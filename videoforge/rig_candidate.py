@@ -123,14 +123,17 @@ def _cutout(src: bytearray, mask: bytearray) -> bytearray:
     for i, value in enumerate(mask):
         p = i * 4
         out[p + 3] = out[p + 3] * value // 255
+        if not out[p + 3]:
+            out[p:p+4] = b"\0\0\0\0"
     return out
 
 
 def _erase(src: bytearray, mask: bytearray) -> bytearray:
     out = bytearray(src)
     for i, value in enumerate(mask):
-        if value:
-            out[4 * i + 3] = 0
+        p=4*i
+        if value or not out[p+3]:
+            out[p:p+4] = b"\0\0\0\0"
     return out
 
 
@@ -140,6 +143,10 @@ def _cape_split(src: bytearray, front_mask: bytearray) -> tuple[bytearray, bytea
         idx = i * 4 + 3
         front[idx] = front[idx] * mask // 255
         back[idx] = back[idx] * (255 - mask) // 255
+        if not front[idx]:
+            front[idx-3:idx+1]=b"\0\0\0\0"
+        if not back[idx]:
+            back[idx-3:idx+1]=b"\0\0\0\0"
     return back, front
 
 
