@@ -191,7 +191,7 @@ class CandidateRigTests(unittest.TestCase):
         # Previous head lost a hair strand; keep it missing in both old sprites.
         for x in range(31,39):
             p=4*(17*64+x)
-            old_open[p:p+4]=b"\\0\\0\\0\\0"
+            old_open[p:p+4]=bytes((0,0,0,0))
         old_closed=bytearray(old_open)
         for y in range(21,31):
             for x in range(28,41):
