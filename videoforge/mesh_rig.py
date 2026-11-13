@@ -75,10 +75,14 @@ def validate_rig_dir(directory: Path, *, channel: str, video_id: str,
     ):
         raise RigAssetError("RIG_HUMAN_ASSET_REVIEW_REQUIRED")
     hashes = raw.get("assets")
-    if not isinstance(hashes, dict) or set(hashes) != set(ASSET_NAMES.values()):
+    optional_front = "cape-front.png"
+    expected_names = set(ASSET_NAMES.values())
+    if isinstance(hashes, dict) and optional_front in hashes:
+        expected_names.add(optional_front)
+    if not isinstance(hashes, dict) or set(hashes) != expected_names:
         raise RigAssetError("RIG_ASSET_LIST_INVALID")
     verified_hashes = {}
-    for name in ASSET_NAMES.values():
+    for name in sorted(expected_names):
         expected = _sha(hashes[name])
         asset = directory / name
         data = scene_layers._read_png(asset)
@@ -119,10 +123,13 @@ def validate_rig_dir(directory: Path, *, channel: str, video_id: str,
     columns = _integer(mesh.get("columns"), 2, 6)
     rows = _integer(mesh.get("rows"), 2, 8)
     amplitude = _number(mesh.get("amplitude_px"), .1, 12)
+    layers = {key: "vf-scene/rig/" + filename for key, filename in ASSET_NAMES.items()}
+    if optional_front in expected_names:
+        layers["capeFront"] = "vf-scene/rig/" + optional_front
     return {
         "schema": RIG_SCHEMA,
         "canvas": {"width": width, "height": height},
-        "layers": {key: "vf-scene/rig/" + filename for key, filename in ASSET_NAMES.items()},
+        "layers": layers,
         "neckPivot": neck,
         "headMaxDeg": angle,
         "blinkFrames": blink_frames,
