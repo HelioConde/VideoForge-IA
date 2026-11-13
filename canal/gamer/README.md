@@ -2,6 +2,10 @@
 
 Identificador: `gamer` · idioma: `pt-BR`.
 
+> **Leia primeiro a [estratégia editorial deste canal](ESTRATEGIA.md).** Ela complementa as regras compartilhadas do projeto e é obrigatória para futuras propostas de pauta, roteiro, artes e análise.
+>
+> **Direção editorial:** jogos com procura real e assuntos representáveis honestamente com **imagens de IA**: lore, personagens, curiosidades, teorias e anúncios confirmados. Não criar falsos gameplays, telas de patch ou provas visuais simuladas.
+
 - `canal.json`: identidade, parâmetros e modelo padrão; YouTube desconectado e uploads desabilitados.
 - `editorial/candidatos.json`: pautas pesquisadas (atualmente vazio).
 - `editorial/reservas.json`: reservas antirrepetição (atualmente vazio).
