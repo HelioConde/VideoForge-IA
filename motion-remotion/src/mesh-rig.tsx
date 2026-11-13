@@ -50,6 +50,12 @@ export const headAngleAtFrame=(frame:number,fps:number,duration:number,maxDeg:nu
 };
 
 /** Piscar: olhos fechados nos quadros centro-1, centro e centro+1. */
+/** A cabeca aberta e sempre base solida; a fechada nunca substitui sua opacidade. */
+export const headOpacitiesAtFrame=(frame:number,centers:readonly number[])=>({
+  open:1,
+  closed:blinkClosureAtFrame(frame,centers),
+});
+
 export const blinkClosureAtFrame=(frame:number,centers:readonly number[]):number=>{
   let closure=0;
   for(const center of centers){
@@ -220,7 +226,7 @@ export const RiggedCharacter:React.FC<{
 }>=({rig,frame,fps,duration})=>{
   const {width,height}=rig.canvas;
   const angle=headAngleAtFrame(frame,fps,duration,rig.headMaxDeg);
-  const blink=blinkClosureAtFrame(frame,rig.blinkFrames);
+  const blink=headOpacitiesAtFrame(frame,rig.blinkFrames);
   const image=(path:string,opacity=1)=><image href={staticFile(path)}
     x={0} y={0} width={width} height={height} opacity={opacity}
     preserveAspectRatio="none"/>;
@@ -250,15 +256,15 @@ export const RiggedCharacter:React.FC<{
             So o desenho fechado entra como overlay; dois PNGs com opacity=.5
             resultavam em alpha .75 e deixavam o fundo atravessar o rosto. */}
         {image(rig.layers.headOpen)}
-        {image(rig.layers.headClosed,blink)}
+        {image(rig.layers.headClosed,blink.closed)}
       </> : rig.layers.headOpen ? <>
         {image(rig.layers.headOpen)}
-        {image(rig.layers.head,blink)}
-        {image(rig.layers.eyesClosed,blink)}
+        {image(rig.layers.head,blink.closed)}
+        {image(rig.layers.eyesClosed,blink.closed)}
       </> : <>
         {image(rig.layers.head)}
-        {image(rig.layers.eyesOpen,1-blink)}
-        {image(rig.layers.eyesClosed,blink)}
+        {image(rig.layers.eyesOpen,1-blink.closed)}
+        {image(rig.layers.eyesClosed,blink.closed)}
       </>}
     </g>
     </svg>
