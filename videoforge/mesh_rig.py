@@ -88,7 +88,10 @@ def validate_rig_dir(directory: Path, *, channel: str, video_id: str,
         data = scene_layers._read_png(asset)
         if hashlib.sha256(data).hexdigest() != expected:
             raise RigAssetError("RIG_ASSET_HASH_MISMATCH")
-        info = scene_layers.png_info(data, require_alpha=True)
+        info = scene_layers.png_info(
+            data, require_alpha=True,
+            min_visible_fraction=.00001 if name.startswith('eyes-') else .005,
+        )
         if (info["width"], info["height"]) != (width, height):
             raise RigAssetError("RIG_ASSET_CANVAS_MISMATCH")
         verified_hashes[name] = expected
