@@ -37,7 +37,7 @@ function Set-SecretFromMemory([string]$name, [string]$value, [string]$gh) {
     $info.RedirectStandardOutput = $true
     $info.RedirectStandardError = $true
     $info.CreateNoWindow = $true
-    $info.StandardInputEncoding = New-Object System.Text.UTF8Encoding($false)
+    $info.StandardInputEncoding = [System.Text.UTF8Encoding]::new($false)
     $process = New-Object System.Diagnostics.Process
     $process.StartInfo = $info
     try {
