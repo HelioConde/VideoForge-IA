@@ -14,7 +14,7 @@ export type CapeBounds={x:number;y:number;width:number;height:number};
 export type RigManifest={
   schema:'videoforge/mesh-rig/v1';
   canvas:{width:number;height:number};
-  layers:{body:string;head:string;eyesOpen:string;eyesClosed:string;cape:string};
+  layers:{body:string;head:string;eyesOpen:string;eyesClosed:string;cape:string;capeFront?:string};
   neckPivot:Point;
   headMaxDeg:number;
   blinkFrames:number[];
@@ -118,12 +118,12 @@ const pointText=(p:Point)=>`${p.x.toFixed(4)},${p.y.toFixed(4)}`;
 const matrixText=(m:Triangle['matrix'])=>`matrix(${m.map(v=>v.toFixed(7)).join(' ')})`;
 
 const WarpedCape:React.FC<{
-  rig:RigManifest;frame:number;fps:number;duration:number;
-}>=({rig,frame,fps,duration})=>{
+  rig:RigManifest;frame:number;fps:number;duration:number;layer:'cape'|'capeFront';
+}>=({rig,frame,fps,duration,layer})=>{
   const id=useId().replace(/:/g,'');
   const triangles=capeMeshAtFrame(rig,frame,fps,duration);
   const {width,height}=rig.canvas;
-  const source=staticFile(rig.layers.cape);
+  const source=staticFile(rig.layers[layer] ?? rig.layers.cape);
   return <g>
     <defs>
       <image id={`${id}-source`} href={source} x={0} y={0}
@@ -159,8 +159,10 @@ export const RiggedCharacter:React.FC<{
     style={{position:'absolute',inset:0,width:'100%',height:'100%',overflow:'visible',
       pointerEvents:'none',zIndex:20}}>
     {/* Capa fica atras do torso. Nunca renderizar character-main neste modo. */}
-    <WarpedCape rig={rig} frame={frame} fps={fps} duration={duration}/>
+    <WarpedCape rig={rig} frame={frame} fps={fps} duration={duration} layer="cape"/>
     {image(rig.layers.body)}
+    {rig.layers.capeFront ? <WarpedCape rig={rig} frame={frame} fps={fps}
+      duration={duration} layer="capeFront"/> : null}
     <g transform={`rotate(${angle.toFixed(5)} ${rig.neckPivot.x} ${rig.neckPivot.y})`}>
       {image(rig.layers.head)}
       {image(rig.layers.eyesOpen,1-blink)}
