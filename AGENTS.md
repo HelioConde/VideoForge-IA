@@ -33,6 +33,10 @@ Primeiro validar renderizador; agentes e escritório só depois.
 - Não tocar no repositório antigo. Organizar arquivos por canal,
   preservar documentação e não introduzir agentes visuais fictícios.
 
+## Regra de execução sem instalações repetidas
+
+Os workflows de produção devem reutilizar imagens GHCR pré-compiladas. Usar `ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-v2` para renderização e o proxy pinado do `docs/CODEX-PROXY-ACTIONS.md` para IA. Nunca reinstalar Go, FFmpeg ou serviços em cada job de vídeo; builds/atualizações são feitos só nos workflows de infraestrutura, com cache e tags estáveis. Runners hospedados ainda precisam baixar a imagem, pois não persistem disco entre execuções. Toda troca de imagem exige smoke real H.264/AAC com QA.
+
 ## Validação
 
     python -m unittest discover -s tests -v

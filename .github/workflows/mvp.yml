@@ -24,24 +24,24 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   smoke:
     runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-v2
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Instalar FFmpeg e fontes (nao presentes no runner)
+      - name: Verificar ambiente precompilado sem instalar pacotes
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
-      - name: Verificar FFmpeg
-        run: |
+          python --version
           command -v ffmpeg
           command -v ffprobe
           ffmpeg -version | head -n 1

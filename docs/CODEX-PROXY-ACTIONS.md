@@ -64,7 +64,7 @@ O código `videoforge/proxy_images.py` valida canal, identificadores, HTTPS/loop
 
 O mesmo padrão de pré-compilação vale para o renderizador de vídeo. O Dockerfile `infra/containers/Dockerfile.media` instala Python 3.12, FFmpeg/FFprobe, fontes, git e ferramentas básicas apenas durante o **build da imagem**. O workflow `.github/workflows/media-image.yml` publica a imagem `ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-v2` no GHCR automaticamente quando seu Dockerfile/workflow for alterado na `main`.
 
-**Migração segura em duas fases:** primeiro publicar e verificar a imagem; **depois**, em PR separado, mudar o `.github/workflows/mvp.yml` para `jobs.<job>.container.image` usando essa tag. Não misturar build da imagem e primeiro consumo no mesmo push para evitar disputa entre jobs. A imagem já pronta é baixada pelo runner em cada job novo, mas não há `apt-get install ffmpeg` ou `setup-python` a cada execução. Se a ferramenta for atualizada, versionar tag, reconstruir e validar antes de trocar consumidores.
+**Migração em duas fases:** imagem Ubuntu 24.04/FFmpeg 6.x publicada e validada primeiro; agora o workflow `.github/workflows/mvp.yml` utiliza `jobs.<job>.container.image` com essa tag. O QA deve continuar obrigatório antes de qualquer distribuição. A imagem já pronta é baixada pelo runner em cada job novo, mas não há `apt-get install ffmpeg` ou `setup-python` a cada execução. Se a ferramenta for atualizada, versionar tag, reconstruir e validar antes de trocar consumidores.
 
 ### Compatibilidade comprovada de FFmpeg
 
