@@ -33,6 +33,10 @@ Primeiro validar renderizador; agentes e escritório só depois.
 - Não tocar no repositório antigo. Organizar arquivos por canal,
   preservar documentação e não introduzir agentes visuais fictícios.
 
+## Reuso permanente de ferramentas no GitHub Actions
+
+Para futuros workflows, usar imagens de execução pré-compiladas no GHCR, conforme `docs/CODEX-PROXY-ACTIONS.md`: `ghcr.io/helioconde/videoforge-media-runner:py312-ffmpeg-v1` para MP4/FFmpeg e a imagem do Codex Proxy quando o job precisa do contêiner local. **Não** executar `apt-get install`, `setup-go`, `go run`, `go install`, `docker build` nem clonar Go/proxy repetidamente em workflows de geração. Builds de atualização são feitos só nos workflows dedicados de infraestrutura, com cache e commit/tag fixos. O runner hospedado pode precisar baixar a imagem novamente; não alegar persistência de disco local. Preservar fallback via serviço HTTPS persistente quando houver sessão OAuth.
+
 ## Validação
 
     python -m unittest discover -s tests -v
