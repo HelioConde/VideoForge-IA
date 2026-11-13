@@ -70,15 +70,15 @@ def prepare(input_dir: Path, channel: str, video_id: str, scene: str,
             duration: int, preset: str) -> Path:
     if not MIN_SECONDS <= duration <= MAX_SECONDS or preset not in PRESETS:
         raise RemotionPreviewError("REMOTION_PREVIEW_PARAMETERS_INVALID")
-    # Valida SHA-256, canais, tipo PNG, RGBA e tamanho de todas as camadas.
-    folder, manifest = animate_layers._trusted_assets(
-        input_dir, channel, video_id, scene
-    )
     destination = target_dir(channel, video_id, scene)
     public_dir = proxy_images.ROOT / "motion-remotion" / "public" / "vf-scene"
     _check_symlinks(public_dir, stop_at=proxy_images.ROOT)
     if destination.exists() or public_dir.exists():
         raise RemotionPreviewError("REMOTION_OUTPUT_ALREADY_EXISTS")
+    # Valida SHA-256, canais, tipo PNG, RGBA e tamanho de todas as camadas.
+    folder, manifest = animate_layers._trusted_assets(
+        input_dir, channel, video_id, scene
+    )
     props = make_props(channel=channel, video_id=video_id, scene=scene,
                        duration=duration, preset=preset,
                        source_sha=manifest["source"]["sha256"])
@@ -177,7 +177,7 @@ def main() -> int:
             print(json.dumps(result, ensure_ascii=False))
         return 0
     except (RemotionPreviewError, VideoForgeError,
-            scene_layers.LayerError) as exc:
+            scene_layers.LayerError, proxy_images.ProxyImageError) as exc:
         print("REMOTION_BLOCKED:", str(exc), file=sys.stderr)
         return 2
 
