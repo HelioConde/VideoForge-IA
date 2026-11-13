@@ -1,0 +1,179 @@
+name: Codex Proxy - validar ou gerar imagem (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      operacao:
+        description: 'health nao consome geracao; generate cria 1 imagem'
+        type: choice
+        options: [health, generate]
+        default: health
+        required: true
+      modo:
+        description: 'persistent = servico externo; ephemeral = imagem precompilada local'
+        type: choice
+        options: [persistent, ephemeral]
+        default: persistent
+        required: true
+      canal:
+        description: 'Canal de destino (sempre isolado)'
+        type: choice
+        options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
+        default: otaku-br
+        required: true
+      video_id:
+        description: 'Identificador de pauta/video, ex. teste-imagem-001'
+        required: true
+        default: teste-imagem-001
+        type: string
+      cena:
+        description: 'Identificador da imagem, ex. cena-01'
+        required: true
+        default: cena-01
+        type: string
+      prompt:
+        description: 'Prompt (visivel no historico do Actions; NAO insira segredos)'
+        required: true
+        default: 'Ilustracao original de fantasia com visual de anime consistente, sem personagens protegidos'
+        type: string
+      modelo:
+        description: 'Modelo de imagem exposto pelo upstream (verificar disponibilidade)'
+        type: choice
+        options: [gpt-image-2, gpt-image-1.5]
+        default: gpt-image-2
+        required: true
+      tamanho:
+        description: 'Dimensoes para a imagem'
+        type: choice
+        options: [1024x1536, 1024x1024, 1536x1024]
+        default: 1024x1536
+        required: true
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: vf-proxy-image-${{ inputs.canal }}-${{ inputs.video_id }}
+  cancel-in-progress: false
+
+jobs:
+  imagem:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      PROXY_MODE: ${{ inputs.modo }}
+      IMAGE_PROMPT: ${{ inputs.prompt }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar configuracao do proxy sem mostrar credenciais
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${CODEX_PROXY_API_KEY}" ]]; then
+            echo "::error::Falta secret CODEX_PROXY_API_KEY neste repositorio."
+            exit 1
+          fi
+          if [[ "$PROXY_MODE" == "persistent" ]]; then
+            if [[ -z "${CODEX_PROXY_BASE_URL}" ]]; then
+              echo "::error::Falta secret CODEX_PROXY_BASE_URL (HTTPS, estado persistente)."
+              exit 1
+            fi
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ "$PROXY_MODE" == "ephemeral" ]]; then
+            if [[ -z "${CODEX_PROXY_ACCOUNTS_JSON}" ]]; then
+              echo "::error::Falta secret CODEX_PROXY_ACCOUNTS_JSON; nao efetuar login em cada job."
+              exit 1
+            fi
+            printf 'PROXY_ENDPOINT=http://127.0.0.1:18080\n' >> "$GITHUB_ENV"
+          else
+            echo "::error::Modo desconhecido."
+            exit 1
+          fi
+      - name: Criar estado temporario de contas (somente modo ephemeral)
+        if: inputs.modo == 'ephemeral'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          try:
+              state = json.loads(os.environ["CODEX_PROXY_ACCOUNTS_JSON"])
+              if not isinstance(state, dict) or not isinstance(state.get("records"), list) or not state["records"]:
+                  raise ValueError("formato invalido")
+              for record in state["records"]:
+                  if not isinstance(record, dict) or not isinstance(record.get("token"), dict):
+                      raise ValueError("conta sem token")
+              dst = Path(os.environ["RUNNER_TEMP"]) / "vf-proxy-state" / "accounts.json"
+              dst.write_text(json.dumps(state), encoding="utf-8")
+              dst.chmod(0o600)
+          except (ValueError, TypeError):
+              raise SystemExit("Formato CODEX_PROXY_ACCOUNTS_JSON invalido. Nenhum dado foi impresso.")
+          PY
+      - name: Reutilizar proxy compilado no GHCR (sem instalar Go)
+        if: inputs.modo == 'ephemeral'
+        shell: bash
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull "ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1"
+          docker run -d --name vf-proxy-job \
+            --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" \
+            -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            "ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1" >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then
+              echo "Proxy temporario em execucao."
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::error::Container nao passou na verificacao de vida."
+          exit 1
+      - name: Conferir autenticacao e contas ativas (sem gerar imagem)
+        shell: bash
+        run: |
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+      - name: Gerar UMA imagem por chamada manual
+        if: inputs.operacao == 'generate'
+        shell: bash
+        run: |
+          python -m videoforge.proxy_images generate \
+            --url "$PROXY_ENDPOINT" \
+            --channel "${{ inputs.canal }}" \
+            --video-id "${{ inputs.video_id }}" \
+            --scene "${{ inputs.cena }}" \
+            --model "${{ inputs.modelo }}" \
+            --size "${{ inputs.tamanho }}"
+      - name: Entregar imagem e relatorio (nao publica no YouTube)
+        if: inputs.operacao == 'generate'
+        uses: actions/upload-artifact@v4
+        with:
+          name: imagem-${{ inputs.canal }}-${{ inputs.video_id }}-${{ github.run_id }}
+          path: output/${{ inputs.canal }}/videos/${{ inputs.video_id }}/imagens/
+          retention-days: 3
+          if-no-files-found: error
+      - name: Encerrar container e eliminar credenciais temporarias
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-job >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
