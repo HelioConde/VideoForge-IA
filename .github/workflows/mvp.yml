@@ -28,8 +28,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Instalar FFmpeg e fontes (nao presentes no runner)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
       - name: Verificar FFmpeg
         run: |
+          command -v ffmpeg
+          command -v ffprobe
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
       - name: Rodar testes incluindo renderizacao real
