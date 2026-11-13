@@ -81,3 +81,13 @@ A etapa de olhos fechados foi aprimorada após observar o defeito visual do test
 - **Bloqueio:** os sprites continuam como **candidatos**, `human_visual_approval=false` e `rig_ready_for_remotion=false`. A geração do MP4 continua com marca d'água e não publica no YouTube.
 
 O workflow [`rig-eye-preview.yml`](../.github/workflows/rig-eye-preview.yml) recria as camadas a partir do artefato original (run 43437992955), testa a geometria e renderiza quadros **0, 38, 39, 40, 41, 42, 60 e 132** e o MP4 para inspeção humana, sem chamadas pagas. O mesmo módulo de olhos pode ser aproveitado em outros canais, desde que cada personagem possua máscara/curva/amostra de pele próprias. O código não cria camadas aprovadas automaticamente.
+
+## Estado final da correção — PR #35 (integrada à main)
+
+A [PR #35](https://github.com/HelioConde/VideoForge-IA/pull/35) corrigiu também o problema detectado **na reabertura**. A extração agora gera um **sétimo sprite `head-open.png`** com os pixels originais intactos, junto de `head-no-eyes.png` (pele recuperada para fechar). O Remotion desenha `head-open.png` integralmente com olhos abertos e só mistura a versão de olhos fechados nos quadros da piscada. Isso impede halos ou remendos no rosto quando o personagem olha normalmente.
+
+A arquitetura é retrocompatível: rigs antigos de 5 ou 6 sprites continuam disponíveis. O sétimo sprite é opcional para esses rigs, mas o gerador corrigido do Otaku BR o produz sempre para preservar o olho aberto original.
+
+**Validação concluída:** [workflow 43506887120](https://github.com/HelioConde/VideoForge-IA/actions/runs/43506887120), MP4 técnico de 8s, 1080×1920 30 FPS, H.264/AAC, SHA-256 `20a8da4f3bf8fc33597381c6a767568ab2ce584b0911eab37bbe0f620a4e03df`. Foi feita a comparação de quadros 0 (aberto) e 40 (fechado) com a versão antiga: o olho aberto mantém o mesmo desenho original, e o fechado tem curva e textura suavizadas. Ainda é **rascunho com marca d'água**: partes ocultas do corpo e da capa não foram reconstruídas, revisão humana editorial e publicação continuam bloqueadas.
+
+O artifact `otaku-br-natural-blink-review-43506887120` inclui `eyes-closed.png`, `eyes-open.png`, `head-open.png`, `head-no-eyes.png`, quadros da piscada e MP4. A retenção é de 7 dias; o código e o plano de curvas ficam permanentemente versionados no canal para reproduzir os PNGs, sem guardar binários pesados no Git.
