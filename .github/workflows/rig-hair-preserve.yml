@@ -1,0 +1,165 @@
+name: 'VideoForge - preservar cabelo original e reusar olhos IA (sem gerar imagens)'
+on:
+  pull_request:
+    paths:
+      - 'videoforge/rig_candidate.py'
+      - 'videoforge/rig_hair_repair.py'
+      - 'canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json'
+      - 'tests/test_rig_candidate.py'
+      - '.github/workflows/rig-hair-preserve.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
+jobs:
+  verify-real-art:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      CHANNEL: otaku-br
+      VIDEO_ID: teste-proxy-20261113
+      SCENE: cena-01
+      EYE_DIR: canal/otaku-br/videos/teste-proxy-20261113/rascunhos/olhos-fechados-ia
+      PLAN: canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json
+      CANDIDATE: output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01
+      PREVIEW: output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verificar testes de recorte e reuso sem IA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_rig_candidate tests.test_eye_refine tests.test_mesh_rig -v
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/mesh-rig.test.cjs
+      - name: Baixar a mesma cena ORIGINAL com SHA-256
+        uses: actions/download-artifact@v4
+        with:
+          run-id: '43437992955'
+          name: camadas-advanced-otaku-br-teste-proxy-20261113-cena-01-43437992955
+          path: ./source-layers
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Regenerar a cabeca e os fios do cabelo a partir do ORIGINAL
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_candidate \
+            --source-dir ./source-layers \
+            --plan "$PLAN" \
+            --output-dir "$CANDIDATE"
+          python -m videoforge.rig_hair_repair \
+            --source-dir ./source-layers \
+            --plan "$PLAN" \
+            --candidate-dir "$CANDIDATE" \
+            --archived-eye-dir "$EYE_DIR"
+      - name: QA rigoroso de cabelo sem cortes e olho AI identico
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from videoforge import rig_candidate as c
+          plan=json.loads(Path("canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json").read_text())
+          folder=Path("output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01")
+          qa=json.loads((folder/"candidate.qa.json").read_text())
+          rig=json.loads((folder/"rig.json").read_text())
+          assert qa["head_mask_variant"]=="head_full_polygon"
+          assert qa["head_full_hair_guard_alpha_coverage"] >= .9998
+          assert qa["eye_close_technique"]=="original_masked_ai_edit_rebased_full_hair"
+          assert qa["model_calls_for_this_repair"]==0
+          assert 100<=qa["reused_eye_pixels"]<=12000
+          assert not qa["human_visual_approval"] and not qa["rig_ready_for_remotion"]
+          assert all(v is False for v in rig["human_review"].values())
+          original=c._image(Path("source-layers/character-main.png"),1024,1536)
+          repaired=c._image(folder/"head-open.png",1024,1536)
+          oldmask=c._mask([plan["head_polygon"]],1024,1536)
+          x0,y0,x1,y1=plan["hair_guard_bbox"]
+          rescued=0
+          for y in range(y0,y1):
+              for x in range(x0,x1):
+                  p=(y*1024+x)*4
+                  i=y*1024+x
+                  if original[p+3]>16 and not oldmask[i]:
+                      if original[p:p+4]==repaired[p:p+4]:
+                          rescued+=1
+          assert rescued>=2, f"Fios originais recuperados insuficientes: {rescued}"
+          print("Cabelo restaurado; nenhum olho regenerado. Pixels recuperados:",rescued)
+          PY
+      - name: Preparar Remotion com o mesmo vento e olhos originais
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_draft_preview prepare \
+            --source-dir ./source-layers \
+            --candidate-dir "$CANDIDATE" \
+            --wind-plan "$PLAN" \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path("output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/draft-props.json").read_text())
+          assert x["rig"]["layers"]["headOpen"]
+          assert x["rig"]["layers"]["headClosed"]
+          assert x["rig"]["capeMesh"]["wind"]
+          assert x["draftPreview"] is True and x["youtubeUpload"] is False
+          PY
+      - name: Gerar quadros para conferir cabelo, olhos e capa
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          for f in 0 40 55 95 190 239; do
+            ./node_modules/.bin/remotion still src/index.ts VideoForgeLayerScene \
+              "../$PREVIEW/hair-fix-frame-$f.png" --frame="$f" \
+              --props="../$PREVIEW/draft-props.json" --log=error
+          done
+      - name: Renderizar MP4 real de 8s, com marca d'agua de rascunho
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/index.ts VideoForgeLayerScene \
+            "../$PREVIEW/rig-draft-preview.mp4" \
+            --props="../$PREVIEW/draft-props.json" \
+            --codec=h264 --concurrency=2 --log=error
+      - name: Gerar MP4 leve e verificar integridade sem publicar
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -nostdin -hide_banner -loglevel error -y \
+            -i "$PREVIEW/rig-draft-preview.mp4" -vf scale=540:960:flags=lanczos \
+            -c:v libx264 -profile:v baseline -level 3.1 \
+            -pix_fmt yuv420p -crf 24 -preset veryfast \
+            -an -movflags +faststart "$PREVIEW/hair-fixed-compat.mp4"
+          python -m videoforge.rig_draft_preview verify \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          q=json.loads(Path("output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/draft-video.qa.json").read_text())
+          assert q["cape_wind_active"] and q["eye_closed_from_original_ai_edit"]
+          assert q["publishable"] is False and q["youtube_uploaded"] is False
+          print("MP4 teste concluido; revisao editorial continua pendente.")
+          PY
+      - name: Compartilhar sprites corrigidos, frames e MP4 (sem IA)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: otaku-br-full-hair-wind-review-${{ github.run_id }}
+          path: |
+            output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01/
+            output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/
+          retention-days: 14
+          if-no-files-found: warn
