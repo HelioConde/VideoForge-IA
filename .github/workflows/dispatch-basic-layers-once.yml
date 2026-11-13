@@ -24,7 +24,7 @@ jobs:
           gh api --method POST \
             "repos/${{ github.repository }}/actions/workflows/scene-layers-basic.yml/dispatches" \
             --field ref=main \
-            --field 'inputs[source_run_id]=43433023378' \
+            --raw-field 'inputs[source_run_id]=43433023378' \
             --field 'inputs[channel]=otaku-br' \
             --field 'inputs[video_id]=teste-proxy-20261113' \
             --field 'inputs[scene]=cena-01' \
