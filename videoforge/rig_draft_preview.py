@@ -61,14 +61,27 @@ def prepare(original_dir: Path, candidate_dir: Path, *,
         qa.get("status")!="draft_unapproved" or
         qa.get("rig_ready_for_remotion") is not False or
         qa.get("human_visual_approval") is not False or
-        origin.get("human_review") is not False or
-        origin.get("model_calls")!=0):
+        origin.get("human_review") is not False):
         raise DraftPreviewError("DRAFT_NOT_VERIFIED_UNAPPROVED")
     if (rig.get("channel"),rig.get("video_id"),rig.get("scene"))!=(channel,video_id,scene):
         raise DraftPreviewError("DRAFT_CROSS_CHANNEL")
     allowed=set(mesh_rig.ASSET_NAMES.values())|{"cape-front.png"}
     if "head-open.png" in rig.get("assets",{}):
         allowed.add("head-open.png")
+    has_ai="head-closed-ai.png" in rig.get("assets",{})
+    if has_ai:
+        if "head-open.png" not in allowed:
+            raise DraftPreviewError("DRAFT_AI_REQUIRES_ORIGINAL_HEAD")
+        allowed.add("head-closed-ai.png")
+        eye_info=origin.get("eye_ai_edit",{})
+        if (eye_info.get("schema")!="videoforge/eye-ai-edit/v1" or
+            eye_info.get("human_review") is not False or
+            eye_info.get("model_calls")!=1 or
+            eye_info.get("source_sha256")!=rig.get("source_sha256") or
+            eye_info.get("closed_head_sha256")!=rig["assets"]["head-closed-ai.png"]):
+            raise DraftPreviewError("DRAFT_AI_PROVENANCE_INVALID")
+    if origin.get("model_calls")!=(1 if has_ai else 0):
+        raise DraftPreviewError("DRAFT_MODEL_CALL_COUNT_INVALID")
     if set(rig.get("assets",{}))!=allowed:
         raise DraftPreviewError("DRAFT_PIECES_INVALID")
     # Copia e verifica camadas da origem, com o contrato do sistema existente.
@@ -95,6 +108,8 @@ def prepare(original_dir: Path, candidate_dir: Path, *,
     layers["capeFront"]="vf-scene/rig/cape-front.png"
     if "head-open.png" in allowed:
         layers["headOpen"]="vf-scene/rig/head-open.png"
+    if has_ai:
+        layers["headClosed"]="vf-scene/rig/head-closed-ai.png"
     rig_props={
         "schema":mesh_rig.RIG_SCHEMA,"canvas":rig["canvas"],
         "layers":layers,"neckPivot":rig["neck_pivot"],
@@ -147,6 +162,7 @@ def verify(channel: str, video_id: str, scene: str) -> dict:
         "technical_mesh_rig_preview":True,"watermark":True,
         "publishable":False,"youtube_uploaded":False,"audio_is_silent":True,
         "motion_detected":True,
+        "eye_closed_from_original_ai_edit":bool(props.get("rig",{}).get("layers",{}).get("headClosed")),
     })
     (dest/"draft-video.qa.json").write_text(json.dumps(
         qa,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
