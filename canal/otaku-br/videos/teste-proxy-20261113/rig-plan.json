@@ -611,5 +611,93 @@
     540,
     365
   ],
-  "hair_notes": "New contour traced against ORIGINAL character-main.png 1024x1536, including wind-blown top and back strands. Hair alpha coverage in guard 260,210..540,365 must be >=99.98%. Legacy head_polygon retained for compatibility; do not use it for this scene."
+  "hair_notes": "New contour traced against ORIGINAL character-main.png 1024x1536, including wind-blown top and back strands. Hair alpha coverage in guard 260,210..540,365 must be >=99.98%. Legacy head_polygon retained for compatibility; do not use it for this scene.",
+  "seam_underlay_polygon": [
+    [
+      205,
+      402
+    ],
+    [
+      256,
+      381
+    ],
+    [
+      321,
+      385
+    ],
+    [
+      369,
+      407
+    ],
+    [
+      410,
+      408
+    ],
+    [
+      448,
+      435
+    ],
+    [
+      509,
+      465
+    ],
+    [
+      564,
+      517
+    ],
+    [
+      635,
+      569
+    ],
+    [
+      666,
+      608
+    ],
+    [
+      647,
+      680
+    ],
+    [
+      588,
+      689
+    ],
+    [
+      538,
+      675
+    ],
+    [
+      505,
+      657
+    ],
+    [
+      464,
+      691
+    ],
+    [
+      397,
+      721
+    ],
+    [
+      330,
+      710
+    ],
+    [
+      269,
+      669
+    ],
+    [
+      210,
+      624
+    ],
+    [
+      181,
+      547
+    ],
+    [
+      177,
+      470
+    ]
+  ],
+  "seam_underlay_feather": 7,
+  "compositing_notes": "Protect chest/neck and cape collision seams with an underlay cropped from original character-main pixels (not hallucinated), always behind both cape meshes and body. Keep original head as solid base while the edited closed-eye PNG appears as overlay; front cape collar pins before flutter."
 }
