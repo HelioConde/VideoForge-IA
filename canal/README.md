@@ -22,3 +22,11 @@ Mesma organização do projeto anterior: **cinco canais isolados**, cada um com 
 Os dados públicos catalogados não comprovam acesso OAuth, pesquisa da equipe, reserva real ou publicação.
 
 **Diferença intencional:** o Otaku Multicena usava `camadas-animadas` como padrão provisório no projeto anterior. Aqui usa `imagem-estatica` até a primeira produção estar operacional; o modelo de camadas continua cadastrado como **não implementado**.
+
+## Histórico editorial de vídeos
+
+- Cada canal também possui `editorial/historico-videos.json` para catalogar IDs e estado das pautas e vídeos **sem executar jobs**.
+- Cada vídeo tem uma pasta `videos/<video-id>/`. Seu **`video.json` é o manifesto técnico do renderizador**, e o **`editorial.json`** (quando criado) documenta pesquisas, SEO, roteiro, controles visuais, QA, publicação e métricas.
+- O modelo do registro está em `../docs/modelos/REGISTRO-EDITORIAL-VIDEO.template.json`.
+- O histórico é criado vazio e **não representa os vídeos existentes no YouTube**. A deduplicação deve consultar este índice, `editorial/reservas.json` e o histórico verificado da plataforma.
+- Referências de cursos/YouTube para pesquisa e treinamento ficam fora dos canais, em `../docs/referencias/CATALOGO-CURSOS-YOUTUBE.md`; aprendizados só podem ser atribuídos a uma aula após estudo real.

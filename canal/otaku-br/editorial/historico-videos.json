@@ -1,0 +1,8 @@
+{
+  "schema": "videoforge/channel-video-history/v1",
+  "canal_id": "otaku-br",
+  "atualizado_em": "2026-11-13",
+  "historico_youtube_importado": false,
+  "nota": "Indice editorial inicialmente vazio. Nao conclua que o canal nao possui videos publicados.",
+  "videos": []
+}

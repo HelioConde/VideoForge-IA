@@ -1,0 +1,81 @@
+{
+  "schema": "videoforge/video-editorial/v1",
+  "canal_id": "<id-do-canal-exatamente-como-canal.json>",
+  "video_id": "<slug-unico-do-video>",
+  "status": "ideia",
+  "titulo_provisorio": "",
+  "tema": "",
+  "assuntos_relacionados": [],
+  "obra_ou_anime": null,
+  "formato": null,
+  "idioma": null,
+  "publico": "",
+  "hipotese": "",
+  "duracao_prevista_segundos": null,
+  "data_criacao": null,
+  "pesquisa": {
+    "consultas": [],
+    "fontes": [],
+    "dados_canal_verificados": false,
+    "data_consulta_analytics": null,
+    "concorrentes": [],
+    "tendencias": []
+  },
+  "antirrepeticao": {
+    "historico_youtube_verificado": false,
+    "data_verificacao": null,
+    "ids_comparados": [],
+    "temas_relacionados": [],
+    "parecer": "pendente",
+    "justificativa": ""
+  },
+  "roteiro": {
+    "arquivo": null,
+    "gancho": null,
+    "progressao": null,
+    "cenas_previstas": []
+  },
+  "arte": {
+    "guia_estilo": null,
+    "personagens": null,
+    "cenario": null,
+    "referencias": [],
+    "consistencia_verificada": false
+  },
+  "seo": {
+    "palavras_chave": [],
+    "titulo_final": null,
+    "descricao": null,
+    "tags": [],
+    "thumbnail_plano": null
+  },
+  "producao": {
+    "manifesto_tecnico": "video.json",
+    "workflow_url": null,
+    "artefato_url": null,
+    "sha256": null,
+    "duracao_real_segundos": null
+  },
+  "qa": {
+    "aprovado_tecnicamente": false,
+    "aprovado_editorialmente": false,
+    "relatorio_url": null
+  },
+  "publicacao": {
+    "youtube_video_id": null,
+    "youtube_url": null,
+    "publicado_em": null
+  },
+  "metricas": {
+    "fonte": null,
+    "data_coleta": null,
+    "visualizacoes": null,
+    "impressoes": null,
+    "ctr": null,
+    "retencao_media_percentual": null,
+    "tempo_medio_assistido_segundos": null,
+    "inscritos_ganhos": null,
+    "comentarios": null
+  },
+  "notas": []
+}
