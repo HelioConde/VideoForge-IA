@@ -83,6 +83,18 @@ class MeshRigTests(unittest.TestCase):
         self.assertTrue(props["bodyPartRiggingImplemented"])
         self.assertEqual(props["rig"], rig)
 
+    def test_optional_seam_underlay_requires_sha_and_full_canvas(self):
+        png=self.rig_dir/"seam-underlay.png"
+        data=_png(32,48,27)
+        png.write_bytes(data)
+        self.manifest["assets"]["seam-underlay.png"]=hashlib.sha256(data).hexdigest()
+        self.write_manifest()
+        rig=self.validate()
+        self.assertEqual(rig["layers"]["seamUnderlay"],"vf-scene/rig/seam-underlay.png")
+        png.write_bytes(data+b"corrupted")
+        with self.assertRaises(mesh_rig.RigAssetError):
+            self.validate()
+
     def test_fail_closed_on_bad_manifest_and_files(self):
         cases = [
             ("cross channel", lambda: self.manifest.update(channel="gamer")),
