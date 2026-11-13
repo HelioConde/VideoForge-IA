@@ -97,3 +97,9 @@ pode-se informar seu run ID em `rig_run_id`; o job baixa o artifact, valida todo
 ## Proxima etapa implementada: preparar candidata com 6 sprites e QA
 
 Leia [preparação do rig candidato](PREPARAR-RIG-CANDIDATO.md). Para a arte real, o segundo olho aparece parcialmente sob a franja e a capa possui sobreposicao na frente do peito. O motor aceita um **sexto sprite opcional `cape-front.png`**: a parte traseira `cape.png` é desenhada atrás do corpo, a parte frontal após o corpo, ambas com o mesmo warp por malha, antes da cabeça. A extração manual por máscaras usando a cena verificada produz apenas **rascunho** com `human_review=false`, sem inpainting nem MP4 aprovado.
+
+## Correção opcional para preservar olhos abertos (estado `headOpen`)
+
+Para um rosto que precisa piscar, a versão atual do extrator gera `head-open.png` **além** das seis peças da capa/olhos. Esse sprite contém a cabeça original antes de qualquer preenchimento da área dos olhos. O `head-no-eyes.png` retocado é utilizado somente durante o fechamento com `eyes-closed.png`. A camada opcional `rig.layers.headOpen` preserva a expressão aberta e evita halos de inpainting. Os validadores aceitam os rigs anteriores sem essa camada para compatibilidade, mas o novo rig de qualidade usa **sete peças**.
+
+Ver [guia da piscada natural](PREPARAR-RIG-CANDIDATO.md). O MP4 de teste aprovado tecnicamente **não equivale a um vídeo editorial aprovado**. As máscaras e anatomia atrás da capa continuam pendentes de correção visual.
