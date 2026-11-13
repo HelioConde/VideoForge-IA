@@ -11,6 +11,14 @@ pesquisa, agentes, modelos de imagem e YouTube Analytics. O repositório
 anterior, agora `HelioConde/video-forge-ia2`, permanece intacto e serve
 somente como referência para organização.
 
+## Estratégia editorial de Shorts
+
+Os materiais de crescimento/SEO enviados em 2026-11-13 foram sintetizados
+em [Estratégia de YouTube Shorts](docs/ESTRATEGIA_SHORTS.md), que inclui
+pesquisa, antirrepetição por canal, retenção, consistência visual,
+métricas e fontes oficiais atualizadas. **Leia o guia antes de planejar**;
+essas práticas ainda não são automações implementadas.
+
 ## O que já funciona
 
 - Compositor FFmpeg de **imagens e narrações fornecidas**, com legendas,
