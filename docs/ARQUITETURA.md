@@ -36,6 +36,15 @@ VideoForge-IA/
 6. `smoke` permanece separado em `dist/smoke.mp4`, apenas simulação técnica de ~5 segundos no CI, sem conteúdo de YouTube.
 7. `output/<channel>/editorial/` é reservado para relatórios temporários futuros; decisão e registros privados exigirão proteção própria antes de qualquer integração.
 
+## Conhecimento editorial compartilhado
+
+O guia transversal de Shorts fica em
+[ESTRATEGIA_SHORTS.md](ESTRATEGIA_SHORTS.md), fora das pastas de canal.
+Ele documenta boas práticas e fontes gerais; métricas, propostas de pautas,
+reservas e vídeos **reais** pertencem somente à árvore `canal/<id>/`.
+Ler o guia antes de criar agentes ou pesquisa editorial. Não copiar textos de
+terceiros integralmente nem criar dados fictícios de canais.
+
 ## Escopo atual
 
 O renderizador de mídia já fornecida produz vídeo 1080×1920, áudio AAC, H.264, legendas e QA técnico. Falta automatizar pesquisa, roteiro, imagens, narração e animações; **não** tratar os registros dos cinco canais ou modelos planejados como agentes ativos. Publicação no YouTube desabilitada. Não alterar repositórios legados.
