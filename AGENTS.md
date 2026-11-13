@@ -2,7 +2,7 @@
 
 ## Instruções obrigatórias para cada tarefa
 
-**Ler nesta ordem, antes de pesquisar ou produzir qualquer vídeo:** `README.md`, `AGENTS.md`, `docs/ARQUITETURA.md`, `docs/REGRAS-EDITORIAIS.md`, `canal/README.md`, `canal/<id>/README.md`, **`canal/<id>/ESTRATEGIA.md`**, `canal/<id>/canal.json`, histórico e reservas do canal e, se útil, `docs/referencias/CATALOGO-CURSOS-YOUTUBE.md` e `docs/referencias/GUIA-OFICIAL-YOUTUBE-CREATORS.md` (para pesquisa, Analytics, SEO, Shorts, direitos, classificação infantil e IA).
+**Ler nesta ordem, antes de pesquisar ou produzir qualquer vídeo:** `README.md`, `AGENTS.md`, `docs/ARQUITETURA.md`, `docs/REGRAS-EDITORIAIS.md`, `canal/README.md`, `canal/<id>/README.md`, **`canal/<id>/ESTRATEGIA.md`**, `canal/<id>/canal.json`, histórico e reservas do canal e, se útil, `docs/referencias/CATALOGO-CURSOS-YOUTUBE.md` e `docs/referencias/GUIA-OFICIAL-YOUTUBE-CREATORS.md` (para pesquisa, Analytics, SEO, Shorts, direitos, classificação infantil e IA) e **`docs/CODEX-PROXY-ACTIONS.md` antes de qualquer trabalho envolvendo ferramentas de IA, Go ou Actions**.
 
 **Hierarquia com precedência:** a estrutura canônica é **`canal/` no singular**, conforme `docs/ARQUITETURA.md`. Não criar `canais/` alternativo. Separar rigorosamente canais; dados do vídeo em `canal/<id>/videos/<video-id>/editorial.json`, manifesto renderizável em `video.json`, índice de histórico em `canal/<id>/editorial/historico-videos.json`. Não substituir o formato técnico do manifesto. Conferir histórico e temas relacionados antes de criar nova pauta. Não presumir que o índice inicial vazio comprova ausência de vídeos no YouTube.
 
@@ -10,7 +10,7 @@ Ler `docs/referencias/GUIA-OFICIAL-YOUTUBE-CREATORS.md` como síntese **de fonte
 
 Os cursos listados são **fontes sugeridas para estudo**, não prova de acesso, aprendizado ou método validado. Não inventar conteúdo das aulas. Não registrar geração, QA ou publicação sem evidências.
 
-## Objetivo inicial
+## Integração central com Codex Proxy\n\nTodas as integrações futuras de pesquisa, roteirização e imagens devem usar o gateway definido em `docs/CODEX-PROXY-ACTIONS.md`, sem instalar Go ou clonar o upstream em cada workflow. A imagem do proxy é compilada uma vez em build isolado no GHCR; jobs posteriores usam serviço persistente ou contêiner pré-compilado. O modo efêmero não persiste tokens OAuth renovados, logo não é a opção principal. Nunca imprimir ou versionar `CODEX_PROXY_ACCOUNTS_JSON`, `CODEX_PROXY_API_KEY` ou `CODEX_PROXY_BASE_URL` privado; credenciais somente via GitHub Actions Secrets. Não habilitar geração paga em push/PR; `health` não gera imagens e `generate` é disparo manual único. Se upstream privado mudar, falhar com erro verificável, jamais tentar contornar limites 429. Geração não equivale a aprovação visual nem MP4.\n\n## Objetivo inicial
 
 Entregar e comprovar um vídeo MP4 vertical do Otaku Multicena com
 90–180 segundos, áudio audível, legendas e identidade visual consistente.
