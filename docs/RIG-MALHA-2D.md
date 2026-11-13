@@ -93,3 +93,7 @@ pode-se informar seu run ID em `rig_run_id`; o job baixa o artifact, valida todo
 - Proximo passo operacional: gerar/reconstruir os cinco PNGs com o mesmo original, medir bounds/pivo, revisar manualmente, preencher os hashes e produzir um artifact de rig de um run autorizado. **So depois** executar a renderizacao real e revisar o MP4.
 - Respeitar direitos sobre arte, modelos e trilha, especialmente personagens de franquias existentes. Nao publicar sem verificacao editorial e direitos.
 - Para licenciamento do proprio Remotion em escala/comercial, consultar [Remotion licensing](https://www.remotion.dev/docs/license/pricing). Documentacao do mecanismo de renderizacao: [Remotion render](https://www.remotion.dev/docs/cli/render); [SVG transforms](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform).
+
+## Proxima etapa implementada: preparar candidata com 6 sprites e QA
+
+Leia [preparação do rig candidato](PREPARAR-RIG-CANDIDATO.md). Para a arte real, o segundo olho aparece parcialmente sob a franja e a capa possui sobreposicao na frente do peito. O motor aceita um **sexto sprite opcional `cape-front.png`**: a parte traseira `cape.png` é desenhada atrás do corpo, a parte frontal após o corpo, ambas com o mesmo warp por malha, antes da cabeça. A extração manual por máscaras usando a cena verificada produz apenas **rascunho** com `human_review=false`, sem inpainting nem MP4 aprovado.
