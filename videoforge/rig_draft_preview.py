@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import shutil
 import sys
@@ -42,7 +43,8 @@ def _json(path: Path) -> dict:
 
 
 def prepare(original_dir: Path, candidate_dir: Path, *,
-            channel: str, video_id: str, scene: str, duration: int=8) -> Path:
+            channel: str, video_id: str, scene: str, duration: int=8,
+            wind_plan: Path | None=None) -> Path:
     if duration != 8:
         raise DraftPreviewError("DRAFT_DURATION_FIXED_TO_8_SECONDS")
     dest=_dir(channel,video_id,scene)
@@ -110,16 +112,43 @@ def prepare(original_dir: Path, candidate_dir: Path, *,
         layers["headOpen"]="vf-scene/rig/head-open.png"
     if has_ai:
         layers["headClosed"]="vf-scene/rig/head-closed-ai.png"
+    cape_params=rig["cape_mesh"]
+    cape_mesh={
+        "bounds":cape_params["bounds"],
+        "rows":cape_params["rows"],
+        "columns":cape_params["columns"],
+        "amplitudePx":cape_params["amplitude_px"],
+    }
+    if "wind" in cape_params:
+        cape_mesh["wind"]=mesh_rig.validate_cape_wind(cape_params["wind"])
+    if wind_plan is not None:
+        # Mudanca de comportamento, nunca de pixels: arte/sha intactos.
+        plan=_json(wind_plan)
+        if (plan.get("schema")!="videoforge/rig-candidate-plan/v1" or
+            (plan.get("channel"),plan.get("video_id"),plan.get("scene"))!=(
+                channel,video_id,scene) or
+            plan.get("source_sha256")!=ref["sha256"] or
+            plan.get("canvas")!=rig["canvas"]):
+            raise DraftPreviewError("DRAFT_WIND_PLAN_CROSS_CHANNEL_OR_SOURCE")
+        requested=plan.get("cape_mesh")
+        if not isinstance(requested,dict) or any(
+            requested.get(key)!=cape_params.get(key)
+            for key in ("bounds","rows","columns")
+        ):
+            raise DraftPreviewError("DRAFT_WIND_PLAN_MESH_MISMATCH")
+        amp=requested.get("amplitude_px")
+        if (type(amp) not in (int,float) or
+            not math.isfinite(amp) or not .1<=amp<=12):
+            raise DraftPreviewError("DRAFT_WIND_AMPLITUDE_INVALID")
+        if "wind" not in requested:
+            raise DraftPreviewError("DRAFT_WIND_PROFILE_MISSING")
+        cape_mesh["amplitudePx"]=amp
+        cape_mesh["wind"]=mesh_rig.validate_cape_wind(requested["wind"])
     rig_props={
         "schema":mesh_rig.RIG_SCHEMA,"canvas":rig["canvas"],
         "layers":layers,"neckPivot":rig["neck_pivot"],
         "headMaxDeg":rig["head_max_deg"],"blinkFrames":rig["blink_frames"],
-        "capeMesh":{
-            "bounds":rig["cape_mesh"]["bounds"],
-            "rows":rig["cape_mesh"]["rows"],
-            "columns":rig["cape_mesh"]["columns"],
-            "amplitudePx":rig["cape_mesh"]["amplitude_px"],
-        },
+        "capeMesh":cape_mesh,
     }
     dest.mkdir(parents=True)
     (public/"rig").mkdir(parents=True)
@@ -163,6 +192,8 @@ def verify(channel: str, video_id: str, scene: str) -> dict:
         "publishable":False,"youtube_uploaded":False,"audio_is_silent":True,
         "motion_detected":True,
         "eye_closed_from_original_ai_edit":bool(props.get("rig",{}).get("layers",{}).get("headClosed")),
+        "cape_wind_active":bool(props.get("rig",{}).get("capeMesh",{}).get("wind")),
+        "cape_wind_profile":props.get("rig",{}).get("capeMesh",{}).get("wind"),
     })
     (dest/"draft-video.qa.json").write_text(json.dumps(
         qa,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
@@ -174,6 +205,8 @@ def main() -> int:
     parser.add_argument("action",choices=("prepare","verify"))
     parser.add_argument("--source-dir",type=Path)
     parser.add_argument("--candidate-dir",type=Path)
+    parser.add_argument("--wind-plan",type=Path,
+                        help="Opcional: perfil de vento validado do mesmo canal/source SHA")
     parser.add_argument("--channel",required=True)
     parser.add_argument("--video-id",required=True)
     parser.add_argument("--scene",required=True)
@@ -183,7 +216,8 @@ def main() -> int:
             if not args.source_dir or not args.candidate_dir:
                 raise DraftPreviewError("DRAFT_INPUTS_REQUIRED")
             report=prepare(args.source_dir,args.candidate_dir,
-                channel=args.channel,video_id=args.video_id,scene=args.scene)
+                channel=args.channel,video_id=args.video_id,scene=args.scene,
+                wind_plan=args.wind_plan)
             print("Rascunho preparado:",report)
         else:
             print(json.dumps(verify(args.channel,args.video_id,args.scene)))
