@@ -39,3 +39,21 @@ VideoForge-IA/
 ## Escopo atual
 
 O renderizador de mídia já fornecida produz vídeo 1080×1920, áudio AAC, H.264, legendas e QA técnico. Falta automatizar pesquisa, roteiro, imagens, narração e animações; **não** tratar os registros dos cinco canais ou modelos planejados como agentes ativos. Publicação no YouTube desabilitada. Não alterar repositórios legados.
+
+## Camada editorial por vídeo — complementação de 13/11/2026
+
+A estrutura acima permanece **a fonte de verdade**; as seguintes entradas são adicionais e **não alteram o contrato** de `video.json` nem o executável:
+
+```text
+docs/
+  REGRAS-EDITORIAIS.md
+  referencias/CATALOGO-CURSOS-YOUTUBE.md
+  modelos/REGISTRO-EDITORIAL-VIDEO.template.json
+canal/<id>/
+  editorial/historico-videos.json              # histórico do canal; nunca fila automática
+  videos/<video-id>/
+    editorial.json                             # dados editoriais e métricas verificáveis
+    video.json                                 # manifesto técnico existente, quando pronto
+```
+
+O catálogo de históricos inicia vazio para os cinco canais. Não é evidência de canais sem vídeos; inventariar via fonte autorizada antes de declarar que uma ideia nunca foi usada. **Não adicionar pasta paralela `canais/`.** Manter cursos e documentação compartilhada em `docs/`, e dados de vídeo específicos em `canal/<id>/`. Ver `docs/REGRAS-EDITORIAIS.md`.

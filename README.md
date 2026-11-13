@@ -1,5 +1,11 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+> **LEITURA OBRIGATÓRIA (antes de qualquer tarefa):** [AGENTS.md](AGENTS.md) → [Arquitetura das pastas](docs/ARQUITETURA.md) → [Regras editoriais dos vídeos](docs/REGRAS-EDITORIAIS.md) → [Regras do canal](canal/README.md) → [Cursos de referência](docs/referencias/CATALOGO-CURSOS-YOUTUBE.md).
+>
+> **Prioridade absoluta:** preservar a estrutura existente **`canal/<id>/`** (singular), `modelos/`, `geradores/`, `videoforge/`, `tests/` e `docs/`. Cada vídeo tem seus dados e histórico dentro de seu próprio canal; não criar `canais/` nem misturar informações entre canais. Cursos de YouTube são **referências para estudo**, não aulas já assistidas.
+>
+> Esta organização **não altera o MVP**: primeiro MP4 verificável e QA, depois agentes e integrações, sem publicação ou uso de IA paga nesta etapa.
+
 Novo projeto: **primeiro entregar um MP4 verificável**, depois conectar
 pesquisa, agentes, modelos de imagem e YouTube Analytics. O repositório
 anterior, agora `HelioConde/video-forge-ia2`, permanece intacto e serve
