@@ -1,0 +1,257 @@
+name: 'Otaku Multicena - editar olhos fechados com imagem ORIGINAL e IA (1 chamada)'
+on:
+  # Gatilho de UMA unica execucao ao mesclar a requisicao inicial.
+  push:
+    branches: [main]
+    paths:
+      - 'canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once.json'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'ephemeral (GHCR) ou persistent (HTTPS configurado)'
+        type: choice
+        options: [ephemeral, persistent]
+        default: ephemeral
+        required: true
+
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
+concurrency:
+  group: vf-eye-ai-original-otaku-br-teste-proxy-20261113
+  cancel-in-progress: false
+
+jobs:
+  edit-original-eyes:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      PROXY_MODE: ${{ inputs.mode || 'ephemeral' }}
+      SOURCE_RUN: '43437992955'
+      CHANNEL: otaku-br
+      VIDEO_ID: teste-proxy-20261113
+      SCENE: cena-01
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preflight, SHA original e autorizacao — sem gastar imagem
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_rig_eye_ai tests.test_rig_candidate -v
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path("canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once.json")
+          data=json.loads(p.read_text())
+          assert data["channel"]=="otaku-br"
+          assert data["video_id"]=="teste-proxy-20261113"
+          assert data["scene"]=="cena-01"
+          assert data["source_sha256"]=="89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab"
+          assert data["purpose"]=="masked_original_eye_edit"
+          assert data["approved_to_make_one_image_edit"] is True
+          assert data["publish_youtube"] is False
+          assert os.environ["CODEX_PROXY_API_KEY"], "Secret CODEX_PROXY_API_KEY ausente"
+          mode=os.environ["PROXY_MODE"]
+          assert mode in ("persistent","ephemeral"), "Modo invalido"
+          if mode=="persistent":
+              assert os.environ["CODEX_PROXY_BASE_URL"], "Falta CODEX_PROXY_BASE_URL"
+          else:
+              assert os.environ["CODEX_PROXY_ACCOUNTS_JSON"], "Falta CODEX_PROXY_ACCOUNTS_JSON"
+          print("Preflight: uma unica edicao original autorizada, sem publicacao.")
+          PY
+      - name: Recuperar PNG original com SHA do GitHub Actions
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ env.SOURCE_RUN }}
+          name: camadas-advanced-otaku-br-teste-proxy-20261113-cena-01-${{ env.SOURCE_RUN }}
+          path: ./source-layers
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Preparar os candidatos sem IA e a referencia com mascara de olhos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_candidate \
+            --source-dir ./source-layers \
+            --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
+            --output-dir ./output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01
+          python -m videoforge.rig_eye_ai prepare \
+            --source-dir ./source-layers \
+            --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
+            --workdir ./output/otaku-br/videos/teste-proxy-20261113/eye-ai-edit/cena-01
+      - name: Preparar gateway de IA precompilado, sem Go
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$PROXY_MODE" == "persistent" ]]; then
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          try:
+              obj=json.loads(os.environ["CODEX_PROXY_ACCOUNTS_JSON"])
+              if not isinstance(obj,dict) or not isinstance(obj.get("records"),list) or not obj["records"]:
+                  raise ValueError()
+              for row in obj["records"]:
+                  if not isinstance(row,dict) or not isinstance(row.get("token"),dict):
+                      raise ValueError()
+              p=Path(os.environ["RUNNER_TEMP"])/"vf-proxy-state/accounts.json"
+              p.write_text(json.dumps(obj),encoding="utf-8")
+              p.chmod(0o600)
+          except (TypeError,ValueError):
+              raise SystemExit("Secret de contas invalido; conteudo omitido")
+          PY
+          printf 'PROXY_ENDPOINT=http://127.0.0.1:18080\n' >> "$GITHUB_ENV"
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-eye-original \
+            --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" \
+            -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Codex Proxy nao iniciou."
+          exit 1
+      - name: Verificar credencial e sessao antes da unica edicao
+        shell: bash
+        run: python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+      - name: Editar UMA imagem original com mascara de olhos fechados
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_eye_ai edit \
+            --url "$PROXY_ENDPOINT" --model gpt-image-1.5 \
+            --workdir ./output/otaku-br/videos/teste-proxy-20261113/eye-ai-edit/cena-01
+      - name: Transferir SOMENTE os pixels editados dos olhos para o rosto original
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_eye_ai apply \
+            --source-dir ./source-layers \
+            --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
+            --workdir ./output/otaku-br/videos/teste-proxy-20261113/eye-ai-edit/cena-01 \
+            --candidate-dir ./output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          folder=Path("output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01")
+          qa=json.loads((folder/"candidate.qa.json").read_text())
+          assert qa["model_calls_for_eye"]==1
+          assert qa["human_visual_approval"] is False
+          assert qa["rig_ready_for_remotion"] is False
+          assert (folder/"head-closed-ai.png").is_file()
+          assert (folder/"head-open.png").is_file()
+          print("Arte fechada gerada a partir da referencia ORIGINAL; aguarda QA visual.")
+          PY
+      - name: Entregar sprites e referencia gerada para render, sem publicar
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rig-eye-ai-original-otaku-br-${{ github.run_id }}
+          path: |
+            output/otaku-br/videos/teste-proxy-20261113/eye-ai-edit/cena-01/
+            output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Encerrar proxy e descartar estado temporario
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-eye-original >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
+
+  remotion-review:
+    needs: edit-original-eyes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      CHANNEL: otaku-br
+      VIDEO_ID: teste-proxy-20261113
+      SCENE: cena-01
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Buscar a mesma cena original
+        uses: actions/download-artifact@v4
+        with:
+          run-id: '43437992955'
+          name: camadas-advanced-otaku-br-teste-proxy-20261113-cena-01-43437992955
+          path: ./source-layers
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Baixar o sprite gerado neste run, nao de outra cena
+        uses: actions/download-artifact@v4
+        with:
+          name: rig-eye-ai-original-otaku-br-${{ github.run_id }}
+          path: ./downloaded
+      - name: Validar hashes de imagem editada, preparar video COM MARCA D'AGUA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_draft_preview prepare \
+            --source-dir ./source-layers \
+            --candidate-dir ./downloaded/rig-candidates/cena-01 \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+      - name: Renderizar comparacao do olho aberto e fechado
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          target="../output/$CHANNEL/videos/$VIDEO_ID/rig-draft-previews/$SCENE"
+          for frame in 0 38 40 42 60; do
+            ./node_modules/.bin/remotion still src/index.ts VideoForgeLayerScene \
+              "$target/eye-ai-frame-$frame.png" --frame="$frame" \
+              --props="$target/draft-props.json" --log=error
+          done
+      - name: Renderizar video de 8s da piscada AI do rosto original
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          target="../output/$CHANNEL/videos/$VIDEO_ID/rig-draft-previews/$SCENE"
+          ./node_modules/.bin/remotion render src/index.ts VideoForgeLayerScene \
+            "$target/rig-draft-preview.mp4" --props="$target/draft-props.json" \
+            --codec=h264 --concurrency=2 --log=error
+      - name: Comprovar movimento sem confundir com arte aprovada
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_draft_preview verify \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+      - name: Publicar MP4 e frames de revisao no Actions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: otaku-br-olho-fechado-ia-original-remotion-${{ github.run_id }}
+          path: output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/
+          retention-days: 14
+          if-no-files-found: warn
