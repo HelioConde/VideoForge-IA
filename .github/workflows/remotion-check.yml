@@ -52,6 +52,7 @@ jobs:
           cd motion-remotion
           node --test tests/mesh-rig.test.cjs
       - name: Renderizar malha SVG real em Chromium com sprites sinteticos
+        shell: bash
         run: |
           set -euo pipefail
           python tests/make_mesh_smoke.py
