@@ -7,7 +7,12 @@
   "modelo_padrao_provisorio": true,
   "gerador_padrao": "educacao",
   "gerador_padrao_provisorio": true,
-  "orientacoes_editoriais": [],
+  "orientacoes_editoriais": [
+    "Canal experimental: prioridade inicial em doramas com histórias originais, narrativas dramáticas e ilustrações coerentes de IA.",
+    "Pesquisar tendências de doramas com fontes/datas verificadas; variar formatos para avaliar a resposta do público brasileiro.",
+    "Não confundir ficção original com resumo oficial de drama nem copiar elenco, OST e cenas de terceiros.",
+    "Seguir ESTRATEGIA.md; não alegar pesquisa ou geração automática implementada."
+  ],
   "youtube": {
     "channel_id": null,
     "conectado": false,
