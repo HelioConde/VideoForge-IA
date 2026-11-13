@@ -9,7 +9,7 @@ Atualizado em **13/11/2026**. Este documento detalha a organização de pesquisa
 3. `docs/ARQUITETURA.md`: hierarquia técnica e isolamento.
 4. Este documento: procedimento editorial e metadados de vídeo.
 5. `canal/README.md`, `canal/<id>/README.md`, `canal/<id>/canal.json`, os índices e reservas do canal.
-6. `docs/referencias/CATALOGO-CURSOS-YOUTUBE.md`, quando a atividade envolver pesquisa, crescimento, SEO, storytelling, edição ou Shorts. **Não alegar que as aulas já foram assistidas.**
+6. `docs/referencias/CATALOGO-CURSOS-YOUTUBE.md` e `docs/referencias/GUIA-OFICIAL-YOUTUBE-CREATORS.md`, quando a atividade envolver pesquisa, crescimento, SEO, storytelling, edição, Shorts, direitos e uso de IA. **Não alegar que as aulas já foram assistidas.** As orientações oficiais foram consultadas; as aulas dos cursos não foram verificadas.
 
 ## Hierarquia que não pode ser quebrada
 
@@ -51,3 +51,9 @@ Usar estados descritivos e verificáveis: `ideia`, `pesquisa`, `roteiro`, `asset
 ## Segurança e observações
 
 Não guardar secrets, tokens, credenciais OAuth, vídeos MP4, áudios, frames ou imagens binárias de produção no Git. Manter somente textos, dados não sensíveis e referências verificadas. A criação destes índices **não instala agentes, não consulta APIs, não cria vídeo e não habilita upload**. Continuar respeitando o requisito do Otaku Multicena (90–180 segundos) e as restrições do MVP do `README.md`.
+
+## Aplicar a análise oficial YouTube Creators
+
+Antes de decidir tema, duração, roteiro, SEO ou melhorias, consultar [Guia oficial YouTube Creators](referencias/GUIA-OFICIAL-YOUTUBE-CREATORS.md). Priorizar satisfação/retencao do espectador, títulos e miniaturas fiéis, uso de Analytics por canal e originalidade, não a produção de volume genérico.
+
+**Checklist antes de eventual publicação:** política vigente de Shorts até 3 min; reivindicações de Content ID em Shorts de mais de 1 min; direitos de músicas e vídeos; classificação de conteúdo feito para crianças; declaração necessária de IA realista/sintética; regras de conteúdo reutilizado e massificado. Links oficiais têm precedência sobre páginas antigas que ainda mencionem Shorts de 60 segundos. Esse checklist não habilita upload, não substitui revisão humana e não comprova estado de vídeos.
