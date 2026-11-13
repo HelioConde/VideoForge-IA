@@ -35,6 +35,10 @@ Os workflows [Teste 1 - background e personagem](.github/workflows/scene-layers-
 
 O [Teste 3 de animação](.github/workflows/animate-separated-layers.yml) usa os PNGs de background, personagem e telhado obtidos pela separação para criar uma prévia parallax de 6–10 segundos com **movimentos independentes**. O motor `videoforge/animate_layers.py` verifica o artifact, renderiza H.264/AAC e confere movimento real entre quadros. **A capa isolada ainda não é usada** porque permanece dentro do sprite completo e seria duplicada; o vídeo é técnico, sem narração e sem envio ao YouTube. [Instruções](docs/ANIMACAO-CAMADAS.md).
 
+## Remotion original — nova prévia animada por camadas
+
+O motor **principal para a nova prévia** é agora [Remotion do AutoEditorVideo](motion-remotion/): reutilizamos as funções do projeto anterior em uma composição React que movimenta camera, personagem e foreground por frame. O novo [workflow manual Remotion](.github/workflows/remotion-animate-layers.yml) usa os PNGs dos artifacts reais com validação de SHA-256, renderiza MP4 com H.264/AAC e QA de movimento, **sem gastar IA ou instalar npm/Chrome toda vez**. Consulte [guia do Remotion](docs/REMOTION-ANIMACAO.md). O renderizador antigo de parallax FFmpeg permanece somente como teste/fallback documentado; a capa não é sobreposta até remover sua versão duplicada do personagem.
+
 ## O que já funciona
 
 - Compositor FFmpeg de **imagens e narrações fornecidas**, com legendas,
