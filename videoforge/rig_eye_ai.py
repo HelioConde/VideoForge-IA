@@ -307,7 +307,7 @@ def apply(source_dir:Path,plan_path:Path,workdir:Path,
     qa["eye_ai_rgb_diff_average"]=round(change_sum/mixed_count,2)
     qa["eye_ai_reference_alignment_score"]=round(best_score,2)
     qa["eye_ai_alignment_variant"]=best_variant
-    qa["eye_ai_output_dimensions"]=meta["actual_size"]
+    qa["eye_ai_output_dimensions"]=meta.get("actual_size",{"width":1024,"height":1024})
     report_path.write_text(json.dumps(qa,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     prov_path=candidate_dir/"asset-provenance.json"
     prov=read_json(prov_path)
