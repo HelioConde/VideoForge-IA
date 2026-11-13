@@ -1,0 +1,109 @@
+name: 'VideoForge - Animacao de rig RASCUNHO com marca d agua'
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Run com PNGs originais conferidos
+        type: string
+        default: '43437992955'
+        required: true
+      candidate_run_id:
+        description: Run com seis sprites CANDIDATOS e QA pendente
+        type: string
+        default: '43498887979'
+        required: true
+  pull_request:
+    paths:
+      - 'videoforge/rig_draft_preview.py'
+      - 'motion-remotion/src/scene-layer-preview.tsx'
+      - '.github/workflows/rig-draft-preview.yml'
+permissions:
+  contents: read
+  actions: read
+  packages: read
+jobs:
+  render-draft:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      SOURCE_RUN: ${{ inputs.source_run_id || '43437992955' }}
+      CANDIDATE_RUN: ${{ inputs.candidate_run_id || '43498887979' }}
+      CHANNEL: otaku-br
+      VIDEO_ID: teste-proxy-20261113
+      SCENE: cena-01
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verificar IDs sem permitir qualquer chamada ao Codex Proxy
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_RUN" =~ ^[1-9][0-9]{7,16}$ ]] || exit 2
+          [[ "$CANDIDATE_RUN" =~ ^[1-9][0-9]{7,16}$ ]] || exit 2
+      - name: Recuperar camadas originais por SHA
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ env.SOURCE_RUN }}
+          name: camadas-advanced-otaku-br-teste-proxy-20261113-cena-01-${{ env.SOURCE_RUN }}
+          path: ./source-layers
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Recuperar sprites nao aprovados apenas para teste
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ env.CANDIDATE_RUN }}
+          name: rig-candidate-otaku-br-teste-proxy-20261113-cena-01-${{ env.CANDIDATE_RUN }}
+          path: ./rig-candidate
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verificar hashes e preparar modo RASCUNHO no Remotion
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_draft_preview prepare \
+            --source-dir ./source-layers --candidate-dir ./rig-candidate \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+      - name: TypeScript Remotion com pacotes GHCR preinstalados
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+      - name: Renderizar stills de diagnostico em quadros exatos
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          target="../output/$CHANNEL/videos/$VIDEO_ID/rig-draft-previews/$SCENE"
+          for frame in 0 40 60 132 239; do
+            ./node_modules/.bin/remotion still src/index.ts VideoForgeLayerScene \
+              "$target/rig-draft-frame-$frame.png" --frame="$frame" \
+              --props="$target/draft-props.json" --log=error
+          done
+      - name: Renderizar MP4 tecnico COM MARCA D AGUA
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          target="../output/$CHANNEL/videos/$VIDEO_ID/rig-draft-previews/$SCENE"
+          ./node_modules/.bin/remotion render src/index.ts VideoForgeLayerScene \
+            "$target/rig-draft-preview.mp4" --props="$target/draft-props.json" \
+            --codec=h264 --concurrency=2 --log=error
+      - name: Verificar codecs, movimento e flags de rascunho
+        run: |
+          python -m videoforge.rig_draft_preview verify \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+        shell: bash
+      - name: Arquivar apenas o MP4 com marca d agua e relatorio
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rig-draft-preview-otaku-br-teste-proxy-20261113-cena-01-${{ github.run_id }}
+          path: output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/
+          retention-days: 7
+          if-no-files-found: warn
