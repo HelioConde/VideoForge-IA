@@ -33,7 +33,10 @@ Esse teste não autoriza vídeo público nem consumo de IA.
 
 ## Organização permanente — mesmo contrato do VideoForge anterior
 
-Sempre consultar `README.md` e `docs/ARQUITETURA.md` antes de editar.
+Sempre consultar `README.md`, `docs/ARQUITETURA.md` e
+`docs/ESTRATEGIA_SHORTS.md` antes de editar ou planejar Shorts.
+O guia de Shorts é orientação **editorial**, não autorização para novos jobs,
+provedores pagos, pesquisa privada ou publicação.
 A estrutura do repositório anterior `HelioConde/video-forge-ia2` é a
 referência **apenas para organização**, sem copiar credenciais, pipelines
 complexos nem trabalhos fictícios.
