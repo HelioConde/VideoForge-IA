@@ -129,6 +129,25 @@ class CandidateRigTests(unittest.TestCase):
         self.assertTrue(all(0<=value<=255 for value in base))
         self.assertGreater(base[3],0)
 
+    def test_natural_eyes_are_generated_and_remain_unapproved(self):
+        self.plan["eyelid_beziers"] = [
+            {"points": [[30,23],[32,26],[35,27],[37,26]],
+             "width":1.4,"color":[66,30,25]},
+        ]
+        self.write_plan()
+        report=r.prepare(self.source,self.plan_path,self.output)
+        detail=report["natural_eyelids_preview"]
+        self.assertIn("antialiased",detail["technique"])
+        self.assertEqual(detail["external_model_calls"],0)
+        self.assertFalse(report["rig_ready_for_remotion"])
+        eyelid=r._image(self.output/"eyes-closed.png",64,96)
+        self.assertTrue(any(0 < eyelid[i] < 255 for i in range(3,len(eyelid),4)))
+        self.assertGreater(detail["closed_lid_visible_pixels"],0)
+        self.assertEqual(
+            report["asset_sha256"]["eyes-closed.png"],
+            hashlib.sha256((self.output/"eyes-closed.png").read_bytes()).hexdigest(),
+        )
+
     def test_png_round_trip_and_masks(self):
         mask=r._mask([[[3,3],[10,3],[10,12],[3,12]]],16,16)
         self.assertGreater(mask.count(255),20)
