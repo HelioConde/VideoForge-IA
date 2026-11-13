@@ -18,6 +18,7 @@ import sys
 import zlib
 
 from . import mesh_rig, proxy_images, scene_layers
+from .errors import VideoForgeError
 from .paths import _check_symlinks
 
 PLAN_SCHEMA = "videoforge/rig-candidate-plan/v1"
@@ -278,6 +279,11 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         if (info["width"],info["height"])!=(width,height):
             raise CandidateError("RIG_INPUT_DIMENSIONS_MISMATCH")
         originals[name]=_image(source_dir/name,width,height)
+    output_dir = (output_dir if output_dir.is_absolute() else proxy_images.ROOT / output_dir)
+    target = (proxy_images.ROOT / "output" / channel / "videos" / video_id
+              / "rig-candidates" / scene)
+    if output_dir != target or ".." in output_dir.parts:
+        raise CandidateError("RIG_CANDIDATE_OUTPUT_CROSS_CHANNEL")
     if output_dir.exists() or output_dir.is_symlink():
         raise CandidateError("RIG_CANDIDATE_OUTPUT_ALREADY_EXISTS")
     _check_symlinks(output_dir, stop_at=proxy_images.ROOT)
@@ -400,7 +406,7 @@ def main() -> int:
     try:
         report=prepare(args.source_dir,args.plan,args.output_dir)
     except (CandidateError,mesh_rig.RigAssetError,
-            scene_layers.LayerError,proxy_images.ProxyImageError) as exc:
+            VideoForgeError,scene_layers.LayerError,proxy_images.ProxyImageError) as exc:
         print("RIG_CANDIDATE_BLOCKED:",exc,file=sys.stderr)
         return 2
     print(json.dumps(report,ensure_ascii=False))
