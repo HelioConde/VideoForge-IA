@@ -16,7 +16,7 @@ loaded.filename=filename;
 loaded.paths=Module._nodeModulePaths(path.dirname(filename));
 loaded._compile(transpiled.outputText,filename);
 const {blinkClosureAtFrame,headAngleAtFrame,capeMeshAtFrame,affineFromTriangles,
-  capeVertexAtFrame,windEnergyAtTime,expandedClip}=loaded.exports;
+  capeVertexAtFrame,windEnergyAtTime,headOpacitiesAtFrame,expandedClip}=loaded.exports;
 const rig={
   schema:'videoforge/mesh-rig/v1',
   canvas:{width:1024,height:1536},
@@ -160,4 +160,37 @@ test('legacy cape remains opt-in and unchanged with absent wind profile',()=>{
   assert.deepEqual(legacy,neutral);
   assert.notDeepEqual(capeMeshAtFrame(windyRig,90,30,240),
                       capeMeshAtFrame(rig,90,30,240));
+});
+
+test('closed-eye overlay NEVER reduces face opacity during blink transition',()=>{
+  for(const frame of [0,37,38,39,40,41,42,43,132,238]){
+    const o=headOpacitiesAtFrame(frame,[40,132]);
+    assert.equal(o.open,1,'open face must remain fully present underneath');
+    assert.ok(o.closed>=0&&o.closed<=1);
+    // Pixel compositing: over is not a crossfade of TWO semi-transparent heads.
+    for(const pixelAlpha of [.1,.5,254/255,1]){
+      const resulting=1-(1-pixelAlpha*o.open)*(1-pixelAlpha*o.closed);
+      assert.ok(resulting+1e-8>=pixelAlpha,'face must never become less opaque');
+    }
+  }
+  assert.equal(headOpacitiesAtFrame(38,[40,132]).closed,.5);
+  assert.equal(headOpacitiesAtFrame(40,[40,132]).closed,1);
+});
+
+test('cape front collar remains pinned while trailing fabric still moves',()=>{
+  const b=windyRig.capeMesh.bounds;
+  const pos=(v,frame,layer='capeFront')=>{
+    const x=b.x+b.width*.7,y=b.y+b.height*v;
+    return capeVertexAtFrame({
+      x,y,frame,fps:30,duration:240,bounds:b,amplitudePx:10.5,wind,layer,
+    });
+  };
+  for(const v of [0,.18,.29,.3]){
+    const src={x:b.x+b.width*.7,y:b.y+b.height*v};
+    for(const frame of [30,55,90,135,190]){
+      assert.deepEqual(pos(v,frame),src,'front cape collar must not detach');
+    }
+  }
+  const free=pos(.48,90);
+  assert.ok(Math.abs(free.x-(b.x+b.width*.7))>.05,'front cloth tip should keep some motion');
 });
