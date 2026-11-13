@@ -1,0 +1,38 @@
+# Teste de separacao de camadas — otaku-br / teste-proxy-20261113
+
+Data: **13/11/2026**. Registro de experimento de IA **sem video publicado**. Este arquivo documenta somente provas efetivamente vistas nos logs, no manifesto e nos PNGs dos artifacts. Nao significa que a animacao ja foi implementada.
+
+## Origem da cena
+
+- [Imagem gerada pelo nosso Codex Proxy](https://github.com/HelioConde/VideoForge-IA/actions/runs/43433023378) — `cena-01.png`, 1024 x 1536, artifact `imagem-otaku-br-teste-proxy-20261113-43433023378`.
+- Cenario original: aventureiro de capa vermelha em telhado de cidade fantastica ao por do sol.
+- Todas as edicoes utilizaram o **mesmo PNG** como referencia `images[0].image_url` via `POST /v1/images/edits`. A imagem-base NAO foi regenerada.
+
+## Execucoes e evidencias
+
+| Teste | Run aprovado | Artefato | Resultado |
+|---|---|---|---|
+| Teste 1: fundo e personagem | [43437394037](https://github.com/HelioConde/VideoForge-IA/actions/runs/43437394037) | `camadas-basic-otaku-br-teste-proxy-20261113-cena-01-43437394037` | `background.png` RGB e `character-main.png` RGBA |
+| Teste 2: foreground e capa | [43437992955](https://github.com/HelioConde/VideoForge-IA/actions/runs/43437992955) | `camadas-advanced-otaku-br-teste-proxy-20261113-cena-01-43437992955` | `foreground-roof.png` RGBA e `cape.png` RGBA |
+
+**Todos os quatro PNGs têm 1024 x 1536 pixels e verificação técnica aprovada.** Hashes SHA-256, z-index e campos de QA encontram-se no `manifest.json` do artifact da etapa 2.
+
+Fraçao de pixels com alfa exatamente zero: personagem **61,85%**, telhado frontal **74,51%**, capa **87,91%**. A checagem rejeita PNG opaco fingindo recorte. Nao mede automaticamente a qualidade das bordas, alinhamento visual ou originalidade.
+
+## Verificacao visual inicial
+
+- O background gerado remove visualmente o aventureiro e preenche o cenario. Ainda precisa de QA detalhado para inpainting e fidelidade exata.
+- O personagem aparece isolado, com pose e figurino reconheciveis. Ha variacoes pontuais possiveis que devem ser avaliadas por comparacao lado a lado.
+- O telhado frontal saiu como elemento independente, com fundo transparente.
+- A capa saiu como elemento separado, mas a **capa continua dentro do PNG completo do personagem**. Para animar a capa sem duplicacao, criar uma versao do corpo sem a capa (ou outra estrategia de composicao/mascara) antes da montagem.
+- **Pixel alignment e consistencia ainda nao foram aprovados por humano.** Esses testes nao implementaram rigs, bonecos recortados, animacao ou MP4 real.
+
+## Pendencias e proximos testes
+
+1. Avaliar sobreposicao com alfa em resolucao integral; conferir se contornos, telhado, personagem e capa coincidem.
+2. Gerar o corpo sem capa e avaliar substituicao da capa isolada, evitando "capa dupla".
+3. Usar o [Teste 2 manual](../../../../.github/workflows/scene-layers-advanced.yml) com `source_run_id=43437394037` e componentes individuais para cabelo, espada, bandeira ou cachoeira **apenas se existirem na cena**.
+4. Implementar motor de composicao e movimento em fase posterior, com teste visual frame a frame.
+5. Artifacts sao temporarios (retencao de 7 dias para camadas). **Nao versionar os PNGs nem os tokens.**
+
+Guia de implementacao transversal: [docs/TESTE-CAMADAS-CENA.md](../../../../docs/TESTE-CAMADAS-CENA.md). Toda nova sessao de teste de outro canal deve receber seu proprio registro em `canal/<id>/videos/<video-id>/`.
