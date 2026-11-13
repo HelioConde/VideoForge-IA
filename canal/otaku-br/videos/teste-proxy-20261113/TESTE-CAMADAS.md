@@ -84,3 +84,9 @@ Documentação do novo motor e parâmetros: [docs/REMOTION-ANIMACAO.md](../../..
 Próxima ação artística: ajustar máscaras do cabelo e olhos, fazer inpainting localizado de pescoço/ombros/costas, validar os seis PNGs contra a composição original em escala 100% e só então considerar `human_review=true` e um primeiro vídeo articulado **não rascunho**.
 
 Guia operacional: [docs/PREPARAR-RIG-CANDIDATO.md](../../../../docs/PREPARAR-RIG-CANDIDATO.md). Resultados de vídeo e imagens continuam exclusivamente nos artifacts e em `output/otaku-br/videos/teste-proxy-20261113/`, sem versionar MP4/PNG no Git.
+
+## 13/11/2026 — Correção da piscada após feedback visual
+
+O fechamento anterior mostrou pálpebras retas/serrilhadas e grandes manchas de cor uniforme no rosto (evidência vista no quadro 40). O gerador passou a usar `videoforge/eye_refine.py`: amostragem de pele da bochecha **original** e curvas cúbicas antialias/taper com dois olhos em proporções diferentes. `rig-plan.json` registra as coordenadas ajustadas. A imagem gerada do olho fechado foi usada **apenas como referência de estilo**, não colada no personagem (evita identidade/perspectiva inconsistentes).
+
+A validação dessa correção é feita por [GitHub Actions `rig-eye-preview.yml`](../../../../.github/workflows/rig-eye-preview.yml) e testes `tests/test_eye_refine.py`, sem inferência nova. Aguardar QA de MP4 e revisão visual antes de falar em aprovação. Oclusão/capa/partes escondidas não foram concluídas. `publishable=false`.
