@@ -6,11 +6,19 @@ on:
     paths:
       - 'videoforge/**'
       - 'tests/**'
+      - 'canal/**'
+      - 'modelos/**'
+      - 'docs/ARQUITETURA.md'
+      - 'AGENTS.md'
       - '.github/workflows/mvp.yml'
   pull_request:
     paths:
       - 'videoforge/**'
       - 'tests/**'
+      - 'canal/**'
+      - 'modelos/**'
+      - 'docs/ARQUITETURA.md'
+      - 'AGENTS.md'
       - '.github/workflows/mvp.yml'
   workflow_dispatch:
 
