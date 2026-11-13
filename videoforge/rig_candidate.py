@@ -311,6 +311,7 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
     cape=originals["cape.png"]
     back,front=_cape_split(cape,frontmask)
     head=_cutout(char,headmask)
+    head_open=bytearray(head)  # estado original INTACTO, antes de qualquer inpainting
     eye_open=_cutout(char,eye_union)
     if "eyelid_beziers" in plan:
         eye_closed, eye_report=eye_refine.create_natural_blink(
@@ -326,6 +327,7 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
     to_save={
         "body-no-head-no-cape.png":body,
         "head-no-eyes.png":head,
+        "head-open.png":head_open,
         "eyes-open.png":eye_open,
         "eyes-closed.png":eye_closed,
         "cape.png":back,
@@ -382,6 +384,7 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         "body_erased_fraction_of_character":round(erased_alpha/max(1,source_alpha),4),
         "needs_manual_reconstruction":True,
         "eyes_extracted_from_original":len(eyes),
+        "head_open_original_pixels_preserved":True,
         "natural_eyelids_preview":eye_report,
         "cape_front_back_split":True,"human_visual_approval":False,
         "rig_ready_for_remotion":False,"youtube_uploaded":False,
