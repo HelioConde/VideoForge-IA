@@ -195,7 +195,7 @@ def create_natural_blink(head:bytearray, source:bytearray,
         coverage+=_stroke(closed,width,height,curve["points"],
                           curve["width"],curve["color"],.94)
     visible=sum(1 for i in range(3,len(closed),4) if closed[i]>0)
-    if visible<12 or visible>width*height*.003:
+    if visible<12 or visible>width*height*.02:
         raise EyeRefineError("EYE_CLOSED_PIXEL_COVERAGE_INVALID")
     return closed,{
         "technique":"original-cheek-texture-transfer + antialiased tapered cubic eyelid",
