@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/original-eye-ai-archive/v1",
+  "channel": "otaku-br",
+  "video_id": "teste-proxy-20261113",
+  "scene": "cena-01",
+  "source_run_id": 43512529516,
+  "source_sha256": "89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab",
+  "files_sha256": {
+    "head-open.png": "4a4bc583114e1119a4d190d0edeb54f239c5e2f196314a96d7e5f420674f8b48",
+    "head-closed-ai.png": "1f5e12dd3197e292c16310977a2132e7dac46ea36134133ef86c4fd56b797552",
+    "face-closed-ai-reference.png": "62ab6883120dc7ef18f48cb4e8ec0a2c09349d7af361ba59ebfe525571af2732"
+  },
+  "status": "draft_technical_review_only",
+  "human_review": false,
+  "publishable": false,
+  "youtube_uploaded": false,
+  "model_calls_for_eye": 1,
+  "head_open_original": true,
+  "head_closed_from_original_masked_ai_edit": true
+}
