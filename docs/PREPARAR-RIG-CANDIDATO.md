@@ -60,3 +60,11 @@ Critério: **motor técnico ≠ sprites visualmente corretos ≠ vídeo publicá
 - `body_pixels_erased_without_inpainting` representa anatomia que precisará reconstrução, nunca é contabilizada como resolvida.
 - `human_visual_approval=false`, `rig_ready_for_remotion=false` e `youtube_uploaded=false` por padrão.
 - `asset-provenance.json` registra SHA-256 das entradas e plano. Isso não substitui verificação de direitos da arte ou licenças do Remotion e dos modelos.
+
+## Prévia MOVIMENTADA de rascunho (apenas diagnóstico)
+
+Existe um [workflow de render de rig em rascunho](../.github/workflows/rig-draft-preview.yml). Ele lê um artifact `rig-candidate-...` com seis sprites não aprovados e verifica hashes/estado `human_review=false`, junto ao artifact original da mesma cena. Gera cinco PNGs estáticos de quadros 0, 40, 60, 132 e 239, além de um MP4 técnico de **8 segundos com marca d'água permanente** `RASCUNHO — SEM RECONSTRUCAO/QA VISUAL`.
+
+O processo usa a mesma malha SVG/head/blink do Remotion, mas o arquivo `videoforge/rig_draft_preview.py` cria props **isoladas, somente para revisão**, sem alterar o bloqueio de produção de `videoforge/mesh_rig.py`. A revisão de assets continua falsa; o QA do draft deve conter `publishable=false`, `youtube_uploaded=false` e `body_inpainting_completed=false`. Não comparar frames de câmera para declarar qualidade anatômica: observar juntas, olhos e capa em resolução integral.
+
+O run de origem e o run do candidato são inputs explícitos; os artifacts expiram após prazo configurado. Um preview não habilita o canal, o modelo `camadas-animadas` ou publicação no YouTube.
