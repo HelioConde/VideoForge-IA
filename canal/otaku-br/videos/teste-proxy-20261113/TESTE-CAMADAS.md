@@ -90,3 +90,14 @@ Guia operacional: [docs/PREPARAR-RIG-CANDIDATO.md](../../../../docs/PREPARAR-RIG
 O fechamento anterior mostrou pálpebras retas/serrilhadas e grandes manchas de cor uniforme no rosto (evidência vista no quadro 40). O gerador passou a usar `videoforge/eye_refine.py`: amostragem de pele da bochecha **original** e curvas cúbicas antialias/taper com dois olhos em proporções diferentes. `rig-plan.json` registra as coordenadas ajustadas. A imagem gerada do olho fechado foi usada **apenas como referência de estilo**, não colada no personagem (evita identidade/perspectiva inconsistentes).
 
 A validação dessa correção é feita por [GitHub Actions `rig-eye-preview.yml`](../../../../.github/workflows/rig-eye-preview.yml) e testes `tests/test_eye_refine.py`, sem inferência nova. Aguardar QA de MP4 e revisão visual antes de falar em aprovação. Oclusão/capa/partes escondidas não foram concluídas. `publishable=false`.
+
+## 13/11/2026 — Piscada natural corrigida, render REAL e verificado
+
+- [PR #35 integrada](https://github.com/HelioConde/VideoForge-IA/pull/35) — `videoforge/eye_refine.py`, curvas de Bézier antisserrilhadas, amostragem de textura da própria bochecha da cena e máscaras precisas dos dois olhos.
+- A inspeção do primeiro teste mostrou que o remendo na pele, embora melhor ao fechar, piorava o **olho aberto**. Isso foi corrigido criando o sétimo sprite `head-open.png` que preserva os pixels originais (a cabeça reparada `head-no-eyes.png` só aparece durante a piscada).
+- [Run 43506887120 aprovado](https://github.com/HelioConde/VideoForge-IA/actions/runs/43506887120). Artifact `otaku-br-natural-blink-review-43506887120`, contendo quadros 0, 38–42, 60, 132, PNGs dos olhos e MP4, válido até expirar a retenção.
+- QA: **8,0 s · 1080×1920 · 30 FPS · H.264 + AAC silencioso**, hash `20a8da4f3bf8fc33597381c6a767568ab2ce584b0911eab37bbe0f620a4e03df`, `motion_detected=true`. Testes Python, TypeScript e render de malha passaram; o fluxo MVP legado também.
+- Comparação visual do rosto aberto/fechado com os frames anteriores: **sem retângulo bege no olho fechado, traçado com acabamento mais natural e olho aberto original preservado**. A aprovação final do personagem como um todo ainda é pendente; capa, ombros e costas parcialmente ocultos precisam correção.
+- Sem nova inferência de IA e sem postagem YouTube. `publishable=false`, `human_visual_approval=false`, `body_inpainting_completed=false`.
+
+Este registro se limita à correção da piscada. Não afirmar que a animação de malha inteira ou o conteúdo final está aprovado para produção.
