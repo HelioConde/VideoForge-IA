@@ -30,6 +30,10 @@ Para prévias animadas de PNGs, usar como **primeira escolha** a composição Re
 
 Ler [docs/RIG-MALHA-2D.md](docs/RIG-MALHA-2D.md) antes de preparar sprites ou alterar `motion-remotion/src/mesh-rig.tsx`. O rig SVG so pode ser ativado com cinco sprites RGBA sem partes duplicadas, hashes vinculados a cena e `human_review` verdadeiro **apos** revisao real. Nao usar `character-main.png` no mesmo modo de render que `body-no-head-no-cape.png` e `cape.png`. Validacao automatica nao prova qualidade visual; manter `publishable=false` e `visual_review=pending` ate revisar MP4. A existencia de codigo nao significa que os PNGs ou o artifact de rig ja existam. Nao executar inferencia IA nem upload por conta propria.
 
+## Preparacao do rig candidato por cena (sem aprovacao automatica)
+
+Consultar [docs/PREPARAR-RIG-CANDIDATO.md](docs/PREPARAR-RIG-CANDIDATO.md) e `canal/<id>/videos/<video-id>/rig-plan.json` antes de alterar máscaras. `videoforge/rig_candidate.py` **nao** executa SAM2/LaMa nem reconstrói anatomia escondida; apenas gera recortes e previews de risco. Na cena piloto o desenho inclui **segundo olho parcialmente visível** e capa frontal/traseira; separar as partes evita duplicações. Sempre manter `human_review=false` no rascunho; não renomear seu artifact para `rig-...` nem alimentar o workflow de MP4 final sem correção de arte, checagem de oclusão e aprovação humana. O workflow `rig-candidate.yml` não chama API de IA nem publica vídeos.
+
 ## Objetivo inicial
 
 Entregar e comprovar um vídeo MP4 vertical do Otaku Multicena com
