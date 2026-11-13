@@ -8,6 +8,7 @@ VideoForge-IA/
 │   ├── otaku-br/
 │   │   ├── canal.json
 │   │   ├── README.md
+│   │   ├── ESTRATEGIA.md  # plano editorial específico; não é fila de jobs
 │   │   ├── conteudos/indice.json
 │   │   ├── editorial/
 │   │   │   ├── candidatos.json

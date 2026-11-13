@@ -7,7 +7,12 @@
   "modelo_padrao_provisorio": true,
   "gerador_padrao": "gamer",
   "gerador_padrao_provisorio": true,
-  "orientacoes_editoriais": [],
+  "orientacoes_editoriais": [
+    "Somente pautas de games populares que possam ser representadas honestamente por imagens originais de IA e narração.",
+    "Priorizar curiosidades, lore, teorias e notícias verificadas; proibir demonstrações de gameplay, patches e testes com imagens inventadas.",
+    "Pesquisar tendências por região em Steam Charts/YouTube/Google Trends e confirmar fatos no desenvolvedor.",
+    "Seguir ESTRATEGIA.md; verificar antirrepetição e direitos."
+  ],
   "youtube": {
     "channel_id": null,
     "conectado": false,

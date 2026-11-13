@@ -17,6 +17,20 @@ planejar qualquer Short. As orientações são compartilhadas entre os canais,
 mas pesquisa, histórico, decisões, temas repetidos e métricas são **sempre
 separados por canal**. O guia não confirma que novos agentes estão ativos.
 
+## Estratégias específicas por canal
+
+Estas estratégias são **instruções editoriais obrigatórias para planejamento futuro**, não agentes ativos nem histórico já pesquisado.
+
+| Canal | Estratégia própria | Pesquisa e produção planejadas |
+| --- | --- | --- |
+| [Alchemy Lab](alchemy-lab/README.md) | [Doramas experimentais](alchemy-lab/ESTRATEGIA.md) | Histórias dramáticas originais ilustradas por IA; testes de gêneros e busca de tendências verificáveis |
+| [Conde Games](gamer/README.md) | [Games em alta com imagens IA](gamer/ESTRATEGIA.md) | Lore, curiosidades e notícias verificadas que não dependam de gameplay inventado |
+| [Emanuelly Kids](manu-kids/README.md) | [Infantil seguro e original](manu-kids/ESTRATEGIA.md) | Histórias e brincadeiras com personagens inéditos; **Fofinhos é controlado exclusivamente pelo usuário** |
+| [Otaku Multicena (BR)](otaku-br/README.md) | [Animes em português](otaku-br/ESTRATEGIA.md) | Curiosidades, análise e teorias com fontes, antirrepetição e consistência visual |
+| [Otaku Reframe (EN)](otaku-en/README.md) | [Anime in English](otaku-en/ESTRATEGIA.md) | Pesquisa inglesa independente, roteiros próprios em inglês e análises originais |
+
+**Precedência:** ler sempre `README.md`, `AGENTS.md`, `docs/ARQUITETURA.md`, `docs/REGRAS-EDITORIAIS.md`, `docs/ESTRATEGIA_SHORTS.md`, este índice, `canal/<id>/README.md`, `canal/<id>/ESTRATEGIA.md` e os arquivos de histórico/reserva **do mesmo canal**. Não misturar dados nem copiar vídeos entre canais. O modelo técnico e o estágio MVP **não mudam** porque o editorial foi atualizado.
+
 ## Regra permanente
 
 - `canal/<id>/canal.json`: identidade, idioma, modelo padrão e YouTube desabilitado.

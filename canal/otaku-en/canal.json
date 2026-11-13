@@ -7,7 +7,12 @@
   "modelo_padrao_provisorio": true,
   "gerador_padrao": "anime",
   "gerador_padrao_provisorio": true,
-  "orientacoes_editoriais": [],
+  "orientacoes_editoriais": [
+    "Canal independente de anime em inglês: pesquisar demanda do público anglófono e criar roteiro/narração/legendas/SEO naturais em inglês.",
+    "Não traduzir/republicar automaticamente pautas, roteiros, imagens ou vídeos do Otaku BR.",
+    "Fatos checados, teorias identificadas, arte IA consistente e direitos verificados; não fingir footage oficial.",
+    "Comparar desempenho apenas com dados do Otaku EN e seguir ESTRATEGIA.md."
+  ],
   "youtube": {
     "channel_id": null,
     "conectado": false,

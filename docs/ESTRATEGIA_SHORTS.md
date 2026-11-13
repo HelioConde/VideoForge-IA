@@ -4,7 +4,7 @@
 
 ## Ordem obrigatória de leitura
 
-Leia README.md, AGENTS.md, docs/ARQUITETURA.md e **este guia** antes de propor pesquisas ou roteiros de Shorts. Depois leia canal/<id>/canal.json, canal/<id>/README.md, canal/<id>/conteudos/indice.json e os registros editoriais **do mesmo canal**. Não tratar dados de outros canais como histórico do canal atual.
+Leia README.md, AGENTS.md, docs/ARQUITETURA.md e **este guia** antes de propor pesquisas ou roteiros de Shorts. Depois leia canal/<id>/canal.json, canal/<id>/README.md, **canal/<id>/ESTRATEGIA.md**, canal/<id>/conteudos/indice.json e os registros editoriais **do mesmo canal**. Não tratar dados de outros canais como histórico do canal atual.
 
 ## Objetivo
 

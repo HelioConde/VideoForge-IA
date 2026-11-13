@@ -2,6 +2,10 @@
 
 Identificador: `alchemy-lab` · idioma: `pt-BR`.
 
+> **Leia primeiro a [estratégia editorial deste canal](ESTRATEGIA.md).** Ela complementa as regras compartilhadas do projeto e é obrigatória para futuras propostas de pauta, roteiro, artes e análise.
+>
+> **Direção editorial:** laboratório de doramas em pt-BR, com mini-histórias originais, romances, dilemas e reviravoltas ilustrados por IA. Pesquisar tendências verificáveis, testar formatos e registrar aprendizados sem afirmar performance inexistente. O `gerador_padrao` atual é apenas provisório e não significa que o gerador de dorama já exista.
+
 - `canal.json`: identidade, parâmetros e modelo padrão; YouTube desconectado e uploads desabilitados.
 - `editorial/candidatos.json`: pautas pesquisadas (atualmente vazio).
 - `editorial/reservas.json`: reservas antirrepetição (atualmente vazio).
