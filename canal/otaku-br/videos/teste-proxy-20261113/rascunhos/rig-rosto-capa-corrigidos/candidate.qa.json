@@ -1,0 +1,59 @@
+{
+  "schema": "videoforge/rig-candidate-qa/v1",
+  "status": "draft_unapproved",
+  "channel": "otaku-br",
+  "video_id": "teste-proxy-20261113",
+  "scene": "cena-01",
+  "source_sha256": "89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab",
+  "source_artifact_manifest_verified": true,
+  "asset_sha256": {
+    "body-no-head-no-cape.png": "c05a414d3d6b6c92914a54e6e489724e18112a7f9371a1a535d729e9904ce9a7",
+    "head-no-eyes.png": "260655528f8f85c70f0743a181efcae9aa170398f9715595ed5d8cde82d27dfe",
+    "head-open.png": "fec852091d553af2d6945e8f8e6cc660bb1cbaf7ac68ec8239368b9b62891e8c",
+    "eyes-open.png": "5874cc557d0e7a3037226dd6d83f4f58e4384e41c6a02031a1116abac6ba95d1",
+    "eyes-closed.png": "516ee636d968d8e5e65af0d9906e937af816955aa6b5f17e34a2456db989faab",
+    "cape.png": "9ab00a7bb46812452a4ce71589c15bdec2e25a8c80bbd8cb5c4789f18291952c",
+    "cape-front.png": "b8a03574b926f12f6b10cbe6bd19d6619f96ec34e1170daf527ab0715791845d",
+    "seam-underlay.png": "b0a3005e05f1d34ea5a9d10511d851516979c835b0f68d8f2a65dc2ee327eed2"
+  },
+  "metrics": {
+    "pixel_rmse_visible": 18.466,
+    "missing_alpha_sample_fraction": 0.0,
+    "preview_downsample": 2
+  },
+  "body_pixels_erased_without_inpainting": 230350,
+  "body_erased_fraction_of_character": 0.3839,
+  "needs_manual_reconstruction": true,
+  "eyes_extracted_from_original": 2,
+  "head_open_original_pixels_preserved": true,
+  "seam_underlay_original_pixels": 105489,
+  "seam_underlay_source": "character-main.png",
+  "head_full_hair_guard_alpha_coverage": 0.9999322,
+  "head_mask_variant": "head_full_polygon",
+  "natural_eyelids_preview": {
+    "technique": "original-cheek-texture-transfer + antialiased tapered cubic eyelid",
+    "human_review": "pending",
+    "eyes": 2,
+    "healed_pixels": 2059,
+    "closed_lid_visible_pixels": 559,
+    "draw_coverage": 804,
+    "external_model_calls": 0
+  },
+  "cape_front_back_split": true,
+  "human_visual_approval": false,
+  "rig_ready_for_remotion": false,
+  "youtube_uploaded": false,
+  "notes": [
+    "Cabeca/olhos/capa extraidos de pixels existentes; recorte de cabelo integral verificado quando head_full_polygon existe",
+    "Olhos fechados usam curvas antialias e pele emprestada da bochecha original; QA artistico ainda requerido",
+    "Corpo atras de capa/cabeca nao reconstruido; a regiao apagada exige inpainting",
+    "Placa localizada da gola copia APENAS pixels originais, sob a capa e o torso, sem inventar anatomia",
+    "O artefato NAO pode receber nome de rig aprovado nem ser usado para publicar"
+  ],
+  "eye_close_technique": "original_masked_ai_edit_rebased_full_hair",
+  "model_calls_for_eye": 1,
+  "model_calls_for_this_repair": 0,
+  "reused_eye_pixels": 3303,
+  "generated_eye_sha256": "1801331744c651b456fc2d8dcdee69111e704fa72867bd5c50c014637d5d19d7",
+  "publishable": false
+}
