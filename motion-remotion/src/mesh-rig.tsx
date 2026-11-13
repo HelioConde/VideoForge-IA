@@ -114,6 +114,18 @@ export const capeMeshAtFrame=(rig:RigManifest,frame:number,fps:number,duration:n
   return tris;
 };
 
+/** Sobrepoe 2 px nos clips de triangulos adjacentes para fechar
+ * fendas de antialias do Chromium; a textura RGBA ainda limita a silhueta. */
+export const expandedClip=(points:[Point,Point,Point],overlapPx=2.0):Point[]=>{
+  const cx=(points[0].x+points[1].x+points[2].x)/3;
+  const cy=(points[0].y+points[1].y+points[2].y)/3;
+  return points.map(p=>{
+    const dx=p.x-cx,dy=p.y-cy;
+    const length=Math.hypot(dx,dy)||1;
+    return {x:p.x+dx*overlapPx/length,y:p.y+dy*overlapPx/length};
+  });
+};
+
 const pointText=(p:Point)=>`${p.x.toFixed(4)},${p.y.toFixed(4)}`;
 const matrixText=(m:Triangle['matrix'])=>`matrix(${m.map(v=>v.toFixed(7)).join(' ')})`;
 
@@ -130,7 +142,7 @@ const WarpedCape:React.FC<{
         width={width} height={height} preserveAspectRatio="none"/>
       {triangles.map((tri,i)=><clipPath key={i} id={`${id}-clip-${i}`}
         clipPathUnits="userSpaceOnUse">
-        <polygon points={tri.destination.map(pointText).join(' ')}/>
+        <polygon points={expandedClip(tri.destination).map(pointText).join(' ')}/>
       </clipPath>)}
     </defs>
     {triangles.map((tri,i)=><g key={i} clipPath={`url(#${id}-clip-${i})`}>
