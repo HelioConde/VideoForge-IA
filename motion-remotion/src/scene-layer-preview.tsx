@@ -27,6 +27,8 @@ export type LayerSceneProps={
   layerSourceHash:string;
   /** Ativado somente com sprites RGBA verificados, sem partes duplicadas. */
   rig?:RigManifest|null;
+  /** Marca d'agua obrigatoria para visualizacao de candidato NAO aprovado. */
+  draftPreview?:boolean;
 };
 
 const imgStyle:React.CSSProperties={
@@ -35,7 +37,7 @@ const imgStyle:React.CSSProperties={
 };
 
 export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
-  id,scene,durationFrames,preset,background,character,foreground,silence,rig,
+  id,scene,durationFrames,preset,background,character,foreground,silence,rig,draftPreview,
 })=>{
   const frame=useCurrentFrame();
   const {fps}=useVideoConfig();
@@ -93,5 +95,13 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
     }}/>
     {/* Silencio para preservar trilha AAC tecnica sem narracao falsa. */}
     <Audio src={staticFile(silence)} />
+    {draftPreview && <div style={{
+      position:'absolute',zIndex:110,left:25,right:25,bottom:48,
+      borderRadius:16,textAlign:'center',fontFamily:'sans-serif',
+      fontSize:30,fontWeight:800,letterSpacing:1.5,
+      color:'#fff',background:'rgba(95,13,13,.83)',padding:'20px 10px',
+      textShadow:'0 2px 2px rgba(0,0,0,.8)',
+      pointerEvents:'none',
+    }}>RASCUNHO — SEM RECONSTRUCAO/QA VISUAL</div>}
   </AbsoluteFill>;
 };
