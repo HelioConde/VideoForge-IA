@@ -114,3 +114,14 @@ Este registro se limita à correção da piscada. Não afirmar que a animação 
 - O usuario ainda precisa aprovar **visualmente** o resultado antes de liberar producao. A capa, partes ocultas do corpo e oclusoes ainda requerem ajustes. `publishable=false`, `human_visual_approval=false`, `youtube_uploaded=false`.
 
 As imagens grandes de cada quadro e o MP4 podem ser baixados nos artifacts de [GitHub Actions run 43512529516](https://github.com/HelioConde/VideoForge-IA/actions/runs/43512529516), com prazo de retencao. Os sprites essenciais e metadados de provenance agora estao em `canal/otaku-br`, sem depender desse prazo para guardar o resultado do olho.
+
+## 13/11/2026 — Capa com vento e deformacao de tecido por malha (PR #41)
+
+- O usuário pediu substituir a sensação de **capa rígida** por **vento natural**. O modelo de malha Remotion ganhou perfil opt-in, mantendo a costura superior fixa, maior oscilação na ponta, resposta progressiva com atraso, diferentes fases de flutter, elevação sutil e três rajadas assimétricas, sem timers/aleatoriedade.
+- O [plano do próprio canal](rig-plan.json) define vento **direita → esquerda**, amplitude de malha 10,5 px, atraso máximo da ponta 0,34 s, intensidade base 0,85, rajadas 1,15 e flutter 0,65. A capa da frente usa 64% da amplitude da traseira, para não afastar do peito.
+- [PR #41 integrada na main](https://github.com/HelioConde/VideoForge-IA/pull/41). Guia em [docs/VENTO-CAPA-REMOTION.md](../../../../docs/VENTO-CAPA-REMOTION.md).
+- [Workflow de render real sem novas imagens/IA: 43515968694](https://github.com/HelioConde/VideoForge-IA/actions/runs/43515968694) — artifact `otaku-br-cape-wind-review-43515968694`, com MP4 de 8 segundos, prévia compatível **540×960 / H.264 baseline**, quadros 0/55/95/145/190/225/239 e comparação com a capa anterior nos quadros 95/190.
+- O teste registrou **474 pixels amostrados diferentes** na região da capa no quadro 95 (comparação vento × legado, amostragem de 4 px). A diferença é perceptível e concentrada na malha, mas não mede realismo.
+- [CI de TypeScript, Python, SVG/Chromium](https://github.com/HelioConde/VideoForge-IA/actions/runs/43515968564) passou. Os workflows MVP e de olhos também passaram. Testes cobrem ombro fixo, ponta com amplitude superior ao meio, diferença entre capa frontal/traseira, ausência de triângulos invertidos, determinismo e comportamento antigo intacto sem perfil de vento.
+- A inspeção dos quadros 95 e 190 em tamanho ampliado mostrou a silhueta da capa mudando com o vento sem alteração do rosto (olhos fechados pela IA continuam usando os sprites originais). Ainda não é simulação física completa: **não existem colisão de tecido, reconstrução total de costas/ombros, nem aprovação editorial da animação**.
+- Publicação no YouTube **não realizada**; `publishable=false`, `human_visual_approval=false`. O próximo passo é revisar a prévia com o usuário e calibrar se ele quiser mais vento ou dobras mais acentuadas.
