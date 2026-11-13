@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/eye-ai-single-request/v1",
+  "purpose": "masked_original_eye_edit",
+  "channel": "otaku-br",
+  "video_id": "teste-proxy-20261113",
+  "scene": "cena-01",
+  "source_run_id": 43437992955,
+  "source_sha256": "89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab",
+  "input_image": "cena-base.png",
+  "model": "gpt-image-1.5",
+  "stage": "edit_only_two_eyes_keep_original_elsewhere",
+  "approved_to_make_one_image_edit": true,
+  "publish_youtube": false,
+  "human_review_required": true,
+  "intent": "User asked to create a newly AI-edited closed-eye image FROM original art and integrate into GitHub rather than drawing eyelids with geometry.",
+  "automatically_repeat": false,
+  "retry_reason": "First attempt 43510970852 failed during preflight because the hosted Ubuntu setup lacked ffmpeg; image model was not called.",
+  "previous_run_id": 43510970852,
+  "version": 2
+}
