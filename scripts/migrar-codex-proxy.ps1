@@ -37,13 +37,22 @@ function Set-SecretFromMemory([string]$name, [string]$value, [string]$gh) {
     $info.RedirectStandardOutput = $true
     $info.RedirectStandardError = $true
     $info.CreateNoWindow = $true
-    $info.StandardInputEncoding = [System.Text.UTF8Encoding]::new($false)
+    # PowerShell 5.1 / .NET Framework nao dispoe de StandardInputEncoding.
+    # Usamos o fluxo binario com bytes UTF-8 (sem BOM) para preservar o JSON.
     $process = New-Object System.Diagnostics.Process
     $process.StartInfo = $info
     try {
         if (-not $process.Start()) { throw 'Falha ao iniciar o GitHub CLI.' }
-        $process.StandardInput.Write($value)
-        $process.StandardInput.Close()
+        $utf8 = New-Object System.Text.UTF8Encoding($false)
+        $payloadBytes = $utf8.GetBytes($value)
+        try {
+            $process.StandardInput.BaseStream.Write($payloadBytes, 0, $payloadBytes.Length)
+            $process.StandardInput.BaseStream.Flush()
+            $process.StandardInput.Close()
+        } finally {
+            # Remove a copia temporaria dos bytes apos o envio por stdin.
+            [Array]::Clear($payloadBytes, 0, $payloadBytes.Length)
+        }
         $null = $process.StandardOutput.ReadToEnd()
         $null = $process.StandardError.ReadToEnd()
         $process.WaitForExit()
