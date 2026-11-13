@@ -1,0 +1,121 @@
+name: VideoForge - Teste Remotion legado: animar camadas (MP4)
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 'Run ID do Teste 2 com o artifact das camadas'
+        required: true
+        type: string
+        default: '43437992955'
+      channel:
+        type: choice
+        options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
+        default: otaku-br
+      video_id:
+        type: string
+        required: true
+        default: teste-proxy-20261113
+      scene:
+        type: string
+        required: true
+        default: cena-01
+      duration:
+        type: choice
+        options: ['6', '8', '10']
+        default: '8'
+      preset:
+        description: 'Presets originais do motor Remotion'
+        type: choice
+        options: [ultrassutil, equilibrado, vivo]
+        default: equilibrado
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+concurrency:
+  group: remotion-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}
+  cancel-in-progress: false
+
+jobs:
+  render:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      SOURCE_RUN: ${{ inputs.source_run_id }}
+      CHANNEL: ${{ inputs.channel }}
+      VIDEO_ID: ${{ inputs.video_id }}
+      SCENE: ${{ inputs.scene }}
+      DURATION: ${{ inputs.duration }}
+      PRESET: ${{ inputs.preset }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validar identificadores antes de baixar o artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os, re
+          from videoforge.remotion_preview import make_props, PRESETS
+          e = os.environ
+          if not re.fullmatch(r'[1-9][0-9]{7,16}', e['SOURCE_RUN']):
+              raise SystemExit('ID de artifact invalido')
+          make_props(channel=e['CHANNEL'],video_id=e['VIDEO_ID'],
+                     scene=e['SCENE'],duration=int(e['DURATION']),
+                     preset=e['PRESET'],source_sha='0'*64)
+          print('Entrada valida; sem chamadas de IA.')
+          PY
+      - name: Recuperar PNGs reais e seu manifesto do Codex Proxy
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.source_run_id }}
+          name: camadas-advanced-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}-${{ inputs.source_run_id }}
+          path: ./input
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verificar hashes e preparar os assets Remotion (sem gerar imagens)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remotion_preview prepare \
+            --input-dir ./input \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE" \
+            --duration "$DURATION" --preset "$PRESET"
+      - name: Verificar TypeScript com pacotes preinstalados (sem npm install)
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+      - name: Remotion - renderizar coreografia original por frame
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/index.ts VideoForgeLayerScene \
+            "../output/$CHANNEL/videos/$VIDEO_ID/animacoes/$SCENE/remotion-teste.mp4" \
+            --props="../output/$CHANNEL/videos/$VIDEO_ID/animacoes/$SCENE/remotion-props.json" \
+            --codec=h264 --concurrency=2 --log=error
+      - name: QA tecnico de MP4 real e quadros com movimentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remotion_preview verify \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+      - name: Arquivar video Remotion e QA (sem publicar YouTube)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: remotion-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}-${{ github.run_id }}
+          path: output/${{ inputs.channel }}/videos/${{ inputs.video_id }}/animacoes/${{ inputs.scene }}/
+          retention-days: 7
+          if-no-files-found: warn
