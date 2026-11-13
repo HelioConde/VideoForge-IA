@@ -7,6 +7,11 @@ on:
         required: true
         type: string
         default: '43437992955'
+      rig_run_id:
+        description: 'Opcional: run ID com artifact rig-<canal>-<video>-<cena>-<run>; vazio = legado'
+        required: false
+        type: string
+        default: ''
       channel:
         type: choice
         options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
@@ -50,6 +55,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     env:
       SOURCE_RUN: ${{ inputs.source_run_id }}
+      RIG_RUN: ${{ inputs.rig_run_id }}
       CHANNEL: ${{ inputs.channel }}
       VIDEO_ID: ${{ inputs.video_id }}
       SCENE: ${{ inputs.scene }}
@@ -69,6 +75,8 @@ jobs:
           e = os.environ
           if not re.fullmatch(r'[1-9][0-9]{7,16}', e['SOURCE_RUN']):
               raise SystemExit('ID de artifact invalido')
+          if e['RIG_RUN'] and not re.fullmatch(r'[1-9][0-9]{7,16}', e['RIG_RUN']):
+              raise SystemExit('Run ID do rig invalido')
           make_props(channel=e['CHANNEL'],video_id=e['VIDEO_ID'],
                      scene=e['SCENE'],duration=int(e['DURATION']),
                      preset=e['PRESET'],source_sha='0'*64)
@@ -81,14 +89,26 @@ jobs:
           name: camadas-advanced-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}-${{ inputs.source_run_id }}
           path: ./input
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Recuperar rig opcional de sprites completos (sem IA)
+        if: ${{ inputs.rig_run_id != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.rig_run_id }}
+          name: rig-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}-${{ inputs.rig_run_id }}
+          path: ./rig-input
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Verificar hashes e preparar os assets Remotion (sem gerar imagens)
         shell: bash
         run: |
           set -euo pipefail
+          rig_args=()
+          if [[ -n "$RIG_RUN" ]]; then
+            rig_args=(--rig-dir ./rig-input)
+          fi
           python -m videoforge.remotion_preview prepare \
             --input-dir ./input \
             --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE" \
-            --duration "$DURATION" --preset "$PRESET"
+            --duration "$DURATION" --preset "$PRESET" "${rig_args[@]}"
       - name: Verificar TypeScript com pacotes preinstalados (sem npm install)
         shell: bash
         run: |

@@ -5,14 +5,15 @@
  * characterPoseAtFrame, motionAtFrame, videoForgeMotionAtFrame.
  * Somente imagens RGBA existentes, verificadas pelo Python.
  *
- * Esta previa NAO finge animacao articulada. A capa isolada permanece
- * bloqueada: o personagem principal ainda contem a capa no sprite.
+ * Modo legado: personagem inteiro, sem sobrepor capa duplicada.
+ * Modo rig opcional: sprites sem duplicacao, cabeca/piscada e capa em malha SVG.
  */
 import React from 'react';
 import {AbsoluteFill,Audio,Img,staticFile,useCurrentFrame,useVideoConfig} from 'remotion';
 import {characterPoseAtFrame,CharacterPreset} from './character-idle';
 import {motionAtFrame} from './cinematic-motion';
 import {videoForgeMotionAtFrame} from './videoforge-motion';
+import {RiggedCharacter,RigManifest} from './mesh-rig';
 
 export type LayerSceneProps={
   id:string;
@@ -24,6 +25,8 @@ export type LayerSceneProps={
   foreground:string;
   silence:string;
   layerSourceHash:string;
+  /** Ativado somente com sprites RGBA verificados, sem partes duplicadas. */
+  rig?:RigManifest|null;
 };
 
 const imgStyle:React.CSSProperties={
@@ -32,7 +35,7 @@ const imgStyle:React.CSSProperties={
 };
 
 export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
-  id,scene,durationFrames,preset,background,character,foreground,silence,
+  id,scene,durationFrames,preset,background,character,foreground,silence,rig,
 })=>{
   const frame=useCurrentFrame();
   const {fps}=useVideoConfig();
@@ -72,10 +75,11 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
       <Img src={staticFile(background)} style={{
         ...imgStyle,zIndex:0,
       }}/>
-      <Img src={staticFile(character)} style={{
+      {rig ? <RiggedCharacter rig={rig} frame={frame} fps={fps}
+        duration={durationFrames}/> : <Img src={staticFile(character)} style={{
         ...imgStyle,zIndex:20,transform:characterTransform,
         transformOrigin:'50% 85%',
-      }}/>
+      }}/>}
       <Img src={staticFile(foreground)} style={{
         ...imgStyle,zIndex:50,
         transform:roofMotion.transform,

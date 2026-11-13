@@ -1,0 +1,43 @@
+{
+  "schema": "videoforge/mesh-rig-assets/v1",
+  "channel": "otaku-br",
+  "video_id": "teste-proxy-20261113",
+  "scene": "cena-01",
+  "source_sha256": "SUBSTITUIR_PELO_SHA256_DA_CENA_ORIGINAL",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "assets": {
+    "body-no-head-no-cape.png": "SHA256_DO_ARQUIVO",
+    "head-no-eyes.png": "SHA256_DO_ARQUIVO",
+    "eyes-open.png": "SHA256_DO_ARQUIVO",
+    "eyes-closed.png": "SHA256_DO_ARQUIVO",
+    "cape.png": "SHA256_DO_ARQUIVO"
+  },
+  "neck_pivot": {
+    "x": 512,
+    "y": 600
+  },
+  "head_max_deg": 1.5,
+  "blink_frames": [
+    40,
+    132
+  ],
+  "cape_mesh": {
+    "bounds": {
+      "x": 300,
+      "y": 500,
+      "width": 350,
+      "height": 650
+    },
+    "columns": 4,
+    "rows": 6,
+    "amplitude_px": 7
+  },
+  "human_review": {
+    "no_duplicate_parts": false,
+    "pixel_alignment": false,
+    "occlusion_order": false
+  }
+}
