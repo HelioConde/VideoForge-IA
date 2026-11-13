@@ -49,3 +49,15 @@ Compare topics and hooks using Otaku EN's **own** engaged views, viewed-versus-s
 8. Quando houver publicação autorizada, acompanhar resultados por vídeo no histórico do **mesmo canal** e revisar temas, ganchos, formatos e frequência a partir dos dados reais; não há garantia de viralização nem obrigação de postar diariamente.
 
 **Fontes transversais:** [YouTube Creators](https://www.youtube.com/intl/pt-BR/creators/), [descoberta de Shorts](https://support.google.com/youtube/answer/11914225?co=YOUTUBE._YTVideoType%3Dshorts&hl=pt-BR), [até 3 minutos e copyright](https://support.google.com/youtube/answer/15424877?hl=pt-BR) e [conteúdo inautêntico](https://support.google.com/youtube/answer/1311392?hl=pt-BR). Temas e fontes sugeridos abaixo são **pistas para pesquisa**, não resultados atuais já verificados.
+
+## 30-day Shorts experiment — research diagnosis (2026-11-13)
+
+**Data provenance:** the deep-research report based on YouTube Studio exports for **2026-10-16 through 2026-11-13** reports **3,552 views** and **7 subscribers gained** for Otaku Reframe. These figures have **not been independently recalculated from the source CSVs** in this repository; they are not live Analytics.
+
+**Editorial hypothesis:** prioritize **anime dilemmas, meaningful choices and explanations of rules/power systems**. Deliver a clear premise in the opening 1–3 seconds and a sourced, satisfying payoff. Treat this as a channel-specific direction, not a reason to translate Otaku BR output or borrow its performance data. Scripts, narration, captions, titles and descriptions must be idiomatic English.
+
+**Optional 30-day allocation:** up to **10 independently researched candidate Shorts**: 4 character or story dilemmas, 3 canon-backed rule explainers, 2 distinct original analyses and 1 verified release/update. This mix is an **operational proposal**, not a transcription of the report's ten detailed ideas, and does not override editorial vetoes. Validate each angle against Otaku EN history and public sources before creating a candidate or reservation.
+
+**Measurement if authorized:** viewed versus swiped, engaged views, average view duration/percentage viewed, subscriber gains and market-specific evidence **from Otaku EN only**. Compare dilemma and rule formats while recording subject, opening style, length and language quality; avoid declaring a winner from one video. No automatic reuse of Brazilian scripts, assets, metadata or footage.
+
+**Production guardrails:** verify canon versus speculation, spoilers and rights; maintain visual continuity and human-quality English. Nothing in this plan enables the currently unimplemented channel renderer, AI agents or YouTube publishing.
