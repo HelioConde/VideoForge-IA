@@ -47,6 +47,29 @@ def _sha(value: object) -> str:
     return value
 
 
+WIND_KEYS = {
+    "direction", "baseStrength", "gustStrength", "flutterStrength",
+    "tipLagSeconds", "liftStrength",
+}
+
+
+def validate_cape_wind(value: object) -> dict:
+    """Perfil opt-in fechado, sem aceitar entradas arbitrarias no render."""
+    if not isinstance(value, dict) or set(value) != WIND_KEYS:
+        raise RigAssetError("RIG_WIND_KEYS_INVALID")
+    direction = _integer(value.get("direction"), -1, 1)
+    if direction == 0:
+        raise RigAssetError("RIG_WIND_DIRECTION_INVALID")
+    return {
+        "direction": direction,
+        "baseStrength": _number(value.get("baseStrength"), 0, 1.5),
+        "gustStrength": _number(value.get("gustStrength"), 0, 2.0),
+        "flutterStrength": _number(value.get("flutterStrength"), 0, 1.5),
+        "tipLagSeconds": _number(value.get("tipLagSeconds"), 0, .75),
+        "liftStrength": _number(value.get("liftStrength"), 0, 1.5),
+    }
+
+
 def validate_rig_dir(directory: Path, *, channel: str, video_id: str,
                      scene: str, source_sha: str, width: int, height: int,
                      duration_frames: int) -> dict:
@@ -126,10 +149,15 @@ def validate_rig_dir(directory: Path, *, channel: str, video_id: str,
     columns = _integer(mesh.get("columns"), 2, 6)
     rows = _integer(mesh.get("rows"), 2, 8)
     amplitude = _number(mesh.get("amplitude_px"), .1, 12)
+    wind = validate_cape_wind(mesh["wind"]) if "wind" in mesh else None
     layers = {key: "vf-scene/rig/" + filename for key, filename in ASSET_NAMES.items()}
     for filename, key in optional_assets.items():
         if filename in expected_names:
             layers[key] = "vf-scene/rig/" + filename
+    cape_mesh = {"bounds": bounds, "columns": columns, "rows": rows,
+                 "amplitudePx": amplitude}
+    if wind is not None:
+        cape_mesh["wind"] = wind
     return {
         "schema": RIG_SCHEMA,
         "canvas": {"width": width, "height": height},
@@ -137,6 +165,5 @@ def validate_rig_dir(directory: Path, *, channel: str, video_id: str,
         "neckPivot": neck,
         "headMaxDeg": angle,
         "blinkFrames": blink_frames,
-        "capeMesh": {"bounds": bounds, "columns": columns, "rows": rows,
-                     "amplitudePx": amplitude},
+        "capeMesh": cape_mesh,
     }
