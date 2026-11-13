@@ -27,7 +27,7 @@ Não há geração paga, OpenCV/SAM2/LaMa obrigatório, modelos externos nem nov
 
 ## Executar no GitHub ou local
 
-Workflow: [Preparar rig candidato RGBA sem IA](../.github/workflows/rig-candidate.yml). Ele recupera o artifact existente, usa a imagem GHCR Remotion pré-compilada e publica o ZIP com prévias e sprites. Também é validado na abertura do PR desta etapa.
+Workflow: [Preparar rig candidato RGBA sem IA](../.github/workflows/rig-candidate.yml). Ele recupera o artifact existente, usa a imagem GHCR Remotion pré-compilada e publica o ZIP com prévias e sprites. O processamento real é executado por `workflow_dispatch` e uma vez no `push` de alterações relevantes à `main`; não roda a cada commit de PR.
 
 Execução local (Python 3.12+ e FFmpeg já disponíveis):
 
@@ -63,7 +63,7 @@ Critério: **motor técnico ≠ sprites visualmente corretos ≠ vídeo publicá
 
 ## Prévia MOVIMENTADA de rascunho (apenas diagnóstico)
 
-Existe um [workflow de render de rig em rascunho](../.github/workflows/rig-draft-preview.yml). Ele lê um artifact `rig-candidate-...` com seis sprites não aprovados e verifica hashes/estado `human_review=false`, junto ao artifact original da mesma cena. Gera cinco PNGs estáticos de quadros 0, 40, 60, 132 e 239, além de um MP4 técnico de **8 segundos com marca d'água permanente** `RASCUNHO — SEM RECONSTRUCAO/QA VISUAL`.
+Existe um [workflow manual de render de rig em rascunho](../.github/workflows/rig-draft-preview.yml). Ele lê um artifact `rig-candidate-...` com seis sprites não aprovados e verifica hashes/estado `human_review=false`, junto ao artifact original da mesma cena. Gera cinco PNGs estáticos de quadros 0, 40, 60, 132 e 239, além de um MP4 técnico de **8 segundos com marca d'água permanente** `RASCUNHO — SEM RECONSTRUCAO/QA VISUAL`.
 
 O processo usa a mesma malha SVG/head/blink do Remotion, mas o arquivo `videoforge/rig_draft_preview.py` cria props **isoladas, somente para revisão**, sem alterar o bloqueio de produção de `videoforge/mesh_rig.py`. A revisão de assets continua falsa; o QA do draft deve conter `publishable=false`, `youtube_uploaded=false` e `body_inpainting_completed=false`. Não comparar frames de câmera para declarar qualidade anatômica: observar juntas, olhos e capa em resolução integral.
 
