@@ -23,7 +23,7 @@ export type CapeWind={
 export type RigManifest={
   schema:'videoforge/mesh-rig/v1';
   canvas:{width:number;height:number};
-  layers:{body:string;head:string;eyesOpen:string;eyesClosed:string;cape:string;capeFront?:string;headOpen?:string;headClosed?:string};
+  layers:{body:string;head:string;eyesOpen:string;eyesClosed:string;cape:string;capeFront?:string;headOpen?:string;headClosed?:string;seamUnderlay?:string};
   neckPivot:Point;
   headMaxDeg:number;
   blinkFrames:number[];
@@ -50,6 +50,12 @@ export const headAngleAtFrame=(frame:number,fps:number,duration:number,maxDeg:nu
 };
 
 /** Piscar: olhos fechados nos quadros centro-1, centro e centro+1. */
+/** A cabeca aberta e sempre base solida; a fechada nunca substitui sua opacidade. */
+export const headOpacitiesAtFrame=(frame:number,centers:readonly number[])=>({
+  open:1,
+  closed:blinkClosureAtFrame(frame,centers),
+});
+
 export const blinkClosureAtFrame=(frame:number,centers:readonly number[]):number=>{
   let closure=0;
   for(const center of centers){
@@ -126,7 +132,9 @@ export const capeVertexAtFrame=(args:{
     };
   }
   if(v===0)return {x,y}; // vertice de costura nunca desloca
-  const layerStrength=layer==='capeFront'?.64:1;
+  // O broche/peito nao deve se soltar: animar so a barra livre da capa frontal.
+  const frontPin=layer==='capeFront' ? smooth((v-.30)/.30) : 1;
+  const layerStrength=(layer==='capeFront'?.64:1)*frontPin;
   const layerDelay=layer==='capeFront'?.085:0;
   const lag=wind.tipLagSeconds*Math.pow(v,1.1)+layerDelay;
   const localTime=t-lag;
@@ -218,7 +226,7 @@ export const RiggedCharacter:React.FC<{
 }>=({rig,frame,fps,duration})=>{
   const {width,height}=rig.canvas;
   const angle=headAngleAtFrame(frame,fps,duration,rig.headMaxDeg);
-  const blink=blinkClosureAtFrame(frame,rig.blinkFrames);
+  const blink=headOpacitiesAtFrame(frame,rig.blinkFrames);
   const image=(path:string,opacity=1)=><image href={staticFile(path)}
     x={0} y={0} width={width} height={height} opacity={opacity}
     preserveAspectRatio="none"/>;
@@ -232,7 +240,10 @@ export const RiggedCharacter:React.FC<{
     preserveAspectRatio="xMidYMid meet"
     style={{position:'absolute',inset:0,width:'100%',height:'100%',overflow:'visible',
       pointerEvents:'none',zIndex:20}}>
-    {/* Capa fica atras do torso. Nunca renderizar character-main neste modo. */}
+    {/* Protecao do pescoco/ombro: recorte ORIGINAL limitado a uma zona de costura.
+        Fica ATRAS da malha e do corpo, sem cobrir olhos nem duplicar capa livre. */}
+    {rig.layers.seamUnderlay ? image(rig.layers.seamUnderlay) : null}
+    {/* Capa fica atras do torso. Nunca renderizar character-main inteiro neste modo. */}
     <WarpedCape rig={rig} frame={frame} fps={fps} duration={duration} layer="cape"/>
     {image(rig.layers.body)}
     {rig.layers.capeFront ? <WarpedCape rig={rig} frame={frame} fps={fps}
@@ -241,16 +252,19 @@ export const RiggedCharacter:React.FC<{
       {rig.layers.headOpen && rig.layers.headClosed ? <>
         {/* A imagem do OLHO FECHADO e uma edicao com referencia original.
             A cabeca inteira e igual fora dos dois pequenos masks. */}
-        {image(rig.layers.headOpen,1-blink)}
-        {image(rig.layers.headClosed,blink)}
+        {/* A cabeca original e a base 100% presente em TODOS os quadros.
+            So o desenho fechado entra como overlay; dois PNGs com opacity=.5
+            resultavam em alpha .75 e deixavam o fundo atravessar o rosto. */}
+        {image(rig.layers.headOpen)}
+        {image(rig.layers.headClosed,blink.closed)}
       </> : rig.layers.headOpen ? <>
         {image(rig.layers.headOpen)}
-        {image(rig.layers.head,blink)}
-        {image(rig.layers.eyesClosed,blink)}
+        {image(rig.layers.head,blink.closed)}
+        {image(rig.layers.eyesClosed,blink.closed)}
       </> : <>
         {image(rig.layers.head)}
-        {image(rig.layers.eyesOpen,1-blink)}
-        {image(rig.layers.eyesClosed,blink)}
+        {image(rig.layers.eyesOpen,1-blink.closed)}
+        {image(rig.layers.eyesClosed,blink.closed)}
       </>}
     </g>
     </svg>

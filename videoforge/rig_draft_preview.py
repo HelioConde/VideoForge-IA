@@ -68,6 +68,9 @@ def prepare(original_dir: Path, candidate_dir: Path, *,
     if (rig.get("channel"),rig.get("video_id"),rig.get("scene"))!=(channel,video_id,scene):
         raise DraftPreviewError("DRAFT_CROSS_CHANNEL")
     allowed=set(mesh_rig.ASSET_NAMES.values())|{"cape-front.png"}
+    has_seam="seam-underlay.png" in rig.get("assets",{})
+    if has_seam:
+        allowed.add("seam-underlay.png")
     if "head-open.png" in rig.get("assets",{}):
         allowed.add("head-open.png")
     has_ai="head-closed-ai.png" in rig.get("assets",{})
@@ -104,6 +107,18 @@ def prepare(original_dir: Path, candidate_dir: Path, *,
             min_visible_fraction=.00001 if name.startswith("eyes-") else .005)
         if (info["width"],info["height"])!=(ref["width"],ref["height"]):
             raise DraftPreviewError("DRAFT_PNG_DIMENSIONS_MISMATCH")
+    if has_ai:
+        # A edicao IA nao pode modificar alfa nem revelar o fundo no rosto.
+        # Validacao pixel por pixel, inclusive bordas com antialias.
+        from . import rig_candidate
+        w,h=ref["width"],ref["height"]
+        opened=rig_candidate._image(candidate_dir/"head-open.png",w,h)
+        closed=rig_candidate._image(candidate_dir/"head-closed-ai.png",w,h)
+        if opened[3::4] != closed[3::4]:
+            raise DraftPreviewError("DRAFT_AI_HEAD_ALPHA_MISMATCH")
+    if has_seam:
+        if qa.get("seam_underlay_original_pixels",0)<100:
+            raise DraftPreviewError("DRAFT_SEAM_PROVENANCE_REQUIRED")
     if rig.get("head_max_deg",0)>2.0 or len(rig.get("blink_frames",[]))>10:
         raise DraftPreviewError("DRAFT_ANIMATION_OUT_OF_RANGE")
     layers={key:"vf-scene/rig/"+name for key,name in mesh_rig.ASSET_NAMES.items()}
@@ -112,6 +127,8 @@ def prepare(original_dir: Path, candidate_dir: Path, *,
         layers["headOpen"]="vf-scene/rig/head-open.png"
     if has_ai:
         layers["headClosed"]="vf-scene/rig/head-closed-ai.png"
+    if has_seam:
+        layers["seamUnderlay"]="vf-scene/rig/seam-underlay.png"
     cape_params=rig["cape_mesh"]
     cape_mesh={
         "bounds":cape_params["bounds"],
@@ -193,6 +210,8 @@ def verify(channel: str, video_id: str, scene: str) -> dict:
         "motion_detected":True,
         "eye_closed_from_original_ai_edit":bool(props.get("rig",{}).get("layers",{}).get("headClosed")),
         "cape_wind_active":bool(props.get("rig",{}).get("capeMesh",{}).get("wind")),
+        "seam_underlay_active":bool(props.get("rig",{}).get("layers",{}).get("seamUnderlay")),
+        "head_alpha_preserved_by_base_layer":bool(props.get("rig",{}).get("layers",{}).get("headOpen") and props.get("rig",{}).get("layers",{}).get("headClosed")),
         "cape_wind_profile":props.get("rig",{}).get("capeMesh",{}).get("wind"),
     })
     (dest/"draft-video.qa.json").write_text(json.dumps(

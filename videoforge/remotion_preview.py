@@ -111,6 +111,8 @@ def prepare(input_dir: Path, channel: str, video_id: str, scene: str,
             shutil.copyfile(rig_dir / "head-open.png", rig_public / "head-open.png")
         if "headClosed" in rig["layers"]:
             shutil.copyfile(rig_dir / "head-closed-ai.png", rig_public / "head-closed-ai.png")
+        if "seamUnderlay" in rig["layers"]:
+            shutil.copyfile(rig_dir / "seam-underlay.png", rig_public / "seam-underlay.png")
     mvp._command([
         "ffmpeg", "-nostdin", "-hide_banner", "-loglevel", "error", "-y",
         "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",

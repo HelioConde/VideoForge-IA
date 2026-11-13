@@ -150,6 +150,42 @@ def _cape_split(src: bytearray, front_mask: bytearray) -> tuple[bytearray, bytea
     return back, front
 
 
+def _make_seam_underlay(source: bytearray, polygons: object,
+                        width: int, height: int, feather: int = 6
+                        ) -> tuple[bytearray, int]:
+    """Placa localizada do personagem ORIGINAL atras da gola/capa.
+
+    Nao reconstrui anatomia invisivel: so impede que areas ja desenhadas
+    fiquem transparentes quando a cabeca/capa se afastam alguns pixels.
+    Nunca animar esta placa junto com a malha de tecido.
+    """
+    if type(feather) is not int or not 2 <= feather <= 12:
+        raise CandidateError("RIG_SEAM_FEATHER_INVALID")
+    mask = _mask([polygons], width, height)
+    kept = 0
+    out = bytearray(len(source))
+    for i, value in enumerate(mask):
+        if not value or source[4*i+3] == 0:
+            continue
+        y,x = divmod(i,width)
+        # Alfa em degradê so perto do limite do poligono, sem nova arte.
+        steps = feather
+        for d in range(1, feather+1):
+            if (x-d<0 or x+d>=width or y-d<0 or y+d>=height or
+                not mask[i-d] or not mask[i+d] or
+                not mask[i-d*width] or not mask[i+d*width]):
+                steps = d-1
+                break
+        amount = min(255, round(255*(steps+.5)/feather))
+        p=4*i
+        out[p:p+3]=source[p:p+3]
+        out[p+3]=round(source[p+3]*amount/255)
+        kept+=1
+    if kept < 100:
+        raise CandidateError("RIG_SEAM_UNDERLAY_TOO_SMALL")
+    return out,kept
+
+
 def _eye_fill(head: bytearray, eye_masks: list[bytearray],
               samples: list[tuple[int, int]], width: int) -> None:
     """Cor proxima da pele, so para o draft; inpainting fino e posterior."""
@@ -352,6 +388,13 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
     cape_alpha=bytearray(255 if cape[4*i+3]>=16 else 0 for i in range(width*height))
     erased=bytearray(max(headmask[i],cape_alpha[i]) for i in range(width*height))
     body=_erase(char,erased)
+    seam_underlay=None
+    seam_pixels=0
+    if "seam_underlay_polygon" in plan:
+        seam_underlay,seam_pixels=_make_seam_underlay(
+            char,plan["seam_underlay_polygon"],width,height,
+            feather=plan.get("seam_underlay_feather",6),
+        )
     to_save={
         "body-no-head-no-cape.png":body,
         "head-no-eyes.png":head,
@@ -361,6 +404,8 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         "cape.png":back,
         "cape-front.png":front,
     }
+    if seam_underlay is not None:
+        to_save["seam-underlay.png"]=seam_underlay
     output_dir.mkdir(parents=True)
     # Arquivos de mascara para revisar o recorte antes de qualquer rig final.
     masks = {
@@ -413,6 +458,8 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         "needs_manual_reconstruction":True,
         "eyes_extracted_from_original":len(eyes),
         "head_open_original_pixels_preserved":True,
+        "seam_underlay_original_pixels":seam_pixels,
+        "seam_underlay_source":"character-main.png" if seam_pixels else None,
         "head_full_hair_guard_alpha_coverage":hair_coverage,
         "head_mask_variant":"head_full_polygon" if "head_full_polygon" in plan else "head_polygon_legacy",
         "natural_eyelids_preview":eye_report,
@@ -422,6 +469,7 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
             "Cabeca/olhos/capa extraidos de pixels existentes; recorte de cabelo integral verificado quando head_full_polygon existe",
             "Olhos fechados usam curvas antialias e pele emprestada da bochecha original; QA artistico ainda requerido",
             "Corpo atras de capa/cabeca nao reconstruido; a regiao apagada exige inpainting",
+            "Placa localizada da gola copia APENAS pixels originais, sob a capa e o torso, sem inventar anatomia",
             "O artefato NAO pode receber nome de rig aprovado nem ser usado para publicar",
         ],
     }
