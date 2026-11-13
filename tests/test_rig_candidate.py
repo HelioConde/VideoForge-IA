@@ -236,6 +236,40 @@ class CandidateRigTests(unittest.TestCase):
                  patch.object(rig_eye_ai,"_weight",side_effect=weight):
                 rig_hair_repair.restore(self.output,old,self.plan_path,self.source)
 
+    def test_source_seam_underlay_is_feathered_and_does_not_repaint(self):
+        w,h=64,96
+        source=r._image(self.source/"character-main.png",w,h)
+        polygon=[[10,28],[42,28],[45,64],[11,64]]
+        out,count=r._make_seam_underlay(source,polygon,w,h,6)
+        self.assertGreater(count,800)
+        self.assertEqual(out[4*(10*w+12):4*(10*w+12)+4],bytes((0,0,0,0)))
+        inside=4*(45*w+25)
+        self.assertEqual(out[inside:inside+3],source[inside:inside+3])
+        self.assertEqual(out[inside+3],source[inside+3])
+        boundary=4*(29*w+16)
+        self.assertLessEqual(out[boundary+3],source[boundary+3])
+        for i in range(w*h):
+            p=4*i
+            if out[p+3]:
+                self.assertEqual(out[p:p+3],source[p:p+3])
+                self.assertLessEqual(out[p+3],source[p+3])
+
+    def test_candidate_seam_sprite_has_verified_hash_and_remains_unapproved(self):
+        self.plan["seam_underlay_polygon"]=[[10,28],[42,28],[45,64],[11,64]]
+        self.plan["seam_underlay_feather"]=6
+        self.write_plan()
+        report=r.prepare(self.source,self.plan_path,self.output)
+        self.assertGreater(report["seam_underlay_original_pixels"],800)
+        self.assertEqual(report["seam_underlay_source"],"character-main.png")
+        self.assertIn("seam-underlay.png",report["asset_sha256"])
+        output=self.output/"seam-underlay.png"
+        self.assertTrue(output.is_file())
+        self.assertEqual(hashlib.sha256(output.read_bytes()).hexdigest(),
+                         report["asset_sha256"]["seam-underlay.png"])
+        self.assertFalse(report["human_visual_approval"])
+        self.assertFalse(report["rig_ready_for_remotion"])
+        self.assertFalse(report["publishable"] if "publishable" in report else False)
+
     def test_png_round_trip_and_masks(self):
         mask=r._mask([[[3,3],[10,3],[10,12],[3,12]]],16,16)
         self.assertGreater(mask.count(255),20)
