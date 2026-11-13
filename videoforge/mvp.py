@@ -9,12 +9,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import re
 import shutil
 import subprocess
 import tempfile
 import textwrap
 from pathlib import Path
+
+from .errors import VideoForgeError
+from .paths import resolve_video_context
 
 VIDEO_SIZE = (1080, 1920)
 FPS = 24
@@ -22,10 +24,6 @@ MIN_SECONDS = 90
 MAX_SECONDS = 180
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 AUDIO_EXTENSIONS = {".mp3", ".wav", ".m4a", ".aac", ".flac"}
-
-
-class VideoForgeError(ValueError):
-    """Error messages contain no private content or provider responses."""
 
 
 def _command(args: list[str], *, cwd: Path | None = None, timeout: int = 900) -> str:
@@ -202,9 +200,13 @@ def _compose(scenes: list[dict], output: Path, *, minimum: float, maximum: float
     return qa
 
 
-def render(manifest_path: Path, output: Path) -> dict:
-    _, scenes = _load_manifest(manifest_path.resolve())
-    return _compose(scenes, output.resolve(), minimum=MIN_SECONDS,
+def render(manifest_path: Path, output: Path | None = None) -> dict:
+    # Fail closed on channel identity, model and output location before FFmpeg.
+    manifest, scenes = _load_manifest(manifest_path)
+    context = resolve_video_context(
+        manifest_path, manifest, requested_output=output
+    )
+    return _compose(scenes, context.output, minimum=MIN_SECONDS,
                     maximum=MAX_SECONDS, kind="real_supplied_media")
 
 
@@ -242,8 +244,9 @@ def main(argv: list[str] | None = None) -> int:
     test = commands.add_parser("smoke", help="generate clearly synthetic technical MP4")
     test.add_argument("--output", type=Path, default=Path("dist/smoke.mp4"))
     production = commands.add_parser("render", help="render real supplied assets")
-    production.add_argument("--manifest", required=True, type=Path)
-    production.add_argument("--output", required=True, type=Path)
+    production.add_argument("--video", "--manifest", dest="manifest", required=True, type=Path)
+    production.add_argument("--output", type=Path,
+                            help="optional; must match output/<channel>/videos/<id>/video.mp4")
     args = parser.parse_args(argv)
     try:
         result = smoke(args.output) if args.action == "smoke" else render(
