@@ -1,7 +1,7 @@
 {
   "id": "camadas-animadas",
   "nome": "Cenas com camadas animadas (planejado)",
-  "descricao": "Receita planejada para imagens-mãe, separação RGBA, personagens e objetos com movimento independente. Ainda sem implementação.",
+  "descricao": "Prévia técnica de parallax de camadas reais implementada em videoforge/animate_layers.py; animação articulada, rig, narração e produção final ainda não implementadas.",
   "operacional": false,
   "etapas": {
     "roteiro": {
@@ -14,9 +14,11 @@
       "modelo_ia": null
     },
     "animacao": {
-      "modo": "elementos-separados",
+      "modo": "parallax-previa-manual; rig-articulado-planejado",
       "provedor": null,
-      "modelo_ia": null
+      "modelo_ia": null,
+      "preview_implementada": true,
+      "motor_preview": "ffmpeg"
     },
     "voz": {
       "provedor": null,
