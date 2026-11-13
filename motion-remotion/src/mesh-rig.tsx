@@ -7,7 +7,7 @@
  * So ativar depois de revisar recortes e partes reconstruidas.
  */
 import React, {useId} from 'react';
-import {staticFile} from 'remotion';
+import {Img,staticFile} from 'remotion';
 
 export type Point={x:number;y:number};
 export type CapeBounds={x:number;y:number;width:number;height:number};
@@ -148,7 +148,12 @@ export const RiggedCharacter:React.FC<{
   const image=(path:string,opacity=1)=><image href={staticFile(path)}
     x={0} y={0} width={width} height={height} opacity={opacity}
     preserveAspectRatio="none"/>;
-  return <svg aria-label="Personagem 2D com malha de capa"
+  return <>
+    {/* Remotion espera o carregamento de todos os PNGs antes de capturar o frame.
+        SVG <image>/<use> sozinho nao participa do delayRender do <Img>. */}
+    {Object.values(rig.layers).map(path=><Img key={path} src={staticFile(path)}
+      style={{position:'absolute',width:1,height:1,opacity:0,pointerEvents:'none'}}/>)}
+    <svg aria-label="Personagem 2D com malha de capa"
     viewBox={`0 0 ${width} ${height}`}
     preserveAspectRatio="xMidYMid meet"
     style={{position:'absolute',inset:0,width:'100%',height:'100%',overflow:'visible',
@@ -161,5 +166,6 @@ export const RiggedCharacter:React.FC<{
       {image(rig.layers.eyesOpen,1-blink)}
       {image(rig.layers.eyesClosed,blink)}
     </g>
-  </svg>;
+    </svg>
+  </>;
 };
