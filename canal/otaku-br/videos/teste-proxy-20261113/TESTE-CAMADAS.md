@@ -101,3 +101,16 @@ A validação dessa correção é feita por [GitHub Actions `rig-eye-preview.yml
 - Sem nova inferência de IA e sem postagem YouTube. `publishable=false`, `human_visual_approval=false`, `body_inpainting_completed=false`.
 
 Este registro se limita à correção da piscada. Não afirmar que a animação de malha inteira ou o conteúdo final está aprovado para produção.
+
+## 13/11/2026 — Edicao REAL do olho fechado por IA a partir da imagem original
+
+**Substituida a tentativa de desenhar manualmente pálpebras.** Foi usada a rota `POST /v1/images/edits` do Codex Proxy com referencia **recortada e ampliada do PNG original `cena-base.png`**, mascarando apenas as areas dos dois olhos. A IA devolveu um rosto com olhos fechados; o compositor transferiu **somente os pixels editados dos olhos**, preservando pixel a pixel o rosto original fora das duas mascaras.
+
+- Implementacao: [PR #36](https://github.com/HelioConde/VideoForge-IA/pull/36), ajustes [PR #37](https://github.com/HelioConde/VideoForge-IA/pull/37) e [PR #38](https://github.com/HelioConde/VideoForge-IA/pull/38).
+- Execucao **real e bem-sucedida**: [run #43512529516](https://github.com/HelioConde/VideoForge-IA/actions/runs/43512529516). O modelo devolveu 1254×1254 (embora pedido 1024×1024), e o pipeline normalizou e avaliou alinhamento, resultado 5,8 (erro médio absoluto RGB fora da mascara, quanto menor melhor). A imagem nova alterou 3303 pixels do sprite da cabeca, somente nos olhos.
+- Resultado: MP4 de revisao Remotion **8s · 1080×1920 · 30fps · H.264/AAC silencioso**. SHA-256 `530923eebfaa90bc71d220230ce34bda7ab96bcf6b55c19bc8b876d447609080`. O MP4 tem marca d'agua **RASCUNHO** e nao foi publicado.
+- **Arte armazenada permanentemente** na branch `main`: [rascunhos/olhos-fechados-ia](rascunhos/olhos-fechados-ia). Arquivos `head-open.png` (pixels originais), `head-closed-ai.png` (olhos fechados com IA), `face-closed-ai-reference.png` (imagem bruta gerada como referencia), `manifest.json` com hashes e README. [PR #40 de arquivo de sprites](https://github.com/HelioConde/VideoForge-IA/pull/40).
+- No Remotion, `headOpen` e `headClosed` substituem a linha artificial de olhos fechados e trocam quadro a quadro apenas com as mascaras originais. O modo legado continua como fallback.
+- O usuario ainda precisa aprovar **visualmente** o resultado antes de liberar producao. A capa, partes ocultas do corpo e oclusoes ainda requerem ajustes. `publishable=false`, `human_visual_approval=false`, `youtube_uploaded=false`.
+
+As imagens grandes de cada quadro e o MP4 podem ser baixados nos artifacts de [GitHub Actions run 43512529516](https://github.com/HelioConde/VideoForge-IA/actions/runs/43512529516), com prazo de retencao. Os sprites essenciais e metadados de provenance agora estao em `canal/otaku-br`, sem depender desse prazo para guardar o resultado do olho.
