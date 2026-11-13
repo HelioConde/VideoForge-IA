@@ -15,8 +15,7 @@
     "typecheck": "tsc --noEmit",
     "render:fofinhos": "remotion render src/index.ts FofinhosEP01Canonico",
     "render:alchemy-dorama": "remotion render src/index.ts AlchemyDoramaOriginal",
-    "render:alchemy-master10": "remotion render src/index.ts AlchemyDoramaMaster10s",
-    "test:mesh": "node --test tests/mesh-rig.test.cjs"
+    "render:alchemy-master10": "remotion render src/index.ts AlchemyDoramaMaster10s"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.0",
