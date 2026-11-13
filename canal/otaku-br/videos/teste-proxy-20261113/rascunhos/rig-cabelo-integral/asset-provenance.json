@@ -1,0 +1,33 @@
+{
+  "schema": "videoforge/rig-asset-provenance/v1",
+  "source_channel": "otaku-br",
+  "source_video_id": "teste-proxy-20261113",
+  "source_scene": "cena-01",
+  "source_scene_sha256": "89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab",
+  "source_layers_sha256": {
+    "cena-base.png": "89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab",
+    "character-main.png": "da2bf6696a1c02b73ae027d4323363b47fa58224645a0a82a99949f58bd4e1e0",
+    "cape.png": "b2267bf12946dfb955ac38c454006fc59bbf3ac6e4b7cc2949a709eba320b259",
+    "background.png": "6343b0ceb627055e4edad23cb34b6981c92541663227d6cb74985f4110b5fed6",
+    "foreground-roof.png": "bbf2ba2436020d9e218309650a824cd38409afdd3f11a887b1e9fa0f4e8caf19"
+  },
+  "plan_sha256": "20fe2d1b69f40eecfebb819fe1f4f6dc078709313a3ceea6d3db8ab57a1fcb14",
+  "technique": "polygon masks + original pixels; natural eyelids/cheek-transfer; no model-driven inpainting",
+  "model_calls": 1,
+  "human_review": false,
+  "reconstruction_of_occluded_anatomy": "not_performed",
+  "commercial_rights": "not_assessed",
+  "eye_ai_edit": {
+    "schema": "videoforge/eye-ai-edit/v1",
+    "human_review": false,
+    "model_calls": 1,
+    "model_calls_in_this_repair": 0,
+    "source_sha256": "89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab",
+    "original_eye_run_id": 43512529516,
+    "original_closed_head_sha256": "1f5e12dd3197e292c16310977a2132e7dac46ea36134133ef86c4fd56b797552",
+    "closed_head_sha256": "1801331744c651b456fc2d8dcdee69111e704fa72867bd5c50c014637d5d19d7",
+    "all_pixels_outside_old_eye_mask_preserved": true,
+    "full_hair_restored_from_character_main": true
+  },
+  "rebase_schema": "videoforge/full-hair-eye-rebase/v1"
+}
