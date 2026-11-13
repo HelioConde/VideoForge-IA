@@ -55,3 +55,15 @@ Analisar dados agregados do canal quando autorizados, respeitando limitações d
 8. Quando houver publicação autorizada, acompanhar resultados por vídeo no histórico do **mesmo canal** e revisar temas, ganchos, formatos e frequência a partir dos dados reais; não há garantia de viralização nem obrigação de postar diariamente.
 
 **Fontes transversais:** [YouTube Creators](https://www.youtube.com/intl/pt-BR/creators/), [descoberta de Shorts](https://support.google.com/youtube/answer/11914225?co=YOUTUBE._YTVideoType%3Dshorts&hl=pt-BR), [até 3 minutos e copyright](https://support.google.com/youtube/answer/15424877?hl=pt-BR) e [conteúdo inautêntico](https://support.google.com/youtube/answer/1311392?hl=pt-BR). Temas e fontes sugeridos abaixo são **pistas para pesquisa**, não resultados atuais já verificados.
+
+## Ciclo experimental de Shorts — diagnóstico de 13/11/2026
+
+**Origem e limite dos dados:** o relatório de pesquisa aprofundada, baseado em exportações do YouTube Studio de **16/10 a 13/11/2026**, registra **167 visualizações** e **0 inscritos ganhos**. Os CSVs **não foram reprocessados independentemente** nesta etapa; a amostra não sustenta conclusões firmes sobre preferências infantis ou a eficácia de um formato.
+
+**Hipótese editorial:** explorar **desafios visuais simples, descobertas e histórias originais com animais**, com linguagem clara, solução apresentada dentro do vídeo e revisão humana de adequação etária. Todos os testes são **totalmente independentes de Fofinhos**. Não criar novas versões, episódios, derivados, personagens, arte, roteiro ou calendário de Fofinhos sem solicitação específica do proprietário.
+
+**Plano opcional de 30 dias:** até **10 candidatos**, sendo 4 jogos de observação com resposta, 4 pequenas histórias originais com animais e 2 descobertas visuais/cores. A distribuição é **proposta operacional**, não a reprodução das dez ideias detalhadas do relatório. Cada candidato exige universo novo, verificação de originalidade, segurança, fontes e idade adequada; não cadastrar reservas antes de decisão real.
+
+**Como avaliar:** usar somente dados **agregados** do Emanuelly Kids e disponíveis para conteúdo infantil: visualizações engajadas, escolha de assistir quando disponível, duração/percentual médio assistido e inscritos. Não inferir dados pessoais de crianças; não depender de comentários, notificações, cards ou mensagens como CTA.
+
+**Portões de segurança:** revisar cenas, áudio, linguagem, personagens, ausência de riscos imitáveis, flashes e sustos; manter classificação de conteúdo feito para crianças. O modelo `camadas-animadas` segue não implementado, e o plano não autoriza renderização, geração de IA nem publicação.

@@ -49,3 +49,15 @@ Comparar formatos por **jogo, gênero, região, duração e tema**, sem confundi
 8. Quando houver publicação autorizada, acompanhar resultados por vídeo no histórico do **mesmo canal** e revisar temas, ganchos, formatos e frequência a partir dos dados reais; não há garantia de viralização nem obrigação de postar diariamente.
 
 **Fontes transversais:** [YouTube Creators](https://www.youtube.com/intl/pt-BR/creators/), [descoberta de Shorts](https://support.google.com/youtube/answer/11914225?co=YOUTUBE._YTVideoType%3Dshorts&hl=pt-BR), [até 3 minutos e copyright](https://support.google.com/youtube/answer/15424877?hl=pt-BR) e [conteúdo inautêntico](https://support.google.com/youtube/answer/1311392?hl=pt-BR). Temas e fontes sugeridos abaixo são **pistas para pesquisa**, não resultados atuais já verificados.
+
+## Ciclo experimental de Shorts — diagnóstico de 13/11/2026
+
+**Origem e limite dos dados:** o relatório de pesquisa aprofundada, com exportações do YouTube Studio de **16/10 a 13/11/2026**, apresenta **1.494 visualizações** e **+6 inscritos**. A leitura qualitativa do relatório indica que **Minecraft e Roblox** concentraram boa parte das visualizações intencionais dos vídeos novos, **sem percentual reproduzido aqui**. Não houve revalidação independente dos CSVs nem consulta ao Analytics ao vivo.
+
+**Hipótese editorial:** priorizar Minecraft e Roblox como núcleos de teste, mantendo espaço para novidades com demanda verificável. Trabalhar **lore, personagens, curiosidades, hipóteses e notícias checadas** que possam ser explicados por ilustrações originais e narração, sem prometer demonstração real do jogo.
+
+**Plano de 30 dias, condicionado a pesquisa e aprovação:** até **10 candidatos**: 5 ângulos distintos sobre Minecraft, 3 sobre Roblox e 2 testes de outros jogos/tendências confirmadas. A distribuição é uma **proposta editorial**, não a lista literal de dez ideias do relatório. Não repetir o mesmo assunto apenas trocando título ou imagem. Checar o histórico publicado antes de registrar reservas.
+
+**Testes e métricas:** comparar jogos e formatos com dados do **Conde Games**: escolha de assistir/deslizar, visualizações engajadas, duração/percentual assistido, inscritos e fontes de tráfego, quando disponíveis. Anotar tema, versão do jogo, data da fonte, duração, gancho e tipo de ilustração; separar mudança de assunto de mudança de formato ao interpretar resultados.
+
+**Veto absoluto:** imagens de IA **não são gameplay, screenshot, prova de patch, teste de desempenho ou tela oficial**. Rotular como ilustração conceitual quando necessário; sem material verificável/licenciado, não produzir pautas que exijam demonstração real. Nenhuma geração ou publicação é autorizada por este plano.

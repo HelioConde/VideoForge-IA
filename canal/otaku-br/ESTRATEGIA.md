@@ -47,3 +47,15 @@ Observar por obra, categoria de tema e formato a decisão de assistir/deslizar, 
 8. Quando houver publicação autorizada, acompanhar resultados por vídeo no histórico do **mesmo canal** e revisar temas, ganchos, formatos e frequência a partir dos dados reais; não há garantia de viralização nem obrigação de postar diariamente.
 
 **Fontes transversais:** [YouTube Creators](https://www.youtube.com/intl/pt-BR/creators/), [descoberta de Shorts](https://support.google.com/youtube/answer/11914225?co=YOUTUBE._YTVideoType%3Dshorts&hl=pt-BR), [até 3 minutos e copyright](https://support.google.com/youtube/answer/15424877?hl=pt-BR) e [conteúdo inautêntico](https://support.google.com/youtube/answer/1311392?hl=pt-BR). Temas e fontes sugeridos abaixo são **pistas para pesquisa**, não resultados atuais já verificados.
+
+## Ciclo experimental de Shorts — diagnóstico de 13/11/2026
+
+**Origem e limite dos dados:** o relatório de pesquisa aprofundada, elaborado a partir de exportações do YouTube Studio de **16/10 a 13/11/2026**, informa **12.774 visualizações**, **+41 inscritos** e **33,96% que continuaram assistindo** no agregado analisado. Estes valores são **transcrição do diagnóstico relatado**, não uma nova leitura independente dos CSVs nem uma conexão ativa com Analytics. A taxa de quem continuou assistindo mede a decisão de ver em vez de deslizar; **não** é sinônimo de retenção média.
+
+**Diagnóstico editorial:** já existe alcance relevante; a hipótese prioritária é melhorar a clareza e o interesse do **gancho nos primeiros 1–3 segundos**, sem sacrificar explicação, precisão ou conclusão. Investigar obras com demanda demonstrável em vez de aumentar volume indiscriminadamente. **Death Note continua pausado** para novas pautas, até instrução explícita em contrário.
+
+**Plano sugerido para os próximos 30 dias (não é fila de produção):** até **10 Shorts candidatos**, distribuídos como hipótese de teste em 4 curiosidades de obras distintas, 3 explicações de poderes/regras, 2 análises ou teorias originais claramente sinalizadas e 1 anúncio confirmado. Esta distribuição é **proposta operacional**, não reprodução das dez ideias detalhadas do relatório; escolher cada tema só depois de inventariar o canal, conferir fontes, direitos e reservas. O piloto técnico continua exigindo **90–180 segundos**.
+
+**Teste prioritário:** contrastar abertura com consequência concreta versus pergunta específica, usando pautas diferentes e anotando que diferenças de tema também afetam os resultados. Acompanhar, apenas com dados autorizados deste canal, **continuaram assistindo versus deslizaram**, visualizações engajadas, duração/percentual médios, retenção por trecho e inscritos. Rever a hipótese após um conjunto suficiente de publicações; não atribuir causalidade a uma amostra pequena.
+
+**Portões antes de qualquer produção:** histórico real e repetição, checagem de canon/teoria, spoilers, licença de arte/áudio, bíblia visual consistente e revisão editorial. Não atualizar `candidatos.json`, `reservas.json` ou `historico-videos.json` como se os dez vídeos já existissem.

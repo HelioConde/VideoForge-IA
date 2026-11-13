@@ -51,3 +51,11 @@ Os dados públicos catalogados não comprovam acesso OAuth, pesquisa da equipe, 
 - O modelo do registro está em `../docs/modelos/REGISTRO-EDITORIAL-VIDEO.template.json`.
 - O histórico é criado vazio e **não representa os vídeos existentes no YouTube**. A deduplicação deve consultar este índice, `editorial/reservas.json` e o histórico verificado da plataforma.
 - Referências de cursos/YouTube para pesquisa e treinamento ficam fora dos canais, em `../docs/referencias/CATALOGO-CURSOS-YOUTUBE.md`; aprendizados só podem ser atribuídos a uma aula após estudo real.
+
+## Diagnóstico e experimento editorial — 13/11/2026
+
+Os cinco arquivos `canal/<id>/ESTRATEGIA.md` incorporam **individualmente** o diagnóstico relatado pela pesquisa aprofundada com exportações do YouTube Studio de **16/10 a 13/11/2026**. As métricas transcritas são **atribuídas ao relatório** e **não foram recalculadas diretamente dos CSVs** nesta atualização. Não são Analytics ao vivo, nem autorização para consultar contas ou conectar YouTube.
+
+A proposta de **até 10 candidatos por canal em 30 dias** (até 50 no conjunto) é **um experimento editorial opcional**, condicionado a pesquisa, inventário real, direitos, viabilidade técnica e aprovação humana. As distribuições por formato adicionadas às estratégias são **hipóteses operacionais**, não a transcrição das 50 ideias específicas do relatório; a lista detalhada não foi importada como fila. Não alterar `editorial/candidatos.json`, `editorial/reservas.json` ou históricos com propostas ainda não aprovadas. Não há geração automática de vídeos, IA paga, upload nem mudança no MVP.
+
+O diagnóstico e as medições futuras continuam **exclusivos de cada canal**. Para execução editorial, seguir as regras de antirrepetição e segurança, sobretudo a pausa de Death Note, a exclusividade de Fofinhos e a proibição de gameplay fictício.

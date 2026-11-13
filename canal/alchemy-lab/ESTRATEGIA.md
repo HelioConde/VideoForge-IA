@@ -50,3 +50,15 @@ Comparar blocos de gênero em uma janela editorial sugerida de quatro semanas **
 8. Quando houver publicação autorizada, acompanhar resultados por vídeo no histórico do **mesmo canal** e revisar temas, ganchos, formatos e frequência a partir dos dados reais; não há garantia de viralização nem obrigação de postar diariamente.
 
 **Fontes transversais:** [YouTube Creators](https://www.youtube.com/intl/pt-BR/creators/), [descoberta de Shorts](https://support.google.com/youtube/answer/11914225?co=YOUTUBE._YTVideoType%3Dshorts&hl=pt-BR), [até 3 minutos e copyright](https://support.google.com/youtube/answer/15424877?hl=pt-BR) e [conteúdo inautêntico](https://support.google.com/youtube/answer/1311392?hl=pt-BR). Temas e fontes sugeridos abaixo são **pistas para pesquisa**, não resultados atuais já verificados.
+
+## Ciclo experimental de Shorts — diagnóstico de 13/11/2026
+
+**Origem e limite dos dados:** o relatório de pesquisa aprofundada, baseado nas exportações do YouTube Studio de **16/10 a 13/11/2026**, apresenta **179 visualizações** e **0 inscritos ganhos**. **Os dados analisados ainda refletem conteúdos anteriores de tecnologia**; portanto, **não medem** a aceitação do novo posicionamento de microdoramas. Estes números não foram revalidados diretamente nos CSVs nesta atualização.
+
+**Hipótese editorial:** testar **microdoramas de ficção original** com conflito identificável nos primeiros 1–3 segundos, progressão emocional, virada narrativa e desfecho coerente. Evitar imitar roteiros, atores, cenas ou OST de doramas existentes. Não declarar que o novo nicho falhou ou funcionou antes de publicar e medir vídeos reais desse formato.
+
+**Plano experimental de 30 dias:** até **10 candidatos** — 4 romances originais, 3 dilemas/reviravoltas, 2 suspenses leves e 1 análise original de trope. Esta distribuição é **proposta de organização**, não transcrição das dez ideias do relatório. Cada história deve ter protagonistas, premissa e resolução realmente distintos; não produzir histórias em massa que só troquem nomes.
+
+**Aprendizado:** registrar em cada teste o conflito inicial, estrutura, duração, estilo de arte e desfecho. Com acesso autorizado a dados **deste canal**, comparar escolha de assistir, visualizações engajadas, duração/percentual assistido, inscritos e comentários elegíveis. Distinguir claramente resultados de vídeos antigos de tecnologia e novos microdoramas; a amostra inicial pode ser insuficiente.
+
+**Portões antes de produzir:** personagens originais e consistentes, música/voz com direitos, cenas que sustentem a história e revisão humana. O gerador de doramas ainda não existe como sistema operacional; o plano não autoriza IA paga, upload nem novos agentes.
