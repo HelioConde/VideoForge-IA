@@ -1,0 +1,33 @@
+name: Teste unico - solicitar camadas basicas
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dispatch-basic-layers-once.yml'
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  start:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Acionar workflow principal com a cena gerada anteriormente
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api --method POST \
+            "repos/${{ github.repository }}/actions/workflows/scene-layers-basic.yml/dispatches" \
+            --field ref=main \
+            --field 'inputs[source_run_id]=43433023378' \
+            --field 'inputs[channel]=otaku-br' \
+            --field 'inputs[video_id]=teste-proxy-20261113' \
+            --field 'inputs[scene]=cena-01' \
+            --field 'inputs[mode]=ephemeral' \
+            --field 'inputs[model]=gpt-image-2'
+          echo 'Teste de background e personagem enviado para GitHub Actions.'
