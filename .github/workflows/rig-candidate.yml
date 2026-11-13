@@ -7,13 +7,6 @@ on:
         type: string
         required: true
         default: '43437992955'
-  pull_request:
-    paths:
-      - 'videoforge/rig_candidate.py'
-      - 'videoforge/mesh_rig.py'
-      - 'videoforge/scene_layers.py'
-      - 'canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json'
-      - '.github/workflows/rig-candidate.yml'
   push:
     branches: [main]
     paths:
