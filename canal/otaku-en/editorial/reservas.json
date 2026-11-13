@@ -1,0 +1,7 @@
+{
+  "schema": "videoforge/channel-topic-reservations/v1",
+  "channel": "otaku-en",
+  "channel_id": null,
+  "entries": [],
+  "note": "Registro inicial vazio; nao prova que o canal nunca publicou. Verificar historico real antes de reservar novas pautas."
+}
