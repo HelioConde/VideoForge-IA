@@ -202,11 +202,11 @@ def _composite(base: bytearray, top: bytearray) -> None:
             base[i:i+4]=top[i:i+4]
             continue
         ba=base[i+3]
-        oa=a+ba*(255-a)//255
-        if not oa:continue
+        den=a*255+ba*(255-a)
+        if not den:continue
         for c in range(3):
-            base[i+c]=(top[i+c]*a*255 + base[i+c]*ba*(255-a))//(oa*255)
-        base[i+3]=oa
+            base[i+c]=(top[i+c]*a*255+base[i+c]*ba*(255-a)+den//2)//den
+        base[i+3]=(den+127)//255
 
 
 def _preview(src: bytearray, parts: list[bytearray], width: int,
