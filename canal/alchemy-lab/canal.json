@@ -1,0 +1,21 @@
+{
+  "id": "alchemy-lab",
+  "nome": "Alchemy Lab",
+  "chave_legada": "alchemy",
+  "idioma": "pt-BR",
+  "modelo_padrao": "imagem-estatica",
+  "modelo_padrao_provisorio": true,
+  "gerador_padrao": "educacao",
+  "gerador_padrao_provisorio": true,
+  "orientacoes_editoriais": [],
+  "youtube": {
+    "channel_id": null,
+    "conectado": false,
+    "upload_habilitado": false,
+    "privacidade": "private",
+    "feito_para_criancas": false,
+    "verificar_identidade_oauth": true
+  },
+  "status_producao": "planejado_sem_execucao",
+  "observacao": "Canal catalogado; sem integração de geração nem YouTube."
+}
