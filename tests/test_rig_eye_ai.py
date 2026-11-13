@@ -65,6 +65,34 @@ class EyeAIContract(unittest.TestCase):
         with self.assertRaisesRegex(e.EyeAIError,"NOT_GENERATED|PREPARATION_INVALID"):
             e.edit("https://proxy.example","s"*32,work,"gpt-image-1.5")
 
+    def test_portrait_output_from_proxy_is_saved_for_alignment(self):
+        work=self.root/"portrait"
+        work.mkdir()
+        original=bytearray(1024*1024*4)
+        for i in range(3,len(original),4):original[i]=255
+        c._write_png(work/"reference-face.png",original,1024,1024)
+        for y in range(440,490):
+            for x in range(440,490):
+                original[4*(y*1024+x)+3]=0
+        c._write_png(work/"edit-mask.png",original,1024,1024)
+        portrait=bytearray(1024*1536*4)
+        for i in range(3,len(portrait),4):portrait[i]=255
+        c._write_png(work/"response.png",portrait,1024,1536)
+        meta={
+            "schema":e.SCHEMA,"status":"prepared_not_generated","model_calls":0,
+            "reference_sha256":hashlib.sha256((work/"reference-face.png").read_bytes()).hexdigest(),
+            "mask_sha256":hashlib.sha256((work/"edit-mask.png").read_bytes()).hexdigest(),
+            "human_visual_approval":False,
+        }
+        (work/"eye-ai.json").write_text(json.dumps(meta))
+        fake={"data":[{"b64_json":base64.b64encode((work/"response.png").read_bytes()).decode()}]}
+        with patch.object(p,"call_proxy",return_value=fake) as request:
+            result=e.edit("https://proxy.example","x"*32,work,"gpt-image-1.5")
+        self.assertEqual(request.call_count,1)
+        self.assertEqual(result["actual_size"],{"width":1024,"height":1536})
+        self.assertTrue((work/e.EDITED_NAME).is_file())
+        self.assertFalse(result["human_visual_approval"])
+
     def test_edited_eyes_only_change_original_head_under_mask(self):
         source=self.root/"src"
         source.mkdir()
