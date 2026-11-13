@@ -39,6 +39,10 @@ O [Teste 3 de animação](.github/workflows/animate-separated-layers.yml) usa os
 
 O motor **principal para a nova prévia** é agora [Remotion do AutoEditorVideo](motion-remotion/): reutilizamos as funções do projeto anterior em uma composição React que movimenta camera, personagem e foreground por frame. O novo [workflow manual Remotion](.github/workflows/remotion-animate-layers.yml) usa os PNGs dos artifacts reais com validação de SHA-256, renderiza MP4 com H.264/AAC e QA de movimento, **sem gastar IA ou instalar npm/Chrome toda vez**. Consulte [guia do Remotion](docs/REMOTION-ANIMACAO.md). O renderizador antigo de parallax FFmpeg permanece somente como teste/fallback documentado; a capa não é sobreposta até remover sua versão duplicada do personagem.
 
+## Rig 2D por malha — implementacao opt-in (ainda sem sprites aprovados)
+
+O novo [MVP de rig 2D](docs/RIG-MALHA-2D.md) acrescenta ao Remotion um **warp por triangulos da capa**, **pivo da cabeca no pescoco** e **piscadas em quadros definidos**. O codigo e validadores existem; a ativacao depende de cinco PNGs RGBA sem partes duplicadas, hashes e revisao visual humana. Sem rig, o workflow permanece no modo legado; **nao existe ainda MP4 real aprovado deste modo novo**. Nao habilita publicacao nem o modelo `camadas-animadas` para producao.
+
 ## O que já funciona
 
 - Compositor FFmpeg de **imagens e narrações fornecidas**, com legendas,
