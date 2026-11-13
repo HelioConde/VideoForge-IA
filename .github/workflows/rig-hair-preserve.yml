@@ -3,6 +3,10 @@ on:
   pull_request:
     paths:
       - 'videoforge/rig_candidate.py'
+      - 'motion-remotion/src/mesh-rig.tsx'
+      - 'motion-remotion/tests/mesh-rig.test.cjs'
+      - 'videoforge/mesh_rig.py'
+      - 'videoforge/rig_draft_preview.py'
       - 'videoforge/rig_hair_repair.py'
       - 'canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json'
       - 'tests/test_rig_candidate.py'
@@ -77,6 +81,9 @@ jobs:
           rig=json.loads((folder/"rig.json").read_text())
           assert qa["head_mask_variant"]=="head_full_polygon"
           assert qa["head_full_hair_guard_alpha_coverage"] >= .9998
+          assert qa["seam_underlay_original_pixels"] > 20000
+          assert qa["seam_underlay_source"] == "character-main.png"
+          assert "seam-underlay.png" in rig["assets"]
           assert qa["eye_close_technique"]=="original_masked_ai_edit_rebased_full_hair"
           assert qa["model_calls_for_this_repair"]==0
           assert 100<=qa["reused_eye_pixels"]<=12000
@@ -112,6 +119,7 @@ jobs:
           x=json.loads(Path("output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/draft-props.json").read_text())
           assert x["rig"]["layers"]["headOpen"]
           assert x["rig"]["layers"]["headClosed"]
+          assert x["rig"]["layers"]["seamUnderlay"]
           assert x["rig"]["capeMesh"]["wind"]
           assert x["draftPreview"] is True and x["youtubeUpload"] is False
           PY
@@ -120,7 +128,7 @@ jobs:
         run: |
           set -euo pipefail
           cd motion-remotion
-          for f in 0 40 55 95 190 239; do
+          for f in 0 37 38 39 40 41 42 43 55 95 190 239; do
             ./node_modules/.bin/remotion still src/index.ts VideoForgeLayerScene \
               "../$PREVIEW/hair-fix-frame-$f.png" --frame="$f" \
               --props="../$PREVIEW/draft-props.json" --log=error
@@ -150,6 +158,7 @@ jobs:
           from pathlib import Path
           q=json.loads(Path("output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/draft-video.qa.json").read_text())
           assert q["cape_wind_active"] and q["eye_closed_from_original_ai_edit"]
+          assert q["seam_underlay_active"] and q["head_alpha_preserved_by_base_layer"]
           assert q["publishable"] is False and q["youtube_uploaded"] is False
           print("MP4 teste concluido; revisao editorial continua pendente.")
           PY
@@ -157,7 +166,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: otaku-br-full-hair-wind-review-${{ github.run_id }}
+          name: otaku-br-face-cape-seam-review-${{ github.run_id }}
           path: |
             output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01/
             output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/
