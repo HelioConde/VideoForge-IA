@@ -53,3 +53,18 @@ Guia de implementacao transversal: [docs/TESTE-CAMADAS-CENA.md](../../../../docs
 **Proxima fase:** produzir `character-body-no-cape.png` (reconstruindo partes encobertas), definir pivô/mascara da capa e testar movimento isolado da capa com QA de composicao; depois olhos, cabelo, espada, bandeiras e outros itens conforme a cena.
 
 Codigo e guia geral: [docs/ANIMACAO-CAMADAS.md](../../../../docs/ANIMACAO-CAMADAS.md). O renderizador completo de `modelos/camadas-animadas` permanece desabilitado.
+
+
+## 13/11/2026 — Remotion original reutilizado e MP4 gerado
+
+- [Execução aprovada do workflow Remotion — run 43458182424](https://github.com/HelioConde/VideoForge-IA/actions/runs/43458182424)
+- Artifact: `remotion-otaku-br-teste-proxy-20261113-cena-01-43458182424` (run do Teste 2 que forneceu as camadas: `43437992955`).
+- Entrada: os mesmos `background.png`, `character-main.png`, `foreground-roof.png` e metadados SHA-256. Não houve nova inferência de imagem.
+- **Motor de animação desta versão: Remotion** (`motion-remotion/src/scene-layer-preview.tsx`, composição `VideoForgeLayerScene`), com módulos importados do AutoEditorVideo e do VideoForge anterior. A versão FFmpeg continua arquivada como teste separado.
+- MP4 validado: **8,000 s, 1080 x 1920, 30 FPS, H.264 e AAC silencioso**. SHA-256 `413b7fcfa0d1eb930816e3c319943ff999abcf34a60c3ee5e1a30759364dcab5`.
+- Movimentos por quadro: câmera cinematográfica `cinematic-motion.ts`, personagem `character-idle.ts`, e telhado em primeiro plano `videoforge-motion.ts`. QA detectou diferença entre quadros decodificados; não é rigging de personagem.
+- O container `ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1` forneceu Node/Remotion/Chrome pré-instalados, sem executar npm ci ou download de Chrome por render.
+- **Limites:** `cape_overlay_enabled=false` (sem duplicação de capa), `body_part_rigging_implemented=false`, `visual_review=pending`, `pixel_alignment_verified=false`, sem narração e sem publicação YouTube. Os movimentos são propositadamente sutis e as bordas de todas as camadas ainda exigem revisão em resolução integral.
+- O artifact e o MP4 não são versionados no Git; permanecem disponíveis no Actions até o prazo de retenção.
+
+Documentação do novo motor e parâmetros: [docs/REMOTION-ANIMACAO.md](../../../../docs/REMOTION-ANIMACAO.md).
