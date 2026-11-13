@@ -177,7 +177,8 @@ export const RiggedCharacter:React.FC<{
       duration={duration} layer="capeFront"/> : null}
     <g transform={`rotate(${angle.toFixed(5)} ${rig.neckPivot.x} ${rig.neckPivot.y})`}>
       {rig.layers.headOpen ? <>
-        {image(rig.layers.headOpen,1-blink)}
+        {/* Always keep opaque source head behind the feathered blink transition. */}
+        {image(rig.layers.headOpen)}
         {image(rig.layers.head,blink)}
         {image(rig.layers.eyesClosed,blink)}
       </> : <>
