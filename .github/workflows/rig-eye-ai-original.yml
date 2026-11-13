@@ -6,6 +6,7 @@ on:
     paths:
       - 'canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once.json'
       - 'canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once-v2.json'
+      - 'canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once-v3.json'
   workflow_dispatch:
     inputs:
       mode:
@@ -62,7 +63,7 @@ jobs:
           python - <<'PY'
           import json, os
           from pathlib import Path
-          p=Path("canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once-v2.json")
+          p=Path("canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once-v3.json")
           data=json.loads(p.read_text())
           assert data["channel"]=="otaku-br"
           assert data["video_id"]=="teste-proxy-20261113"
