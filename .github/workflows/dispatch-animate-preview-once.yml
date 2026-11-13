@@ -1,0 +1,30 @@
+name: Teste unico - acionar previa de animacao de camadas
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/dispatch-animate-preview-once.yml']
+permissions:
+  contents: read
+  actions: write
+jobs:
+  dispatch:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Disparar workflow de animacao com artifact da cena real
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api --method POST \
+            "repos/${{ github.repository }}/actions/workflows/animate-separated-layers.yml/dispatches" \
+            --raw-field 'ref=main' \
+            --raw-field 'inputs[source_run_id]=43437992955' \
+            --raw-field 'inputs[channel]=otaku-br' \
+            --raw-field 'inputs[video_id]=teste-proxy-20261113' \
+            --raw-field 'inputs[scene]=cena-01' \
+            --raw-field 'inputs[duration]=8' \
+            --raw-field 'inputs[preset]=cinematic'
+          echo 'Previa de 8s solicitada ao VideoForge-IA.'
