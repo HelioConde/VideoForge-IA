@@ -1,0 +1,47 @@
+name: MVP - renderizar MP4 tecnico sem IA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/**'
+      - 'tests/**'
+      - '.github/workflows/mvp.yml'
+  pull_request:
+    paths:
+      - 'videoforge/**'
+      - 'tests/**'
+      - '.github/workflows/mvp.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar FFmpeg
+        run: |
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Rodar testes incluindo renderizacao real
+        run: python -m unittest discover -s tests -v
+      - name: Gerar MP4 tecnico verificavel
+        run: python -m videoforge.mvp smoke --output dist/smoke.mp4
+      - name: Arquivar MP4 e QA sem YouTube
+        uses: actions/upload-artifact@v4
+        with:
+          name: videoforge-mvp-smoke
+          path: |
+            dist/smoke.mp4
+            dist/smoke.qa.json
+          retention-days: 7
+          if-no-files-found: error
