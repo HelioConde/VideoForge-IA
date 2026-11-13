@@ -1,0 +1,105 @@
+name: 'VideoForge - arquivar cabelo integral do Otaku (sem IA)'
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/otaku-br/videos/teste-proxy-20261113/hair-archive-once.json'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  archive-corrected-rig:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Baixar o artefato REAL de cabelo restaurado, nunca executar IA
+        uses: actions/download-artifact@v4
+        with:
+          run-id: '43519037869'
+          name: otaku-br-full-hair-wind-review-43519037869
+          path: ./from-hair-review
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verificar todos os SHA, estado de rascunho e copiar para o canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,shutil
+          from pathlib import Path
+          request=json.loads(Path("canal/otaku-br/videos/teste-proxy-20261113/hair-archive-once.json").read_text())
+          assert request["run_id"]==43519037869
+          assert request["channel"]=="otaku-br"
+          assert request["video_id"]=="teste-proxy-20261113"
+          assert request["scene"]=="cena-01"
+          assert request["source_sha256"]=="89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab"
+          assert request["draft_only"] is True and request["publish_youtube"] is False
+          src=Path("from-hair-review/rig-candidates/cena-01")
+          assert src.is_dir()
+          rig=json.loads((src/"rig.json").read_text())
+          qa=json.loads((src/"candidate.qa.json").read_text())
+          provenance=json.loads((src/"asset-provenance.json").read_text())
+          assert [rig["channel"],rig["video_id"],rig["scene"]]==["otaku-br","teste-proxy-20261113","cena-01"]
+          assert rig["source_sha256"]==request["source_sha256"]
+          assert rig["candidate_only"] is True
+          assert all(v is False for v in rig["human_review"].values())
+          assert qa["status"]=="draft_unapproved" and qa["human_visual_approval"] is False
+          assert qa["rig_ready_for_remotion"] is False
+          assert qa["head_mask_variant"]=="head_full_polygon"
+          assert qa["head_full_hair_guard_alpha_coverage"]>=.9998
+          assert qa["model_calls_for_this_repair"]==0
+          assert 100<=qa["reused_eye_pixels"]<=12000
+          assert provenance["model_calls"]==1
+          assert provenance["eye_ai_edit"]["model_calls_in_this_repair"]==0
+          assert provenance["eye_ai_edit"]["source_sha256"]==request["source_sha256"]
+          assert provenance["eye_ai_edit"]["closed_head_sha256"]==rig["assets"]["head-closed-ai.png"]
+          target=Path("canal/otaku-br/videos/teste-proxy-20261113/rascunhos/rig-cabelo-integral")
+          assert not target.exists(),"Nao sobrescrever imagens de um teste anterior"
+          target.mkdir(parents=True)
+          for name,sha in sorted(rig["assets"].items()):
+              assert name.endswith(".png") and "/" not in name and "\\" not in name
+              image=src/name
+              data=image.read_bytes()
+              assert data.startswith(b'\x89PNG\r\n\x1a\n') and hashlib.sha256(data).hexdigest()==sha
+              (target/name).write_bytes(data)
+          for name in ("rig.json","candidate.qa.json","asset-provenance.json"):
+              shutil.copyfile(src/name,target/name)
+          manifest={
+              "schema":"videoforge/full-hair-archive/v1",
+              "channel":"otaku-br","video_id":"teste-proxy-20261113","scene":"cena-01",
+              "source_run_id":43437992955,"render_run_id":43519037869,
+              "source_sha256":request["source_sha256"],
+              "sprites_sha256":rig["assets"],
+              "head_full_hair_guard_alpha_coverage":qa["head_full_hair_guard_alpha_coverage"],
+              "model_calls_for_this_repair":0,
+              "status":"draft_unapproved","human_visual_approval":False,
+              "publishable":False,"youtube_uploaded":False,
+          }
+          (target/"manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n")
+          (target/"README.md").write_text(
+              "# Rig do Otaku Multicena com cabelo preservado\n\n"
+              "Cópia verificada (SHA-256) dos PNGs **originais corrigidos** produzidos "
+              "na [execução 43519037869](https://github.com/HelioConde/VideoForge-IA/actions/runs/43519037869).\n\n"
+              "A cabeça completa inclui os fios soltos de cabelo; o rosto de olhos fechados "
+              "reutiliza a imagem aprovada anteriormente sem novas inferências. A capa é "
+              "independente e continua animada pela malha com vento.\n\n"
+              "A pasta contém os sprites e manifestos por cena, com revisão editorial "
+              "**pendente**. Não publicar estes arquivos diretamente nem alterar "
+              "\`human_review\` automaticamente.\n",
+              encoding="utf-8")
+          print("Imagens corrigidas arquivadas com hashes; nao houve chamada de IA.")
+          PY
+      - name: Versionar numa branch de imagens para revisao antes de mesclar
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c assets/otaku-br-full-hair-43519037869
+          git add canal/otaku-br/videos/teste-proxy-20261113/rascunhos/rig-cabelo-integral/
+          git commit -m "assets(otaku-br): preservar sprites de cabelo integral e olho fechado IA"
+          git push --set-upstream origin HEAD:refs/heads/assets/otaku-br-full-hair-43519037869
