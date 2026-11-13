@@ -36,14 +36,15 @@ jobs:
           context: .
           file: infra/containers/Dockerfile.media
           push: true
-          tags: ghcr.io/helioconde/videoforge-media-runner:py312-ffmpeg-v1
+          tags: ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-v2
           cache-from: type=gha,scope=videoforge-media
           cache-to: type=gha,mode=max,scope=videoforge-media
       - name: Verificar que Python e FFmpeg ja estao instalados
         run: |
-          docker run --rm ghcr.io/helioconde/videoforge-media-runner:py312-ffmpeg-v1 sh -ec '
+          docker run --rm ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-v2 sh -ec '
             python -c "import sys; assert sys.version_info[:2] == (3,12)"
             ffmpeg -version | head -n 1
+            ffmpeg -version | head -n 1 | grep -E 'ffmpeg version 6\\.'
             ffprobe -version | head -n 1
             fc-list | head -n 1
           '

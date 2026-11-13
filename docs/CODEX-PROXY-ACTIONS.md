@@ -62,6 +62,10 @@ O código `videoforge/proxy_images.py` valida canal, identificadores, HTTPS/loop
 
 ## Imagem de ambiente para FFmpeg e demais programas
 
-O mesmo padrão de pré-compilação vale para o renderizador de vídeo. O Dockerfile `infra/containers/Dockerfile.media` instala Python 3.12, FFmpeg/FFprobe, fontes, git e ferramentas básicas apenas durante o **build da imagem**. O workflow `.github/workflows/media-image.yml` publica a imagem `ghcr.io/helioconde/videoforge-media-runner:py312-ffmpeg-v1` no GHCR automaticamente quando seu Dockerfile/workflow for alterado na `main`.
+O mesmo padrão de pré-compilação vale para o renderizador de vídeo. O Dockerfile `infra/containers/Dockerfile.media` instala Python 3.12, FFmpeg/FFprobe, fontes, git e ferramentas básicas apenas durante o **build da imagem**. O workflow `.github/workflows/media-image.yml` publica a imagem `ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-v2` no GHCR automaticamente quando seu Dockerfile/workflow for alterado na `main`.
 
 **Migração segura em duas fases:** primeiro publicar e verificar a imagem; **depois**, em PR separado, mudar o `.github/workflows/mvp.yml` para `jobs.<job>.container.image` usando essa tag. Não misturar build da imagem e primeiro consumo no mesmo push para evitar disputa entre jobs. A imagem já pronta é baixada pelo runner em cada job novo, mas não há `apt-get install ffmpeg` ou `setup-python` a cada execução. Se a ferramenta for atualizada, versionar tag, reconstruir e validar antes de trocar consumidores.
+
+### Compatibilidade comprovada de FFmpeg
+
+O teste do primeiro contêiner Debian 12 com FFmpeg **5.1** falhou no QA `MP4_QA_FAILED` (workflow PR #9), embora o mesmo teste passasse no Ubuntu 24.04 do GitHub Actions. Por segurança, a base foi corrigida para **Ubuntu 24.04/FFmpeg 6.x** e tag `ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-v2`; não promover imagem 5.1 para MP4 sem testes. O teste deve comprovar vídeo H.264/AAC, duração e QA antes de migrar o job consumidor.

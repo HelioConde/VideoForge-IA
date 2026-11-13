@@ -1,10 +1,13 @@
-# Media tools preinstalled: no apt-get during every VideoForge job.
-FROM python:3.12-slim-bookworm
+# Ubuntu 24.04 matches the FFmpeg major version already proven in MVP CI.
+# Build once; jobs consume the GHCR image without installing apt packages.
+FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      ffmpeg fonts-dejavu-core fontconfig ca-certificates git tar gzip unzip && \
+      python3 python3-minimal ffmpeg fonts-dejavu-core fontconfig \
+      ca-certificates git tar gzip unzip && \
+    ln -s /usr/bin/python3 /usr/local/bin/python && \
     rm -rf /var/lib/apt/lists/*
 WORKDIR /workspace
