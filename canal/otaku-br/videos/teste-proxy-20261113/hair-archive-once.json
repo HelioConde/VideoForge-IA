@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/rig-hair-archive-request/v1",
+  "channel": "otaku-br",
+  "video_id": "teste-proxy-20261113",
+  "scene": "cena-01",
+  "run_id": 43519037869,
+  "source_sha256": "89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab",
+  "draft_only": true,
+  "publish_youtube": false,
+  "run_ai_again": false,
+  "target": "canal/otaku-br/videos/teste-proxy-20261113/rascunhos/rig-cabelo-integral",
+  "purpose": "Keep the verified full-hair and original-image blink sprites in the right channel, without reliance on temporary Actions artifacts."
+}
