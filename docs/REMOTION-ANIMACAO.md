@@ -50,3 +50,7 @@ Sem roteiro, narração, voz final, legendas, vídeo publicável, APIs de IA ou 
 3. Manter o modo `camadas-animadas` com `operacional=false` até existir animação articulada e pipeline de produção completo.
 4. Não regenerar imagens desnecessariamente, nem consumir conta Codex para renderização de Remotion.
 5. Arquivos do GitHub Actions têm retenção limitada; se o artifact de origem expirar, é necessário recuperar/gerar novamente os assets de forma autorizada.
+
+## Implementacao opcional de malha 2D (fase seguinte)
+
+Foi adicionado [rig 2D SVG](RIG-MALHA-2D.md): deformacao real de triangulos da capa, rotacao discreta da cabeca e piscadas. O modo atual **continua** sem capa extra; o novo modo requer sprites RGBA separados sem duplicacao e revisados, que **ainda nao foram produzidos/aprovados**. Nao confundir implementacao do motor com animacao de personagem ja validada em MP4. O workflow aceita `rig_run_id` opcional, sem IA nem novas dependencias no runner.
