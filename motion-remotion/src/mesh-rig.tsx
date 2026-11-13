@@ -14,7 +14,7 @@ export type CapeBounds={x:number;y:number;width:number;height:number};
 export type RigManifest={
   schema:'videoforge/mesh-rig/v1';
   canvas:{width:number;height:number};
-  layers:{body:string;head:string;eyesOpen:string;eyesClosed:string;cape:string;capeFront?:string;headOpen?:string};
+  layers:{body:string;head:string;eyesOpen:string;eyesClosed:string;cape:string;capeFront?:string;headOpen?:string;headClosed?:string};
   neckPivot:Point;
   headMaxDeg:number;
   blinkFrames:number[];
@@ -176,8 +176,12 @@ export const RiggedCharacter:React.FC<{
     {rig.layers.capeFront ? <WarpedCape rig={rig} frame={frame} fps={fps}
       duration={duration} layer="capeFront"/> : null}
     <g transform={`rotate(${angle.toFixed(5)} ${rig.neckPivot.x} ${rig.neckPivot.y})`}>
-      {rig.layers.headOpen ? <>
-        {/* Always keep opaque source head behind the feathered blink transition. */}
+      {rig.layers.headOpen && rig.layers.headClosed ? <>
+        {/* A imagem do OLHO FECHADO e uma edicao com referencia original.
+            A cabeca inteira e igual fora dos dois pequenos masks. */}
+        {image(rig.layers.headOpen,1-blink)}
+        {image(rig.layers.headClosed,blink)}
+      </> : rig.layers.headOpen ? <>
         {image(rig.layers.headOpen)}
         {image(rig.layers.head,blink)}
         {image(rig.layers.eyesClosed,blink)}
