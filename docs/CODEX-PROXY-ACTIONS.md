@@ -59,3 +59,9 @@ O código `videoforge/proxy_images.py` valida canal, identificadores, HTTPS/loop
 - Não confiar em outputs para inferir direitos sobre imagens de anime, músicas ou personagens. Rever políticas oficiais de conteúdo de IA e direito autoral.
 - Não permitir que parâmetros de workflows substituam URLs/credenciais secretas; acesso somente a partir da configuração aprovada.
 - A aprovação deste suporte **não habilita** upload público, geração de 30 imagens em lote ou consumo recorrente automático. Ampliação exige novos testes, limite/custo e revisão humana.
+
+## Imagem de ambiente para FFmpeg e demais programas
+
+O mesmo padrão de pré-compilação vale para o renderizador de vídeo. O Dockerfile `infra/containers/Dockerfile.media` instala Python 3.12, FFmpeg/FFprobe, fontes, git e ferramentas básicas apenas durante o **build da imagem**. O workflow `.github/workflows/media-image.yml` publica a imagem `ghcr.io/helioconde/videoforge-media-runner:py312-ffmpeg-v1` no GHCR automaticamente quando seu Dockerfile/workflow for alterado na `main`.
+
+**Migração segura em duas fases:** primeiro publicar e verificar a imagem; **depois**, em PR separado, mudar o `.github/workflows/mvp.yml` para `jobs.<job>.container.image` usando essa tag. Não misturar build da imagem e primeiro consumo no mesmo push para evitar disputa entre jobs. A imagem já pronta é baixada pelo runner em cada job novo, mas não há `apt-get install ffmpeg` ou `setup-python` a cada execução. Se a ferramenta for atualizada, versionar tag, reconstruir e validar antes de trocar consumidores.
