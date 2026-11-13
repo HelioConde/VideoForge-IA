@@ -109,6 +109,35 @@ class MeshRigTests(unittest.TestCase):
         with self.assertRaises(mesh_rig.RigAssetError):
             self.validate()
 
+    def test_validated_wind_profile_is_optional_and_strict(self):
+        self.assertNotIn("wind", self.validate()["capeMesh"])
+        wind = {
+            "direction": -1, "baseStrength": .85,
+            "gustStrength": 1.15, "flutterStrength": .65,
+            "tipLagSeconds": .34, "liftStrength": .62,
+        }
+        self.manifest["cape_mesh"]["wind"] = wind
+        self.write_manifest()
+        self.assertEqual(self.validate()["capeMesh"]["wind"], wind)
+        bad_cases = [
+            dict(wind, direction=0),
+            dict(wind, direction=2),
+            dict(wind, gustStrength=4),
+            dict(wind, flutterStrength=float("nan")),
+            dict(wind, tipLagSeconds=1),
+            dict(wind, liftStrength=-.1),
+            dict(wind, unwanted="unsafe"),
+        ]
+        for bad in bad_cases:
+            with self.subTest(bad=bad):
+                self.manifest["cape_mesh"]["wind"] = bad
+                self.write_manifest()
+                with self.assertRaises(mesh_rig.RigAssetError):
+                    self.validate()
+        self.manifest["cape_mesh"].pop("wind")
+        self.write_manifest()
+        self.assertNotIn("wind", self.validate()["capeMesh"])
+
     def test_prepare_with_real_rgba_fixture_does_not_duplicate_legacy_character(self):
         config = self.root / "canal/otaku-br/canal.json"
         config.parent.mkdir(parents=True)
