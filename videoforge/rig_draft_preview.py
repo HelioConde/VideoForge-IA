@@ -66,9 +66,11 @@ def prepare(original_dir: Path, candidate_dir: Path, *,
         raise DraftPreviewError("DRAFT_NOT_VERIFIED_UNAPPROVED")
     if (rig.get("channel"),rig.get("video_id"),rig.get("scene"))!=(channel,video_id,scene):
         raise DraftPreviewError("DRAFT_CROSS_CHANNEL")
-    allowed=set(mesh_rig.ASSET_NAMES.values())|{"cape-front.png","head-open.png"}
+    allowed=set(mesh_rig.ASSET_NAMES.values())|{"cape-front.png"}
+    if "head-open.png" in rig.get("assets",{}):
+        allowed.add("head-open.png")
     if set(rig.get("assets",{}))!=allowed:
-        raise DraftPreviewError("DRAFT_SEVEN_PIECES_REQUIRED")
+        raise DraftPreviewError("DRAFT_PIECES_INVALID")
     # Copia e verifica camadas da origem, com o contrato do sistema existente.
     source,manifest=animate_layers._trusted_assets(
         original_dir,channel,video_id,scene)
@@ -91,7 +93,8 @@ def prepare(original_dir: Path, candidate_dir: Path, *,
         raise DraftPreviewError("DRAFT_ANIMATION_OUT_OF_RANGE")
     layers={key:"vf-scene/rig/"+name for key,name in mesh_rig.ASSET_NAMES.items()}
     layers["capeFront"]="vf-scene/rig/cape-front.png"
-    layers["headOpen"]="vf-scene/rig/head-open.png"
+    if "head-open.png" in allowed:
+        layers["headOpen"]="vf-scene/rig/head-open.png"
     rig_props={
         "schema":mesh_rig.RIG_SCHEMA,"canvas":rig["canvas"],
         "layers":layers,"neckPivot":rig["neck_pivot"],
