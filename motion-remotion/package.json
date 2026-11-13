@@ -1,0 +1,31 @@
+{
+  "name": "arquivo-otaku-motion-remotion",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts ArquivoOtaku",
+    "compositions": "remotion compositions src/index.ts",
+    "render:master": "remotion render src/index.ts ArquivoOtakuMaster",
+    "render:pilot": "remotion render src/index.ts PilotoCanaisV3",
+    "render:emanuelly": "remotion render src/index.ts EmanuellySerieV1",
+    "test:character": "node --test tests/character-idle.test.cjs",
+    "test:shorts": "node --test tests/shorts-pacing.test.cjs",
+    "test:qa": "node --test tests/character-idle.test.cjs tests/shorts-pacing.test.cjs tests/pose-timeline.test.cjs tests/mesh-timeline.test.cjs",
+    "typecheck": "tsc --noEmit",
+    "render:fofinhos": "remotion render src/index.ts FofinhosEP01Canonico",
+    "render:alchemy-dorama": "remotion render src/index.ts AlchemyDoramaOriginal",
+    "render:alchemy-master10": "remotion render src/index.ts AlchemyDoramaMaster10s"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "remotion": "^4.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}
