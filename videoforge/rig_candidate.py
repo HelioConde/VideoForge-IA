@@ -17,7 +17,7 @@ import subprocess
 import sys
 import zlib
 
-from . import mesh_rig, proxy_images, scene_layers
+from . import eye_refine, mesh_rig, proxy_images, scene_layers
 from .errors import VideoForgeError
 from .paths import _check_symlinks
 
@@ -311,15 +311,23 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
     cape=originals["cape.png"]
     back,front=_cape_split(cape,frontmask)
     head=_cutout(char,headmask)
-    _eye_fill(head,eyes,skins,width)
+    head_open=bytearray(head)  # estado original INTACTO, antes de qualquer inpainting
     eye_open=_cutout(char,eye_union)
-    eye_closed=_eyelids(plan["eyelid_lines"],width,height)
+    if "eyelid_beziers" in plan:
+        eye_closed, eye_report=eye_refine.create_natural_blink(
+            head,char,eyes,skins,plan["eyelid_beziers"],width,height)
+    else:
+        _eye_fill(head,eyes,skins,width)
+        eye_closed=_eyelids(plan["eyelid_lines"],width,height)
+        eye_report={"technique":"legacy-blocky-line-art",
+                    "human_review":"pending","eyes":len(eyes),"external_model_calls":0}
     cape_alpha=bytearray(255 if cape[4*i+3]>=16 else 0 for i in range(width*height))
     erased=bytearray(max(headmask[i],cape_alpha[i]) for i in range(width*height))
     body=_erase(char,erased)
     to_save={
         "body-no-head-no-cape.png":body,
         "head-no-eyes.png":head,
+        "head-open.png":head_open,
         "eyes-open.png":eye_open,
         "eyes-closed.png":eye_closed,
         "cape.png":back,
@@ -376,11 +384,13 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         "body_erased_fraction_of_character":round(erased_alpha/max(1,source_alpha),4),
         "needs_manual_reconstruction":True,
         "eyes_extracted_from_original":len(eyes),
+        "head_open_original_pixels_preserved":True,
+        "natural_eyelids_preview":eye_report,
         "cape_front_back_split":True,"human_visual_approval":False,
         "rig_ready_for_remotion":False,"youtube_uploaded":False,
         "notes":[
             "Cabeça/olhos/capa extraidos de pixels existentes; plan polygons sao candidatos",
-            "Olhos fechados sao line-art provisoria; head skin fill exige acabamento",
+            "Olhos fechados usam curvas antialias e pele emprestada da bochecha original; QA artistico ainda requerido",
             "Corpo atras de capa/cabeca nao reconstruido; a regiao apagada exige inpainting",
             "O artefato NAO pode receber nome de rig aprovado nem ser usado para publicar",
         ],
@@ -392,7 +402,7 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         "source_layers_sha256":{name:hashlib.sha256((source_dir/name).read_bytes()).hexdigest()
                                 for name in REQUIRED},
         "plan_sha256":hashlib.sha256(plan_path.read_bytes()).hexdigest(),
-        "technique":"polygon masks + original pixels; eyelids drawn; no inpainting",
+        "technique":"polygon masks + original pixels; natural eyelids/cheek-transfer; no model-driven inpainting",
         "model_calls":0,"human_review":False,
         "reconstruction_of_occluded_anatomy":"not_performed",
         "commercial_rights":"not_assessed",
@@ -412,7 +422,7 @@ def main() -> int:
     args=parser.parse_args()
     try:
         report=prepare(args.source_dir,args.plan,args.output_dir)
-    except (CandidateError,mesh_rig.RigAssetError,
+    except (CandidateError,eye_refine.EyeRefineError,mesh_rig.RigAssetError,
             VideoForgeError,scene_layers.LayerError,proxy_images.ProxyImageError) as exc:
         print("RIG_CANDIDATE_BLOCKED:",exc,file=sys.stderr)
         return 2

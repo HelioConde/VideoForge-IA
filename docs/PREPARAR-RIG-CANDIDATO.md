@@ -68,3 +68,16 @@ Existe um [workflow manual de render de rig em rascunho](../.github/workflows/ri
 O processo usa a mesma malha SVG/head/blink do Remotion, mas o arquivo `videoforge/rig_draft_preview.py` cria props **isoladas, somente para revisão**, sem alterar o bloqueio de produção de `videoforge/mesh_rig.py`. A revisão de assets continua falsa; o QA do draft deve conter `publishable=false`, `youtube_uploaded=false` e `body_inpainting_completed=false`. Não comparar frames de câmera para declarar qualidade anatômica: observar juntas, olhos e capa em resolução integral.
 
 O run de origem e o run do candidato são inputs explícitos; os artifacts expiram após prazo configurado. Um preview não habilita o canal, o modelo `camadas-animadas` ou publicação no YouTube.
+
+## Refinamento natural da piscada — sem trocar o personagem
+
+A etapa de olhos fechados foi aprimorada após observar o defeito visual do teste anterior: havia uma **faixa de pele plana** e **linhas escuras pixelizadas**, principalmente no olho de frente. O módulo [`videoforge/eye_refine.py`](../videoforge/eye_refine.py) corrige o recorte em coordenadas originais da cena:
+
+- **Preenchimento local:** lê a textura RGB da bochecha original próxima aos olhos, com amostragem bilinear e borda suavizada. Não cola uma imagem de rosto diferente nem mistura estilos.
+- **Pálpebra natural:** pinta linhas finas de Bézier com espessura variável, terminação afilada, tons marrons e sombra sutil antisserrilhada.
+- **Dois olhos visíveis:** o segundo, parcialmente escondido sob a franja, recebe uma linha proporcionalmente menor.
+- **Controle de arte:** o arquivo `rig-plan.json` deste vídeo define máscara, origem das amostras de pele e quatro pontos por curva para eventual correção precisa; esses dados não são uma solução para todas as cenas.
+- **Proveniência:** nenhuma inferência de IA é necessária nessa fase. O retrato de olho fechado gerado como referência serve para orientar o **estilo**, mas não é aplicado diretamente ao sprite: enquadramento, escala e textura diferem da cena-base.
+- **Bloqueio:** os sprites continuam como **candidatos**, `human_visual_approval=false` e `rig_ready_for_remotion=false`. A geração do MP4 continua com marca d'água e não publica no YouTube.
+
+O workflow [`rig-eye-preview.yml`](../.github/workflows/rig-eye-preview.yml) recria as camadas a partir do artefato original (run 43437992955), testa a geometria e renderiza quadros **0, 38, 39, 40, 41, 42, 60 e 132** e o MP4 para inspeção humana, sem chamadas pagas. O mesmo módulo de olhos pode ser aproveitado em outros canais, desde que cada personagem possua máscara/curva/amostra de pele próprias. O código não cria camadas aprovadas automaticamente.

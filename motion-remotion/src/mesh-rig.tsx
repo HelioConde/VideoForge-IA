@@ -14,7 +14,7 @@ export type CapeBounds={x:number;y:number;width:number;height:number};
 export type RigManifest={
   schema:'videoforge/mesh-rig/v1';
   canvas:{width:number;height:number};
-  layers:{body:string;head:string;eyesOpen:string;eyesClosed:string;cape:string;capeFront?:string};
+  layers:{body:string;head:string;eyesOpen:string;eyesClosed:string;cape:string;capeFront?:string;headOpen?:string};
   neckPivot:Point;
   headMaxDeg:number;
   blinkFrames:number[];
@@ -176,9 +176,16 @@ export const RiggedCharacter:React.FC<{
     {rig.layers.capeFront ? <WarpedCape rig={rig} frame={frame} fps={fps}
       duration={duration} layer="capeFront"/> : null}
     <g transform={`rotate(${angle.toFixed(5)} ${rig.neckPivot.x} ${rig.neckPivot.y})`}>
-      {image(rig.layers.head)}
-      {image(rig.layers.eyesOpen,1-blink)}
-      {image(rig.layers.eyesClosed,blink)}
+      {rig.layers.headOpen ? <>
+        {/* Always keep opaque source head behind the feathered blink transition. */}
+        {image(rig.layers.headOpen)}
+        {image(rig.layers.head,blink)}
+        {image(rig.layers.eyesClosed,blink)}
+      </> : <>
+        {image(rig.layers.head)}
+        {image(rig.layers.eyesOpen,1-blink)}
+        {image(rig.layers.eyesClosed,blink)}
+      </>}
     </g>
     </svg>
   </>;

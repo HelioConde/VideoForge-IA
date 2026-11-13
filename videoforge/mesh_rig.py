@@ -75,10 +75,10 @@ def validate_rig_dir(directory: Path, *, channel: str, video_id: str,
     ):
         raise RigAssetError("RIG_HUMAN_ASSET_REVIEW_REQUIRED")
     hashes = raw.get("assets")
-    optional_front = "cape-front.png"
+    optional_assets = {"cape-front.png": "capeFront", "head-open.png": "headOpen"}
     expected_names = set(ASSET_NAMES.values())
-    if isinstance(hashes, dict) and optional_front in hashes:
-        expected_names.add(optional_front)
+    if isinstance(hashes, dict):
+        expected_names.update(name for name in optional_assets if name in hashes)
     if not isinstance(hashes, dict) or set(hashes) != expected_names:
         raise RigAssetError("RIG_ASSET_LIST_INVALID")
     verified_hashes = {}
@@ -127,8 +127,9 @@ def validate_rig_dir(directory: Path, *, channel: str, video_id: str,
     rows = _integer(mesh.get("rows"), 2, 8)
     amplitude = _number(mesh.get("amplitude_px"), .1, 12)
     layers = {key: "vf-scene/rig/" + filename for key, filename in ASSET_NAMES.items()}
-    if optional_front in expected_names:
-        layers["capeFront"] = "vf-scene/rig/" + optional_front
+    for filename, key in optional_assets.items():
+        if filename in expected_names:
+            layers[key] = "vf-scene/rig/" + filename
     return {
         "schema": RIG_SCHEMA,
         "canvas": {"width": width, "height": height},
