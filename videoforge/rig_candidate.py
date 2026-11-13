@@ -216,7 +216,7 @@ def _preview(src: bytearray, parts: list[bytearray], width: int,
         _composite(joined,item)
     # Tiles reduzidos 1/2: original, recomposicao, mapa de diferenca, areas marcadas.
     w2,h2=width//2,height//2
-    panel=bytearray(w2*4*h2*2*4) # total width 4*w2 height h2
+    panel=bytearray(4*w2*h2*4) # total width 4*w2 height h2
     panel_w=4*w2
     err=0
     missing=0
