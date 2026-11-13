@@ -7,7 +7,13 @@
   "modelo_padrao_provisorio": true,
   "gerador_padrao": "anime",
   "gerador_padrao_provisorio": true,
-  "orientacoes_editoriais": [],
+  "orientacoes_editoriais": [
+    "Produzir vídeos originais sobre animes em português com fatos checados, análise, curiosidades e teorias marcadas.",
+    "Pesquisar interesse atual em anime via YouTube Brasil/Google Trends/fontes oficiais, sem repetir tema relacionado do canal.",
+    "Pausar novas pautas de Death Note até nova orientação do usuário.",
+    "Usar guia visual único por vídeo e verificar copyrights; piloto de 90-180s e só assets fornecidos no MVP.",
+    "Seguir ESTRATEGIA.md e QA editorial antes da produção."
+  ],
   "youtube": {
     "channel_id": "UCXGYTuBYn-0Ziqin5ajKhOw",
     "conectado": false,
