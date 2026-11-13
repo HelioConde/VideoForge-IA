@@ -36,3 +36,20 @@ Fraçao de pixels com alfa exatamente zero: personagem **61,85%**, telhado front
 5. Artifacts sao temporarios (retencao de 7 dias para camadas). **Nao versionar os PNGs nem os tokens.**
 
 Guia de implementacao transversal: [docs/TESTE-CAMADAS-CENA.md](../../../../docs/TESTE-CAMADAS-CENA.md). Toda nova sessao de teste de outro canal deve receber seu proprio registro em `canal/<id>/videos/<video-id>/`.
+
+
+## 13/11/2026 — Teste 3 de animacao por camadas (REAL)
+
+- [Workflow de renderizacao animada aprovado — run 43453893646](https://github.com/HelioConde/VideoForge-IA/actions/runs/43453893646).
+- Artifact: `animacao-otaku-br-teste-proxy-20261113-cena-01-43453893646`. Contem `teste-parallax.mp4`, `teste-parallax.qa.json` e `movimentos.json`.
+- Entrada: artifact do Teste 2, run `43437992955`, importando e validando os hashes das imagens ja geradas. Nenhuma nova inferencia de IA nem acesso a tokens Codex foi necessario.
+- Resultado confirmado por `ffprobe`/QA: **8,0 segundos**, **1080×1920**, **24 fps**, **H.264 + AAC silencioso**, SHA-256 do MP4 `90784b39495c213cabeb2d6cc8ee591a96b0ae12ba7b70dab3cfe996951e129a`.
+- Verificacao tecnica de movimento: quadros decodificados em instantes diferentes tiveram checksums diferentes; `motion_detected=true`. O resultado e um video tecnico de revisao, **nao um Short final**.
+- Tracks animados: `background` (pan lento/overscan), `character-main` (movimento sutil de respiracao) e `foreground-roof` (parallax na frente da camera).
+- `cape_overlay_enabled=false`: a capa ainda existe dentro do PNG do personagem. A versao isolada nao pode ser sobreposta com movimento antes de remover a capa original do corpo e conferir encaixe.
+- Audio presente e **silencio proposital**: `narration_present=false`. Nao houve lip sync, rig de membros, articulacao de cabelo/espada ou upload no YouTube.
+- `visual_approval=pending` e `pixel_alignment_verified=false`. Nao concluir qualidade da composicao ou adequacao editorial somente pelo MP4 tecnico; comparar quadros e revisar bordas/cobertura/duplicacao.
+
+**Proxima fase:** produzir `character-body-no-cape.png` (reconstruindo partes encobertas), definir pivô/mascara da capa e testar movimento isolado da capa com QA de composicao; depois olhos, cabelo, espada, bandeiras e outros itens conforme a cena.
+
+Codigo e guia geral: [docs/ANIMACAO-CAMADAS.md](../../../../docs/ANIMACAO-CAMADAS.md). O renderizador completo de `modelos/camadas-animadas` permanece desabilitado.
