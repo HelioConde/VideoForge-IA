@@ -1,0 +1,103 @@
+name: VideoForge - arquivar olhos IA originais como rascunho
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/otaku-br/videos/teste-proxy-20261113/eye-ai-archive-once.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  archive:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Recuperar artifact gerado sobre a imagem ORIGINAL sem IA nova
+        uses: actions/download-artifact@v4
+        with:
+          run-id: '43512529516'
+          name: rig-eye-ai-original-otaku-br-43512529516
+          path: ./incoming-eye-ai
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verificar SHA e criar arquivos de rascunho no canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          root=Path("incoming-eye-ai")
+          config=json.loads(Path("canal/otaku-br/videos/teste-proxy-20261113/eye-ai-archive-once.json").read_text())
+          assert config["source_run_id"]==43512529516
+          assert config["source_sha256"]=="89156f3f411b8db2cce68b6506009fedf5c63e5f348529e456d7eca81a8468ab"
+          assert config["archive_unapproved"] is True and config["publish_youtube"] is False
+          part=root/"rig-candidates/cena-01"
+          edit=root/"eye-ai-edit/cena-01"
+          rig=json.loads((part/"rig.json").read_text())
+          qa=json.loads((part/"candidate.qa.json").read_text())
+          prov=json.loads((part/"asset-provenance.json").read_text())
+          meta=json.loads((edit/"eye-ai.json").read_text())
+          assert rig["schema"]=="videoforge/mesh-rig-assets/v1"
+          assert [rig["channel"],rig["video_id"],rig["scene"]]==["otaku-br","teste-proxy-20261113","cena-01"]
+          assert rig["source_sha256"]==config["source_sha256"]
+          assert all(v is False for v in rig["human_review"].values())
+          assert qa["human_visual_approval"] is False and qa["rig_ready_for_remotion"] is False
+          assert qa["model_calls_for_eye"]==1 and qa["publishable"] is False
+          assert prov["model_calls"]==1 and prov["eye_ai_edit"]["model_calls"]==1
+          assert meta["status"]=="generated_pending_review" and meta["model_calls"]==1
+          assert meta["source_sha256"]==config["source_sha256"]
+          expected={
+            "head-open.png":rig["assets"]["head-open.png"],
+            "head-closed-ai.png":rig["assets"]["head-closed-ai.png"],
+            "face-closed-ai-reference.png":meta["face_closed_sha256"],
+          }
+          files={
+            "head-open.png":part/"head-open.png",
+            "head-closed-ai.png":part/"head-closed-ai.png",
+            "face-closed-ai-reference.png":edit/"face-closed-ai.png",
+          }
+          target=Path("canal/otaku-br/videos/teste-proxy-20261113/rascunhos/olhos-fechados-ia")
+          assert not target.exists(), "Nao sobrescrever geracoes anteriores"
+          target.mkdir(parents=True)
+          for name,path in files.items():
+              data=path.read_bytes()
+              assert data.startswith(b'\x89PNG\r\n\x1a\n') and hashlib.sha256(data).hexdigest()==expected[name]
+              (target/name).write_bytes(data)
+          record={
+            "schema":"videoforge/original-eye-ai-archive/v1",
+            "channel":"otaku-br","video_id":"teste-proxy-20261113","scene":"cena-01",
+            "source_run_id":43512529516,"source_sha256":config["source_sha256"],
+            "files_sha256":expected,"status":"draft_technical_review_only",
+            "human_review":False,"publishable":False,"youtube_uploaded":False,
+            "model_calls_for_eye":1,"head_open_original":True,
+            "head_closed_from_original_masked_ai_edit":True,
+          }
+          (target/"manifest.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          (target/"README.md").write_text(
+              "# Olhos fechados editados a partir da cena ORIGINAL\n\n"
+              "PNG de rascunho gerados por edicao com a imagem original (GitHub Actions 43512529516).\n\n"
+              "- head-open.png: pixels originais do rosto com olhos abertos.\n"
+              "- head-closed-ai.png: mesmos pixels, alterando apenas os dois olhos.\n"
+              "- face-closed-ai-reference.png: imagem de referencia devolvida pela IA, nunca a cena final.\n"
+              "- manifest.json: hashes, origem exata e bloqueios de publicacao.\n\n"
+              "**RASCUNHO: precisa revisao visual antes de ser usado em producao.**\n",
+              encoding="utf-8")
+          print("Arte AI original verificada, guardada na pasta do canal como rascunho.")
+          PY
+      - name: Enviar sprites para branch de revisao sem alterar main automaticamente
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c assets/otaku-br-original-ai-eye-43512529516
+          git add canal/otaku-br/videos/teste-proxy-20261113/rascunhos/olhos-fechados-ia/
+          git commit -m "assets(otaku-br): preservar olhos fechados IA e original (rascunho)"
+          git push --set-upstream origin HEAD:refs/heads/assets/otaku-br-original-ai-eye-43512529516
