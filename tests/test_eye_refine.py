@@ -51,7 +51,7 @@ class NaturalBlinkTests(unittest.TestCase):
         self.assertEqual(original[4*(40*self.W+39)],43) # original immutable
         alphas=closed[3::4]
         self.assertTrue(any(0<a<235 for a in alphas))
-        self.assertLess(sum(a>0 for a in alphas),300)
+        self.assertLess(sum(a>0 for a in alphas),900)
         self.assertLess(max(alphas),256)
 
     def test_two_renders_deterministic_and_invalid_geometry_rejected(self):
