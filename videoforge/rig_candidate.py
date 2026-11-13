@@ -313,6 +313,17 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         "cape-front.png":front,
     }
     output_dir.mkdir(parents=True)
+    # Arquivos de mascara para revisar o recorte antes de qualquer rig final.
+    masks = {
+        "head-mask.png": headmask,
+        "eyes-mask.png": eye_union,
+        "cape-front-mask.png": frontmask,
+    }
+    for filename, mask in masks.items():
+        rgba=bytearray(width*height*4)
+        for i, v in enumerate(mask):
+            rgba[4*i:4*i+4]=bytes((v,v,v,255))
+        _write_png(output_dir/filename,rgba,width,height)
     hashes={}
     for name,data in to_save.items():
         target=output_dir/name
@@ -339,7 +350,7 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         json.dumps(rig,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     preview,metrics=_preview(char,[back,body,front,head,eye_open],
                            width,height,head,eye_open,front,pivot)
-    _write_png(output_dir/"contact-sheet.png",preview,2*(width//2),height//2)
+    _write_png(output_dir/"contact-sheet.png",preview,4*(width//2),height//2)
     source_alpha=sum(1 for i in range(width*height) if char[4*i+3]>0)
     erased_alpha=sum(1 for i in range(width*height)
                      if erased[i] and char[4*i+3]>0)
@@ -361,6 +372,20 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
             "O artefato NAO pode receber nome de rig aprovado nem ser usado para publicar",
         ],
     }
+    provenance={
+        "schema":"videoforge/rig-asset-provenance/v1",
+        "source_channel":channel,"source_video_id":video_id,"source_scene":scene,
+        "source_scene_sha256":sha,
+        "source_layers_sha256":{name:hashlib.sha256((source_dir/name).read_bytes()).hexdigest()
+                                for name in REQUIRED},
+        "plan_sha256":hashlib.sha256(plan_path.read_bytes()).hexdigest(),
+        "technique":"polygon masks + original pixels; eyelids drawn; no inpainting",
+        "model_calls":0,"human_review":False,
+        "reconstruction_of_occluded_anatomy":"not_performed",
+        "commercial_rights":"not_assessed",
+    }
+    (output_dir/"asset-provenance.json").write_text(
+        json.dumps(provenance,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     (output_dir/"candidate.qa.json").write_text(
         json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return report
