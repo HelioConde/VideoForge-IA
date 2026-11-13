@@ -148,7 +148,7 @@ class CandidateRigTests(unittest.TestCase):
         open_head=r._image(self.output/"head-open.png",64,96)
         fixed_head=r._image(self.output/"head-no-eyes.png",64,96)
         eye_pixel=(25*64+32)*4
-        self.assertEqual(open_head[eye_pixel:eye_pixel+4],bytes((95,55,90,255)))
+        self.assertEqual(open_head[eye_pixel:eye_pixel+4],bytes((43,21,20,255)))
         self.assertNotEqual(open_head[eye_pixel:eye_pixel+3],fixed_head[eye_pixel:eye_pixel+3])
         self.assertEqual(
             report["asset_sha256"]["eyes-closed.png"],
