@@ -14,6 +14,10 @@ Os cursos listados são **fontes sugeridas para estudo**, não prova de acesso, 
 
 A cópia antiga usa o Environment `proxy-runtime`, mas os valores de Secrets não podem ser recuperados por API. O script `scripts/migrar-codex-proxy.ps1`, para uso **local no Windows**, importa o `accounts.json` existente no Docker ou em arquivo privado e registra os novos Secrets via stdin no `gh` CLI. Nunca armazenar tokens, senhas, chaves, dumps ou arquivos de conta em commits, logs, discussões, PRs, artifacts ou GitHub Pages. Não afirmar que houve migração até ela ser executada localmente e verificada em Actions. Consulte `docs/CODEX-PROXY-ACTIONS.md`.
 
+## Testes de separacao generativa por camadas
+
+Antes de modificar ou executar rotinas de edicao de cenas, leia `docs/TESTE-CAMADAS-CENA.md`. Os workflows `scene-layers-basic.yml` e `scene-layers-advanced.yml` executam somente por `workflow_dispatch`, reutilizam o mesmo PNG original verificado por hash, usam o proxy Go PRECOMPILADO e limitam no maximo 2 imagens por run, sem retry automatico. Resultados vao exclusivamente para `output/<canal>/videos/<video-id>/assets/<cena>/` como artifacts; nunca sao versionados, enviados ao YouTube ou classificados como animacao pronta. O manifesto tem `human_visual_approval=false`, `pixel_alignment_verified=false` e `animation_implemented=false` ate verificacao adequada. Uma edicao por IA NAO e recorte fiel e nao pode substituir QA humano.
+
 ## Objetivo inicial
 
 Entregar e comprovar um vídeo MP4 vertical do Otaku Multicena com

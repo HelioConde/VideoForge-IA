@@ -67,3 +67,7 @@ canal/<id>/
 ```
 
 O catálogo de históricos inicia vazio para os cinco canais. Não é evidência de canais sem vídeos; inventariar via fonte autorizada antes de declarar que uma ideia nunca foi usada. **Não adicionar pasta paralela `canais/`.** Manter cursos e documentação compartilhada em `docs/`, e dados de vídeo específicos em `canal/<id>/`. Ver `docs/REGRAS-EDITORIAIS.md`.
+
+## Teste manual de arte por camadas
+
+Veja [TESTE-CAMADAS-CENA.md](TESTE-CAMADAS-CENA.md). O artifact guarda `output/<canal>/videos/<video-id>/assets/<cena>/cena-base.png`, camadas PNG com alfa e um `manifest.json` tecnico para revisao. Isto nao substitui o manifesto executavel `video.json`, nao altera o MVP MP4 e nao significa que `camadas-animadas` esteja implementado.
