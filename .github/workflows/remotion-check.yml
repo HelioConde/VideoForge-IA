@@ -4,6 +4,8 @@ on:
     paths:
       - 'motion-remotion/**'
       - 'videoforge/remotion_preview.py'
+      - 'videoforge/mesh_rig.py'
+      - 'tests/test_mesh_rig.py'
       - 'tests/test_remotion_preview.py'
       - '.github/workflows/remotion-check.yml'
       - '.github/workflows/remotion-animate-layers.yml'
@@ -12,6 +14,8 @@ on:
     paths:
       - 'motion-remotion/**'
       - 'videoforge/remotion_preview.py'
+      - 'videoforge/mesh_rig.py'
+      - 'tests/test_mesh_rig.py'
       - 'tests/test_remotion_preview.py'
       - '.github/workflows/remotion-check.yml'
   workflow_dispatch:
@@ -41,4 +45,8 @@ jobs:
           cd motion-remotion
           ./node_modules/.bin/tsc --noEmit
       - name: Testar contrato de props e integridade sem IA
-        run: python -m unittest tests.test_remotion_preview -v
+        run: python -m unittest tests.test_remotion_preview tests.test_mesh_rig -v
+      - name: Testar matematica de malha, pivô e piscadas quadro a quadro
+        run: |
+          cd motion-remotion
+          node --test tests/mesh-rig.test.cjs
