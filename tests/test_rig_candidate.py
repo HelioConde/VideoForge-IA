@@ -156,6 +156,29 @@ class CandidateRigTests(unittest.TestCase):
             hashlib.sha256((self.output/"eyes-closed.png").read_bytes()).hexdigest(),
         )
 
+    def test_complete_hair_mask_guards_every_original_visible_strand(self):
+        self.plan["head_full_polygon"]=[
+            [19,8],[44,8],[46,43],[21,46],[19,40]]
+        self.plan["hair_guard_bbox"]=[25,12,40,33]
+        self.write_plan()
+        report=r.prepare(self.source,self.plan_path,self.output)
+        self.assertEqual(report["head_mask_variant"],"head_full_polygon")
+        self.assertEqual(report["head_full_hair_guard_alpha_coverage"],1.0)
+        source=r._image(self.source/"character-main.png",64,96)
+        head=r._image(self.output/"head-open.png",64,96)
+        for y in range(12,33):
+            for x in range(25,40):
+                off=4*(y*64+x)
+                self.assertEqual(head[off:off+4],source[off:off+4])
+
+    def test_clipped_hair_is_rejected_even_when_eye_polygon_fits(self):
+        self.plan["head_full_polygon"]=[[27,15],[43,15],[43,40],[27,40]]
+        self.plan["hair_guard_bbox"]=[25,12,40,33]
+        self.write_plan()
+        with self.assertRaisesRegex(r.CandidateError,"RIG_HAIR_CLIPPED_BY_HEAD_MASK"):
+            r.prepare(self.source,self.plan_path,self.output)
+        self.assertFalse(self.output.exists())
+
     def test_png_round_trip_and_masks(self):
         mask=r._mask([[[3,3],[10,3],[10,12],[3,12]]],16,16)
         self.assertGreater(mask.count(255),20)
