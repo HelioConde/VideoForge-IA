@@ -6,6 +6,7 @@ on:
       - 'videoforge/remotion_preview.py'
       - 'videoforge/mesh_rig.py'
       - 'tests/test_mesh_rig.py'
+      - 'tests/make_mesh_smoke.py'
       - 'tests/test_remotion_preview.py'
       - '.github/workflows/remotion-check.yml'
       - '.github/workflows/remotion-animate-layers.yml'
@@ -27,7 +28,7 @@ permissions:
 jobs:
   typecheck-and-unit:
     runs-on: ubuntu-24.04
-    timeout-minutes: 12
+    timeout-minutes: 20
     container:
       image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
       credentials:
@@ -50,3 +51,36 @@ jobs:
         run: |
           cd motion-remotion
           node --test tests/mesh-rig.test.cjs
+      - name: Renderizar malha SVG real em Chromium com sprites sinteticos
+        run: |
+          set -euo pipefail
+          python tests/make_mesh_smoke.py
+          cd motion-remotion
+          ./node_modules/.bin/remotion still src/index.ts VideoForgeLayerScene \
+            ../output/mesh-smoke-frame-0.png --frame=0 \
+            --props=../output/mesh-smoke-props.json --log=error
+          ./node_modules/.bin/remotion still src/index.ts VideoForgeLayerScene \
+            ../output/mesh-smoke-frame-60.png --frame=60 \
+            --props=../output/mesh-smoke-props.json --log=error
+          test -s ../output/mesh-smoke-frame-0.png
+          test -s ../output/mesh-smoke-frame-60.png
+          test "$(sha256sum ../output/mesh-smoke-frame-0.png | cut -d' ' -f1)" != \
+               "$(sha256sum ../output/mesh-smoke-frame-60.png | cut -d' ' -f1)"
+          ffmpeg -nostdin -hide_banner -loglevel error -i ../output/mesh-smoke-frame-60.png \
+            -f rawvideo -pix_fmt rgb24 ../output/mesh-smoke.rgb
+          cd ..
+          python - <<'PY'
+          from pathlib import Path
+          raw = Path("output/mesh-smoke.rgb").read_bytes()
+          w,h = 1080,1920
+          assert len(raw) == w*h*3, "Canvas Shorts inesperado"
+          red = 0
+          for y in range(700,1400,3):
+              for x in range(300,780,3):
+                  p=(y*w+x)*3
+                  r,g,b=raw[p:p+3]
+                  if r>170 and r>g*2.5 and r>b*2:
+                      red+=1
+          assert red>200, f"Capa vermelha nao apareceu na malha SVG: {red}"
+          print("SVG real: frames distintos e capa vermelha visivel no Chromium.")
+          PY
