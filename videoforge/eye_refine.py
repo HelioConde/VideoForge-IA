@@ -40,7 +40,7 @@ def _validate_curves(plan: object, count: int, width: int, height: int) -> list[
         if not isinstance(p,list) or len(p)!=4:
             raise EyeRefineError("EYE_BEZIER_NEEDS_FOUR_POINTS")
         pts=[_point(v,width,height) for v in p]
-        if math.dist(pts[0],pts[-1]) < 8 or math.dist(pts[0],pts[-1]) > 140:
+        if math.dist(pts[0],pts[-1]) < 6 or math.dist(pts[0],pts[-1]) > 140:
             raise EyeRefineError("EYE_BEZIER_LENGTH_INVALID")
         radius=curve.get("width",1.4)
         if type(radius) not in (int,float) or not .6<=radius<=2.5:
@@ -93,7 +93,7 @@ def _heal_region(head: bytearray, source: bytearray, mask: bytearray,
     for i,a in enumerate(mask):
         if a:
             xs.append(i%width);ys.append(i//width)
-    if len(xs)<10 or len(xs)>width*height*.02:
+    if len(xs)<10 or len(xs)>width*height*.10:
         raise EyeRefineError("EYE_MASK_EMPTY_OR_TOO_LARGE")
     minx,maxx,miny,maxy=min(xs),max(xs),min(ys),max(ys)
     cx,cy=(minx+maxx)/2,(miny+maxy)/2
