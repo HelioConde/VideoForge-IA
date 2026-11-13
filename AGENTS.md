@@ -18,6 +18,10 @@ A cópia antiga usa o Environment `proxy-runtime`, mas os valores de Secrets nã
 
 Antes de modificar ou executar rotinas de edicao de cenas, leia `docs/TESTE-CAMADAS-CENA.md`. Os workflows `scene-layers-basic.yml` e `scene-layers-advanced.yml` executam somente por `workflow_dispatch`, reutilizam o mesmo PNG original verificado por hash, usam o proxy Go PRECOMPILADO e limitam no maximo 2 imagens por run, sem retry automatico. Resultados vao exclusivamente para `output/<canal>/videos/<video-id>/assets/<cena>/` como artifacts; nunca sao versionados, enviados ao YouTube ou classificados como animacao pronta. O manifesto tem `human_visual_approval=false`, `pixel_alignment_verified=false` e `animation_implemented=false` ate verificacao adequada. Uma edicao por IA NAO e recorte fiel e nao pode substituir QA humano.
 
+## Prévia de animação de camadas verificável
+
+O workflow manual `animate-separated-layers.yml` consome somente o artifact do Teste 2, sem chamadas ao proxy, sem reinstalação de Go/FFmpeg e sem upload ao YouTube. O motor `videoforge/animate_layers.py` anima 3 camadas independentes via FFmpeg, verifica SHA-256, RGBA real, movimento entre quadros e codecs do MP4. A capa e demais peças que ainda existem no personagem-base **não podem ser adicionadas como overlays**, pois isso duplicaria roupa/objetos. É obrigatório criar personagem-base sem a peça e pivôs revistos antes do rig. `modelos/camadas-animadas` permanece desabilitado para produção completa. Ver `docs/ANIMACAO-CAMADAS.md`.
+
 ## Objetivo inicial
 
 Entregar e comprovar um vídeo MP4 vertical do Otaku Multicena com

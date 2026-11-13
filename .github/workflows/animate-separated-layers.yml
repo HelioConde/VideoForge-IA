@@ -1,0 +1,102 @@
+name: VideoForge - Teste 3 animar camadas separadas (MP4)
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 'Run ID do Teste 2 que entregou camadas-advanced'
+        required: true
+        type: string
+        default: '43437992955'
+      channel:
+        description: 'Canal do artefato'
+        type: choice
+        options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
+        default: otaku-br
+      video_id:
+        description: 'Identificador do video/cena'
+        type: string
+        default: teste-proxy-20261113
+        required: true
+      scene:
+        type: string
+        default: cena-01
+        required: true
+      duration:
+        description: 'Duracao da previa tecnicamente limitada'
+        type: choice
+        options: ['6', '8', '10']
+        default: '8'
+      preset:
+        description: 'Movimentos independentes sem gerar novas imagens'
+        type: choice
+        options: [cinematic, subtle]
+        default: cinematic
+
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
+concurrency:
+  group: animation-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}
+  cancel-in-progress: false
+
+jobs:
+  animate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-v2
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    timeout-minutes: 18
+    env:
+      SOURCE_RUN: ${{ inputs.source_run_id }}
+      CHANNEL: ${{ inputs.channel }}
+      VIDEO_ID: ${{ inputs.video_id }}
+      SCENE: ${{ inputs.scene }}
+      DURATION: ${{ inputs.duration }}
+      PRESET: ${{ inputs.preset }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validar entrada antes de importar imagens
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os, re
+          from videoforge.scene_layers import output_dir
+          from videoforge.animate_layers import PRESETS, MIN_DURATION, MAX_DURATION
+          values=os.environ
+          if not re.fullmatch(r'[1-9][0-9]{7,16}',values['SOURCE_RUN']):
+              raise SystemExit("ID do artifact invalido")
+          output_dir(values['CHANNEL'],values['VIDEO_ID'],values['SCENE'])
+          if values['PRESET'] not in PRESETS or not MIN_DURATION <= int(values['DURATION']) <= MAX_DURATION:
+              raise SystemExit("Preset ou duracao invalida")
+          print("Entradas validas; zero chamadas ao Codex Proxy ou geracao de imagens.")
+          PY
+      - name: Baixar as mesmas camadas PNG geradas pelo Codex Proxy
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.source_run_id }}
+          name: camadas-advanced-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}-${{ inputs.source_run_id }}
+          path: ./input
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Renderizar previa parallax com FFmpeg 6 e QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.animate_layers \
+            --input-dir ./input \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE" \
+            --duration "$DURATION" --preset "$PRESET"
+      - name: Arquivar video H264/AAC e relatorio sem publicar no YouTube
+        uses: actions/upload-artifact@v4
+        with:
+          name: animacao-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}-${{ github.run_id }}
+          path: output/${{ inputs.channel }}/videos/${{ inputs.video_id }}/animacoes/${{ inputs.scene }}/
+          retention-days: 7
+          if-no-files-found: error

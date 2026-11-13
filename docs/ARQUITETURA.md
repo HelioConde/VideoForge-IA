@@ -71,3 +71,7 @@ O catálogo de históricos inicia vazio para os cinco canais. Não é evidência
 ## Teste manual de arte por camadas
 
 Veja [TESTE-CAMADAS-CENA.md](TESTE-CAMADAS-CENA.md). O artifact guarda `output/<canal>/videos/<video-id>/assets/<cena>/cena-base.png`, camadas PNG com alfa e um `manifest.json` tecnico para revisao. Isto nao substitui o manifesto executavel `video.json`, nao altera o MVP MP4 e nao significa que `camadas-animadas` esteja implementado.
+
+## Primeira prévia de animação em MP4 por camadas
+
+O motor `videoforge/animate_layers.py` usa três PNGs do artifact de separação com hashes e QA técnico; salva preview 1080×1920, AAC silencioso e relatório em `output/<canal>/videos/<video-id>/animacoes/<cena>/`. É movimento de câmera e de camadas inteiras (parallax), não animação articulada nem produção Shorts. O modelo completo `camadas-animadas` continua não operacional. Leia [ANIMACAO-CAMADAS.md](ANIMACAO-CAMADAS.md).
