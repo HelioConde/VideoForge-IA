@@ -30,3 +30,33 @@ Primeiro validar renderizador; agentes e escritório só depois.
 
 Conferir artefato de Actions: video H.264, áudio AAC, 1080 × 1920 e QA JSON.
 Esse teste não autoriza vídeo público nem consumo de IA.
+
+## Organização permanente — mesmo contrato do VideoForge anterior
+
+Sempre consultar `README.md` e `docs/ARQUITETURA.md` antes de editar.
+A estrutura do repositório anterior `HelioConde/video-forge-ia2` é a
+referência **apenas para organização**, sem copiar credenciais, pipelines
+complexos nem trabalhos fictícios.
+
+- Cada canal vive exclusivamente em `canal/<id>/`; seus dados não podem
+  migrar nem ser misturados com os de outro canal.
+- Em `canal/<id>/`, manter `canal.json`, `README.md`, 
+  `conteudos/indice.json`, `editorial/candidatos.json`,
+  `editorial/reservas.json` e `videos/README.md`.
+- Pesquisas com fontes ficam em `editorial/pesquisas/YYYY-MM-DD.json`.
+  Pastas de arquivo editorial têm valor histórico, **não são fila de produção**.
+- Cada vídeo real usa `canal/<id>/videos/<video-id>/video.json`. O modelo
+  técnico padrão vem de `canal.json.modelo_padrao`, com sobrescrita opcional
+  em `video.json.modelo`; modelos reutilizáveis em `modelos/<id>/modelo.json`.
+- Geradores específicos de nicho podem viver em `geradores/<id>/` somente
+  quando houver implementação e testes reais; não inferir trabalho ativo a
+  partir de arquivos de configuração.
+- Manter resultados e dados temporários em `output/<id>/editorial/` ou
+  `output/<id>/videos/<video-id>/`, nunca versionados.
+- O MVP só processa `otaku-br` e `imagem-estatica` fornecida. O modelo
+  `camadas-animadas` está **planejado, não implementado**. 
+- `videoforge/paths.py` deve falhar antes de gerar mídia se o canal,
+  diretório, receita técnica ou destino de saída estiverem incorretos.
+- Em toda mudança: organizar antes e depois, atualizar docs,
+  testar regressões, verificar Actions; nunca editar outros repositórios,
+  gastar IA ou publicar YouTube sem autorização explícita.

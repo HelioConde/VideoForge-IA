@@ -10,3 +10,11 @@ output/
 .env
 .env.*
 secrets/
+
+# Mídia de vídeo não pode ser versionada em canais
+canal/*/videos/*/imagens/
+canal/*/videos/*/voz/
+canal/*/videos/*/assets/
+*.m4a
+*.aac
+*.flac

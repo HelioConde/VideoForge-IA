@@ -2,59 +2,109 @@
 
 Novo projeto: **primeiro entregar um MP4 verificável**, depois conectar
 pesquisa, agentes, modelos de imagem e YouTube Analytics. O repositório
-anterior permanece como histórico; não é dependência deste projeto.
+anterior, agora `HelioConde/video-forge-ia2`, permanece intacto e serve
+somente como referência para organização.
 
-## Estado da primeira versão
+## O que já funciona
 
-- **Compositor de vídeo real**: recebe imagens e narrações fornecidas,
-  redimensiona para 1080 × 1920, adiciona legendas visíveis por cena,
-  combina as faixas de áudio e salva um MP4 H.264 + AAC.
-- **QA automático**: verifica áudio, vídeo, duração, resolução e SHA-256.
-- **Smoke test real**: gera um MP4 de aproximadamente 5 segundos com
-  imagens e tons **sintéticos**, rotulado como teste, no GitHub Actions.
-  **Este artefato não é um vídeo de produção do Otaku Multicena.**
-- **Sem uso de créditos de IA, sem segredos e sem publicação no YouTube.**
-- Primeira produção de Otaku Multicena exige **90 a 180 segundos**;
-  imagens e vozes reais precisam ser fornecidas no manifesto.
+- Compositor FFmpeg de **imagens e narrações fornecidas**, com legendas,
+  MP4 H.264/AAC vertical 1080 × 1920.
+- QA automático de vídeo, áudio, duração, resolução e SHA-256.
+- Smoke test no GitHub Actions produz clipe técnico sintético de ~5 segundos
+  (não é vídeo editorial, não é produção de agentes, sem IA paga).
+- Produção do primeiro Otaku Multicena exige **90–180 segundos**
+  e a autorização humana para qualquer integração futura de IA.
+- Não há publicação no YouTube, nem credenciais no Git.
+
+## Pastas — igual ao VideoForge anterior
+
+```text
+canal/
+  otaku-br/                         # Otaku Multicena, piloto
+    canal.json                      # opções / modelo padrão
+    conteudos/indice.json           # referências, não fila automática
+    editorial/
+      candidatos.json               # pesquisas autenticadas futuras
+      reservas.json                 # antirrepetição, começa vazio
+      pesquisas/YYYY-MM-DD.json     # futuro, só pesquisa verificável
+    videos/
+      <video-id>/video.json         # manifesto por vídeo
+  otaku-en/                         # Otaku Reframe
+  gamer/                            # Conde Games
+  manu-kids/                        # Emanuelly Kids
+  alchemy-lab/                      # Alchemy Lab
+modelos/
+  imagem-estatica/modelo.json       # implementado: imagens fornecidas
+  camadas-animadas/modelo.json      # PLANEJADO, ainda não implementado
+geradores/                          # receitas de nicho futuras
+videoforge/                         # código reutilizável
+tests/                              # testes offline e FFmpeg
+docs/ARQUITETURA.md                 # regra permanente de organização
+output/
+  <channel>/videos/<video-id>/      # MP4 e QA; ignorado pelo Git
+```
+
+Confira [regras dos canais](canal/README.md),
+[modelos](modelos/README.md) e
+[arquitetura](docs/ARQUITETURA.md).
+
+**Isolamento:** nenhum vídeo, métrica, pauta ou reserva de um canal pode ser
+usado como se fosse de outro. O código valida canal e modelo, e bloqueia
+o destino de saída fora de seu diretório.
 
 ## Executar
 
-Requer Python 3.12+ e FFmpeg/FFprobe no PATH. Não precisa instalar pacotes Python.
+Requer Python 3.12+ e FFmpeg/FFprobe no PATH, sem dependências Python extras.
 
-Teste técnico:
+```bash
+python -m unittest discover -s tests -v
+python -m videoforge.mvp smoke --output dist/smoke.mp4
+```
 
-    python -m unittest discover -s tests -v
-    python -m videoforge.mvp smoke --output dist/smoke.mp4
+Após fornecer **mídia realmente existente** e o manifesto aprovado:
 
-Renderização de produção, após fornecer assets e um manifesto válido:
+```bash
+python -m videoforge.mvp render --video canal/otaku-br/videos/episodio-001/video.json
+```
 
-    python -m videoforge.mvp render --manifest projects/otaku-br/episodio-001.json --output dist/episodio-001.mp4
+Esse comando gera o arquivo e relatório QA em:
+`output/otaku-br/videos/episodio-001/video.mp4` e
+`output/otaku-br/videos/episodio-001/video.qa.json`.
 
-Exemplo do formato (os arquivos abaixo devem existir ao lado do JSON):
+O manifesto `video.json` tem este formato **ilustrativo**:
 
-    {
-      "schema": "videoforge/mvp/v1",
-      "channel": "otaku-br",
-      "youtube_upload": false,
-      "scenes": [
-        {"image": "imagens/cena-01.png", "audio": "voz/cena-01.mp3", "caption": "Legenda original 1"},
-        {"image": "imagens/cena-02.png", "audio": "voz/cena-02.mp3", "caption": "Legenda original 2"},
-        {"image": "imagens/cena-03.png", "audio": "voz/cena-03.mp3", "caption": "Legenda original 3"}
-      ]
-    }
+```json
+{
+  "schema": "videoforge/mvp/v1",
+  "channel": "otaku-br",
+  "modelo": "imagem-estatica",
+  "youtube_upload": false,
+  "scenes": [
+    {"image": "imagens/cena-01.png", "audio": "voz/cena-01.mp3", "caption": "Legenda 1"},
+    {"image": "imagens/cena-02.png", "audio": "voz/cena-02.mp3", "caption": "Legenda 2"},
+    {"image": "imagens/cena-03.png", "audio": "voz/cena-03.mp3", "caption": "Legenda 3"}
+  ]
+}
+```
 
-O programa mede a duração total das narrações. Para produção, a soma deve
-ficar entre 90 e 180 segundos. O exemplo é apenas um esquema, não contém
-arquivos de áudio/imagem e não pode ser renderizado sem eles.
+Os arquivos de imagens e voz devem existir ao lado de `video.json` nos
+respectivos subdiretórios, mas **não são versionados**. A narração somada
+precisa durar 90–180 segundos. O manifesto de exemplo **não contém mídia
+nem aprova a escolha do tema**.
+
+`modelo` é opcional no vídeo e usa por padrão `canal.json.modelo_padrao`.
+O Otaku Multicena tinha `camadas-animadas` como padrão provisório no antigo
+projeto; nesta reconstrução usa `imagem-estatica` **temporariamente** para
+entregar um MP4 real primeiro. O modelo de camadas ainda está desativado.
 
 ## Próximos marcos
 
-1. Validar o **MP4 técnico real** em GitHub Actions.
-2. Renderizar um vídeo de 90–180s com **imagens e áudio reais**, fornecidos
-   por um provedor explicitamente configurado, sem depender do Proxy anterior.
-3. Acrescentar pesquisa e três agentes independentes (Pesquisador, Diretor,
-   Produtor) somente depois que o render estiver funcionando.
-4. Integrar métricas do YouTube, revisão humana e, separadamente, upload.
+1. Preservar o MP4 técnico aprovado pelo CI após organização por canal.
+2. Renderizar vídeo de 90–180s com áudio e imagens reais, sem falar em
+   agentes até haver evidências dos trabalhos deles.
+3. Só depois implementar pesquisa, três agentes independentes,
+   provedores de IA com limites, identidade visual e animações.
+4. YouTube Analytics, QA editorial e publicação são etapas separadas;
+   nunca enviar conteúdo automaticamente.
 
-**Importante:** todo artefato recebe QA técnico; isso não constitui aprovação
-visual ou editorial. Não usar o vídeo de teste como vídeo do canal.
+**QA técnico não é aprovação editorial ou visual.**

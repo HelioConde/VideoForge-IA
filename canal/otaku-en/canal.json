@@ -1,0 +1,21 @@
+{
+  "id": "otaku-en",
+  "nome": "Otaku Reframe",
+  "chave_legada": "en",
+  "idioma": "en-US",
+  "modelo_padrao": "imagem-estatica",
+  "modelo_padrao_provisorio": true,
+  "gerador_padrao": "anime",
+  "gerador_padrao_provisorio": true,
+  "orientacoes_editoriais": [],
+  "youtube": {
+    "channel_id": null,
+    "conectado": false,
+    "upload_habilitado": false,
+    "privacidade": "private",
+    "feito_para_criancas": false,
+    "verificar_identidade_oauth": true
+  },
+  "status_producao": "planejado_sem_execucao",
+  "observacao": "Canal catalogado; sem integração de geração nem YouTube."
+}
