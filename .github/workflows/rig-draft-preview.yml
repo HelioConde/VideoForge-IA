@@ -12,12 +12,6 @@ on:
         type: string
         default: '43498887979'
         required: true
-  pull_request:
-    paths:
-      - 'videoforge/rig_draft_preview.py'
-      - 'motion-remotion/src/scene-layer-preview.tsx'
-      - 'motion-remotion/src/mesh-rig.tsx'
-      - 'motion-remotion/tests/mesh-rig.test.cjs'
       - '.github/workflows/rig-draft-preview.yml'
 permissions:
   contents: read
