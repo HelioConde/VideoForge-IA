@@ -9,7 +9,8 @@ Atualizado em **13/11/2026**. Este documento detalha a organização de pesquisa
 3. `docs/ARQUITETURA.md`: hierarquia técnica e isolamento.
 4. Este documento: procedimento editorial e metadados de vídeo.
 5. `canal/README.md`, `canal/<id>/README.md`, `canal/<id>/canal.json`, os índices e reservas do canal.
-6. `docs/referencias/CATALOGO-CURSOS-YOUTUBE.md` e `docs/referencias/GUIA-OFICIAL-YOUTUBE-CREATORS.md`, quando a atividade envolver pesquisa, crescimento, SEO, storytelling, edição, Shorts, direitos e uso de IA. **Não alegar que as aulas já foram assistidas.** As orientações oficiais foram consultadas; as aulas dos cursos não foram verificadas.
+6. **`canal/<id>/ESTRATEGIA.md`**: plano exclusivo do canal, pesquisa de nicho, limites de imagens por IA, idade, originalidade e restrições. Para `manu-kids`, Fofinhos/Fofinho é de gestão exclusiva do usuário e não pode ser produzido ou modificado automaticamente; para `gamer`, jamais inventar gameplay; para `otaku-en`, elaborar em inglês sem tradução automática do Otaku BR.
+7. `docs/referencias/CATALOGO-CURSOS-YOUTUBE.md` e `docs/referencias/GUIA-OFICIAL-YOUTUBE-CREATORS.md`, quando a atividade envolver pesquisa, crescimento, SEO, storytelling, edição, Shorts, direitos e uso de IA. **Não alegar que as aulas já foram assistidas.** As orientações oficiais foram consultadas; as aulas dos cursos não foram verificadas.
 
 ## Hierarquia que não pode ser quebrada
 
