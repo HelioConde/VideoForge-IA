@@ -75,7 +75,7 @@ def validate_rig_dir(directory: Path, *, channel: str, video_id: str,
     ):
         raise RigAssetError("RIG_HUMAN_ASSET_REVIEW_REQUIRED")
     hashes = raw.get("assets")
-    optional_assets = {"cape-front.png": "capeFront", "head-open.png": "headOpen"}
+    optional_assets = {"cape-front.png": "capeFront", "head-open.png": "headOpen", "head-closed-ai.png": "headClosed"}
     expected_names = set(ASSET_NAMES.values())
     if isinstance(hashes, dict):
         expected_names.update(name for name in optional_assets if name in hashes)
