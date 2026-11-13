@@ -105,6 +105,8 @@ def prepare(input_dir: Path, channel: str, video_id: str, scene: str,
         rig_public.mkdir()
         for name in mesh_rig.ASSET_NAMES.values():
             shutil.copyfile(rig_dir / name, rig_public / name)
+        if "capeFront" in rig["layers"]:
+            shutil.copyfile(rig_dir / "cape-front.png", rig_public / "cape-front.png")
     mvp._command([
         "ffmpeg", "-nostdin", "-hide_banner", "-loglevel", "error", "-y",
         "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",

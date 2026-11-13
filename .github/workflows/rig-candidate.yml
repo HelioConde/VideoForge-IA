@@ -1,0 +1,98 @@
+name: 'VideoForge - Preparar rig candidato RGBA (sem IA)'
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 'Run ID de origem com character-main, cape e manifest'
+        type: string
+        required: true
+        default: '43437992955'
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/rig_candidate.py'
+      - 'canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json'
+      - '.github/workflows/rig-candidate.yml'
+
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
+jobs:
+  make-candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      SOURCE_RUN: ${{ inputs.source_run_id || '43437992955' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verificar origem conhecida e parametros
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_RUN" =~ ^[1-9][0-9]{7,16}$ ]] || exit 2
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          p=Path("canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json")
+          plan=json.loads(p.read_text())
+          assert plan["approved"] is False, "Nunca aprovar rig no plano inicial"
+          assert plan["channel"]=="otaku-br"
+          assert plan["video_id"]=="teste-proxy-20261113"
+          assert plan["scene"]=="cena-01"
+          print("Plano de mascara candidato: validado como RASCUNHO.")
+          PY
+      - name: Baixar PNGs verificados da mesma cena (sem gerar novas imagens)
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ env.SOURCE_RUN }}
+          name: camadas-advanced-otaku-br-teste-proxy-20261113-cena-01-${{ env.SOURCE_RUN }}
+          path: ./source-layers
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extrair candidatos RGBA e gerar contact sheet de risco
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_candidate \
+            --source-dir ./source-layers \
+            --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
+            --output-dir ./output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from videoforge.mesh_rig import validate_rig_dir, RigAssetError
+          p=Path("output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01")
+          manifest=json.loads((p/"rig.json").read_text())
+          report=json.loads((p/"candidate.qa.json").read_text())
+          assert not any(manifest["human_review"].values())
+          assert report["rig_ready_for_remotion"] is False
+          assert report["needs_manual_reconstruction"] is True
+          assert report["human_visual_approval"] is False
+          assert (p/"contact-sheet.png").is_file()
+          try:
+              validate_rig_dir(p,channel="otaku-br",
+                video_id="teste-proxy-20261113",scene="cena-01",
+                source_sha=manifest["source_sha256"],
+                width=1024,height=1536,duration_frames=240)
+          except RigAssetError as e:
+              assert "RIG_HUMAN_ASSET_REVIEW_REQUIRED" in str(e), str(e)
+              print("Bloqueio de render aprovado corretamente:",e)
+          else:
+              raise AssertionError("RIG CANDIDATO NUNCA PODE SER APROVADO AUTOMATICAMENTE")
+          PY
+      - name: Arquivar somente candidatos e imagens de QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rig-candidate-otaku-br-teste-proxy-20261113-cena-01-${{ github.run_id }}
+          path: output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01/
+          retention-days: 7
+          if-no-files-found: warn

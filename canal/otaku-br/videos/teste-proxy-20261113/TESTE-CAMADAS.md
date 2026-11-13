@@ -68,3 +68,19 @@ Codigo e guia geral: [docs/ANIMACAO-CAMADAS.md](../../../../docs/ANIMACAO-CAMADA
 - O artifact e o MP4 não são versionados no Git; permanecem disponíveis no Actions até o prazo de retenção.
 
 Documentação do novo motor e parâmetros: [docs/REMOTION-ANIMACAO.md](../../../../docs/REMOTION-ANIMACAO.md).
+
+## 13/11/2026 — Rig por malha: candidatos REAIS, frames e MP4 de revisão
+
+**Não há aprovação humana nem publicação.** A pesquisa de preparação por cutout+reconstrução parcial foi aplicada ao material real do Teste 2, sem consumir chamadas de IA.
+
+- [Run da preparação dos PNGs RGBA — 43498887979](https://github.com/HelioConde/VideoForge-IA/actions/runs/43498887979): artifact `rig-candidate-otaku-br-teste-proxy-20261113-cena-01-43498887979`. O código valida os hashes do Teste 2 e extrai **seis sprites candidatos** (corpo, cabeça, dois estados de olho e capa dividida em traseira e frontal), máscaras, contact-sheet, plano de pivô e provenance.
+- O desenho real possui **um olho principal e um segundo olho parcialmente visível sob a franja**, não apenas um olho. O `rig-plan.json` contém polígonos aproximados visualmente, ainda não aprovados.
+- O `candidate.qa.json` registrou **225.842 pixels apagados do corpo que requerem reconstrução**, cerca de **37,63% da área visível do personagem**. O preenchimento provisório do olho fechado e a junção das capas ainda precisam de intervenção artística. `human_visual_approval=false`, `rig_ready_for_remotion=false`.
+- [Run de prévia articulada com clip SVG corrigido — 43500330004](https://github.com/HelioConde/VideoForge-IA/actions/runs/43500330004): artifact `rig-draft-preview-otaku-br-teste-proxy-20261113-cena-01-43500330004`, contendo MP4 e PNGs dos quadros 0, 40, 60, 132 e 239 com marca d'água **RASCUNHO — SEM RECONSTRUCAO/QA VISUAL**.
+- QA desse MP4: **8 segundos, 1080×1920, 30 FPS, H.264, AAC silencioso**, SHA-256 `51eeef037af60506e8d947f7c6483bc63a4bf253c97cfaae8510d611d5544492`. `publishable=false`, `youtube_uploaded=false`, `asset_human_approval=false`, `body_inpainting_completed=false`.
+- Primeira versão do warp tinha **fendas de antialias** entre triângulos; o clip SVG foi expandido em 2 px para sobrepor as bordas. Inspeção visual do quadro 60 da versão corrigida mostrou melhora. Os olhos fechados continuam esteticamente provisórios.
+- O workflow `rig-draft-preview.yml` é **manual**, para evitar re-renderizar 8 segundos a cada mudança no código; a versão renderizável oficial `remotion-animate-layers.yml` permanece bloqueada para sprites candidatos.
+
+Próxima ação artística: ajustar máscaras do cabelo e olhos, fazer inpainting localizado de pescoço/ombros/costas, validar os seis PNGs contra a composição original em escala 100% e só então considerar `human_review=true` e um primeiro vídeo articulado **não rascunho**.
+
+Guia operacional: [docs/PREPARAR-RIG-CANDIDATO.md](../../../../docs/PREPARAR-RIG-CANDIDATO.md). Resultados de vídeo e imagens continuam exclusivamente nos artifacts e em `output/otaku-br/videos/teste-proxy-20261113/`, sem versionar MP4/PNG no Git.
