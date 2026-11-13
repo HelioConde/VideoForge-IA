@@ -7,7 +7,12 @@
   "modelo_padrao_provisorio": true,
   "gerador_padrao": "kids",
   "gerador_padrao_provisorio": true,
-  "orientacoes_editoriais": [],
+  "orientacoes_editoriais": [
+    "Fofinhos/Fofinho é série exclusiva do usuário: não sugerir, reservar, alterar, gerar, publicar nem tocar sem pedido específico dele.",
+    "Para os demais vídeos, criar histórias infantis originais, educativas, seguras e com personagens próprios em imagens IA consistentes.",
+    "Manter classificação para crianças, sem plano de interação por comentários e sem conteúdos assustadores ou desafios perigosos.",
+    "Seguir ESTRATEGIA.md; nunca reutilizar artes e personagens de Fofinhos automaticamente."
+  ],
   "youtube": {
     "channel_id": null,
     "conectado": false,
