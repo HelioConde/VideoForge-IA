@@ -1,0 +1,52 @@
+name: VideoForge - Teste 2 foreground e animaveis
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 'ID do Teste 1 com artifact camadas-basic'
+        required: true
+        type: string
+      channel:
+        type: choice
+        options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
+        default: otaku-br
+      video_id:
+        type: string
+        required: true
+        default: teste-proxy-20261113
+      scene:
+        type: string
+        required: true
+        default: cena-01
+      component:
+        type: choice
+        description: 'pair faz foreground+cape em ate duas chamadas'
+        options: [pair, foreground-roof, cape, hair, sword, flag, waterfall]
+        default: pair
+      mode:
+        type: choice
+        options: [ephemeral, persistent]
+        default: ephemeral
+      model:
+        type: choice
+        options: [gpt-image-2, gpt-image-1.5]
+        default: gpt-image-2
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+jobs:
+  separar:
+    uses: ./.github/workflows/scene-layer-engine.yml
+    with:
+      stage: advanced
+      source_run_id: ${{ inputs.source_run_id }}
+      channel: ${{ inputs.channel }}
+      video_id: ${{ inputs.video_id }}
+      scene: ${{ inputs.scene }}
+      mode: ${{ inputs.mode }}
+      model: ${{ inputs.model }}
+      component: ${{ inputs.component }}
+    secrets: inherit
