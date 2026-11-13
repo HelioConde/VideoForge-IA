@@ -1,4 +1,4 @@
-# Animação de camadas separadas — teste real de MP4
+# Animação de camadas separadas — legado FFmpeg (fallback de teste)
 
 Versão inicial: 13/11/2026. Este teste usa **as imagens que o VideoForge-IA já criou e separou**, sem gerar imagens novas e sem gastar chamadas de IA. Executa FFmpeg da imagem Docker precompilada no GHCR, sem instalar Go ou FFmpeg por job.
 
@@ -64,3 +64,7 @@ Comando local quando o artifact estiver extraído:
 ```bash
 python -m videoforge.animate_layers --input-dir ./input --channel otaku-br --video-id teste-proxy-20261113 --scene cena-01 --duration 8 --preset cinematic
 ```
+
+## Substituição pelo Remotion do projeto antigo
+
+O fluxo preferido para refazer as animações agora está no [guia Remotion](REMOTION-ANIMACAO.md) e no workflow `remotion-animate-layers.yml`. O motor FFmpeg desta página continua disponível apenas como comparação/regressão; a animação por quadro no teste novo é renderizada pelo Remotion antigo.

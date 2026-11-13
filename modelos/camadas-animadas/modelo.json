@@ -1,7 +1,7 @@
 {
   "id": "camadas-animadas",
   "nome": "Cenas com camadas animadas (planejado)",
-  "descricao": "Prévia técnica de parallax de camadas reais implementada em videoforge/animate_layers.py; animação articulada, rig, narração e produção final ainda não implementadas.",
+  "descricao": "Previa Remotion baseada no AutoEditorVideo, reutilizando personagens e foreground RGBA; animacao articulada, rig, narracao e producao final ainda nao implementadas.",
   "operacional": false,
   "etapas": {
     "roteiro": {
@@ -14,11 +14,12 @@
       "modelo_ia": null
     },
     "animacao": {
-      "modo": "parallax-previa-manual; rig-articulado-planejado",
+      "modo": "remotion-legado-previa-por-camadas; rig-articulado-planejado",
       "provedor": null,
       "modelo_ia": null,
       "preview_implementada": true,
-      "motor_preview": "ffmpeg"
+      "motor_preview": "remotion",
+      "motor_legacy_fallback": "ffmpeg"
     },
     "voz": {
       "provedor": null,

@@ -1,0 +1,44 @@
+name: Validar Remotion legado - TypeScript e testes
+on:
+  pull_request:
+    paths:
+      - 'motion-remotion/**'
+      - 'videoforge/remotion_preview.py'
+      - 'tests/test_remotion_preview.py'
+      - '.github/workflows/remotion-check.yml'
+      - '.github/workflows/remotion-animate-layers.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'motion-remotion/**'
+      - 'videoforge/remotion_preview.py'
+      - 'tests/test_remotion_preview.py'
+      - '.github/workflows/remotion-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  typecheck-and-unit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Reutilizar node_modules preinstalado sem npm ci
+        run: |
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+      - name: Validar TypeScript de toda a composicao React/Remotion
+        run: |
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+      - name: Testar contrato de props e integridade sem IA
+        run: python -m unittest tests.test_remotion_preview -v

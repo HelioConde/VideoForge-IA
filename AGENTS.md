@@ -22,6 +22,10 @@ Antes de modificar ou executar rotinas de edicao de cenas, leia `docs/TESTE-CAMA
 
 O workflow manual `animate-separated-layers.yml` consome somente o artifact do Teste 2, sem chamadas ao proxy, sem reinstalação de Go/FFmpeg e sem upload ao YouTube. O motor `videoforge/animate_layers.py` anima 3 camadas independentes via FFmpeg, verifica SHA-256, RGBA real, movimento entre quadros e codecs do MP4. A capa e demais peças que ainda existem no personagem-base **não podem ser adicionadas como overlays**, pois isso duplicaria roupa/objetos. É obrigatório criar personagem-base sem a peça e pivôs revistos antes do rig. `modelos/camadas-animadas` permanece desabilitado para produção completa. Ver `docs/ANIMACAO-CAMADAS.md`.
 
+## Motor Remotion reaproveitado do projeto antigo
+
+Para prévias animadas de PNGs, usar como **primeira escolha** a composição React em `motion-remotion/src/scene-layer-preview.tsx` e o [guia](docs/REMOTION-ANIMACAO.md). Os módulos `character-idle.ts`, `cinematic-motion.ts` vieram do `AutoEditorVideo/motion-remotion` fixado em `ec85db5bc74455122e4501aba05bd2dd3fd0df2c`, e `videoforge-motion.ts` do antigo VideoForge. A renderização é executada no workflow `remotion-animate-layers.yml` usando imagem GHCR de Node/Remotion/Chrome já compilada, sem npm ci ou download do navegador a cada job. FFmpeg somente gera silêncio e verifica codecs/quadros. Validar SHA, RGBA e identidade do canal antes de compor, **não duplicar a capa**, não fingir rig de membros/cabelo, não enviar ao YouTube. Modelo `camadas-animadas` ainda não é produção pronta.
+
 ## Objetivo inicial
 
 Entregar e comprovar um vídeo MP4 vertical do Otaku Multicena com
