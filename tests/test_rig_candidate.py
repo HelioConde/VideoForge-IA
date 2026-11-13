@@ -121,6 +121,14 @@ class CandidateRigTests(unittest.TestCase):
         with self.assertRaisesRegex(r.CandidateError,"RIG_EYE_NOT_INSIDE_HEAD"):
             r.prepare(self.source,self.plan_path,self.output)
 
+    def test_alpha_over_keeps_fractional_pixels_in_valid_byte_range(self):
+        base=bytearray((248,255,250,3))
+        top=bytearray((252,252,252,2))
+        r._composite(base,top)
+        self.assertEqual(len(base),4)
+        self.assertTrue(all(0<=value<=255 for value in base))
+        self.assertGreater(base[3],0)
+
     def test_png_round_trip_and_masks(self):
         mask=r._mask([[[3,3],[10,3],[10,12],[3,12]]],16,16)
         self.assertGreater(mask.count(255),20)
