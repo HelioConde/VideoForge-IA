@@ -10,6 +10,13 @@ Mesma organização do projeto anterior: **cinco canais isolados**, cada um com 
 | Emanuelly Kids | [manu-kids/](manu-kids/README.md) | `camadas-animadas` | Modelo planejado, sem executor |
 | Alchemy Lab | [alchemy-lab/](alchemy-lab/README.md) | `imagem-estatica` | Cadastro, sem executor |
 
+## Estratégia geral para Shorts
+
+Consultar o [guia de Shorts](../docs/ESTRATEGIA_SHORTS.md) antes de
+planejar qualquer Short. As orientações são compartilhadas entre os canais,
+mas pesquisa, histórico, decisões, temas repetidos e métricas são **sempre
+separados por canal**. O guia não confirma que novos agentes estão ativos.
+
 ## Regra permanente
 
 - `canal/<id>/canal.json`: identidade, idioma, modelo padrão e YouTube desabilitado.
