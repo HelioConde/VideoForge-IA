@@ -1,0 +1,21 @@
+{
+  "id": "manu-kids",
+  "nome": "Emanuelly Kids",
+  "chave_legada": "kids",
+  "idioma": "pt-BR",
+  "modelo_padrao": "camadas-animadas",
+  "modelo_padrao_provisorio": true,
+  "gerador_padrao": "kids",
+  "gerador_padrao_provisorio": true,
+  "orientacoes_editoriais": [],
+  "youtube": {
+    "channel_id": null,
+    "conectado": false,
+    "upload_habilitado": false,
+    "privacidade": "private",
+    "feito_para_criancas": true,
+    "verificar_identidade_oauth": true
+  },
+  "status_producao": "planejado_sem_execucao",
+  "observacao": "Modelo padrão reservado para animação por camadas; não está implementado no MVP. Exige avaliação infantil antes de publicar."
+}
