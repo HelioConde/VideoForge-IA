@@ -1,0 +1,165 @@
+name: 'VideoForge - Teste capa ao vento (Remotion, sem IA)'
+on:
+  pull_request:
+    paths:
+      - 'motion-remotion/src/mesh-rig.tsx'
+      - 'motion-remotion/tests/mesh-rig.test.cjs'
+      - 'videoforge/mesh_rig.py'
+      - 'videoforge/rig_draft_preview.py'
+      - 'canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json'
+      - '.github/workflows/rig-wind-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+  packages: read
+jobs:
+  render-wind-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      CHANNEL: otaku-br
+      VIDEO_ID: teste-proxy-20261113
+      SCENE: cena-01
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Recuperar PNGs da cena ORIGINAL com hashes conhecidos
+        uses: actions/download-artifact@v4
+        with:
+          run-id: '43437992955'
+          name: camadas-advanced-otaku-br-teste-proxy-20261113-cena-01-43437992955
+          path: ./source-layers
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Recuperar olhos FECHADOS corrigidos por IA sem chama-la novamente
+        uses: actions/download-artifact@v4
+        with:
+          run-id: '43512529516'
+          name: rig-eye-ai-original-otaku-br-43512529516
+          path: ./downloaded
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validar configuracao do vento e dos olhos
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/mesh-rig.test.cjs
+          cd ..
+          python -m unittest tests.test_mesh_rig -v
+      - name: Preparar rig em RASCUNHO com vento progressivo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_draft_preview prepare \
+            --source-dir ./source-layers \
+            --candidate-dir ./downloaded/rig-candidates/cena-01 \
+            --wind-plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+          python - <<'PY'
+          import copy,json
+          from pathlib import Path
+          p=Path("output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/draft-props.json")
+          props=json.loads(p.read_text())
+          assert props["draftPreview"] is True
+          assert props["candidate_only"] is True
+          assert props["youtubeUpload"] is False
+          assert props["rig"]["layers"].get("headClosed"),"Olho fechado por IA nao incluido"
+          assert props["rig"]["capeMesh"]["wind"]["direction"] == -1
+          assert props["rig"]["capeMesh"]["amplitudePx"] == 10.5
+          legacy=copy.deepcopy(props)
+          legacy["rig"]["capeMesh"].pop("wind",None)
+          legacy["rig"]["capeMesh"]["amplitudePx"]=6
+          out=p.with_name("legacy-cape-props.json")
+          out.write_text(json.dumps(legacy,ensure_ascii=False,indent=2)+"\n")
+          print("Olhos originais preservados, vento habilitado; baseline antigo salvo.")
+          PY
+      - name: Comparar quadros da capa com e sem vento
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          target="../output/$CHANNEL/videos/$VIDEO_ID/rig-draft-previews/$SCENE"
+          for f in 0 55 95 145 190 225 239; do
+            ./node_modules/.bin/remotion still src/index.ts VideoForgeLayerScene \
+              "$target/wind-frame-$f.png" --frame="$f" \
+              --props="$target/draft-props.json" --log=error
+          done
+          for f in 95 190; do
+            ./node_modules/.bin/remotion still src/index.ts VideoForgeLayerScene \
+              "$target/legacy-frame-$f.png" --frame="$f" \
+              --props="$target/legacy-cape-props.json" --log=error
+            test "$(sha256sum "$target/wind-frame-$f.png" | cut -d' ' -f1)" != \
+                 "$(sha256sum "$target/legacy-frame-$f.png" | cut -d' ' -f1)"
+          done
+          cd ..
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          base=Path("output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01")
+          w,h=1080,1920
+          def rgb(path):
+              p=subprocess.run(["ffmpeg","-nostdin","-hide_banner","-loglevel","error",
+                "-i",str(path),"-frames:v","1","-f","rawvideo","-pix_fmt","rgb24","-"],
+                stdout=subprocess.PIPE,check=True,timeout=30)
+              assert len(p.stdout)==w*h*3
+              return p.stdout
+          a,b=rgb(base/"wind-frame-95.png"),rgb(base/"legacy-frame-95.png")
+          changed=0
+          for y in range(450,1200,4):
+              for x in range(100,720,4):
+                  k=(y*w+x)*3
+                  if max(abs(a[k+i]-b[k+i]) for i in range(3))>18:
+                      changed+=1
+          assert changed>120,f"Vento praticamente imperceptivel na area da capa: {changed}"
+          print(f"Alteracao visual de capa verificada em {changed} pixels amostrados.")
+          PY
+      - name: Renderizar MP4 8s de teste com malha de vento (nao publicavel)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          target="../output/$CHANNEL/videos/$VIDEO_ID/rig-draft-previews/$SCENE"
+          ./node_modules/.bin/remotion render src/index.ts VideoForgeLayerScene \
+            "$target/rig-draft-preview.mp4" \
+            --props="$target/draft-props.json" \
+            --codec=h264 --concurrency=2 --log=error
+      - name: Gerar MP4 leve e verificar QA tecnico sem publicar
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="output/$CHANNEL/videos/$VIDEO_ID/rig-draft-previews/$SCENE"
+          ffmpeg -nostdin -hide_banner -loglevel error -y \
+            -i "$target/rig-draft-preview.mp4" \
+            -vf scale=540:960:flags=lanczos \
+            -c:v libx264 -profile:v baseline -level 3.1 \
+            -pix_fmt yuv420p -crf 24 -preset veryfast \
+            -an -movflags +faststart "$target/capa-vento-preview-compat.mp4"
+          python -m videoforge.rig_draft_preview verify \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          qa=Path("output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/draft-video.qa.json")
+          data=json.loads(qa.read_text())
+          assert data["cape_wind_active"] is True
+          assert data["eye_closed_from_original_ai_edit"] is True
+          assert data["publishable"] is False and data["youtube_uploaded"] is False
+          assert data["asset_human_approval"] is False
+          print("Vento renderizado e rastreado, sem liberacao editorial.")
+          PY
+      - name: Arquivar frames antes/depois, MP4 e qualidade para revisao humana
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: otaku-br-cape-wind-review-${{ github.run_id }}
+          path: output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/
+          retention-days: 14
+          if-no-files-found: warn

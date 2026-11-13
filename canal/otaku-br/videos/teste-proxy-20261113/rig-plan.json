@@ -381,7 +381,15 @@
     },
     "columns": 4,
     "rows": 6,
-    "amplitude_px": 6
+    "amplitude_px": 10.5,
+    "wind": {
+      "direction": -1,
+      "baseStrength": 0.85,
+      "gustStrength": 1.15,
+      "flutterStrength": 0.65,
+      "tipLagSeconds": 0.34,
+      "liftStrength": 0.62
+    }
   },
   "approved": false,
   "eyelid_beziers": [
@@ -437,5 +445,6 @@
         29
       ]
     }
-  ]
+  ],
+  "wind_notes": "Vento vindo da direita para a esquerda: ombro fixo, base pouco móvel, meio e ponta respondem com atraso; 3 rajadas suaves em 8s; sem colisão física. Ajustes são candidatos até assistir ao MP4."
 }

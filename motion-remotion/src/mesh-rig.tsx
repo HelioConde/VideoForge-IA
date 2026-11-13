@@ -11,6 +11,15 @@ import {Img,staticFile} from 'remotion';
 
 export type Point={x:number;y:number};
 export type CapeBounds={x:number;y:number;width:number;height:number};
+/** Parametros fisicamente plausiveis em unidades de malha, nao pixels de tela. */
+export type CapeWind={
+  direction:-1|1;
+  baseStrength:number;
+  gustStrength:number;
+  flutterStrength:number;
+  tipLagSeconds:number;
+  liftStrength:number;
+};
 export type RigManifest={
   schema:'videoforge/mesh-rig/v1';
   canvas:{width:number;height:number};
@@ -18,7 +27,7 @@ export type RigManifest={
   neckPivot:Point;
   headMaxDeg:number;
   blinkFrames:number[];
-  capeMesh:{bounds:CapeBounds;columns:number;rows:number;amplitudePx:number};
+  capeMesh:{bounds:CapeBounds;columns:number;rows:number;amplitudePx:number;wind?:CapeWind};
 };
 export type Triangle={
   source:[Point,Point,Point];
@@ -67,29 +76,82 @@ export const affineFromTriangles=(
   return [a,b,c,d,d0.x-a*s0.x-c*s0.y,d0.y-b*s0.x-d*s0.y];
 };
 
-/** Deformacao leve de tecido: costura superior fixa, base livre. */
+/**
+ * Pseudotecido 2D: vento deterministico com rajadas nao uniformes.
+ *
+ * - costura do ombro inteiramente fixa (v=0)
+ * - atraso progressivo do meio/ponta (v=0..1)
+ * - velocidade de onda e flutter diferentes; sem loop repetido mecanicamente
+ * - pequenas rajadas em tempos relativos ao clipe, com ataque/cauda suaves
+ * - camada frontal responde menos, preservando sobreposicao no peito
+ * Nao e uma simulacao fisica de colisao de tecido nem IK.
+ */
+const gustPulse=(time:number,center:number,attack:number,decay:number):number=>{
+  if(time<=center-attack||time>=center+decay)return 0;
+  return smooth((time-center+attack)/attack)*
+    smooth((center+decay-time)/decay);
+};
+export const windEnergyAtTime=(time:number,durationSeconds:number,wind:CapeWind):number=>{
+  const base=wind.baseStrength*(
+    .52+.14*Math.sin(2*Math.PI*.17*time+.45)+
+    .09*Math.sin(2*Math.PI*.37*time+1.35)
+  );
+  const gust=wind.gustStrength*(
+    .90*gustPulse(time,durationSeconds*.23,.40,.95)+
+    .62*gustPulse(time,durationSeconds*.53,.32,.75)+
+    1.08*gustPulse(time,durationSeconds*.79,.38,.85)
+  );
+  return Math.max(0,base+gust);
+};
 export const capeVertexAtFrame=(args:{
   x:number;y:number;frame:number;fps:number;duration:number;
   bounds:CapeBounds;amplitudePx:number;
+  wind?:CapeWind;layer?:'cape'|'capeFront';
 }):Point=>{
-  const {x,y,frame,fps,duration,bounds,amplitudePx}=args;
+  const {x,y,frame,fps,duration,bounds,amplitudePx,wind,layer='cape'}=args;
   if(fps<=0)return {x,y};
   const u=clamp((x-bounds.x)/bounds.width,0,1);
   const v=clamp((y-bounds.y)/bounds.height,0,1);
   const t=frame/fps;
-  const strength=Math.pow(v,1.65)*envelope(frame,duration);
-  const wave=Math.sin(2*Math.PI*.42*t-1.9*v+1.3*u)-
-    Math.sin(-1.9*v+1.3*u);
-  const vertical=Math.sin(2*Math.PI*.31*t+1.4*u-v)-
-    Math.sin(1.4*u-v);
+  if(!wind){
+    // Compativel com renders anteriores: comportamento exatamente igual.
+    const strength=Math.pow(v,1.65)*envelope(frame,duration);
+    const wave=Math.sin(2*Math.PI*.42*t-1.9*v+1.3*u)-
+      Math.sin(-1.9*v+1.3*u);
+    const vertical=Math.sin(2*Math.PI*.31*t+1.4*u-v)-
+      Math.sin(1.4*u-v);
+    return {
+      x:x+amplitudePx*strength*(.75+.25*u)*wave*.5,
+      y:y+amplitudePx*strength*.22*vertical,
+    };
+  }
+  if(v===0)return {x,y}; // vertice de costura nunca desloca
+  const layerStrength=layer==='capeFront'?.64:1;
+  const layerDelay=layer==='capeFront'?.085:0;
+  const lag=wind.tipLagSeconds*Math.pow(v,1.1)+layerDelay;
+  const localTime=t-lag;
+  const durationSeconds=duration/fps;
+  const energy=windEnergyAtTime(localTime,durationSeconds,wind);
+  const strength=Math.pow(v,1.38)*envelope(frame,duration)*layerStrength;
+  const wavePhase=2*Math.PI*.64*localTime-2.8*v+1.6*u;
+  const flutterPhase=2*Math.PI*1.21*localTime-5.3*v+2.2*u+.45;
+  const slowBend=Math.sin(wavePhase);
+  const ripple=Math.sin(flutterPhase);
+  const sideways=amplitudePx*strength*(
+    .85*energy+.55*slowBend+.38*wind.flutterStrength*ripple
+  );
+  const rise=amplitudePx*strength*(
+    wind.liftStrength*(.30*energy+.23*Math.max(0,slowBend))-
+    .14*wind.flutterStrength*ripple
+  );
   return {
-    x:x+amplitudePx*strength*(.75+.25*u)*wave*.5,
-    y:y+amplitudePx*strength*.22*vertical,
+    x:x+wind.direction*sideways,
+    y:y-rise,
   };
 };
 
 /** Triangulacao regular do retangulo da capa; apenas pixels RGBA da capa aparecem. */
-export const capeMeshAtFrame=(rig:RigManifest,frame:number,fps:number,duration:number):Triangle[]=>{
+export const capeMeshAtFrame=(rig:RigManifest,frame:number,fps:number,duration:number,layer:'cape'|'capeFront'='cape'):Triangle[]=>{
   const {bounds,columns,rows,amplitudePx}=rig.capeMesh;
   const at=(col:number,row:number):Point=>{
     const x=bounds.x+bounds.width*col/columns;
@@ -99,7 +161,7 @@ export const capeMeshAtFrame=(rig:RigManifest,frame:number,fps:number,duration:n
   const tris:Triangle[]=[];
   const append=(p:[Point,Point,Point])=>{
     const dest=p.map(s=>capeVertexAtFrame({
-      ...s,frame,fps,duration,bounds,amplitudePx,
+      ...s,frame,fps,duration,bounds,amplitudePx,wind:rig.capeMesh.wind,layer,
     })) as [Point,Point,Point];
     tris.push({source:p,destination:dest,matrix:affineFromTriangles(p,dest)});
   };
@@ -133,7 +195,7 @@ const WarpedCape:React.FC<{
   rig:RigManifest;frame:number;fps:number;duration:number;layer:'cape'|'capeFront';
 }>=({rig,frame,fps,duration,layer})=>{
   const id=useId().replace(/:/g,'');
-  const triangles=capeMeshAtFrame(rig,frame,fps,duration);
+  const triangles=capeMeshAtFrame(rig,frame,fps,duration,layer);
   const {width,height}=rig.canvas;
   const source=staticFile(rig.layers[layer] ?? rig.layers.cape);
   return <g>
