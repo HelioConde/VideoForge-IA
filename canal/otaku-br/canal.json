@@ -1,0 +1,21 @@
+{
+  "id": "otaku-br",
+  "nome": "Otaku Multicena",
+  "chave_legada": "br",
+  "idioma": "pt-BR",
+  "modelo_padrao": "imagem-estatica",
+  "modelo_padrao_provisorio": true,
+  "gerador_padrao": "anime",
+  "gerador_padrao_provisorio": true,
+  "orientacoes_editoriais": [],
+  "youtube": {
+    "channel_id": "UCXGYTuBYn-0Ziqin5ajKhOw",
+    "conectado": false,
+    "upload_habilitado": false,
+    "privacidade": "private",
+    "feito_para_criancas": false,
+    "verificar_identidade_oauth": true
+  },
+  "status_producao": "mvp_render_assets_fornecidos",
+  "observacao": "Neste MVP usa imagem-estatica. O camadas-animadas original permanece planejado e não será fingido como operacional."
+}
