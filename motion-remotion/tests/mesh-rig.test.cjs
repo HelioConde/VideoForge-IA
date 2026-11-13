@@ -15,7 +15,7 @@ const loaded=new Module(filename,module);
 loaded.filename=filename;
 loaded.paths=Module._nodeModulePaths(path.dirname(filename));
 loaded._compile(transpiled.outputText,filename);
-const {blinkClosureAtFrame,headAngleAtFrame,capeMeshAtFrame,affineFromTriangles}=loaded.exports;
+const {blinkClosureAtFrame,headAngleAtFrame,capeMeshAtFrame,affineFromTriangles,expandedClip}=loaded.exports;
 const rig={
   schema:'videoforge/mesh-rig/v1',
   canvas:{width:1024,height:1536},
@@ -70,4 +70,15 @@ test('triangulo degenerado e rejeitado',()=>{
     [{x:0,y:0},{x:1,y:1},{x:2,y:2}],
     [{x:0,y:0},{x:1,y:1},{x:2,y:2}]
   ),/RIG_DEGENERATE_TRIANGLE/);
+});
+
+test('SVG mesh triangle clips overlap adjacent edges to avoid dark seams',()=>{
+  const points=[{x:2,y:2},{x:20,y:2},{x:11,y:21}];
+  const out=expandedClip(points,2);
+  const cx=11,cy=25/3;
+  for(let i=0;i<3;i++){
+    const old=Math.hypot(points[i].x-cx,points[i].y-cy);
+    const ext=Math.hypot(out[i].x-cx,out[i].y-cy);
+    assert.ok(ext>old+1.9,'clip must expand by ~2px');
+  }
 });
