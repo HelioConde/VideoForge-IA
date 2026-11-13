@@ -69,3 +69,24 @@ O mesmo padrão de pré-compilação vale para o renderizador de vídeo. O Docke
 ### Compatibilidade comprovada de FFmpeg
 
 O teste do primeiro contêiner Debian 12 com FFmpeg **5.1** falhou no QA `MP4_QA_FAILED` (workflow PR #9), embora o mesmo teste passasse no Ubuntu 24.04 do GitHub Actions. Por segurança, a base foi corrigida para **Ubuntu 24.04/FFmpeg 6.x** e tag `ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-v2`; não promover imagem 5.1 para MP4 sem testes. O teste deve comprovar vídeo H.264/AAC, duração e QA antes de migrar o job consumidor.
+
+
+## Migrar a sessão Codex do repositório anterior
+
+O antigo [VideoForge](https://github.com/HelioConde/video-forge-ia2) possui workflow configurado para ler `PROXY_API_KEY` e `PROXY_ACCOUNTS_JSON` do Environment `proxy-runtime`. **GitHub permite ver os nomes, mas não recuperar os valores dos Secrets via API, mesmo ao dono.** Assim, não é possível copiá-los diretamente pelo conector GitHub.
+
+Se o proxy antigo ainda existir no Docker do Windows ou houver uma cópia privada local de `accounts.json`, o script [migrar-codex-proxy.ps1](../scripts/migrar-codex-proxy.ps1) preserva a autorização da conta sem exigir novo login no Codex. A migração **precisa ser executada localmente** pelo proprietário, com GitHub CLI (`gh`) autenticado. Não instala Go nem compila o servidor.
+
+No PowerShell, dentro de uma cópia atualizada do repositório novo:
+
+```powershell
+.\scripts\migrar-codex-proxy.ps1
+```
+
+Se houver vários contêineres, informar `-Container chatgpt-codex-proxy`. Se não houver contêiner rodando, mas existir um arquivo privado local de sessão, informar `-ArquivoContas 'C:\privado\accounts.json'`.
+
+O script lê somente o estado local, valida `accounts.records` e os tokens, gera uma chave API aleatória nova e cadastra via **stdin** os Secrets `CODEX_PROXY_ACCOUNTS_JSON` e `CODEX_PROXY_API_KEY` do repositório novo. Nenhum token entra em argumentos do CLI, histórico de shell, commit ou artifact. Isso prepara o **modo efêmero**. Não configura por si só `CODEX_PROXY_BASE_URL` (necessário apenas para um servidor persistente HTTPS).
+
+Depois, executar em Actions **Codex Proxy - validar ou gerar imagem (manual)** com `modo=ephemeral` e `operacao=health`. Esse health não gera imagem, apenas verifica o serviço e a presença de contas; a validade das credenciais e a disponibilidade real de imagens exigem avaliação separada.
+
+**Limite importante:** o GitHub Actions efêmero usa um snapshot da sessão. Tokens renovados no contêiner não são gravados de volta no Secret; o snapshot pode expirar. Para uso contínuo, preferir um proxy persistente privado com HTTPS. Se a sessão só existir dentro do Secret antigo e nenhum estado local/backup estiver disponível, será necessária outra transferência explicitamente autorizada ou reautenticação; o GitHub não revela valores dos Secrets antigos.
