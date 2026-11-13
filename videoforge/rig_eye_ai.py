@@ -189,12 +189,17 @@ def edit(url:str,api_key:str,workdir:Path,model:str) -> dict:
     if extension!=".png":
         raise EyeAIError("EYE_EDIT_OUTPUT_NOT_PNG")
     info=scene_layers.png_info(blob)
-    if (info["width"],info["height"])!=(1024,1024):
-        raise EyeAIError("EYE_EDIT_OUTPUT_DIMENSIONS_INVALID")
+    w,h=info["width"],info["height"]
+    # O proxy pode produzir canvas horizontal/vertical apesar de pedido quadrado.
+    # Salvar o ORIGINAL da resposta em vez de desperdiçar a chamada de IA.
+    if not (min(w,h)>=512 and max(w,h)<=1536 and max(w,h)/min(w,h)<=1.5):
+        raise EyeAIError("EYE_EDIT_OUTPUT_UNUSABLE_RESOLUTION")
     (workdir/EDITED_NAME).write_bytes(blob)
     meta["status"]="generated_pending_review"
     meta["model"]=model
     meta["model_calls"]=1
+    meta["actual_size"]={"width":w,"height":h}
+    meta["expected_size"]={"width":1024,"height":1024}
     meta["face_closed_sha256"]=hashlib.sha256(blob).hexdigest()
     (workdir/"eye-ai.json").write_text(json.dumps(meta,indent=2)+"\n",encoding="utf-8")
     return meta
@@ -213,7 +218,10 @@ def apply(source_dir:Path,plan_path:Path,workdir:Path,
     result=scene_layers._read_png(workdir/EDITED_NAME)
     if hashlib.sha256(result).hexdigest()!=meta["face_closed_sha256"]:
         raise EyeAIError("EYE_EDIT_OUTPUT_HASH_MISMATCH")
-    if scene_layers.png_info(result)["width"]!=1024:
+    result_info=scene_layers.png_info(result)
+    iw,ih=result_info["width"],result_info["height"]
+    expected=meta.get("actual_size",{"width":1024,"height":1024})
+    if (iw,ih)!=(expected.get("width"),expected.get("height")):
         raise EyeAIError("EYE_EDIT_OUTPUT_WRONG_SIZE")
     rigname=candidate_dir/"rig.json"
     rig=read_json(rigname)
@@ -230,13 +238,39 @@ def apply(source_dir:Path,plan_path:Path,workdir:Path,
     if target.exists():
         raise EyeAIError("EYE_EDIT_CLOSED_HEAD_ALREADY_EXISTS")
     x0,y0,w=CROP
-    scaled=workdir/"face-closed-downscaled.png"
-    _ffmpeg_png(workdir/EDITED_NAME,scaled,
-                f"scale={w}:{w}:flags=lanczos")
-    generated=candidate._image(scaled,w,w)
     original=candidate._image(head_path,1024,1536)
-    closed=bytearray(original)
+    reference=candidate._image(source_dir/"cena-base.png",1024,1536)
     regions=_eye_regions(plan)
+    # Testar varios enquadramentos SEM redesenhar o rosto.
+    # Escolher o que melhor preserva cabelo/bochecha fora dos olhos.
+    filters=[f"scale={w}:{w}:flags=lanczos"]
+    square=min(iw,ih)
+    if iw!=ih:
+        movement=max(iw,ih)-square
+        for frac in (0.,.25,.5,.75,1.):
+            offset=round(movement*frac)
+            ox,oy=(offset,0) if iw>ih else (0,offset)
+            filters.append(f"crop={square}:{square}:{ox}:{oy},scale={w}:{w}:flags=lanczos")
+    options=[]
+    for k,filtergraph in enumerate(filters):
+        scaled=workdir/f"face-closed-aligned-{k}.png"
+        _ffmpeg_png(workdir/EDITED_NAME,scaled,filtergraph)
+        pixels=candidate._image(scaled,w,w)
+        errors,count=0,0
+        for py in range(30,w-20,8):
+            for px in range(25,w-25,8):
+                x,y=x0+px,y0+py
+                if _weight(x+.5,y+.5,regions)>.1:
+                    continue
+                a=4*(y*1024+x)
+                b=4*(py*w+px)
+                errors+=sum(abs(reference[a+c]-pixels[b+c]) for c in range(3))
+                count+=3
+        options.append((errors/max(count,1),k,pixels))
+    best_score,best_variant,generated=min(options,key=lambda item:(item[0],item[1]))
+    if best_score>120:
+        raise EyeAIError("EYE_EDIT_REFERENCE_ALIGNMENT_FAILED")
+    closed=bytearray(original)
     change_sum=0
     mixed_count=0
     for y in range(y0,y0+w):
@@ -271,6 +305,9 @@ def apply(source_dir:Path,plan_path:Path,workdir:Path,
     qa["publishable"]=False
     qa["eye_ai_modified_pixels"]=mixed_count
     qa["eye_ai_rgb_diff_average"]=round(change_sum/mixed_count,2)
+    qa["eye_ai_reference_alignment_score"]=round(best_score,2)
+    qa["eye_ai_alignment_variant"]=best_variant
+    qa["eye_ai_output_dimensions"]=meta["actual_size"]
     report_path.write_text(json.dumps(qa,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     prov_path=candidate_dir/"asset-provenance.json"
     prov=read_json(prov_path)
