@@ -1,4 +1,4 @@
-name: VideoForge - Teste Remotion legado: animar camadas (MP4)
+name: 'VideoForge - Teste Remotion legado: animar camadas (MP4)'
 on:
   workflow_dispatch:
     inputs:
