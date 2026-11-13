@@ -56,7 +56,8 @@ def _read_png(path: Path) -> bytes:
     return path.read_bytes()
 
 
-def png_info(data: bytes, *, require_alpha: bool | None = None) -> dict:
+def png_info(data: bytes, *, require_alpha: bool | None = None,
+             min_visible_fraction: float = .005) -> dict:
     """PNG RGB8/RGBA8, nao interlacado, com CRC e alfa realmente decodificado."""
     if len(data) > MAX_PNG or not data.startswith(b"\x89PNG\r\n\x1a\n"):
         raise LayerError("Arquivo PNG invalido ou grande demais")
@@ -95,6 +96,8 @@ def png_info(data: bytes, *, require_alpha: bool | None = None) -> dict:
     info = {"width": width, "height": height, "color_type": kind, "has_alpha": kind == 6}
     if require_alpha is None:
         return info
+    if not (0 < min_visible_fraction < 1):
+        raise LayerError("Fracao minima de alfa invalida")
     if require_alpha and kind != 6:
         raise LayerError("Camada precisa ser PNG RGBA8 com canal alfa real")
     if kind == 2:
@@ -141,7 +144,7 @@ def png_info(data: bytes, *, require_alpha: bool | None = None) -> dict:
     count = width * height
     info["alpha_zero_fraction"] = round(zero / count, 4)
     info["alpha_visible_fraction"] = round(visible / count, 4)
-    if require_alpha is True and (zero / count < .01 or visible / count < .005):
+    if require_alpha is True and (zero / count < .01 or visible / count < min_visible_fraction):
         raise LayerError("PNG sem transparencia real ou objeto visivel")
     if require_alpha is False and visible / count < .99:
         raise LayerError("Background nao preenche o quadro")
