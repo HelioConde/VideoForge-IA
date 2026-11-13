@@ -1,0 +1,29 @@
+{
+  "id": "imagem-estatica",
+  "nome": "Imagem estática por cena (MVP)",
+  "descricao": "Compositor simples: imagem e narração já fornecidas; legendas FFmpeg. Não inclui movimento real por camadas.",
+  "operacional": true,
+  "etapas": {
+    "roteiro": {
+      "provedor": null,
+      "modelo_ia": null
+    },
+    "imagem": {
+      "modo": "imagem-fornecida",
+      "provedor": null,
+      "modelo_ia": null
+    },
+    "animacao": {
+      "modo": "estatica",
+      "provedor": null,
+      "modelo_ia": null
+    },
+    "voz": {
+      "provedor": null,
+      "modelo_ia": null
+    },
+    "montagem": {
+      "motor": "ffmpeg"
+    }
+  }
+}
