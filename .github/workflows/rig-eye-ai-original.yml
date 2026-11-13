@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once.json'
+      - 'canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once-v2.json'
   workflow_dispatch:
     inputs:
       mode:
@@ -44,15 +45,24 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Reutilizar FFmpeg do container Remotion precompilado (sem apt install)
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
       - name: Preflight, SHA original e autorizacao — sem gastar imagem
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_rig_eye_ai tests.test_rig_candidate -v
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v "$GITHUB_WORKSPACE:/workspace" -w /workspace \
+            ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1 \
+            python -m unittest tests.test_rig_eye_ai tests.test_rig_candidate -v
           python - <<'PY'
           import json, os
           from pathlib import Path
-          p=Path("canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once.json")
+          p=Path("canal/otaku-br/videos/teste-proxy-20261113/eye-ai-request-once-v2.json")
           data=json.loads(p.read_text())
           assert data["channel"]=="otaku-br"
           assert data["video_id"]=="teste-proxy-20261113"
@@ -81,14 +91,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m videoforge.rig_candidate \
-            --source-dir ./source-layers \
-            --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
-            --output-dir ./output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01
-          python -m videoforge.rig_eye_ai prepare \
-            --source-dir ./source-layers \
-            --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
-            --workdir ./output/otaku-br/videos/teste-proxy-20261113/eye-ai-edit/cena-01
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v "$GITHUB_WORKSPACE:/workspace" -w /workspace \
+            ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1 \
+            python -m videoforge.rig_candidate \
+              --source-dir ./source-layers \
+              --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
+              --output-dir ./output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v "$GITHUB_WORKSPACE:/workspace" -w /workspace \
+            ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1 \
+            python -m videoforge.rig_eye_ai prepare \
+              --source-dir ./source-layers \
+              --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
+              --workdir ./output/otaku-br/videos/teste-proxy-20261113/eye-ai-edit/cena-01
       - name: Preparar gateway de IA precompilado, sem Go
         shell: bash
         run: |
@@ -147,11 +163,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m videoforge.rig_eye_ai apply \
-            --source-dir ./source-layers \
-            --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
-            --workdir ./output/otaku-br/videos/teste-proxy-20261113/eye-ai-edit/cena-01 \
-            --candidate-dir ./output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v "$GITHUB_WORKSPACE:/workspace" -w /workspace \
+            ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1 \
+            python -m videoforge.rig_eye_ai apply \
+              --source-dir ./source-layers \
+              --plan ./canal/otaku-br/videos/teste-proxy-20261113/rig-plan.json \
+              --workdir ./output/otaku-br/videos/teste-proxy-20261113/eye-ai-edit/cena-01 \
+              --candidate-dir ./output/otaku-br/videos/teste-proxy-20261113/rig-candidates/cena-01
           python - <<'PY'
           import json
           from pathlib import Path
