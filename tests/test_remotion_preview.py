@@ -43,7 +43,7 @@ class RemotionPreviewTests(unittest.TestCase):
             with self.subTest(key=key):
                 arg = dict(base)
                 arg[key] = value
-                with self.assertRaises(ValueError):
+                with self.assertRaises((ValueError, r.proxy_images.ProxyImageError)):
                     r.make_props(**arg)
 
     def test_prepare_copies_just_three_verified_layers(self):
