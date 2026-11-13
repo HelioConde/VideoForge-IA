@@ -1,0 +1,31 @@
+name: Disparar UMA previa Remotion do projeto antigo
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dispatch-remotion-once.yml'
+permissions:
+  contents: read
+  actions: write
+jobs:
+  dispatch:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Acionar render Remotion do otaku-br com artifact ja existente
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api --method POST \
+            "repos/${{ github.repository }}/actions/workflows/remotion-animate-layers.yml/dispatches" \
+            --raw-field 'ref=main' \
+            --raw-field 'inputs[source_run_id]=43437992955' \
+            --raw-field 'inputs[channel]=otaku-br' \
+            --raw-field 'inputs[video_id]=teste-proxy-20261113' \
+            --raw-field 'inputs[scene]=cena-01' \
+            --raw-field 'inputs[duration]=8' \
+            --raw-field 'inputs[preset]=equilibrado'
+          echo 'Novo render Remotion solicitado (sem gerar imagens).'
