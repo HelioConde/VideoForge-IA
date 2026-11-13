@@ -1,0 +1,158 @@
+name: VideoForge - motor de camadas (workflow reutilizavel)
+on:
+  workflow_call:
+    inputs:
+      stage: {type: string, required: true}
+      source_run_id: {type: string, required: true}
+      channel: {type: string, required: true}
+      video_id: {type: string, required: true}
+      scene: {type: string, required: true}
+      mode: {type: string, required: true}
+      model: {type: string, required: true}
+      component: {type: string, required: true}
+
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
+jobs:
+  layers:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 26
+    concurrency:
+      group: vf-layers-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}-${{ inputs.stage }}
+      cancel-in-progress: false
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      PROXY_MODE: ${{ inputs.mode }}
+      SOURCE_RUN: ${{ inputs.source_run_id }}
+      CHANNEL: ${{ inputs.channel }}
+      VIDEO_ID: ${{ inputs.video_id }}
+      SCENE: ${{ inputs.scene }}
+      STAGE: ${{ inputs.stage }}
+      COMPONENT: ${{ inputs.component }}
+      MODEL: ${{ inputs.model }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preflight - origem, canal, modo e secrets (SEM IA)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os, re
+          from videoforge.proxy_images import IMAGE_MODELS, destination
+          x = os.environ
+          if not re.fullmatch(r'[1-9][0-9]{7,16}', x["SOURCE_RUN"]):
+              raise SystemExit("Run ID de origem invalido")
+          if x["STAGE"] not in ("basic", "advanced"):
+              raise SystemExit("Etapa invalida")
+          if x["MODEL"] not in IMAGE_MODELS:
+              raise SystemExit("Modelo invalido")
+          destination(x["CHANNEL"], x["VIDEO_ID"], x["SCENE"])
+          if not x["CODEX_PROXY_API_KEY"]:
+              raise SystemExit("Falta CODEX_PROXY_API_KEY")
+          if x["PROXY_MODE"] == "ephemeral" and not x["CODEX_PROXY_ACCOUNTS_JSON"]:
+              raise SystemExit("Falta CODEX_PROXY_ACCOUNTS_JSON")
+          if x["PROXY_MODE"] == "persistent" and not x["CODEX_PROXY_BASE_URL"]:
+              raise SystemExit("Falta CODEX_PROXY_BASE_URL")
+          if x["PROXY_MODE"] not in ("ephemeral", "persistent"):
+              raise SystemExit("Modo desconhecido")
+          print("Preflight concluido sem gastar cota de geracao")
+          PY
+      - name: Baixar artifact EXATO da imagem ou das camadas basicas
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.source_run_id }}
+          name: ${{ inputs.stage == 'basic' && format('imagem-{0}-{1}-{2}', inputs.channel, inputs.video_id, inputs.source_run_id) || format('camadas-basic-{0}-{1}-{2}-{3}', inputs.channel, inputs.video_id, inputs.scene, inputs.source_run_id) }}
+          path: ./input
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Importar e validar a mesma cena, sem gerar novamente
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$STAGE" == "basic" ]]; then
+            python -m videoforge.scene_layers init \
+              --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE" \
+              --source "./input/$SCENE.png"
+          else
+            python -m videoforge.scene_layers resume \
+              --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE" \
+              --input-dir ./input
+          fi
+      - name: Iniciar proxy precompilado no GHCR (sem Go)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$PROXY_MODE" == "persistent" ]]; then
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          try:
+              data=json.loads(os.environ["CODEX_PROXY_ACCOUNTS_JSON"])
+              if not isinstance(data,dict) or not isinstance(data.get("records"),list) or not data["records"]:
+                  raise ValueError()
+              for row in data["records"]:
+                  if not isinstance(row,dict) or not isinstance(row.get("token"),dict):
+                      raise ValueError()
+              f=Path(os.environ["RUNNER_TEMP"])/"vf-proxy-state/accounts.json"
+              f.write_text(json.dumps(data),encoding="utf-8")
+              f.chmod(0o600)
+          except (ValueError, TypeError):
+              raise SystemExit("Estado secreto invalido - conteudo omitido")
+          PY
+          printf 'PROXY_ENDPOINT=http://127.0.0.1:18080\n' >> "$GITHUB_ENV"
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-layers \
+            --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy nao iniciou corretamente."
+          exit 1
+      - name: Health autenticado sem geracao
+        shell: bash
+        run: python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+      - name: Editar no maximo DUAS camadas com a imagem de referencia
+        shell: bash
+        run: |
+          python -m videoforge.scene_layers generate \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE" \
+            --stage "$STAGE" --component "$COMPONENT" \
+            --url "$PROXY_ENDPOINT" --model "$MODEL"
+      - name: Enviar PNG e manifesto para artifact, inclusive parcial quando houver falha
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: camadas-${{ inputs.stage }}-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}-${{ github.run_id }}
+          path: output/${{ inputs.channel }}/videos/${{ inputs.video_id }}/assets/${{ inputs.scene }}/
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Desligar container e apagar estado privado
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-layers >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
