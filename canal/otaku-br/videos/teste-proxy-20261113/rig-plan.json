@@ -8,7 +8,7 @@
     "width": 1024,
     "height": 1536
   },
-  "notes": "Coordenadas candidatas extraidas de inspecao visual do character-main.png, ainda nao aprovadas; segundo olho parcialmente visivel sob franja. Usar apenas para gerar PREVIA nao publicavel.",
+  "notes": "Refino experimental (fechado natural): olhos cobrem iris/contorno; textura de pele reamostrada da bochecha ORIGINAL, pálpebras cúbicas com taper/antialias. Ilustração gerada em close-up serve somente como referência de estilo, jamais como pixel colado sobre rig. HUMAN REVIEW pendente.",
   "head_polygon": [
     [
       318,
@@ -122,77 +122,93 @@
   "eye_polygons": [
     [
       [
-        421,
-        317
-      ],
-      [
-        437,
-        318
-      ],
-      [
-        454,
-        316
-      ],
-      [
-        469,
+        412,
         327
       ],
       [
-        469,
-        343
+        422,
+        324
       ],
       [
-        460,
+        442,
+        324
+      ],
+      [
+        456,
+        329
+      ],
+      [
+        467,
+        338
+      ],
+      [
+        469,
+        344
+      ],
+      [
+        462,
         350
       ],
       [
-        439,
-        348
+        447,
+        352
       ],
       [
-        423,
-        340
+        434,
+        350
+      ],
+      [
+        419,
+        339
+      ],
+      [
+        412,
+        334
       ]
     ],
     [
       [
-        476,
-        336
+        472,
+        340
       ],
       [
-        487,
-        334
+        481,
+        338
+      ],
+      [
+        489,
+        340
       ],
       [
         497,
-        337
+        346
       ],
       [
-        502,
+        496,
+        358
+      ],
+      [
+        488,
+        362
+      ],
+      [
+        479,
+        357
+      ],
+      [
+        471,
         349
-      ],
-      [
-        498,
-        360
-      ],
-      [
-        484,
-        361
-      ],
-      [
-        473,
-        354
       ]
     ]
   ],
   "skin_samples": [
     [
-      447,
-      366
+      445,
+      368
     ],
     [
-      487,
-      373
+      476,
+      370
     ]
   ],
   "eyelid_lines": [
@@ -367,5 +383,59 @@
     "rows": 6,
     "amplitude_px": 6
   },
-  "approved": false
+  "approved": false,
+  "eyelid_beziers": [
+    {
+      "points": [
+        [
+          416,
+          330
+        ],
+        [
+          430,
+          340
+        ],
+        [
+          449,
+          346
+        ],
+        [
+          462,
+          341
+        ]
+      ],
+      "width": 1.75,
+      "color": [
+        67,
+        34,
+        30
+      ]
+    },
+    {
+      "points": [
+        [
+          474,
+          344
+        ],
+        [
+          479,
+          348
+        ],
+        [
+          488,
+          354
+        ],
+        [
+          494,
+          354
+        ]
+      ],
+      "width": 1.05,
+      "color": [
+        70,
+        37,
+        29
+      ]
+    }
+  ]
 }
