@@ -294,7 +294,10 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
     if output_dir.exists() or output_dir.is_symlink():
         raise CandidateError("RIG_CANDIDATE_OUTPUT_ALREADY_EXISTS")
     _check_symlinks(output_dir, stop_at=proxy_images.ROOT)
-    headmask=_mask([plan["head_polygon"]],width,height)
+    # Head rig must retain ALL original hair strands, not just face geometry.
+    # Legacy plans still use head_polygon; fuller per-channel art has its own contour.
+    full_head=plan.get("head_full_polygon",plan["head_polygon"])
+    headmask=_mask([full_head],width,height)
     eye_shapes=plan["eye_polygons"]
     if not isinstance(eye_shapes,list) or not 1<=len(eye_shapes)<=2:
         raise CandidateError("RIG_EYES_ONE_OR_TWO_REQUIRED")
@@ -308,6 +311,31 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         raise CandidateError("RIG_EYE_NOT_INSIDE_HEAD")
     frontmask=_mask([plan["cape_front_polygon"]],width,height)
     char=originals["character-main.png"]
+    hair_coverage=None
+    if "head_full_polygon" in plan:
+        bbox=plan.get("hair_guard_bbox")
+        if not isinstance(bbox,list) or len(bbox)!=4 or any(
+            type(v) is not int for v in bbox
+        ):
+            raise CandidateError("RIG_HAIR_GUARD_MISSING")
+        x0,y0,x1,y1=bbox
+        if not (0<=x0<x1<=width and 0<=y0<y1<=height
+                and x1-x0>=10 and y1-y0>=10):
+            raise CandidateError("RIG_HAIR_GUARD_BOUNDS")
+        total=0
+        lost=0
+        for y in range(y0,y1):
+            for x in range(x0,x1):
+                i=y*width+x
+                alpha=char[4*i+3]
+                total+=alpha
+                if not headmask[i]:
+                    lost+=alpha
+        if total<2550:
+            raise CandidateError("RIG_HAIR_GUARD_EMPTY")
+        hair_coverage=round(1-lost/total,7)
+        if lost/total>0.0002:
+            raise CandidateError("RIG_HAIR_CLIPPED_BY_HEAD_MASK")
     cape=originals["cape.png"]
     back,front=_cape_split(cape,frontmask)
     head=_cutout(char,headmask)
@@ -385,11 +413,13 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         "needs_manual_reconstruction":True,
         "eyes_extracted_from_original":len(eyes),
         "head_open_original_pixels_preserved":True,
+        "head_full_hair_guard_alpha_coverage":hair_coverage,
+        "head_mask_variant":"head_full_polygon" if "head_full_polygon" in plan else "head_polygon_legacy",
         "natural_eyelids_preview":eye_report,
         "cape_front_back_split":True,"human_visual_approval":False,
         "rig_ready_for_remotion":False,"youtube_uploaded":False,
         "notes":[
-            "Cabeça/olhos/capa extraidos de pixels existentes; plan polygons sao candidatos",
+            "Cabeca/olhos/capa extraidos de pixels existentes; recorte de cabelo integral verificado quando head_full_polygon existe",
             "Olhos fechados usam curvas antialias e pele emprestada da bochecha original; QA artistico ainda requerido",
             "Corpo atras de capa/cabeca nao reconstruido; a regiao apagada exige inpainting",
             "O artefato NAO pode receber nome de rig aprovado nem ser usado para publicar",

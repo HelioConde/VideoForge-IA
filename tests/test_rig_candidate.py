@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from videoforge import mesh_rig, proxy_images, rig_candidate as r, scene_layers
+from videoforge import mesh_rig, proxy_images, rig_candidate as r, rig_hair_repair, rig_eye_ai, scene_layers
 
 
 class CandidateRigTests(unittest.TestCase):
@@ -155,6 +155,86 @@ class CandidateRigTests(unittest.TestCase):
             report["asset_sha256"]["eyes-closed.png"],
             hashlib.sha256((self.output/"eyes-closed.png").read_bytes()).hexdigest(),
         )
+
+    def test_complete_hair_mask_guards_every_original_visible_strand(self):
+        self.plan["head_full_polygon"]=[
+            [19,8],[44,8],[46,43],[21,46],[19,40]]
+        self.plan["hair_guard_bbox"]=[25,12,40,33]
+        self.write_plan()
+        report=r.prepare(self.source,self.plan_path,self.output)
+        self.assertEqual(report["head_mask_variant"],"head_full_polygon")
+        self.assertEqual(report["head_full_hair_guard_alpha_coverage"],1.0)
+        source=r._image(self.source/"character-main.png",64,96)
+        head=r._image(self.output/"head-open.png",64,96)
+        for y in range(12,33):
+            for x in range(25,40):
+                off=4*(y*64+x)
+                self.assertEqual(head[off:off+4],source[off:off+4])
+
+    def test_clipped_hair_is_rejected_even_when_eye_polygon_fits(self):
+        self.plan["head_full_polygon"]=[[27,15],[43,15],[43,40],[27,40]]
+        self.plan["hair_guard_bbox"]=[25,12,40,33]
+        self.write_plan()
+        with self.assertRaisesRegex(r.CandidateError,"RIG_HAIR_CLIPPED_BY_HEAD_MASK"):
+            r.prepare(self.source,self.plan_path,self.output)
+        self.assertFalse(self.output.exists())
+
+    def test_reuse_existing_ai_eye_pixels_on_complete_original_hair(self):
+        self.plan["head_full_polygon"]=[[19,8],[44,8],[46,43],[21,46],[19,40]]
+        self.plan["hair_guard_bbox"]=[25,12,40,33]
+        self.write_plan()
+        r.prepare(self.source,self.plan_path,self.output)
+        old=self.root/"archived-eye"
+        old.mkdir()
+        data=r._image(self.output/"head-open.png",64,96)
+        old_open=bytearray(data)
+        # Previous head lost a hair strand; keep it missing in both old sprites.
+        for x in range(31,39):
+            p=4*(17*64+x)
+            old_open[p:p+4]=bytes((0,0,0,0))
+        old_closed=bytearray(old_open)
+        for y in range(21,31):
+            for x in range(28,41):
+                off=4*(y*64+x)
+                old_closed[off:off+3]=bytes((25,35,46))
+        r._write_png(old/"head-open.png",old_open,64,96)
+        r._write_png(old/"head-closed-ai.png",old_closed,64,96)
+        r._write_png(old/"face-closed-ai-reference.png",old_closed,64,96)
+        filenames=("head-open.png","head-closed-ai.png","face-closed-ai-reference.png")
+        (old/"manifest.json").write_text(json.dumps({
+            "schema":"videoforge/original-eye-ai-archive/v1",
+            "channel":"otaku-br","video_id":"teste-001","scene":"cena-01",
+            "source_run_id":12345678,"source_sha256":self.source_sha,
+            "files_sha256":{
+                name:hashlib.sha256((old/name).read_bytes()).hexdigest()
+                for name in filenames},
+            "human_review":False,"publishable":False,"model_calls_for_eye":1
+        }))
+        def weight(x,y,areas):
+            return 1 if 28<=x-.5<41 and 21<=y-.5<31 else 0
+        with patch.object(rig_eye_ai,"_eye_regions",return_value=[(34,25,10,10)]), \
+             patch.object(rig_eye_ai,"_weight",side_effect=weight):
+            report=rig_hair_repair.restore(
+                self.output,old,self.plan_path,self.source)
+        self.assertEqual(report["model_calls_in_this_repair"],0)
+        self.assertEqual(report["eye_edited_pixels_reused"],130)
+        repaired=r._image(self.output/"head-closed-ai.png",64,96)
+        head=r._image(self.output/"head-open.png",64,96)
+        # New strand is sourced from ORIGINAL, not the old clipped AI sprite.
+        self.assertEqual(repaired[4*(17*64+34):4*(17*64+34)+4],
+                         head[4*(17*64+34):4*(17*64+34)+4])
+        self.assertNotEqual(repaired[4*(25*64+34):4*(25*64+34)+3],
+                            head[4*(25*64+34):4*(25*64+34)+3])
+        qa=json.loads((self.output/"candidate.qa.json").read_text())
+        prov=json.loads((self.output/"asset-provenance.json").read_text())
+        self.assertFalse(qa["human_visual_approval"])
+        self.assertFalse(qa["rig_ready_for_remotion"])
+        self.assertEqual(prov["model_calls"],1)
+        self.assertEqual(prov["eye_ai_edit"]["model_calls_in_this_repair"],0)
+        with self.assertRaisesRegex(rig_hair_repair.HairRepairError,"NO_OVERWRITE"):
+            with patch.object(rig_eye_ai,"_eye_regions",return_value=[(34,25,10,10)]), \
+                 patch.object(rig_eye_ai,"_weight",side_effect=weight):
+                rig_hair_repair.restore(self.output,old,self.plan_path,self.source)
 
     def test_png_round_trip_and_masks(self):
         mask=r._mask([[[3,3],[10,3],[10,12],[3,12]]],16,16)
