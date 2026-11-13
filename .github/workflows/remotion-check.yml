@@ -7,6 +7,8 @@ on:
       - 'videoforge/mesh_rig.py'
       - 'videoforge/rig_candidate.py'
       - 'videoforge/eye_refine.py'
+      - 'videoforge/rig_eye_ai.py'
+      - 'tests/test_rig_eye_ai.py'
       - 'videoforge/scene_layers.py'
       - 'tests/test_rig_candidate.py'
       - 'tests/test_eye_refine.py'
@@ -23,6 +25,8 @@ on:
       - 'videoforge/mesh_rig.py'
       - 'videoforge/rig_candidate.py'
       - 'videoforge/eye_refine.py'
+      - 'videoforge/rig_eye_ai.py'
+      - 'tests/test_rig_eye_ai.py'
       - 'videoforge/scene_layers.py'
       - 'tests/test_rig_candidate.py'
       - 'tests/test_eye_refine.py'
@@ -56,7 +60,7 @@ jobs:
           cd motion-remotion
           ./node_modules/.bin/tsc --noEmit
       - name: Testar contrato de props e integridade sem IA
-        run: python -m unittest tests.test_remotion_preview tests.test_mesh_rig tests.test_rig_candidate tests.test_eye_refine -v
+        run: python -m unittest tests.test_remotion_preview tests.test_mesh_rig tests.test_rig_candidate tests.test_eye_refine tests.test_rig_eye_ai -v
       - name: Testar matematica de malha, pivô e piscadas quadro a quadro
         run: |
           cd motion-remotion
