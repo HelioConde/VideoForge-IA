@@ -13,7 +13,7 @@ Atualizado em 13/11/2026. Prioridade de implementação: usar `10/chatgpt-codex-
 
 ## Evitar reinstalar Go, Docker e outras ferramentas em cada workflow
 
-1. **`.github/workflows/proxy-image.yml`**: executar manualmente na branch `main` **uma vez** para criar imagem compilada e publicá-la no GHCR. Buildx usa cache GitHub Actions. Ao atualizar o upstream, revisar o commit, substituir SHA e tag nos dois workflows e reconstruir; nunca usar `@main` ou `:latest` em produção.
+1. **`.github/workflows/proxy-image.yml`**: é executado automaticamente **uma vez** quando o arquivo de workflow entra na branch `main` (também permite execução manual) para criar imagem compilada e publicá-la no GHCR. Buildx usa cache GitHub Actions. Ao atualizar o upstream, revisar o commit, substituir SHA e tag nos dois workflows e reconstruir; nunca usar `@main` ou `:latest` em produção.
 2. **`.github/workflows/proxy-images.yml`**: nunca instala Go nem recompila o proxy. No modo `ephemeral`, apenas baixa a imagem já compilada no GHCR; no modo `persistent`, acessa um serviço HTTPS existente e nem precisa baixar imagem.
 3. O GitHub hospedado descarta o disco depois do job. **Não há garantia de zero downloads de imagens/binários**, mas não há reinstalação/compilação Go por execução. Para cache e sessões duráveis, usar container persistente com armazenamento seguro em VPS/self-hosted runner.
 4. Não fazer `go run`, `go install`, `git clone` do upstream ou `docker build` nos jobs de geração de vídeo, imagem ou pesquisa. Esses jobs usam apenas a API do serviço ou a imagem publicada.
