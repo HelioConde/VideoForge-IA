@@ -101,3 +101,7 @@ complexos nem trabalhos fictícios.
 - Em toda mudança: organizar antes e depois, atualizar docs,
   testar regressões, verificar Actions; nunca editar outros repositórios,
   gastar IA ou publicar YouTube sem autorização explícita.
+
+## Diagnosticar rig sem aprovar sprites
+
+Para ver movimento antes de reconstruir partes ocultas, o workflow `rig-draft-preview.yml` produz MP4 **com marca d'água de rascunho** e quadros de revisão. O módulo `videoforge/rig_draft_preview.py` deve aceitar somente `rig-candidate` com `human_review=false`, SHA validado e origem/canal corretos; nunca converter rascunho em aprovação ou publicar o vídeo. Marcar `publishable=false` e registrar inpainting pendente no QA. A versão de produção segue exigindo `validate_rig_dir` com aprovação visual humana.
