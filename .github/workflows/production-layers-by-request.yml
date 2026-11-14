@@ -144,6 +144,12 @@ jobs:
           set -euo pipefail
           python -m unittest tests.test_production_scene_layers tests.test_scene_layers -v
           python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          CH_SCOPE="${CHANNEL:-${CH:-}}"
+          VID_SCOPE="${VIDEO_ID:-${VID:-}}"
+          if [[ "$CH_SCOPE" == "alchemy-lab" && "$VID_SCOPE" == "mmorpg-conquiste-a-princesa-ep01" && -f "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock" ]]; then
+            echo "::error::Geracao de imagens bloqueada para este episodio; usar PNGs arquivados"
+            exit 2
+          fi
           python -m videoforge.production_scene_layers \
             --channel "$CHANNEL" --video-id "$VIDEO_ID" --number "$NUMBER" \
             --source ./input/cena-01.png --source-report ./input/cena-01.production.json \
