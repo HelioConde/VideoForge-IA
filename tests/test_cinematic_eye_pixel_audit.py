@@ -97,6 +97,24 @@ class EyePixelGeometryTests(unittest.TestCase):
         with self.assertRaisesRegex(VideoForgeError,"CINEMATIC_EYE_MASK_INPUT_INVALID"):
             verify_alpha_sweep(head,parts,safe)
 
+    def test_translucent_pupil_fringe_cannot_escape_safe_eye(self):
+        head,parts,safe=fixture()
+        # 1 alpha-value is still a visible fringe. At +12 it escapes
+        # the left eye mask; this cannot be waved through by QA flags.
+        parts["pupil-left"].putpixel((33,13),1)
+        with self.assertRaisesRegex(VideoForgeError,
+                                    "CINEMATIC_EYE_PIXEL_BLEED"):
+            verify_alpha_sweep(head,parts,safe)
+
+    def test_translucent_head_underlay_is_not_opaque_enough(self):
+        head,parts,safe=fixture()
+        # A head alpha=200 would show the background through the eye,
+        # reproducing the transparent-face glitch on bright scenes.
+        head.putpixel((27,14),200)
+        with self.assertRaisesRegex(VideoForgeError,
+                                    "CINEMATIC_EYE_PIXEL_BLEED"):
+            verify_alpha_sweep(head,parts,safe)
+
     def test_alpha_threshold_and_no_wrap(self):
         almost=Image.new("L",(W,H),0)
         almost.putpixel((100,10),127)
