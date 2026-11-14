@@ -1,0 +1,133 @@
+name: "VideoForge - sprite RGBA independente da cena-mae"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/*/videos/*/pedido-geracao-parte-rgba.json'
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+jobs:
+  extrair-sprite:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 27
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar pedido de UMA parte e mesma cena-mae
+        id: req
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os,pathlib,re,subprocess
+          files=subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','-r','HEAD'],text=True).splitlines()
+          files=[f for f in files if re.fullmatch(r'canal/[a-z0-9-]+/videos/[a-z0-9-]+/pedido-geracao-parte-rgba\.json',f)]
+          if len(files)!=1: raise SystemExit('PART_REQUEST_AMBIGUOUS')
+          path=pathlib.Path(files[0]); req=json.loads(path.read_text(encoding='utf8'))
+          ch,vid=path.parts[1],path.parts[3]
+          if (req.get('schema')!='videoforge/rgba-part-request/v1'
+              or req.get('channel')!=ch or req.get('video_id')!=vid
+              or req.get('max_calls_per_run')!=1
+              or req.get('youtube_upload') is not False
+              or req.get('retry_on_429') is not False):
+              raise SystemExit('PART_REQUEST_INVALID')
+          number=req.get('scene_number'); part=req.get('part_id'); run=req.get('source_run_id')
+          if type(number) is not int or type(run) is not int or run<=0:
+              raise SystemExit('PART_SOURCE_INVALID')
+          from videoforge.production_rgba_parts import plan_entry
+          plan_entry(ch,vid,number,part)
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf8') as out:
+              for key,val in dict(ch=ch,vid=vid,number=number,part=part,
+                source_run=run,source_artifact=f'vf-real-scene-{ch}-{vid}-{number}-{run}').items():
+                  out.write(f'{key}={val}\n')
+          print('PART_REQUEST_VALIDATED',ch,vid,part,'one image edit, no upload')
+          PY
+      - name: Configurar proxy autorizado
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then echo "::error::CODEX_PROXY_API_KEY ausente"; exit 1; fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else echo "::error::Proxy nao configurado"; exit 1; fi
+      - name: Iniciar proxy precompilado
+        if: env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          obj=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+          assert isinstance(obj,dict) and isinstance(obj.get('records'),list)
+          assert obj['records'] and all(isinstance(x,dict) and isinstance(x.get('token'),dict) for x in obj['records'])
+          p=Path(os.environ['RUNNER_TEMP'])/'vf-proxy-state'/'accounts.json'
+          p.write_text(json.dumps(obj),encoding='utf8'); p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-one-part --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy indisponivel"; exit 1
+      - name: Baixar imagem-mae e origem SHA auditavel
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ steps.req.outputs.source_run }}
+          name: ${{ steps.req.outputs.source_artifact }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input
+      - name: Extrair UMA peca RGBA REAL mantendo quadro original
+        shell: bash
+        env:
+          CH: ${{ steps.req.outputs.ch }}
+          VID: ${{ steps.req.outputs.vid }}
+          NUMBER: ${{ steps.req.outputs.number }}
+          PART: ${{ steps.req.outputs.part }}
+        run: |
+          set -euo pipefail
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          python -m videoforge.production_rgba_parts \
+            --channel "$CH" --video-id "$VID" --number "$NUMBER" --part "$PART" \
+            --source ./input/cena-01.png --source-report ./input/cena-01.production.json \
+            --url "$PROXY_ENDPOINT" --model gpt-image-2
+      - name: Arquivar sprite e QA mesmo se falhar a qualidade
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-rgba-part-${{ steps.req.outputs.ch }}-${{ steps.req.outputs.vid }}-${{ steps.req.outputs.part }}-${{ github.run_id }}
+          path: output/${{ steps.req.outputs.ch }}/videos/${{ steps.req.outputs.vid }}/parts/cena-01/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Apagar tokens e proxy
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-one-part >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
