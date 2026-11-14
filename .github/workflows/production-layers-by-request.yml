@@ -1,0 +1,164 @@
+name: "VideoForge - separar camadas RGBA da cena-mae por canal"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/*/videos/*/pedido-separacao-camadas.json'
+  workflow_dispatch:
+    inputs:
+      channel:
+        type: choice
+        options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
+        default: alchemy-lab
+        required: true
+      video_id:
+        type: string
+        default: mmorpg-conquiste-a-princesa-ep01
+        required: true
+      source_run_id:
+        type: string
+        default: '43591342058'
+        required: true
+      scene_number:
+        type: number
+        default: 1
+        required: true
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+jobs:
+  separar-camadas:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      INPUT_CHANNEL: ${{ inputs.channel }}
+      INPUT_VIDEO_ID: ${{ inputs.video_id }}
+      INPUT_SOURCE_RUN_ID: ${{ inputs.source_run_id }}
+      INPUT_SCENE_NUMBER: ${{ inputs.scene_number }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar origem de cena e pedido de duas edicoes de IA
+        id: request
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os,pathlib,re,subprocess
+          if os.environ["GITHUB_EVENT_NAME"]=="workflow_dispatch":
+              ch,vid=os.environ["INPUT_CHANNEL"],os.environ["INPUT_VIDEO_ID"]
+              number=int(os.environ["INPUT_SCENE_NUMBER"])
+              run_id=int(os.environ["INPUT_SOURCE_RUN_ID"])
+          else:
+              names=subprocess.check_output(["git","diff-tree","--no-commit-id","--name-only","-r","HEAD"],text=True).splitlines()
+              names=[n for n in names if re.fullmatch(r"canal/[a-z0-9-]+/videos/[a-z0-9-]+/pedido-separacao-camadas\.json",n)]
+              if len(names)!=1: raise SystemExit("LAYER_REQUEST_AMBIGUOUS")
+              path=pathlib.Path(names[0])
+              request=json.loads(path.read_text(encoding="utf-8"))
+              ch,vid=path.parts[1],path.parts[3]
+              if (request.get("schema")!="videoforge/layer-extraction-request/v1" or request.get("channel")!=ch or request.get("video_id")!=vid or request.get("youtube_upload") is not False or request.get("max_calls_per_run")!=2):
+                  raise SystemExit("LAYER_REQUEST_INVALID")
+              number=request.get("scene_number")
+              run_id=request.get("source_run_id")
+          from videoforge.paths import CHANNEL_IDS,IDENTIFIER
+          from videoforge.production_scene_layers import read_plan
+          if ch not in CHANNEL_IDS or not IDENTIFIER.fullmatch(vid) or type(number) is not int or type(run_id) is not int or run_id<=0:
+              raise SystemExit("LAYER_IDENTIFIERS_INVALID")
+          _,_,entry=read_plan(ch,vid,number)
+          if number!=1: raise SystemExit("LAYER_PIPELINE_CURRENTLY_FIRST_SCENE_ONLY")
+          artifact=f"vf-real-scene-{ch}-{vid}-{number}-{run_id}"
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as f:
+              f.write(f"channel={ch}\nvideo_id={vid}\nscene_number={number}\nsource_run_id={run_id}\nsource_artifact={artifact}\n")
+          print("LAYER_REQUEST_VALIDATED",ch,vid,number,entry["scene"],"2 edits max")
+          PY
+      - name: Verificar proxy sem divulgar chave
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then echo "::error::Proxy key ausente"; exit 1; fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else
+            echo "::error::Proxy nao configurado"; exit 1
+          fi
+      - name: Iniciar proxy efemero se necessario
+        if: env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          obj=json.loads(os.environ["CODEX_PROXY_ACCOUNTS_JSON"])
+          assert isinstance(obj,dict) and isinstance(obj.get("records"),list)
+          assert obj["records"] and all(isinstance(x,dict) and isinstance(x.get("token"),dict) for x in obj["records"])
+          out=Path(os.environ["RUNNER_TEMP"])/"vf-proxy-state"/"accounts.json"
+          out.write_text(json.dumps(obj),encoding="utf-8")
+          out.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-layer-request --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" \
+            -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy indisponivel"; exit 1
+      - name: Baixar cena-mae real e hash do mesmo video
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ steps.request.outputs.source_run_id }}
+          name: ${{ steps.request.outputs.source_artifact }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input
+      - name: Editar mesma cena-mae para fundo e personagem RGBA
+        env:
+          CHANNEL: ${{ steps.request.outputs.channel }}
+          VIDEO_ID: ${{ steps.request.outputs.video_id }}
+          NUMBER: ${{ steps.request.outputs.scene_number }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_production_scene_layers tests.test_scene_layers -v
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          python -m videoforge.production_scene_layers \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --number "$NUMBER" \
+            --source ./input/cena-01.png --source-report ./input/cena-01.production.json \
+            --url "$PROXY_ENDPOINT" --model gpt-image-2
+      - name: Guardar fundo e camadas para QA sem fingir rig final
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-layered-scene-${{ steps.request.outputs.channel }}-${{ steps.request.outputs.video_id }}-${{ steps.request.outputs.scene_number }}-${{ github.run_id }}
+          path: output/${{ steps.request.outputs.channel }}/videos/${{ steps.request.outputs.video_id }}/assets/cena-01/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Apagar credenciais e proxy temporarios
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-layer-request >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
