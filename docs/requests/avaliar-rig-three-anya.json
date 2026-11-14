@@ -13,10 +13,15 @@
   "rigOfficial": false,
   "youtubeUpload": false,
   "workflowMode": "normal_push_no_private",
-  "revision": "v3_qa_reject_foreign_character_contamination_even_when_roundtrip_mean_small",
+  "revision": "v4_clip_head_to_real_anya_connected_segmentation",
   "previous_failed_run": 43587154254,
   "new_image_calls": 0,
   "expected_result": "candidate_rejected_until_isolation_rebuilt",
   "previous_pass_numeric_but_failed_visual_run": 43587264889,
-  "additional_image_calls": 0
+  "additional_image_calls": 0,
+  "isolation_run_id": 43589190537,
+  "isolation_artifact_id": 14111966286,
+  "objective": "Eliminar Loid/Yor de todo sprite da Anya sem alteracao nos pixels originais; manter cabeca e corpo como candidatos sujeitos a QA",
+  "workflow_mode": "normal_no_private",
+  "human_approved": false
 }
