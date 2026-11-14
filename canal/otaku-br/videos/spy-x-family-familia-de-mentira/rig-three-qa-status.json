@@ -6,12 +6,12 @@
   "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
   "reference_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
   "latest_workflow": {
-    "name": "rig-three-anya-hand-layer.yml",
-    "run_id": 43591918632,
+    "name": "rig-three-anya-hair-draft.yml",
+    "run_id": 43593183590,
     "conclusion": "success",
-    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43591918632",
-    "artifact_id": 14112921248,
-    "artifact_name": "vf-anya-hand-head-separate-draft-43591918632"
+    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43593183590",
+    "artifact_id": 14113271572,
+    "artifact_name": "vf-anya-hair-side-seam-draft-43593183590"
   },
   "earlier_artifacts": {
     "isolation_run": 43589190537,
@@ -42,12 +42,11 @@
     "neutral-diff-corrected.png"
   ],
   "pending_visual_and_motion_checks": [
-    "reconstruct face and scalp behind detachable hair/front bangs using the same mother art, not arbitrary external art",
-    "split hair into individually riggable coherent locks without hard cropped rectangular edges",
-    "keep head/hand/collar underlays visually consistent at +/-2 degrees around the neck pivot",
-    "validate neutral and rotation frames of head and independently positioned pointing hand",
-    "approve sprite z-order and seam anti-aliasing under light and dark backgrounds",
-    "run real ThreeCanvas frames and deterministic render QA only after art approval"
+    "Create original-style underlay for the two side-tip locks (their inner edges currently reveal background when deformed).",
+    "Verify that detached moving hair contains no duplicate pink pixels on the original torso below y1470.",
+    "Reconstruct neck/collar hidden areas using the actual source art and inspect hand overlap before moving head.",
+    "Test independent deformable hair 7x9 meshes in the genuine ThreeCanvas runner with exact motion QA.",
+    "Review multiple light/dark backgrounds, frame determinism, eye transition, and parent character separation before releasing a rig."
   ],
   "human_review_approved": false,
   "hair_underlay_approved": false,
@@ -56,7 +55,7 @@
   "rig_animado_aplicado": false,
   "video_oficial_do_programa": false,
   "youtube_uploaded": false,
-  "status": "neutral_roundtrip_passed_geometric_stress_seams_pending",
+  "status": "side_hair_source_partition_qa_passed_real_underlay_and_three_motion_pending",
   "provisional_neck_pivot_review": {
     "source": "local exploratory OpenCV geometry check; NOT a ThreeCanvas render or official motion QA",
     "pivot_candidate_original_canvas": [
@@ -72,5 +71,39 @@
     "outcome": "failed_visual_motion_candidate_needs_underlay_and_pivot_revision",
     "permitted_next_step": "reconstruct originally occluded shoulder/neck pixels; validate joint pivots; separate coherent hair locks with their own underlay; then rerender actual Three.js",
     "head_motion_approved": false
+  },
+  "hair_side_partition_qa": {
+    "source_previous_approved_candidate_run": 43591918632,
+    "source_original_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
+    "left_hair_source_pixels": 32078,
+    "right_hair_source_pixels": 28653,
+    "head_hair_disjoint_neutral_rgb_alpha_exact": true,
+    "full_compositor_max_rgb_rounding_delta": 1,
+    "approved_blink_delta_retained": true,
+    "synthetic_python_unit_tests": 10,
+    "geometric_stress_pivot": [
+      515,
+      1429
+    ],
+    "geometric_stress_missing_alpha_pixels_roi": {
+      "0": 0,
+      "2": 514,
+      "-2": 567
+    },
+    "refined_exposure_localization": {
+      "hair_and_face_side_region_y1360_to1429": {
+        "2": 514,
+        "-2": 565
+      },
+      "neckline_region_y1430_to1529": {
+        "2": 0,
+        "-2": 2
+      },
+      "interpretation": "Most measured alpha gaps are on moving hair/face silhouette; do not infer that the neck collar is missing 500 pixels."
+    },
+    "stage": "machine_qa_passed_static_source_partition_only",
+    "hair_underlay_approved": false,
+    "real_threecanvas_motion_qa": false,
+    "human_visual_approval": false
   }
 }
