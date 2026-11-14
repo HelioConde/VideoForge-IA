@@ -1,0 +1,220 @@
+{
+  "schema": "videoforge/rig-inventory-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "sourceMotherSHA256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "filesValidated": 19,
+  "sha256AllValid": true,
+  "piecesCandidateCount": 16,
+  "piecesRejectedCount": 1,
+  "artworkGeneratedDuringQA": false,
+  "globalGates": {
+    "sourceSHAverifiedFromGitHubQAs": true,
+    "alphaReal": true,
+    "roundtripExistingPartition": true,
+    "roundtripWithMotherAndBackground": false,
+    "underlaysReconstructed": false,
+    "pivotsMeasured": false,
+    "guardArmRigged": false,
+    "kingSpriteApproved": false,
+    "eyesConsistent": false,
+    "hairMeshApproved": false,
+    "humanReview": false,
+    "renderOfficialAllowed": false
+  },
+  "rigReady": false,
+  "renderOfficialAllowed": false,
+  "humanVisualApproved": false,
+  "files": [
+    {
+      "path": "assets/cenas-mae/cena-01.png",
+      "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "bytes": 2785525,
+      "color_type": 2,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/candidatos/background-reconstructed.png",
+      "sha256": "5c3a553a5b9a76a1cf8506f9cca67ee097cde9ff8701aa140701669e43c9d620",
+      "bytes": 2745573,
+      "color_type": 2,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/candidatos/kael-rgba-candidate.png",
+      "sha256": "f910f2df550062267efb17cde99a950c1afa47e1216179372fd963a26b864f41",
+      "bytes": 1533604,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/rosto-orelha.png",
+      "sha256": "a81fbbb5e291782cf1a3f318e20988f8560de596b7c5ea63c65f16572150410e",
+      "bytes": 22391,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/cabelo.png",
+      "sha256": "2210bab86b15f629d854a2ef8fa5df46bfe482a653bdc0dc497ee2f065337af7",
+      "bytes": 78233,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/mao-direita.png",
+      "sha256": "ec61a1b8606e6458141d1966f10f6f64a129e266f2b1407be47af7def7387f54",
+      "bytes": 33176,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/antebraco-direito.png",
+      "sha256": "b60682e6ba88df5136413b4c0425fe3f39ff5f31125952113ffa211caefdb38a",
+      "bytes": 35032,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/braco-superior-direito.png",
+      "sha256": "72f539387056996de30a2046d2a3e0d40a6551aeb4e5c0b8cca47455460a43f9",
+      "bytes": 77431,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/braco-esquerdo.png",
+      "sha256": "dcf26dc3c731fd0458d82beada8ac25856137171275f0f83f8ef773c43aa5cb0",
+      "bytes": 63246,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/bota-direita.png",
+      "sha256": "048e22a52688a9b52d47a945b20ec74d81803bb9cbf9d84530ce642dfd470066",
+      "bytes": 75290,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/bota-esquerda.png",
+      "sha256": "e2c64aee46b8b1cb100915e834dfe3c0ac7f935a0107ca4757b9eccd5a783a69",
+      "bytes": 88654,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/perna-direita-levantada.png",
+      "sha256": "ea9e324d1daa8e4b463fd7f37af387f56ca1ff88801206bcdfaf7ac882f9305c",
+      "bytes": 119983,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/perna-esquerda-ajoelhada.png",
+      "sha256": "b8da187765237617ea7454e11cc6c0f2b0534babfbb5c7e33a0a6a3f45d21ebe",
+      "bytes": 213072,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/tronco-jaqueta.png",
+      "sha256": "895a0cb48ff5e55ffb1dc845a5e52a2be4d29ebcb9ac59f627183baf499faf55",
+      "bytes": 191279,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/lancas/lanca-guarda-esquerdo-CANDIDATE.png",
+      "sha256": "57757aa43fb53c47b83ec8f0298485ea229cff3b9f348dfc62465b34e0609413",
+      "bytes": 49642,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/lancas/lanca-guarda-direito-CANDIDATE.png",
+      "sha256": "c944a31f6bc9081172c53051467617f60c7d9dd943bf3b6b9807987026001a8d",
+      "bytes": 51080,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/grupo/guarda-esquerdo-alinhado.png",
+      "sha256": "33621f89af2f6f04735442a20b1e33c96ac351602a8593ecb64eaedea585c246",
+      "bytes": 439651,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/grupo/guarda-direito-alinhado.png",
+      "sha256": "623d01cf8d4a747936449107140c89853a3cd5d6f7c9c6b55ec2d52be2ebb74b",
+      "bytes": 453988,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/grupo/aldric-com-trono-REJECTED.png",
+      "sha256": "c2e356211b6e020b74e16ee9c5550815421beea956d63b76cfb432fb2b39d9db",
+      "bytes": 252772,
+      "color_type": 6,
+      "canvas": [
+        1024,
+        1536
+      ]
+    }
+  ]
+}
