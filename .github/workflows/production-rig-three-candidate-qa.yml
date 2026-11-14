@@ -54,6 +54,13 @@ jobs:
           name: vf-spy-family-cena01-camadas-remotion-43576834439
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input/blink
+      - name: Recuperar a mascara real da Anya isolada dos demais personagens
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43589190537
+          name: vf-spy-anya-isolated-original-no-ai-43589190537
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/isolation
       - name: Validar manual, proveniencia, pixels e recomposicao original
         shell: bash
         run: |
@@ -64,6 +71,7 @@ jobs:
             --video-id spy-x-family-familia-de-mentira \
             --source ./input/source --head ./input/head \
             --body ./input/body --closed ./input/blink \
+            --isolation ./input/isolation \
             --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/rig-qa
       - name: Publicar candidatos RGBA, composicao e diff para revisão
         if: always()
