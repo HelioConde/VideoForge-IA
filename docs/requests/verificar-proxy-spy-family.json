@@ -1,0 +1,8 @@
+{
+  "schema": "videoforge/proxy-health-request/v1",
+  "target": "otaku-br/spy-x-family-familia-de-mentira",
+  "purpose": "Validar autenticacao do gerador de imagens no fluxo VideoForge-IA sem gastar creditos e sem criar MP4 experimental.",
+  "image_generation": false,
+  "youtube_upload": false,
+  "requested_date": "2026-11-14"
+}
