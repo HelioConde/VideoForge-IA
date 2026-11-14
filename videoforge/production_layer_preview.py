@@ -78,54 +78,50 @@ def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path,bl
     if not 2<duration<100:
         raise VideoForgeError("LAYER_REVIEW_AUDIO_DURATION_INVALID")
     frames=math.ceil(duration*FPS)
+    # Rejeita overlays antigos: a piscada vem de uma SEGUNDA COPIA INTEIRA
+    # do mesmo PNG do personagem, alterada SOMENTE na regiao dos olhos.
     blink_asset=None
-    hair_asset=None
     blink_centers=[]
     blink_record=None
-    hair_record=None
-    occlusion_record=None
+    full_character_qa=None
     if blink_dir is not None:
-        bm=scene_layers._read_manifest(blink_dir/"manifest.json")
-        bqa=json.loads((blink_dir/"eye-overlay.qa.json").read_text(encoding="utf-8"))
-        original_eyes=blink_dir/"eyes-closed.png"
-        blink_asset=blink_dir/"eyes-closed-safe.png"
-        hair_asset=blink_dir/"hair-foreground.png"
-        occlusion_path=blink_dir/"occlusion.qa.json"
-        if not occlusion_path.is_file() or occlusion_path.is_symlink():
-            raise VideoForgeError("LAYER_REVIEW_HAIR_OCCLUSION_QA_REQUIRED")
-        occlusion=json.loads(occlusion_path.read_text(encoding="utf-8"))
-        record=bm.get("layers",{}).get("eyes-closed")
-        if (bm.get("source",{}).get("sha256")!=manifest["source"]["sha256"] or
-            not isinstance(record,dict) or record.get("technical_status")!="verified" or
-            not original_eyes.is_file() or original_eyes.is_symlink() or
-            not blink_asset.is_file() or blink_asset.is_symlink() or
-            hair_asset is None or not hair_asset.is_file() or hair_asset.is_symlink() or
-            record.get("sha256")!=sha(original_eyes) or
-            bqa.get("eyes_rgba_sha256")!=sha(original_eyes) or
-            bqa.get("scene_mother_sha256")!=manifest["source"]["sha256"] or
-            bqa.get("tech_roi_qa")!="passed" or
-            bqa.get("visual_review")!="pending"):
-            raise VideoForgeError("LAYER_REVIEW_EYES_NOT_VALIDATED")
-        if (occlusion.get("schema")!="videoforge/blink-hair-occlusion/v1" or
-            occlusion.get("scene_mother_sha256")!=manifest["source"]["sha256"] or
-            occlusion.get("character_original_sha256")!=sha(character) or
-            occlusion.get("raw_eyes_sha256")!=sha(original_eyes) or
-            occlusion.get("safe_eyes_sha256")!=sha(blink_asset) or
-            occlusion.get("hair_foreground_sha256")!=sha(hair_asset) or
-            occlusion.get("occlusion_qa")!="eye_matte_excludes_original_hair" or
-            occlusion.get("visual_approval") is not False or
-            occlusion.get("pixels_outside_safe_eyes")!=0 or
-            occlusion.get("face_base_opacity_untouched") is not True):
-            raise VideoForgeError("LAYER_REVIEW_EYE_OVER_HAIR_QA_INVALID")
+        ai=blink_dir/"character-eyes-closed-ai.png"
+        report=blink_dir/"character-eyes-closed-ai.production.json"
+        blink_asset=blink_dir/"character-eyes-closed-safe.png"
+        qa_path=blink_dir/"closed-character.qa.json"
+        if any(p.is_symlink() or not p.is_file() for p in (ai,report,blink_asset,qa_path)):
+            raise VideoForgeError("BLINK_FULL_CHARACTER_VARIANT_REQUIRED")
+        try:
+            generation=json.loads(report.read_text(encoding="utf-8"))
+            q=json.loads(qa_path.read_text(encoding="utf-8"))
+        except (ValueError,OSError) as exc:
+            raise VideoForgeError("BLINK_FULL_CHARACTER_QA_INVALID") from exc
+        if (generation.get("schema")!="videoforge/full-character-closed-eyes/v1" or
+            generation.get("scene")!=entry["scene"] or
+            generation.get("channel")!=channel or
+            generation.get("video_id")!=video_id or
+            generation.get("original_character_sha256")!=sha(character) or
+            generation.get("source_scene_mother_sha256")!=manifest["source"]["sha256"] or
+            generation.get("ai_full_closed_sha256")!=sha(ai) or
+            generation.get("original_reference_used") is not True or
+            q.get("schema")!="videoforge/closed-character-pixel-qa/v1" or
+            q.get("mode")!="swap_full_character_image_during_blink" or
+            q.get("source_scene_mother_sha256")!=manifest["source"]["sha256"] or
+            q.get("original_character_sha256")!=sha(character) or
+            q.get("ai_full_closed_sha256")!=sha(ai) or
+            q.get("safe_full_closed_sha256")!=sha(blink_asset) or
+            q.get("only_eyes_modified_technical_qa")!="passed" or
+            q.get("alpha_pixels_changed")!=0 or
+            q.get("non_eye_pixels_changed")!=0 or
+            q.get("visual_approval") is not False):
+            raise VideoForgeError("BLINK_FULL_CHARACTER_PROVENANCE_OR_PIXEL_QA_FAILED")
         scene_layers.png_info(blink_asset.read_bytes(),require_alpha=True)
-        scene_layers.png_info(hair_asset.read_bytes(),require_alpha=True)
-        occlusion_record=occlusion
-        hair_record=sha(hair_asset)
-        blink_centers=bqa.get("blink_centers_frames",[])
+        blink_centers=entry.get("eyes_closed",{}).get("blink_centers_frames",[])
         if (not isinstance(blink_centers,list) or not blink_centers or
             any(type(t) is not int or t<3 or t>=frames-2 for t in blink_centers)):
             raise VideoForgeError("LAYER_REVIEW_BLINK_TIMING_INVALID")
         blink_record=sha(blink_asset)
+        full_character_qa=q
     dest=output_dir(channel,video_id,scene)
     public=ROOT/"motion-remotion"/"public"/"vf-scene"
     if dest.exists() or public.exists():
@@ -136,8 +132,7 @@ def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path,bl
                        (wav,"narracao-feminina.wav")):
         shutil.copyfile(src,public/target)
     if blink_asset is not None:
-        shutil.copyfile(blink_asset,public/"eyes-closed-safe.png")
-        shutil.copyfile(hair_asset,public/"hair-foreground.png")
+        shutil.copyfile(blink_asset,public/"character-eyes-closed-safe.png")
     shutil.copyfile(srt,dest/"legenda-original.srt")
     props={
         "id":video_id,"scene":scene,"durationFrames":frames,
@@ -145,8 +140,9 @@ def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path,bl
         "background":"vf-scene/background.png",
         "character":"vf-scene/character-main.png",
         "foreground":None,  # sobrescreve defaultProps legado do Remotion
-        "eyesClosed":"vf-scene/eyes-closed-safe.png" if blink_asset is not None else None,
-        "hairForeground":"vf-scene/hair-foreground.png" if hair_asset is not None else None,
+        "characterEyesClosed":"vf-scene/character-eyes-closed-safe.png" if blink_asset is not None else None,
+        "eyesClosed":None,
+        "hairForeground":None,
         "blinkFrames":blink_centers,
         "animatedObjects":[],  # nunca inventar objetos ausentes
         "silence":"vf-scene/narracao-feminina.wav",
@@ -165,9 +161,10 @@ def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path,bl
         "layered_motion":True,"camera_motion_not_rig":True,
         "eyes_closed_rgba_verified":blink_record is not None,
         "eyes_closed_sha256":blink_record,
-        "hair_foreground_rgba_verified":hair_record is not None,
-        "hair_foreground_sha256":hair_record,
-        "hair_occlusion_qa":occlusion_record.get("occlusion_qa") if occlusion_record else "not_applicable",
+        "full_character_swap_verified":full_character_qa is not None,
+        "only_eyes_modified_technical_qa":full_character_qa.get("only_eyes_modified_technical_qa") if full_character_qa else "not_applicable",
+        "non_eye_pixels_changed":full_character_qa.get("non_eye_pixels_changed") if full_character_qa else None,
+        "alpha_pixels_changed":full_character_qa.get("alpha_pixels_changed") if full_character_qa else None,
         "separate_object_layers":0,
         "character_micro_motion_px_max":2.8,
         "human_visual_review":"pending","youtube_uploaded":False,
@@ -208,8 +205,10 @@ def verify(channel:str,video_id:str,number:int)->dict:
         "female_voice_and_srt_present":True,
         "eyes_blink_rgba_verified":bool(stage.get("eyes_closed_rgba_verified")),
         "eyes_blink_visual_review":"pending",
-        "bangs_over_blink_technical_qa":stage.get("hair_occlusion_qa")=="eye_matte_excludes_original_hair",
-        "hair_foreground_rgba_verified":bool(stage.get("hair_foreground_rgba_verified")),
+        "full_character_swap_verified":bool(stage.get("full_character_swap_verified")),
+        "only_eyes_modified_technical_qa":stage.get("only_eyes_modified_technical_qa"),
+        "non_eye_pixels_changed":stage.get("non_eye_pixels_changed"),
+        "alpha_pixels_changed":stage.get("alpha_pixels_changed"),
         "character_motion_reduced_to_max_px":stage.get("character_micro_motion_px_max"),
         "remotion_layered_motion_verified":True,
         "rig_head_eyes_hair_clothes":False,
