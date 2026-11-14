@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/production-scenes-batch-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "source_artifact_run_id": 43555226353,
+  "source_character_bible_sha256": "6021f2b2360808c20fc77a55c2b9fd37f19ea36787d2ab1c3e9dce696aded8dd",
+  "completed_scene_1_run_id": 43555469650,
+  "remaining_scenes": "2..N determined by roteiro.json",
+  "existing_generated_images": 2,
+  "additional_requested_images": 15,
+  "estimated_total": 17,
+  "authorized_ceiling": 30,
+  "no_retry_on_429": true,
+  "github_only": true,
+  "version": "main",
+  "youtube_upload": false
+}
