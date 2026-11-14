@@ -38,7 +38,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m unittest tests.test_spy_family_pilot -v
-      - name: Gerar 10 cenas com voz sintetica offline e MP4 vertical 90-180s
+      - name: Gerar cenas dinamicas com voz sintetica offline e MP4 vertical 90-180s
         shell: bash
         run: |
           set -euo pipefail
