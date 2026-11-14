@@ -17,5 +17,9 @@
   "require_alpha": true,
   "require_roundtrip_qa_and_human_review": true,
   "rig_approved": false,
-  "youtube_upload": false
+  "youtube_upload": false,
+  "revision": "v2_imagem_mae_policy_term_corrected",
+  "previous_failed_run_id": 43586637687,
+  "previous_run_spent_image_calls": 0,
+  "run_normal_public_workflow": true
 }
