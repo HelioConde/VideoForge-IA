@@ -32,7 +32,7 @@
       "arte_final": false,
       "narracao_final": false,
       "video_oficial_do_programa": false,
-      "pendencia": "15 cenas restantes precisam background/personagens/objetos transparentes + partes separadas e rig verdadeiro; projeto ainda nao aprovado",
+      "pendencia": "15 cenas ainda sem camadas. Cena 1 tem piscada RGBA da Anya e movimento sutil, mas falta separar demais personagens, cabelo, braços, roupa e objetos e validar rig completo.",
       "render_tech_confirmed": true,
       "workflow_arquivo": ".github/workflows/spy-family-animated.yml",
       "agentes_e_arte_final_integrados": false,
@@ -61,10 +61,12 @@
       "voz_natural_final": false,
       "legendas_embutidas": true,
       "movimento_camera": true,
-      "cena_mae_layer_preview_run_id": 43560582246,
-      "cena_mae_layer_preview_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246/artifacts/14099899544",
+      "cena_mae_layer_preview_run_id": 43570324901,
+      "cena_mae_layer_preview_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43570324901/artifacts/14104157803",
       "verified_layer_scenes": 1,
-      "expected_layer_scenes": 16
+      "expected_layer_scenes": 16,
+      "cena01_blink_anya": true,
+      "cena01_micromovimento_vertical_max_px": 2.8
     }
   ]
 }
