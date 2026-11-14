@@ -129,6 +129,7 @@ jobs:
         run: |
           bash scripts/persistir-imagens-gh.sh "$VF_CH" "$VF_VID" "output/$VF_CH/videos/$VF_VID/imagens" "${{ github.run_id }}" "$VF_PRODUCER"
       - name: Entregar nova cena real para conferencia
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: vf-otaku-br-spy-scene-${{ inputs.scene_number || 1 }}-${{ github.run_id }}
