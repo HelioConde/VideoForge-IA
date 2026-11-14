@@ -7,7 +7,7 @@ import {blinkNeutralWeightAtFrame} from './blink-motion-sync';
 
 export type Rect=[number,number,number,number];
 export type Point={x:number;y:number};
-export type MeshType='cape'|'hair-front'|'hair-back'|'cloth';
+export type MeshType='cape'|'hair-front'|'hair-front-left'|'hair-front-right'|'hair-back'|'cloth';
 export type MeshSpec={columns:number;rows:number;pinnedRows:[0];amplitudePx:number};
 export type LayerSpec={
   id:string;file:string;bbox:Rect;sha256:string;z:number;mesh?:MeshSpec;
