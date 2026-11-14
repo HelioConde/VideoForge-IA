@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/chat-style-reference-qa-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "source_images_expected": 2,
+  "no_generate_images": true,
+  "no_edit_pixels": true,
+  "render_mp4": false,
+  "youtube_upload": false,
+  "manifest": "referencias-cinematograficas-aprovadas-no-chat.json",
+  "expected_originals": [
+    "assets/referencias/chat-aprovadas/kael-close-salao.png",
+    "assets/referencias/chat-aprovadas/elara-close-trono.png"
+  ],
+  "zip_upload_path": "uploads/alchemy-ep01-refs-estilo.zip",
+  "reports": [
+    "qa-referencias-chat-cinematograficas.json"
+  ],
+  "review_policy": "Visual style preference approved; full canonical identity/rig not yet approved."
+}
