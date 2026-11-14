@@ -1,0 +1,23 @@
+{
+  "schema": "videoforge/animated-preview-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "storyboard": "roteiro.json",
+  "engine": "remotion-svg-layered-rig",
+  "render": "full-video-16-scenes",
+  "youtube_upload": false,
+  "art_level": "procedural-vector-review-not-official-anime-art",
+  "voice": "offline-ptbr-draft",
+  "rig_requirements": [
+    "opaque-face-while-blinking",
+    "layered-clothes",
+    "anchored-shoulder",
+    "shared-seam-overlap",
+    "subtle-cinematic-motion",
+    "same-character-design-every-scene"
+  ],
+  "source": "user_requested_github_test",
+  "requested_at": "2026-11-13",
+  "approved_for_test": true,
+  "automatic_publish": false
+}
