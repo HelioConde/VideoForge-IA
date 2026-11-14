@@ -58,7 +58,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_animation_manual -v
+          python -m unittest tests.test_animation_manual tests.test_rig_three_candidate_qa -v
           python -m videoforge.rig_three_candidate_qa \
             --channel otaku-br \
             --video-id spy-x-family-familia-de-mentira \
