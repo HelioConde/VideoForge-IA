@@ -12,6 +12,6 @@
     "37 shot timeline and 4890 frames"
   ],
   "status": "qa_request_only",
-  "revision": 7,
-  "reason": "Validar composicao C12 tecnica ThreeCanvas com cinco RGBA deformados, brinco bone pivot e 512 triangulos sem liberar render oficial"
+  "revision": 8,
+  "reason": "Reexecutar typecheck ThreeCanvas e SHA exato dos 5 sprites RGBA originais apos reforcar contrato"
 }
