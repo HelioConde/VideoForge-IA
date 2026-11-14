@@ -1,0 +1,68 @@
+{
+  "schema": "videoforge/c12-preview-mp4/v1",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "channel": "alchemy-lab",
+  "preview_id": "c12-primeiro-mp4-aprovacao-v01",
+  "state": "MP4_PREVIEW_CREATED_LOCALLY_AWAITING_USER_VISUAL_APPROVAL",
+  "source": "rendered from original existing approved-style PNGs available in ChatGPT session",
+  "preview_filename": "alchemy_c12_primeiro_mp4_aprovacao.mp4",
+  "video_sha256": "22417e6023f90a8c68d48b21c3a28903f719c63f5290b7152821f9f7b67d5a58",
+  "video_bytes": 975443,
+  "media": {
+    "duration_seconds": 12,
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "frames": 360
+  },
+  "shots": [
+    {
+      "id": "C12-P01",
+      "start_sec": 0,
+      "duration_sec": 4,
+      "original_png": "olhar_tenso_no_salão_real.png",
+      "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f"
+    },
+    {
+      "id": "C12-P02",
+      "start_sec": 4,
+      "duration_sec": 4,
+      "original_png": "confronto_no_trono_real.png",
+      "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535"
+    },
+    {
+      "id": "C12-P03",
+      "start_sec": 8,
+      "duration_sec": 4,
+      "original_png": "princesa_intrigada_no_trono_real.png",
+      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a"
+    }
+  ],
+  "animation": "The two portrait shots animate independently extracted, small alpha-masked iris regions, with existing source pixels inpainted locally to prevent doubled pupils; independent procedural atmosphere particles on all three shots. Full source images are not transformed as a substitute for a character rig.",
+  "sound": "original synthesized cinematic tone, not a copyrighted soundtrack; final thought subtitle is from scene c12 in roteiro.json",
+  "limitations": [
+    "technical animatic, not finished 2D mesh animation",
+    "hair, cape, body and clothing do not yet have approved deformable rigs",
+    "iris segmentation and face coverage are provisional until human QA",
+    "scene mother camera C12-P02 not yet independently QA-approved",
+    "preview uses 720x1280, official planned output is 1080x1920",
+    "local generated mp4 is not yet archived as bytes on GitHub"
+  ],
+  "integrity": {
+    "image_generation_calls": 0,
+    "source_pngs_modified": false,
+    "fully_official_mp4_rendered": false,
+    "uploaded_to_youtube": false
+  },
+  "github_state": {
+    "mp4_binary_uploaded": false,
+    "three_original_pngs_imported": false
+  },
+  "user_review": {
+    "requested": true,
+    "status": "awaiting_review",
+    "approves_only_preview_not_full_episode": true
+  }
+}
