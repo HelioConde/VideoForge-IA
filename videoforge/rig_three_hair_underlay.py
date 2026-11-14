@@ -81,9 +81,11 @@ def reconstruct(body, head_open, head_closed, base_open, base_closed,
     repaired=cv2.cvtColor(repaired,cv2.COLOR_BGR2RGB)
     new_base=base_open.copy()
     new_base[:,:,:3][hair_alpha]=repaired[hair_alpha]
-    # Opaque behind original hair except antialiased/transparent silhouette.
+    # Underlay must NOT change neutral antialiased alpha. The complete
+    # source pixel must be 100% opaque; 251-254 still introduce visible
+    # edge-color/alpha deltas. Transparent silhouettes are never filled.
     new_base[:,:,3][hair_alpha]=np.where(
-        head_open[:,:,3][hair_alpha]>250,255,0).astype(np.uint8)
+        head_open[:,:,3][hair_alpha]==255,255,0).astype(np.uint8)
     new_closed=base_closed.copy()
     new_closed[:,:,:3][hair_alpha]=repaired[hair_alpha]
     new_closed[:,:,3][hair_alpha]=new_base[:,:,3][hair_alpha]
