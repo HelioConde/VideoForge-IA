@@ -1,0 +1,63 @@
+name: "VideoForge - Produzir cenas restantes da obra com arte real"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/gerar-cenas-restantes-spy-family.json'
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+concurrency:
+  group: vf-spy-family-production-scenes
+  cancel-in-progress: false
+
+jobs:
+  planejar-cenas:
+    runs-on: ubuntu-24.04
+    outputs:
+      numbers: ${{ steps.plan.outputs.numbers }}
+      count: ${{ steps.plan.outputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Conferir contrato de cenas e orcamento previamente autorizado
+        id: plan
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from videoforge.production_art import read_plan
+          p,s=read_plan("otaku-br","spy-x-family-familia-de-mentira")
+          scenes=s["scenes"]
+          # A primeira cena e a prancha ja foram geradas com runs verificados.
+          # Nenhum teto no gerador: apenas o orcamento desta solicitacao.
+          total_calls=1+len(scenes)
+          budget=p["request_limit"]["strict_budget"]
+          assert total_calls <= budget, "Orcamento de IA excedido; nao gerar"
+          assert len(scenes)>=2, "Nao ha cenas restantes"
+          assert all(c["number"]==i for i,c in enumerate(scenes,1))
+          numbers=list(range(2,len(scenes)+1))
+          with open(os.environ["GITHUB_OUTPUT"],"a") as fp:
+            fp.write("numbers="+json.dumps(numbers,separators=(",",":"))+"\n")
+            fp.write("count="+str(len(numbers))+"\n")
+          print(f"PLANO_VALIDADO: {len(numbers)} cenas, {total_calls}/{budget} imagens totais planejadas")
+          PY
+
+  gerar-cenas:
+    needs: planejar-cenas
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        scene: ${{ fromJson(needs.planejar-cenas.outputs.numbers) }}
+    uses: ./.github/workflows/production-scene.yml
+    with:
+      scene_number: ${{ matrix.scene }}
+      reference_run_id: '43555226353'
+    secrets: inherit
