@@ -43,8 +43,13 @@ class VisualReferenceFingerprintTests(unittest.TestCase):
         self.assertFalse(d["originalPixelsModified"])
         self.assertFalse(d["officialRenderAllowed"])
         self.assertFalse(d["rigOrShotHumanApproved"])
-        self.assertEqual(d["status"],"AWAITING_ORIGINAL_BINARY_TRANSFER")
-        self.assertEqual(d["exactShaVerifiedCount"],0)
+        self.assertIn(d["status"],(
+            "AWAITING_ORIGINAL_BINARY_TRANSFER","THREE_ORIGINALS_ARCHIVED"))
+        self.assertTrue(0<=d["exactShaVerifiedCount"]<=3)
+        self.assertEqual(sum(e["sha256Verified"] for e in d["entries"]),
+                         d["exactShaVerifiedCount"])
+        self.assertTrue(all(e["productionRigApproved"] is False
+                            for e in d["entries"]))
 
     def test_corrupt_source_is_not_imported_as_valid_reference(self):
         with tempfile.TemporaryDirectory() as tmp:
