@@ -7,6 +7,10 @@ on:
       - 'videoforge/persist_generated_assets.py'
       - 'tests/test_persist_generated_assets.py'
       - 'tests/test_persist_workflow_wiring.py'
+      - 'scripts/persistir-imagens-gh.sh'
+      - '.github/workflows/production-*.yml'
+      - '.github/workflows/proxy-images.yml'
+      - '.github/workflows/qa-permanent-image-archive.yml'
   workflow_dispatch:
 
 permissions:
