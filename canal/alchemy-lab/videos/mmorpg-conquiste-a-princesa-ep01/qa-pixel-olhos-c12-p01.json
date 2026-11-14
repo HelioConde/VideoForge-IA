@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/eye-pixel-readiness-report/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot": "C12-P01",
+  "source": "assets/planos/C12-P01/",
+  "method": "recompute alpha envelope of four original RGBA eye parts",
+  "imageGenerationCalls": 0,
+  "newPNGFiles": 0,
+  "mp4Rendered": false,
+  "youtubeUploaded": false,
+  "automatedAlphaApproved": false,
+  "humanVisualApproved": false,
+  "officialRigApproved": false,
+  "status": "awaiting_own_shot_art",
+  "blockers": [
+    "SHOT_RIG_JSON_MISSING",
+    "SHOT_QA_JSON_MISSING"
+  ]
+}
