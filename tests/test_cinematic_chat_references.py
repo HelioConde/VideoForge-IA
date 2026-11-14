@@ -79,6 +79,46 @@ class CinematicChatReferencesTests(unittest.TestCase):
         self.assertIn("A identidade antiga continua",current)
         self.assertTrue((base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file())
 
+    def test_third_camera_candidate_is_recorded_but_never_implicitly_approved(self):
+        r=reference_status()
+        camera=r["camera_candidate_C12_P02"]
+        self.assertEqual(camera["shot_id"],"C12-P02")
+        self.assertEqual(
+            camera["expected_sha256"],
+            "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+        )
+        self.assertIn(camera["status"],("UPLOAD_PENDING","EXACT_SOURCE_ARCHIVED"))
+        self.assertFalse(camera["human_shot_approval"])
+        self.assertFalse(camera["shot_mother_approval"])
+        self.assertFalse(camera["rig_approved"])
+
+    def test_three_originals_zip_rejects_unexpected_or_incorrect_bytes(self):
+        from videoforge.import_cinematic_chat_references import UPLOAD_THREE_REL
+        manifest_path=ROOT/"canal"/CHANNEL/"videos"/VIDEO/MANIFEST
+        camera_path=ROOT/"canal"/CHANNEL/"videos"/VIDEO/"candidato-camera-c12-p02.json"
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            base=root/"canal"/CHANNEL/"videos"/VIDEO
+            base.mkdir(parents=True)
+            shutil.copyfile(manifest_path,base/MANIFEST)
+            shutil.copyfile(camera_path,base/"candidato-camera-c12-p02.json")
+            upload=root/UPLOAD_THREE_REL
+            upload.parent.mkdir(parents=True)
+            with ZipFile(upload,"w") as z:
+                for filename in ("kael-close-salao.png","elara-close-trono.png",
+                                 "confronto-trono-c12-p02.png"):
+                    z.writestr(filename,b"wrong bytes"*200)
+            with self.assertRaisesRegex(VideoForgeError,"SOURCE_MISMATCH"):
+                validate_and_extract(root)
+            self.assertFalse((base/"assets").exists())
+            with ZipFile(upload,"w") as z:
+                for filename in ("kael-close-salao.png","elara-close-trono.png",
+                                 "unexpected-camera.png"):
+                    z.writestr(filename,b"wrong bytes"*200)
+            with self.assertRaisesRegex(VideoForgeError,"UNEXPECTED_ENTRIES"):
+                validate_and_extract(root)
+            self.assertFalse((base/"assets").exists())
+
     def test_missing_zip_does_not_create_new_art_or_directories(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
