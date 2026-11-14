@@ -172,7 +172,26 @@
       "assets_de_personagens_separados_e_validados",
       "edicao_final_com_voz_natural",
       "qa_visual_e_editorial"
-    ]
+    ],
+    "ultimo_pedido_oficial": {
+      "run_id": 43553752100,
+      "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43553752100",
+      "diagnostico_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43553752100/artifacts/14096174813",
+      "resultado": "pipeline_pendente",
+      "mp4_gerado": false,
+      "blockers": [
+        "LAYERED_ANIMATION_MODEL_NOT_OPERATIONAL",
+        "OFFICIAL_RENDERER_HAS_NO_LAYERED_PIPELINE",
+        "OFFICIAL_AGENTS_NOT_INTEGRATED",
+        "SCENE_ART_GENERATOR_NOT_INTEGRATED",
+        "SCENE_ART_AND_RGBA_LAYERS_NOT_GENERATED"
+      ],
+      "modelo_solicitado": "camadas-animadas",
+      "canal": "otaku-br",
+      "cenas": 16,
+      "proxy_configuracao_presente": true,
+      "nota": "Execucao oficial bloqueada antes de geracao de artes; nenhum novo MP4 oficial, nenhuma publicacao."
+    }
   },
   "qa": {
     "aprovado_tecnicamente": true,
@@ -203,6 +222,7 @@
     "Workflow #43541390091 gerou MP4 tecnico com 10 cenas e voz sintetica offline; sem arte final, sem animação de personagens. 104.782s, QA tecnico aprovado.",
     "Revisão editorial de 13/11/2026: roteiro renovado para 16 cenas com gancho sobre Anya, título, descrição, tags e plano visual. A versão renderizada em 104,782s é anterior à revisão; não descrever esse MP4 como atualizado.",
     "Execucao real #43545398967 gerou MP4 vertical de 131.136s com 16 cenas, movimentos de cabeca, piscada, roupas e cabelo por camadas no Remotion; imagens originais de anime NAO foram geradas. Arte final/narracao natural pendentes. Sem upload YouTube.",
-    "Regra nº 1 (14/11/2026): workflow experimental renderizado no GitHub Actions não é vídeo oficial do programa. Reclassificado para preview_tecnico_nao_oficial, status assets_pendentes; o artefato é mantido somente para auditoria."
+    "Regra nº 1 (14/11/2026): workflow experimental renderizado no GitHub Actions não é vídeo oficial do programa. Reclassificado para preview_tecnico_nao_oficial, status assets_pendentes; o artefato é mantido somente para auditoria.",
+    "14/11/2026: preflight oficial #43553752100 executou 11 testes (OK), bloqueou geracao do MP4 por ausência de pipeline/agents/artes RGBA. Reporta cinco blockers; não substituir por arquivo experimental."
   ]
 }
