@@ -1,0 +1,136 @@
+name: "VideoForge - Editar MESMO personagem: fechar apenas olhos"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/gerar-personagem-olhos-fechados.json'
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+jobs:
+  check-proxy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 26
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar chaves sem exibir valores
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then
+            echo "::error::CODEX_PROXY_API_KEY nao configurado"
+            exit 1
+          fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            echo "Modo: proxy persistente"
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo "Modo: proxy efemero com snapshot autorizado"
+            printf 'PROXY_ENDPOINT=http://127.0.0.1:18080\n' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else
+            echo "::error::Falta CODEX_PROXY_BASE_URL ou CODEX_PROXY_ACCOUNTS_JSON"
+            exit 1
+          fi
+      - name: Iniciar proxy precompilado se necessario
+        if: env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          payload=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+          assert isinstance(payload,dict) and isinstance(payload.get('records'),list)
+          assert payload['records'] and all(isinstance(x,dict) and isinstance(x.get('token'),dict) for x in payload['records'])
+          p=Path(os.environ['RUNNER_TEMP'])/'vf-proxy-state'/'accounts.json'
+          p.write_text(json.dumps(payload),encoding='utf-8')
+          p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-health \
+            --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy nao iniciou corretamente"
+          exit 1
+      - name: Testar contas e autenticacao sem imagem nem custos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          echo "PROXY_HEALTH_OK — contas acessiveis; nao confirma disponibilidade do modelo de imagem."
+      - name: Baixar a imagem ORIGINAL do personagem e conferir origem SHA
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input
+      - name: Validar plano, origem e teste SEM gastar imagem
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_full_character_blink tests.test_production_scene_layers -v
+          python - <<'PY'
+          from pathlib import Path
+          from videoforge.full_character_blink import source_info
+          entry,m=source_info(Path('input/character-main.png'),
+              Path('input/manifest.json'), 'otaku-br',
+              'spy-x-family-familia-de-mentira',1)
+          assert entry['eyes_closed']['method']=='edit_full_original_character_same_reference'
+          assert entry['eyes_closed']['must_keep_non_eye_pixels_identical'] is True
+          print('ORIGINAL_CHARACTER_REFERENCE_SHA_OK',m['layers']['character-main']['sha256'])
+          PY
+      - name: Enviar mesma imagem da personagem para IA e fechar SOMENTE olhos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.full_character_blink generate \
+            --channel otaku-br \
+            --video-id spy-x-family-familia-de-mentira --number 1 \
+            --source ./input/character-main.png \
+            --manifest ./input/manifest.json \
+            --output output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/character-eyes-closed-ai.png \
+            --url "$PROXY_ENDPOINT" --model gpt-image-2
+      - name: Salvar imagem editada e manifesto sem declarar aprovacao visual
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-spy-character-same-image-closed-eyes-${{ github.run_id }}
+          path: |
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/character-eyes-closed-ai.png
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/character-eyes-closed-ai.production.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Apagar tokens temporarios
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-health >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
