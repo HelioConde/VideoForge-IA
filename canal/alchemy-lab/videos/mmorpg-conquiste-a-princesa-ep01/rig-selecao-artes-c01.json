@@ -117,7 +117,14 @@
         "handConstraint": "guard_right.hand_left",
         "underlaysReady": false
       }
-    ]
+    ],
+    "backgroundReconciledCandidate": {
+      "path": "assets/cena-01/candidatos/background-reconciliado-CANDIDATO.png",
+      "sha256": "e8d19f283516ef5cb8b5c2e4136d0adaab83ebe0fbb22b5e09bcc4a0b112a847",
+      "status": "candidate_neutral_composite_qa_passed_human_qa_pending",
+      "sourceImagesOnly": true,
+      "readyForOfficialRig": false
+    }
   },
   "deprecated": [
     {
@@ -153,14 +160,29 @@
     "noDuplicateCharactersInBackground": false,
     "armatureAndMeshReady": false,
     "renderOfficialAllowed": false,
-    "youtubeUploaded": false
+    "youtubeUploaded": false,
+    "neutralCompositeTested": true,
+    "neutralCompositeDiffGT24": 0.053202,
+    "neutralCompositeMeanAbsoluteRGB": 3.446,
+    "backgroundCandidateReadyForVisualReview": true
   },
   "nextTasks": [
+    "Avaliar visualmente fundo reconciliado, sobretudo bordas entre personagens e trono",
     "validar pose neutra com todas as camadas e fundo reconstruído contra cena-mãe original",
     "corrigir halos e incompatibilidades na linha de contorno do rei/trono",
     "completar áreas ocultas de mãos e lança sem desenhar nova imagem enquanto lock ativo",
     "validar articulações com pivôs medidos por pixel, separação de cabeça e membros",
     "montar rig pelo ThreeCanvas com QA e somente depois Remotion"
   ],
-  "newImageGenerationCallsThisStage": 0
+  "newImageGenerationCallsThisStage": 0,
+  "qaComparison": {
+    "prior": "qa-recomposicao-c01.json",
+    "reconciled": "qa-recomposicao-c01-reconciliado.json",
+    "sourceOnlyBackgroundReport": "qa-background-reconciliado-c01.json",
+    "beforeMAE": 11.095,
+    "afterMAE": 3.446,
+    "beforePixelGT24": 0.172064,
+    "afterPixelGT24": 0.053202,
+    "artReview": false
+  }
 }
