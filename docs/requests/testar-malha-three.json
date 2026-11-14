@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/rig-three-synthetic-smoke/v1",
+  "goal": "Validate real Three.js vertex deformation with independent sprite textures in Remotion 4",
+  "workflow_mode": "normal_github_actions_no_private",
+  "runner_tag": "ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1",
+  "engine": "@remotion/three ThreeCanvas",
+  "gl": "swangle",
+  "frames": [
+    0,
+    60,
+    74,
+    90,
+    173
+  ],
+  "fixtures": "synthetic_only_no_source_character",
+  "image_ai_calls": 0,
+  "youtube_upload": false,
+  "official_video": false,
+  "manual_review": "not_applicable_to_synthetic_test"
+}
