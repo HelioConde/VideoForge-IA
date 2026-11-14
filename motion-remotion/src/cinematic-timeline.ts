@@ -3,6 +3,7 @@
  * EDL sem arte nunca deve ser tratada como vídeo renderizável.
  */
 import type {ThreeRigManifest} from './rig-three-math';
+import {validatePupilPerformance, type GazePerformance} from './eye-gaze-timeline';
 
 export type CinematicShotType =
   'black'|'insert'|'low_angle'|'wide'|'close_up'|'extreme_close_up'|
@@ -37,6 +38,7 @@ export type CinematicShot = {
   hud?:CinematicHud|null;
   humanVisualApproved?:true;
   originShaVerified?:true;
+  performance?:GazePerformance;
 };
 export type CinematicEpisodeProps = {
   schema:'videoforge/cinematic-remotion-episode/v1';
@@ -110,6 +112,29 @@ export const validateCinematicRender=(input:CinematicEpisodeProps):void=>{
         throw new Error('CINEMATIC_HUD_REMOTION_OVERLAY_REQUIRED');
     }else if(shot.hud)throw new Error('CINEMATIC_UNEXPECTED_HUD');
     const actors=shot.actors??[];
+    if(shot.id==='C12-P01'){
+      if(!shot.performance)
+        throw new Error('CINEMATIC_C12_PUPIL_PERFORMANCE_REQUIRED');
+      validatePupilPerformance(shot.performance,shot.id,shotDurationFrames(shot));
+      if(actors.length!==1||actors[0]?.id!=='kael')
+        throw new Error('CINEMATIC_C12_KAEL_ONLY');
+      const r=actors[0].rig;
+      const eyes=r.eyeRig;
+      const ids=new Set(r.layers.map(l=>l.id));
+      if(!eyes || eyes.actorId!=='kael' ||
+        r.headMaxRotationDeg!==0 || r.blinkFrames.length!==0 ||
+        eyes.eyeUnderlaysVerified!==true ||
+        eyes.pupilMasksVerified!==true ||
+        eyes.noDuplicatePaintedPupilsInHead!==true ||
+        eyes.rotationOrTranslationClippingQA!==true ||
+        eyes.humanVisualApproved!==true ||
+        eyes.gazePupilMaxPx!==12 || eyes.eyelidMaxPx!==1 ||
+        !['pupil-left','pupil-right','eyelid-left','eyelid-right']
+          .every(id=>ids.has(id)))
+        throw new Error('CINEMATIC_C12_INDEPENDENT_EYES_AND_UNDERLAYS_REQUIRED');
+    }else if(shot.performance){
+      throw new Error('CINEMATIC_UNEXPECTED_GAZE_PERFORMANCE');
+    }
     if(actors.length===0 && (SUBJECT_TYPES.has(shot.type) ||
       shot.staticShotApproved!==true))
       throw new Error('CINEMATIC_SUBJECT_MUST_HAVE_REAL_RIG');
