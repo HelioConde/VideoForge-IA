@@ -44,6 +44,70 @@ def unique(folder:Path,name:str)->Path:
     return found[0]
 
 
+
+def repair_body_and_partition(original, iso, head, hand, body, np):
+    """Restore only EXPOSED source pixels; retain hidden body underlay.
+
+    The first isolation covered the head but omitted part of Anya's uniform.
+    Do not erase those pixels or leave them in 'other characters'. The
+    AI-edited body is used exclusively as an occluded reconstruction.
+    """
+    if any(a.shape != original.shape for a in (iso, head, hand, body)):
+        raise VideoForgeError("RIG_HAND_ROUNDTRIP_DIMENSIONS_INVALID")
+    if np.any((head[:, :, 3] > 0) & (iso[:, :, 3] == 0)):
+        raise VideoForgeError("RIG_HAND_FOREIGN_PIXELS_IN_HEAD")
+    exposed = (head[:, :, 3] == 0) & (hand[:, :, 3] == 0) & (body[:, :, 3] > 0)
+    restored = body.copy()
+    restored[exposed] = original[exposed]
+    # Add the torso pixels missing from the earlier head-heavy isolation.
+    anya_mask = (iso[:, :, 3] > 0) | (
+        (body[:, :, 3] > 0) & (original[:, :, 3] > 0)
+    )
+    anya = original.copy()
+    others = original.copy()
+    anya[:, :, 3] = np.where(anya_mask, original[:, :, 3], 0)
+    others[:, :, 3] = np.where(~anya_mask, original[:, :, 3], 0)
+    if np.any(anya[:, :, 3].astype(np.int16) +
+              others[:, :, 3].astype(np.int16) != original[:, :, 3]):
+        raise VideoForgeError("RIG_HAND_PARTITION_NOT_LOSSLESS")
+    return restored, anya, others, int(np.count_nonzero(exposed)), int(
+        np.count_nonzero(anya_mask & (iso[:, :, 3] == 0)))
+
+
+def rgba_over(back, front, np):
+    """Straight alpha-over with no PNG or FFmpeg resampling."""
+    fa = front[:, :, 3:4].astype(np.float32) / 255.0
+    ba = back[:, :, 3:4].astype(np.float32) / 255.0
+    a = fa + ba * (1 - fa)
+    rgb = (front[:, :, :3].astype(np.float32) * fa +
+           back[:, :, :3].astype(np.float32) * ba * (1 - fa))
+    rgb /= np.maximum(a, 0.000001)
+    out = np.empty_like(back)
+    out[:, :, :3] = np.clip(rgb, 0, 255).astype(np.uint8)
+    out[:, :, 3] = np.clip(a[:, :, 0] * 255, 0, 255).astype(np.uint8)
+    return out
+
+
+def roundtrip_metrics(assembled, anya, original, np):
+    target = anya[:, :, 3] > 0
+    source_opaque = anya[:, :, 3] > 200
+    rgb_error = np.mean(np.abs(
+        assembled[:, :, :3].astype(np.int16) -
+        original[:, :, :3].astype(np.int16)), axis=2)
+    return {
+        "visible_pixels": int(np.count_nonzero(target)),
+        "mean_abs_rgb_error": round(float(np.mean(rgb_error[target])), 4),
+        "large_rgb_error_pixels_gt20": int(np.count_nonzero(target & (rgb_error > 20))),
+        "missing_opaque_pixels": int(np.count_nonzero(
+            source_opaque & (assembled[:, :, 3] < 100))),
+        "stray_alpha_pixels": int(np.count_nonzero(
+            (assembled[:, :, 3] > 32) & ~target)),
+        "alpha_error_pixels_gt30": int(np.count_nonzero(
+            target & (np.abs(assembled[:, :, 3].astype(np.int16) -
+                             original[:, :, 3].astype(np.int16)) > 30))),
+    }
+
+
 def prepare(original_dir:Path,heads_dir:Path,iso_dir:Path,
             head_ai_dir:Path,dest:Path,channel:str,video_id:str)->dict:
     enforce_animation_manual()
@@ -161,6 +225,27 @@ def prepare(original_dir:Path,heads_dir:Path,iso_dir:Path,
     bx,by,bw,bh=revised_qa["body_no_head_bbox"]
     body_full=np.zeros_like(original)
     body_full[by:by+bh,bx:bx+bw]=body
+    body_full, corrected_anya, corrected_others, body_restored, mask_recovered = (
+        repair_body_and_partition(original,iso,open_full,fore,body_full,np))
+    neutral = rgba_over(rgba_over(body_full,open_full,np),fore,np)
+    metrics = roundtrip_metrics(neutral,corrected_anya,original,np)
+    if (metrics["mean_abs_rgb_error"] > 0.5 or
+        metrics["large_rgb_error_pixels_gt20"] > 250 or
+        metrics["missing_opaque_pixels"] > 500 or
+        metrics["stray_alpha_pixels"] > 0 or
+        metrics["alpha_error_pixels_gt30"] > 50):
+        raise VideoForgeError("RIG_HAND_NEUTRAL_ROUNDTRIP_REJECTED_"+str(metrics))
+    write(dest/"body-visible-restored-candidate.png",
+          body_full[by:by+bh,bx:bx+bw],cv2)
+    write(dest/"anya-complete-source-isolated-candidate.png",corrected_anya,cv2)
+    write(dest/"other-characters-without-anya-candidate.png",corrected_others,cv2)
+    write(dest/"neutral-composition-corrected-candidate.png",neutral,cv2)
+    diff=np.zeros_like(original)
+    diff[:,:,:3]=np.clip(
+        np.abs(neutral[:,:,:3].astype(np.int16) -
+               original[:,:,:3].astype(np.int16))*3,0,255).astype(np.uint8)
+    diff[:,:,3]=corrected_anya[:,:,3]
+    write(dest/"neutral-diff-corrected.png",diff,cv2)
     for part in (body_full,open_full,fore):
         alpha=part[:,:,3:4].astype(np.float32)/255
         backdrop=part[:,:,:3].astype(np.float32)*alpha+backdrop*(1-alpha)
@@ -177,6 +262,13 @@ def prepare(original_dir:Path,heads_dir:Path,iso_dir:Path,
       "head_bbox_original_canvas":bbox,
       "hand_bbox_original_canvas":hb,
       "hand_visible_pixels":count,
+      "original_exposed_body_pixels_restored":body_restored,
+      "original_anya_torso_pixels_recovered_from_other_characters":mask_recovered,
+      "original_partition_alpha_differences_after_correction":0,
+      "neutral_open_roundtrip_qa":metrics,
+      "neutral_open_roundtrip_status":"pixel_qa_passed_visual_review_pending",
+      "hair_neutral_and_motion_underlay_qa":"pending",
+      "neck_and_collar_motion_qa":"pending",
       "hidden_underlay_pixels_reconstructed_in_two_frames":reconstruction_pixels,
       "finger_separate_from_face_component":True,
       "hand_foreground_original_pixels_preserved":True,
