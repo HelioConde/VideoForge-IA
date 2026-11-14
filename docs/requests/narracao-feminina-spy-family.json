@@ -1,0 +1,14 @@
+{
+  "schema": "videoforge/production-female-narration/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "source": "roteiro.json",
+  "number_of_scenes": "automatic",
+  "female_voice": "pt-br+f3",
+  "locale": "pt-BR",
+  "caption_style": "short_phrase_actual_audio_timing",
+  "no_external_costs": true,
+  "youtube_upload": false,
+  "requested_date": "2026-11-14",
+  "mode": "narracao_feminina_legendas_srt"
+}
