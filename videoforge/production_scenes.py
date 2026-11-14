@@ -41,17 +41,21 @@ def scene_prompt(channel:str,video_id:str,number:int)->tuple[str,dict]:
     except (KeyError,ValueError) as exc:
         raise VideoForgeError("PRODUCTION_SCENE_PROMPT_INVALID") from exc
     bible=plan.get("character_bible")
-    if not isinstance(bible,dict) or not all(
-        isinstance(bible.get(name),str) for name in ("anya","loid","yor")
+    if not isinstance(bible,dict) or not 1<=len(bible)<=12 or any(
+        not isinstance(name,str) or not name.isidentifier()
+        or not isinstance(description,str) or not 15<=len(description)<=600
+        for name,description in bible.items()
     ):
         raise VideoForgeError("PRODUCTION_SCENE_BIBLE_MISSING")
+    # Compatibilidade com roteiro Spy Family: manter a ordem antiga da biblia.
+    ordering=("loid","yor","anya") if {"loid","yor","anya"}<=set(bible) else tuple(bible)
+    character_lines=[name.title()+": "+bible[name] for name in ordering]
     suffix="\n".join([
         "A PRANCHA anexada e a referencia unica de design; nao copie o fundo.",
         "Direcao de arte: "+plan["style"],
-        "Loid: "+bible["loid"],
-        "Yor: "+bible["yor"],
-        "Anya: "+bible["anya"],
-        "Mensagem da cena: "+scene["narration"],
+        *character_lines,
+        "Mensagem da cena: "+str(scene.get("narration","")),
+        "NUNCA desenhar personagens ausentes do enquadramento descrito.",
         "Imagem de cena completa, NUNCA cartao, poster ou fluxograma.",
         "Composicao vertical sem texto ou marca d'agua, area de legenda livre.",
     ])
