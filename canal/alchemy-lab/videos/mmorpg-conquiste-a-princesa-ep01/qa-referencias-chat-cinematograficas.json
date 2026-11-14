@@ -51,5 +51,18 @@
       "approved_as_rig": false
     }
   ],
+  "camera_candidate_C12_P02": {
+    "shot_id": "C12-P02",
+    "status": "UPLOAD_PENDING",
+    "expected_repo_path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+    "expected_sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+    "source_verified": false,
+    "human_shot_approval": false,
+    "shot_mother_approval": false,
+    "rig_approved": false,
+    "issues": [
+      "SOURCE_FILE_NOT_UPLOADED"
+    ]
+  },
   "next_action": "Importar PNGs idênticos; conciliar nova aparência com bíblia antiga, inspecionar continuidade e nunca aprovar rig por SHA de referência."
 }
