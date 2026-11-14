@@ -1,0 +1,108 @@
+name: "VideoForge - arquivar imagens existentes de Alchemy Lab (sem gerar)"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-arquivar-assets.json'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: vf-alchemy-archive-existing-assets
+  cancel-in-progress: false
+
+jobs:
+  arquivar:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Conferir pedido explícito e bloquear geração de imagens
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-arquivar-assets.json')
+          d=json.loads(p.read_text(encoding='utf8'))
+          assert d['schema']=='videoforge/existing-asset-archive-request/v1'
+          assert d['channel']=='alchemy-lab'
+          assert d['video_id']=='mmorpg-conquiste-a-princesa-ep01'
+          assert d['only_copy_preexisting_images'] is True
+          assert d['image_generation_calls']==0
+          assert d['youtube_upload'] is False
+          print('COPY_ONLY_VALIDATED — nenhum modelo nem proxy será chamado')
+          PY
+      - name: Baixar prancha ORIGINAL da mesma obra
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43590930215
+          name: vf-real-art-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-character-bible-43590930215
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./_inputs/reference
+      - name: Baixar cena-mãe inicial já gerada
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43591342058
+          name: vf-real-scene-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-1-43591342058
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./_inputs/first
+      - name: Baixar todas as demais 13 cenas já geradas (sem rerender)
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43591745279
+          pattern: vf-real-batch-scene-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-*-43591745279
+          merge-multiple: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./_inputs/batch
+      - name: Baixar camadas recuperadas existentes
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43592098806
+          name: vf-recovered-layers-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-43592098806
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./_inputs/layers
+      - name: Baixar Kael RGBA já gerado
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43592844393
+          name: vf-rgba-part-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-kael-43592844393
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./_inputs/kael
+      - name: Conferir SHA256 de cada PNG e arquivar no canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.archive_existing_episode ./_inputs
+          echo 'Nenhuma imagem nova criada: arquivos foram copiados de artifacts existentes.'
+      - name: Commitar SOMENTE assets e proveniência no diretório de Alchemy Lab
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEST='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$DEST"
+          if git diff --cached --quiet; then
+            echo 'Nenhum PNG novo: conteúdo já arquivado e igual.'
+            exit 0
+          fi
+          git commit -m 'assets(alchemy-lab): arquivar 14 cenas-mae e camadas existentes com SHA'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Registrar somente proveniência; NÃO considerar render oficial
+        run: |
+          echo 'Assets copiados no repo. Aprovação artística, rigs e render oficial continuam pendentes.'
