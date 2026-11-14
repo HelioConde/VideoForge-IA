@@ -408,7 +408,9 @@
     "artifacts_source_sha_verified": true,
     "roundtrip_static": true,
     "animation_or_render_allowed": false,
-    "visual_human_approval": false
+    "visual_human_approval": false,
+    "motionEnvelopeAlphaSafe": false,
+    "underlayRequiredBefore18Degrees": true
   },
   "visibilityAndSafety": {
     "rigRotationsAllowedDegrees": [
@@ -420,10 +422,45 @@
     "doNotUseFlatPNGAnimation": true
   },
   "nextActions": [
+    "Corrigir 2410/2462 pixels de silhueta perdidos no alvo ±18° sem IA; se conteúdo oculto faltar, registrar não executável e não renderizar",
     "measure pivots from original image at each joint and verify anatomically",
     "separate overlap between gloved finger and shaft; requires genuine pixels of occluded glove not currently available",
     "validate both spear front/back order at crossing point",
     "reconstruct missing regions under moved arms without generating new images (may require source artwork not available); keep rigs locked if impossible",
     "after masks and underlays approved, replay C01-P04 keyframes with hand constraints and QA frames [240,245,280,326,359]"
-  ]
+  ],
+  "motionEnvelopeQA": {
+    "report": "qa-guardas-envelope-movimento-c01.json",
+    "run": 43614298159,
+    "algorithm": "rotate masks in-memory, not sprites",
+    "anglesDeg": [
+      -18,
+      -8,
+      -2,
+      0,
+      2,
+      8,
+      18
+    ],
+    "results": [
+      {
+        "guard": "guarda-esquerdo",
+        "neutralMissingOpaquePixels": 0,
+        "at2degMissingOpaquePixels": 286,
+        "atTargetDeg": 18,
+        "atTargetMissingOpaquePixels": 2410,
+        "motionSafeWithoutUnderlay": false
+      },
+      {
+        "guard": "guarda-direito",
+        "neutralMissingOpaquePixels": 0,
+        "at2degMissingOpaquePixels": 294,
+        "atTargetDeg": -18,
+        "atTargetMissingOpaquePixels": 2462,
+        "motionSafeWithoutUnderlay": false
+      }
+    ],
+    "contentGenerated": false,
+    "humanReviewApproved": false
+  }
 }
