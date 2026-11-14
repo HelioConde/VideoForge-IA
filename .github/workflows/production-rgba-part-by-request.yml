@@ -5,7 +5,7 @@ on:
     paths:
       - 'canal/*/videos/*/pedido-geracao-parte-rgba.json'
 permissions:
-  contents: read
+  contents: write
   packages: read
   actions: read
 
@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
           fetch-depth: 2
       - uses: actions/setup-python@v5
         with:
@@ -123,6 +123,14 @@ jobs:
             --channel "$CH" --video-id "$VID" --number "$NUMBER" --part "$PART" \
             --source ./input/cena-01.png --source-report ./input/cena-01.production.json \
             --url "$PROXY_ENDPOINT" --model gpt-image-2
+      - name: Arquivar permanentemente PNG e SHA no GitHub por canal
+        if: success()
+        shell: bash
+        env:
+          CH: ${{ steps.req.outputs.ch }}
+          VID: ${{ steps.req.outputs.vid }}
+        run: |
+          bash scripts/persistir-imagens-gh.sh "$CH" "$VID" "output/$CH/videos/$VID/parts/cena-01" "${{ github.run_id }}" "production-rgba-request"
       - name: Arquivar sprite e QA mesmo se falhar a qualidade
         if: always()
         uses: actions/upload-artifact@v4
