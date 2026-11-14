@@ -7,52 +7,82 @@
     {
       "image": "imagens/cena-01.png",
       "audio": "voz/cena-01.wav",
-      "caption": "UM SEGREDO POR PESSOA"
+      "caption": "ANYA SABE O SEGREDO"
     },
     {
       "image": "imagens/cena-02.png",
       "audio": "voz/cena-02.wav",
-      "caption": "A MISSÃO DE LOID"
+      "caption": "UMA MISSÃO SECRETA"
     },
     {
       "image": "imagens/cena-03.png",
       "audio": "voz/cena-03.wav",
-      "caption": "O PAI PERFEITO?"
+      "caption": "O PAI É UM ESPIÃO"
     },
     {
       "image": "imagens/cena-04.png",
       "audio": "voz/cena-04.wav",
-      "caption": "O SEGREDO DE YOR"
+      "caption": "A FILHA IMPROVÁVEL"
     },
     {
       "image": "imagens/cena-05.png",
       "audio": "voz/cena-05.wav",
-      "caption": "ANYA SABE DE TUDO"
+      "caption": "ELA LÊ PENSAMENTOS"
     },
     {
       "image": "imagens/cena-06.png",
       "audio": "voz/cena-06.wav",
-      "caption": "NINGUÉM CONTA TUDO"
+      "caption": "A MÃE TAMBÉM ESCONDE"
     },
     {
       "image": "imagens/cena-07.png",
       "audio": "voz/cena-07.wav",
-      "caption": "UM DIA NADA NORMAL"
+      "caption": "TRÊS VIDAS SECRETAS"
     },
     {
       "image": "imagens/cena-08.png",
       "audio": "voz/cena-08.wav",
-      "caption": "ALÉM DOS DISFARCES"
+      "caption": "NINGUÉM SUSPEITA"
     },
     {
       "image": "imagens/cena-09.png",
       "audio": "voz/cena-09.wav",
-      "caption": "UM LAÇO DE VERDADE"
+      "caption": "LER MENTES NÃO RESOLVE TUDO"
     },
     {
       "image": "imagens/cena-10.png",
       "audio": "voz/cena-10.wav",
-      "caption": "A VERDADE DA FAMÍLIA"
+      "caption": "A ESCOLA ENTRA NO PLANO"
+    },
+    {
+      "image": "imagens/cena-11.png",
+      "audio": "voz/cena-11.wav",
+      "caption": "A AMIZADE VIRA DESAFIO"
+    },
+    {
+      "image": "imagens/cena-12.png",
+      "audio": "voz/cena-12.wav",
+      "caption": "UM JANTAR PODE DAR ERRADO"
+    },
+    {
+      "image": "imagens/cena-13.png",
+      "audio": "voz/cena-13.wav",
+      "caption": "O PLANO MUDA DE SENTIDO"
+    },
+    {
+      "image": "imagens/cena-14.png",
+      "audio": "voz/cena-14.wav",
+      "caption": "POR QUE ANYA NÃO CONTA?"
+    },
+    {
+      "image": "imagens/cena-15.png",
+      "audio": "voz/cena-15.wav",
+      "caption": "A MAIOR IRONIA"
+    },
+    {
+      "image": "imagens/cena-16.png",
+      "audio": "voz/cena-16.wav",
+      "caption": "UM LAR DE VERDADE?"
     }
   ]
 }
