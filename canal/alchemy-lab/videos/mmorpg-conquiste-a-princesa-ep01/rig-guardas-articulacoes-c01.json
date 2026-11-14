@@ -1,0 +1,429 @@
+{
+  "schema": "videoforge/guard-rig-draft-kinematics/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "C01",
+  "shot": "C01-P04",
+  "status": "DRAFT_BLOCKED",
+  "frameConvention": "absolute_frame_start_inclusive_end_exclusive",
+  "fps": 30,
+  "range": [
+    240,
+    360
+  ],
+  "worldToRender": {
+    "source": [
+      1024,
+      1536
+    ],
+    "output": [
+      1080,
+      1920
+    ],
+    "fit": "cover",
+    "scale": 1.25,
+    "cropX": 100,
+    "coordinates": "renderX=1.25*sourceX-100;renderY=1.25*sourceY"
+  },
+  "engineTarget": "Remotion4+ThreeCanvas+R3F",
+  "timeSource": "useCurrentFrame/useVideoConfig",
+  "generativeImageCalls": 0,
+  "noImageGenerationLock": "SEM-GERACAO-NOVAS-IMAGENS.lock",
+  "sceneOriginalPose": "the mother image is already at the final X-crossed pose",
+  "openingConflict": "Cannot start with spears uncrossed and animate into X without reverse pose and hidden glove/forearm/background underlays; the initial art depicts them already crossed. Original keyframes are TARGET DIRECTION, not approved executable transforms.",
+  "targetKeyframeSpec": "direcao-rig-remotion.json:scenes[C01].shots[C01-P04].rigKeyframes",
+  "rigRoots": [
+    {
+      "id": "guarda-esquerdo",
+      "kind": "draft_2d_kinematic_rig",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "sourcePose": "crossed_spears_already_in_mother_art",
+      "jointCoordinates": {
+        "shoulder": [
+          254,
+          572
+        ],
+        "elbow": [
+          303,
+          670
+        ],
+        "wrist": [
+          360,
+          730
+        ],
+        "handContact": [
+          381,
+          751
+        ]
+      },
+      "parentHierarchy": [
+        {
+          "node": "body-remainder",
+          "parent": "character-root",
+          "pivot": "pelvis"
+        },
+        {
+          "node": "upper-arm",
+          "parent": "body-remainder",
+          "pivot": "shoulder"
+        },
+        {
+          "node": "forearm",
+          "parent": "upper-arm",
+          "pivot": "elbow"
+        },
+        {
+          "node": "gripping-hand",
+          "parent": "forearm",
+          "pivot": "wrist"
+        },
+        {
+          "node": "lanca-guarda-esquerdo-CANDIDATE",
+          "parent": "gripping-hand",
+          "pivot": "handContact"
+        }
+      ],
+      "parts": [
+        {
+          "id": "body-remainder",
+          "png": "assets/cena-01/rig-drafts/guard-arm-parts/guarda-esquerdo-body-remainder-DRAFT.png",
+          "sha256": "93f7c191433b7850b2342f5e1564a3bf2e340785a4bac31c8080ee4338f7b0d9",
+          "bboxXYXY": [
+            9,
+            408,
+            393,
+            1203
+          ],
+          "pivotSourceXY": null,
+          "pivotRenderXY": null,
+          "pivotApproved": false,
+          "motionMinDegrees": 0,
+          "motionMaxDegrees": 0,
+          "motionLockReason": "no underlay and no human visual approval",
+          "underlay": "missing",
+          "spearOverlapPixels": null
+        },
+        {
+          "id": "upper-arm",
+          "png": "assets/cena-01/rig-drafts/guard-arm-parts/guarda-esquerdo-upper-arm-DRAFT.png",
+          "sha256": "f0dca7a6bb35753e26561cc710dcde5d7140b5e579e7bfce356a0df97162f38b",
+          "bboxXYXY": [
+            216,
+            551,
+            323,
+            701
+          ],
+          "pivotSourceXY": [
+            254,
+            572
+          ],
+          "pivotRenderXY": [
+            217.5,
+            715
+          ],
+          "pivotApproved": false,
+          "motionMinDegrees": 0,
+          "motionMaxDegrees": 0,
+          "motionLockReason": "no underlay and no human visual approval",
+          "underlay": "missing",
+          "spearOverlapPixels": 0
+        },
+        {
+          "id": "forearm",
+          "png": "assets/cena-01/rig-drafts/guard-arm-parts/guarda-esquerdo-forearm-DRAFT.png",
+          "sha256": "294e720a91cfdc794b9a62c93b0e4d2460a68396040cafb94d483c68a9d7f313",
+          "bboxXYXY": [
+            289,
+            668,
+            384,
+            754
+          ],
+          "pivotSourceXY": [
+            303,
+            670
+          ],
+          "pivotRenderXY": [
+            278.75,
+            837.5
+          ],
+          "pivotApproved": false,
+          "motionMinDegrees": 0,
+          "motionMaxDegrees": 0,
+          "motionLockReason": "no underlay and no human visual approval",
+          "underlay": "missing",
+          "spearOverlapPixels": 0
+        },
+        {
+          "id": "gripping-hand",
+          "png": "assets/cena-01/rig-drafts/guard-arm-parts/guarda-esquerdo-gripping-hand-DRAFT.png",
+          "sha256": "34107b1f7da32578931515f2447b7ed8bcedde3569e1eb51c945a2080c34f7a2",
+          "bboxXYXY": [
+            352,
+            721,
+            406,
+            769
+          ],
+          "pivotSourceXY": [
+            360,
+            730
+          ],
+          "pivotRenderXY": [
+            350,
+            912.5
+          ],
+          "pivotApproved": false,
+          "motionMinDegrees": 0,
+          "motionMaxDegrees": 0,
+          "motionLockReason": "no underlay and no human visual approval",
+          "underlay": "missing",
+          "spearOverlapPixels": 458
+        }
+      ],
+      "weapon": {
+        "id": "lanca-guarda-esquerdo-CANDIDATE",
+        "png": "assets/cena-01/rig-drafts/lancas/lanca-guarda-esquerdo-CANDIDATE.png",
+        "sha256": "57757aa43fb53c47b83ec8f0298485ea229cff3b9f348dfc62465b34e0609413",
+        "pivotSourceXY": [
+          381,
+          751
+        ],
+        "pivotRenderXY": [
+          376.25,
+          938.75
+        ],
+        "attachedTo": "gripping-hand",
+        "allowedIndependentRotation": false,
+        "sourceOverlapAtHand": 458,
+        "overlapValidationRequired": true,
+        "alphaMayIncludeBackground": true
+      },
+      "flags": {
+        "neutralSourcePixelRoundtrip": true,
+        "armMotionReady": false,
+        "rigThreeReady": false,
+        "occlusionQA": false,
+        "hasHeadSeparated": false,
+        "underlayReconstructed": false
+      }
+    },
+    {
+      "id": "guarda-direito",
+      "kind": "draft_2d_kinematic_rig",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "sourcePose": "crossed_spears_already_in_mother_art",
+      "jointCoordinates": {
+        "shoulder": [
+          773,
+          573
+        ],
+        "elbow": [
+          722,
+          670
+        ],
+        "wrist": [
+          666,
+          732
+        ],
+        "handContact": [
+          644,
+          749
+        ]
+      },
+      "parentHierarchy": [
+        {
+          "node": "body-remainder",
+          "parent": "character-root",
+          "pivot": "pelvis"
+        },
+        {
+          "node": "upper-arm",
+          "parent": "body-remainder",
+          "pivot": "shoulder"
+        },
+        {
+          "node": "forearm",
+          "parent": "upper-arm",
+          "pivot": "elbow"
+        },
+        {
+          "node": "gripping-hand",
+          "parent": "forearm",
+          "pivot": "wrist"
+        },
+        {
+          "node": "lanca-guarda-direito-CANDIDATE",
+          "parent": "gripping-hand",
+          "pivot": "handContact"
+        }
+      ],
+      "parts": [
+        {
+          "id": "body-remainder",
+          "png": "assets/cena-01/rig-drafts/guard-arm-parts/guarda-direito-body-remainder-DRAFT.png",
+          "sha256": "3956b9a4540576a31b8c51a58f166b374dcda8f321adb2ad289151ce5494d930",
+          "bboxXYXY": [
+            631,
+            407,
+            1015,
+            1203
+          ],
+          "pivotSourceXY": null,
+          "pivotRenderXY": null,
+          "pivotApproved": false,
+          "motionMinDegrees": 0,
+          "motionMaxDegrees": 0,
+          "motionLockReason": "no underlay and no human visual approval",
+          "underlay": "missing",
+          "spearOverlapPixels": null
+        },
+        {
+          "id": "upper-arm",
+          "png": "assets/cena-01/rig-drafts/guard-arm-parts/guarda-direito-upper-arm-DRAFT.png",
+          "sha256": "178e73370e42824cbcc115cce18adf6fd7c4b239e62c17d35186b3e190c9c08a",
+          "bboxXYXY": [
+            705,
+            556,
+            811,
+            702
+          ],
+          "pivotSourceXY": [
+            773,
+            573
+          ],
+          "pivotRenderXY": [
+            866.25,
+            716.25
+          ],
+          "pivotApproved": false,
+          "motionMinDegrees": 0,
+          "motionMaxDegrees": 0,
+          "motionLockReason": "no underlay and no human visual approval",
+          "underlay": "missing",
+          "spearOverlapPixels": 0
+        },
+        {
+          "id": "forearm",
+          "png": "assets/cena-01/rig-drafts/guard-arm-parts/guarda-direito-forearm-DRAFT.png",
+          "sha256": "0e2858d4556a4ae31326aa7ba7bba57e9d8f00fb53c8f91bac97df419885b9e6",
+          "bboxXYXY": [
+            635,
+            668,
+            729,
+            758
+          ],
+          "pivotSourceXY": [
+            722,
+            670
+          ],
+          "pivotRenderXY": [
+            802.5,
+            837.5
+          ],
+          "pivotApproved": false,
+          "motionMinDegrees": 0,
+          "motionMaxDegrees": 0,
+          "motionLockReason": "no underlay and no human visual approval",
+          "underlay": "missing",
+          "spearOverlapPixels": 108
+        },
+        {
+          "id": "gripping-hand",
+          "png": "assets/cena-01/rig-drafts/guard-arm-parts/guarda-direito-gripping-hand-DRAFT.png",
+          "sha256": "3048cd17ede898c4001df003e3c03a5fdc23acdeecaf37d8a816359a20bdabb5",
+          "bboxXYXY": [
+            617,
+            720,
+            674,
+            768
+          ],
+          "pivotSourceXY": [
+            666,
+            732
+          ],
+          "pivotRenderXY": [
+            732.5,
+            915
+          ],
+          "pivotApproved": false,
+          "motionMinDegrees": 0,
+          "motionMaxDegrees": 0,
+          "motionLockReason": "no underlay and no human visual approval",
+          "underlay": "missing",
+          "spearOverlapPixels": 369
+        }
+      ],
+      "weapon": {
+        "id": "lanca-guarda-direito-CANDIDATE",
+        "png": "assets/cena-01/rig-drafts/lancas/lanca-guarda-direito-CANDIDATE.png",
+        "sha256": "c944a31f6bc9081172c53051467617f60c7d9dd943bf3b6b9807987026001a8d",
+        "pivotSourceXY": [
+          644,
+          749
+        ],
+        "pivotRenderXY": [
+          705,
+          936.25
+        ],
+        "attachedTo": "gripping-hand",
+        "allowedIndependentRotation": false,
+        "sourceOverlapAtHand": 369,
+        "overlapValidationRequired": true,
+        "alphaMayIncludeBackground": true
+      },
+      "flags": {
+        "neutralSourcePixelRoundtrip": true,
+        "armMotionReady": false,
+        "rigThreeReady": false,
+        "occlusionQA": false,
+        "hasHeadSeparated": false,
+        "underlayReconstructed": false
+      }
+    }
+  ],
+  "intersection": {
+    "sourceApproxXY": [
+      510,
+      641
+    ],
+    "renderApproxXY": [
+      537.5,
+      801.25
+    ],
+    "foregroundSpearUnverified": true,
+    "requireFrontBackSplit": true
+  },
+  "hardGates": {
+    "actual_joint_bones": false,
+    "all_pivots_measured": false,
+    "underlay_complete": false,
+    "kinematic_IK": true,
+    "hand_lance_contact_model_defined": true,
+    "actual_spear_z_order": false,
+    "artifacts_source_sha_verified": true,
+    "roundtrip_static": true,
+    "animation_or_render_allowed": false,
+    "visual_human_approval": false
+  },
+  "visibilityAndSafety": {
+    "rigRotationsAllowedDegrees": [
+      0,
+      0
+    ],
+    "cameraMotionIndependentlyPossibleButDoesNotCountAsRig": true,
+    "unexpectedMovementMustFail": true,
+    "doNotUseFlatPNGAnimation": true
+  },
+  "nextActions": [
+    "measure pivots from original image at each joint and verify anatomically",
+    "separate overlap between gloved finger and shaft; requires genuine pixels of occluded glove not currently available",
+    "validate both spear front/back order at crossing point",
+    "reconstruct missing regions under moved arms without generating new images (may require source artwork not available); keep rigs locked if impossible",
+    "after masks and underlays approved, replay C01-P04 keyframes with hand constraints and QA frames [240,245,280,326,359]"
+  ]
+}
