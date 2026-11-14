@@ -38,7 +38,8 @@ def _checked(path:Path,hash_value:str)->Path:
 
 
 def prepare(original_dir:Path,corrected_dir:Path,
-            candidate_dir:Path,output:Path,art_run_id:int)->dict:
+            candidate_dir:Path,output:Path,art_run_id:int,
+            ornaments_dir:Path|None=None)->dict:
     enforce_animation_manual()
     if not isinstance(art_run_id,int) or art_run_id<=0:
         raise VideoForgeError("ANYA_DRAFT_SOURCE_RUN_ID_REQUIRED")
@@ -74,6 +75,33 @@ def prepare(original_dir:Path,corrected_dir:Path,
     p=png_info(static_other.read_bytes(),require_alpha=True)
     if (p["width"],p["height"])!=(1024,1536):
         raise VideoForgeError("ANYA_DRAFT_STATIC_OTHERS_DIMENSIONS_INVALID")
+    # Optional authentic black/gold horn ornaments: source pixels previously
+    # remained in the Loid/Yor static plate. The resulting sprite pair MUST
+    # be included together, and the static plate replaced with its inpainted
+    # variant, otherwise the accessories remain frozen or get duplicated.
+    ornaments_qa=None
+    if ornaments_dir is not None:
+        ornaments_qa=json.loads(
+            unique(ornaments_dir,"qa.json").read_text(encoding="utf-8"))
+        if (ornaments_qa.get("schema")!=
+              "videoforge/anya-head-ornaments-source-split/v1" or
+            ornaments_qa.get("original_character_sha256")!=SOURCE_SHA or
+            ornaments_qa.get("original_static_other_sha256")!=sha(static_other) or
+            ornaments_qa.get("human_visual_approval") is not False or
+            ornaments_qa.get("rig_operational") is not False or
+            ornaments_qa.get("new_image_calls")!=0 or
+            ornaments_qa.get("neutral_rgb_error_pixels_gt20")!=0 or
+            ornaments_qa.get("neutral_alpha_error_pixels_gt3")!=0 or
+            not 9500<=ornaments_qa.get("total_original_pixels_moved",0)<=11500):
+            raise VideoForgeError("ANYA_DRAFT_ORNAMENT_QA_INVALID")
+        replacement=unique(
+            ornaments_dir,"other-characters-without-ornaments-candidate.png")
+        static_other=_checked(replacement,
+            ornaments_qa.get("files",{}).get(replacement.name,""))
+        p=png_info(static_other.read_bytes(),require_alpha=True)
+        if (p["width"],p["height"])!=(1024,1536):
+            raise VideoForgeError("ANYA_DRAFT_ORNAMENT_STATIC_DIMENSIONS_INVALID")
+
     pack=candidate_dir/"rig-candidate"
     qa=json.loads((pack/"pack.qa.json").read_text(encoding="utf-8"))
     prep=json.loads((candidate_dir/"qa.json").read_text(encoding="utf-8"))
@@ -119,6 +147,26 @@ def prepare(original_dir:Path,corrected_dir:Path,
         info=png_info(asset.read_bytes(),require_alpha=True)
         if (info["width"],info["height"])!=tuple(layer["bbox"][2:]):
             raise VideoForgeError("ANYA_DRAFT_CROPPED_BBOX_INVALID")
+    if ornaments_qa is not None:
+        for side,z in (("left",25),("right",26)):
+            filename="ornament-"+side+".png"
+            ornament=_checked(unique(ornaments_dir,filename),
+                ornaments_qa.get("files",{}).get(filename,""))
+            box=ornaments_qa["bbox_original_canvas"][side]
+            info=png_info(ornament.read_bytes(),require_alpha=True)
+            if (not isinstance(box,list) or len(box)!=4 or
+                (info["width"],info["height"])!=tuple(box[2:]) or
+                not 0<=box[0] and 0<=box[1]):
+                raise VideoForgeError("ANYA_DRAFT_ORNAMENT_BBOX_INVALID")
+            if not 0<=box[0]<1024 or not 0<=box[1]<1536:
+                raise VideoForgeError("ANYA_DRAFT_ORNAMENT_OUTSIDE_CANVAS")
+            manifest["layers"].append({
+                "id":"ornament-"+side,
+                "file":filename,
+                "bbox":box,
+                "sha256":sha(ornament),
+                "z":z
+            })
     if output.exists():
         raise VideoForgeError("ANYA_DRAFT_OUTPUT_EXISTS")
     public=ROOT/"motion-remotion"/"public"/"vf-scene"
@@ -128,7 +176,12 @@ def prepare(original_dir:Path,corrected_dir:Path,
     shutil.copyfile(background,public/"background.png")
     shutil.copyfile(static_other,public/"other-characters-static.png")
     for layer in manifest["layers"]:
-        shutil.copyfile(pack/layer["file"],public/"rig-three"/layer["file"])
+        asset_folder=(ornaments_dir if layer["id"].startswith("ornament-")
+                      else pack)
+        shutil.copyfile(asset_folder/layer["file"],
+                        public/"rig-three"/layer["file"])
+        if sha(public/"rig-three"/layer["file"])!=layer["sha256"]:
+            raise VideoForgeError("ANYA_DRAFT_POSTCOPY_SHA_MISMATCH")
         layer["file"]="vf-scene/rig-three/"+layer["file"]
     output.mkdir(parents=True)
     props={
@@ -147,7 +200,13 @@ def prepare(original_dir:Path,corrected_dir:Path,
       "source_character_sha256":SOURCE_SHA,
       "source_scene_mother_sha256":MOTHER_SHA,
       "other_characters_source_sha256":sha(static_other),
-      "rig_sprites_count":6,
+      "rig_sprites_count":len(manifest["layers"]),
+      "ornament_head_parented":ornaments_qa is not None,
+      "ornament_pixels_reparented":(
+          ornaments_qa["total_original_pixels_moved"]
+          if ornaments_qa else 0),
+      "ornament_source_qa":(
+          ornaments_qa["schema"] if ornaments_qa else None),
       "deformable_hair_meshes":2,
       "real_threecanvas_review":True,
       "frames_requested":FRAMES,
@@ -171,9 +230,11 @@ def main()->int:
     p.add_argument("--candidate",type=Path,required=True)
     p.add_argument("--dest",type=Path,required=True)
     p.add_argument("--art-run-id",type=int,required=True)
+    p.add_argument("--ornaments",type=Path)
     a=p.parse_args()
     try:
-        prepare(a.original,a.corrected,a.candidate,a.dest,a.art_run_id)
+        prepare(a.original,a.corrected,a.candidate,a.dest,a.art_run_id,
+                a.ornaments)
         return 0
     except (VideoForgeError,ThreeRigError,OSError,ValueError,KeyError,
             TypeError) as exc:
