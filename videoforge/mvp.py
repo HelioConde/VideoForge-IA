@@ -111,9 +111,17 @@ def _load_manifest(path: Path) -> tuple[dict, list[dict]]:
 
 
 def _drawtext_filter(caption_filename: str) -> str:
+    # O storyboard 2:3 precisa caber no Short 9:16 sem cortar cabelo,
+    # ponta de roupas ou personagens nas laterais. O fundo desfocado
+    # preenche a tela sem barras pretas; a arte original fica INTEIRA
+    # e sem ampliacao que elimine partes do enquadramento.
     return (
-        "scale=1080:1920:force_original_aspect_ratio=decrease,"
-        "pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=black,"
+        "split=2[back_source][original_source];"
+        "[back_source]scale=1080:1920:force_original_aspect_ratio=increase,"
+        "crop=1080:1920,boxblur=28:2[soft_background];"
+        "[original_source]scale=1080:1920:"
+        "force_original_aspect_ratio=decrease[original];"
+        "[soft_background][original]overlay=(W-w)/2:(H-h)/2,"
         "drawtext=font=Sans:textfile=" + caption_filename +
         ":fontsize=44:fontcolor=white:line_spacing=12:"
         "box=1:boxcolor=black@0.68:boxborderw=18:"
