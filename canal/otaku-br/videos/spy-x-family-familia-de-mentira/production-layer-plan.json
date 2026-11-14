@@ -51,13 +51,13 @@
       "head_eyes_hair_clothes_rgba": "pending",
       "human_visual_approval": false,
       "layer_preview": {
-        "run_id": 43575133723,
-        "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43575133723",
-        "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43575133723/artifacts/14105378846",
+        "run_id": 43576834439,
+        "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439",
+        "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439/artifacts/14106521460",
         "scene_number": 1,
         "scene_id": "gancho-anya",
         "duration_seconds": 8.32,
-        "sha256": "b7610dc9054c91355655947a0ffedf24a00676e84a260d594e646664b99b8398",
+        "sha256": "c2bf3d4387adcabe703a4b047ebdee9ec3b43ddd26fc9c6d753bb01f92b69fbe",
         "source_scene_mother_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
         "original_character_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
         "ai_full_character_run_id": 43574833995,
@@ -78,7 +78,17 @@
         "video_official": false,
         "youtube_uploaded": false,
         "workflow_mode": "normal_push_no_private",
-        "status": "technical_verified_user_visual_review_pending"
+        "status": "technical_verified_user_visual_review_pending",
+        "animation_sync": {
+          "mode": "ease_to_neutral_before_full_character_eye_swap",
+          "neutral_hold_frames": 3,
+          "neutral_ease_frames": 12,
+          "body_and_camera_neutral_at_swap": true,
+          "head_motion_available_in_renderer": true,
+          "independent_head_motion_active": false,
+          "head_sprite_source": "pending_no_approved_body_without_head_and_separate_head_rgba",
+          "node_tests_passed": 17
+        }
       },
       "eyes_closed": {
         "target": "Anya grande na parte inferior da cena-mãe (NÃO os olhos do trio superior)",
@@ -144,7 +154,10 @@
         "camera_resets_at_image_switch": true,
         "body_and_camera_poses_identical_for_open_closed": true,
         "head_neck_pivot_verified": false,
-        "preview_visual_approval": false
+        "preview_visual_approval": false,
+        "latest_run_id": 43576834439,
+        "latest_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439/artifacts/14106521460",
+        "technical_test_status": "passed_17_node_tests"
       }
     },
     {
