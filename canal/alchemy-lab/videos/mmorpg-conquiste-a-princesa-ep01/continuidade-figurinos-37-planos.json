@@ -29,6 +29,8 @@
       "main_character_requirements": {},
       "is_black_opening": true,
       "planned_cast": [],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": true,
       "art_and_rig_approved": false
     },
     {
@@ -40,6 +42,8 @@
       "planned_cast": [
         "carrasco"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": true,
       "art_and_rig_approved": false
     },
     {
@@ -64,6 +68,8 @@
         "kael",
         "aldric"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": true,
       "art_and_rig_approved": false
     },
     {
@@ -90,6 +96,8 @@
         "guarda_esquerdo",
         "guarda_direito"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": true,
       "art_and_rig_approved": false
     },
     {
@@ -101,6 +109,8 @@
       "planned_cast": [
         "aldric"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": true,
       "art_and_rig_approved": false
     },
     {
@@ -124,6 +134,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": true,
       "art_and_rig_approved": false
     },
     {
@@ -147,6 +159,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -170,6 +184,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -193,6 +209,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -202,6 +220,8 @@
       "main_character_requirements": {},
       "is_black_opening": false,
       "planned_cast": [],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -225,6 +245,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -248,6 +270,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -271,6 +295,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -294,6 +320,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -318,6 +346,8 @@
         "kael",
         "figurantes"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -341,6 +371,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -364,6 +396,8 @@
       "planned_cast": [
         "elara"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -389,6 +423,8 @@
         "mascarado_1",
         "mascarado_2"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -424,6 +460,8 @@
         "kael",
         "elara"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -459,6 +497,8 @@
         "kael",
         "elara"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -483,6 +523,8 @@
         "kael",
         "mascarados"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -519,6 +561,8 @@
         "kael",
         "mascarados"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -554,6 +598,8 @@
         "kael",
         "elara"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -589,6 +635,8 @@
         "kael",
         "elara"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -612,6 +660,8 @@
       "planned_cast": [
         "elara"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -635,6 +685,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -660,6 +712,8 @@
         "guarda_esquerdo",
         "guarda_direito"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -684,6 +738,8 @@
         "kael",
         "guarda_esquerdo"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -709,6 +765,8 @@
         "guarda_esquerdo",
         "guarda_direito"
       ],
+      "princess_reveal_before_C12_forbidden": true,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -732,6 +790,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": false,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -768,6 +828,8 @@
         "elara",
         "aldric"
       ],
+      "princess_reveal_before_C12_forbidden": false,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -803,6 +865,8 @@
         "kael",
         "elara"
       ],
+      "princess_reveal_before_C12_forbidden": false,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -839,6 +903,8 @@
         "elara",
         "aldric"
       ],
+      "princess_reveal_before_C12_forbidden": false,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -862,6 +928,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": false,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -886,6 +954,8 @@
         "elara",
         "aldric"
       ],
+      "princess_reveal_before_C12_forbidden": false,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -910,6 +980,8 @@
         "elara",
         "aldric"
       ],
+      "princess_reveal_before_C12_forbidden": false,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     },
     {
@@ -933,6 +1005,8 @@
       "planned_cast": [
         "kael"
       ],
+      "princess_reveal_before_C12_forbidden": false,
+      "royal_palace_early_reveal_human_qa_required": false,
       "art_and_rig_approved": false
     }
   ]
