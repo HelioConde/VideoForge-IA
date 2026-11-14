@@ -11,6 +11,6 @@
   "visual_shots": 36,
   "initial_black_shot": 1,
   "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon",
-  "revision": 13,
-  "reason": "Testar nova regra: focal_bbox de closes e inserts nunca cortado pela camera 9:16 nativa; fotos 941x1672"
+  "revision": 14,
+  "reason": "Verificar contrato da previa C12 com cinco partes mesh, 360 frames e 512 triangulos sem gerar PNG novo"
 }
