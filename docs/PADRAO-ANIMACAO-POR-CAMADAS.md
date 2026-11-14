@@ -44,6 +44,12 @@ O erro observado na cena 1 foi causado por uma camada generativa de pálpebras c
 
 QA obrigatório por cena: máscaras validadas por SHA, máscara ocular de região específica (nunca usar coordenadas de Anya para outra cena), alfa verdadeiro sem vazamento nos pixels protegidos do cabelo, continuidade de rosto opaco, captura de quadros abertos/fechados e revisão visual humana. Se falhar, a piscada permanece desabilitada e `video_oficial_do_programa=false`. O padrão de movimento corporal continua mínimo, com limite absoluto 2,8 px no quadro 1080×1920 e sem deslocar objetos inexistentes.
 
+## Método novo de piscada — cópia integral com olhos fechados (substitui overlay)
+
+A solicitação explícita do usuário é **pegar a imagem original da personagem, pedir à IA somente olhos fechados e não alterar absolutamente mais nada**. Para isso, `videoforge/full_character_blink.py` envia o arquivo `character-main.png` original (SHA do manifesto, origem cena-mãe) à edição `/v1/images/edits` com `input_fidelity=high`, gerando `character-eyes-closed-ai.png` em uma única chamada. O QA constrói `character-eyes-closed-safe.png` com **mesmo canvas, alfa idêntico e pixels fora dos olhos copiados exatamente da imagem original**. Se o serviço devolver RGB opaco, sua transparência é descartada — a saída final usa apenas o alfa original.
+
+No Remotion, a piscada deve alternar o **PNG inteiro original** e o **PNG inteiro fechado** por poucos frames, com o mesmo transform do corpo. Não adicionar pálpebras separadas, máscara sobre franja, `hair-foreground.png` artificial nem qualquer outra camada por cima. O sistema verifica o número de pixels alterados só nos dois olhos, proíbe mudanças não oculares, exige hash de ambos os PNG e mantém a revisão humana pendente. Se a IA não fechar corretamente os olhos, o resultado é **reprovado**, não substituído por uma piscada simulada.
+
 ## Referências de código
 
 - `motion-remotion/src/mesh-rig.tsx`: piscada, cabeça sólida, malha de tecido, vento e proteção de costura.
