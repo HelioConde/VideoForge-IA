@@ -2,7 +2,7 @@
   "schema": "videoforge/video-editorial/v1",
   "canal_id": "otaku-br",
   "video_id": "spy-x-family-familia-de-mentira",
-  "status": "assets_pendentes",
+  "status": "renderizado",
   "titulo_provisorio": "Spy x Family: por que Anya esconde os segredos dos pais? 👀",
   "tema": "Por que Anya guarda os segredos de Loid e Yor e o que isso revela sobre a família Forger",
   "assuntos_relacionados": [
@@ -97,7 +97,9 @@
       "Anya: cabelo rosa, acessórios escuros, proporções infantis estáveis",
       "Casa dos Forger e Academia Eden com composição, paleta e direção de luz consistentes",
       "Movimentos suaves com rig por camadas sem fendas, transparências ou duplicação de sprites"
-    ]
+    ],
+    "estado": "preview_vetorial_provisorio_sem_sprites_rgba_da_franquia",
+    "documentacao_animacao": "docs/PADRAO-ANIMACAO-POR-CAMADAS.md"
   },
   "seo": {
     "palavras_chave": [
@@ -141,10 +143,10 @@
   },
   "producao": {
     "manifesto_tecnico": "video.json",
-    "workflow_url": null,
-    "artefato_url": null,
-    "sha256": null,
-    "duracao_real_segundos": null,
+    "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43545398967",
+    "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43545398967/artifacts/14093378535",
+    "sha256": "acf1e2b6b89f5ec5180bcb410ae8409f7f15d4c7feec63fba75d061ea9278254",
+    "duracao_real_segundos": 131.136,
     "versoes_anteriores": [
       {
         "tipo": "previsualizacao_tecnica_antiga",
@@ -154,13 +156,16 @@
         "duracao_real_segundos": 104.782,
         "qa_tecnico_aprovado": true
       }
-    ]
+    ],
+    "engine": "remotion_svg_layered_rig_preview",
+    "numero_de_cenas": 16,
+    "nova_versao": "spy-family-animado-review-43545398967"
   },
   "qa": {
-    "aprovado_tecnicamente": false,
+    "aprovado_tecnicamente": true,
     "aprovado_editorialmente": false,
-    "relatorio_url": null,
-    "nota": "Nova V2 com roteiro diferente: arquivo MP4 ainda não gerado e arte final pendente; a QA anterior permanece em producao.versoes_anteriores."
+    "relatorio_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43545398967/artifacts/14093378535",
+    "nota": "O MP4 animado com 16 cenas passou no QA tecnico (H264/AAC 1080x1920, 131.136s e movimento detectado). Arte vetorial provisoria e voz espeak-ng; QA visual humano e direitos pendentes."
   },
   "publicacao": {
     "youtube_video_id": null,
@@ -183,6 +188,7 @@
     "Prévia gerada com tipografia e voz sintética offline não equivale a arte final.",
     "Sem publicação nem autorização de uso de imagens oficiais.",
     "Workflow #43541390091 gerou MP4 tecnico com 10 cenas e voz sintetica offline; sem arte final, sem animação de personagens. 104.782s, QA tecnico aprovado.",
-    "Revisão editorial de 13/11/2026: roteiro renovado para 16 cenas com gancho sobre Anya, título, descrição, tags e plano visual. A versão renderizada em 104,782s é anterior à revisão; não descrever esse MP4 como atualizado."
+    "Revisão editorial de 13/11/2026: roteiro renovado para 16 cenas com gancho sobre Anya, título, descrição, tags e plano visual. A versão renderizada em 104,782s é anterior à revisão; não descrever esse MP4 como atualizado.",
+    "Execucao real #43545398967 gerou MP4 vertical de 131.136s com 16 cenas, movimentos de cabeca, piscada, roupas e cabelo por camadas no Remotion; imagens originais de anime NAO foram geradas. Arte final/narracao natural pendentes. Sem upload YouTube."
   ]
 }
