@@ -167,6 +167,30 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
                 diff+=abs(value-orig[k+c])
     error=diff/(3*max(1,pixels))
     overlapping_fraction=overlap/max(1,total_head_visible+total_body_visible)
+    # Export real neutral assembly and a visible RGB-diff image for review.
+    # Alpha outside the original Anya ROI remains zero; none of these previews
+    # can be misinterpreted as an approved video or a reference for new images.
+    composed=bytearray(BYTES)
+    difference=bytearray(BYTES)
+    for y in range(head_roi[1],HEIGHT):
+        for x in range(head_roi[0],head_roi[2]):
+            k=(y*WIDTH+x)*4
+            ah=head[k+3];ab=body[k+3]
+            out_a=ah+ab*(255-ah)//255
+            if out_a>0:
+                composed[k+3]=out_a
+                for ch in range(3):
+                    composed[k+ch]=(head[k+ch]*ah+
+                        body[k+ch]*ab*(255-ah)//255)//max(1,out_a)
+            if orig[k+3]>20:
+                difference[k+3]=255
+                for ch in range(3):
+                    difference[k+ch]=min(255,
+                        abs(composed[k+ch]-orig[k+ch])*3)
+    encode_crop(destination/"neutral-composition-candidate.png",
+                composed,[0,0,WIDTH,HEIGHT])
+    encode_crop(destination/"roundtrip-diff-review.png",
+                difference,[0,0,WIDTH,HEIGHT])
     result={
       "schema":"videoforge/rig-three-candidate-roundtrip-qa/v1",
       "channel":channel,"video_id":video_id,"scene":"cena-01",
