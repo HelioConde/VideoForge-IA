@@ -79,6 +79,15 @@ class CinematicShotAssetTests(unittest.TestCase):
         self.assertTrue(d["noImageGenerationLock"])
         self.assertEqual(d["pixelFilesCreated"],0)
 
+    def test_legacy_pan_assembler_cannot_replace_cinematic_rig(self):
+        from videoforge.production_assemble import prepare
+        with tempfile.TemporaryDirectory() as temp:
+            with self.assertRaisesRegex(
+                VideoForgeError,"CINEMATIC_36_SHOTS_REQUIRE_OWN_MOTHERS_RIGS_AND_QA"
+            ):
+                prepare(CHANNEL,VIDEO,Path(temp)/"missing-images",
+                        Path(temp)/"missing-audio",Path(temp)/"missing-report")
+
     def test_unsafe_paths_blocked(self):
         with tempfile.TemporaryDirectory() as tmp:
             base=Path(tmp)
