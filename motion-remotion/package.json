@@ -15,7 +15,9 @@
     "typecheck": "tsc --noEmit",
     "render:fofinhos": "remotion render src/index.ts FofinhosEP01Canonico",
     "render:alchemy-dorama": "remotion render src/index.ts AlchemyDoramaOriginal",
-    "render:alchemy-master10": "remotion render src/index.ts AlchemyDoramaMaster10s"
+    "render:alchemy-master10": "remotion render src/index.ts AlchemyDoramaMaster10s",
+    "test:cinematic": "node --test tests/cinematic-contract.test.cjs",
+    "render:cinematic:official": "remotion render src/cinematic-index.ts VideoForgeCinematicEpisode"
   },
   "dependencies": {
     "@react-three/fiber": "9.8.2",
