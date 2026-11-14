@@ -1,5 +1,7 @@
 # VideoForge-IA — rig 2D real com Three.js + Remotion
 
+> **REGRA CANÔNICA:** [MANUAL PRINCIPAL DE ANIMAÇÃO 2D](MANUAL-PRINCIPAL-ANIMACAO-2D.md) tem precedência sobre este relatório de implementação e todas as notas antigas. Os smoke-tests sintéticos NÃO aprovam personagens reais.
+
 **Situação em 14/11/2026:** motor matemático, renderer ThreeCanvas, contrato de assets e runner GHCR implementados e **testados com sprites sintéticos**. A execução [43580456827](https://github.com/HelioConde/VideoForge-IA/actions/runs/43580456827) passou com 8 testes matemáticos, 5 testes Python e cinco frames reais de Chromium/WebGL em software swangle. **Isso ainda NÃO é a animação definitiva da Anya.** Não há um conjunto aprovado de cabeça/corpo/cabelo separados para as 16 cenas do vídeo Spy × Family. Não foi publicado vídeo no YouTube.
 
 ## O padrão correto
