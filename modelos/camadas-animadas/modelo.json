@@ -31,7 +31,8 @@
       "workflow": ".github/workflows/rig-three-real-render.yml",
       "runner": "ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1",
       "composition": "VideoForgeMeshRigScene",
-      "legacy_flat_preview_not_rig": true
+      "legacy_flat_preview_not_rig": true,
+      "manual_principal": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md"
     },
     "voz": {
       "provedor": null,
@@ -68,6 +69,13 @@
       "module": "motion-remotion/src/blink-motion-sync.ts",
       "enabled_only_if_verified_rgba_head_and_body_no_head": true
     },
-    "last_verified_test_run": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439"
-  }
+    "last_verified_test_run": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439",
+    "legacy_flat_png_motion_not_official": true,
+    "modo_oficial": "head_pivot+body_independent+hair_cloth_mesh+eyes_same_head_pngs"
+  },
+  "manual_principal": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "regra_principal_animacoes_obrigatoria": true,
+  "prioridade_animacao": "manual-principal > modelos e prompts anteriores > legado",
+  "metodo_de_producao": "rig_three_real_parts_only",
+  "estados_sem_sprite_real": "assets_pendentes"
 }
