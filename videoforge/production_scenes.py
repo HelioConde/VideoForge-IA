@@ -111,6 +111,7 @@ def generate_scene(channel:str,video_id:str,number:int,reference:Path,
                    report:Path,url:str,model:str="gpt-image-2",
                    shot_id:str|None=None)->dict:
     image_generation_policy.assert_image_generation_allowed(channel,video_id)
+    cinematic_direction.assert_shot_generation_ready(channel,video_id)
     prompt,scene=scene_prompt(channel,video_id,number,shot_id)
     if model not in proxy.IMAGE_MODELS:
         raise VideoForgeError("PRODUCTION_SCENE_MODEL_INVALID")
