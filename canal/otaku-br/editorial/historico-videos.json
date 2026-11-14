@@ -7,16 +7,27 @@
   "videos": [
     {
       "video_id": "spy-x-family-familia-de-mentira",
-      "titulo": "Spy x Family: FAMÍLIA DE MENTIRA 👀 #Shorts",
+      "titulo": "Spy x Family: por que Anya esconde os segredos dos pais? 👀",
       "obra": "Spy x Family",
-      "assunto": "A família Forger, segredos e vínculos",
-      "status": "renderizado",
-      "tipo": "previa_tecnica_sem_arte_final",
-      "duracao_segundos": 104.782,
-      "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091",
-      "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091/artifacts/14092490361",
+      "assunto": "Por que Anya guarda os segredos de Loid e Yor e o que isso revela sobre a família Forger",
+      "status": "assets_pendentes",
+      "tipo": "revisao_editorial_v2",
+      "duracao_segundos": null,
+      "workflow_url": null,
+      "artefato_url": null,
       "publicado": false,
-      "visual_qa": "pendente"
+      "visual_qa": "pendente",
+      "revisoes_anteriores": [
+        {
+          "tipo": "previa_tecnica_sem_arte_final",
+          "estado": "renderizado",
+          "duracao_segundos": 104.782,
+          "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091",
+          "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091/artifacts/14092490361",
+          "visual_qa": "pendente"
+        }
+      ],
+      "scene_count": 16
     }
   ]
 }
