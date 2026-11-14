@@ -13,7 +13,10 @@ import sys
 
 from PIL import Image
 
-from .refine_existing_guards import BASE, MaskError
+BASE=Path(__file__).resolve().parents[1]/"canal"/"alchemy-lab"/"videos"/"mmorpg-conquiste-a-princesa-ep01"
+
+class MaskError(ValueError):
+    pass
 from .split_existing_png_parts import split_existing
 
 OLD = BASE/"assets/cena-01/candidatos/kael-rgba-candidate.png"
