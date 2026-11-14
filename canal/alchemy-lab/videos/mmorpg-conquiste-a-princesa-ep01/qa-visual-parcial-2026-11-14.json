@@ -76,7 +76,8 @@
     "Separar individualmente Kael/Aldric/guardas e lanças da C01 por edição da mesma imagem original, removendo trono do alfa",
     "Recompor todos sprites em pose neutra e comparar diff.png com imagem-mãe antes de qualquer rig",
     "Não liberar produção MP4 oficial enquanto rig independente e QA não forem concluídos",
-    "Partes RGBA individuais em produção; candidato Kael gerado por edição da mesma mãe, mas rig por malha e QA de overdraw ainda faltam"
+    "Partes RGBA individuais em produção; candidato Kael gerado por edição da mesma mãe, mas rig por malha e QA de overdraw ainda faltam",
+    "Preferir assets alinhados diretamente à mãe, conforme rig-selecao-artes-c01.json; proibir uso dos candidatos antigos em escala divergente."
   ],
   "status": {
     "assetsDrawnPartially": true,
@@ -93,5 +94,68 @@
     "meaning": "14 PNGs de cena-mae no total (1 piloto +13 lote), mas aprovação visual não se segue de sucesso técnico",
     "visual_qa": "pending_12_other_scenes_and_rejected_02_03",
     "production_approval": false
+  },
+  "latestQaRevision": "2026-11-14-existing-asset-alignment-v2",
+  "repositoryArchive": {
+    "pngCount": 56,
+    "externalChatZipPngCount": 8,
+    "externalChatZipUploaded": false,
+    "allLocatedIn": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets",
+    "imageGenerationCallsDuringRefinement": 0
+  },
+  "preferredRigInventory": "rig-selecao-artes-c01.json",
+  "alignmentCorrections": [
+    {
+      "actor": "kael",
+      "workflow_run": 43601362186,
+      "newAsset": "assets/cena-01/rig-drafts/kael-alinhado-original/kael-alinhado-mesma-cena-mae-CANDIDATO.png",
+      "oldCandidateMaskIou": 0.27821,
+      "sourceBBox": [
+        306,
+        750,
+        647,
+        1397
+      ],
+      "status": "candidate; corrected source alignment"
+    },
+    {
+      "actor": "kael anatomical pieces",
+      "workflow_run": 43601692577,
+      "newAssetDirectory": "assets/cena-01/rig-drafts/kael-alinhado-partes",
+      "pieceCount": 12,
+      "nonemptyParts": 11,
+      "roundtripVisiblePixels": true,
+      "status": "draft; affine masks not anatomical QA"
+    },
+    {
+      "actor": "guarda esquerdo",
+      "workflow_run": 43601017320,
+      "asset": "assets/cena-01/rig-drafts/guardas-refinados/guarda-esquerdo-origem-rgb-candidato.png",
+      "maskArea": 150433,
+      "spearOverlapRemovedPixels": 3598,
+      "status": "candidate; holes in no-spear variant"
+    },
+    {
+      "actor": "guarda direito",
+      "workflow_run": 43601017320,
+      "asset": "assets/cena-01/rig-drafts/guardas-refinados/guarda-direito-origem-rgb-candidato.png",
+      "maskArea": 149303,
+      "spearOverlapRemovedPixels": 3702,
+      "status": "candidate; holes in no-spear variant"
+    },
+    {
+      "actor": "aldric",
+      "workflow_run": 43602241129,
+      "asset": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+      "maskArea": 57371,
+      "status": "candidate; throne armrest overlaps unknown"
+    }
+  ],
+  "productionSafety": {
+    "noNewImageGenerationLock": true,
+    "fullVideoMp4Completed": false,
+    "qaHumanApproved": false,
+    "rigThreeArticulated": false,
+    "youtubeUploaded": false
   }
 }
