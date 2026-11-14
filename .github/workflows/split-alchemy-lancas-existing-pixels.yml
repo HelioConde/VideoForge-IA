@@ -1,0 +1,75 @@
+name: "VideoForge - separar duas lanças da cena-mãe sem IA"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-separar-lancas.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-alchemy-extract-existing-spears
+  cancel-in-progress: false
+
+jobs:
+  separar-lancas:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar que NÃO haverá geração de imagens
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-separar-lancas.json")
+          request=json.loads(p.read_text(encoding="utf8"))
+          assert request.get("schema")=="videoforge/split-existing-spears-request/v1"
+          assert request.get("channel")=="alchemy-lab"
+          assert request.get("image_generation_calls")==0
+          assert request.get("only_existing_mother_pixels") is True
+          assert request.get("human_visual_approval") is False
+          assert request.get("youtube_upload") is False
+          print("NO_IMAGE_GENERATION: SHA verified mother pixels only")
+          PY
+      - name: Preparar biblioteca local de máscara de pixels (sem IA)
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Testes de anti-alucinação e integridade RGB
+        run: python -m unittest tests.test_split_existing_png_parts -v
+      - name: Extrair as duas lanças do próprio PNG da cena-mãe
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          python -m videoforge.split_existing_png_parts \
+            --source "$BASE/assets/cenas-mae/cena-01.png" \
+            --plan "$BASE/rig-lancas-pixel-partition.json" \
+            --dest "$BASE/assets/cena-01/rig-drafts/lancas"
+      - name: Arquivar os recortes da cena original em canal/alchemy-lab
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEST='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/lancas'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$DEST"
+          if git diff --cached --quiet; then
+            echo 'Lanças já arquivadas e idênticas'
+            exit 0
+          fi
+          git commit -m 'assets(alchemy): duas lanças candidatas dos pixels da cena-mãe sem IA'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Aviso de QA
+        run: |
+          echo 'Os dois PNGs são candidatos: máscara geométrica pode incluir fundo ou luvas.'
+          echo 'Sem pivôs finais, underlays, aprovação visual, rig ou MP4.'
