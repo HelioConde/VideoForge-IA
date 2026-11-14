@@ -12,8 +12,10 @@
   "youtube_upload": false,
   "image_generation_calls": 0,
   "do_not_rebuild_legacy_runner": true,
-  "revision": "v2_commit_verified_package_lock_to_main_via_normal_actions",
+  "revision": "v3_git_rebase_before_push",
   "initial_bootstrap_run_id": 43579639458,
   "latest_build_docker_tag": "ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1",
-  "no_new_art_generation": true
+  "no_new_art_generation": true,
+  "previous_failed_run_id": 43579816492,
+  "issue": "Non-fast-forward because concurrent commits landed on main; rebasing before push"
 }
