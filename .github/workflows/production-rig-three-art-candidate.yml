@@ -121,14 +121,14 @@ jobs:
             --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/rig-candidates \
             --url "$PROXY_ENDPOINT" --model gpt-image-2
       - name: Commitar PNGs originais permanentemente no canal, com QA separado
-        if: success()
+        if: always()
         shell: bash
         env:
           VF_CH: otaku-br
           VF_VID: spy-x-family-familia-de-mentira
           VF_PRODUCER: rig-three-${{ matrix.part }}
         run: |
-          bash scripts/persistir-imagens-gh.sh "$VF_CH" "$VF_VID" "output/$VF_CH/videos/$VF_VID/assets/cena-01/rig-candidates" "${{ github.run_id }}" "$VF_PRODUCER"
+          bash scripts/arquivar-pngs-se-existirem.sh "$VF_CH" "$VF_VID" "output/$VF_CH/videos/$VF_VID/assets/cena-01/rig-candidates" "${{ github.run_id }}" "$VF_PRODUCER" "${{ job.status }}"
       - name: Salvar PNG e QA como CANDIDATO nao aprovado (mesmo se reprovado)
         if: always()
         uses: actions/upload-artifact@v4
