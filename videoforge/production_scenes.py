@@ -40,6 +40,9 @@ def scene_prompt(channel:str,video_id:str,number:int,shot_id:str|None=None)->tup
             visual_direction=(cinematic_direction.prompt_direction(cinematic) if cinematic else scene["visual_direction"]),
             story_goal=(f"Tomada individual {cinematic['id']} deste episodio; manter evento, local e cronologia." if cinematic else scene["story_goal"]),
         )
+    except VideoForgeError:
+        # Quadros pretos e planos invalidados precisam manter erro explícito.
+        raise
     except (KeyError,ValueError) as exc:
         raise VideoForgeError("PRODUCTION_SCENE_PROMPT_INVALID") from exc
     bible=plan.get("character_bible")
