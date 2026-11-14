@@ -11,12 +11,12 @@
       "obra": "Spy x Family",
       "assunto": "Por que Anya guarda os segredos de Loid e Yor e o que isso revela sobre a família Forger",
       "status": "renderizado",
-      "tipo": "revisao_com_artes_reais_produzida_pelo_programa",
-      "duracao_segundos": 130.847,
-      "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43556709886",
-      "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43556709886/artifacts/14097759273",
+      "tipo": "revisao_artes_reais_voz_feminina_legendas_movimento",
+      "duracao_segundos": 157.089,
+      "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43558375270",
+      "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43558375270/artifacts/14100020237",
       "publicado": false,
-      "visual_qa": "pendente",
+      "visual_qa": "amostra_verificada_aprovacao_humana_pendente",
       "revisoes_anteriores": [
         {
           "tipo": "previa_tecnica_sem_arte_final",
@@ -28,11 +28,11 @@
         }
       ],
       "scene_count": 16,
-      "sha256": "037287be34cd352ad8e1c269e73e8bcad8d803f4e484820da406274b110d1e1c",
+      "sha256": "8b28018d468bed938ad89bb5d661ca1ce76d73c9118f79df0912aca832534a92",
       "arte_final": false,
       "narracao_final": false,
       "video_oficial_do_programa": false,
-      "pendencia": "Falta gerar arte real por fluxo do programa/agentes e montar vídeo definitivo com QA; artefato existente é prévia técnica do workflow separado.",
+      "pendencia": "Falta separação real dos personagens em camadas RGBA, rig com olhos/cabelo/roupas e aprovação da locução e arte final.",
       "render_tech_confirmed": true,
       "workflow_arquivo": ".github/workflows/spy-family-animated.yml",
       "agentes_e_arte_final_integrados": false,
@@ -56,7 +56,11 @@
         43555226353,
         43555469650,
         43555715519
-      ]
+      ],
+      "voz_feminina": true,
+      "voz_natural_final": false,
+      "legendas_embutidas": true,
+      "movimento_camera": true
     }
   ]
 }
