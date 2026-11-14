@@ -12,5 +12,8 @@
   "humanVisualApproval": false,
   "rigOfficial": false,
   "youtubeUpload": false,
-  "workflowMode": "normal_push_no_private"
+  "workflowMode": "normal_push_no_private",
+  "revision": "v2_ffmpeg_rgba_composition_clamp",
+  "previous_failed_run": 43587154254,
+  "new_image_calls": 0
 }
