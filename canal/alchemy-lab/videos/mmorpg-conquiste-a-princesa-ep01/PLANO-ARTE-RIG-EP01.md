@@ -149,3 +149,29 @@ Os erros do quadro neutro caíram aproximadamente 69%, mas **isso não aprova an
 **Total agora verificado: 57 PNGs** armazenados no caminho do episódio em canal/alchemy-lab. A imagem nova nesta contagem é uma derivação pixel-a-pixel de duas imagens já produzidas; não houve geração de nova ilustração por IA. Os 56 PNGs anteriores foram preservados.
 
 Próximos gates: verificar a oclusão correta das lanças e mãos; conferir Aldric sem fragmentos do trono; medir pivôs reais de Kael e guardas; avaliar em que movimentações as regiões escondidas ficam visíveis; validar composição e malhas Three.js antes de qualquer render oficial. As cenas 02 e 03 continuam reprovadas visualmente e o lock de não geração de imagens permanece ativo.
+
+## 12. Separação de braços dos guardas e peças de Aldric (sem geração de imagens)
+
+Esta etapa foi executada com **zero chamadas a modelos de imagem** e usando exclusivamente as cores, texturas e alfa já disponíveis no episódio. O repositório contém **71 PNGs** em `canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets` (57 anteriores + 8 peças de guardas + 6 peças do rei). As oito variações exclusivas do ZIP da conversa continuam fora do GitHub, aguardando envio do ZIP à pasta `uploads/`.
+
+### C01-P04 — Dois guardas, braços independentes
+
+- Workflow [43613024544](https://github.com/HelioConde/VideoForge-IA/actions/runs/43613024544) criou em `assets/cena-01/rig-drafts/guard-arm-parts/` **4 camadas por guarda**: corpo, braço superior, antebraço, mão segurando lança.
+- As oito camadas passam na **recomposição exata** de pixels visíveis dos dois PNGs fontes, conforme `guard-arm-parts/qa.json`. Isso ainda não preenche regiões escondidas.
+- A análise de contato por alfa verificou 458 pixels de sobreposição entre a mão esquerda da composição e sua lança, e 369 pixels na outra mão; o antebraço do guarda direito ainda intercepta a lança em 108 pixels.
+- Foram documentados os pontos provisórios de ombro, cotovelo, punho e pega, e a hierarquia `body -> upper-arm -> forearm -> gripping-hand -> spear` em [rig-guardas-articulacoes-c01.json](rig-guardas-articulacoes-c01.json).
+- O [laudo de rig](qa-guardas-articulacoes-c01.json) conferiu **10 PNGs com SHA correto** e obriga ângulos de movimento iguais a **zero** enquanto faltarem underlays, pivôs aprovados e ordenação dos planos das lanças.
+- **Incompatibilidade cinematográfica:** a imagem-mãe já mostra as lanças cruzadas; a direção requer a ação de cruzá-las. Ainda faltam poses e arte original dos trechos escondidos sob mãos e antebraços. Não criar abertura artificial girando uma lança isolada ou fazendo zoom no quadro.
+
+### Rei Aldric — seis partes reais, pose sentada
+
+- Workflow [43613662737](https://github.com/HelioConde/VideoForge-IA/actions/runs/43613662737) executou [rig-aldric-pixel-partition.json](rig-aldric-pixel-partition.json) sem IA e salvou **6 PNGs** em `assets/cena-01/rig-drafts/aldric-partes/`.
+- Peças: `coroa-cabelo-rosto`, `mao-esquerda`, `mao-direita`, `manto-esquerdo`, `manto-direito`, `corpo-vestimenta-restante`.
+- Relatório `assets/cena-01/rig-drafts/aldric-partes/split-qa.json`: recomposição fiel dos pixels visíveis da fonte, sem geração ou pintura de pixels. As coroas, mãos e manto ainda não têm underlays; não há visemas nem versões de olhos abertos/fechados aprovadas.
+- O candidato original de Aldric poderá conter resíduos do trono nas bordas: a divisão exata não os elimina. Não promover essas seis camadas a rig aprovado.
+
+### Testes e proteção de recursos
+
+- O workflow MVP foi ajustado para **não rerenderizar MP4 de teste a cada commit de PNGs, relatórios QA ou solicitações deste episódio**. Mudanças no código `videoforge/**` e testes `tests/**` continuam disparando o smoke para preservar segurança.
+- Persistem: `SEM-GERACAO-NOVAS-IMAGENS.lock`, aprovação humana pendente, underlays ausentes e `video_oficial_do_programa=false`.
+- **Próxima ação técnica**: revisar a silhueta de cada parte com o trono e braços; levantar máscara para oclusão correta de dedos/lanças; avaliar pose neutra e envelope máximo de movimento antes de liberar qualquer transformação do rig.
