@@ -1,0 +1,143 @@
+{
+  "schema": "videoforge/existing-pixel-split-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+  "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "pieces": [
+    {
+      "id": "coroa-cabelo-rosto",
+      "file": "coroa-cabelo-rosto.png",
+      "sha256": "f6028cbd1812695a1713cedf25fd91fe0c5cde0d70cb8b356bf72cf6fd90aea5",
+      "bbox_global": [
+        469,
+        298,
+        562,
+        383
+      ],
+      "pivot_xy_provisional": [
+        514,
+        364
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "DRAFT_head_with_crown_beard_not_ready_for_turn"
+    },
+    {
+      "id": "mao-esquerda",
+      "file": "mao-esquerda.png",
+      "sha256": "77a85e32ff715236782e161d52c7bef10ed92686bb6781fe380abbf450e8ef19",
+      "bbox_global": [
+        390,
+        397,
+        448,
+        453
+      ],
+      "pivot_xy_provisional": [
+        415,
+        422
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "DRAFT_hand_on_throne_left_underlay_missing"
+    },
+    {
+      "id": "mao-direita",
+      "file": "mao-direita.png",
+      "sha256": "2fff22c33bcfdea441e3bc76eaf5df5469ca453d7b35d95c23d4419636929ebf",
+      "bbox_global": [
+        589,
+        397,
+        643,
+        459
+      ],
+      "pivot_xy_provisional": [
+        616,
+        421
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "DRAFT_hand_on_throne_right_underlay_missing"
+    },
+    {
+      "id": "manto-esquerdo",
+      "file": "manto-esquerdo.png",
+      "sha256": "e67eaaa3eca75260c7866e82447063e62e12dda238eefc145ff6dddd69780695",
+      "bbox_global": [
+        335,
+        352,
+        475,
+        621
+      ],
+      "pivot_xy_provisional": [
+        454,
+        387
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "DRAFT_cloth_mesh_root_underlay_missing"
+    },
+    {
+      "id": "manto-direito",
+      "file": "manto-direito.png",
+      "sha256": "ef15935d2fb48e5c88946f219da85b927d44b87f56d99bd3cd7fe69fa9b26e53",
+      "bbox_global": [
+        569,
+        362,
+        645,
+        546
+      ],
+      "pivot_xy_provisional": [
+        579,
+        388
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "DRAFT_cloth_mesh_root_underlay_missing"
+    },
+    {
+      "id": "corpo-vestimenta-restante",
+      "file": "corpo-vestimenta-restante.png",
+      "sha256": "4c6dd51cf87fc9bdd5126ae160474428f2bca9aaf801b051f8f2ad9694897833",
+      "bbox_global": [
+        335,
+        345,
+        593,
+        623
+      ],
+      "pivot_xy_provisional": [
+        515,
+        443
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "DRAFT_opaque_rest_with_no_hidden_anatomy"
+    }
+  ],
+  "piece_count": 6,
+  "source_mode": "RGBA",
+  "neutral_roundtrip_pixel_exact": true,
+  "source_pixels_created_or_painted": 0,
+  "source_pixels_discarded": 0,
+  "alpha_alignment": "unverified_for_actual_joint_deformation",
+  "hidden_anatomy_underlays": "missing",
+  "halo_and_background_contamination": "requires_human_review",
+  "pivots": "provisional",
+  "head_closed_same_image": "not_available_no_eyes_visible",
+  "actual_rig": "pending",
+  "human_visual_approval": false,
+  "video_official": false,
+  "youtube_uploaded": false,
+  "explicit_restriction": "Não usar estes recortes diretamente como rig aprovado."
+}
