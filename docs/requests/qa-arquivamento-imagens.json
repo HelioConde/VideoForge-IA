@@ -13,5 +13,6 @@
     "no empty successes",
     "provenance meta"
   ],
-  "request_version": 1
+  "request_version": 2,
+  "description": "Validar armazenamento permanente de PNG SHA e ligacao de 9 workflows geradores sem inferencia"
 }
