@@ -47,13 +47,29 @@ def scene_prompt(channel:str,video_id:str,number:int)->tuple[str,dict]:
         for name,description in bible.items()
     ):
         raise VideoForgeError("PRODUCTION_SCENE_BIBLE_MISSING")
-    # Compatibilidade com roteiro Spy Family: manter a ordem antiga da biblia.
-    ordering=("loid","yor","anya") if {"loid","yor","anya"}<=set(bible) else tuple(bible)
+    # Para vídeos com elenco explícito, NÃO enviar descrição de
+    # personagens fora do enquadramento. Mantém formato legado Spy Family.
+    cast=scene.get("reference_cast")
+    if cast is not None:
+        if (not isinstance(cast,list) or not cast or len(cast)>len(bible)
+                or len(set(cast))!=len(cast)
+                or any(not isinstance(name,str) or name not in bible for name in cast)):
+            raise VideoForgeError("PRODUCTION_SCENE_CAST_INVALID")
+        ordering=tuple(cast)
+        absent=[name for name in bible if name not in cast]
+    else:
+        ordering=("loid","yor","anya") if {"loid","yor","anya"}<=set(bible) else tuple(bible)
+        absent=[]
     character_lines=[name.title()+": "+bible[name] for name in ordering]
+    exclusion=("Personagens PROIBIDOS neste quadro, apesar de aparecerem na prancha: "
+               +", ".join(absent)+". Nunca desenhar estes rostos, roupas, sombras, reflexos ou silhuetas."
+               if absent else "")
     suffix="\n".join([
-        "A PRANCHA anexada e a referencia unica de design; nao copie o fundo.",
+        "A PRANCHA anexada e referencia de IDENTIDADE, NAO de COMPOSICAO.",
         "Direcao de arte: "+plan["style"],
         *character_lines,
+        "Desenhar SOMENTE as figuras presentes na direcao visual.",
+        exclusion,
         "Mensagem da cena: "+str(scene.get("narration","")),
         "NUNCA desenhar personagens ausentes do enquadramento descrito.",
         "Imagem de cena completa, NUNCA cartao, poster ou fluxograma.",
