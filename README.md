@@ -172,3 +172,11 @@ entregar um MP4 real primeiro. O modelo de camadas ainda está desativado.
    nunca enviar conteúdo automaticamente.
 
 **QA técnico não é aprovação editorial ou visual.**
+
+## Direção articulada do dorama — 2026-11-14
+
+O programa agora possui uma entrada de diagnóstico para executar os keyframes
+do Alchemy Lab sobre peças hierárquicas e malhas reais em ThreeCanvas.
+Consulte [animação por direção](docs/ANIMACAO-POR-DIRECAO.md) para preparar
+um plano, renderizar pelo Actions e consultar cobertura/QA. As artes atuais
+continuam candidatas; a prévia marcada não constitui o episódio final.
