@@ -137,3 +137,42 @@ test('Anya side locks pin the inner face edge at all rows, not just their roots'
     assert.deepEqual(at(kind,173).positions,zero.positions);
   }
 });
+
+
+test('C12-P03 earring pivots about measured original source loop, without rotating face',()=>{
+  const rig={
+    bbox:[680,532,41,126],canvas:{width:941,height:1672},
+    kind:'earring',
+    spec:{kind:'earring',columns:4,rows:9,pinnedRows:[0],
+      amplitudePx:6,pivotPx:[690,547],phaseRad:.7,frequencyHz:.67},
+    fps:30,duration:120,blinkFrames:[],
+  };
+  const zero=meshGridAtFrame({...rig,frame:0});
+  const moved=meshGridAtFrame({...rig,frame:51});
+  const neutral=meshGridAtFrame({...rig,frame:119});
+  assert.equal(zero.indices.length,4*9*6);
+  assert.deepEqual(zero.positions,neutral.positions);
+  assert.deepEqual(zero.positions.slice(0,15),moved.positions.slice(0,15));
+  assert.notDeepEqual(moved.positions.slice(15),zero.positions.slice(15));
+  assert.deepEqual(moved.positions,
+    meshGridAtFrame({...rig,frame:51}).positions);
+});
+
+test('C12-specific cape and hair sprites have independent meshes, distinct timings',()=>{
+  const common={bbox:[147,735,150,131],
+    canvas:{width:941,height:1672},
+    fps:30,duration:120,frame:50,blinkFrames:[]};
+  const cape=meshGridAtFrame({...common,kind:'cape',
+    spec:{kind:'cape',columns:6,rows:8,pinnedRows:[0],amplitudePx:8.5}});
+  const hair=meshGridAtFrame({...common,kind:'hair-front',
+    spec:{kind:'hair-front',columns:6,rows:8,pinnedRows:[0],amplitudePx:8.5}});
+  assert.equal(cape.indices.length,6*8*6);
+  assert.notDeepEqual(cape.positions,hair.positions);
+  assert.deepEqual(cape.positions.slice(0,21),hair.positions.slice(0,21));
+  assert.throws(()=>meshGridAtFrame({...common,kind:'cape',
+    spec:{kind:'hair-back',columns:6,rows:8,pinnedRows:[0],amplitudePx:8.5}}),
+  /KIND_DISAGREES/);
+  assert.throws(()=>meshGridAtFrame({...common,kind:'earring',
+    spec:{kind:'earring',columns:4,rows:8,pinnedRows:[0],amplitudePx:4}}),
+  /BONE_PIVOT_INVALID/);
+});
