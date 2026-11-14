@@ -1,0 +1,230 @@
+{
+  "schema": "videoforge/storyboard-preproduction/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "version": "2026-11-14",
+  "status": "roteiro_pronto_assets_pendentes",
+  "total_duration_seconds": 134,
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "scenes": [
+    {
+      "id": "C01",
+      "start_seconds": 0,
+      "end_seconds": 8,
+      "duration_seconds": 8,
+      "description": "Trono: acusação",
+      "characters": [
+        "rei",
+        "guarda",
+        "kael"
+      ],
+      "location": "sala-do-trono",
+      "rig_notes": "rei inclina cabeça; guardas seguram lanças",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C02",
+      "start_seconds": 8,
+      "end_seconds": 17,
+      "duration_seconds": 9,
+      "description": "Pânico de Kael",
+      "characters": [
+        "kael"
+      ],
+      "location": "sala-do-trono",
+      "rig_notes": "piscar e respiração por peças",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C03",
+      "start_seconds": 17,
+      "end_seconds": 23,
+      "duration_seconds": 6,
+      "description": "Transição de memória",
+      "characters": [
+        "kael"
+      ],
+      "location": "sala-do-trono",
+      "rig_notes": "pupila e corte para flashback",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C04",
+      "start_seconds": 23,
+      "end_seconds": 34,
+      "duration_seconds": 11,
+      "description": "Último login",
+      "characters": [
+        "kael"
+      ],
+      "location": "quarto-moderno",
+      "rig_notes": "mãos no teclado; luz da interface",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C05",
+      "start_seconds": 34,
+      "end_seconds": 46,
+      "duration_seconds": 12,
+      "description": "Nível 1",
+      "characters": [
+        "kael"
+      ],
+      "location": "estrada-arken",
+      "rig_notes": "cabelo/jaqueta ao vento; mãos",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C06",
+      "start_seconds": 46,
+      "end_seconds": 57,
+      "duration_seconds": 11,
+      "description": "Mercado sem ouro",
+      "characters": [
+        "kael",
+        "figurantes"
+      ],
+      "location": "mercado-arken",
+      "rig_notes": "bolsa e dedos separados",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C07",
+      "start_seconds": 57,
+      "end_seconds": 69,
+      "duration_seconds": 12,
+      "description": "Jovem encapuzada",
+      "characters": [
+        "kael",
+        "elara",
+        "mascarados"
+      ],
+      "location": "beco-arken",
+      "rig_notes": "corrida somente se rig de membros real",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C08",
+      "start_seconds": 69,
+      "end_seconds": 83,
+      "duration_seconds": 14,
+      "description": "O salvamento",
+      "characters": [
+        "kael",
+        "elara",
+        "mascarados"
+      ],
+      "location": "beco-arken",
+      "rig_notes": "braços e carrinho independentes",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C09",
+      "start_seconds": 83,
+      "end_seconds": 93,
+      "duration_seconds": 10,
+      "description": "Broche da princesa",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "location": "beco-arken",
+      "rig_notes": "mãos, cabelo, broche RGBA",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C10",
+      "start_seconds": 93,
+      "end_seconds": 104,
+      "duration_seconds": 11,
+      "description": "Acusado no portão",
+      "characters": [
+        "kael",
+        "guardas"
+      ],
+      "location": "portao-palacio",
+      "rig_notes": "braços dos guardas e broche",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C11",
+      "start_seconds": 104,
+      "end_seconds": 113,
+      "duration_seconds": 9,
+      "description": "Olhar furtivo",
+      "characters": [
+        "kael",
+        "elara",
+        "rei"
+      ],
+      "location": "sala-do-trono",
+      "rig_notes": "somente olhar lateral e cabeça em pivô; face opaca",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C12",
+      "start_seconds": 113,
+      "end_seconds": 124,
+      "duration_seconds": 11,
+      "description": "Conquiste a princesa",
+      "characters": [
+        "kael",
+        "elara",
+        "rei"
+      ],
+      "location": "sala-do-trono",
+      "rig_notes": "rig real da expressão + HUD como overlay",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C13",
+      "start_seconds": 124,
+      "end_seconds": 134,
+      "duration_seconds": 10,
+      "description": "O falso noivado",
+      "characters": [
+        "kael",
+        "elara",
+        "rei",
+        "guardas"
+      ],
+      "location": "sala-do-trono",
+      "rig_notes": "gesto da princesa e reação de Kael",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    }
+  ],
+  "youtube_upload": false,
+  "video_oficial_do_programa": false,
+  "rig_animado_aplicado": false
+}
