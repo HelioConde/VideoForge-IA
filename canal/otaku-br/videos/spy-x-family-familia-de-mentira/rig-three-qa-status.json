@@ -6,12 +6,12 @@
   "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
   "reference_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
   "latest_workflow": {
-    "name": "rig-three-anya-hair-underlay.yml",
-    "run_id": 43597972939,
+    "name": "rig-three-anya-draft-mp4.yml",
+    "run_id": 43599954870,
     "conclusion": "success",
-    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43597972939",
-    "artifact_id": 14115058750,
-    "artifact_name": "vf-anya-hair-underlay-candidate-43597972939"
+    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43599954870",
+    "artifact_id": 14115478507,
+    "artifact_name": "vf-anya-threecanvas-6s-not-approved-43599954870"
   },
   "earlier_artifacts": {
     "isolation_run": 43589190537,
@@ -42,11 +42,11 @@
     "neutral-diff-corrected.png"
   ],
   "pending_visual_and_motion_checks": [
-    "Inspect horizontal attachment seam of left/right side locks at their roots in actual ThreeCanvas frames",
-    "Compare 0/30/74/76/173/175 frame pairs; ensure no new visible part duplication and no blink jump",
-    "Test foreground hand against neck pivot and shoulder underlay with real head rotation",
-    "Review segmentation accuracy of source hair masks under independent 7x9 mesh deformation on light/dark backgrounds",
-    "Human visual sign-off before enabling rig manifest and before official MP4 or YouTube upload"
+    "Inspect roots of two side locks and remaining seams at frames 30/74/76/173 in the refined genuine ThreeCanvas render",
+    "Review face/hand/collar intersection under actual head rotation; pointing hand has not been independently rigged",
+    "Confirm no see-through or pink source hair remains under deforming locks on both light and dark backgrounds",
+    "Approve head pivot source coordinates only after visual and physical inspection",
+    "Validate all remaining scenes and audio/narration before any production or publication"
   ],
   "human_review_approved": false,
   "hair_underlay_approved": false,
@@ -55,7 +55,7 @@
   "rig_animado_aplicado": false,
   "video_oficial_do_programa": false,
   "youtube_uploaded": false,
-  "status": "real_art_threecanvas_draft_frames_passed_hair_hand_neck_visual_and_mp4_pending",
+  "status": "real_anime_threecanvas_refined_6s_draft_mp4_generated_visual_approval_pending",
   "provisional_neck_pivot_review": {
     "source": "local exploratory OpenCV geometry check; NOT a ThreeCanvas render or official motion QA",
     "pivot_candidate_original_canvas": [
@@ -177,11 +177,11 @@
     "real_character_ThreeCanvas_rendered": false
   },
   "real_art_threecanvas_draft_qa": {
-    "workflow_run_id": 43598866124,
-    "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43598866124",
-    "artifact_id": 14114674407,
-    "artifact_name": "vf-anya-three-real-art-unapproved-review-43598866124",
-    "source_art_run": 43598536256,
+    "workflow_run_id": 43599952174,
+    "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43599952174",
+    "artifact_id": 14116086474,
+    "artifact_name": "vf-anya-three-real-art-unapproved-review-43599952174",
+    "source_art_run": 43599799485,
     "corrected_static_other_run": 43591918632,
     "actual_art_frames_rendered": [
       0,
@@ -192,14 +192,14 @@
       175,
       239
     ],
-    "renderer": "Remotion 4 / ThreeCanvas SWANGLE",
+    "renderer": "Remotion ThreeCanvas SWANGLE",
     "both_side_hair_pinned_meshes": true,
     "source_character_and_background_sha_verified": true,
     "others_from_corrected_partition_sha_verified": true,
     "frame_30_repeat_identical": true,
     "scene_motion_visible_between_frame_0_and_frame_30": true,
     "blink_difference_visible_74_vs_76": true,
-    "neutral_reference_visual_review": "technical screenshot review indicates consistent Loid/Yor; hair neck and finger seams require motion review",
+    "note": "render passed; side-hair edge and hair-to-neck root seams remain visually pending",
     "approval": "pending_human_visual_review",
     "video_official": false,
     "youtube_uploaded": false
@@ -214,5 +214,47 @@
     "pixels_with_rgb_error_above_20": 0,
     "pixels_with_alpha_error_above_3": 0,
     "status": "pixel_qa_passed_motion_visual_review_pending"
+  },
+  "seven_pixel_underlay_qa": {
+    "run_id": 43599799485,
+    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43599799485",
+    "artifact_id": 14115531905,
+    "hair_mask_pixels": 60731,
+    "original_alpha_254_core_underlay_pixels": 14803,
+    "additional_source_alpha_253_inward_edge_pixels": 9239,
+    "true_reconstructed_underlay_pixels": 24042,
+    "edge_width_pixels": 7,
+    "original_pixels_repainted_outside_hidden_reconstruction": 0,
+    "neutral_roundtrip_mean_rgb_difference": 0.11044,
+    "neutral_rgb_error_pixels_gt20": 0,
+    "neutral_alpha_error_pixels_gt3": 0,
+    "geometric_opencv_diagnostic_holes_roi": {
+      "0": 0,
+      "2": 0,
+      "-2": 0
+    },
+    "geometric_test_does_not_certify_threecanvas": true,
+    "approved_blink_retained": true,
+    "human_art_review_approved": false
+  },
+  "technical_mp4": {
+    "workflow_run_id": 43599954870,
+    "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43599954870",
+    "artifact_id": 14115478507,
+    "file": "anya-three-draft-6s.mp4",
+    "video_source_art_run": 43599799485,
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "resolution": [
+      1080,
+      1920
+    ],
+    "fps": 30,
+    "frames": 180,
+    "duration_seconds": 6,
+    "narration_or_audio": false,
+    "approved_for_youtube": false,
+    "preview_tecnico_nao_oficial": true,
+    "human_visual_approval": false
   }
 }
