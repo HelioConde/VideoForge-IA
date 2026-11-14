@@ -32,6 +32,7 @@ export type CinematicShot = {
   backgroundFile?:string;
   backgroundSha256?:string;
   sourceMotherSha256?:string;
+  sourceCanvas?:{width:number;height:number};
   actors?:CinematicActor[];
   staticShotApproved?:boolean;
   audioFile?:string|null;
@@ -54,7 +55,11 @@ export type CinematicEpisodeProps = {
 
 const SHA=/^[a-f0-9]{64}$/;
 const SHOT=/^C\d{2}-P\d{2}$/;
-const CANVAS={width:1024,height:1536};
+/** Native shot sources may be legacy 2:3 or the approved portraits at ~9:16. */
+const nativeCanvasAllowed=(size:{width:number;height:number}|undefined):boolean=>
+  Boolean(size && Number.isSafeInteger(size.width)&&Number.isSafeInteger(size.height) &&
+    ((size.width===1024 && size.height===1536) ||
+     (size.width===941 && size.height===1672)));
 const CLOSE_TYPES=new Set<CinematicShotType>(['close_up','extreme_close_up']);
 const SUBJECT_TYPES=new Set<CinematicShotType>([
   'close_up','extreme_close_up','medium','two_shot','over_shoulder',
@@ -99,6 +104,7 @@ export const validateCinematicRender=(input:CinematicEpisodeProps):void=>{
       shot.humanVisualApproved!==true ||
       shot.originShaVerified!==true ||
       !shot.backgroundFile || !shot.sourceMotherSha256 ||
+      !nativeCanvasAllowed(shot.sourceCanvas) ||
       !SHA.test(shot.sourceMotherSha256) ||
       !SHA.test(shot.backgroundSha256??''))
       throw new Error('CINEMATIC_SHOT_VISUAL_QA_OR_ORIGIN_MISSING');
@@ -150,8 +156,8 @@ export const validateCinematicRender=(input:CinematicEpisodeProps):void=>{
         rig.technicalAssetsVerified!==true ||
         rig.humanVisualReview!==true ||
         rig.youtubeUploaded!==false ||
-        rig.canvas.width!==CANVAS.width ||
-        rig.canvas.height!==CANVAS.height ||
+        rig.canvas.width!==shot.sourceCanvas?.width ||
+        rig.canvas.height!==shot.sourceCanvas?.height ||
         rig.layers.length<3 ||
         !rig.layers.some(l=>Boolean(l.mesh)) ||
         !rig.layers.every(l=>SHA.test(l.sha256) &&
