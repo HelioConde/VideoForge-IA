@@ -11,7 +11,7 @@ from .errors import VideoForgeError
 ROOT=Path(__file__).resolve().parents[1]
 MANUAL_REL="docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md"
 REQUIRED=(
-    "Three.js","Remotion","cena-mãe","PNG RGBA","body-no-head",
+    "Three.js","Remotion","imagem-mãe","PNG RGBA","body-no-head",
     "head-open","head-closed","recomposição","--gl=swangle",
     "não","pivô","malha",
 )
