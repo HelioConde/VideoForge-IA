@@ -1,0 +1,121 @@
+name: "VideoForge - MP4 tecnico da Anya com ThreeCanvas (SEM publicacao)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/anya-three-draft-mp4.json'
+permissions:
+  contents: read
+  actions: read
+  packages: read
+concurrency:
+  group: videoforge-three-anya-draft-mp4-review
+  cancel-in-progress: false
+jobs:
+  render-preview:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Recuperar cena original
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          path: ./input/original
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Recuperar Loid/Yor estaticos e QA da composicao
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43591918632
+          name: vf-anya-hand-head-separate-draft-43591918632
+          path: ./input/corrected
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Recuperar as 6 camadas originais corrigidas da Anya
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43598536256
+          name: vf-anya-hair-underlay-candidate-43598536256
+          path: ./input/draft
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Preparar props SHA-verificados com aprovacao humana BLOQUEADA
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/rig-three-math.test.cjs tests/blink-motion-sync.test.cjs
+          cd ..
+          python -m videoforge.rig_three_draft_review \
+            --original ./input/original \
+            --corrected ./input/corrected \
+            --candidate ./input/draft \
+            --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-mp4
+      - name: Renderizar 6s por Remotion/ThreeCanvas SWANGLE sem movimentos falsos
+        shell: bash
+        run: |
+          set -euo pipefail
+          target=output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-mp4
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/rig-three-review-index.ts VideoForgeAnyaRigDraftQA \
+            "../$target/anya-three-draft-6s.mp4" \
+            --props="../$target/props.json" \
+            --frames=0-179 --codec=h264 --pixel-format=yuv420p \
+            --gl=swangle --concurrency=1 --log=error
+          cd ..
+          test -s "$target/anya-three-draft-6s.mp4"
+          ffprobe -v error -show_entries stream=codec_name,codec_type,pix_fmt,r_frame_rate,width,height \
+            -show_entries format=duration,size -of json \
+            "$target/anya-three-draft-6s.mp4" > "$target/ffprobe.json"
+      - name: QA audiovisual sem publicacao nem certificacao de arte
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          folder=Path('output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-mp4')
+          f=folder/'anya-three-draft-6s.mp4'
+          details=json.loads((folder/'ffprobe.json').read_text())
+          stream=next((x for x in details['streams'] if x['codec_type']=='video'),None)
+          seconds=float(details['format']['duration'])
+          if not stream or stream['codec_name']!='h264' or stream['pix_fmt']!='yuv420p':
+              raise SystemExit('ANYA_DRAFT_MP4_H264_YUV420_REQUIRED')
+          if (stream['width'],stream['height'])!=(1080,1920):
+              raise SystemExit('ANYA_DRAFT_MP4_WRONG_RESOLUTION')
+          if not 5.95<=seconds<=6.12 or stream['r_frame_rate']!='30/1':
+              raise SystemExit('ANYA_DRAFT_MP4_FRAMERATE_DURATION_INVALID')
+          if f.stat().st_size<30000:
+              raise SystemExit('ANYA_DRAFT_MP4_EMPTY')
+          stage=json.loads((folder/'stage.qa.json').read_text())
+          result={**stage,'schema':'videoforge/rig-three-anya-draft-mp4-qa/v1',
+            'file':f.name,'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),
+            'codec':'h264','pixel_format':'yuv420p','resolution':[1080,1920],
+            'duration_seconds':seconds,'fps':30,
+            'frame_count_expected':180,'rendered_by':'remotion-three-swangle',
+            'real_layers_and_two_independent_hair_meshes':True,
+            'preview_tecnico_nao_oficial':True,
+            'audio_present':False,
+            'human_visual_approval':False,'rig_operational':False,
+            'video_official':False,'youtube_uploaded':False}
+          (folder/'mp4.qa.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+          print('ANYA_THREECANVAS_DRAFT_MP4_QA',json.dumps(result))
+          PY
+      - name: Disponibilizar MP4 de 6s APENAS para revisao tecnica
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-anya-threecanvas-6s-not-approved-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-mp4/
+          retention-days: 14
+          if-no-files-found: warn
