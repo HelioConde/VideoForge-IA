@@ -53,6 +53,16 @@
       "visual_quality": "REJECTED",
       "failure": "Imagem repete elenco inteiro da prancha, incluindo princesa antes da revelação e Kael em pé; o plano de memória exigia close extremo no olho de Kael, não group pose.",
       "human_approval": false
+    },
+    {
+      "asset": "scene-01-kael-independent-rgba",
+      "source_run": 43592844393,
+      "source_sha256": "f910f2df550062267efb17cde99a950c1afa47e1216179372fd963a26b864f41",
+      "technical_rgba": "passed",
+      "alpha_zero_fraction": 0.72,
+      "visual_observation": "Kael ajoelhado preservado como única figura e sem trono ou guardas; imagem em RGBA independente ao compor em fundo claro. Requer correção de alfa residual, QA de pixels e separação de cabeça, olhos, mãos, braços, pernas, roupa, malhas e underlays; não é rig final.",
+      "quality": "CANDIDATE_PENDING_QA",
+      "human_approval": false
     }
   ],
   "do_not_use_for_animation": [
@@ -65,7 +75,8 @@
     "Recriar cenas 2 e 3 com foco de plano e usar arte-mãe aprovada como guia adicional",
     "Separar individualmente Kael/Aldric/guardas e lanças da C01 por edição da mesma imagem original, removendo trono do alfa",
     "Recompor todos sprites em pose neutra e comparar diff.png com imagem-mãe antes de qualquer rig",
-    "Não liberar produção MP4 oficial enquanto rig independente e QA não forem concluídos"
+    "Não liberar produção MP4 oficial enquanto rig independente e QA não forem concluídos",
+    "Partes RGBA individuais em produção; candidato Kael gerado por edição da mesma mãe, mas rig por malha e QA de overdraw ainda faltam"
   ],
   "status": {
     "assetsDrawnPartially": true,
@@ -73,5 +84,14 @@
     "mp4Rendered": false,
     "humanQAApproved": false,
     "youtubeUploaded": false
+  },
+  "batch_summary": {
+    "source_run": 43591745279,
+    "generated_scene_mothers": 13,
+    "successful_jobs": 13,
+    "failed_jobs": 0,
+    "meaning": "14 PNGs de cena-mae no total (1 piloto +13 lote), mas aprovação visual não se segue de sucesso técnico",
+    "visual_qa": "pending_12_other_scenes_and_rejected_02_03",
+    "production_approval": false
   }
 }
