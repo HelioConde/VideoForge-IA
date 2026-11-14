@@ -317,3 +317,17 @@ O episódio permanece com \`SEM-GERACAO-NOVAS-IMAGENS.lock\` ativo; os arquivos 
 **Escopo:** este arquivo é um **animatic para aprovação visual**, não animação 2D definitiva por malha. Cabelo, capa, vestes, braços, underlays e rigs não estão aprovados. Os pixels dos três PNGs fontes não foram modificados. Este preview não valida automaticamente os 36 planos visuais nem libera o MP4 oficial de 163s.
 
 Ver [qa-primeiro-mp4-c12.json](qa-primeiro-mp4-c12.json) para hashes, duração e fontes. Ainda é necessário importar os bytes do vídeo e dos PNGs para o GitHub e obter revisão do usuário. O lock SEM-GERACAO-NOVAS-IMAGENS.lock continua ativo; não fazer upload ao YouTube.
+
+
+## 21. Prévia C12 v2 — deformação real de malha em partes independentes
+
+**Correção da objeção do usuário:** a prévia C12 v1 era apenas um animatic de olhos e partículas. A nova prévia C12 v2 contém **cinco camadas RGBA derivadas dos três PNGs originais**, com **512 triângulos** deformados independentemente, sem mover o PNG inteiro: uma dobra da capa de Kael em C12-P02 e duas mechas, um brinco pivotado e um trecho do tecido de Elara em C12-P03. O plano C12-P01 continua de **olhar independente, sem movimentar cabeça, cabelo ou capa**.
+
+- Vídeo local de 12 s e 360 frames: `alchemy_c12_mesh_rig_v2_aprovacao.mp4`, 720x1280 H.264/AAC, SHA-256 `e08f79924e6f09bab195e54d49c32b588c2438d28faf2e1db12d626bba018016`.
+- [Contrato das cinco malhas](qa-c12-rig-malha-v2.json). A origem é 941x1672, e cada recorte tem pivô, amplitude, malha e posição medida na arte original.
+- Pacote técnico dos recortes: `alchemy_c12_rig_camadas_tecnicas_v2.zip`, disponível **como anexo na conversa**, com cinco PNGs RGBA e dois fundos de recomposição derivados das artes originais. **Não foi enviado ao GitHub.**
+- QA de recomposição em resolução nativa (média de diferença absoluta em nível de cor): C12-P02 **0,0009** e C12-P03 **0,0069**. Existem alguns pixels de borda ainda acima do limite visual, principalmente nos recortes do cabelo e do brinco. **Ainda não aprovados.**
+- A prova local utilizou rasterização determinística de malhas triangulares para obter um MP4 real de teste. O **pipeline de produção continua sendo Remotion + ThreeCanvas**. A atualização de `motion-remotion/src/rig-three-math.ts` permite brinco por pivô de osso, e `motion-remotion/src/c12-mesh-technical.tsx` fornece compositor Three.js **isolado, apenas técnico**, que exige os PNGs originais previamente importados e hashes específicos.
+- Testes de segurança impedem que a prévia técnica marque os 36 planos ou rigs oficiais como aprovados, e que passe SHA/bbox de outra câmera.
+
+**Limitações ainda abertas, sem atalhos:** não temos todos os elementos da anatomia articuláveis da cabeça, braços, ombros, cabelo inteiro e manto. O segmento do brinco ainda inclui pixels adjacentes na máscara; as regiões ocultas precisam de QA visual. O close C12-P01 ainda necessita da execução final do deslocamento ocular de 12 px em sprites de pupila/esclerótica separados e aprovados. O MP4 v2 demonstra malha verdadeira **parcial**, mas ainda não é o rig **completo** requerido para uma cena oficial. Os PNGs de origem e o MP4 não estão no repositório; lá existem atualmente apenas metadados, componentes e testes. Não publicar no YouTube, não desativar o lock de geração de novas ilustrações.
