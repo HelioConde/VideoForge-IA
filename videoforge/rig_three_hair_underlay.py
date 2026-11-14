@@ -37,8 +37,8 @@ def pink_shoulder_mask(body, head, hand, left, right, cv2, np):
     return mask
 
 
-def reconstruct(body, head_open, head_closed, hand, left, right,
-                original, cv2, np):
+def reconstruct(body, head_open, head_closed, base_open, base_closed,
+                hand, left, right, original, cv2, np):
     """Transfer exposed hair to lock sprites; inpaint only hidden counterparts."""
     if any(a.shape != (H,W,4) for a in (
             body,head_open,head_closed,hand,left,right,original)):
@@ -46,6 +46,11 @@ def reconstruct(body, head_open, head_closed, hand, left, right,
     # Input head here is the entire head, before removing either side-lock.
     if np.any(head_open[:,:,3]!=head_closed[:,:,3]):
         raise VideoForgeError("RIG_HAIR_UNDERLAY_BLINK_ALPHA_UNSAFE")
+    if np.any((base_open[:,:,3]>0) & (
+            (left[:,:,3]>0) | (right[:,:,3]>0))):
+        raise VideoForgeError("RIG_HAIR_UNDERLAY_DUPLICATED_VISIBLE_LOCKS")
+    if np.any(base_open[:,:,3]!=base_closed[:,:,3]):
+        raise VideoForgeError("RIG_HAIR_UNDERLAY_BASE_BLINK_ALPHA_UNSAFE")
     hair_alpha=(left[:,:,3]>0)|(right[:,:,3]>0)
     # Save original masks for QA: detached original visible colors must not change.
     pre_left=left.copy()
@@ -74,12 +79,12 @@ def reconstruct(body, head_open, head_closed, hand, left, right,
     repaired=cv2.inpaint(rgb,hair_alpha.astype(np.uint8)*255,7,
                          cv2.INPAINT_TELEA)
     repaired=cv2.cvtColor(repaired,cv2.COLOR_BGR2RGB)
-    new_base=head_open.copy()
+    new_base=base_open.copy()
     new_base[:,:,:3][hair_alpha]=repaired[hair_alpha]
     # Opaque behind original hair except antialiased/transparent silhouette.
     new_base[:,:,3][hair_alpha]=np.where(
         head_open[:,:,3][hair_alpha]>250,255,0).astype(np.uint8)
-    new_closed=head_closed.copy()
+    new_closed=base_closed.copy()
     new_closed[:,:,:3][hair_alpha]=repaired[hair_alpha]
     new_closed[:,:,3][hair_alpha]=new_base[:,:,3][hair_alpha]
     # Protect the original approved blink and make both head variants identical
@@ -182,8 +187,8 @@ def produce(original_dir:Path,corrected_dir:Path,hair_dir:Path,dest:Path)->dict:
     if np.any((base_open[:,:,3]>0)&(
             (left[:,:,3]>0)|(right[:,:,3]>0))):
         raise VideoForgeError("RIG_HAIR_UNDERLAY_OVERLAPPING_SOURCE_LOCKS")
-    result=reconstruct(body,head_open,head_closed,hand,left,right,
-                       original,cv2,np)
+    result=reconstruct(body,head_open,head_closed,base_open,base_closed,
+                       hand,left,right,original,cv2,np)
     original_pose=rgba_over(rgba_over(body,head_open,np),hand,np)
     rebuilt=rgba_over(result["body"],result["head-open"],np)
     rebuilt=rgba_over(rebuilt,result["hair-left"],np)
