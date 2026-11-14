@@ -12,5 +12,8 @@
   "source": "same_scene_mother",
   "target": "Anya large bottom pair of eyes",
   "human_visual_approval": false,
-  "youtube_upload": false
+  "youtube_upload": false,
+  "revision": "r2_valid_public_workflow_yaml",
+  "previous_invalid_run_id": 43569825006,
+  "requested_github_mode": "normal_push"
 }
