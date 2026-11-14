@@ -1,0 +1,90 @@
+{
+  "_NOTICE": "TEMPLATE INVALIDO. Substitua hashes/arquivos/bbox pelos assets REAIS da mesma cena-mae e obtenha revisao visual. Nunca definir flags true automaticamente.",
+  "schema": "videoforge/rig-three/v1",
+  "channel": "otaku-br",
+  "video_id": "ID-DO-VIDEO",
+  "scene": "cena-01",
+  "sceneMotherSha256": "SHA256_DA_CENA_MAE",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "neckPivot": [
+    0,
+    0
+  ],
+  "headMaxRotationDeg": 2,
+  "blinkFrames": [
+    74,
+    173
+  ],
+  "eyeEditQa": {
+    "nonEyePixelsChanged": null,
+    "alphaPixelsChanged": null
+  },
+  "humanReview": {
+    "partsReconstructed": false,
+    "noDuplicatedPixels": false,
+    "roundTripComposition": false,
+    "hairAndFaceOcclusion": false,
+    "seamsAndPivot": false
+  },
+  "layers": [
+    {
+      "id": "body-no-head",
+      "file": "body-no-head.png",
+      "sha256": "SHA256_BODY",
+      "bbox": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "z": 20
+    },
+    {
+      "id": "head-open",
+      "file": "head-open.png",
+      "sha256": "SHA256_HEAD_OPEN",
+      "bbox": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "z": 30
+    },
+    {
+      "id": "head-closed",
+      "file": "head-closed.png",
+      "sha256": "SHA256_HEAD_CLOSED",
+      "bbox": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "z": 30
+    },
+    {
+      "id": "hair-front",
+      "file": "hair-front.png",
+      "sha256": "SHA256_HAIR",
+      "bbox": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "z": 40,
+      "mesh": {
+        "columns": 7,
+        "rows": 9,
+        "pinnedRows": [
+          0
+        ],
+        "amplitudePx": 4
+      }
+    }
+  ]
+}
