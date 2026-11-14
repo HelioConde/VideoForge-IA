@@ -17,6 +17,16 @@ Identificador: `alchemy-lab` · idioma: `pt-BR`.
 **Estado:** Canal catalogado; sem integração de geração nem YouTube. Nenhuma produção nem aprovação editorial está implícita nestes arquivos.
 
 
+## Nova regra de quadros cinematográficos
+
+No dorama **Conquiste a Princesa**, a direção do programa agora separa **37 tomadas cinematográficas**, com **12 closes de rosto/olhos, 5 planos sobre o ombro e 4 planos gerais**. O gerador suporta `--shot-id` por imagem-mãe, preservando a duração e o elenco de cada tomada. As expressões de Kael, rei e princesa são focos importantes, com HUD adicionado depois no Remotion.
+
+- [Direção JSON dos 37 enquadramentos](videos/mmorpg-conquiste-a-princesa-ep01/direcao-cinematografica-planos.json)
+- [Guia de enquadramento e continuidade](videos/mmorpg-conquiste-a-princesa-ep01/GUIA-DIRECAO-CINEMATOGRAFICA.md)
+- [Testes e hashes dos 36 prompts](videos/mmorpg-conquiste-a-princesa-ep01/qa-direcao-cinematografica.json)
+
+**Sem imagens novas nesta implementação.** Os quadros aprovados no chat servem como referência de composição, mas o visual de figurino/cabelo diverge da bíblia antiga. Antes de produzir, incorporar os arquivos reais e resolver a identidade visual. O lock de não geração de imagens segue ativo.
+
 ## Produção em andamento: dorama MMORPG — Conquiste a Princesa
 
 **Arte em pré-produção, sem geração de novas imagens:** o episódio tem [roteiro de 14 cenas](videos/mmorpg-conquiste-a-princesa-ep01/roteiro.md), [direção de 37 planos para rigs/Remotion](videos/mmorpg-conquiste-a-princesa-ep01/direcao-rig-remotion.json) e [plano de QA](videos/mmorpg-conquiste-a-princesa-ep01/PLANO-ARTE-RIG-EP01.md).
