@@ -1,0 +1,16 @@
+{
+  "schema": "videoforge/remotion-layer-test/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene_number": 1,
+  "real_source_run_id": 43555469650,
+  "layer_run_id": 43560159589,
+  "female_voice_run_id": 43557582317,
+  "engine": "VideoForge Remotion with real background+transparent character extracted from same scene mother",
+  "expected_output": "layered-preview.mp4",
+  "no_official_video_claim": true,
+  "rig_individual_parts_pending": true,
+  "all_16_scenes_require_future_layers": true,
+  "youtube_upload": false,
+  "notes": "Teste verdadeiro de composicao por camadas; nao substituir pelo pan da imagem completa."
+}
