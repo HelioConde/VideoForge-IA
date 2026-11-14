@@ -45,7 +45,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_cinematic_shot_assets tests.test_cinematic_direction tests.test_production_scenes tests.test_alchemy_no_image_generation -v
+          python -m unittest tests.test_cinematic_shot_assets tests.test_cinematic_direction tests.test_production_scenes tests.test_alchemy_no_image_generation tests.test_official_production -v
       - name: Gerar somente manifesto JSON de timeline para Remotion
         shell: bash
         run: |
