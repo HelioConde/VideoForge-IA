@@ -1,0 +1,12 @@
+{
+  "schema": "videoforge/qa-neutral-composite-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "read_only_png_files": true,
+  "image_generation_calls": 0,
+  "youtube_upload": false,
+  "human_visual_approval": false,
+  "sources": "Only pre-existing PNGs in assets/cena-01 and original source mother",
+  "output": "qa-recomposicao-c01.json",
+  "note": "In-memory diagnostic recompose (no image files created), region MAE and overlapping alpha. Must not promote rig to approved."
+}
