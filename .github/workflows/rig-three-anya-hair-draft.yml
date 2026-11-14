@@ -1,0 +1,76 @@
+name: "VideoForge - Anya cabelo lateral e QA de costura (draft)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/rig_three_hair_draft.py'
+      - 'tests/test_rig_three_hair_draft.py'
+      - 'docs/requests/anya-hair-seam-qa.json'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vf-rig-anya-hair-seam
+  cancel-in-progress: false
+jobs:
+  draft:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias pinadas de preparo (nunca renderer)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir \
+            "numpy==1.26.4" "opencv-python-headless==4.10.0.84"
+      - name: Cena-mae original imutavel
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/original
+      - name: Cabeca, corpo e mao corrigidos do QA anterior
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43591918632
+          name: vf-anya-hand-head-separate-draft-43591918632
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/corrected
+      - name: Semente original do cabelo isolado, sem IA nova
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43589190537
+          name: vf-spy-anya-isolated-original-no-ai-43589190537
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/isolation
+      - name: Testar particao de cabelo e piscada
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_animation_manual tests.test_rig_three_hand_roundtrip tests.test_rig_three_hair_draft -v
+      - name: Gerar mechas independentes e contact sheet de costura (nao oficial)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_three_hair_draft \
+            --original ./input/original \
+            --corrected ./input/corrected \
+            --isolation ./input/isolation \
+            --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hair-draft
+      - name: Publicar artefatos e QA para revisao humana (rig bloqueado)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-anya-hair-side-seam-draft-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hair-draft/
+          if-no-files-found: warn
+          retention-days: 14
