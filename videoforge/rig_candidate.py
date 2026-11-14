@@ -426,7 +426,9 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         if lost/total>0.0002:
             raise CandidateError("RIG_HAIR_CLIPPED_BY_HEAD_MASK")
     cape=originals["cape.png"]
-    back,front=_cape_split(\n        cape,frontmask,width,height,overlap_px=plan.get("cape_seam_overlap_px",0),\n    )
+    back,front=_cape_split(
+        cape,frontmask,width,height,overlap_px=plan.get("cape_seam_overlap_px",0),
+    )
     head=_cutout(char,headmask)
     head_open=bytearray(head)  # estado original INTACTO, antes de qualquer inpainting
     eye_open=_cutout(char,eye_union)
