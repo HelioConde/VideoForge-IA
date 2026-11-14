@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/official-production-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "programa": "HelioConde/VideoForge-IA",
+  "modelo_solicitado": "camadas-animadas",
+  "roteiro": "roteiro.json",
+  "youtube_upload": false,
+  "preview_as_substitute_forbidden": true,
+  "require_program_pipeline": true,
+  "request_note": "Gerar MP4 oficial com agentes e arte real pelo programa; caso componentes faltem registrar bloqueio sem gerar placeholder.",
+  "requested_on": "2026-11-14"
+}
