@@ -1,0 +1,177 @@
+{
+  "schema": "videoforge/scene1-neutral-composition-audit/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "C01",
+  "sourceSHA256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "mode": "read-only in-memory neutral composite",
+  "imageGenerationCalls": 0,
+  "createdPixelFiles": 0,
+  "renderMP4": false,
+  "youtubeUploaded": false,
+  "selectionPath": "rig-selecao-artes-c01.json",
+  "compositionOrder": [
+    "aldric",
+    "guarda_esquerdo",
+    "guarda_direito",
+    "kael",
+    "lanca_direita",
+    "lanca_esquerda"
+  ],
+  "metricsByRegion": {
+    "fullFrame": {
+      "rectXYXY": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "meanAbsoluteRGB": 11.095,
+      "pixelErrorMaxMean": 14.659,
+      "fractionAnyChannelGT12": 0.336181,
+      "fractionAnyChannelGT24": 0.172064,
+      "fractionAnyChannelGT48": 0.069026,
+      "maxChannelError": 231
+    },
+    "kingAndThrone": {
+      "rectXYXY": [
+        310,
+        240,
+        740,
+        680
+      ],
+      "meanAbsoluteRGB": 14.316,
+      "pixelErrorMaxMean": 19.595,
+      "fractionAnyChannelGT12": 0.410074,
+      "fractionAnyChannelGT24": 0.228108,
+      "fractionAnyChannelGT48": 0.10842,
+      "maxChannelError": 231
+    },
+    "guardLeft": {
+      "rectXYXY": [
+        0,
+        370,
+        435,
+        1240
+      ],
+      "meanAbsoluteRGB": 9.725,
+      "pixelErrorMaxMean": 12.53,
+      "fractionAnyChannelGT12": 0.319802,
+      "fractionAnyChannelGT24": 0.166289,
+      "fractionAnyChannelGT48": 0.06134,
+      "maxChannelError": 231
+    },
+    "guardRight": {
+      "rectXYXY": [
+        595,
+        370,
+        1024,
+        1240
+      ],
+      "meanAbsoluteRGB": 11.567,
+      "pixelErrorMaxMean": 15.397,
+      "fractionAnyChannelGT12": 0.363832,
+      "fractionAnyChannelGT24": 0.191137,
+      "fractionAnyChannelGT48": 0.08098,
+      "maxChannelError": 231
+    },
+    "kael": {
+      "rectXYXY": [
+        282,
+        720,
+        686,
+        1440
+      ],
+      "meanAbsoluteRGB": 11.159,
+      "pixelErrorMaxMean": 14.668,
+      "fractionAnyChannelGT12": 0.325529,
+      "fractionAnyChannelGT24": 0.173639,
+      "fractionAnyChannelGT48": 0.084626,
+      "maxChannelError": 231
+    },
+    "crossedSpears": {
+      "rectXYXY": [
+        290,
+        285,
+        765,
+        860
+      ],
+      "meanAbsoluteRGB": 13.646,
+      "pixelErrorMaxMean": 18.605,
+      "fractionAnyChannelGT12": 0.401743,
+      "fractionAnyChannelGT24": 0.207674,
+      "fractionAnyChannelGT48": 0.10143,
+      "maxChannelError": 231
+    },
+    "unoccupiedUpper": {
+      "rectXYXY": [
+        0,
+        0,
+        1024,
+        240
+      ],
+      "meanAbsoluteRGB": 9.333,
+      "pixelErrorMaxMean": 13.005,
+      "fractionAnyChannelGT12": 0.332646,
+      "fractionAnyChannelGT24": 0.148376,
+      "fractionAnyChannelGT48": 0.029085,
+      "maxChannelError": 189
+    }
+  },
+  "alphaOverlapPairs": {
+    "aldric__guarda_esquerdo": {
+      "opaqueOverlapPixels": 0,
+      "firstLayerOpaquePixels": 57433,
+      "secondLayerOpaquePixels": 150455,
+      "potentialOcclusionContact": false
+    },
+    "aldric__guarda_direito": {
+      "opaqueOverlapPixels": 0,
+      "firstLayerOpaquePixels": 57433,
+      "secondLayerOpaquePixels": 149326,
+      "potentialOcclusionContact": false
+    },
+    "kael__lanca_direita": {
+      "opaqueOverlapPixels": 0,
+      "firstLayerOpaquePixels": 134405,
+      "secondLayerOpaquePixels": 12161,
+      "potentialOcclusionContact": false
+    },
+    "kael__lanca_esquerda": {
+      "opaqueOverlapPixels": 0,
+      "firstLayerOpaquePixels": 134405,
+      "secondLayerOpaquePixels": 12346,
+      "potentialOcclusionContact": false
+    },
+    "guarda_esquerdo__lanca_esquerda": {
+      "opaqueOverlapPixels": 3516,
+      "firstLayerOpaquePixels": 150455,
+      "secondLayerOpaquePixels": 12346,
+      "potentialOcclusionContact": true
+    },
+    "guarda_direito__lanca_direita": {
+      "opaqueOverlapPixels": 3633,
+      "firstLayerOpaquePixels": 149326,
+      "secondLayerOpaquePixels": 12161,
+      "potentialOcclusionContact": true
+    },
+    "lanca_esquerda__lanca_direita": {
+      "opaqueOverlapPixels": 0,
+      "firstLayerOpaquePixels": 12346,
+      "secondLayerOpaquePixels": 12161,
+      "potentialOcclusionContact": false
+    }
+  },
+  "unoccupiedBackgroundMeanAbsoluteRGB": 16.362,
+  "unoccupiedPixelFraction": 0.677553,
+  "humanVisualApproval": false,
+  "readyForMeshRig": false,
+  "readyForOfficialRender": false,
+  "diagnosis": [
+    "A recomposição neutra é diagnóstico, não prova de camadas animáveis.",
+    "A ordem de oclusão atual é provisória; lanças/luvas podem precisar de fatias de frente e trás.",
+    "A reconstrução oculta sob mãos, braços e tecidos ainda é ausente.",
+    "Qualquer desvio alto exige limpeza local de máscaras/oclusões sem chamar gerador de imagens.",
+    "Não sobrepor sprites à imagem-mãe com personagens já desenhados."
+  ]
+}
