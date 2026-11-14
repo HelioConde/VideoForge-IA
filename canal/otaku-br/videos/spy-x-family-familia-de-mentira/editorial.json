@@ -204,7 +204,10 @@
       "geracao_de_artes_de_personagens_no_programa",
       "assets_de_personagens_separados_e_validados",
       "edicao_final_com_voz_natural",
-      "qa_visual_e_editorial"
+      "qa_visual_e_editorial",
+      "cenas_02_a_16_background_e_sprites_rgba",
+      "recortes_individuais_personagens_cabelo_olhos_roupas_objetos",
+      "rig_remotion_articulado_por_personagem"
     ],
     "ultimo_pedido_oficial": {
       "run_id": 43553752100,
@@ -243,7 +246,24 @@
     "voz_run_id": 43557582317,
     "legendas": "SRT de trechos narrados embutidas no MP4",
     "legendas_visiveis_revisao_amostra": true,
-    "movimento": "pan cinematografico da arte original, sem recorte"
+    "movimento": "pan cinematografico da arte original, sem recorte",
+    "pipeline_animacao_obrigatorio": "cena-mae + background reconstruido + personagens/objetos RGBA + rig verificado + revisao",
+    "teste_camadas_reais": {
+      "run_id": 43560582246,
+      "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246",
+      "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246/artifacts/14099899544",
+      "scene_number": 1,
+      "scene_id": "gancho-anya",
+      "duration_seconds": 8.32,
+      "sha256": "246464fa7b254034a85f99e698a444dd4d63af4b421c239eda840965936c9d23",
+      "source_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
+      "source_layer_run_id": 43560159589,
+      "background_and_character_rgba_technical_qa": true,
+      "female_voice_and_subtitles": true,
+      "rig_individual_parts": false,
+      "visual_approval": false,
+      "official_full_video": false
+    }
   },
   "qa": {
     "aprovado_tecnicamente": true,
@@ -278,6 +298,7 @@
     "14/11/2026: preflight oficial #43553752100 executou 11 testes (OK), bloqueou geracao do MP4 por ausência de pipeline/agents/artes RGBA. Reporta cinco blockers; não substituir por arquivo experimental.",
     "14/11/2026: geração REAL da prancha Loid/Anya/Yor via módulo reutilizável production_art.py no GitHub; PNG 1024x1536 SHA validado, inspeção visual interna sem aprovação humana. Não é produção final.",
     "14/11/2026: MP4 real de revisão do VideoForge-IA validado no run #43556709886; imagens reais #43555226353/#43555469650/#43555715519, áudio de staging, H264/AAC 1080x1920 130.847s; faixas pretas corrigidas sem cortar personagens. NÃO é animação articulada e NÃO foi publicado.",
-    "14/11/2026: implementação no programa: voz feminina eSpeak pt-br+f3 #43557582317, legenda por segmento WAV e SRT embutida, pan sem cortar personagens; vídeo final de revisão #43558375270, qa técnico positivo e quadro visível inspecionado. Não é animação individual de personagem e não foi publicado."
+    "14/11/2026: implementação no programa: voz feminina eSpeak pt-br+f3 #43557582317, legenda por segmento WAV e SRT embutida, pan sem cortar personagens; vídeo final de revisão #43558375270, qa técnico positivo e quadro visível inspecionado. Não é animação individual de personagem e não foi publicado.",
+    "14/11/2026: regra cena-mae + background reconstruido + sprite transparente registrada no AGENTS.md e docs. Remotion de camadas da cena 01 (8.32s, voz feminina/SRT, SHA verificado) run #43560582246, artifact #14099899544. Previas com pan continuam sem rig e video_oficial_do_programa=false. Restantes 15 cenas nao foram renderizadas em camadas."
   ]
 }
