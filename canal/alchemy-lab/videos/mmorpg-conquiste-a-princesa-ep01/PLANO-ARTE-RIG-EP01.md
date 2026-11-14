@@ -77,3 +77,21 @@ A execução [43598226488](https://github.com/HelioConde/VideoForge-IA/actions/r
 O relatório `assets/cena-01/rig-drafts/grupo/split-qa.json` registra **round-trip exato dos pixels visíveis** e classificação por peça. Isso NÃO significa que os guardas já tenham ombros, braços, mãos, cabeças e capas prontos para rig. A imagem original tem contaminação visual; a decomposição automática apenas organiza o material existente para revisão.
 
 **Totais atuais no GitHub: 18 PNGs originais arquivados + 12 PNGs de partição de Kael + 5 PNGs de partição do grupo = 35 PNGs existentes armazenados neste canal. Nenhum deles foi desenhado de novo nesta etapa.** Oito PNGs exclusivos do chat permanecem em ZIP separado, aguardando upload ao GitHub, com SHA listado em `IMAGENS-EXTERNAS-PENDENTES.json`.
+
+
+## 8. Extração fiel das duas lanças da cena-mãe, sem IA
+
+A execução [43599262296](https://github.com/HelioConde/VideoForge-IA/actions/runs/43599262296) recortou as duas lanças **diretamente do PNG original** `assets/cenas-mae/cena-01.png`, validado pelo SHA `544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf`. O procedimento usa máscaras de polígono e linha; não chama nenhum modelo de imagem. Os arquivos estão em `assets/cena-01/rig-drafts/lancas/`:
+
+- `lanca-guarda-esquerdo-CANDIDATE.png`: ponta superior direita, ligada à mão do guarda à esquerda, pivô provisório (381,751), caixa de conteúdo (35,321)–(816,1108).
+- `lanca-guarda-direito-CANDIDATE.png`: ponta superior esquerda, ligada à mão do guarda à direita, pivô provisório (644,749), caixa de conteúdo (209,322)–(991,1106).
+- `restante-cena-mae-REJECTED-AS-LAYER.png`: residual para confirmar conservação exata, **proibido como sprite móvel**.
+- `split-qa.json`: recomposição dos pixels da mãe passou; isso não comprova que as máscaras não incluam fundo, luvas ou reflexos.
+
+**Total salvo no GitHub agora: 38 PNGs**, dos quais três são recortes/residual desta etapa e oito PNGs exclusivos da conversa ainda dependem da importação binária do ZIP. As duas lanças são candidatas, **não** sprites validados para movimentar sozinhas. No plano C01-P04 os braços dos guardas precisam iniciar movimento antes das lanças, respeitando contato e hierarquia; enquanto isso não existir, render oficial bloqueado.
+
+## 9. Inventário verificável e bloqueio editorial
+
+O [inventário da cena 1](rig-inventario-c01.json) e [seu relatório SHA](rig-inventario-c01.qa.json) foram validados pelo [GitHub Actions 43599647856](https://github.com/HelioConde/VideoForge-IA/actions/runs/43599647856): **19 PNGs conferidos**, **16 partes candidatas/rascunho**, **1 peça rejeitada no inventário**, qualidade de rig e publicação **bloqueadas**. O enquadramento 1024×1536 para saída 1080×1920 usa fator 1,25 e corta 100px de cada lateral, sem distorção.
+
+O arquivo [SEM-GERACAO-NOVAS-IMAGENS.lock](SEM-GERACAO-NOVAS-IMAGENS.lock) registra a instrução expressa de NÃO gerar imagens novas. Seis workflows de geração/edição do episódio já consultam esse lock e interrompem antes de chamar IA. Ele se aplica só a este vídeo, não afeta os outros canais. Só poderá ser retirado após novo pedido explícito.
