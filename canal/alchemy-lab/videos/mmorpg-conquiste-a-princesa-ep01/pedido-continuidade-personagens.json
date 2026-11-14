@@ -10,5 +10,7 @@
   "required_shots": 37,
   "goal": "Preservar cara/cabelo de Kael e Elara, trocar roupa apenas pela narrativa, manter disfarce ate revelar a princesa na cena C12.",
   "output": "continuidade-figurinos-37-planos.json",
-  "changes_do_not_auto_approve_existing_pngs": true
+  "changes_do_not_auto_approve_existing_pngs": true,
+  "revision": 2,
+  "reason": "Reexecutar QA após bloquear vazamento visual da princesa no fundo de C01/C02 mesmo sem personagem em rig"
 }
