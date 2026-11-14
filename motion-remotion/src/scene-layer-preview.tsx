@@ -25,6 +25,8 @@ export type LayerSceneProps={
   foreground?:string|null;
   /** Somente sprite RGBA de PALPEBRAS FECHADAS vindo da mesma cena-mae. */
   eyesClosed?:string|null;
+  /** Franja derivada do personagem ORIGINAL, sobreposta DEPOIS da piscada. */
+  hairForeground?:string|null;
   /** Centros de piscada em quadros, sem tocar na opacidade do rosto. */
   blinkFrames?:number[];
   /** Somente objetos extraidos e com remocao da base comprovada. */
@@ -44,7 +46,7 @@ const imgStyle:React.CSSProperties={
 
 export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
   id,scene,durationFrames,preset,background,character,foreground,
-  eyesClosed,blinkFrames,animatedObjects,silence,rig,draftPreview,
+  eyesClosed,hairForeground,blinkFrames,animatedObjects,silence,rig,draftPreview,
 })=>{
   const frame=useCurrentFrame();
   const {fps}=useVideoConfig();
@@ -72,6 +74,9 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
   // Nada de opacidade no rosto. A camada de olhos FECHADOS e sobreposta
   // apenas por 3-5 frames, nunca usada em crossfade com a face-base.
   const centers=blinkFrames??[Math.round(fps*2.8),Math.round(fps*6.0)];
+  if(eyesClosed && !rig && !hairForeground){
+    throw new Error('BLINK_REQUIRES_HAIR_FOREGROUND_TO_AVOID_BANGS_OVERPAINT');
+  }
   const blink=eyesClosed ? blinkClosureAtFrame(frame,centers) : 0;
   const cameraGlow=Math.max(0,Math.min(.045,camera.fill));
   return <AbsoluteFill style={{overflow:'hidden',backgroundColor:'#100e1c'}}>
@@ -98,6 +103,12 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
         ...imgStyle,zIndex:25,
         transform:characterTransform,transformOrigin:'50% 85%',
         opacity:blink,
+      }}/>} 
+      {/* Render order: base person -> eyelids -> ORIGINAL hair strands.
+          Same pivot avoids drifting seams; independent hair motion requires an underlay. */}
+      {hairForeground && !rig && <Img src={staticFile(hairForeground)} style={{
+        ...imgStyle,zIndex:30,transform:characterTransform,
+        transformOrigin:'50% 85%',
       }}/>} 
       {(animatedObjects??[]).filter(x=>x.approvedNoDuplicate).map((obj,i)=><Img
         key={i} src={staticFile(obj.src)} style={{
