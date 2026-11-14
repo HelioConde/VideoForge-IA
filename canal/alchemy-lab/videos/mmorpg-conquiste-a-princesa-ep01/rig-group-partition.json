@@ -1,0 +1,295 @@
+{
+  "schema": "videoforge/existing-pixel-partition/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "source_path": "assets/cena-01/candidatos/character-group-REJECTED.png",
+  "source_sha256": "e9d0f6a1e69a4a49e30e8744be6b3ae3b4c8caf46bf1ebcf69fee3572889bcb9",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "no_generation": true,
+  "only_source_pixel_cutouts": true,
+  "source_is_character_candidate_not_approved": true,
+  "human_visual_approval": false,
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "notes": [
+    "Separação sem IA de guardas e rei a partir do recorte de grupo REPROVADO; não significa aceitação de silhueta.",
+    "Recorte Aldric inclui pixels do trono, por isso marcado REJECTED. Os guardas também podem conter halo e carecem de underlay e pivôs definitivos.",
+    "A soma binária dos cinco PNGs deve reconstruir os pixels visíveis do grupo original; nenhum pixel deve ser inventado.",
+    "O Kael do grupo é apenas duplicata, a peça independente é fonte preferida."
+  ],
+  "layers": [
+    {
+      "id": "guarda-esquerdo-alinhado",
+      "kind": "polygon",
+      "vertices": [
+        [
+          111,
+          386
+        ],
+        [
+          211,
+          389
+        ],
+        [
+          245,
+          454
+        ],
+        [
+          280,
+          537
+        ],
+        [
+          296,
+          622
+        ],
+        [
+          407,
+          688
+        ],
+        [
+          420,
+          780
+        ],
+        [
+          348,
+          787
+        ],
+        [
+          298,
+          743
+        ],
+        [
+          306,
+          1059
+        ],
+        [
+          322,
+          1171
+        ],
+        [
+          294,
+          1225
+        ],
+        [
+          27,
+          1227
+        ],
+        [
+          1,
+          1095
+        ],
+        [
+          16,
+          860
+        ],
+        [
+          30,
+          586
+        ],
+        [
+          58,
+          454
+        ]
+      ],
+      "pivot_xy": [
+        170,
+        529
+      ],
+      "qa_status": "draft_guard_halo_cleaning_required"
+    },
+    {
+      "id": "guarda-direito-alinhado",
+      "kind": "polygon",
+      "vertices": [
+        [
+          803,
+          387
+        ],
+        [
+          921,
+          388
+        ],
+        [
+          991,
+          497
+        ],
+        [
+          1023,
+          684
+        ],
+        [
+          1019,
+          1100
+        ],
+        [
+          996,
+          1229
+        ],
+        [
+          721,
+          1222
+        ],
+        [
+          695,
+          1097
+        ],
+        [
+          713,
+          793
+        ],
+        [
+          605,
+          784
+        ],
+        [
+          602,
+          724
+        ],
+        [
+          680,
+          671
+        ],
+        [
+          734,
+          574
+        ],
+        [
+          754,
+          453
+        ]
+      ],
+      "pivot_xy": [
+        833,
+        535
+      ],
+      "qa_status": "draft_guard_halo_cleaning_required"
+    },
+    {
+      "id": "kael-grupo-alinhado-REJECTED",
+      "kind": "polygon",
+      "vertices": [
+        [
+          472,
+          737
+        ],
+        [
+          586,
+          750
+        ],
+        [
+          616,
+          811
+        ],
+        [
+          612,
+          945
+        ],
+        [
+          649,
+          1012
+        ],
+        [
+          666,
+          1134
+        ],
+        [
+          625,
+          1265
+        ],
+        [
+          622,
+          1394
+        ],
+        [
+          454,
+          1427
+        ],
+        [
+          303,
+          1423
+        ],
+        [
+          305,
+          1301
+        ],
+        [
+          323,
+          1146
+        ],
+        [
+          321,
+          1002
+        ],
+        [
+          308,
+          905
+        ],
+        [
+          371,
+          808
+        ]
+      ],
+      "pivot_xy": [
+        491,
+        985
+      ],
+      "qa_status": "rejected_duplicate_kael_better_independent_source_available"
+    },
+    {
+      "id": "aldric-com-trono-REJECTED",
+      "kind": "polygon",
+      "vertices": [
+        [
+          415,
+          259
+        ],
+        [
+          547,
+          263
+        ],
+        [
+          608,
+          322
+        ],
+        [
+          659,
+          397
+        ],
+        [
+          700,
+          553
+        ],
+        [
+          716,
+          640
+        ],
+        [
+          315,
+          639
+        ],
+        [
+          324,
+          540
+        ],
+        [
+          359,
+          394
+        ]
+      ],
+      "pivot_xy": [
+        520,
+        425
+      ],
+      "qa_status": "rejected_trono_pixels_inside_character"
+    },
+    {
+      "id": "trono-halo-residual-REJECTED",
+      "kind": "remainder",
+      "pivot_xy": null,
+      "qa_status": "rejected_background_and_residual_contamination"
+    }
+  ]
+}
