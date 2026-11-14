@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/layer-recovery-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "background_reused": true,
+  "background_sha256": "5c3a553a5b9a76a1cf8506f9cca67ee097cde9ff8701aa140701669e43c9d620",
+  "character_group_sha256": "e9d0f6a1e69a4a49e30e8744be6b3ae3b4c8caf46bf1ebcf69fee3572889bcb9",
+  "individual_parts_created": false,
+  "rig_animation_applied": false,
+  "human_visual_approval": false,
+  "video_official": false,
+  "youtube_uploaded": false
+}

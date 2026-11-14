@@ -1,0 +1,16 @@
+{
+  "schema": "videoforge/production-scene/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "number": 8,
+  "scene": "c08",
+  "reference_sha256": "28bec3010f7ad86d9a2090415e91e193bc6b8d100251236adc135322a87ee165",
+  "sha256": "5b3e6bccbb65a459d78afa0d8afa9a6929bc6f0d384dfb3eb9b37ea61a810762",
+  "model": "gpt-image-2",
+  "size": "1024x1536",
+  "technical_qa": "valid_png_opaque",
+  "visual_consistency_review": "pending",
+  "layers_generated": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}

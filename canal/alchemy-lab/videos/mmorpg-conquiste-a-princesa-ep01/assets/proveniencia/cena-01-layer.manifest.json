@@ -1,0 +1,50 @@
+{
+  "animation_implemented": false,
+  "channel": "alchemy-lab",
+  "created_at_utc": "2026-11-14T11:46:47.295929+00:00",
+  "human_visual_approval": false,
+  "layers": {
+    "background": {
+      "alpha_visible_fraction": 1.0,
+      "alpha_zero_fraction": 0.0,
+      "color_type": 2,
+      "file": "background.png",
+      "has_alpha": false,
+      "height": 1536,
+      "human_visual_review": "pending",
+      "model": "gpt-image-2",
+      "requires_alpha": false,
+      "sha256": "5c3a553a5b9a76a1cf8506f9cca67ee097cde9ff8701aa140701669e43c9d620",
+      "technical_status": "verified",
+      "width": 1024,
+      "z_index": 0
+    },
+    "character-main": {
+      "alpha_visible_fraction": 0.3784,
+      "alpha_zero_fraction": 0.6216,
+      "color_type": 6,
+      "file": "character-main.png",
+      "has_alpha": true,
+      "height": 1536,
+      "human_visual_review": "pending",
+      "model": "gpt-image-2",
+      "requires_alpha": true,
+      "sha256": "e9d0f6a1e69a4a49e30e8744be6b3ae3b4c8caf46bf1ebcf69fee3572889bcb9",
+      "technical_status": "verified",
+      "width": 1024,
+      "z_index": 20
+    }
+  },
+  "pixel_alignment_verified": false,
+  "scene": "cena-01",
+  "schema": "videoforge/scene-layers/v1",
+  "source": {
+    "color_type": 2,
+    "file": "cena-base.png",
+    "has_alpha": false,
+    "height": 1536,
+    "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+    "width": 1024
+  },
+  "video_id": "mmorpg-conquiste-a-princesa-ep01"
+}
