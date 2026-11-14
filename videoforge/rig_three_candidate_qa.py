@@ -83,6 +83,16 @@ def _verify_qa(file:Path,part:str,blob:Path,plan:dict):
         raise VideoForgeError("RIG_CANDIDATE_ARTIFACT_NOT_VERIFIED")
 
 
+def foreign_character_pixel(original:bytes,ai:bytes)->bool:
+    """Off-character dark pixels under IA's pink repaint imply a foreign body.
+
+    This is an inexpensive heuristic used to REJECT questionable masks, never
+    an automatic way to approve them. No character identity inference.
+    """
+    return (original[0]<170 and original[1]<120 and
+            ai[0]>200 and ai[0]-original[0]>80)
+
+
 def compose(input_source:Path,input_head:Path,input_body:Path,
             input_eyes:Path,destination:Path,channel:str,video_id:str)->dict:
     enforce_animation_manual()
@@ -122,8 +132,8 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
     body=bytearray(BYTES)
     head_roi=by_id["head-open"]["roi"]
     body_roi=by_id["body-no-head"]["roi"]
-    changed_open_closed_outside_eye=0
     total_head_visible=total_body_visible=0
+    inspected_upper_pixels=foreign_upper_pixels=0
     head_mask=blobs["head-open"]
     body_raw=blobs["body-no-head"]
     # Use a common geometric mask for open/closed. Never use AI-generated
@@ -134,6 +144,10 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
             if head_roi[0]<=x<head_roi[2] and head_roi[1]<=y<head_roi[3]:
                 a=min(orig[k+3],head_mask[k+3])
                 if a>20:
+                    if y<1180 and orig[k+3]>100 and head_mask[k+3]>100:
+                        inspected_upper_pixels+=1
+                        if foreign_character_pixel(orig[k:k+3],head_mask[k:k+3]):
+                            foreign_upper_pixels+=1
                     head[k:k+3]=orig[k:k+3]
                     head_closed[k:k+3]=closed[k:k+3]
                     head[k+3]=head_closed[k+3]=a
@@ -167,6 +181,10 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
                 diff+=abs(value-orig[k+c])
     error=diff/(3*max(1,pixels))
     overlapping_fraction=overlap/max(1,total_head_visible+total_body_visible)
+    foreign_ratio=foreign_upper_pixels/max(1,inspected_upper_pixels)
+    isolation_status=("rejected_foreign_character_or_background_fragments"
+                      if foreign_upper_pixels>1800 or foreign_ratio>.08
+                      else "candidate_only_requires_human_review")
     # Export real neutral assembly and a visible RGB-diff image for review.
     # Alpha outside the original Anya ROI remains zero; none of these previews
     # can be misinterpreted as an approved video or a reference for new images.
@@ -205,6 +223,11 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
       "overlapping_head_body_pixels":overlap,
       "overlap_fraction":round(overlapping_fraction,5),
       "neutral_roundtrip_mean_abs_rgb_error":round(error,3),
+      "foreign_character_suspect_pixels":foreign_upper_pixels,
+      "upper_mask_inspected_pixels":inspected_upper_pixels,
+      "foreign_character_suspect_ratio":round(foreign_ratio,5),
+      "silhouette_isolation_qa":isolation_status,
+      "ready_for_rig":False,
       "head_color_source":"pixel_identical_original_character",
       "closed_head_source":"user_approved_safe_full_closed_png",
       "closed_head_outside_eyes_source_unchanged":True,
@@ -237,7 +260,11 @@ def main()->int:
     p.add_argument("--video-id",required=True)
     a=p.parse_args()
     try:
-        compose(a.source,a.head,a.body,a.closed,a.dest,a.channel,a.video_id)
+        result=compose(a.source,a.head,a.body,a.closed,a.dest,a.channel,a.video_id)
+        if result["silhouette_isolation_qa"].startswith("rejected"):
+            print("RIG_THREE_CANDIDATE_REJECTED_OTHER_CHARACTERS",
+                  result["foreign_character_suspect_pixels"],file=sys.stderr)
+            return 3
         return 0
     except (VideoForgeError,scene_layers.LayerError,ValueError,OSError,KeyError) as exc:
         print("RIG_THREE_RECONSTRUCTION_QA_BLOCKED",str(exc),file=sys.stderr)
