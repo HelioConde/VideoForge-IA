@@ -67,7 +67,16 @@
       "audio": "voz/cena-01.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C01-P04"
+      "scene_mother_shot_id": "C01-P04",
+      "reference_cast": [
+        "kael",
+        "aldric",
+        "guardas"
+      ],
+      "forbidden_characters_in_mother": [
+        "elara"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 2,
@@ -101,7 +110,15 @@
       "audio": "voz/cena-02.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C02-P01"
+      "scene_mother_shot_id": "C02-P01",
+      "reference_cast": [
+        "aldric"
+      ],
+      "forbidden_characters_in_mother": [
+        "kael",
+        "elara"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 3,
@@ -135,7 +152,15 @@
       "audio": "voz/cena-03.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C03-P01"
+      "scene_mother_shot_id": "C03-P01",
+      "reference_cast": [
+        "kael"
+      ],
+      "forbidden_characters_in_mother": [
+        "elara",
+        "aldric"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 4,
@@ -176,7 +201,15 @@
       "audio": "voz/cena-04.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C04-P01"
+      "scene_mother_shot_id": "C04-P01",
+      "reference_cast": [
+        "kael"
+      ],
+      "forbidden_characters_in_mother": [
+        "elara",
+        "aldric"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 5,
@@ -217,7 +250,15 @@
       "audio": "voz/cena-05.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C05-P02"
+      "scene_mother_shot_id": "C05-P02",
+      "reference_cast": [
+        "kael"
+      ],
+      "forbidden_characters_in_mother": [
+        "elara",
+        "aldric"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 6,
@@ -251,7 +292,15 @@
       "audio": "voz/cena-06.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C06-P01"
+      "scene_mother_shot_id": "C06-P01",
+      "reference_cast": [
+        "kael"
+      ],
+      "forbidden_characters_in_mother": [
+        "elara",
+        "aldric"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 7,
@@ -292,7 +341,15 @@
       "audio": "voz/cena-07.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C07-P01"
+      "scene_mother_shot_id": "C07-P01",
+      "reference_cast": [
+        "elara"
+      ],
+      "forbidden_characters_in_mother": [
+        "kael",
+        "aldric"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 8,
@@ -333,7 +390,15 @@
       "audio": "voz/cena-08.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C08-P02"
+      "scene_mother_shot_id": "C08-P02",
+      "reference_cast": [
+        "kael"
+      ],
+      "forbidden_characters_in_mother": [
+        "elara",
+        "aldric"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 9,
@@ -367,7 +432,15 @@
       "audio": "voz/cena-09.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C09-P01"
+      "scene_mother_shot_id": "C09-P01",
+      "reference_cast": [
+        "kael",
+        "elara"
+      ],
+      "forbidden_characters_in_mother": [
+        "aldric"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 10,
@@ -401,7 +474,15 @@
       "audio": "voz/cena-10.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C10-P02"
+      "scene_mother_shot_id": "C10-P02",
+      "reference_cast": [
+        "kael"
+      ],
+      "forbidden_characters_in_mother": [
+        "elara",
+        "aldric"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 11,
@@ -442,7 +523,16 @@
       "audio": "voz/cena-11.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C11-P01"
+      "scene_mother_shot_id": "C11-P01",
+      "reference_cast": [
+        "kael",
+        "guardas"
+      ],
+      "forbidden_characters_in_mother": [
+        "elara",
+        "aldric"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 12,
@@ -483,7 +573,14 @@
       "audio": "voz/cena-12.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C12-P02"
+      "scene_mother_shot_id": "C12-P02",
+      "reference_cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "forbidden_characters_in_mother": [],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 13,
@@ -517,7 +614,14 @@
       "audio": "voz/cena-13.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C13-P01"
+      "scene_mother_shot_id": "C13-P01",
+      "reference_cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "forbidden_characters_in_mother": [],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     },
     {
       "number": 14,
@@ -558,7 +662,15 @@
       "audio": "voz/cena-14.wav",
       "art_approved": false,
       "rig_approved": false,
-      "scene_mother_shot_id": "C14-P02"
+      "scene_mother_shot_id": "C14-P02",
+      "reference_cast": [
+        "elara",
+        "aldric"
+      ],
+      "forbidden_characters_in_mother": [
+        "kael"
+      ],
+      "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     }
   ]
 }
