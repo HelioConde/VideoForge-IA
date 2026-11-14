@@ -81,11 +81,18 @@ def reconstruct(body, head_open, head_closed, base_open, base_closed,
     repaired=cv2.cvtColor(repaired,cv2.COLOR_BGR2RGB)
     new_base=base_open.copy()
     new_base[:,:,:3][hair_alpha]=repaired[hair_alpha]
-    # Underlay must NOT change neutral antialiased alpha. The complete
-    # source pixel must be 100% opaque; 251-254 still introduce visible
-    # edge-color/alpha deltas. Transparent silhouettes are never filled.
+    # The source scene is RGBA with an opaque plateau of alpha=254,
+    # NOT 255. A literal 255 test left the ENTIRE underlay transparent.
+    # Rebuild only the highest-alpha plateau, never translucent edges.
+    source_max_alpha=int(head_open[:,:,3].max())
+    if source_max_alpha<250:
+        raise VideoForgeError("RIG_HAIR_UNDERLAY_SOURCE_OPACITY_UNSAFE")
+    fully_opaque_source=hair_alpha & (head_open[:,:,3]==source_max_alpha)
+    actual_underlay_pixels=int(np.count_nonzero(fully_opaque_source))
+    if actual_underlay_pixels<10000:
+        raise VideoForgeError("RIG_HAIR_UNDERLAY_NO_VISIBLE_RECONSTRUCTION")
     new_base[:,:,3][hair_alpha]=np.where(
-        head_open[:,:,3][hair_alpha]==255,255,0).astype(np.uint8)
+        fully_opaque_source[hair_alpha],source_max_alpha,0).astype(np.uint8)
     new_closed=base_closed.copy()
     new_closed[:,:,:3][hair_alpha]=repaired[hair_alpha]
     new_closed[:,:,3][hair_alpha]=new_base[:,:,3][hair_alpha]
@@ -118,7 +125,9 @@ def reconstruct(body, head_open, head_closed, base_open, base_closed,
         "fragment_pixels":int(fragment.sum()),
         "fragment_left":int(left_fragment.sum()),
         "fragment_right":int(right_fragment.sum()),
-        "underlay_pixels":int(hair_alpha.sum()),
+        "hair_mask_pixels":int(hair_alpha.sum()),
+        "underlay_pixels":actual_underlay_pixels,
+        "source_max_alpha":source_max_alpha,
         "original_visible_pixels_changed_outside_repaired_areas":0,
         "approved_blink_preserved":True,
     }
@@ -245,6 +254,9 @@ def produce(original_dir:Path,corrected_dir:Path,hair_dir:Path,dest:Path)->dict:
         "method":"same_source_OpenCV_Telea_inpainting_plus_original_pixel_transfer",
         "new_image_calls":0,
         "side_hair_reconstructed_underlay_pixels":result["underlay_pixels"],
+        "hair_mask_pixel_count":result["hair_mask_pixels"],
+        "source_opaque_alpha_plateau":result["source_max_alpha"],
+        "actually_opaque_underlay_pixel_count":result["underlay_pixels"],
         "stranded_shoulder_hair_pixels_reparented":result["fragment_pixels"],
         "left_fragment_pixels":result["fragment_left"],
         "right_fragment_pixels":result["fragment_right"],
