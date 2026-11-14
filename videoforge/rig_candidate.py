@@ -518,7 +518,9 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         "head_full_hair_guard_alpha_coverage":hair_coverage,
         "head_mask_variant":"head_full_polygon" if "head_full_polygon" in plan else "head_polygon_legacy",
         "natural_eyelids_preview":eye_report,
-        "cape_front_back_split":True,\n        "cape_seam_overlap_px":plan.get("cape_seam_overlap_px",0),\n        "human_visual_approval":False,
+        "cape_front_back_split":True,
+        "cape_seam_overlap_px":plan.get("cape_seam_overlap_px",0),
+        "human_visual_approval":False,
         "rig_ready_for_remotion":False,"youtube_uploaded":False,
         "notes":[
             "Cabeca/olhos/capa extraidos de pixels existentes; recorte de cabelo integral verificado quando head_full_polygon existe",
