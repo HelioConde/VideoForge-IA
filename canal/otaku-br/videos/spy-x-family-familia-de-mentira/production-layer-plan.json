@@ -51,12 +51,24 @@
       "human_visual_approval": false,
       "layer_preview": {
         "status": "technical_verified",
-        "run_id": 43560582246,
-        "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246/artifacts/14099899544",
-        "sha256": "246464fa7b254034a85f99e698a444dd4d63af4b421c239eda840965936c9d23",
+        "run_id": 43570324901,
+        "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43570324901",
+        "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43570324901/artifacts/14104157803",
+        "scene_number": 1,
+        "scene_id": "gancho-anya",
         "duration_seconds": 8.32,
+        "sha256": "27afe97c2c66980da5dc49e22f4b94b1327b5e97415d7be3c5f05950b5d650b0",
         "source_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
-        "rig_individual_parts": false
+        "blink_overlay_run_id": 43569915048,
+        "background_and_character_rgba_technical_qa": true,
+        "female_voice_and_subtitles": true,
+        "blink_anya_verified_in_sample_frames": true,
+        "body_vertical_max_px": 2.8,
+        "rig_individual_parts": false,
+        "other_objects_separated": false,
+        "visual_approval": false,
+        "official_full_video": false,
+        "workflow_mode": "normal_push_no_private"
       },
       "eyes_closed": {
         "target": "Anya grande na parte inferior da cena-mãe (NÃO os olhos do trio superior)",
@@ -67,13 +79,15 @@
           1310
         ],
         "sprite_name": "eyes-closed.png",
-        "status": "pending",
+        "status": "technical_verified_visual_sample_checked",
         "requires_real_alpha": true,
         "blink_centers_frames": [
           90,
           188
         ],
-        "guidance": "OLHOS DA ANYA GRANDE NO TERÇO INFERIOR: gerar SOMENTE pequenas pálpebras fechadas mais pele ao redor dos dois olhos existentes, sem mexer em cabelo, rosto ou olhos de Loid/Yor, sem outros objetos. Mesma cena-mãe e canvas 1024x1536; todo pixel fora das duas pequenas áreas dos olhos tem que ser transparente."
+        "guidance": "OLHOS DA ANYA GRANDE NO TERÇO INFERIOR: gerar SOMENTE pequenas pálpebras fechadas mais pele ao redor dos dois olhos existentes, sem mexer em cabelo, rosto ou olhos de Loid/Yor, sem outros objetos. Mesma cena-mãe e canvas 1024x1536; todo pixel fora das duas pequenas áreas dos olhos tem que ser transparente.",
+        "source_artifact_run_id": 43569915048,
+        "preview_run_id": 43570324901
       }
     },
     {
