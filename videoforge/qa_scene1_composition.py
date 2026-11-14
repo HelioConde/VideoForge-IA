@@ -5,6 +5,7 @@ recompõe em memória e publica métricas JSON. Aprovado artístico fica falso.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -62,10 +63,11 @@ def stat_region(diff:np.ndarray,region:tuple[int,int,int,int])->dict[str,Any]:
         "maxChannelError":int(np.max(sample)),
     }
 
-def audit()->dict[str,Any]:
+def audit(background_choice:str="original")->dict[str,Any]:
     if not (EPISODE/"SEM-GERACAO-NOVAS-IMAGENS.lock").exists():
         raise QAError("NO_GENERATION_POLICY_LOCK_MISSING")
-    if REPORT.exists():
+    report_path=REPORT if background_choice=="original" else EPISODE/"qa-recomposicao-c01-reconciliado.json"
+    if report_path.exists():
         raise QAError("QA_REPORT_ALREADY_EXISTS_NO_OVERWRITE")
     d=json.loads(DOC.read_text(encoding="utf8"))
     if d.get("schema")!="videoforge/alchemy-episode-scene1-preferred-assets/v1":
@@ -77,8 +79,19 @@ def audit()->dict[str,Any]:
                  if entry.get("kind")=="reconstructed_background"]
     if len(backgrounds)!=1 or backgrounds[0]["path"]!=str(EPISODE.relative_to(ROOT)/p["background"]["path"]):
         raise QAError("BACKGROUND_PROVENANCE_MISMATCH")
-    background=read_png({"path":p["background"]["path"],
-                         "sha256":backgrounds[0]["sha256"]}, False)
+    if background_choice=="original":
+        background_asset={"path":p["background"]["path"],
+                          "sha256":backgrounds[0]["sha256"]}
+    elif background_choice=="reconciled":
+        bq=json.loads((EPISODE/"qa-background-reconciliado-c01.json").read_text(encoding="utf8"))
+        if (bq.get("schema")!="videoforge/existing-background-reconciliation/v1"
+                or bq.get("humanVisualApproved") is not False
+                or bq.get("newImageGenerationCalls")!=0):
+            raise QAError("RECONCILED_BACKGROUND_QA_PROVENANCE_INVALID")
+        background_asset={"path":bq["resultPNG"],"sha256":bq["resultSHA256"]}
+    else:
+        raise QAError("UNKNOWN_BACKGROUND_CHOICE")
+    background=read_png(background_asset,False)
     # Ordem de oclusão provisória: fundo, rei, guardas, Kael, lanças.
     layers=[
         ("aldric",p["aldric"]),
@@ -136,6 +149,8 @@ def audit()->dict[str,Any]:
         "mode":"read-only in-memory neutral composite","imageGenerationCalls":0,
         "createdPixelFiles":0,"renderMP4":False,"youtubeUploaded":False,
         "selectionPath":"rig-selecao-artes-c01.json",
+        "backgroundChoice":background_choice,
+        "backgroundAsset":background_asset,
         "compositionOrder":[x[0] for x in layers],
         "metricsByRegion":metrics,"alphaOverlapPairs":pairs,
         "unoccupiedBackgroundMeanAbsoluteRGB":round(float(np.mean(diff_background[unaffected])),3),
@@ -151,7 +166,7 @@ def audit()->dict[str,Any]:
             "Não sobrepor sprites à imagem-mãe com personagens já desenhados.",
         ],
     }
-    REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
+    report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
     print("SCENE1_COMPOSITE_AUDIT",json.dumps({
         "fullMAE":metrics["fullFrame"]["meanAbsoluteRGB"],
         "framePixelGT24":metrics["fullFrame"]["fractionAnyChannelGT24"],
@@ -162,8 +177,11 @@ def audit()->dict[str,Any]:
     return report
 
 def main()->int:
+    parser=argparse.ArgumentParser()
+    parser.add_argument("--background",choices=("original","reconciled"),default="original")
+    args=parser.parse_args()
     try:
-        audit()
+        audit(args.background)
         return 0
     except (QAError,ValueError,OSError,KeyError,IndexError) as ex:
         print("SCENE1_COMPOSITE_QA_BLOCKED",str(ex),file=sys.stderr)
