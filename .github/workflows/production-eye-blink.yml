@@ -1,0 +1,133 @@
+name: "VideoForge - Blink RGBA da cena-mae (teste normal)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/gerar-olhos-spy-family.json'
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+jobs:
+  check-proxy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 26
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar chaves sem exibir valores
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then
+            echo "::error::CODEX_PROXY_API_KEY nao configurado"
+            exit 1
+          fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            echo "Modo: proxy persistente"
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo "Modo: proxy efemero com snapshot autorizado"
+            printf 'PROXY_ENDPOINT=http://127.0.0.1:18080\n' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else
+            echo "::error::Falta CODEX_PROXY_BASE_URL ou CODEX_PROXY_ACCOUNTS_JSON"
+            exit 1
+          fi
+      - name: Iniciar proxy precompilado se necessario
+        if: env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          payload=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+          assert isinstance(payload,dict) and isinstance(payload.get('records'),list)
+          assert payload['records'] and all(isinstance(x,dict) and isinstance(x.get('token'),dict) for x in payload['records'])
+          p=Path(os.environ['RUNNER_TEMP'])/'vf-proxy-state'/'accounts.json'
+          p.write_text(json.dumps(payload),encoding='utf-8')
+          p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-health \
+            --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy nao iniciou corretamente"
+          exit 1
+      - name: Testar contas e autenticacao sem imagem nem custos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          echo "PROXY_HEALTH_OK — contas acessiveis; nao confirma disponibilidade do modelo de imagem."
+            - name: Baixar as camadas reais da cena-mae do proprio VideoForge
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input
+      - name: Validar origem, cobranca e recorte de piscada
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_production_scene_layers tests.test_scene_layers -v
+          python - <<'PY'
+          from pathlib import Path
+          from videoforge.scene_layers import _read_manifest
+          d=Path('input')
+          m=_read_manifest(d/'manifest.json')
+          assert m['channel']=='otaku-br'
+          assert m['video_id']=='spy-x-family-familia-de-mentira'
+          assert m['scene']=='cena-01'
+          assert set(m['layers'])=={'background','character-main'}
+          print('SCENE_MOTHER_ORIGINAL_VERIFIED')
+          PY
+      - name: Gerar uma camada de olhos fechados mantendo face opaca
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.production_eye_blink \
+            --channel otaku-br \
+            --video-id spy-x-family-familia-de-mentira \
+            --number 1 --incoming ./input --url "$PROXY_ENDPOINT" \
+            --model gpt-image-2
+      - name: Publicar somente sprite RGBA e QA, sem video falso
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-spy-family-blink-rgba-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/
+          retention-days: 14
+          if-no-files-found: warn
+- name: Apagar tokens temporarios
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-health >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
