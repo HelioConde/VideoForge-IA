@@ -30,7 +30,7 @@ on:
       - 'canal/*/videos/*/pedido-geracao-cena.json'
 
 permissions:
-  contents: read
+  contents: write
   packages: read
   actions: read
 
@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
           fetch-depth: 2
       - uses: actions/setup-python@v5
         with:
@@ -175,6 +175,14 @@ jobs:
             --number "$SCENE_NUMBER" --reference ./input/character-bible.png \
             --reference-report ./input/character-bible.production.json \
             --model gpt-image-2 --url "$PROXY_ENDPOINT" "${SHOT_ARGS[@]}"
+      - name: Arquivar permanentemente PNG e SHA no GitHub por canal
+        if: success()
+        shell: bash
+        env:
+          CH: ${{ steps.request.outputs.channel }}
+          VID: ${{ steps.request.outputs.video_id }}
+        run: |
+          bash scripts/persistir-imagens-gh.sh "$CH" "$VID" "output/$CH/videos/$VID/imagens" "${{ github.run_id }}" "production-scene-request"
       - name: Guardar PNG de cena e origem para QA visual
         if: always()
         uses: actions/upload-artifact@v4
