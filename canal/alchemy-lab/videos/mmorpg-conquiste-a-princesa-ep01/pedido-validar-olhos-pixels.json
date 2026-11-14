@@ -1,0 +1,21 @@
+{
+  "schema": "videoforge/c12-p01-pixel-eye-audit-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot": "C12-P01",
+  "no_new_images": true,
+  "no_mp4": true,
+  "youtube_upload": false,
+  "no_network_inference": true,
+  "audit_from_existing_source_only": true,
+  "expected_source": "assets/planos/C12-P01/scene-mother.png",
+  "eye_sources_needed": [
+    "assets/planos/C12-P01/rig.json",
+    "assets/planos/C12-P01/qa.json",
+    "Four RGBA eye part files referenced by rig.json with original SHA",
+    "Two RGBA sclera safe masks for left/right eyes, source mother SHA"
+  ],
+  "geometry": "Check all 0..12px pupil translations and 0..1px eyelid translations with alpha >=1, full-opaque sclera mask/head at >=254",
+  "output": "qa-pixel-olhos-c12-p01.json",
+  "status": "requested_readiness_audit_even_if_art_missing"
+}
