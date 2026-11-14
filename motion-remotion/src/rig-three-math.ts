@@ -92,12 +92,17 @@ export const meshVertexAtFrame=(args:{
   const t=frame/fps;
   const pin=Math.pow(v,1.75)*sharedNeutralEnvelope(frame,duration,blinkFrames);
   const kindScale=kind.startsWith('hair')?.38:kind==='cloth'?.62:1;
+  // Separate natural follow-through for each side lock. Both remain at
+  // their ORIGINAL coordinates on frame zero and at the blink neutral.
+  const sidePhase=kind==='hair-front-left'?.19:
+    kind==='hair-front-right'?-.23:0;
   const delay=.24*v + (kind.startsWith('hair')?.11:0);
-  const wave=Math.sin((t-delay)*1.92 -1.7*v +.65*u)-
-    Math.sin(-delay*1.92 -1.7*v +.65*u);
-  const detail=Math.sin((t-delay)*3.03 + .95*u -2.1*v)-
-    Math.sin(-delay*3.03 + .95*u -2.1*v);
-  const drift=Math.sin(t*.67-delay*.5)-Math.sin(-delay*.5);
+  const wave=Math.sin((t-delay)*1.92 -1.7*v +.65*u+sidePhase)-
+    Math.sin(-delay*1.92 -1.7*v +.65*u+sidePhase);
+  const detail=Math.sin((t-delay)*3.03 + .95*u -2.1*v+sidePhase*.4)-
+    Math.sin(-delay*3.03 + .95*u -2.1*v+sidePhase*.4);
+  const drift=Math.sin(t*.67-delay*.5+sidePhase)-
+    Math.sin(-delay*.5+sidePhase);
   const dx=amplitudePx*kindScale*pin*(.53*wave+.22*detail+.18*drift);
   const dy=amplitudePx*kindScale*pin*.12*(
     Math.sin(t*1.30+.7*u-v)-Math.sin(.7*u-v)
