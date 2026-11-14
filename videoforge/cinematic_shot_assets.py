@@ -51,7 +51,7 @@ def _file_from_rel(root:Path,relative:str)->Path:
             raise VideoForgeError("CINEMATIC_ASSET_PARENT_SYMLINK_BLOCKED")
     return path
 
-def _png_valid(path:Path, sha:str, rgba:bool|None=None)->bool:
+def _png_valid(path:Path, sha:str, rgba:bool|None=None, size:tuple[int,int]=CANVAS)->bool:
     if not isinstance(sha,str) or not _SHA.fullmatch(sha):
         return False
     if path.is_symlink() or not path.is_file():
@@ -60,8 +60,8 @@ def _png_valid(path:Path, sha:str, rgba:bool|None=None)->bool:
     if (len(raw)<34 or raw[:8]!=PNG_MAGIC or raw[12:16]!=b"IHDR"
             or hashlib.sha256(raw).hexdigest()!=sha):
         return False
-    size=(int.from_bytes(raw[16:20],"big"),int.from_bytes(raw[20:24],"big"))
-    if size!=CANVAS:
+    measured=(int.from_bytes(raw[16:20],"big"),int.from_bytes(raw[20:24],"big"))
+    if measured!=size:
         return False
     color_type=raw[25]
     return color_type in ((6,) if rgba is True else (2,6) if rgba is False else (2,6))
@@ -126,7 +126,16 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
             continue
         if not str(file.relative_to(episode)).startswith(f"assets/planos/{sid}/"):
             failures.append("SHOT_PART_NOT_FROM_OWN_MOTHER")
-        if not _png_valid(file,part.get("sha256"),True):
+        bbox=part.get("bbox")
+        if not (isinstance(bbox,list) and len(bbox)==4
+                and all(type(v) is int for v in bbox)
+                and bbox[2]>0 and bbox[3]>0
+                and 0<=bbox[0]<CANVAS[0] and 0<=bbox[1]<CANVAS[1]
+                and bbox[0]+bbox[2]<=CANVAS[0]
+                and bbox[1]+bbox[3]<=CANVAS[1]):
+            failures.append("SHOT_PART_BBOX_MISSING_OR_INVALID")
+            continue
+        if not _png_valid(file,part.get("sha256"),True,(bbox[2],bbox[3])):
             failures.append("SHOT_PART_RGBA_OR_SHA_INVALID")
         if (part.get("underlay_verified") is not True
                 or part.get("pivot_measured") is not True):
