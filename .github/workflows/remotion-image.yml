@@ -54,6 +54,7 @@ jobs:
             cd /opt/videoforge-remotion
             node -p "require(\"remotion/package.json\").version"
             node -p "require(\"@remotion/cli/package.json\").version"
+            node -e "require.resolve(\"three\"); require.resolve(\"@react-three/fiber\"); require.resolve(\"@remotion/three\"); console.log(\"THREE_RIG_LIBRARIES_IN_GHCR\")"
             test -d node_modules/.remotion/chrome-headless-shell
             ./node_modules/.bin/remotion browser ensure --log error
           '
