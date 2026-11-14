@@ -1,0 +1,79 @@
+name: "VideoForge - continuidade de figurino e rosto v2 nos 37 planos"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-continuidade-personagens.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/referencias/chat-aprovadas/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-alchemy-continuity-identity-v2
+  cancel-in-progress: false
+
+jobs:
+  costume-identity-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirmar que nao gera PNG nem MP4
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          base=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          req=json.loads((base/'pedido-continuidade-personagens.json').read_text())
+          assert req['schema']=='videoforge/character-continuity-qa-request/v1'
+          assert req['new_images'] is False
+          assert req['render_video'] is False
+          assert req['youtube_upload'] is False
+          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          print('CONTINUITY_ONLY_NO_IMAGES')
+          PY
+      - name: Validar figurinos de Kael/Elara e regras de spoiler
+        run: |
+          python -m unittest tests.test_cinematic_identity_continuity \
+            tests.test_cinematic_chat_references -v
+      - name: Gerar contrato dos 37 planos
+        run: python -m videoforge.cinematic_identity_continuity
+      - name: Verificar que a bíblia de estilo não aprovou artes/rigs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          base=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          doc=json.loads((base/'continuidade-figurinos-37-planos.json').read_text())
+          assert doc['total_shots']==37
+          assert doc['black_openings']==1
+          assert doc['generator_locked'] is True
+          assert doc['image_generation_calls']==0
+          assert doc['production_render_allowed'] is False
+          assert all(s['art_and_rig_approved'] is False for s in doc['shots'])
+          print('CONTINUITY_POLICY_READY, NO RENDER APPROVAL')
+          PY
+      - name: Versionar apenas o manifesto textual de figurinos
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/continuidade-figurinos-37-planos.json'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$FILE"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(alchemy): registrar roupas e identidades v2 dos 37 planos sem gerar arte'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
