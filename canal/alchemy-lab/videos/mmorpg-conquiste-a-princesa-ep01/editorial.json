@@ -1,0 +1,117 @@
+{
+  "schema": "videoforge/video-editorial/v1",
+  "canal_id": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "status": "pre_producao_assets_pendentes",
+  "titulo_provisorio": "Fui Julgado pelo Rei... Mas o Sistema Mandou Conquistar a Princesa!",
+  "tema": "Dorama MMORPG original: falso noivado real e missão de romance",
+  "assuntos_relacionados": [
+    "isekai",
+    "MMORPG",
+    "dorama de fantasia",
+    "romance de corte",
+    "falso noivado"
+  ],
+  "obra_ou_anime": null,
+  "formato": "Short vertical serializado, episódio 1",
+  "idioma": "pt-BR",
+  "publico": "adultos e jovens interessados em dorama, fantasy romance e MMORPG",
+  "hipotese": "Gancho de julgamento com virada de missão RPG e cliffhanger de falso noivado pode gerar curiosidade; hipótese não verificada",
+  "duracao_prevista_segundos": 134,
+  "data_criacao": "2026-11-14",
+  "pesquisa": {
+    "consultas": [],
+    "fontes": [],
+    "dados_canal_verificados": false,
+    "data_consulta_analytics": null,
+    "concorrentes": [],
+    "tendencias": []
+  },
+  "antirrepeticao": {
+    "historico_youtube_verificado": false,
+    "data_verificacao": null,
+    "ids_comparados": [],
+    "temas_relacionados": [
+      "dorama fantasia",
+      "romance com princesa",
+      "MMORPG"
+    ],
+    "parecer": "pendente_historico_youtube",
+    "justificativa": "Pauta original do usuário; índice local sem entradas, mas histórico de YouTube não verificado."
+  },
+  "roteiro": {
+    "arquivo": "roteiro.md",
+    "gancho": "Você é acusado de sequestrar a princesa deste reino!",
+    "progressao": "Julgamento → flashback de mundo real → renascimento nível 1 → salvar jovem misteriosa → broche causa acusação → olhar furtivo → missão conquistar princesa → noivado declarado",
+    "cenas_previstas": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C10",
+      "C11",
+      "C12",
+      "C13"
+    ]
+  },
+  "arte": {
+    "guia_estilo": "biblia-visual.md",
+    "personagens": "Kael, princesa Elara, rei Aldric, guardas, mascarados",
+    "cenario": "Arken; salão do trono, quarto moderno, estrada, mercado, becos e portão",
+    "referencias": [],
+    "consistencia_verificada": false
+  },
+  "seo": {
+    "palavras_chave": [
+      "dorama MMORPG",
+      "fantasia medieval",
+      "princesa",
+      "isekai",
+      "romance",
+      "missão RPG"
+    ],
+    "titulo_final": null,
+    "descricao": null,
+    "tags": [],
+    "thumbnail_plano": "Kael ajoelhado, princesa junto ao trono e HUD 'CONQUISTE A PRINCESA' sem excesso de texto"
+  },
+  "producao": {
+    "manifesto_tecnico": null,
+    "workflow_url": null,
+    "artefato_url": null,
+    "sha256": null,
+    "duracao_real_segundos": null
+  },
+  "qa": {
+    "aprovado_tecnicamente": false,
+    "aprovado_editorialmente": false,
+    "relatorio_url": null
+  },
+  "publicacao": {
+    "youtube_video_id": null,
+    "youtube_url": null,
+    "publicado_em": null
+  },
+  "metricas": {
+    "fonte": null,
+    "data_coleta": null,
+    "visualizacoes": null,
+    "impressoes": null,
+    "ctr": null,
+    "retencao_media_percentual": null,
+    "tempo_medio_assistido_segundos": null,
+    "inscritos_ganhos": null,
+    "comentarios": null
+  },
+  "notas": [
+    "Ideia e premissa fornecidas pelo usuário em 2026-11-14; detalhes de personagens e acontecimentos são propostas criativas para EP01.",
+    "Não criar video.json técnico até existir pacote de mídia de origem e contrato do gerador validado.",
+    "Status oficial: pipeline_pendente / assets_pendentes; rig_animado_aplicado=false; video_oficial_do_programa=false; youtube_uploaded=false.",
+    "Seguir integralmente docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md; sem modo private-quota-live, custos novos ou upload."
+  ]
+}
