@@ -102,7 +102,7 @@ def split_existing(source:Path, plan_path:Path, dest:Path)->dict:
             "animation_ready":False,
             "human_visual_approval":False,
             "pixels_copied_not_generated":True,
-            "category":("rejected_residual" if cfg["kind"]=="remainder"
+            "category":cfg.get("qa_status") or ("rejected_residual" if cfg["kind"]=="remainder"
                         else "draft_anatomical_cutout"),
         })
     # RGB invisível de pixels alfa=0 não é parte da arte visível.
