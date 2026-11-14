@@ -146,10 +146,10 @@ def _drawtext_filter(caption_filename: str, *,
         # Subtitles are short phrases, not fixed cards unrelated to narration.
         chain += (
             "subtitles=filename=" + subtitle_filename +
-            ":force_style='FontName=DejaVu Sans,FontSize=23,"
+            ":force_style='FontName=DejaVu Sans,FontSize=11,"
             "PrimaryColour=&H00FFFFFF,OutlineColour=&H65000000,"
             "BorderStyle=3,BackColour=&H90000000,"
-            "Alignment=2,MarginV=330',"
+            "Alignment=2,MarginV=55',"
         )
     else:
         chain += (
