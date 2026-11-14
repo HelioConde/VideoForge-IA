@@ -1,0 +1,59 @@
+{
+  "schema": "videoforge/rgba-part-extraction-plan/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene_number": 1,
+  "source_scene_id": "c01",
+  "source_scene_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "image_model": "gpt-image-2",
+  "retry_on_429": false,
+  "human_visual_approval": false,
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "process": "Edit original mother per part in RGBA8; generate isolated character/weapon image in same coordinate system; compare neutral roundtrip and reconstruct anatomy before subdividing into anatomical rig pieces",
+  "parts": [
+    {
+      "id": "kael",
+      "prompt": "EXTRAIR SOMENTE KAEL, o jovem de cabelos pretos ondulados e jaqueta cinza AJOELHADO EM PRIMEIRO PLANO, com uma perna apoiada e outra levantada. Preservar todo cabelo, rosto com cabeça baixa, jaqueta, camiseta, calça, botas, braços, mãos e pernas da MESMA ilustração, inclusive partes escondidas por seu próprio corpo. Não desenhar trono, rei, dois guardas, lanças, chão, sombra do piso ou qualquer mancha de ambiente. Manter seu tamanho e localização exatamente no 1024x1536 de origem.",
+      "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "technical_qa": "pending",
+      "visual_qa": "pending"
+    },
+    {
+      "id": "aldric",
+      "prompt": "EXTRAIR EXCLUSIVAMENTE REI ALDRIC SENTADO no centro superior, barba e cabelos grisalhos, coroa, túnica bordô e manto preto, mãos nos apoios e pernas recuadas. NÃO incluir TRONO, encosto, cabeças de leão, laterais douradas, escadaria, paredes, piso, guardas, Kael ou lanças. Reconstruir partes da túnica e da capa que são cobertas pelo trono com continuidade de tecido, preservando posição e escala da ilustração de origem.",
+      "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "technical_qa": "pending",
+      "visual_qa": "pending"
+    },
+    {
+      "id": "guarda-esquerdo",
+      "prompt": "EXTRAIR SOMENTE o GUARDA À ESQUERDA do espectador no salão do trono, armadura prata com detalhes dourados e capa bordô, capacete, rosto, ombros, braços, mãos e pernas COM INTEGRIDADE DE SILHUETA. A lança e os outros elementos são objetos independentes, portanto retirar completamente a lança sem cortar mãos ou dedos. NÃO incluir outro guarda, rei, Kael, trono, piso, vitrais ou fundo. Manter coordenadas originais e tamanho.",
+      "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "technical_qa": "pending",
+      "visual_qa": "pending"
+    },
+    {
+      "id": "guarda-direito",
+      "prompt": "EXTRAIR SOMENTE o GUARDA À DIREITA do espectador no salão do trono, armadura prata/dourada, capa bordô, capacete, rosto, luvas, mãos, pernas e botas INTEIROS. A lança à sua frente precisa ficar em camada de objeto própria, portanto remover toda a lança da extração do personagem e reconstruir os dedos sob a haste. Não incluir guarda esquerdo, rei, Kael, trono, cenário ou chão. Preservar 1024x1536 com alfa zero fora da figura.",
+      "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "technical_qa": "pending",
+      "visual_qa": "pending"
+    },
+    {
+      "id": "lanca-esquerda",
+      "prompt": "EXTRAIR SOMENTE A LANÇA DO GUARDA À ESQUERDA no momento inicial do tribunal: haste longa reta e ponta metálica pontiaguda com brilho, observada na MESMA cena mãe, isolada como UMA peça de arma em PNG transparente. Restaurar trecho da haste que fica encoberto por mão/corpo se preciso, sem mudar escala, perspectiva ou direção. NÃO desenhar mão, braço, guarda, rei, trono, Kael, chão, reflexo de ambiente ou lança da direita.",
+      "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "technical_qa": "pending",
+      "visual_qa": "pending"
+    },
+    {
+      "id": "lanca-direita",
+      "prompt": "EXTRAIR SOMENTE A LANÇA DO GUARDA À DIREITA no momento de julgamento: haste longa reta e ponta metálica da MESMA imagem mãe, isolada como UMA peça transparente na posição original. A arma será articulada a partir do pivô da mão do guarda; restaurar trecho escondido pelo punho sem inventar outra arma. Não incluir o guarda, a mão, a lança esquerda, rei, trono, Kael, ambiente ou sombras de cena. Manter 1024x1536 e transparência plena fora da lança.",
+      "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "technical_qa": "pending",
+      "visual_qa": "pending"
+    }
+  ],
+  "next_stage": "After individual silhouettes pass human QA, split Kael head-open/head-closed/hair/arms/legs/underlay/cloth meshes, guards and Aldric similarly, and actual crossing spear motion with hand constraint",
+  "publish": false
+}
