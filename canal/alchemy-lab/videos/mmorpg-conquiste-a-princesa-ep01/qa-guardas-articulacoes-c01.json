@@ -1,0 +1,80 @@
+{
+  "schema": "videoforge/guard-rig-readiness-audit/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot": "C01-P04",
+  "fps": 30,
+  "sourceScenePose": "spears_already_crossed",
+  "verifiedPNGCount": 10,
+  "motionFrames": [
+    240,
+    245,
+    280,
+    326,
+    359
+  ],
+  "spearContacts": [
+    {
+      "id": "guarda-esquerdo",
+      "partCount": 4,
+      "shaValidatedPNGCount": 5,
+      "handSpearOverlapPixels": 458,
+      "forearmSpearOverlapPixels": 0,
+      "neutralPoseVerifiedBySourceQA": true,
+      "shoulder": [
+        254,
+        572
+      ],
+      "elbow": [
+        303,
+        670
+      ],
+      "wrist": [
+        360,
+        730
+      ],
+      "spearGrip": [
+        381,
+        751
+      ],
+      "allMotionDisabled": true,
+      "underlaysRequired": true
+    },
+    {
+      "id": "guarda-direito",
+      "partCount": 4,
+      "shaValidatedPNGCount": 5,
+      "handSpearOverlapPixels": 369,
+      "forearmSpearOverlapPixels": 108,
+      "neutralPoseVerifiedBySourceQA": true,
+      "shoulder": [
+        773,
+        573
+      ],
+      "elbow": [
+        722,
+        670
+      ],
+      "wrist": [
+        666,
+        732
+      ],
+      "spearGrip": [
+        644,
+        749
+      ],
+      "allMotionDisabled": true,
+      "underlaysRequired": true
+    }
+  ],
+  "artGenerationCalls": 0,
+  "visualHumanApproved": false,
+  "underlaysReconstructed": false,
+  "pivotMeasured": false,
+  "guardArmsPhysicallyRigged": false,
+  "rigReady": false,
+  "officialRenderAllowed": false,
+  "youtubeUploaded": false,
+  "blocker": "Mãos e lanças têm pixels ocluídos; início do plano requer armas não cruzadas, enquanto a imagem-mãe mostra armas cruzadas.",
+  "next": "Revisar máscara de luvas sob hastes e resolver pose inicial sem inventar partes ocultas; não habilitar rotações sem QA."
+}
