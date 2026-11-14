@@ -1,0 +1,16 @@
+{
+  "schema": "videoforge/eye-blink-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene_number": 1,
+  "source_layer_run_id": 43560159589,
+  "mode": "normal_github_actions_push",
+  "private_proxy_mode": false,
+  "new_image_calls": 1,
+  "no_retry_on_429": true,
+  "expected": "eyes-closed.png RGBA only",
+  "source": "same_scene_mother",
+  "target": "Anya large bottom pair of eyes",
+  "human_visual_approval": false,
+  "youtube_upload": false
+}
