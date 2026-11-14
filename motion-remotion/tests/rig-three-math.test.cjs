@@ -104,3 +104,36 @@ test('left and right side locks have different but deterministic follow-through'
   const top=8*3;
   assert.deepEqual(l.positions.slice(0,top),r.positions.slice(0,top));
 });
+
+
+test('Anya side locks pin the inner face edge at all rows, not just their roots',()=>{
+  const bbox=[208,1280,238,211];
+  const canvas={width:1024,height:1536};
+  const spec={columns:7,rows:9,pinnedRows:[0],amplitudePx:4};
+  const common={bbox,canvas,spec,fps:30,duration:240,blinkFrames:[74,173]};
+  const at=(kind,frame)=>meshGridAtFrame({...common,kind,frame});
+  const c=spec.columns+1;
+  for(const [kind,pinnedCol,movingCol] of [
+    ['hair-front-left',7,0],['hair-front-right',0,7]
+  ]){
+    const zero=at(kind,0);
+    for(const frame of [1,15,30,60,74,76,111,150,173,175,239]){
+      const grid=at(kind,frame);
+      for(let row=0;row<=spec.rows;row++){
+        const inner=(row*c+pinnedCol)*3;
+        assert.deepEqual(grid.positions.slice(inner,inner+3),
+          zero.positions.slice(inner,inner+3),
+          `inner cheek edge must remain pinned: ${kind} row ${row}, frame ${frame}`);
+      }
+      // Top root is also fixed all the way across both meshes.
+      assert.deepEqual(grid.positions.slice(0,c*3),zero.positions.slice(0,c*3));
+    }
+    const moving=at(kind,111);
+    const outer=(spec.rows*c+movingCol)*3;
+    assert.notDeepEqual(moving.positions.slice(outer,outer+3),
+      zero.positions.slice(outer,outer+3),
+      'free outer tip must retain actual mesh motion');
+    assert.deepEqual(at(kind,74).positions,zero.positions);
+    assert.deepEqual(at(kind,173).positions,zero.positions);
+  }
+});
