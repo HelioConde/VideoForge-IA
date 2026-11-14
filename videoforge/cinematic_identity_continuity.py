@@ -94,11 +94,15 @@ def build_continuity(root:Path=ROOT)->dict:
     shots=[shot_requirements(s,ids) for s in plan["shots"]]
     if len({s["shot_id"] for s in shots})!=37:
         raise VideoForgeError("CINEMATIC_CONTINUITY_DUPLICATE_SHOT")
+    from .cinematic_chat_references import reference_status
+    original_sources_verified=(
+        reference_status(root)["original_source_files_sha_verified"]==2
+    )
     return {
         "schema":SCHEMA,"channel":CHANNEL,"video_id":VIDEO,
         "source":SOURCE_MANIFEST,
         "source_approved_for_visual_preference_only":True,
-        "canonical_references_imported":False,
+        "canonical_references_imported":original_sources_verified,
         "generator_locked":(base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file(),
         "image_generation_calls":0,
         "total_shots":37,
@@ -152,6 +156,21 @@ def validate_actor_wardrobe(shot:dict,rig:dict,qa:dict,reference_imported:bool)-
         if (character=="elara" and
             human.get("princess_identity_revealed") is not expected["is_princess_identity_revealed"]):
             raise VideoForgeError("CINEMATIC_CONTINUITY_SPOILER_OR_REVEAL_WRONG")
+
+
+
+def verify_shot_continuity(shot:dict,rig:dict,qa:dict,
+                           root:Path=ROOT)->None:
+    """Recheck import+SHA and the actual actor against this shot's wardrobe."""
+    if not any(x in MAIN_CAST for x in shot.get("characters",[])):
+        return
+    report=build_continuity(root)
+    policy=next((x for x in report["shots"] if x["shot_id"]==shot["id"]),None)
+    if policy is None or policy["planned_cast"]!=shot["characters"]:
+        raise VideoForgeError("CINEMATIC_CONTINUITY_SHOT_NOT_IN_SOURCE_PLAN")
+    validate_actor_wardrobe(
+        policy,rig,qa,report["canonical_references_imported"]
+    )
 
 def main()->int:
     try:
