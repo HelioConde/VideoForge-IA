@@ -17,19 +17,19 @@ import sys
 
 from .cinematic_shot_assets import (
     ROOT, RIG_SCHEMA, QA_SCHEMA, build_edl, _load_json, _file_from_rel,
-    _png_valid, CANVAS,
+    _png_valid, CANVAS, validate_shot_canvas,
 )
 from .errors import VideoForgeError
 
 OUTPUT_PREFIX="vf-cinema"
 
-def _check_bbox(bbox:object)->tuple[int,int]:
+def _check_bbox(bbox:object,canvas:tuple[int,int]=CANVAS)->tuple[int,int]:
     if not (isinstance(bbox,list) and len(bbox)==4
             and all(type(k) is int for k in bbox)
             and bbox[0]>=0 and bbox[1]>=0
             and bbox[2]>0 and bbox[3]>0
-            and bbox[0]+bbox[2]<=CANVAS[0]
-            and bbox[1]+bbox[3]<=CANVAS[1]):
+            and bbox[0]+bbox[2]<=canvas[0]
+            and bbox[1]+bbox[3]<=canvas[1]):
         raise VideoForgeError("CINEMATIC_EXPORTED_RIG_BBOX_INVALID")
     return bbox[2],bbox[3]
 
@@ -69,6 +69,7 @@ def build_props(channel:str,video_id:str,root:Path=ROOT)->tuple[dict,list[tuple[
             review.get("human_visual_approved") is not True):
             raise VideoForgeError("CINEMATIC_EXPORT_PROVENANCE_OR_QA_INVALID")
         source_sha=data["source_sha256"]
+        native_canvas=validate_shot_canvas(data)
         def asset(rel:str,expected:str,alpha:bool,size:tuple[int,int])->str:
             src=_file_from_rel(base,rel)
             if not rel.startswith("assets/planos/"+shot["id"]+"/"):
@@ -84,16 +85,16 @@ def build_props(channel:str,video_id:str,root:Path=ROOT)->tuple[dict,list[tuple[
         # Source mother is verified for provenance but NOT composited as
         # a foreground layer, since it includes the whole already-drawn cast.
         mother=_file_from_rel(base,paths["mother"])
-        if not _png_valid(mother,source_sha,False,CANVAS):
+        if not _png_valid(mother,source_sha,False,native_canvas):
             raise VideoForgeError("CINEMATIC_EXPORT_MOTHER_INVALID")
         background=asset(paths["background"],data["background_sha256"],
-                         False,CANVAS)
+                         False,native_canvas)
         parts=data.get("parts",[])
         part_index={}
         for part in parts:
             if not isinstance(part,dict) or not isinstance(part.get("name"),str):
                 raise VideoForgeError("CINEMATIC_EXPORT_PART_ENTRY_INVALID")
-            _check_bbox(part.get("bbox"))
+            _check_bbox(part.get("bbox"),native_canvas)
             part_index[part["path"]]=(part["sha256"],part["bbox"])
         source_actors=data.get("actors")
         if not isinstance(source_actors,list):
@@ -113,7 +114,7 @@ def build_props(channel:str,video_id:str,root:Path=ROOT)->tuple[dict,list[tuple[
                     or rig.get("humanVisualReview") is not True
                     or rig.get("youtubeUploaded") is not False
                     or rig.get("sceneMotherSha256")!=source_sha
-                    or rig.get("canvas")!={"width":1024,"height":1536}):
+                    or rig.get("canvas")!=data.get("canvas")):
                 raise VideoForgeError("CINEMATIC_EXPORT_ACTOR_RIG_UNAPPROVED")
             layers=rig.get("layers")
             if not isinstance(layers,list) or len(layers)<3 or not any(
@@ -126,7 +127,7 @@ def build_props(channel:str,video_id:str,root:Path=ROOT)->tuple[dict,list[tuple[
                 if not isinstance(layer,dict) or layer.get("id") in ids:
                     raise VideoForgeError("CINEMATIC_EXPORT_DUPLICATE_LAYER")
                 ids.add(layer["id"])
-                size=_check_bbox(layer.get("bbox"))
+                size=_check_bbox(layer.get("bbox"),native_canvas)
                 rel=layer.get("file")
                 if rel not in part_index or part_index[rel]!=(
                     layer.get("sha256"),layer.get("bbox")
@@ -172,6 +173,7 @@ def build_props(channel:str,video_id:str,root:Path=ROOT)->tuple[dict,list[tuple[
             "backgroundFile":background,
             "backgroundSha256":data["background_sha256"],
             "sourceMotherSha256":source_sha,
+            "sourceCanvas":{"width":native_canvas[0],"height":native_canvas[1]},
             "actors":actors,
             "staticShotApproved":static_ok,
             "humanVisualApproved":True,
