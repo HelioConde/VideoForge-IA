@@ -63,3 +63,17 @@
 Há um ZIP local de oito PNGs (Aldric; dois guardas e duas versões adicionais; duas lanças; trono). Esses arquivos não estavam nos artefatos anteriores do GitHub. A conexão atual do GitHub não aceita cópia direta desses binários do container. Para importar sem gerá-los outra vez, enviar o ZIP existente à pasta uploads/ pelo GitHub. O workflow import-alchemy-existing-chat-assets.yml valida os SHA-256 e move os PNGs para assets/cena-01/variacoes-geradas-na-conversa/, removendo o ZIP intermediário. Até isso acontecer, NÃO afirmar que as oito imagens estão no repositório.
 
 Referência normativa: docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md e AGENTS.md. A direção quadro a quadro permanece no arquivo direcao-rig-remotion.json.
+
+
+## 7. Nova etapa: guardas individualizados por pixels, sem IA
+
+A execução [43598226488](https://github.com/HelioConde/VideoForge-IA/actions/runs/43598226488) criou **cinco PNGs candidatos** a partir do antigo `character-group-REJECTED.png`, por máscaras no mesmo canvas e sem IA:
+
+- `guarda-esquerdo-alinhado.png` e `guarda-direito-alinhado.png`: posições derivadas do recorte original; ainda pode haver halo ou bordas incorretas.
+- `kael-grupo-alinhado-REJECTED.png`: duplicata do Kael separado; não usar.
+- `aldric-com-trono-REJECTED.png`: contém pixels indevidos do trono, não usar como personagem.
+- `trono-halo-residual-REJECTED.png`: residual para conferência, nunca no render.
+
+O relatório `assets/cena-01/rig-drafts/grupo/split-qa.json` registra **round-trip exato dos pixels visíveis** e classificação por peça. Isso NÃO significa que os guardas já tenham ombros, braços, mãos, cabeças e capas prontos para rig. A imagem original tem contaminação visual; a decomposição automática apenas organiza o material existente para revisão.
+
+**Totais atuais no GitHub: 18 PNGs originais arquivados + 12 PNGs de partição de Kael + 5 PNGs de partição do grupo = 35 PNGs existentes armazenados neste canal. Nenhum deles foi desenhado de novo nesta etapa.** Oito PNGs exclusivos do chat permanecem em ZIP separado, aguardando upload ao GitHub, com SHA listado em `IMAGENS-EXTERNAS-PENDENTES.json`.
