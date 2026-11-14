@@ -47,3 +47,16 @@ A interface de geração futura `videoforge.production_scenes` recebe opcionalme
 A execução GitHub Actions `43637493536` aprovou a integridade dos 37 planos, o elenco, a variedade cinematográfica e a preparação de 36 prompts. O relatório em [qa-direcao-cinematografica.json](qa-direcao-cinematografica.json) contém SHA-256 dos 36 textos.
 
 **Estado final da solicitação:** zero novas imagens, zero MP4, zero upload ao YouTube; planejamento do programa implementado e prontidão de referência/arte aguardando revisão.
+
+
+## Timeline de edição real do programa (EDL)
+
+O programa agora usa [timeline-cinematografica.json](timeline-cinematografica.json), construído por `videoforge/cinematic_shot_assets.py`. Esse documento conecta cada `CXX-PXX` aos frames absolutos para edição **sem transições falsas**: 37 planos contínuos entre frames 0 e 4890 a 30fps, total de 163 segundos. O primeiro plano `C01-P01` é preto e não precisa de arte.
+
+As **36 tomadas com imagem** têm diretórios individuais em `assets/planos/CXX-PXX/`. Dentro de cada diretório, o contrato exigirá a mãe `scene-mother.png`, `background-reconstructed.png`, `rig.json` com PNGs RGBA independentes de corpo/cabeça/olhos/mãos/cabelo e `qa.json` com prova de origem, pivôs, underlays, composição neutra, identidade e revisão visual. As artes já existentes dos 14 cenários **não substituem** automaticamente essas tomadas. Nenhum desses 36 planos foi aprovado para render.
+
+A regra de segurança foi aplicada também a `videoforge/production_assemble.py`: o render técnico legado de imagem inteira com movimento `cinematic-pan` é **bloqueado para vídeos com timeline por plano**, sem alterar outros canais. O `official_production.py` informa que a cena exige rigs reais por tomada e que ainda falta a integração do renderer multi-personagem com ThreeCanvas/Remotion.
+
+O validador da EDL impede buracos e sobreposições de frames, caminhos inseguros, SHA inválido, RGBA de outra tomada, imagens sem pivôs ou underlays, QA não aprovado e aprovação falsa. Todos os arquivos ficam na pasta do canal; o workflow apenas escreve a timeline JSON, **não gera PNG, não renderiza MP4 e não publica**.
+
+**Atenção:** o manifesto é um contrato de montagem validado, não uma declaração de que os 36 rigs já existem. O bloqueio `SEM-GERACAO-NOVAS-IMAGENS.lock` segue ativo.
