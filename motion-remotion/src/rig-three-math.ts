@@ -125,8 +125,10 @@ export const meshGridAtFrame=(args:{
       const p=meshVertexAtFrame({original,uv:{x:u,y:v},kind,
         amplitudePx:spec.amplitudePx,frame,fps,duration,blinkFrames});
       positions.push(p.x-canvas.width/2,canvas.height/2-p.y,0);
-      uvs.push(original.x/canvas.width,
-        1-original.y/canvas.height);
+      // PNGs in rig-three are cropped to bbox (not full-canvas PNGs).
+      // Geometry is positioned in original canvas coordinates, but UV stays
+      // local to that individual crop to avoid texture distortion.
+      uvs.push(u,1-v);
     }
   }
   for(let row=0;row<spec.rows;row++){
