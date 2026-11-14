@@ -1,0 +1,126 @@
+name: "Otaku BR - Spy x Family animacao por camadas (teste integral)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/otaku-br/videos/spy-x-family-familia-de-mentira/executar-animacao.json'
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+concurrency:
+  group: otaku-br-spy-family-animacao
+  cancel-in-progress: false
+
+jobs:
+  preparar-voz:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    container:
+      image: ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-espeak-v3
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validar planejamento sem limitar numero de cenas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_spy_family_pilot tests.test_spy_family_animated -v
+          command -v espeak-ng
+          command -v ffprobe
+      - name: Gerar vozes PT-BR e duracoes verificadas, sem IA paga
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.spy_family_animated prepare
+      - name: Salvar audio e dados de cada cena
+        uses: actions/upload-artifact@v4
+        with:
+          name: spy-family-voice-stage
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/animated-preview/stage/
+          if-no-files-found: error
+          retention-days: 3
+
+  animar-e-renderizar:
+    needs: preparar-voz
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      PREVIEW: output/otaku-br/videos/spy-x-family-familia-de-mentira/animated-preview
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Recuperar audios e roteiro sincronizado (mesma execucao)
+        uses: actions/download-artifact@v4
+        with:
+          name: spy-family-voice-stage
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/animated-preview/stage/
+      - name: Verificar TypeScript e modelos de movimento
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          mkdir -p motion-remotion/public/vf-spy
+          cp "$PREVIEW"/stage/audio/*.wav motion-remotion/public/vf-spy/
+          test "$(find motion-remotion/public/vf-spy -name '*.wav' | wc -l)" -eq 16
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/mesh-rig.test.cjs
+      - name: Remotion 4 - renderizar 16 cenas com rig, piscadas e narracao
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/index.ts SpyFamilyEpisodePreview \
+            "../$PREVIEW/preview-540.mp4" \
+            --props="../$PREVIEW/stage/episode-props.json" \
+            --codec=h264 --concurrency=2 --log=error
+      - name: Converter a 1080x1920 H264/AAC e verificar movimento real
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -nostdin -hide_banner -loglevel error -y \
+            -i "$PREVIEW/preview-540.mp4" \
+            -vf scale=1080:1920:flags=lanczos \
+            -c:v libx264 -preset veryfast -crf 25 -pix_fmt yuv420p \
+            -c:a aac -b:a 128k -movflags +faststart \
+            "$PREVIEW/video.mp4"
+          python -m videoforge.spy_family_animated verify
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          folder=Path('output/otaku-br/videos/spy-x-family-familia-de-mentira/animated-preview')
+          qa=json.loads((folder/'animated-video.qa.json').read_text())
+          assert qa['status']=='technical_verified'
+          assert qa['frame_samples_changed'] is True
+          assert qa['scene_count'] == 16
+          assert qa['publishable'] is False and qa['youtube_uploaded'] is False
+          print('ANIMATED PREVIEW QA OK — arte vetorial de teste; revisao humana pendente')
+          PY
+      - name: Entregar MP4 animado e relatórios (sem YouTube)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spy-family-animado-review-${{ github.run_id }}
+          path: |
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/animated-preview/video.mp4
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/animated-preview/animated-video.qa.json
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/animated-preview/motion-*.png
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/animated-preview/stage/audio-stage.qa.json
+          retention-days: 14
+          if-no-files-found: warn
