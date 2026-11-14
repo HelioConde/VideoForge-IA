@@ -32,5 +32,16 @@
       "motor": "ffmpeg"
     }
   },
-  "padrao_obrigatorio": "cena-mae + background independente reconstruido + personagens e objetos animaveis RGBA derivados da mesma imagem + partes/pivos sem duplicar + rig Remotion + QA"
+  "padrao_obrigatorio": "cena-mae + background independente reconstruido + personagens e objetos animaveis RGBA derivados da mesma imagem + partes/pivos sem duplicar + rig Remotion + QA",
+  "politica_micro_movimento": {
+    "body_vertical_max_px": 2.8,
+    "body_horizontal_max_px": 1,
+    "body_rotation_max_deg": 0.25,
+    "background_camera_pan_scale": 0.25,
+    "secondary_objects_distance_px_max": 1.5,
+    "piscar_olhos": "somente_com_sprite_RGBA_eyes_closed_validado_da_mesma_cena_mae",
+    "face_opaque": true,
+    "object_layers": "nunca_animar_objeto_duplicado_na_base",
+    "normal_workflow_only": true
+  }
 }
