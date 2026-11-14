@@ -1,0 +1,691 @@
+{
+  "schema": "videoforge/existing-pixel-partition/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "shot": "C01-P03/C01-P04",
+  "source_path": "assets/cena-01/rig-drafts/kael-alinhado-original/kael-alinhado-mesma-cena-mae-CANDIDATO.png",
+  "source_sha256": "5fab509b5eb72114a780b2a7ae63197e6665ed91e25471187158adf794baf3c0",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "no_generation": true,
+  "only_source_pixel_cutouts": true,
+  "source_is_character_candidate_not_approved": true,
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "human_visual_approval": false,
+  "alpha_contamination": "source file has substantial shadow/glow; residual tracked separately; do NOT consider silhouette clean",
+  "pose_roundtrip_requirement": "exact source RGBA reconstruction including rejected residual",
+  "layers": [
+    {
+      "id": "rosto-orelha",
+      "kind": "polygon",
+      "vertices": [
+        [
+          521,
+          822
+        ],
+        [
+          541,
+          821
+        ],
+        [
+          568,
+          827
+        ],
+        [
+          577,
+          840
+        ],
+        [
+          571,
+          857
+        ],
+        [
+          551,
+          862
+        ],
+        [
+          528,
+          853
+        ]
+      ],
+      "pivot_xy": [
+        530,
+        839
+      ],
+      "note": "Rosto parcialmente visível; olhos não aparecem nesta pose; NÃO criar piscar fictício",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "cabelo",
+      "kind": "polygon",
+      "vertices": [
+        [
+          465,
+          808
+        ],
+        [
+          469,
+          783
+        ],
+        [
+          481,
+          766
+        ],
+        [
+          504,
+          752
+        ],
+        [
+          535,
+          748
+        ],
+        [
+          559,
+          754
+        ],
+        [
+          580,
+          768
+        ],
+        [
+          592,
+          793
+        ],
+        [
+          595,
+          824
+        ],
+        [
+          586,
+          845
+        ],
+        [
+          567,
+          861
+        ],
+        [
+          549,
+          858
+        ],
+        [
+          525,
+          847
+        ],
+        [
+          500,
+          833
+        ],
+        [
+          466,
+          821
+        ],
+        [
+          456,
+          814
+        ]
+      ],
+      "pivot_xy": [
+        531,
+        828
+      ],
+      "note": "Cabelo de Kael da própria ilustração; malha e underlay ainda pendentes",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "mao-direita",
+      "kind": "polygon",
+      "vertices": [
+        [
+          568,
+          1005
+        ],
+        [
+          594,
+          1006
+        ],
+        [
+          616,
+          1017
+        ],
+        [
+          635,
+          1031
+        ],
+        [
+          649,
+          1055
+        ],
+        [
+          651,
+          1082
+        ],
+        [
+          642,
+          1096
+        ],
+        [
+          626,
+          1084
+        ],
+        [
+          628,
+          1066
+        ],
+        [
+          613,
+          1050
+        ],
+        [
+          596,
+          1040
+        ],
+        [
+          581,
+          1046
+        ],
+        [
+          561,
+          1045
+        ]
+      ],
+      "pivot_xy": [
+        575,
+        1034
+      ],
+      "note": "Dedos repousando no joelho; contato do rig com o joelho ainda precisa QA",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "antebraco-direito",
+      "kind": "polygon",
+      "vertices": [
+        [
+          522,
+          985
+        ],
+        [
+          557,
+          983
+        ],
+        [
+          569,
+          1003
+        ],
+        [
+          591,
+          1010
+        ],
+        [
+          581,
+          1038
+        ],
+        [
+          552,
+          1056
+        ],
+        [
+          522,
+          1059
+        ],
+        [
+          508,
+          1041
+        ],
+        [
+          509,
+          1017
+        ]
+      ],
+      "pivot_xy": [
+        527,
+        997
+      ],
+      "note": "Manga e antebraço; separar articulação do cotovelo",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "braco-superior-direito",
+      "kind": "polygon",
+      "vertices": [
+        [
+          495,
+          855
+        ],
+        [
+          533,
+          844
+        ],
+        [
+          568,
+          858
+        ],
+        [
+          580,
+          885
+        ],
+        [
+          576,
+          926
+        ],
+        [
+          569,
+          972
+        ],
+        [
+          552,
+          1007
+        ],
+        [
+          518,
+          1006
+        ],
+        [
+          502,
+          967
+        ],
+        [
+          484,
+          915
+        ]
+      ],
+      "pivot_xy": [
+        510,
+        883
+      ],
+      "note": "Ombro e manga; não mover até reconstrução da região atrás do ombro",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "braco-esquerdo",
+      "kind": "polygon",
+      "vertices": [
+        [
+          342,
+          854
+        ],
+        [
+          375,
+          851
+        ],
+        [
+          382,
+          897
+        ],
+        [
+          369,
+          959
+        ],
+        [
+          356,
+          1007
+        ],
+        [
+          353,
+          1055
+        ],
+        [
+          332,
+          1057
+        ],
+        [
+          323,
+          1015
+        ],
+        [
+          329,
+          939
+        ]
+      ],
+      "pivot_xy": [
+        353,
+        882
+      ],
+      "note": "Braço esquerdo parcialmente ocluído pelo corpo; underlay não reconstruído",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "bota-direita",
+      "kind": "polygon",
+      "vertices": [
+        [
+          514,
+          1230
+        ],
+        [
+          582,
+          1230
+        ],
+        [
+          582,
+          1272
+        ],
+        [
+          595,
+          1302
+        ],
+        [
+          621,
+          1306
+        ],
+        [
+          626,
+          1341
+        ],
+        [
+          604,
+          1356
+        ],
+        [
+          516,
+          1359
+        ],
+        [
+          510,
+          1338
+        ]
+      ],
+      "pivot_xy": [
+        545,
+        1240
+      ],
+      "note": "Bota direita do joelho levantado",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "bota-esquerda",
+      "kind": "polygon",
+      "vertices": [
+        [
+          357,
+          1232
+        ],
+        [
+          416,
+          1228
+        ],
+        [
+          441,
+          1258
+        ],
+        [
+          438,
+          1329
+        ],
+        [
+          431,
+          1384
+        ],
+        [
+          413,
+          1406
+        ],
+        [
+          359,
+          1402
+        ],
+        [
+          353,
+          1367
+        ],
+        [
+          359,
+          1312
+        ]
+      ],
+      "pivot_xy": [
+        398,
+        1246
+      ],
+      "note": "Sola da bota esquerda ajoelhada, sem inventar sola oculta",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "perna-direita-levantada",
+      "kind": "polygon",
+      "vertices": [
+        [
+          519,
+          1045
+        ],
+        [
+          596,
+          1037
+        ],
+        [
+          639,
+          1048
+        ],
+        [
+          650,
+          1088
+        ],
+        [
+          630,
+          1137
+        ],
+        [
+          602,
+          1192
+        ],
+        [
+          595,
+          1247
+        ],
+        [
+          531,
+          1243
+        ],
+        [
+          512,
+          1208
+        ],
+        [
+          517,
+          1158
+        ],
+        [
+          500,
+          1130
+        ]
+      ],
+      "pivot_xy": [
+        523,
+        1081
+      ],
+      "note": "Coxa e canela direita; rotação bloqueada até separar joelho e preencher áreas ocultas",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "perna-esquerda-ajoelhada",
+      "kind": "polygon",
+      "vertices": [
+        [
+          352,
+          1046
+        ],
+        [
+          435,
+          1048
+        ],
+        [
+          502,
+          1071
+        ],
+        [
+          525,
+          1132
+        ],
+        [
+          497,
+          1185
+        ],
+        [
+          466,
+          1228
+        ],
+        [
+          460,
+          1329
+        ],
+        [
+          428,
+          1363
+        ],
+        [
+          344,
+          1358
+        ],
+        [
+          302,
+          1324
+        ],
+        [
+          313,
+          1275
+        ],
+        [
+          332,
+          1220
+        ],
+        [
+          339,
+          1146
+        ]
+      ],
+      "pivot_xy": [
+        372,
+        1092
+      ],
+      "note": "Quadril e perna dobrada; underlay ausente",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "tronco-jaqueta",
+      "kind": "polygon",
+      "vertices": [
+        [
+          460,
+          808
+        ],
+        [
+          501,
+          813
+        ],
+        [
+          540,
+          847
+        ],
+        [
+          575,
+          865
+        ],
+        [
+          568,
+          924
+        ],
+        [
+          547,
+          993
+        ],
+        [
+          519,
+          1067
+        ],
+        [
+          473,
+          1084
+        ],
+        [
+          421,
+          1081
+        ],
+        [
+          367,
+          1069
+        ],
+        [
+          326,
+          1067
+        ],
+        [
+          327,
+          869
+        ],
+        [
+          350,
+          853
+        ],
+        [
+          407,
+          830
+        ]
+      ],
+      "pivot_xy": [
+        472,
+        1068
+      ],
+      "note": "Inclui costuras e parte da camiseta. Está contaminado por pixels de halo próximo à silhueta",
+      "qa_status": "draft_affine_requires_anatomical_review"
+    },
+    {
+      "id": "residual-halo-REJECTED",
+      "kind": "remainder",
+      "pivot_xy": null,
+      "note": "Resto não classificado / halo / possíveis pixels remanescentes; PROIBIDO no rig. Preservado para recuperar pixels da origem.",
+      "qa_status": "rejected_unclassified_residual"
+    }
+  ],
+  "rig_plan": {
+    "hierarchy": [
+      "root",
+      "pelvis",
+      "leg-kneeling",
+      "leg-raised",
+      "boots",
+      "torso",
+      "arm-left",
+      "upper-arm-right",
+      "forearm-right",
+      "hand-right",
+      "neck",
+      "head",
+      "hair"
+    ],
+    "pivot_status": "provisional_not_measured",
+    "head_rotation_max_deg": 2,
+    "underlays": "missing",
+    "blink": "not_applicable_to_back_view",
+    "cloth_mesh": "pending",
+    "secondary_shadows": "pending",
+    "frame_driven_remotion": "pending"
+  },
+  "next": [
+    "Revisar máscaras e sombras e fotografar contact sheet na própria arte-mãe",
+    "Extrair pixels da área de silhueta, limpar halo sem perder cabelo",
+    "Criar underlay real de pescoço/ombro sob movimento sem imagem nova não é possível; bloquear até asset existente adequado",
+    "Medir pivôs de cada peça e QA",
+    "Não abrir tela de render como vídeo aprovado sem rigs"
+  ],
+  "geometryRemap": {
+    "fromAlphaBbox": [
+      185,
+      394,
+      792,
+      1520
+    ],
+    "toAlphaBbox": [
+      306,
+      751,
+      647,
+      1397
+    ],
+    "scaleX": 0.561779,
+    "scaleY": 0.573712,
+    "kind": "rough_affine_partition_draft_NOT_pose_matched",
+    "preservesSourceRGB": true
+  },
+  "warning": "Recorte determinístico, geometria de partes é aproximação; requer QA anatômico e underlays antes de rig."
+}

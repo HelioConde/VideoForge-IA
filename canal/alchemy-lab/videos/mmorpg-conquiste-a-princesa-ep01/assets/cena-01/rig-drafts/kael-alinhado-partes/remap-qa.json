@@ -1,0 +1,19 @@
+{
+  "schema": "videoforge/remapped-existing-kael-qa/v1",
+  "sourceAlignedSHA256": "5fab509b5eb72114a780b2a7ae63197e6665ed91e25471187158adf794baf3c0",
+  "sourceOldSHA256": "f910f2df550062267efb17cde99a950c1afa47e1216179372fd963a26b864f41",
+  "parts": 12,
+  "nonemptyActiveParts": 11,
+  "visiblePixelRoundtrip": true,
+  "imageGenerationCalls": 0,
+  "humanVisualApproval": false,
+  "bodyRigReady": false,
+  "headEyeRigReady": false,
+  "underlaysAvailable": false,
+  "warnings": [
+    "Máscaras aproximadas transferidas por escala e translação, não rastreamento anatômico",
+    "Roundtrip prova conservação dos pixels visíveis, não rig articulado",
+    "Não animar antes de revisão de articulações/underlay/cabelo"
+  ],
+  "status": "draft_only"
+}
