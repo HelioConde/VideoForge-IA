@@ -32,3 +32,14 @@ Todo vídeo deve ser produzido por módulos **reutilizáveis** em `videoforge/`,
 - Cena 01 gerada: run `43555469650`.
 - Lote 2..16: run `43555715519`.
 - Os IDs da execução do MP4 final/revisão devem ser registrados **apenas após a conclusão e QA**. Não inventar IDs, arquivos ou estados.
+
+## Nova etapa: voz feminina, legendas e movimento cinematográfico (14/11/2026)
+
+- `videoforge/female_voice.py` usa o runtime espeak-ng do runner GHCR com a variante de **voz feminina pt-br+f3**. A voz é **sintética e provisória**, não neural. Não depende de novas chamadas de imagem nem de modelos de voz com licenciamento não comercial. A qualidade e a pronúncia ainda exigem aprovação humana.
+- O roteiro é separado em frases curtas; cada frase é efetivamente sintetizada em WAV. Os tempos de início e fim geram arquivos `legendas/cena-XX.srt` sem inventar alinhamento de palavras.
+- `videoforge/production_assemble.py` valida os hashes dos 16 WAV e SRT, copia o material para o canal e atualiza o manifesto **no workspace daquele workflow**. Usa o `videoforge.mvp.render` do programa principal.
+- O compositor FFmpeg `videoforge/mvp.py` oferece `motion=cinematic-pan` com deslocamento leve da **imagem completa**, preservando cabelo e roupas sem recortes; SRT é incorporado no vídeo com libass. Isso **não** equivale a movimento independente dos olhos, boca, cabelo ou braços. O modelo `camadas-animadas` só poderá ser considerado pronto após gerar PNGs RGBA separados e animar um rig verificado sem transparências nem frestas.
+- O workflow `.github/workflows/production-female-voice.yml` produz os áudios e SRT com QA. `.github/workflows/production-female-motion-render.yml` os integra aos 16 PNGs reais, realiza QA do MP4/áudio e compara quadros em instantes diferentes para conferir movimento. O fluxo permanece sem upload automático para YouTube.
+- QA visual obrigatório: conferir localização/tamanho das legendas **no MP4 renderizado**. Um arquivo SRT válido não garante que as palavras sejam visíveis; por isso o tamanho `FontSize=11` e a margem `MarginV=55` foram testados para 1080×1920, após corrigir a primeira prévia que posicionava legendas fora da área visível.
+- `video_oficial_do_programa=false` enquanto faltar rig de personagens e aprovação de voz, direitos e conteúdo. Um MP4 tecnicamente verificado não recebe aprovação automática.
+
