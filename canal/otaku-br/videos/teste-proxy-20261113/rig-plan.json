@@ -699,5 +699,6 @@
     ]
   ],
   "seam_underlay_feather": 7,
-  "compositing_notes": "Protect chest/neck and cape collision seams with an underlay cropped from original character-main pixels (not hallucinated), always behind both cape meshes and body. Keep original head as solid base while the edited closed-eye PNG appears as overlay; front cape collar pins before flutter."
+  "compositing_notes": "Protect chest/neck and cape collision seams with an underlay cropped from original character-main pixels (not hallucinated), always behind both cape meshes and body. Keep original head as solid base while the edited closed-eye PNG appears as overlay; front cape collar pins before flutter. Front/back cape meshes now share a 36px band of the ORIGINAL cape pixels across their cut boundary, avoiding holes when their animations separate; no synthetic texture or change to solid head.",
+  "cape_seam_overlap_px": 36
 }
