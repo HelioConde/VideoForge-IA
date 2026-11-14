@@ -13,9 +13,15 @@
   "all_16_scenes_require_future_layers": true,
   "youtube_upload": false,
   "notes": "Teste verdadeiro de composicao por camadas; nao substituir pelo pan da imagem completa.",
-  "revision": "r2_foreground_null_not_legacy_roof",
-  "fix": "Explicit foreground=null and remove inherited foreign foreground-roof.png from merged Remotion defaultProps",
+  "revision": "r3_blink_rgba_bob_sutil",
+  "fix": "Movimento vertical <=2.8px; piscada Anya com olhos-fechados RGBA real; fundo original separado; objeto somente se RGBA real sem duplicação",
   "previous_failed_run_id": 43560470819,
   "retry_image_generation": false,
-  "artifacts_reused": true
+  "artifacts_reused": true,
+  "normal_workflow": true,
+  "private_mode": false,
+  "source_real_eye_artifact_run_id": 43569915048,
+  "no_new_image_calls": true,
+  "run_review_only": true,
+  "previous_test_run_id": 43560582246
 }
