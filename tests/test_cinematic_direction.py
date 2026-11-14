@@ -6,6 +6,7 @@ import unittest
 from videoforge.cinematic_direction import (
     CLOSE_TYPES,load_plan,validate_plan,resolve_shot,prompt_direction,
     validate_visual_reference_gate,
+    assert_shot_generation_ready,
 )
 from videoforge.errors import VideoForgeError
 from videoforge.production_scenes import scene_prompt
@@ -78,6 +79,11 @@ class CinematicDirectionTests(unittest.TestCase):
         self.assertFalse(gate["new_image_generation_allowed"])
         self.assertFalse(gate["source_image_files_verified"])
         self.assertTrue(gate["canonical_identity_conflict"])
+
+    def test_approved_chat_images_must_be_uploaded_and_canonized_before_generation(self):
+        with self.assertRaisesRegex(VideoForgeError,"CINEMATIC_CANONICAL_REFERENCE_NOT_APPROVED"):
+            assert_shot_generation_ready(CHANNEL,VIDEO)
+        self.assertIsNone(assert_shot_generation_ready("otaku-br","spy-x-family-familia-de-mentira"))
 
     def test_other_project_preserves_original_prompt_contract(self):
         text,scene=scene_prompt("otaku-br","spy-x-family-familia-de-mentira",1)
