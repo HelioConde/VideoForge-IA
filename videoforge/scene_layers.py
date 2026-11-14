@@ -31,6 +31,8 @@ COMPONENTS = {
     "foreground-roof": (50, True, "Isole apenas os elementos de telhado/borda que estao NA FRENTE do aventureiro, mantendo coordenadas e perspectiva. Remova personagem, ceu e castelo. Fora do objeto, alfa inteiramente transparente."),
     "cape": (28, True, "Isole somente a capa vermelha do personagem, mesma silhueta, tecido, dobras e posicao. Nao desenhe corpo nem fundo. Fundo totalmente transparente."),
     "hair": (31, True, "Isole somente cabelo/franja do aventureiro, mesmas proporcoes, cor e posicao; nao desenhe rosto ou fundo. Restante transparente."),
+    # Reutilizavel: a instrucao especifica do personagem vem da cena-mae.
+    "eyes-closed": (36, True, "Extraia somente as palpebras fechadas solicitadas na cena, na mesma posicao dos olhos; todo restante transparente. Nao gere rosto completo."),
     "sword": (32, True, "Isole a espada e bainha visiveis, mantendo escala, detalhes e coordenadas; nao desenhe corpo ou cenario. Fundo transparente."),
     "flag": (10, True, "Isole apenas o estandarte vermelho da torre, no local exato da referencia. Nao invente bandeiras. Fora do objeto, transparencia real."),
     "waterfall": (9, True, "Isole apenas a cachoeira visivel proxima ao castelo, nas mesmas proporcoes e posicao. Nao invente outra. Fora do objeto, alfa transparente."),
