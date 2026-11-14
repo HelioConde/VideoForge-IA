@@ -18,14 +18,18 @@
     "render:alchemy-master10": "remotion render src/index.ts AlchemyDoramaMaster10s"
   },
   "dependencies": {
+    "@react-three/fiber": "9.8.2",
     "@remotion/cli": "^4.0.0",
-    "remotion": "^4.0.0",
+    "@remotion/three": "4.0.539",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "remotion": "^4.0.0",
+    "three": "0.187.0"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
     "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0"
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "0.187.0",
+    "typescript": "^5.0.0"
   }
 }
