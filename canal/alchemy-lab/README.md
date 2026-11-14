@@ -22,6 +22,7 @@ Identificador: `alchemy-lab` · idioma: `pt-BR`.
 No dorama **Conquiste a Princesa**, a direção do programa agora separa **37 tomadas cinematográficas**, com **12 closes de rosto/olhos, 5 planos sobre o ombro e 4 planos gerais**. O gerador suporta `--shot-id` por imagem-mãe, preservando a duração e o elenco de cada tomada. As expressões de Kael, rei e princesa são focos importantes, com HUD adicionado depois no Remotion.
 
 - [Direção JSON dos 37 enquadramentos](videos/mmorpg-conquiste-a-princesa-ep01/direcao-cinematografica-planos.json)
+- [Timeline de montagem para Remotion: 37 tomadas / 4890 quadros](videos/mmorpg-conquiste-a-princesa-ep01/timeline-cinematografica.json) — 1 abertura preta pronta, **36 planos com artes e rigs exclusivos pendentes**. Montagem de pan/zoom legado bloqueada para este episódio.
 - [Guia de enquadramento e continuidade](videos/mmorpg-conquiste-a-princesa-ep01/GUIA-DIRECAO-CINEMATOGRAFICA.md)
 - [Testes e hashes dos 36 prompts](videos/mmorpg-conquiste-a-princesa-ep01/qa-direcao-cinematografica.json)
 
