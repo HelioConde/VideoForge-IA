@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/female-motion-render-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "feminine_audio_run_id": 43557582317,
+  "image_reference_run_id": 43555226353,
+  "image_batch_run_id": 43555715519,
+  "image_scene01_run_id": 43555469650,
+  "motor": "videoforge.mvp.render",
+  "subtitles": "SRT real timed by speech WAV fragments",
+  "motion": "cinematic-pan on original full artworks without crop",
+  "rig_character_animation": false,
+  "youtube_upload": false,
+  "requested_at": "2026-11-14"
+}
