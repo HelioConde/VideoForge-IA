@@ -1,5 +1,7 @@
 """Protect no-crop animation and time-aligned captions in the main compositor."""
 import tempfile
+import shutil
+import subprocess
 import json
 import unittest
 from pathlib import Path
@@ -24,6 +26,30 @@ class FemaleMotionRenderTests(unittest.TestCase):
         self.assertIn("textfile=caption-001.txt",filt)
         self.assertNotIn("subtitles=",filt)
         self.assertNotIn("8*sin(",filt)
+
+
+    @unittest.skipUnless(shutil.which("ffmpeg"),"ffmpeg absent")
+    def test_active_caption_is_visibly_inside_lower_half(self):
+        with tempfile.TemporaryDirectory() as folder:
+            p=Path(folder)
+            (p/"active.srt").write_text(
+                "1\n00:00:00,000 --> 00:00:01,000\nANIMACAO FEMININA COM LEGENDAS\n",
+                encoding="utf-8")
+            (p/"inactive.srt").write_text(
+                "1\n00:00:10,000 --> 00:00:11,000\nANIMACAO FEMININA COM LEGENDAS\n",
+                encoding="utf-8")
+            def fingerprint(subtitle):
+                filt=_drawtext_filter(
+                    "caption.txt",subtitle_filename=subtitle,motion="cinematic-pan"
+                )+",crop=1080:670:0:1110"
+                cmd=["ffmpeg","-nostdin","-hide_banner","-loglevel","error",
+                     "-f","lavfi","-i","color=c=red:s=1024x1536:r=1:d=1",
+                     "-vf",filt,"-frames:v","1","-f","md5","-"]
+                result=subprocess.run(cmd,cwd=p,capture_output=True,
+                                      timeout=45,check=False)
+                self.assertEqual(result.returncode,0,result.stderr.decode(errors="replace")[-400:])
+                return result.stdout
+            self.assertNotEqual(fingerprint("active.srt"),fingerprint("inactive.srt"))
 
     def test_manifest_requires_existing_srt_if_female_motion_enabled(self):
         with tempfile.TemporaryDirectory() as folder:
