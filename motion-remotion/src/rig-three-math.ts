@@ -90,7 +90,15 @@ export const meshVertexAtFrame=(args:{
   const v=clamp(uv.y,0,1),u=clamp(uv.x,0,1);
   if(v===0)return {...original}; // EXACT fixed seam, for every frame.
   const t=frame/fps;
-  const pin=Math.pow(v,1.75)*sharedNeutralEnvelope(frame,duration,blinkFrames);
+  // The side locks are peeled from a head sprite: their INSIDE boundary
+  // touches the cheek, not just their top row. Anchoring only v=0 let the
+  // lower inner contour slide off the face, exposing dark hair outlines.
+  // Left lock occupies the left side of the canvas: inner edge is u=1.
+  // Right lock occupies the right side: inner edge is u=0.
+  const innerEdgeAnchor=kind==='hair-front-left'?Math.pow(1-u,1.75):
+    kind==='hair-front-right'?Math.pow(u,1.75):1;
+  const pin=Math.pow(v,1.75)*innerEdgeAnchor*
+    sharedNeutralEnvelope(frame,duration,blinkFrames);
   const kindScale=kind.startsWith('hair')?.38:kind==='cloth'?.62:1;
   // Separate natural follow-through for each side lock. Both remain at
   // their ORIGINAL coordinates on frame zero and at the blink neutral.
