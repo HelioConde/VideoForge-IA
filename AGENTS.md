@@ -19,6 +19,12 @@ O planejamento é `direcao-cinematografica-planos.json` por vídeo e a API reuti
 
 **Não quebrar o Manual Principal:** direção de câmera não equivale a rig real; sem underlays/pivôs/QA `pipeline_pendente`. O caso Alchemy Lab EP01 tem bloqueio expresso de nova geração de imagens e conflito de referências entre visual antigo e quadros aprovados no chat; não remover bloqueio nem mesclar figurinos silenciosamente.
 
+## ESTILO V2 DO DORAMA ALCHEMY-LAB EP01 — sem alterar imagens existentes
+
+Para o episódio **mmorpg-conquiste-a-princesa-ep01**, antes de preparar qualquer tomada, ler [a bíblia visual v2](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/biblia-visual.md) e o [manifesto SHA das duas referências aprovadas como estética no chat](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/referencias-cinematograficas-aprovadas-no-chat.json). Kael: cabelo castanho quase preto volumoso, arranhões no rosto, capa vinho rasgada, ombreira metálica. Elara: cabelo loiro dourado, olhos violeta, vestido branco e violeta com bordados dourados. Não usar descrições de cabelo preto/vestido azul de Elara e Kael sem capa/armadura da v1, que foi preservada como histórico.
+
+**A aprovação é da preferência visual; os PNGs originais ainda estão pendentes no GitHub** e os 71 PNGs antigos não foram recortados, alterados nem aprovados na v2. Validar os arquivos por SHA e revisar eixos, iluminação, ocultações e continuidade antes de produzir; nunca liberar rig ou MP4 a partir de referência de estilo. Apresentar a arte existente também diretamente no chat para revisão e distinguir claramente imagens de referência, rascunho e aprovada. O lock de **não gerar novas imagens** deste episódio permanece obrigatório.
+
 ## REGRA Nº 1 — Vídeos exclusivamente pelo programa VideoForge-IA no GitHub
 
 **Todo vídeo solicitado como produção oficial deve ser criado pelo fluxo de produção do repositório [HelioConde/VideoForge-IA](https://github.com/HelioConde/VideoForge-IA), executado e rastreável no GitHub Actions.** Esta regra tem prioridade sobre qualquer exemplo, demonstração, script temporário, renderer externo ou solução improvisada.
