@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'docs/requests/anya-hand-layer-qa.json'
+      - 'videoforge/rig_three_hand_split.py'
+      - 'tests/test_rig_three_hand_roundtrip.py'
 permissions:
   contents: read
   actions: read
@@ -57,18 +59,18 @@ jobs:
           name: vf-spy-family-three-rig-candidate-head-open-43586783907
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input/ai-head
-      - name: Separar mao e validar preservacao de cor e piscada
+      - name: Separar mao, recuperar uniforme e validar roundtrip de pixels
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_animation_manual -v
+          python -m unittest tests.test_animation_manual tests.test_rig_three_hand_roundtrip -v
           python -m videoforge.rig_three_hand_split \
             --original ./input/original \
             --isolation ./input/isolation \
             --heads ./input/heads \
             --ai-head ./input/ai-head \
             --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hand-draft
-      - name: Guardar versoes de revisao (NAO aprovar rig)
+      - name: Guardar camadas corrigidas + diff de revisao (NAO aprovar rig)
         if: always()
         uses: actions/upload-artifact@v4
         with:
