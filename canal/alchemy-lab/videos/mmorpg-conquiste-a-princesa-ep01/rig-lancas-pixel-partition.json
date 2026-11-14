@@ -1,0 +1,249 @@
+{
+  "schema": "videoforge/existing-pixel-partition/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "shot": "C01-P04",
+  "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "source_path": "assets/cenas-mae/cena-01.png",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "allow_opaque_scene_mother": true,
+  "no_generation": true,
+  "human_visual_approval": false,
+  "purpose": "Extração preliminar de dois objetos lança diretamente dos pixels RGB da cena-mãe ORIGINAL, com máscaras geométricas; não são sprites redesenhados",
+  "notes": [
+    "Guardas utilizam armas distintas: guarda esquerdo segura lança de ponta SUPERIOR DIREITA, guarda direito segura lança de ponta SUPERIOR ESQUERDA",
+    "A origem contém as armas cruzadas em X, a união de peças deve recompor a imagem original exatamente",
+    "As máscaras incluem pedaços de fundo junto às hastes e partes das luvas nos grips; limpeza/underlays e validação humana PENDENTES",
+    "A imagem do plano ainda contém lanças embutidas; nunca sobrepor estes candidatos ao plano achatado sem remoção prévia das armas da base",
+    "A oclusão do cruzamento e as mãos precisam de revisão em contato físico antes do rig e da movimentação"
+  ],
+  "layers": [
+    {
+      "id": "lanca-guarda-esquerdo-CANDIDATE",
+      "kind": "stroke",
+      "points": [
+        [
+          711,
+          454
+        ],
+        [
+          688,
+          480
+        ],
+        [
+          512,
+          639
+        ],
+        [
+          383,
+          752
+        ],
+        [
+          51,
+          1091
+        ]
+      ],
+      "width_px": 11,
+      "head_polygon": [
+        [
+          815,
+          321
+        ],
+        [
+          800,
+          338
+        ],
+        [
+          783,
+          354
+        ],
+        [
+          762,
+          383
+        ],
+        [
+          744,
+          408
+        ],
+        [
+          712,
+          420
+        ],
+        [
+          705,
+          439
+        ],
+        [
+          679,
+          475
+        ],
+        [
+          702,
+          483
+        ],
+        [
+          728,
+          448
+        ],
+        [
+          743,
+          421
+        ],
+        [
+          766,
+          390
+        ]
+      ],
+      "butt_polygon": [
+        [
+          35,
+          1107
+        ],
+        [
+          53,
+          1071
+        ],
+        [
+          65,
+          1084
+        ]
+      ],
+      "pivot_xy": [
+        381,
+        751
+      ],
+      "qa_status": "candidate_original_pixels_background_and_hand_contamination_pending",
+      "attached_to": "guarda_esquerdo.mao_direita",
+      "direction": "ponta em (815,321), base em (35,1107), atravessa o centro do X",
+      "max_rotation_degrees": 18,
+      "rig_ready": false
+    },
+    {
+      "id": "lanca-guarda-direito-CANDIDATE",
+      "kind": "stroke",
+      "points": [
+        [
+          321,
+          447
+        ],
+        [
+          346,
+          482
+        ],
+        [
+          507,
+          640
+        ],
+        [
+          646,
+          751
+        ],
+        [
+          974,
+          1087
+        ]
+      ],
+      "width_px": 11,
+      "head_polygon": [
+        [
+          209,
+          322
+        ],
+        [
+          228,
+          343
+        ],
+        [
+          254,
+          376
+        ],
+        [
+          277,
+          410
+        ],
+        [
+          299,
+          433
+        ],
+        [
+          310,
+          450
+        ],
+        [
+          324,
+          466
+        ],
+        [
+          347,
+          482
+        ],
+        [
+          342,
+          462
+        ],
+        [
+          323,
+          428
+        ],
+        [
+          304,
+          413
+        ],
+        [
+          273,
+          389
+        ]
+      ],
+      "butt_polygon": [
+        [
+          990,
+          1105
+        ],
+        [
+          963,
+          1077
+        ],
+        [
+          976,
+          1063
+        ]
+      ],
+      "pivot_xy": [
+        644,
+        749
+      ],
+      "qa_status": "candidate_original_pixels_background_and_hand_contamination_pending",
+      "attached_to": "guarda_direito.mao_esquerda",
+      "direction": "ponta em (209,322), base em (990,1105), atravessa o centro do X",
+      "max_rotation_degrees": 18,
+      "rig_ready": false
+    },
+    {
+      "id": "restante-cena-mae-REJECTED-AS-LAYER",
+      "kind": "remainder",
+      "pivot_xy": null,
+      "qa_status": "rejected_as_movable_sprite_background_people_and_occluded_area"
+    }
+  ],
+  "qa": {
+    "must_fail_closed_if": [
+      "source_sha_mismatch",
+      "missing_source",
+      "rgb_overlay_instead_of_true_rgba",
+      "roundtrip_pixel_diff",
+      "any_human_review_claim"
+    ],
+    "afterwards": [
+      "measure grip pivot pixel-perfect",
+      "remove lance pixels from baseline using approved background reconstruction",
+      "repair hidden grip fingers under lance using same source only",
+      "isolate from background inside stroke; until then NOT ready",
+      "verify crossing order and avoid one lance clipping into second",
+      "no rig rendering until human visual review"
+    ]
+  }
+}
