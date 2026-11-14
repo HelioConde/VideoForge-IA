@@ -1,0 +1,85 @@
+{
+  "schema": "videoforge/native-cinematic-canvas-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "purpose": "Preservar closes de Kael/Elara na resolucao original sem deformar rosto, proteger olhos/objeto focal no cover vertical",
+  "status": "SOFTWARE_VALIDATED_ART_PENDING",
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "allowed_native_canvases": [
+    {
+      "width": 941,
+      "height": 1672,
+      "origin": "duas fotos originais aprovadas como estilo no chat",
+      "scale": 1.1483253588516746,
+      "crop_left_px": 0.25,
+      "crop_right_px": 0.25,
+      "crop_top_px": 0,
+      "crop_bottom_px": 0,
+      "non_uniform_stretch": false
+    },
+    {
+      "width": 1024,
+      "height": 1536,
+      "origin": "14 imagens-mae legadas como referencia de local",
+      "scale": 1.25,
+      "crop_left_px": 80,
+      "crop_right_px": 80,
+      "crop_top_px": 0,
+      "crop_bottom_px": 0,
+      "non_uniform_stretch": false
+    }
+  ],
+  "implemented_in": [
+    "videoforge/cinematic_shot_assets.py",
+    "videoforge/cinematic_remotion_export.py",
+    "videoforge/cinematic_eye_pixel_audit.py",
+    "videoforge/cinematic_frame_fit.py",
+    "motion-remotion/src/cinematic-timeline.ts",
+    "motion-remotion/tests/cinematic-contract.test.cjs"
+  ],
+  "qa_gates": [
+    "shot rig declares exact native canvas width and height",
+    "source mother PNG and reconstructed background match source canvas by SHA256",
+    "all independent RGBA cropped layers use source-coordinate bbox within same canvas",
+    "all actor rigs in the shot match its source canvas",
+    "close_up, extreme_close_up and insert require reviewed focal_bbox",
+    "focal region remains fully visible after centered aspect-ratio-preserving 9:16 cover with 2px safety margin",
+    "Remotion repeats native canvas and focal-region checks before rendering"
+  ],
+  "test_results": {
+    "python": {
+      "run_id": 43646668407,
+      "result": "success",
+      "tests": 65,
+      "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43646668407"
+    },
+    "remotion": {
+      "run_id": 43646674144,
+      "result": "success",
+      "typecheck": "success",
+      "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43646674144"
+    }
+  },
+  "episode_current_status": {
+    "original_ref_images_in_github": false,
+    "existing_pngs_preserved": 71,
+    "cinematic_shots": 37,
+    "visible_shots_pending_assets_and_rigs": 36,
+    "approved_shot_rigs": 0,
+    "images_generated_this_step": 0,
+    "source_pixels_modified": 0,
+    "official_mp4_rendered": false,
+    "youtube_uploaded": false,
+    "no_new_image_generation_lock_active": true
+  },
+  "notes": [
+    "Esta auditoria apenas prova matematica de recorte e protecao contra deformacao; nao substitui inspecao de identidade, anatomia e camada RGBA.",
+    "Os dois PNGs de referencia de 941x1672 ainda aguardam importacao exata no GitHub, sem alteracao de bytes.",
+    "Quando cada shot tiver sua propria arte, escolher 941x1672 ou 1024x1536 explicitamente no rig e fornecer o bbox da regiao focal.",
+    "Nunca tratar referencia do chat como arte-mae de outro enquadramento ou como rig aprovado."
+  ]
+}
