@@ -29,7 +29,7 @@ def output_dir(channel:str,video_id:str,scene:str)->Path:
     return ROOT/"output"/channel/"videos"/video_id/"layers-review"/scene
 
 
-def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path)->dict:
+def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path,blink_dir:Path|None=None)->dict:
     plan,story,entry=production_scene_layers.read_plan(channel,video_id,number)
     scene=f"cena-{number:02d}"
     manifest=scene_layers._read_manifest(layer_dir/"manifest.json")
@@ -78,6 +78,29 @@ def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path)->
     if not 2<duration<100:
         raise VideoForgeError("LAYER_REVIEW_AUDIO_DURATION_INVALID")
     frames=math.ceil(duration*FPS)
+    blink_asset=None
+    blink_centers=[]
+    blink_record=None
+    if blink_dir is not None:
+        bm=scene_layers._read_manifest(blink_dir/"manifest.json")
+        bqa=json.loads((blink_dir/"eye-overlay.qa.json").read_text(encoding="utf-8"))
+        blink_asset=blink_dir/"eyes-closed.png"
+        record=bm.get("layers",{}).get("eyes-closed")
+        if (bm.get("source",{}).get("sha256")!=manifest["source"]["sha256"] or
+            not isinstance(record,dict) or record.get("technical_status")!="verified" or
+            not blink_asset.is_file() or blink_asset.is_symlink() or
+            record.get("sha256")!=sha(blink_asset) or
+            bqa.get("eyes_rgba_sha256")!=sha(blink_asset) or
+            bqa.get("scene_mother_sha256")!=manifest["source"]["sha256"] or
+            bqa.get("tech_roi_qa")!="passed" or
+            bqa.get("visual_review")!="pending"):
+            raise VideoForgeError("LAYER_REVIEW_EYES_NOT_VALIDATED")
+        scene_layers.png_info(blink_asset.read_bytes(),require_alpha=True)
+        blink_centers=bqa.get("blink_centers_frames",[])
+        if (not isinstance(blink_centers,list) or not blink_centers or
+            any(type(t) is not int or t<3 or t>=frames-2 for t in blink_centers)):
+            raise VideoForgeError("LAYER_REVIEW_BLINK_TIMING_INVALID")
+        blink_record=sha(blink_asset)
     dest=output_dir(channel,video_id,scene)
     public=ROOT/"motion-remotion"/"public"/"vf-scene"
     if dest.exists() or public.exists():
@@ -87,6 +110,8 @@ def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path)->
     for src,target in ((bg,"background.png"),(character,"character-main.png"),
                        (wav,"narracao-feminina.wav")):
         shutil.copyfile(src,public/target)
+    if blink_asset is not None:
+        shutil.copyfile(blink_asset,public/"eyes-closed.png")
     shutil.copyfile(srt,dest/"legenda-original.srt")
     props={
         "id":video_id,"scene":scene,"durationFrames":frames,
@@ -94,6 +119,9 @@ def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path)->
         "background":"vf-scene/background.png",
         "character":"vf-scene/character-main.png",
         "foreground":None,  # sobrescreve defaultProps legado do Remotion
+        "eyesClosed":"vf-scene/eyes-closed.png" if blink_asset is not None else None,
+        "blinkFrames":blink_centers,
+        "animatedObjects":[],  # nunca inventar objetos ausentes
         "silence":"vf-scene/narracao-feminina.wav",
         "layerSourceHash":sha(source),
         "draftPreview":True
@@ -108,6 +136,10 @@ def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path)->
         "subtitle_sha256":sha(srt),"duration_frames":frames,
         "duration_seconds":duration,"individual_parts_animated":False,
         "layered_motion":True,"camera_motion_not_rig":True,
+        "eyes_closed_rgba_verified":blink_record is not None,
+        "eyes_closed_sha256":blink_record,
+        "separate_object_layers":0,
+        "character_micro_motion_px_max":2.8,
         "human_visual_review":"pending","youtube_uploaded":False,
         "official_video_created":False
     }
@@ -144,6 +176,9 @@ def verify(channel:str,video_id:str,number:int)->dict:
         "background_rgba_verified":True,
         "characters_real_alpha_verified":True,
         "female_voice_and_srt_present":True,
+        "eyes_blink_rgba_verified":bool(stage.get("eyes_closed_rgba_verified")),
+        "eyes_blink_visual_review":"pending",
+        "character_motion_reduced_to_max_px":stage.get("character_micro_motion_px_max"),
         "remotion_layered_motion_verified":True,
         "rig_head_eyes_hair_clothes":False,
         "visual_review":"pending","official_video_created":False,
@@ -162,12 +197,13 @@ def main()->int:
     p.add_argument("--number",type=int,required=True)
     p.add_argument("--layers",type=Path)
     p.add_argument("--voice",type=Path)
+    p.add_argument("--blink",type=Path)
     args=p.parse_args()
     try:
         if args.command=="prepare":
             if args.layers is None or args.voice is None:
                 raise VideoForgeError("LAYER_REVIEW_INPUTS_MISSING")
-            prepare(args.channel,args.video_id,args.number,args.layers,args.voice)
+            prepare(args.channel,args.video_id,args.number,args.layers,args.voice,args.blink)
         else:
             result=verify(args.channel,args.video_id,args.number)
             print("LAYER_REVIEW_MP4_QA_OK",json.dumps(result,ensure_ascii=False))
