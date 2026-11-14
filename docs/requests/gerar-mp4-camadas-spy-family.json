@@ -12,5 +12,10 @@
   "rig_individual_parts_pending": true,
   "all_16_scenes_require_future_layers": true,
   "youtube_upload": false,
-  "notes": "Teste verdadeiro de composicao por camadas; nao substituir pelo pan da imagem completa."
+  "notes": "Teste verdadeiro de composicao por camadas; nao substituir pelo pan da imagem completa.",
+  "revision": "r2_foreground_null_not_legacy_roof",
+  "fix": "Explicit foreground=null and remove inherited foreign foreground-roof.png from merged Remotion defaultProps",
+  "previous_failed_run_id": 43560470819,
+  "retry_image_generation": false,
+  "artifacts_reused": true
 }
