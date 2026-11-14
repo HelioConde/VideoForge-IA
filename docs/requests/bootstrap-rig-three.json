@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/rig-three-deps-bootstrap/v1",
+  "purpose": "One-time Node lockfile for Three.js + @react-three/fiber + @remotion/three matching Remotion 4.0.539",
+  "runner": "github-actions-normal",
+  "private_mode": false,
+  "stages": [
+    "generate lockfile",
+    "npm ci consistency",
+    "tsc",
+    "artifact commit in next step"
+  ],
+  "youtube_upload": false,
+  "image_generation_calls": 0,
+  "do_not_rebuild_legacy_runner": true
+}
