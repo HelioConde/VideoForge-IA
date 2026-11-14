@@ -16,6 +16,7 @@ import sys
 
 from . import proxy_images, scene_layers, production_scene_layers
 from .errors import VideoForgeError
+from . import image_generation_policy
 
 ROOT=Path(__file__).resolve().parents[1]
 SCHEMA="videoforge/rgba-part-extraction-plan/v1"
@@ -53,6 +54,7 @@ def plan_entry(channel:str,video_id:str,scene_number:int,part_id:str)->dict:
 
 def make_part(channel:str,video_id:str,scene_number:int,part_id:str,
               mother:Path,report:Path,url:str,model:str="gpt-image-2")->dict:
+    image_generation_policy.assert_image_generation_allowed(channel,video_id)
     entry=plan_entry(channel,video_id,scene_number,part_id)
     plan,_story,scene=production_scene_layers.read_plan(channel,video_id,scene_number)
     actual=production_scene_layers.validate_source(mother,report,scene,channel,video_id)
