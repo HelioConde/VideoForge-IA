@@ -16,6 +16,7 @@ from videoforge import (
     production_layer_recovery,
     production_rgba_parts,
     proxy_images,
+    scene_layers,
 )
 
 CHANNEL="alchemy-lab"
@@ -35,6 +36,20 @@ class ImageGenerationBanTests(unittest.TestCase):
         ]:
             with self.subTest(channel=channel,video=video):
                 self.assertIsNone(assert_image_generation_allowed(channel,video))
+
+    def test_direct_proxy_and_layer_generation_are_also_blocked(self):
+        with patch.object(proxy_images,"call_proxy",side_effect=AssertionError("PROXY_MUST_NOT_RUN")) as proxy:
+            with self.assertRaisesRegex(proxy_images.ProxyImageError,"IMAGE_GENERATION_DENIED_ALCHEMY_EP01"):
+                proxy_images.generate(
+                    "https://invalid.invalid","no-secret",CHANNEL,VIDEO,
+                    "cena-01","gpt-image-2","1024x1536","never send this")
+            with patch.object(scene_layers,"_read_manifest",
+                              return_value={"channel":CHANNEL,"video_id":VIDEO,"layers":{}}):
+                with self.assertRaisesRegex(scene_layers.LayerError,"IMAGE_GENERATION_DENIED_ALCHEMY_EP01"):
+                    scene_layers.generate_layer(
+                        MISSING.parent,"background","https://invalid.invalid",
+                        "no-secret","gpt-image-2")
+            proxy.assert_not_called()
 
     def test_every_generation_entrypoint_blocks_before_any_input_or_proxy(self):
         actions=[
