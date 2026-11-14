@@ -354,5 +354,50 @@
     "All deformations expressed in native 941x1672 coordinates",
     "Preview uses CPU triangle rasterization as mesh behavior proof; production must implement same in Three.js Remotion",
     "Each mask/bbox must pass alpha, source SHA, hidden-region and human continuity approval before official render"
-  ]
+  ],
+  "rgbaExtraction": {
+    "origin": "native 941x1672 unmodified RGB source + polygon-derived RGBA crop + classical inpaint technical underlay",
+    "bundleName": "alchemy_c12_rig_camadas_tecnicas_v2.zip",
+    "bundleBytes": 6186154,
+    "bundleLocation": "local_chat_artifact_not_in_github",
+    "referenceSpriteCount": 5,
+    "technicalBackgroundCount": 2,
+    "native_qa": [
+      {
+        "shot": "C12-P02",
+        "meanAbsoluteDifferenceAtNeutral": 0.0009,
+        "rmseAtNeutral": 0.0744,
+        "pixelsOver16Difference": 10
+      },
+      {
+        "shot": "C12-P03",
+        "meanAbsoluteDifferenceAtNeutral": 0.0069,
+        "rmseAtNeutral": 0.2036,
+        "pixelsOver16Difference": 77
+      }
+    ],
+    "qaBounds": "Full 941x1672 source canvas reconstructed with original RGBA parts at neutral",
+    "sourceArtNotOverwritten": true,
+    "automatedMaskQaPassed": true,
+    "maskBoundaryHumanApproval": false,
+    "hiddenRegionHumanApproval": false,
+    "noPhotorealisticOrNewArtGeneration": true,
+    "warning": "The earring and loose curl masks still contain neighboring background/skin pixels. These masks MUST be cleaned and checked before official Three.js rig."
+  },
+  "qaVerified": {
+    "localMp4H264AAC360frames": true,
+    "nativeSpritePackagingDone": true,
+    "testsPython": {
+      "run": 43653702785,
+      "status": "success",
+      "count": 69
+    },
+    "testsRemotion": {
+      "run": 43653695518,
+      "status": "success",
+      "typecheck": true,
+      "meshPivots": true
+    },
+    "localMp4Sha256": "e08f79924e6f09bab195e54d49c32b588c2438d28faf2e1db12d626bba018016"
+  }
 }
