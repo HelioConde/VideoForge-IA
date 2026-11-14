@@ -26,6 +26,12 @@ O motor `videoforge/cinematic_identity_continuity.py` impede que um QA marque co
 - [Execução dos testes de continuidade](https://github.com/HelioConde/VideoForge-IA/actions/runs/43647560925) — 14 testes aprovados, sem gerar imagem ou MP4.
 - Os originais dos dois retratos de referência ainda **não foram importados no repositório**. O lock `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo; nenhum dos 36 planos visuais foi declarado pronto.
 
+## Pacote único de três referências cinematográficas
+
+O pacote ZIP original de Kael, Elara e do plano sobre o ombro `C12-P02` pode ser importado em uma única operação, **sem gerar ou alterar os três PNGs**. O script `scripts/enviar-referencias-cinema.ps1` confere os SHA-256 no Windows e envia o ZIP para `uploads/`; o workflow de referência extrai e confere novamente cada arquivo. [Instruções completas](videos/mmorpg-conquiste-a-princesa-ep01/IMPORTAR-TRES-REFERENCIAS-ORIGINAIS.md).
+
+A foto do trono é candidata à câmera C12-P02, **não um rig aprovado**. O workflow não libera imagens-mãe específicas, meshes, MP4 ou YouTube, e os 71 PNGs antigos continuam preservados.
+
 ## Estilo aprovado no chat — Kael e Elara (v2)
 
 A nova **[bíblia visual descritiva v2](videos/mmorpg-conquiste-a-princesa-ep01/biblia-visual.md)** segue os closes que o usuário elogiou: Kael com cabelo escuro volumoso, tecido vinho rasgado e ombreira metálica; Elara loira, olhos violeta e vestido branco-violeta com ornamentos dourados. A **[v1 original foi arquivada](videos/mmorpg-conquiste-a-princesa-ep01/biblia-visual-v1-arquivada.md)** sem apagar os 71 PNGs ou as 14 imagens-mãe antigas.
