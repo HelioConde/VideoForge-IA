@@ -157,6 +157,8 @@ def build_props(channel:str,video_id:str,root:Path=ROOT)->tuple[dict,list[tuple[
                 review.get("hud_text_approved") is not True
             ):
                 raise VideoForgeError("CINEMATIC_EXPORT_HUD_NOT_APPROVED")
+        from .cinematic_identity_continuity import verify_shot_continuity
+        verify_shot_continuity(shot,data,review,root)
         if shot["id"]=="C12-P01":
             from .cinematic_eye_motion import check_eye_performance
             from .cinematic_eye_pixel_audit import audit_existing_eye_assets
