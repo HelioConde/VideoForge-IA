@@ -1,0 +1,78 @@
+name: "VideoForge - Anya mao separada da cabeca (rig draft)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/anya-hand-layer-qa.json'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vf-rig-anya-hand-layer
+  cancel-in-progress: false
+jobs:
+  candidate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar OpenCV apenas para preparo artistico, NAO para render
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir \
+            "numpy==1.26.4" "opencv-python-headless==4.10.0.84"
+      - name: Recuperar pixels originais da personagem e SHA
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/original
+      - name: Recuperar Anya isolada SEM Loid/Yor
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43589190537
+          name: vf-spy-anya-isolated-original-no-ai-43589190537
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/isolation
+      - name: Recuperar head-open/closed refinados e body candidato
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43589485833
+          name: vf-spy-family-three-rig-roundtrip-43589485833
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/heads
+      - name: Recuperar arte editada original de cabeca como underlay
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43586783907
+          name: vf-spy-family-three-rig-candidate-head-open-43586783907
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/ai-head
+      - name: Separar mao e validar preservacao de cor e piscada
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_animation_manual -v
+          python -m videoforge.rig_three_hand_split \
+            --original ./input/original \
+            --isolation ./input/isolation \
+            --heads ./input/heads \
+            --ai-head ./input/ai-head \
+            --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hand-draft
+      - name: Guardar versoes de revisao (NAO aprovar rig)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-anya-hand-head-separate-draft-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hand-draft/
+          if-no-files-found: warn
+          retention-days: 14
