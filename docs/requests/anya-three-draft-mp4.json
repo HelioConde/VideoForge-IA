@@ -16,9 +16,12 @@
   "human_visual_approval": false,
   "rig_operational": false,
   "youtube_upload": false,
-  "revision": "underlay-7px-edge-alpha253-source-run-43599799485",
+  "revision": "side-hair-inner-cheek-edge-pinned-2026-11-14",
   "source_draft_underlay_alpha254_run": 43599799485,
   "underlay_7px_alpha253_edge_enabled": true,
   "refinement_reason": "Review exact source art after 7px alpha-253 near-edge underlay, preserving approved eye pixels; keep candidate nonofficial",
-  "youtube_uploaded": false
+  "youtube_uploaded": false,
+  "goal_current": "Testar malha 7x9 com raiz superior E borda interna das mechas fixas ao rosto, preservando resto do movimento e piscada",
+  "approval": false,
+  "video_official": false
 }
