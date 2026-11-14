@@ -1,6 +1,9 @@
 """Deterministic QA for Anya's source-pixel body and head/hand roundtrip."""
 import unittest
-import numpy as np
+try:
+    import numpy as np
+except ImportError:  # runner do MVP não usa NumPy; rig especializado deve executar este teste
+    np = None
 
 from videoforge.errors import VideoForgeError
 from videoforge.rig_three_hand_split import (
@@ -8,6 +11,7 @@ from videoforge.rig_three_hand_split import (
 )
 
 
+@unittest.skipUnless(np is not None, 'NumPy não instalado no runner MVP; testar no runner de rig')
 class RigThreeHandRoundtripTests(unittest.TestCase):
     def fixtures(self):
         source = np.zeros((8, 8, 4), dtype=np.uint8)
