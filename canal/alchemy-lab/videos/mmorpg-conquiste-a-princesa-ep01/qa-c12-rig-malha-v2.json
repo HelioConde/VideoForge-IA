@@ -1,0 +1,358 @@
+{
+  "schema": "videoforge/c12-mesh-rig-technical-draft/v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "date": "2026-11-14",
+  "shot_timing": [
+    {
+      "id": "C12-P01",
+      "startFrame": 0,
+      "endFrameExclusive": 120,
+      "motion": "pupils_only_locked_head"
+    },
+    {
+      "id": "C12-P02",
+      "startFrame": 120,
+      "endFrameExclusive": 240,
+      "motion": "localized_mesh_kael_cape"
+    },
+    {
+      "id": "C12-P03",
+      "startFrame": 240,
+      "endFrameExclusive": 360,
+      "motion": "localized_mesh_elara_hair_jewelry_cloth"
+    }
+  ],
+  "sourceCanvas": [
+    941,
+    1672
+  ],
+  "previewCanvas": [
+    720,
+    1280
+  ],
+  "fps": 30,
+  "frames": 360,
+  "preview": {
+    "name": "alchemy_c12_mesh_rig_v2_aprovacao.mp4",
+    "local_sha256": "e08f79924e6f09bab195e54d49c32b588c2438d28faf2e1db12d626bba018016",
+    "bytes": 999889,
+    "codec": "h264_aac",
+    "availability": "chat_attachment_only_not_archived_on_github"
+  },
+  "meshTotalTriangles": 512,
+  "meshParts": [
+    {
+      "id": "kael-cape-loose-fold",
+      "shot": "C12-P02",
+      "character": "kael",
+      "meshKind": "cape",
+      "polygon": [
+        [
+          147,
+          735
+        ],
+        [
+          189,
+          751
+        ],
+        [
+          242,
+          776
+        ],
+        [
+          297,
+          835
+        ],
+        [
+          283,
+          866
+        ],
+        [
+          252,
+          844
+        ],
+        [
+          217,
+          817
+        ],
+        [
+          159,
+          785
+        ]
+      ],
+      "pivot": [
+        159,
+        751
+      ],
+      "columns": 6,
+      "rows": 8,
+      "amplitudePx": 8.5,
+      "kind": "cloth",
+      "triangles": 96
+    },
+    {
+      "id": "elara-left-face-hair-lock",
+      "shot": "C12-P03",
+      "character": "elara",
+      "meshKind": "hair-front-left",
+      "polygon": [
+        [
+          338,
+          679
+        ],
+        [
+          365,
+          722
+        ],
+        [
+          346,
+          762
+        ],
+        [
+          332,
+          814
+        ],
+        [
+          352,
+          876
+        ],
+        [
+          379,
+          943
+        ],
+        [
+          366,
+          985
+        ],
+        [
+          337,
+          961
+        ],
+        [
+          312,
+          894
+        ],
+        [
+          302,
+          818
+        ],
+        [
+          322,
+          742
+        ]
+      ],
+      "pivot": [
+        338,
+        694
+      ],
+      "columns": 5,
+      "rows": 10,
+      "amplitudePx": 5.2,
+      "kind": "hair",
+      "triangles": 100
+    },
+    {
+      "id": "elara-back-hair-fall",
+      "shot": "C12-P03",
+      "character": "elara",
+      "meshKind": "hair-back",
+      "polygon": [
+        [
+          776,
+          742
+        ],
+        [
+          804,
+          775
+        ],
+        [
+          840,
+          862
+        ],
+        [
+          860,
+          1000
+        ],
+        [
+          884,
+          1140
+        ],
+        [
+          897,
+          1320
+        ],
+        [
+          933,
+          1510
+        ],
+        [
+          938,
+          1640
+        ],
+        [
+          905,
+          1580
+        ],
+        [
+          874,
+          1460
+        ],
+        [
+          852,
+          1320
+        ],
+        [
+          843,
+          1140
+        ],
+        [
+          829,
+          953
+        ],
+        [
+          798,
+          841
+        ]
+      ],
+      "pivot": [
+        784,
+        760
+      ],
+      "columns": 6,
+      "rows": 12,
+      "amplitudePx": 9.4,
+      "kind": "hair",
+      "triangles": 144
+    },
+    {
+      "id": "elara-earring-pendant",
+      "shot": "C12-P03",
+      "character": "elara",
+      "meshKind": "earring",
+      "polygon": [
+        [
+          686,
+          543
+        ],
+        [
+          698,
+          538
+        ],
+        [
+          709,
+          566
+        ],
+        [
+          710,
+          593
+        ],
+        [
+          708,
+          616
+        ],
+        [
+          701,
+          649
+        ],
+        [
+          690,
+          636
+        ],
+        [
+          686,
+          607
+        ],
+        [
+          687,
+          574
+        ]
+      ],
+      "pivot": [
+        690,
+        547
+      ],
+      "columns": 4,
+      "rows": 9,
+      "amplitudePx": 4.3,
+      "frequencyHz": 0.67,
+      "phaseRad": 0.7,
+      "kind": "hinge",
+      "triangles": 72
+    },
+    {
+      "id": "elara-sleeve-lower-fabric",
+      "shot": "C12-P03",
+      "character": "elara",
+      "meshKind": "cloth",
+      "polygon": [
+        [
+          575,
+          1305
+        ],
+        [
+          627,
+          1300
+        ],
+        [
+          661,
+          1372
+        ],
+        [
+          695,
+          1470
+        ],
+        [
+          700,
+          1583
+        ],
+        [
+          690,
+          1670
+        ],
+        [
+          639,
+          1670
+        ],
+        [
+          606,
+          1572
+        ],
+        [
+          583,
+          1460
+        ]
+      ],
+      "pivot": [
+        600,
+        1308
+      ],
+      "columns": 5,
+      "rows": 10,
+      "amplitudePx": 5.9,
+      "kind": "cloth",
+      "triangles": 100
+    }
+  ],
+  "per_part_motion": true,
+  "global_png_position_animation": false,
+  "external_image_generation_calls": 0,
+  "original_pngs_modified": false,
+  "artifacts_uploaded_to_github": false,
+  "technical_mesh_proof": true,
+  "three_js_remotion_full_rig_ready": false,
+  "technical_layers_human_approved": false,
+  "neutral_recomposition_qa_pending": true,
+  "underlays_human_qa_pending": true,
+  "source_original_archive_pending": true,
+  "official_render_allowed": false,
+  "youtube_uploaded": false,
+  "quality_rules": [
+    "Independent original-pixel sprite alpha mask plus underlay required for every moving part",
+    "Top mesh seam pinned; earring rotates around measured source pivot, never a whole face/image",
+    "C12-P01 head, hair, cape and camera locked; eyes are the only moving facial part",
+    "All deformations expressed in native 941x1672 coordinates",
+    "Preview uses CPU triangle rasterization as mesh behavior proof; production must implement same in Three.js Remotion",
+    "Each mask/bbox must pass alpha, source SHA, hidden-region and human continuity approval before official render"
+  ]
+}
