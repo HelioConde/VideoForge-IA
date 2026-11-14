@@ -137,7 +137,7 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
         </div> : <Img src={staticFile(showFullClosed ? characterEyesClosed! : character)} style={{
         ...imgStyle,zIndex:20,transform:characterTransform,
         transformOrigin:'50% 85%',
-      }/>}
+      }}/>}
       {eyesClosed && !rig && blink>0 && <Img src={staticFile(eyesClosed)} style={{
         ...imgStyle,zIndex:25,
         transform:characterTransform,transformOrigin:'50% 85%',
