@@ -1,0 +1,41 @@
+{
+  "schema": "videoforge/existing-background-reconciliation/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "C01",
+  "sourceMotherSHA256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "reconstructedBackgroundSHA256": "5c3a553a5b9a76a1cf8506f9cca67ee097cde9ff8701aa140701669e43c9d620",
+  "resultPNG": "assets/cena-01/candidatos/background-reconciliado-CANDIDATO.png",
+  "resultSHA256": "e8d19f283516ef5cb8b5c2e4136d0adaab83ebe0fbb22b5e09bcc4a0b112a847",
+  "sourcePixelsPreservedOutsideMask": true,
+  "untouchedMotherPixelCount": 800935,
+  "insideCharacterOrSpearCorePixelCount": 695642,
+  "featherBandPixelCount": 76287,
+  "canvas": [
+    1024,
+    1536
+  ],
+  "globalRGBMeanAbsDiffVersusMother": {
+    "previousBackground": 29.2602,
+    "reconciledCandidate": 21.6113,
+    "reductionPct": 26.14
+  },
+  "pixelArtSources": [
+    "existing_original_scene_RGB",
+    "existing_reconstructed_background_RGB"
+  ],
+  "newImageGenerationCalls": 0,
+  "newImaginedDetails": false,
+  "pixelCompositingOnly": true,
+  "humanVisualApproved": false,
+  "occludedAnatomyReconstructed": false,
+  "officialRigReady": false,
+  "renderMP4Approved": false,
+  "youtubeUploaded": false,
+  "warnings": [
+    "Ajuste de cor matemático não equivale a cenário reconstruído artisticamente aprovado",
+    "Pode haver halos na transição da máscara e artefatos da reconstrução original",
+    "Se um objeto se mover para além do núcleo reconstruído, ainda poderá revelar pixels antigos",
+    "Não trocar o background de produção sem inspeção visual frame-a-frame"
+  ]
+}
