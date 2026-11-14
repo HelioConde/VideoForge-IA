@@ -113,6 +113,17 @@ export const CharacterParts:React.FC<{rig:CharacterRigParts;motion:Motion}>=({ri
   }
   if(eyeLayers.length>0 && !independentEyes)
     throw new Error('THREE_RIG_EYE_LAYERS_WITHOUT_UNDERLAYS');
+  if(independentEyes && (
+    eyeLayers.length!==4 ||
+    independentEyes.eyeUnderlaysVerified!==true ||
+    independentEyes.pupilMasksVerified!==true ||
+    independentEyes.noDuplicatePaintedPupilsInHead!==true ||
+    independentEyes.rotationOrTranslationClippingQA!==true ||
+    independentEyes.humanVisualApproved!==true))
+    throw new Error('THREE_RIG_EYE_ATLAS_NOT_VISUALLY_APPROVED');
+  // A pupil-only close keeps every hair/cloth mesh at its source pose.
+  const stillMotion:Motion=motion.freezeHead&&motion.freezeBody?
+    {...motion,frame:0}:motion;
   const hairBehind=rig.layers.filter(x=>
     x.id==='hair-back'||x.id==='ornament-left'||x.id==='ornament-right');
   const hairFront=rig.layers.filter(x=>
@@ -125,15 +136,15 @@ export const CharacterParts:React.FC<{rig:CharacterRigParts;motion:Motion}>=({ri
   return <group position={[0,-bodyMotion.translateY,0]}
     scale={[bodyMotion.scaleX,bodyMotion.scaleY,1]}>
     {moving.map(layer=><Layer key={layer.id} layer={layer}
-      canvas={canvas} motion={motion}/>)}
+      canvas={canvas} motion={stillMotion}/>)}
     <RigidSprite layer={body} canvas={canvas}/>
     {/* Head rotates about neck, not about centre of full PNG. */}
     <group position={pivot} rotation={[0,0,-headAngle*Math.PI/180]}>
       <group position={[-pivot[0],-pivot[1],0]}>
         {hairBehind.map(layer=><Layer key={layer.id} layer={layer}
-          canvas={canvas} motion={motion}/>)}
+          canvas={canvas} motion={stillMotion}/>)}
         <RigidSprite layer={selectedHead} canvas={canvas}/>
-        {motion.eyePerformanceApproved===true ? <>
+        {independentEyes ? <>
           <group position={[motion.pupilOffsetPx??0,0,0]}>
             {eyeLayers.filter(l=>l.id.startsWith('pupil-')).map(layer=>
               <RigidSprite key={layer.id} layer={layer} canvas={canvas}/>)}
@@ -144,7 +155,7 @@ export const CharacterParts:React.FC<{rig:CharacterRigParts;motion:Motion}>=({ri
           </group>
         </> : null}
         {hairFront.map(layer=><Layer key={layer.id} layer={layer}
-          canvas={canvas} motion={motion}/>)}
+          canvas={canvas} motion={stillMotion}/>)}
       </group>
     </group>
   </group>;
