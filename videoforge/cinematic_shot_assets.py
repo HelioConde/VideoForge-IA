@@ -21,7 +21,20 @@ QA_SCHEMA = "videoforge/cinematic-shot-visual-qa/v1"
 RIG_SCHEMA = "videoforge/cinematic-shot-rig/v1"
 _SHA = re.compile(r"^[0-9a-f]{64}$")
 PNG_MAGIC = bytes((137,80,78,71,13,10,26,10))
-CANVAS = (1024,1536)
+CANVAS = (1024,1536)  # Format of the 14 archived scene mothers
+NATIVE_CINEMATIC_CANVASES=frozenset({(1024,1536),(941,1672)})
+
+def validate_shot_canvas(rig:dict)->tuple[int,int]:
+    """Declare each shot's exact source pixels, never stretch a 9:16 close."""
+    canvas=rig.get("canvas")
+    if not isinstance(canvas,dict) or set(canvas)!={"width","height"}:
+        raise VideoForgeError("CINEMATIC_SHOT_CANVAS_MISSING")
+    width,height=canvas["width"],canvas["height"]
+    if (type(width) is not int or type(height) is not int
+            or (width,height) not in NATIVE_CINEMATIC_CANVASES):
+        raise VideoForgeError("CINEMATIC_SHOT_CANVAS_UNSUPPORTED")
+    return width,height
+
 
 def _load_json(path:Path, limit:int=200_000)->dict:
     if (path.is_symlink() or not path.is_file() or path.stat().st_size>limit):
@@ -98,6 +111,11 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
         return False,failures,{}
     rig=_load_json(rig_path)
     qa=_load_json(qa_path)
+    try:
+        native_canvas=validate_shot_canvas(rig)
+    except VideoForgeError as exc:
+        failures.append(str(exc))
+        native_canvas=CANVAS  # never approve the shot when fallback is used
     if (rig.get("schema")!=RIG_SCHEMA or rig.get("shot_id")!=sid
             or rig.get("scene")!=shot["scene"]):
         failures.append("SHOT_RIG_PROVENANCE_INVALID")
@@ -105,7 +123,7 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
        ("source_sha256",mother_path,False),
        ("background_sha256",bg_path,False),
     ):
-        if not _png_valid(asset,rig.get(key),alpha):
+        if not _png_valid(asset,rig.get(key),alpha,native_canvas):
             failures.append("SHOT_"+key.upper()+"_INVALID")
     parts=rig.get("parts")
     if not isinstance(parts,list) or len(parts)<2:
@@ -130,9 +148,9 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
         if not (isinstance(bbox,list) and len(bbox)==4
                 and all(type(v) is int for v in bbox)
                 and bbox[2]>0 and bbox[3]>0
-                and 0<=bbox[0]<CANVAS[0] and 0<=bbox[1]<CANVAS[1]
-                and bbox[0]+bbox[2]<=CANVAS[0]
-                and bbox[1]+bbox[3]<=CANVAS[1]):
+                and 0<=bbox[0]<native_canvas[0] and 0<=bbox[1]<native_canvas[1]
+                and bbox[0]+bbox[2]<=native_canvas[0]
+                and bbox[1]+bbox[3]<=native_canvas[1]):
             failures.append("SHOT_PART_BBOX_MISSING_OR_INVALID")
             continue
         if not _png_valid(file,part.get("sha256"),True,(bbox[2],bbox[3])):
@@ -170,7 +188,7 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
                 or a.get("technicalAssetsVerified") is not True
                 or a.get("humanVisualReview") is not True
                 or a.get("youtubeUploaded") is not False
-                or a.get("canvas")!={"width":1024,"height":1536}):
+                or a.get("canvas")!=rig.get("canvas")):
             failures.append("SHOT_ACTOR_RIG_PROVENANCE_OR_APPROVAL_INVALID")
         layers=a.get("layers")
         if not isinstance(layers,list) or len(layers)<3:
@@ -219,6 +237,7 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
         "mother_sha256":rig.get("source_sha256"),
         "background_sha256":rig.get("background_sha256"),
         "rig_parts":len(parts),
+        "native_canvas":{"width":native_canvas[0],"height":native_canvas[1]},
         "qa_frames":qa.get("qa_frames"),
     }
     return not failures, sorted(set(failures)), data
@@ -291,7 +310,10 @@ def build_edl(channel:str,video_id:str,root:Path=ROOT)->dict:
         "format":{"fps":fps,"width":1080,"height":1920,
                   "totalFrames":next_frame,"durationSeconds":next_frame/fps},
         "sourceArtworkFormat":{"width":1024,"height":1536,
-                               "fit":"cover_no_stretch"},
+                               "fit":"cover_no_stretch",
+                               "legacySceneMotherFormat":[1024,1536],
+                               "nativePerShotCanvasRequired":True,
+                               "allowedNativeCanvasSizes":[[941,1672],[1024,1536]]},
         "shotCount":len(shots),
         "blackShots":sum(s["type"]=="black" for s in shots),
         "artRequiredShots":len(shots)-1,
