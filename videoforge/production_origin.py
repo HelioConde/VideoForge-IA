@@ -84,6 +84,30 @@ def validate_editorial_origin(editorial: dict) -> bool:
     art = editorial.get("arte", {})
     if art.get("consistencia_verificada") is not True:
         raise ProvenanceError("ORIGIN_VISUAL_ART_NOT_APPROVED")
+    # Regra nº 1: um MP4 com pan, mesmo com 16 imagens e boa narração,
+    # NÃO é animação aprovada. Exigir provas por cena-mãe e partes RGBA.
+    if (production.get("rig_animado_aplicado") is not True or
+        production.get("animacao_motor") != "remotion-rig-rgba-scene-mother"):
+        raise ProvenanceError("ORIGIN_ACTUAL_LAYERED_RIG_REQUIRED")
+    story = editorial.get("roteiro", {})
+    expected = story.get("cenas_previstas") if isinstance(story,dict) else None
+    verified = production.get("cenas_animadas_verificadas")
+    if (not isinstance(expected,list) or not expected or
+        not isinstance(verified,list) or len(verified)!=len(expected)):
+        raise ProvenanceError("ORIGIN_SCENE_MOTHER_COVERAGE_INCOMPLETE")
+    for identifier,row in zip(expected,verified):
+        if (not isinstance(identifier,str) or not isinstance(row,dict) or
+            row.get("scene")!=identifier or
+            row.get("scene_mother_sha256") is None or
+            any(not isinstance(row.get(k),str) or len(row[k])!=64
+                for k in ("scene_mother_sha256","background_sha256",
+                          "characters_rgba_sha256")) or
+            row.get("individual_character_parts_verified") is not True or
+            row.get("all_movable_objects_separated") is not True or
+            row.get("seam_and_opaque_face_qa") is not True or
+            row.get("rig_motion_qa") is not True or
+            row.get("human_visual_approval") is not True):
+            raise ProvenanceError("ORIGIN_SCENE_MOTHER_RIG_EVIDENCE_INCOMPLETE")
     return True
 
 
