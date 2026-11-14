@@ -1,0 +1,14 @@
+{
+  "schema": "videoforge/cinematic-edl-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "no_new_images": true,
+  "render_video": false,
+  "youtube_upload": false,
+  "direction": "direcao-cinematografica-planos.json",
+  "output": "timeline-cinematografica.json",
+  "required_shots": 37,
+  "visual_shots": 36,
+  "initial_black_shot": 1,
+  "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon"
+}
