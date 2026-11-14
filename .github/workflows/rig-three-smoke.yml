@@ -1,0 +1,70 @@
+name: "VideoForge - Validar malha REAL Three.js no Remotion"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/testar-malha-three.json'
+permissions:
+  contents: read
+  packages: read
+concurrency:
+  group: videoforge-rig-three-smoke
+  cancel-in-progress: false
+jobs:
+  mesh-smoke:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verificar dependencias precompiladas; sem npm install
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          node -e 'for(const p of ["three","@react-three/fiber","@remotion/three"]) require.resolve(p)'
+          node -p 'require("remotion/package.json").version'
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/rig-three-math.test.cjs tests/blink-motion-sync.test.cjs
+      - name: QA rigoroso do manifesto e PNGs RGBA (fixture sintetico)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_rig_three_contract -v
+          python tests/make_rig_three_smoke.py
+      - name: Renderizar quadros WebGL SWANGLE por ThreeCanvas (NÃO video real)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          for frame in 0 60 74 90 173; do
+            ./node_modules/.bin/remotion still src/rig-three-index.ts VideoForgeMeshRigScene \
+              ../output/rig-three-frame-"$frame".png --frame="$frame" \
+              --props=../output/rig-three-synthetic-props.json \
+              --gl=swangle --log=error
+          done
+          cd ..
+          for frame in 0 60 74 90 173; do test -s output/rig-three-frame-"$frame".png; done
+          A="$(sha256sum output/rig-three-frame-0.png | cut -d' ' -f1)"
+          B="$(sha256sum output/rig-three-frame-60.png | cut -d' ' -f1)"
+          test "$A" != "$B"
+          echo "THREE_MESH_GPULESS_SWANGLE_RENDER_OK"
+      - name: Guardar quadros sinteticos de prova de malha (nao publicar)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-rig-three-synthetic-smoke-${{ github.run_id }}
+          path: |
+            output/rig-three-frame-*.png
+            output/rig-three-synthetic-props.json
+          retention-days: 7
+          if-no-files-found: warn
