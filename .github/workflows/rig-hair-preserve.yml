@@ -1,6 +1,6 @@
 name: 'VideoForge - preservar cabelo original e reusar olhos IA (sem gerar imagens)'
 on:
-  # Push neste workflow permite gerar uma previa revisada na main sem alterar
+  # Reexecucao apos reparar a sintaxe do recorte e validar os 36px.\n  # Push neste workflow permite gerar uma previa revisada na main sem alterar
   # as permissoes de publicacao nem disparar em todos os commits.
   push:
     branches: [main]
