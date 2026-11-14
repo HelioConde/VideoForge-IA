@@ -48,6 +48,41 @@ def gold_centroid(path:Path):
     return sx/n,sy/n,n
 
 
+
+def stable_gold_motion(folder:Path,side:str)->dict:
+    width,height=24,36
+    nbytes=width*height*3
+    paths=[folder/("ornament-"+side+"-stable-"+str(frame)+".rgb")
+           for frame in (0,30)]
+    rgb=[p.read_bytes() for p in paths]
+    if any(p.is_symlink() or len(data)!=nbytes
+           for p,data in zip(paths,rgb)):
+        raise VideoForgeError("ANYA_ORNAMENT_STABLE_GOLD_RGB_INVALID")
+    original_visible_gold=0
+    changed=0
+    for offset in range(0,nbytes,3):
+        r,g,b=rgb[0][offset:offset+3]
+        if r>170 and g>95 and b<155 and r-g>20 and g-b>10:
+            original_visible_gold+=1
+        if rgb[0][offset:offset+3]!=rgb[1][offset:offset+3]:
+            changed+=1
+    # A deliberately stable interior source patch distinguishes actual
+    # ornament movement from a static horn merely occluded by moving hair.
+    # Baseline old render: left 0/864, right 57/864 changed pixels.
+    # Actual head-attached render: >800/864 on both source gold patches.
+    if original_visible_gold<250 or changed<600:
+        raise VideoForgeError("ANYA_ORNAMENT_STILL_STATIC_"+side+
+                              "_"+str(changed)+"_gold"+str(original_visible_gold))
+    return {
+        "interior_ornament_source_gold_pixels":original_visible_gold,
+        "interior_source_patch_pixels_changed":changed,
+        "interior_source_patch_pixels_total":width*height,
+        "previous_static_baseline_changed_pixels":{
+            "left":0,"right":57
+        }[side],
+        "ornament_not_static":True,
+    }
+
 def verify(folder:Path)->dict:
     stage=json.loads((folder/"stage.qa.json").read_text(encoding="utf8"))
     props=json.loads((folder/"props.json").read_text(encoding="utf8"))
@@ -71,19 +106,17 @@ def verify(folder:Path)->dict:
                 ("ornament-left","ornament-right"))):
         raise VideoForgeError("ANYA_ORNAMENT_RIG_REVIEW_GATE_FAILED")
     motions={}
-    for side,threshold in (("left",2.0),("right",3.0)):
+    for side in ("left","right"):
+        patch=stable_gold_motion(folder,side)
         x0,y0,n0=gold_centroid(folder/("ornament-"+side+"-0.rgb"))
         x1,y1,n1=gold_centroid(folder/("ornament-"+side+"-30.rgb"))
         distance=math.hypot(x1-x0,y1-y0)
-        if not distance>threshold:
-            raise VideoForgeError(
-                "ANYA_ORNAMENT_GOLD_PIXELS_STILL_FROZEN_"+side+
-                "_"+str(round(distance,3)))
         motions[side]={
+            **patch,
             "frame0_source_gold_pixels":n0,
             "frame30_source_gold_pixels":n1,
-            "gold_centroid_motion_screen_px":round(distance,4),
-            "minimum_accepted_motion_screen_px":threshold,
+            "gold_centroid_shift_screen_px_diagnostic_only":round(distance,4),
+            "centroid_note":"Not a pass criterion: moving hair occlusion biases this value",
             "moved_with_head_at_frame30":True,
         }
     video=folder/"anya-ornaments-head-fixed-6s.mp4"
