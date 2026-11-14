@@ -13,9 +13,9 @@
   "all_16_scenes_require_future_layers": true,
   "youtube_upload": false,
   "notes": "Teste verdadeiro de composicao por camadas; nao substituir pelo pan da imagem completa.",
-  "revision": "r6_synchronized_motion_body_head_blink_neutral",
+  "revision": "r6b_fix_tsx_style_and_positive_zero_neutral",
   "fix": "Editar exatamente a imagem inteira do personagem original, fechar apenas os olhos da Anya grande. Recuperar pixels e alpha original fora dos olhos, trocar PNGs completos durante piscada no Remotion; nao utilizar overlay de palpebras ou hair-foreground.",
-  "previous_failed_run_id": 43560470819,
+  "previous_failed_run_id": 43576689478,
   "retry_image_generation": false,
   "artifacts_reused": true,
   "normal_workflow": true,
@@ -39,5 +39,8 @@
   "head_separate_rgba_status": "not_available_for_scene01; renderer opt-in only",
   "expected_test_scene": "cena-01",
   "workflow_mode": "normal_push_no_private",
-  "official_video": false
+  "official_video": false,
+  "retry_render_only": true,
+  "extra_image_calls": 0,
+  "motion_reset_rule": "body, verified head, and camera return to shared original initial pose over 12 frames before each swap; neutral +/-3 frames"
 }
