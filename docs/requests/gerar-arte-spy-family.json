@@ -1,0 +1,12 @@
+{
+  "schema": "videoforge/production-art-request/v1",
+  "repository": "HelioConde/VideoForge-IA",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "asset": "character-bible",
+  "max_calls_this_run": 1,
+  "model": "gpt-image-2",
+  "note": "Primeira referência visual genuína para Loid, Anya e Yor gerada DENTRO do programa no GitHub, sem usar preview substituto. Arte pendente de aprovação visual.",
+  "requested_at": "2026-11-14",
+  "youtube_upload": false
+}
