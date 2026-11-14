@@ -1,0 +1,47 @@
+{
+  "schema": "videoforge/production-art-plan/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "purpose": "referencia_personagens_para_arte_mae_e_rig_2d_real",
+  "source_storyboard": "roteiro.json",
+  "source_scene_count": 14,
+  "style": "manhwa 2D cinematográfico coerente, line art refinado, luz cinematográfica suave, cores azul ardósia/âmbar/prata/bordô e tecidos detalhados, sem realismo fotográfico, sem 3D",
+  "character_bible": {
+    "kael": "Kael, homem de 23 anos, cabelo preto curto ondulado, olhos âmbar, jaqueta curta cinza, camisa creme, calça marrom simples, botas marrons, sem armadura/espada/capa vermelha, expressivo e humano.",
+    "elara": "Elara, princesa de 21 anos, cabelo preto longo reflexos azuis, olhos cinza-violeta, flor prateada no cabelo, vestido medieval azul meia-noite, capuz azul escuro opcional como disfarce com MESMO ROSTO.",
+    "aldric": "Rei Aldric, 55 anos, rosto severo, barba grisalha, coroa discreta, túnica bordô com detalhes dourados e manto preto.",
+    "guardas": "Dois guardas da corte, armaduras metálicas coerentes e lanças longas, papéis de ameaça sem agressão gráfica."
+  },
+  "visual_rules": [
+    "Identidade original única e consistente entre prancha, imagens-mãe e camadas RGBA.",
+    "A arte inicial nunca deve cortar cabelo, rosto, braços nem pernas.",
+    "Sem texto/UI em imagem AI; legendas e HUD são renderizados no Remotion.",
+    "Sem personagem, item ou roupa inventada entre cenas; Kael NÃO porta espada.",
+    "Expressão e composição com espaço seguro para legendas verticais.",
+    "Cada recorte e reconstrução deriva da MESMA cena-mãe, preservando luz e perspectiva.",
+    "A roupa de Elara muda para manto no beco, mas rosto e flor prateada mantêm identidade.",
+    "Fundo sem duplicações dos elementos móveis, rig real por pivôs e malha, nada de só zoom de PNG."
+  ],
+  "request_limit": {
+    "per_run": 1,
+    "strict_budget": 1,
+    "never_retry_429": true,
+    "scope": "primeira chamada de referência; quantidade de imagens do EPISÓDIO não limitada artificialmente, orçamento de novas chamadas requer autorização separada"
+  },
+  "assets": [
+    {
+      "id": "character-bible",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "prompt": "PRANCHA ORIGINAL DE REFERÊNCIA DE PERSONAGENS PARA SÉRIE DORAMA MMORPG ARKEN. Manhwa 2D cinematográfico profissional, quadro vertical 2:3; mostrar 3 personagens em pé de corpo inteiro, sem cortar mãos/cabelo/roupas, separados com espaço claro: à esquerda Kael, jovem de 23 anos com cabelo curto preto ondulado, olhos âmbar, jaqueta curta cinza, camisa creme, calça marrom simples, botas, SEM espada, SEM armadura, sem capa; no centro Princesa Elara, jovem de 21 anos com cabelo longo preto e reflexos azul-escuro, olhos cinza-violeta, adorno de flor de prata sobre o cabelo e vestido royal azul meia-noite bordado de forma sutil, expressão independente e decidida; à direita Rei Aldric, 55 anos barba grisalha, coroa real discreta, túnica bordô e manto preto, autoridade severa. Todos de proporções humanas coerentes, lineart refinado, shading ilustrado 2D, luz cinematográfica macia, paleta azul prata âmbar bordô; fundo palaciano neutro coerente. APENAS os personagens originais; sem texto, sem logotipo, sem HUD, sem cenário que oculte silhuetas. Essa prancha será a referência obrigatória das 14 cenas e 37 planos; para a versão de Elara com capuz, conservar exatamente o mesmo rosto e cabelo, mudando apenas manto."
+    }
+  ],
+  "scene_prompt_template": "Gerar cena-mãe original 2D cinematográfica consistente com prancha de identidade REAL gerada previamente. {visual_direction}. Personagens: Kael, Elara e Aldric iguais à mesma prancha; cenário: {story_goal}. Manter todas as partes inteiras e recuperáveis para PNG RGBA. Não desenhar UI, texto, letras, marcas. A edição posterior deve partir desta mesma imagem, não gerar outro personagem por texto.",
+  "scene_count_unlimited": true,
+  "publication": {
+    "youtube_upload": false,
+    "qa_visual_pending": true,
+    "artifacts_only": true
+  }
+}
