@@ -6,12 +6,12 @@
   "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
   "reference_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
   "latest_workflow": {
-    "name": "rig-three-anya-hair-draft.yml",
-    "run_id": 43593183590,
+    "name": "rig-three-anya-hair-underlay.yml",
+    "run_id": 43597256686,
     "conclusion": "success",
-    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43593183590",
-    "artifact_id": 14113271572,
-    "artifact_name": "vf-anya-hair-side-seam-draft-43593183590"
+    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43597256686",
+    "artifact_id": 14114747015,
+    "artifact_name": "vf-anya-hair-underlay-candidate-43597256686"
   },
   "earlier_artifacts": {
     "isolation_run": 43589190537,
@@ -42,11 +42,11 @@
     "neutral-diff-corrected.png"
   ],
   "pending_visual_and_motion_checks": [
-    "Create original-style underlay for the two side-tip locks (their inner edges currently reveal background when deformed).",
-    "Verify that detached moving hair contains no duplicate pink pixels on the original torso below y1470.",
-    "Reconstruct neck/collar hidden areas using the actual source art and inspect hand overlap before moving head.",
-    "Test independent deformable hair 7x9 meshes in the genuine ThreeCanvas runner with exact motion QA.",
-    "Review multiple light/dark backgrounds, frame determinism, eye transition, and parent character separation before releasing a rig."
+    "Inspect horizontal attachment seam of left/right side locks at their roots in actual ThreeCanvas frames",
+    "Compare 0/30/74/76/173/175 frame pairs; ensure no new visible part duplication and no blink jump",
+    "Test foreground hand against neck pivot and shoulder underlay with real head rotation",
+    "Review segmentation accuracy of source hair masks under independent 7x9 mesh deformation on light/dark backgrounds",
+    "Human visual sign-off before enabling rig manifest and before official MP4 or YouTube upload"
   ],
   "human_review_approved": false,
   "hair_underlay_approved": false,
@@ -55,7 +55,7 @@
   "rig_animado_aplicado": false,
   "video_oficial_do_programa": false,
   "youtube_uploaded": false,
-  "status": "side_hair_source_partition_qa_passed_real_underlay_and_three_motion_pending",
+  "status": "neutral_underlay_qa_passed_threecanvas_synthetic_smoke_passed_human_art_review_pending",
   "provisional_neck_pivot_review": {
     "source": "local exploratory OpenCV geometry check; NOT a ThreeCanvas render or official motion QA",
     "pivot_candidate_original_canvas": [
@@ -105,5 +105,45 @@
     "hair_underlay_approved": false,
     "real_threecanvas_motion_qa": false,
     "human_visual_approval": false
+  },
+  "hair_underlay_machine_qa": {
+    "source_original_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
+    "original_hair_pixels_reconstructed_below_opaque_visible_area": 60731,
+    "stranded_shoulder_hair_pixels_reparented": 555,
+    "left_shoulder_pixels": 114,
+    "right_shoulder_pixels": 441,
+    "original_blink_pair_retained": true,
+    "no_new_image_calls": true,
+    "neutral_roundtrip_mean_rgb_difference_0_to_255": 0.00212,
+    "pixels_with_rgb_difference_gt_20": 0,
+    "pixels_with_alpha_difference_gt_3": 0,
+    "rotation_stress_source": "OpenCV diagnostic affine rotations - NOT ThreeCanvas",
+    "rotation_stress_missing_alpha_roi": {
+      "0": 0,
+      "2": 687,
+      "-2": 673
+    },
+    "status": "neutral_qa_passed_visual_and_threecanvas_motion_review_pending"
+  },
+  "engine_support": {
+    "modules": [
+      "motion-remotion/src/rig-three-math.ts",
+      "motion-remotion/src/rig-three-scene.tsx",
+      "videoforge/rig_three_contract.py"
+    ],
+    "new_mesh_layer_ids": [
+      "hair-front-left",
+      "hair-front-right"
+    ],
+    "mesh_grid": "7x9",
+    "pinned_root_row": 0,
+    "deterministic_per_side_sway": true,
+    "current_ThreeCanvas_smoke": {
+      "run_id": 43597495991,
+      "status": "success",
+      "purpose": "synthetic-only renderer code check",
+      "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43597495991"
+    },
+    "anya_real_art_ThreeCanvas_rendered": false
   }
 }
