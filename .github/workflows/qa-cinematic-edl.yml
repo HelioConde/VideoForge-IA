@@ -47,7 +47,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_cinematic_shot_assets tests.test_cinematic_direction tests.test_cinematic_remotion_export tests.test_cinematic_eye_motion tests.test_cinematic_eye_pixel_audit tests.test_production_scenes tests.test_alchemy_no_image_generation tests.test_official_production -v
+          python -m unittest tests.test_cinematic_shot_assets tests.test_cinematic_direction tests.test_cinematic_remotion_export tests.test_cinematic_eye_motion tests.test_cinematic_eye_pixel_audit tests.test_cinematic_asset_inventory tests.test_production_scenes tests.test_alchemy_no_image_generation tests.test_official_production -v
       - name: Gerar somente manifesto JSON de timeline para Remotion
         shell: bash
         run: |
@@ -76,6 +76,24 @@ jobs:
           assert d["pixelFilesCreated"]==0
           print("TIMELINE_READY_FOR_ASSET_PRODUCTION_ONLY; official video BLOCKED")
           PY
+      - name: Inventariar 14 artes-mae arquivadas versus 36 cameras por SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.cinematic_asset_inventory
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          b=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          d=json.loads((b/'qa-inventario-tomadas-cinema.json').read_text(encoding='utf8'))
+          assert d['legacySceneMotherCount']==14
+          assert d['shotsTotal']==37
+          assert d['faceCloseups']==12
+          assert d['visualShotsPendingApproval']==36
+          assert d['imageGenerationCalls']==0
+          assert d['officialMP4Allowed'] is False
+          print('14 scene references, 36 independent cameras pending art')
+          PY
       - name: Versionar timeline no canal Alchemy Lab
         shell: bash
         run: |
@@ -83,7 +101,7 @@ jobs:
           FILE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/timeline-cinematografica.json'
           git config user.name 'videoforge-archive[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- "$FILE"
+          git add -- "$FILE" 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-inventario-tomadas-cinema.json'
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'qa(alchemy): versionar timeline cinematografica de 37 cortes e bloqueios por shot'
           if ! git push origin HEAD:main; then
