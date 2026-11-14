@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/rig-three-anya-underlay-request/v1",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "source_original_run": 43560159589,
+  "torso_and_hand_run": 43591918632,
+  "hair_side_draft_run": 43593183590,
+  "goal": "reconstruct hidden side-hair and collar pixels from frozen same-source art, reparent pink hair fragments from uniform to corresponding hair lock, export neutral and +/-2 degree diagnostic QA",
+  "new_image_calls": 0,
+  "github_actions_mode": "normal_no_private",
+  "renderer": "art_preparation_only_not_ThreeCanvas",
+  "rig_operational": false,
+  "human_visual_approval": false,
+  "youtube_upload": false
+}
