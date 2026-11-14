@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/qa-cinematic-renderer-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "image_generation_calls": 0,
+  "render_mp4": false,
+  "youtube_upload": false,
+  "checks": [
+    "TypeScript typecheck of cinematic multi-person rigs",
+    "Node tests reject unapproved sources, rig and pose",
+    "Exclusive Remotion root",
+    "37 shot timeline and 4890 frames"
+  ],
+  "status": "qa_request_only"
+}
