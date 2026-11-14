@@ -17,6 +17,8 @@
     "qa-referencias-chat-cinematograficas.json"
   ],
   "review_policy": "Visual style preference approved; full canonical identity/rig not yet approved.",
-  "revision": 2,
-  "reason": "Validar migracao de descricoes v2 ao estilo preferido, preservando os 14 cenarios e o lock, e conferir SHA do pacote de 2 PNGs originais"
+  "revision": 3,
+  "reason": "Validar novo importador de ZIP de 3 originais (Kael, Elara, plano C12-P02), sha256, PNG IHDR, segurança e zero geracao/MP4",
+  "optional_third_camera_candidate": "confronto-trono-c12-p02.png",
+  "three_originals_zip": "uploads/alchemy-ep01-cinema-3-originais.zip"
 }
