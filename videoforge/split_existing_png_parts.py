@@ -105,8 +105,11 @@ def split_existing(source:Path, plan_path:Path, dest:Path)->dict:
             "category":("rejected_residual" if cfg["kind"]=="remainder"
                         else "draft_anatomical_cutout"),
         })
+    # RGB invisível de pixels alfa=0 não é parte da arte visível.
     mismatch=ImageChops.difference(restored,im)
-    if mismatch.getbbox() is not None:
+    visible=src_alpha.point(lambda a:255 if a else 0)
+    mismatch_visible=Image.composite(mismatch,Image.new("RGBA",im.size,(0,0,0,0)),visible)
+    if mismatch_visible.getbbox() is not None:
         raise SplitError("PARTITION_ROUNDTRIP_NOT_EXACT")
     # A imagem recombinada não é uma nova cena: é cópia idêntica da origem.
     qa={
