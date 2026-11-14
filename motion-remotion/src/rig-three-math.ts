@@ -24,6 +24,22 @@ export type ThreeRigManifest={
   technicalAssetsVerified:true;
   humanVisualReview:true;
   youtubeUploaded:false;
+  /**
+   * Optional independent eye atlas. The moving pupils must be removed from
+   * the static head art, and underlying sclera reconstructed and reviewed.
+   */
+  eyeRig?:{
+    actorId:string;
+    pupilLayerIds:['pupil-left','pupil-right'];
+    eyelidLayerIds:['eyelid-left','eyelid-right'];
+    eyeUnderlaysVerified:true;
+    pupilMasksVerified:true;
+    noDuplicatePaintedPupilsInHead:true;
+    rotationOrTranslationClippingQA:true;
+    gazePupilMaxPx:12;
+    eyelidMaxPx:1;
+    humanVisualApproved:true;
+  };
 };
 
 const clamp=(v:number,a:number,b:number)=>Math.max(a,Math.min(b,v));
