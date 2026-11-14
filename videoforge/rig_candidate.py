@@ -137,16 +137,69 @@ def _erase(src: bytearray, mask: bytearray) -> bytearray:
     return out
 
 
-def _cape_split(src: bytearray, front_mask: bytearray) -> tuple[bytearray, bytearray]:
+def _dilate_binary_mask(mask: bytearray, width: int, height: int,
+                        radius: int) -> bytearray:
+    """Dilata recorte por uma janela quadrada em O(width*height).
+
+    Uma sobreposicao real de tecido evita que duas malhas animadas exponham
+    buracos quando deixam de coincidir nas bordas do antigo recorte.
+    """
+    if len(mask) != width * height or not 0 <= radius <= 48:
+        raise CandidateError("RIG_CAPE_OVERLAP_INVALID")
+    if radius == 0:
+        return bytearray(255 if value else 0 for value in mask)
+    horizontal = bytearray(width * height)
+    result = bytearray(width * height)
+    for y in range(height):
+        start = y * width
+        active = sum(bool(mask[start + x]) for x in range(min(width, radius + 1)))
+        for x in range(width):
+            horizontal[start + x] = 255 if active else 0
+            if x + radius + 1 < width:
+                active += bool(mask[start + x + radius + 1])
+            if x - radius >= 0:
+                active -= bool(mask[start + x - radius])
+    for x in range(width):
+        active = sum(bool(horizontal[y * width + x])
+                     for y in range(min(height, radius + 1)))
+        for y in range(height):
+            result[y * width + x] = 255 if active else 0
+            if y + radius + 1 < height:
+                active += bool(horizontal[(y + radius + 1) * width + x])
+            if y - radius >= 0:
+                active -= bool(horizontal[(y - radius) * width + x])
+    return result
+
+
+def _cape_split(src: bytearray, front_mask: bytearray,
+                width: int | None = None, height: int | None = None,
+                overlap_px: int = 0) -> tuple[bytearray, bytearray]:
+    """Mantenha uma faixa DUPLA de tecido autentico ao longo da costura.
+
+    A divisao complementar sem margem causa frestas quando a capa da frente
+    e a de tras se movem com fases diferentes. Cada malha recebe uma
+    margem do seu proprio tecido original, sem criar pixels novos.
+    """
+    if type(overlap_px) is not int or not 0 <= overlap_px <= 48:
+        raise CandidateError("RIG_CAPE_OVERLAP_INVALID")
+    if overlap_px:
+        if not width or not height or len(src) != width * height * 4:
+            raise CandidateError("RIG_CAPE_OVERLAP_DIMENSIONS")
+        front_zone = _dilate_binary_mask(front_mask, width, height, overlap_px)
+        inverse = bytearray(255 if not value else 0 for value in front_mask)
+        back_zone = _dilate_binary_mask(inverse, width, height, overlap_px)
+    else:
+        front_zone = front_mask
+        back_zone = bytearray(255 - value for value in front_mask)
     back, front = bytearray(src), bytearray(src)
-    for i, mask in enumerate(front_mask):
+    for i in range(len(front_mask)):
         idx = i * 4 + 3
-        front[idx] = front[idx] * mask // 255
-        back[idx] = back[idx] * (255 - mask) // 255
+        front[idx] = front[idx] * front_zone[i] // 255
+        back[idx] = back[idx] * back_zone[i] // 255
         if not front[idx]:
-            front[idx-3:idx+1]=b"\0\0\0\0"
+            front[idx-3:idx+1] = b"\0\0\0\0"
         if not back[idx]:
-            back[idx-3:idx+1]=b"\0\0\0\0"
+            back[idx-3:idx+1] = b"\0\0\0\0"
     return back, front
 
 
@@ -373,7 +426,7 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         if lost/total>0.0002:
             raise CandidateError("RIG_HAIR_CLIPPED_BY_HEAD_MASK")
     cape=originals["cape.png"]
-    back,front=_cape_split(cape,frontmask)
+    back,front=_cape_split(\n        cape,frontmask,width,height,overlap_px=plan.get("cape_seam_overlap_px",0),\n    )
     head=_cutout(char,headmask)
     head_open=bytearray(head)  # estado original INTACTO, antes de qualquer inpainting
     eye_open=_cutout(char,eye_union)
@@ -463,7 +516,7 @@ def prepare(source_dir: Path, plan_path: Path, output_dir: Path) -> dict:
         "head_full_hair_guard_alpha_coverage":hair_coverage,
         "head_mask_variant":"head_full_polygon" if "head_full_polygon" in plan else "head_polygon_legacy",
         "natural_eyelids_preview":eye_report,
-        "cape_front_back_split":True,"human_visual_approval":False,
+        "cape_front_back_split":True,\n        "cape_seam_overlap_px":plan.get("cape_seam_overlap_px",0),\n        "human_visual_approval":False,
         "rig_ready_for_remotion":False,"youtube_uploaded":False,
         "notes":[
             "Cabeca/olhos/capa extraidos de pixels existentes; recorte de cabelo integral verificado quando head_full_polygon existe",
