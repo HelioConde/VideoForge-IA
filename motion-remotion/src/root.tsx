@@ -37,4 +37,17 @@ export const VideoForgeRoot:React.FC=()=>(
       durationInFrames:Math.max(120,Math.min(360,props.durationFrames||240)),
     })}
   />
+  <Composition
+    id="SpyFamilyEpisodePreview"
+    component={SpyFamilyEpisode}
+    durationInFrames={120}
+    fps={30}
+    width={540}
+    height={960}
+    defaultProps={spyDefaultProps}
+    calculateMetadata={({props})=>({
+      durationInFrames:Math.max(1,props.totalFrames||120),
+    })}
+  />
+  </>
 );
