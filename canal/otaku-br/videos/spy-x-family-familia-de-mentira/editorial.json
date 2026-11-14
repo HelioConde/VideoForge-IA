@@ -249,13 +249,13 @@
     "movimento": "pan cinematografico da arte original, sem recorte",
     "pipeline_animacao_obrigatorio": "cena-mae + background reconstruido + personagens/objetos RGBA + rig verificado + revisao",
     "teste_camadas_reais": {
-      "run_id": 43575133723,
-      "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43575133723",
-      "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43575133723/artifacts/14105378846",
+      "run_id": 43576834439,
+      "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439",
+      "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439/artifacts/14106521460",
       "scene_number": 1,
       "scene_id": "gancho-anya",
       "duration_seconds": 8.32,
-      "sha256": "b7610dc9054c91355655947a0ffedf24a00676e84a260d594e646664b99b8398",
+      "sha256": "c2bf3d4387adcabe703a4b047ebdee9ec3b43ddd26fc9c6d753bb01f92b69fbe",
       "source_scene_mother_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
       "original_character_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
       "ai_full_character_run_id": 43574833995,
@@ -275,7 +275,17 @@
       "human_visual_approval": false,
       "video_official": false,
       "youtube_uploaded": false,
-      "workflow_mode": "normal_push_no_private"
+      "workflow_mode": "normal_push_no_private",
+      "animation_sync": {
+        "mode": "ease_to_neutral_before_full_character_eye_swap",
+        "neutral_hold_frames": 3,
+        "neutral_ease_frames": 12,
+        "body_and_camera_neutral_at_swap": true,
+        "head_motion_available_in_renderer": true,
+        "independent_head_motion_active": false,
+        "head_sprite_source": "pending_no_approved_body_without_head_and_separate_head_rgba",
+        "node_tests_passed": 17
+      }
     },
     "preview_anterior_camadas": {
       "run_id": 43560582246,
@@ -342,7 +352,36 @@
       "youtube_uploaded": false,
       "github_mode": "push_normal_not_private"
     },
-    "animacao_piscada_metodo": "editar imagem inteira original, olhos fechados, alternancia de quadros inteiros"
+    "animacao_piscada_metodo": "editar imagem inteira original, olhos fechados, alternancia de quadros inteiros",
+    "previa_anterior_movimento_sem_sincronizacao": {
+      "run_id": 43575133723,
+      "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43575133723",
+      "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43575133723/artifacts/14105378846",
+      "scene_number": 1,
+      "scene_id": "gancho-anya",
+      "duration_seconds": 8.32,
+      "sha256": "b7610dc9054c91355655947a0ffedf24a00676e84a260d594e646664b99b8398",
+      "source_scene_mother_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
+      "original_character_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
+      "ai_full_character_run_id": 43574833995,
+      "ai_full_character_sha256": "5db4a4991a90232c2996ce8fb5053f464223983cd7baf687510c18fe23a99c81",
+      "safe_full_character_sha256": "668434bae05289b4400224012b420bfc94e07bee2b972b2e2add2b6d0e8b9694",
+      "blink_mode": "swap_same_full_character_png_eyes_only",
+      "eye_pixels_changed": 14507,
+      "non_eye_pixels_changed": 0,
+      "alpha_pixels_changed": 0,
+      "character_vertical_movement_max_px": 2.8,
+      "female_voice": true,
+      "subtitles": true,
+      "visual_frame_comparison_done": true,
+      "rig_individual_parts": false,
+      "other_objects_separated": false,
+      "technical_qa": "passed",
+      "human_visual_approval": false,
+      "video_official": false,
+      "youtube_uploaded": false,
+      "workflow_mode": "normal_push_no_private"
+    }
   },
   "qa": {
     "aprovado_tecnicamente": true,
@@ -381,6 +420,7 @@
     "14/11/2026: regra cena-mae + background reconstruido + sprite transparente registrada no AGENTS.md e docs. Remotion de camadas da cena 01 (8.32s, voz feminina/SRT, SHA verificado) run #43560582246, artifact #14099899544. Previas com pan continuam sem rig e video_oficial_do_programa=false. Restantes 15 cenas nao foram renderizadas em camadas.",
     "14/11/2026: teste de 8.32s realizado pelo workflow NORMAL #43570324901 (sem modo private). Retina/rosto sempre opacos, Anya piscando com RGBA editado da mesma cena-mãe, bob vertical limitado a 2.8px, voz feminina e SRT. QA técnico passou e exemplos de olhos abertos/fechados foram inspecionados. Ainda sem objetos animáveis isolados nem rig de cabeça/cabelo/roupas e sem produção oficial.",
     "14/11/2026: correção real GitHub Actions normal #43573042654. Mascara dos olhos da Anya restringida (19.479 pixels alfa), 3.581 pixels protegidos do cabelo; franja extraida do original desenhada acima da piscada. PNGs por SHA; video 8,32s H264/AAC, voz feminina e legendas. Quadros abertos/fechados conferidos visualmente. Aguarda aprovação do usuário; falta rig individual para os 16 trechos.",
-    "14/11/2026: usuario rejeitou overlays; versão substituta IA /images/edits edita exatamente character-main.png com olhos fechados, 43574833995. Pixel QA restaura TODOS pixels originais fora dos olhos e alpha (0 diferenças não oculares, 0 alpha), 14.507 pixels editados nos olhos. Remotion usa troca de imagem inteira; MP4 8.32s em #43575133723; video oficial ainda nao aprovado, visual revisão usuário pendente."
+    "14/11/2026: usuario rejeitou overlays; versão substituta IA /images/edits edita exatamente character-main.png com olhos fechados, 43574833995. Pixel QA restaura TODOS pixels originais fora dos olhos e alpha (0 diferenças não oculares, 0 alpha), 14.507 pixels editados nos olhos. Remotion usa troca de imagem inteira; MP4 8.32s em #43575133723; video oficial ainda nao aprovado, visual revisão usuário pendente.",
+    "14/11/2026: Remotion #43576834439 renderizou 8.32s com corpo/camera suavizando 12 quadros para pose inicial nos centros de piscada [90,188], neutralizados +/-3 quadros e retomados por 12 quadros; 17 testes JS aprovados, QA pixel outside eyes=0, alfa=0. Suporte para movimento de cabeça independente introduzido, mas NÃO ativo na prévia sem sprites validos. Sem video oficial/publicacao."
   ]
 }
