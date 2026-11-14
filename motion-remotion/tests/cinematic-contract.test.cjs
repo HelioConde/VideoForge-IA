@@ -38,13 +38,13 @@ const edlPath=path.join(__dirname,
 const realEdl=JSON.parse(fs.readFileSync(edlPath,'utf8'));
 
 /** All fake media are internal validation fixtures; no PNG files are made. */
-function rigFor(id){
+function rigFor(id,nativeCanvas={width:1024,height:1536}){
   const p='assets/planos/'+id+'/';
   const eyeClose=id==='C12-P01';
   const result={
     schema:'videoforge/rig-three/v1',
     rigType:'independent-parts-and-deformable-mesh',
-    canvas:{width:1024,height:1536},sceneMotherSha256:sha,
+    canvas:{...nativeCanvas},sceneMotherSha256:sha,
     technicalAssetsVerified:true,humanVisualReview:true,youtubeUploaded:false,
     neckPivot:[500,650],headMaxRotationDeg:eyeClose?0:2,
     blinkFrames:eyeClose?[]:[30],
@@ -73,7 +73,9 @@ function rigFor(id){
   }
   return result;
 }
-function syntheticApprovedManifest(){
+function syntheticApprovedManifest(nativePortrait=false){
+  const nativeCanvas=nativePortrait?
+    {width:941,height:1672}:{width:1024,height:1536};
   const shots=realEdl.shots.map((s,i)=>{
     const base={
       id:s.id,scene:s.scene,startFrame:s.startFrame,
@@ -86,9 +88,10 @@ function syntheticApprovedManifest(){
     return {
       ...base,status:'ready_for_render',
       sourceMotherSha256:sha,backgroundSha256:other,
+      sourceCanvas:{...nativeCanvas},
       backgroundFile:p+'background-reconstructed.png',
       actors:[{id:s.id==='C12-P01'?'kael':'fixture-character',
-               rig:rigFor(s.id),
+               rig:rigFor(s.id,nativeCanvas),
                motherSha256:sha,approvedForShot:true}],
       ...(s.id==='C12-P01'?{
         performance:{
@@ -213,4 +216,25 @@ test('C12 gaze cannot be assigned to another shot or change keyframe targets',()
   const gaze=f.shots.find(s=>s.id==='C12-P01').performance;
   gaze.pupilKeyframes[2].value=15;
   assert.throws(()=>validateCinematicRender(f),/KEYFRAMES_MISMATCH/);
+});
+
+
+test('native 941x1672 portrait sources retain their geometry in all 36 shots',()=>{
+  const d=syntheticApprovedManifest(true);
+  assert.doesNotThrow(()=>validateCinematicRender(d));
+  assert.equal(d.shots[1].sourceCanvas.width,941);
+  assert.equal(d.shots[1].sourceCanvas.height,1672);
+  assert.equal(d.shots[1].actors[0].rig.canvas.width,941);
+  assert.equal(d.shots[1].actors[0].rig.canvas.height,1672);
+});
+test('source canvas mismatch and invented resolutions are blocked',()=>{
+  const d=syntheticApprovedManifest(true);
+  d.shots[1].actors[0].rig.canvas={width:1024,height:1536};
+  assert.throws(()=>validateCinematicRender(d),/RIG_NOT_VERIFIED_FOR_SHOT/);
+  const e=syntheticApprovedManifest(true);
+  e.shots[1].sourceCanvas={width:1024,height:1672};
+  assert.throws(()=>validateCinematicRender(e),/QA_OR_ORIGIN_MISSING/);
+  const f=syntheticApprovedManifest();
+  delete f.shots[1].sourceCanvas;
+  assert.throws(()=>validateCinematicRender(f),/QA_OR_ORIGIN_MISSING/);
 });
