@@ -65,7 +65,7 @@ try {
     $out = Join-Path $uploadDir 'alchemy-ep01-cinema-3-originais.zip'
     Copy-Item -LiteralPath $fullZip -Destination $out -Force
 
-    & git -C $work add -- $destRel
+    & git -C $work add -f -- $destRel
     if ($LASTEXITCODE -ne 0) { throw 'git add falhou.' }
     & git -C $work diff --cached --quiet
     if ($LASTEXITCODE -eq 0) {
