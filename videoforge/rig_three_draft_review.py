@@ -92,6 +92,10 @@ def prepare(original_dir:Path,corrected_dir:Path,
             ornaments_qa.get("new_image_calls")!=0 or
             ornaments_qa.get("neutral_rgb_error_pixels_gt20")!=0 or
             ornaments_qa.get("neutral_alpha_error_pixels_gt3")!=0 or
+            not isinstance(ornaments_qa.get(
+                "remaining_stationary_gold_pixels_in_source_regions"),dict) or
+            any(ornaments_qa["remaining_stationary_gold_pixels_in_source_regions"].get(
+                side,999)>20 for side in ("left","right")) or
             not 9500<=ornaments_qa.get("total_original_pixels_moved",0)<=11500):
             raise VideoForgeError("ANYA_DRAFT_ORNAMENT_QA_INVALID")
         replacement=unique(
@@ -156,7 +160,7 @@ def prepare(original_dir:Path,corrected_dir:Path,
             info=png_info(ornament.read_bytes(),require_alpha=True)
             if (not isinstance(box,list) or len(box)!=4 or
                 (info["width"],info["height"])!=tuple(box[2:]) or
-                not 0<=box[0] and 0<=box[1]):
+                not (0<=box[0] and 0<=box[1])):
                 raise VideoForgeError("ANYA_DRAFT_ORNAMENT_BBOX_INVALID")
             if not 0<=box[0]<1024 or not 0<=box[1]<1536:
                 raise VideoForgeError("ANYA_DRAFT_ORNAMENT_OUTSIDE_CANVAS")
