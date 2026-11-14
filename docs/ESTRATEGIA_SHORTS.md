@@ -38,6 +38,10 @@ Guarde resultados verificáveis em canal/<id>/editorial/pesquisas/YYYY-MM-DD.jso
 - Não aplicar automaticamente a recomendação “15–30 segundos”: muitos materiais fornecidos citam o limite antigo de 60 segundos. A duração ideal depende da narrativa e dos dados de cada canal.
 - Shorts com **mais de 1 minuto** e reivindicação de direitos autorais ativa de qualquer tipo são bloqueados globalmente. Preferir mídia original/licenciada e conferir direitos de imagem, música e vídeo. Não presumir que áudio “em alta” pode ser usado fora das condições da plataforma.
 
+## Cenas: flexibilidade obrigatória
+
+Um Short pode precisar de muitos microcortes, ou de poucas cenas longas. **Nenhum número máximo fixo de cenas** é permitido em roteirização, manifestos ou renderizadores. O que se mede é progressão narrativa, imagem pertinente e ritmo; o formato do canal ainda tem duração de 90–180s, sem ultrapassar o limite da plataforma. Validar tempo, custos, licenças e QA; não remover cenas silenciosamente.
+
 ## 4. SEO e descoberta
 
 - Título fiel ao conteúdo, natural, específico, com termo pesquisado quando fizer sentido; não clickbait enganoso.
