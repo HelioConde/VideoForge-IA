@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/image-persistence-test-request/v1",
+  "scope": "all channels with GitHub Action image generation",
+  "generate_images": false,
+  "render_mp4": false,
+  "youtube_upload": false,
+  "checks": [
+    "per-channel original PNG SHA",
+    "idempotent staging without overwrite",
+    "no secrets",
+    "no path traversal",
+    "reject wrong channel",
+    "no empty successes",
+    "provenance meta"
+  ],
+  "request_version": 1
+}
