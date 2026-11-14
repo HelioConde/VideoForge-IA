@@ -1,0 +1,31 @@
+{
+  "schema": "videoforge/aldric-deterministic-cut-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "imageGenerationCalls": 0,
+  "sourceSceneSHA256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "output": "aldric-RGB-da-mae-CANDIDATO.png",
+  "outputSHA256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+  "sourceRGBUnmodified": true,
+  "segmentation": "OpenCV GrabCut with foreground and throne-exclusion seeds",
+  "coreAreaPixels": 57371,
+  "bboxGlobal": [
+    336,
+    299,
+    644,
+    622
+  ],
+  "tronoOverdrawMayRemain": true,
+  "hiddenBodyPartsReconstructed": false,
+  "facePartsRigged": false,
+  "humanVisualApproval": false,
+  "officialRig": false,
+  "youtubeUploaded": false,
+  "status": "candidate_requires_throne_edge_and_lion_armrest_review",
+  "warnings": [
+    "A máscara pode cortar partes do manto ou conter pedaços do braço do trono",
+    "A textura contém somente pixels da mãe, não preenche regiões do corpo escondidas",
+    "Revisar sobreposição com trono vazio e limpar elementos duplicados antes de rig"
+  ]
+}
