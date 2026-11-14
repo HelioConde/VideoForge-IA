@@ -14,12 +14,13 @@
   "human_visual_approval": false,
   "video_official": false,
   "youtube_uploaded": false,
-  "revision": "deghost-original-costume-underlay-loid-yor-ornaments-v2",
+  "revision": "original_gold_interior_motion_test_v3",
   "source_ornament_artifact_id": 14116984343,
   "required_qa": [
     "no stationary gold ghosts in source-static local regions",
     "both ornaments rigid under head pivot",
     "source gold centroid moves more than old static baseline",
     "zero new image calls"
-  ]
+  ],
+  "qa_design": "Gold centroid is diagnostic; 24x36 stable original-gold interiors must show >=600/864 changed pixels from f0 to f30, vs prior static 0/864 left and 57/864 right"
 }
