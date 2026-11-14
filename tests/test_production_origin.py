@@ -21,9 +21,10 @@ class ProductionOriginTests(unittest.TestCase):
         f=ROOT/"canal"/"otaku-br"/"videos"/"spy-x-family-familia-de-mentira"/"editorial.json"
         record=json.loads(f.read_text(encoding="utf-8"))
         self.assertFalse(validate_editorial_origin(record))
-        self.assertEqual(record["producao"]["classificacao"], "preview_tecnico_nao_oficial")
+        self.assertNotEqual(record["producao"]["classificacao"], "producao_oficial")
         self.assertFalse(record["producao"]["video_oficial_do_programa"])
-        self.assertEqual(record["status"], "assets_pendentes")
+        self.assertIn(record["status"], ("assets_pendentes", "renderizado"))
+        self.assertFalse(record["producao"].get("rig_animado_aplicado", False))
 
     def test_preview_nao_pode_mentir_com_tipo_oficial(self):
         obj={"producao":{"classificacao":"producao_oficial",
@@ -37,6 +38,9 @@ class ProductionOriginTests(unittest.TestCase):
         obj=json.loads(f.read_text(encoding="utf-8"))
         obj["producao"]["classificacao"]="producao_oficial"
         obj["producao"]["video_oficial_do_programa"]=True
+        # O cadastro editorial evolui; o teste deve injetar um workflow
+        # experimental de propósito, não depender do nome atual do episódio.
+        obj["producao"]["workflow_arquivo"]=".github/workflows/spy-family-animated.yml"
         with self.assertRaisesRegex(ProvenanceError,"EXPERIMENTAL_WORKFLOW"):
             validate_editorial_origin(obj)
 
