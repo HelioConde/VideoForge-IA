@@ -6,7 +6,7 @@ on:
     paths:
       - 'docs/requests/bootstrap-rig-three.json'
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: vf-bootstrap-three-deps
   cancel-in-progress: false
@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -39,6 +39,19 @@ jobs:
               process.exit(1);
             console.log("THREE_LOCKFILE_MATCHES_REMOTION_4_0_539");'
           ./node_modules/.bin/tsc --noEmit
+      - name: Versionar lockfile verificado na main (commit auditavel)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "videoforge-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add motion-remotion/package.json motion-remotion/package-lock.json
+          if git diff --cached --quiet; then
+            echo "RIG_THREE_LOCK_ALREADY_COMMITTED"
+            exit 0
+          fi
+          git commit -m "build(remotion): lock Three.js, R3F e @remotion/three em versoes reproduziveis"
+          git push origin HEAD:main
       - name: Entregar package.json e package-lock.json para commit auditavel
         uses: actions/upload-artifact@v4
         with:
