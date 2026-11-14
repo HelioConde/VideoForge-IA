@@ -7,8 +7,16 @@ import {blinkNeutralWeightAtFrame} from './blink-motion-sync';
 
 export type Rect=[number,number,number,number];
 export type Point={x:number;y:number};
-export type MeshType='cape'|'hair-front'|'hair-front-left'|'hair-front-right'|'hair-back'|'cloth'|'hand';
-export type MeshSpec={columns:number;rows:number;pinnedRows:[number];amplitudePx:number};
+export type MeshType='cape'|'hair-front'|'hair-front-left'|'hair-front-right'|'hair-back'|'cloth'|'hand'|'earring';
+export type MeshSpec={
+  columns:number;rows:number;pinnedRows:[number];amplitudePx:number;
+  /** Optional override for arbitrary original-source layer ids. */
+  kind?:MeshType;
+  /** Required for ornaments that pivot around their attached top loop. */
+  pivotPx?:[number,number];
+  phaseRad?:number;
+  frequencyHz?:number;
+};
 export type LayerSpec={
   id:string;file:string;bbox:Rect;sha256:string;z:number;mesh?:MeshSpec;
 };
@@ -99,11 +107,35 @@ export const meshVertexAtFrame=(args:{
   amplitudePx:number;
   frame:number;fps:number;duration:number;
   blinkFrames:readonly number[];
+  pivotPx?:[number,number];
+  phaseRad?:number;
+  frequencyHz?:number;
 }):Point=>{
   const {original,uv,kind,amplitudePx,frame,fps,duration,blinkFrames}=args;
   if(!Number.isFinite(fps)||fps<=0||amplitudePx<0||amplitudePx>12)
     throw new Error('RIG_MESH_PARAMETERS_INVALID');
   const v=clamp(uv.y,0,1),u=clamp(uv.x,0,1);
+  if(kind==='earring'){
+    const pivot=args.pivotPx;
+    if(!pivot || pivot.length!==2 ||
+      !pivot.every(Number.isFinite) ||
+      (args.frequencyHz!==undefined &&
+      (!Number.isFinite(args.frequencyHz)||args.frequencyHz<.1||args.frequencyHz>2)))
+      throw new Error('RIG_EARRING_BONE_PIVOT_INVALID');
+    if(v===0 || frame===0 || frame===duration-1)return {...original};
+    const rate=2*Math.PI*(args.frequencyHz??.67);
+    const phase=args.phaseRad??0;
+    const angle=(4.7*Math.PI/180)*(
+      Math.sin(frame/fps*rate+phase)-Math.sin(phase))*
+      sharedNeutralEnvelope(frame,duration,blinkFrames);
+    const root=Math.pow(v,1.2);
+    const rx=original.x-pivot[0],ry=original.y-pivot[1];
+    const dx=(rx*(Math.cos(angle)-1)-ry*Math.sin(angle))*root;
+    const dy=(rx*Math.sin(angle)+ry*(Math.cos(angle)-1))*root;
+    const len=Math.hypot(dx,dy);
+    const safe=len>amplitudePx?amplitudePx/len:1;
+    return {x:original.x+dx*safe,y:original.y+dy*safe};
+  }
   if(kind==='hand'){
     // This source hand rises from the uniform (wrist at bottom) to the
     // fingertip touching the chin (top). Anchor wrist and move the top
@@ -159,6 +191,11 @@ export const meshGridAtFrame=(args:{
 })=>{
   const {bbox,canvas,spec,kind,frame,fps,duration,blinkFrames}=args;
   const requiredPinRow=kind==='hand'?spec.rows:0;
+  if(spec.kind!==undefined && spec.kind!==kind)
+    throw new Error('RIG_MESH_KIND_DISAGREES_WITH_SOURCE');
+  if(spec.amplitudePx<0||spec.amplitudePx>12||
+     !Number.isFinite(spec.amplitudePx))
+    throw new Error('RIG_MESH_AMPLITUDE_INVALID');
   if(spec.columns<2||spec.rows<2||
      spec.pinnedRows.length!==1||spec.pinnedRows[0]!==requiredPinRow)
     throw new Error('RIG_MESH_NOT_SUBDIVIDED_OR_PINNED');
@@ -171,7 +208,9 @@ export const meshGridAtFrame=(args:{
       const u=col/spec.columns,v=row/spec.rows;
       const original={x:bx+bw*u,y:by+bh*v};
       const p=meshVertexAtFrame({original,uv:{x:u,y:v},kind,
-        amplitudePx:spec.amplitudePx,frame,fps,duration,blinkFrames});
+        amplitudePx:spec.amplitudePx,frame,fps,duration,blinkFrames,
+        pivotPx:spec.pivotPx,phaseRad:spec.phaseRad,
+        frequencyHz:spec.frequencyHz});
       positions.push(p.x-canvas.width/2,canvas.height/2-p.y,0);
       // PNGs in rig-three are cropped to bbox (not full-canvas PNGs).
       // Geometry is positioned in original canvas coordinates, but UV stays
