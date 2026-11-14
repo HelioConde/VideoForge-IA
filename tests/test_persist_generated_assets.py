@@ -15,14 +15,14 @@ import zlib
 from videoforge.persist_generated_assets import archive
 from videoforge.errors import VideoForgeError
 
-def png()->bytes:
+def png(rgb=(1,2,3))->bytes:
     def chunk(kind,data):
         return (struct.pack(">I",len(data))+kind+data+
                 struct.pack(">I",zlib.crc32(kind+data)&0xffffffff))
     return (b"\x89PNG\r\n\x1a\n"+
             chunk(b"IHDR",struct.pack(">IIBBBBB",1,1,8,2,0,0,0))+
             chunk(b"tEXt",b"test-fixture\x00"+b"x"*82)+
-            chunk(b"IDAT",zlib.compress(b"\x00\x01\x02\x03"))+
+            chunk(b"IDAT",zlib.compress(b"\x00"+bytes(rgb)))+
             chunk(b"IEND",b""))
 
 class PermanentGeneratedImageArchiveTests(unittest.TestCase):
@@ -60,7 +60,7 @@ class PermanentGeneratedImageArchiveTests(unittest.TestCase):
         b=self.run_archive()
         self.assertEqual(a,b)
         first=(self.dest/"quadro.png").read_bytes()
-        (self.source/"quadro.png").write_bytes(self.png+b"changed")
+        (self.source/"quadro.png").write_bytes(png((8,9,10)))
         with self.assertRaisesRegex(VideoForgeError,"WOULD_OVERWRITE_EXISTING"):
             self.run_archive()
         self.assertEqual((self.dest/"quadro.png").read_bytes(),first)
