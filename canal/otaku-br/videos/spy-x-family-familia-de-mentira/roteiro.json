@@ -1,0 +1,131 @@
+{
+  "schema": "videoforge/spy-family-pilot/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "mode": "technical_animatic_previsualization",
+  "youtube_upload": false,
+  "art_direction": {
+    "style": "storyboard gráfico original 2D, tipografia editorial; NÃO representa artes finais de personagens",
+    "palette": [
+      "#121B31",
+      "#C94747",
+      "#E8B56C",
+      "#98B6A4"
+    ],
+    "consistency": "três placas gráficas estáveis LOID/YOR/ANYA, sem fotografias ou imagens oficiais",
+    "expected_final_assets": "ilustrações autorais consistentes dos Forger e separação de camadas para animação; pendentes"
+  },
+  "source": {
+    "repository": "HelioConde/AutoEditorVideo",
+    "commit": "ec85db5bc74455122e4501aba05bd2dd3fd0df2c",
+    "file": "conteudos/otaku-multicena-grade-50-b.json",
+    "item_id": "5027-spy-x-family",
+    "original_status": "roteiro_pronto_aguarda_video",
+    "second_outline": "conteudos/otaku-multicena-teste-90s-v1.json",
+    "second_outline_status": "90s_story_outline_only"
+  },
+  "original_script": "Um espião, uma assassina e uma telepata fingem ser uma família normal. Loid precisa cumprir uma missão usando uma identidade familiar improvisada. Yor esconde a própria profissão e Anya consegue perceber pensamentos que os adultos prefeririam guardar em segredo. O resultado não é apenas uma sequência de mal-entendidos engraçados. Aos poucos, tarefas comuns — uma entrevista escolar ou um jantar em casa — revelam laços sinceros. A ironia de Spy x Family é que a família criada para enganar outras pessoas acaba parecendo mais verdadeira do que o plano inicial. Qual segredo seria mais difícil de esconder nessa casa? Inscreva-se para acompanhar mais histórias de anime!",
+  "narration_revision": "Expansão original para piloto de 90–180 segundos, sem CTA repetitiva. Ainda precisa de revisão factual e aprovação editorial.",
+  "scenes": [
+    {
+      "number": 1,
+      "id": "trio-improvavel",
+      "card": "UM SEGREDO POR PESSOA",
+      "narration": "Um espião, uma assassina e uma telepata. Parece uma combinação impossível, mas essa é a família Forger em Spy x Family.",
+      "caption": "UM SEGREDO POR PESSOA",
+      "planned_visual": "trio-improvavel",
+      "image": "imagens/cena-01.png",
+      "audio": "voz/cena-01.wav"
+    },
+    {
+      "number": 2,
+      "id": "loid",
+      "card": "A MISSÃO DE LOID",
+      "narration": "Loid é um agente secreto que precisa construir uma família para cumprir sua missão. O problema: ninguém ali conhece toda a verdade.",
+      "caption": "A MISSÃO DE LOID",
+      "planned_visual": "loid",
+      "image": "imagens/cena-02.png",
+      "audio": "voz/cena-02.wav"
+    },
+    {
+      "number": 3,
+      "id": "disfarce",
+      "card": "O PAI PERFEITO?",
+      "narration": "Para quem olha de fora, ele é um pai responsável. Por dentro, está sempre calculando riscos, disfarces e o próximo passo de sua operação.",
+      "caption": "O PAI PERFEITO?",
+      "planned_visual": "disfarce",
+      "image": "imagens/cena-03.png",
+      "audio": "voz/cena-03.wav"
+    },
+    {
+      "number": 4,
+      "id": "yor",
+      "card": "O SEGREDO DE YOR",
+      "narration": "Yor aceita fazer parte dessa família e também esconde algo enorme. Sua vida profissional é muito mais perigosa do que aparenta.",
+      "caption": "O SEGREDO DE YOR",
+      "planned_visual": "yor",
+      "image": "imagens/cena-04.png",
+      "audio": "voz/cena-04.wav"
+    },
+    {
+      "number": 5,
+      "id": "anya",
+      "card": "ANYA SABE DE TUDO",
+      "narration": "E existe um segredo ainda mais inesperado. Anya consegue ler pensamentos. Ela sabe coisas que Loid e Yor nunca contariam em voz alta.",
+      "caption": "ANYA SABE DE TUDO",
+      "planned_visual": "anya",
+      "image": "imagens/cena-05.png",
+      "audio": "voz/cena-05.wav"
+    },
+    {
+      "number": 6,
+      "id": "mal-entendidos",
+      "card": "NINGUÉM CONTA TUDO",
+      "narration": "Imagine a confusão: um adulto tenta esconder sua missão, o outro esconde sua identidade, e uma criança ouve os pensamentos dos dois.",
+      "caption": "NINGUÉM CONTA TUDO",
+      "planned_visual": "mal-entendidos",
+      "image": "imagens/cena-06.png",
+      "audio": "voz/cena-06.wav"
+    },
+    {
+      "number": 7,
+      "id": "cotidiano",
+      "card": "UM DIA NADA NORMAL",
+      "narration": "Uma simples entrevista escolar passa a exigir mais do que boas respostas. Até um jantar comum pode virar um teste de convivência.",
+      "caption": "UM DIA NADA NORMAL",
+      "planned_visual": "cotidiano",
+      "image": "imagens/cena-07.png",
+      "audio": "voz/cena-07.wav"
+    },
+    {
+      "number": 8,
+      "id": "afeto",
+      "card": "ALÉM DOS DISFARCES",
+      "narration": "Só que o mais interessante não está nos disfarces. Está no jeito como essa família aprende a cuidar uns dos outros.",
+      "caption": "ALÉM DOS DISFARCES",
+      "planned_visual": "afeto",
+      "image": "imagens/cena-08.png",
+      "audio": "voz/cena-08.wav"
+    },
+    {
+      "number": 9,
+      "id": "vinculo",
+      "card": "UM LAÇO DE VERDADE",
+      "narration": "O que começou como um plano prático ganha pequenos gestos de afeto, preocupação e parceria. A mentira inicial abre espaço para laços reais.",
+      "caption": "UM LAÇO DE VERDADE",
+      "planned_visual": "vinculo",
+      "image": "imagens/cena-09.png",
+      "audio": "voz/cena-09.wav"
+    },
+    {
+      "number": 10,
+      "id": "resposta",
+      "card": "A VERDADE DA FAMÍLIA",
+      "narration": "Essa é a grande ironia de Spy x Family: ninguém conhece todos os segredos da casa, mas juntos começam a construir algo verdadeiro.",
+      "caption": "A VERDADE DA FAMÍLIA",
+      "planned_visual": "resposta",
+      "image": "imagens/cena-10.png",
+      "audio": "voz/cena-10.wav"
+    }
+  ]
+}
