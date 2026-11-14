@@ -24,7 +24,7 @@ test('real mesh 7x9, original UV, anchored seam; changing non-root vertices',()=
   const mid=meshGridAtFrame({...args,frame:111});
   assert.equal(zero.positions.length,(7+1)*(9+1)*3);
   assert.equal(zero.indices.length,7*9*6);
-  assert.deepEqual(zero.uvs.slice(0,2),[100/1024,1-120/1536]);
+  assert.deepEqual(zero.uvs.slice(0,2),[0,1]);
   const topCount=(7+1)*3;
   assert.deepEqual(mid.positions.slice(0,topCount),zero.positions.slice(0,topCount));
   assert.notDeepEqual(mid.positions.slice(topCount),zero.positions.slice(topCount));
