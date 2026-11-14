@@ -119,6 +119,82 @@ class CinematicChatReferencesTests(unittest.TestCase):
                 validate_and_extract(root)
             self.assertFalse((base/"assets").exists())
 
+    def test_three_originals_positive_import_with_tiny_synthetic_png_fixtures(self):
+        """Test only temporary 1x1 fixtures; never upload test images as artwork."""
+        import hashlib
+        import struct
+        import zlib
+        from unittest.mock import patch
+        from videoforge.import_cinematic_chat_references import UPLOAD_THREE_REL
+
+        def chunk(kind,data):
+            return (struct.pack(">I",len(data))+kind+data+
+                    struct.pack(">I",zlib.crc32(kind+data)&0xffffffff))
+
+        def tiny_fixture(rgb):
+            return (b"\x89PNG\r\n\x1a\n"+
+                    chunk(b"IHDR",struct.pack(">IIBBBBB",1,1,8,2,0,0,0))+
+                    chunk(b"tEXt",b"fixture\x00"+b"X"*1400)+
+                    chunk(b"IDAT",zlib.compress(b"\x00"+bytes(rgb)))+
+                    chunk(b"IEND",b""))
+
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            base=root/"canal"/CHANNEL/"videos"/VIDEO
+            base.mkdir(parents=True)
+            actual_base=ROOT/"canal"/CHANNEL/"videos"/VIDEO
+            manifest=json.loads((actual_base/MANIFEST).read_text(encoding="utf8"))
+            candidate=json.loads(
+                (actual_base/"candidato-camera-c12-p02.json").read_text(encoding="utf8")
+            )
+            files={
+                "kael-close-salao.png":tiny_fixture([1,2,3]),
+                "elara-close-trono.png":tiny_fixture([5,6,7]),
+                "confronto-trono-c12-p02.png":tiny_fixture([9,10,11]),
+            }
+            for sample in manifest["approved_samples"]:
+                raw=files[Path(sample["expected_repo_path"]).name]
+                sample["dimensions_px"]=[1,1]
+                sample["original_sha256"]=hashlib.sha256(raw).hexdigest()
+                sample["expected_bytes"]=len(raw)
+            raw=files["confronto-trono-c12-p02.png"]
+            candidate.update({
+                "original_width_px":1,"original_height_px":1,
+                "source_sha256":hashlib.sha256(raw).hexdigest(),
+                "original_bytes":len(raw),
+            })
+            (base/MANIFEST).write_text(json.dumps(manifest),encoding="utf8")
+            (base/"candidato-camera-c12-p02.json").write_text(
+                json.dumps(candidate),encoding="utf8"
+            )
+            (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").write_text(
+                "PROHIBIT AI IMAGE GENERATION",encoding="utf8"
+            )
+            bundle=root/UPLOAD_THREE_REL
+            bundle.parent.mkdir(parents=True)
+            with ZipFile(bundle,"w") as z:
+                for name,raw in files.items(): z.writestr(name,raw)
+            fake_status={
+                "original_source_files_sha_verified":2,
+                "camera_candidate_C12_P02":{"source_verified":True},
+            }
+            with patch(
+                "videoforge.import_cinematic_chat_references.reference_status",
+                return_value=fake_status,
+            ):
+                out=validate_and_extract(root)
+            self.assertEqual(out["original_source_files_sha_verified"],2)
+            for sample in manifest["approved_samples"]:
+                name=Path(sample["expected_repo_path"]).name
+                self.assertEqual((base/sample["expected_repo_path"]).read_bytes(),files[name])
+            self.assertEqual(
+                (base/candidate["expected_repo_path"]).read_bytes(),
+                files["confronto-trono-c12-p02.png"],
+            )
+            # No final scene-mother, motion rigs or MP4 can be generated.
+            self.assertFalse((base/"assets/planos").exists())
+            self.assertFalse((base/"video.mp4").exists())
+
     def test_missing_zip_does_not_create_new_art_or_directories(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
