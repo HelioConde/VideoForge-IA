@@ -7,6 +7,19 @@ on:
       - 'videoforge/**'
       - 'tests/**'
       - 'canal/**'
+      # O canal Alchemy arquiva muitos PNGs e relatorios por workflow.
+      # Esses artefatos nao alteram o motor de renderizacao MVP.
+      # Evita render MP4 smoke a cada PNG/JSON de QA importado.
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/**'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-*.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-*.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/rig-*.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-ARTE-RIG-EP01.md'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/IMAGENS-EXTERNAS-PENDENTES.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/roteiro.md'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/storyboard.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/direcao-rig-remotion.json'
       - 'modelos/**'
       - 'docs/ARQUITETURA.md'
       - 'AGENTS.md'
@@ -16,6 +29,19 @@ on:
       - 'videoforge/**'
       - 'tests/**'
       - 'canal/**'
+      # O canal Alchemy arquiva muitos PNGs e relatorios por workflow.
+      # Esses artefatos nao alteram o motor de renderizacao MVP.
+      # Evita render MP4 smoke a cada PNG/JSON de QA importado.
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/**'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-*.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-*.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/rig-*.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-ARTE-RIG-EP01.md'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/IMAGENS-EXTERNAS-PENDENTES.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/roteiro.md'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/storyboard.json'
+      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/direcao-rig-remotion.json'
       - 'modelos/**'
       - 'docs/ARQUITETURA.md'
       - 'AGENTS.md'
