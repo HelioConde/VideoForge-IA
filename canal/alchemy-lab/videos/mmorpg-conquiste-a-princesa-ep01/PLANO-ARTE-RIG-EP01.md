@@ -126,3 +126,26 @@ Aldric agora tem `aldric-origem/aldric-RGB-da-mae-CANDIDATO.png`. O método Grab
 - O rig precisa de pivôs realmente medidos e áreas ocultas preenchidas; os candidatos atuais **não** têm esses dados.
 - A comparação de reconstrução de pixels visíveis não valida movimentos articulados. Guardas e rei não podem se deslocar enquanto as mãos/ombreiras estiverem incompletas.
 - Render oficial e upload YouTube continuam `false` até QA completo. O arquivo de lock continua obrigatoriamente ativo.
+
+## 11. Auditoria de recomposição e fundo reconciliado — sem novas artes
+
+ZIP recebido nesta conversa e conferido localmente em 14/11/2026: **8 PNGs, 8 hashes SHA-256 válidos**. O ZIP mede 8.857.833 bytes e tem SHA-256 2083cdd1425fef1b579cfb663016485a7c6b6c7279db0720db9830bd16e9b4a3. Detalhes em [qa-zip-8-imagens-existentes.json](qa-zip-8-imagens-existentes.json). **Esses oito PNGs ainda não estão no repositório GitHub:** o ZIP anexado ao chat não foi transferido pelo conector. O workflow de importação só roda após o ZIP ser enviado à pasta uploads/ do GitHub.
+
+A primeira [QA de recomposição](qa-recomposicao-c01.json) montou sprites existentes na pose neutra apenas em memória: diferença média RGB 11,095 e 17,2064% dos pixels com erro superior a 24 em algum canal. O fundo reconstruído alterava áreas que deveriam coincidir com a cena original.
+
+O código videoforge/reconcile_existing_background.py utilizou **somente pixels de duas imagens já existentes** para criar um candidato de fundo sem IA generativa, em assets/cena-01/candidatos/background-reconciliado-CANDIDATO.png. A operação preservou 800.935 pixels originais fora das máscaras de personagens e reduziu em 26,14% a diferença média RGB do fundo em relação à imagem-mãe.
+
+A [segunda QA com fundo corrigido](qa-recomposicao-c01-reconciliado.json) demonstrou:
+
+| Métrica | Original | Reconciliado |
+|---|---:|---:|
+| Diferença média RGB no quadro inteiro | 11,095 | 3,446 |
+| Pixels com maior erro RGB acima de 24 | 17,2064% | 5,3202% |
+| Diferença média na região rei/trono | 14,316 | 6,211 |
+| Diferença média nas lanças cruzadas | 13,646 | 7,379 |
+
+Os erros do quadro neutro caíram aproximadamente 69%, mas **isso não aprova animação nem garante que não surjam buracos ao movimentar personagens**. O resultado ainda é candidato e depende de revisão visual.
+
+**Total agora verificado: 57 PNGs** armazenados no caminho do episódio em canal/alchemy-lab. A imagem nova nesta contagem é uma derivação pixel-a-pixel de duas imagens já produzidas; não houve geração de nova ilustração por IA. Os 56 PNGs anteriores foram preservados.
+
+Próximos gates: verificar a oclusão correta das lanças e mãos; conferir Aldric sem fragmentos do trono; medir pivôs reais de Kael e guardas; avaliar em que movimentações as regiões escondidas ficam visíveis; validar composição e malhas Three.js antes de qualquer render oficial. As cenas 02 e 03 continuam reprovadas visualmente e o lock de não geração de imagens permanece ativo.
