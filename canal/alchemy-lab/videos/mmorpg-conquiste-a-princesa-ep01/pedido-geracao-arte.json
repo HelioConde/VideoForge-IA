@@ -1,0 +1,19 @@
+{
+  "schema": "videoforge/image-generation-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset": "character-bible",
+  "model": "gpt-image-2",
+  "max_calls_per_run": 1,
+  "youtube_upload": false,
+  "requested_by": "creative_user",
+  "purpose": "Gerar primeira imagem real de referência dos personagens para 14 cenas/37 planos e 163s. Produção seguirá cena-mãe > RGBA independente > rig mesh Three > Remotion. Não renderizar MP4 de imagem chapada nem declarar aprovação sem QA.",
+  "next_steps": [
+    "validar arquivo PNG e SHA real desta geração",
+    "revisão visual humana de identidade de Kael, Elara e Aldric",
+    "criar imagens-mãe dos planos com a mesma prancha de referência",
+    "reconstruir fundo e extrair partes RGBA reais",
+    "montar rigs e renderizar MP4 somente com QA"
+  ],
+  "status": "requested"
+}
