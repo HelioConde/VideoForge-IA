@@ -14,6 +14,7 @@ import {characterPoseAtFrame,CharacterPreset} from './character-idle';
 import {motionAtFrame} from './cinematic-motion';
 import {videoForgeMotionAtFrame} from './videoforge-motion';
 import {RiggedCharacter,RigManifest,blinkClosureAtFrame} from './mesh-rig';
+import {blinkNeutralWeightAtFrame,synchronizedPoseAtFrame,subtleHeadPoseAtFrame} from './blink-motion-sync';
 
 export type LayerSceneProps={
   id:string;
@@ -33,6 +34,11 @@ export type LayerSceneProps={
   blinkFrames?:number[];
   /** Somente objetos extraidos e com remocao da base comprovada. */
   animatedObjects?:Array<{src:string;approvedNoDuplicate:boolean;attachedToCharacter?:boolean}>;
+  /** Opt-in: requires genuine RGBA body with NO head and separate open/closed heads. */
+  articulatedHead?:{
+    bodyNoHead:string;headOpen:string;headClosed:string;
+    neckPivot:{x:number;y:number};sourceMatched:boolean;
+  }|null;
   silence:string;
   layerSourceHash:string;
   /** Ativado somente com sprites RGBA verificados, sem partes duplicadas. */
@@ -48,15 +54,20 @@ const imgStyle:React.CSSProperties={
 
 export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
   id,scene,durationFrames,preset,background,character,foreground,
-  characterEyesClosed,eyesClosed,hairForeground,blinkFrames,animatedObjects,silence,rig,draftPreview,
+  characterEyesClosed,eyesClosed,hairForeground,blinkFrames,animatedObjects,
+  articulatedHead,silence,rig,draftPreview,
 })=>{
   const frame=useCurrentFrame();
   const {fps}=useVideoConfig();
   const camera=motionAtFrame(frame,0,durationFrames,'establish',id,'cinematica');
-  // Camara acompanha o movimento, mas NAO substitui camadas animaveis.
-  const cameraTransform='translate('+(camera.panX*.30).toFixed(3)+'px,'+
-    (camera.panY*.25).toFixed(3)+'px) scale('+
-    (1+(camera.zoom-1)*.30).toFixed(5)+')';
+  const centers=blinkFrames??[Math.round(fps*2.8),Math.round(fps*6.0)];
+  // Neutralize gradually BEFORE the image swap, never snap at the swap frame.
+  // All attached character parts share this neutral frame and the same pivot.
+  const neutral=blinkNeutralWeightAtFrame(frame,
+    characterEyesClosed||articulatedHead ? centers : []);
+  const cameraTransform='translate('+(camera.panX*.30*neutral).toFixed(3)+'px,'+
+    (camera.panY*.25*neutral).toFixed(3)+'px) scale('+
+    (1+(camera.zoom-1)*.30*neutral).toFixed(5)+')';
   const characterPose=characterPoseAtFrame({
     role:'front_character',id:id,coverage:0.3815,
     contactRisk:.12,heroRisk:0,heightFraction:.72,
@@ -69,24 +80,33 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
   );
   // Camera condividida para composicao, movimento proprio para personagem
   // e primeiro plano. Nada de Math.random ou sprites substitutos.
+  const syncedPose=synchronizedPoseAtFrame(characterPose,frame,
+    characterEyesClosed||articulatedHead ? centers : []);
   const characterTransform='translate('+
-    characterPose.translateX.toFixed(3)+'px,'+
-    characterPose.translateY.toFixed(3)+'px) rotate('+
-    characterPose.rotateDeg.toFixed(4)+'deg)';
+    syncedPose.translateX.toFixed(3)+'px,'+
+    syncedPose.translateY.toFixed(3)+'px) rotate('+
+    syncedPose.rotateDeg.toFixed(4)+'deg)';
   // Nada de opacidade no rosto. A camada de olhos FECHADOS e sobreposta
   // apenas por 3-5 frames, nunca usada em crossfade com a face-base.
-  const centers=blinkFrames??[Math.round(fps*2.8),Math.round(fps*6.0)];
-  if(characterEyesClosed && (eyesClosed || hairForeground || rig)){
+  if(characterEyesClosed && (eyesClosed || hairForeground || rig || articulatedHead)){
     throw new Error('BLINK_CANNOT_MIX_FULL_CHARACTER_SWAP_WITH_EYELID_OVERLAYS');
   }
   if(eyesClosed && !rig && !hairForeground){
     throw new Error('BLINK_REQUIRES_HAIR_FOREGROUND_TO_AVOID_BANGS_OVERPAINT');
   }
+  if(articulatedHead && (rig || eyesClosed || hairForeground || !articulatedHead.sourceMatched)){
+    throw new Error('ARTICULATED_HEAD_REQUIRES_SEPARATE_VERIFIED_PARTS');
+  }
   const blink=eyesClosed ? blinkClosureAtFrame(frame,centers) : 0;
   // Faz troca de frame, nao sobrepoe uma faixa de pele nos fios da franja.
   // O PNG fechado tem exatos mesmos pixels da base fora dos olhos.
-  const showFullClosed=Boolean(characterEyesClosed && !rig &&
+  const showFullClosed=Boolean((characterEyesClosed || articulatedHead) && !rig &&
     centers.some(center=>Math.abs(frame-center)<=1));
+  const headPose=subtleHeadPoseAtFrame(frame,fps,centers);
+  const headTransform='translate('+
+    headPose.translateX.toFixed(3)+'px,'+
+    headPose.translateY.toFixed(3)+'px) rotate('+
+    headPose.rotateDeg.toFixed(4)+'deg)';
   const cameraGlow=Math.max(0,Math.min(.045,camera.fill));
   return <AbsoluteFill style={{overflow:'hidden',backgroundColor:'#100e1c'}}>
     {/* A imagem 2:3 permanece completa, com extensão desfocada apenas
@@ -104,10 +124,20 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
         ...imgStyle,zIndex:0,
       }}/>
       {rig ? <RiggedCharacter rig={rig} frame={frame} fps={fps}
-        duration={durationFrames}/> : <Img src={staticFile(showFullClosed ? characterEyesClosed! : character)} style={{
+        duration={durationFrames}/> : articulatedHead ? <div style={{
+          position:'absolute',inset:0,zIndex:20,
+          transform:characterTransform,transformOrigin:'50% 85%',
+        }}>
+          <Img src={staticFile(articulatedHead.bodyNoHead)} style={imgStyle}/>
+          <Img src={staticFile(showFullClosed ? articulatedHead.headClosed : articulatedHead.headOpen)} style={{
+            ...imgStyle,transform:headTransform,
+            transformOrigin:(articulatedHead.neckPivot.x/1024*100).toFixed(4)+'% '+
+              (articulatedHead.neckPivot.y/1536*100).toFixed(4)+'%',
+          }}/>
+        </div> : <Img src={staticFile(showFullClosed ? characterEyesClosed! : character)} style={{
         ...imgStyle,zIndex:20,transform:characterTransform,
         transformOrigin:'50% 85%',
-      }}/>}
+      }/>}
       {eyesClosed && !rig && blink>0 && <Img src={staticFile(eyesClosed)} style={{
         ...imgStyle,zIndex:25,
         transform:characterTransform,transformOrigin:'50% 85%',
