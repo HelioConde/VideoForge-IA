@@ -11,6 +11,14 @@
 **Precedência:** regra geral nº 1 (tudo pelo programa GitHub e sem publicação não autorizada) + este manual para toda decisão de animação. Instruções antigas abaixo sobre overlay de olhos ou bob devem ser interpretadas como histórico de prévias **LEGADAS E REPROVADAS**; não autorizam repetir tais técnicas no vídeo oficial.
 
 
+## REGRA DE ENQUADRAMENTOS CINEMATOGRÁFICOS — doramas, anime e narrativas
+
+**Para histórias com múltiplas tomadas, ler [docs/GUIA-ENQUADRAMENTOS-CINEMATOGRAFICOS.md](docs/GUIA-ENQUADRAMENTOS-CINEMATOGRAFICOS.md) antes de solicitar imagens.** Um plano geral não pode ser duplicado 20 vezes como pôster. Alternar conforme o roteiro entre close do rosto, extremo close de olhos, sobre-o-ombro, contraplano, planos médios, detalhes de mãos/objetos e planos de estabelecimento. Expressão e continuidade visual são obrigatórias.
+
+O planejamento é `direcao-cinematografica-planos.json` por vídeo e a API reutilizável `videoforge/cinematic_direction.py`. O gerador `videoforge/production_scenes.py` aceita `--shot-id C12-P01` (quando autorizado); é **uma imagem-mãe nova por ângulo necessário**, da mesma referência canônica, com SHA e recortes RGBA específicos. **Não** usar pan, zoom ou recorte de uma arte ampla como substituto de personagem em close de qualidade. UI/HUD e legendas entram no Remotion, não ficam impressos na arte.
+
+**Não quebrar o Manual Principal:** direção de câmera não equivale a rig real; sem underlays/pivôs/QA `pipeline_pendente`. O caso Alchemy Lab EP01 tem bloqueio expresso de nova geração de imagens e conflito de referências entre visual antigo e quadros aprovados no chat; não remover bloqueio nem mesclar figurinos silenciosamente.
+
 ## REGRA Nº 1 — Vídeos exclusivamente pelo programa VideoForge-IA no GitHub
 
 **Todo vídeo solicitado como produção oficial deve ser criado pelo fluxo de produção do repositório [HelioConde/VideoForge-IA](https://github.com/HelioConde/VideoForge-IA), executado e rastreável no GitHub Actions.** Esta regra tem prioridade sobre qualquer exemplo, demonstração, script temporário, renderer externo ou solução improvisada.
