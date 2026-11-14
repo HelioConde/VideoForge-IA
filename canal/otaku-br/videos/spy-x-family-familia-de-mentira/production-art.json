@@ -1,0 +1,45 @@
+{
+  "schema": "videoforge/production-art-plan/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "purpose": "assets_reais_para_pipeline_oficial",
+  "source_storyboard": "roteiro.json",
+  "source_scene_count": 16,
+  "style": "anime 2D ilustrado contemporâneo, traços limpos e expressivos, acabamento profissional, sombras suaves e cel shading, paleta harmoniosa. Jamais realista ou 3D.",
+  "character_bible": {
+    "anya": "Anya Forger, menina pequena de cabelos rosa-claro curtos e franja, olhos verdes grandes, dois acessórios pretos e dourados em forma de cone na lateral do cabelo; roupa infantil discreta em preto e dourado; tamanho infantil, não adulta.",
+    "loid": "Loid Forger, homem adulto com cabelo loiro curto penteado para o lado, olhos azuis esverdeados, terno verde escuro, camisa branca e gravata vermelha; postura cuidadosa.",
+    "yor": "Yor Forger, mulher adulta com cabelo preto longo, faixa vermelha e brincos dourados discretos, olhos vermelhos escuros, roupa elegante vinho/preto; postura gentil e atenta."
+  },
+  "visual_rules": [
+    "Sempre mesma aparência dos personagens em todas as cenas, sem alternar estilo de arte.",
+    "Proporção criança/adultos correta, mãos anatomia e rostos consistentes.",
+    "Manter cabeça, cabelo e roupa inteiros na arte-base; não recortar anatomia no desenho inicial.",
+    "Sem texto, balões, logomarcas ou marca d'água desenhados dentro da imagem.",
+    "Composição com espaço livre para legendas na região inferior.",
+    "Cena-base e sprites extraídos devem manter coordenadas, cores e iluminação coerentes.",
+    "Nenhum frame, screenshot, desenho oficial ou trilha existente reutilizado."
+  ],
+  "request_limit": {
+    "per_run": 1,
+    "total_target": 21,
+    "strict_budget": 30,
+    "never_retry_429": true
+  },
+  "assets": [
+    {
+      "id": "character-bible",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "prompt": "Prancha de referência original e coesa, estilo anime 2D profissional, com os três integrantes da família Forger juntos em plano americano, vistos de frente, com expressões serenas e distintas, iluminação suave de fim de tarde. Loid (adulto loiro de terno verde, gravata vermelha) à esquerda; Anya (menina pequena de cabelo rosa-claro, olhos verdes e acessórios pretos/dourados, roupa infantil) ao centro; Yor (adulta de cabelo longo preto, roupa vinho/preto, tiara vermelha) à direita. Manter rostos, roupa e silhuetas nítidos, sem sobreposição entre personagens, sem misturar características, sem lettering e sem marca d'água, quadro vertical 2:3. Imagem de referência para uso em todas as 16 cenas, não cartão gráfico, não diagrama."
+    }
+  ],
+  "scene_prompt_template": "Criar uma cena NOVA em anime 2D coerente com a PRANCHA DE REFERÊNCIA fornecida. Reutilizar exatamente a identidade de Anya, Loid e Yor: mesma roupa, cabelo, rosto, proporções e estilo de cor. Preservar continuidade e composição vertical. Cena: {visual_direction}. Objetivo da cena: {story_goal}. Sem texto, sem logos, sem quadros de HQ. Não copiar frames do anime.",
+  "scene_count_unlimited": true,
+  "publication": {
+    "youtube_upload": false,
+    "qa_visual_pending": true,
+    "artifacts_only": true
+  }
+}
