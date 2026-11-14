@@ -1,0 +1,27 @@
+{
+  "schema": "videoforge/anya-threecanvas-art-review-request/v1",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "source_original_run": 43560159589,
+  "static_other_characters_corrected_run": 43591918632,
+  "source_draft_underlay_alpha254_run": 43598536256,
+  "purpose": "Renderizar quadros reais de Anya com malhas esquerda/direita em ThreeCanvas para diagnosticar costuras, mantendo Loid/Yor estáticos e nenhuma aprovação humana simulada",
+  "frames": [
+    0,
+    30,
+    74,
+    76,
+    173,
+    175,
+    239
+  ],
+  "render_mode": "preview_tecnico_nao_oficial",
+  "real_art_visual_review": "pending",
+  "rig_operational": false,
+  "human_visual_approval": false,
+  "youtube_uploaded": false,
+  "allow_private_workflows": false,
+  "new_image_calls": 0
+}
