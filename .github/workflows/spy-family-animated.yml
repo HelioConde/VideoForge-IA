@@ -1,10 +1,7 @@
-name: "Otaku BR - Spy x Family animacao por camadas (teste integral)"
+name: "TESTE TECNICO nao oficial - Spy x Family animacao"
 on:
+  # EXCLUSIVAMENTE para teste de motor, nao para producao oficial.
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'canal/otaku-br/videos/spy-x-family-familia-de-mentira/executar-animacao.json'
 
 permissions:
   contents: read
@@ -112,7 +109,7 @@ jobs:
           assert qa['publishable'] is False and qa['youtube_uploaded'] is False
           print('ANIMATED PREVIEW QA OK — arte vetorial de teste; revisao humana pendente')
           PY
-      - name: Entregar MP4 animado e relatórios (sem YouTube)
+      - name: Entregar apenas PREVIA TECNICA nao oficial e relatórios (sem YouTube)
         if: always()
         uses: actions/upload-artifact@v4
         with:
