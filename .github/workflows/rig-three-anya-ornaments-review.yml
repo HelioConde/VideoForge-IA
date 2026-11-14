@@ -1,0 +1,136 @@
+name: "VideoForge - enfeites Anya unidos a cabeca (ThreeCanvas QA)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/anya-ornaments-three-qa.json'
+permissions:
+  contents: read
+  actions: read
+  packages: read
+concurrency:
+  group: vf-anya-ornaments-three-review
+  cancel-in-progress: false
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Imagem-mae original
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/original
+      - name: Loid e Yor da composicao anterior
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43591918632
+          name: vf-anya-hand-head-separate-draft-43591918632
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/corrected
+      - name: Seis sprites de Anya e cabelo articulado
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43599799485
+          name: vf-anya-hair-underlay-candidate-43599799485
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/draft
+      - name: Dois enfeites preto e amarelo na arte original
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43602371052
+          name: vf-anya-head-ornaments-from-original-43602371052
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/ornaments
+      - name: Testar TypeScript e malhas reais antes do render
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          python -m unittest tests.test_animation_manual tests.test_rig_three_contract -v
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/rig-three-math.test.cjs tests/blink-motion-sync.test.cjs
+      - name: Validar 8 sprites com enfeites atras do cabelo e pai cabeca
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_three_draft_review \
+            --original ./input/original --corrected ./input/corrected \
+            --candidate ./input/draft --ornaments ./input/ornaments \
+            --art-run-id 43599799485 \
+            --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/ornament-head-qa
+      - name: Renderizar frames reais no ThreeCanvas para inspecao de enfeites
+        shell: bash
+        run: |
+          set -euo pipefail
+          folder=output/otaku-br/videos/spy-x-family-familia-de-mentira/ornament-head-qa
+          cd motion-remotion
+          for frame in 0 30 74 76 173 175; do
+            ./node_modules/.bin/remotion still src/rig-three-review-index.ts VideoForgeAnyaRigDraftQA \
+              "../$folder/frame-$frame.png" --frame="$frame" \
+              --props="../$folder/props.json" --gl=swangle --log=error
+          done
+          cd ..
+          test -s "$folder/frame-0.png"
+          test -s "$folder/frame-30.png"
+      - name: Validar que as duas areas dos enfeites deixaram de ser estaticas
+        shell: bash
+        run: |
+          set -euo pipefail
+          folder=output/otaku-br/videos/spy-x-family-familia-de-mentira/ornament-head-qa
+          for part in left right; do
+            if [[ "$part" = left ]]; then rect=24:36:325:1282
+            else rect=24:36:718:1288
+            fi
+            for frame in 0 30; do
+              ffmpeg -nostdin -v error -y -i "$folder/frame-$frame.png" \
+                -vf "crop=$rect" -frames:v 1 -pix_fmt rgb24 -f rawvideo \
+                "$folder/ornament-$part-$frame.rgb"
+            done
+            if cmp -s "$folder/ornament-$part-0.rgb" "$folder/ornament-$part-30.rgb"; then
+              echo "FAIL: $part accessory still static" >&2; exit 2
+            fi
+          done
+          echo "BOTH_HAIR_ORNAMENT_REGIONS_MOVE_IN_THREECANVAS"
+      - name: Gerar 6s de MP4 para revisao SEM publicar
+        shell: bash
+        run: |
+          set -euo pipefail
+          folder=output/otaku-br/videos/spy-x-family-familia-de-mentira/ornament-head-qa
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/rig-three-review-index.ts VideoForgeAnyaRigDraftQA \
+            "../$folder/anya-ornaments-head-fixed-6s.mp4" \
+            --props="../$folder/props.json" --frames=0-179 \
+            --codec=h264 --pixel-format=yuv420p \
+            --gl=swangle --concurrency=1 --log=error
+          cd ..
+          ffprobe -v error -show_entries stream=codec_name,pix_fmt,width,height,r_frame_rate \
+            -show_entries format=duration,size -of json \
+            "$folder/anya-ornaments-head-fixed-6s.mp4" > "$folder/ffprobe.json"
+          test -s "$folder/anya-ornaments-head-fixed-6s.mp4"
+      - name: QA final nao oficial
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_three_ornament_render_qa \
+            --folder output/otaku-br/videos/spy-x-family-familia-de-mentira/ornament-head-qa
+      - name: Exportar MP4 e screenshots somente de revisao
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-anya-ornaments-head-follow-review-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/ornament-head-qa/
+          if-no-files-found: warn
+          retention-days: 14
