@@ -55,7 +55,7 @@
   "rig_animado_aplicado": false,
   "video_oficial_do_programa": false,
   "youtube_uploaded": false,
-  "status": "cropped_candidate_assets_packaged_synthetic_threecanvas_qa_passed_human_visual_and_real_anya_motion_pending",
+  "status": "real_art_threecanvas_draft_frames_passed_hair_hand_neck_visual_and_mp4_pending",
   "provisional_neck_pivot_review": {
     "source": "local exploratory OpenCV geometry check; NOT a ThreeCanvas render or official motion QA",
     "pivot_candidate_original_canvas": [
@@ -175,5 +175,44 @@
     "other_characters_static_background_compositor_pending": true,
     "human_review_approved": false,
     "real_character_ThreeCanvas_rendered": false
+  },
+  "real_art_threecanvas_draft_qa": {
+    "workflow_run_id": 43598866124,
+    "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43598866124",
+    "artifact_id": 14114674407,
+    "artifact_name": "vf-anya-three-real-art-unapproved-review-43598866124",
+    "source_art_run": 43598536256,
+    "corrected_static_other_run": 43591918632,
+    "actual_art_frames_rendered": [
+      0,
+      30,
+      74,
+      76,
+      173,
+      175,
+      239
+    ],
+    "renderer": "Remotion 4 / ThreeCanvas SWANGLE",
+    "both_side_hair_pinned_meshes": true,
+    "source_character_and_background_sha_verified": true,
+    "others_from_corrected_partition_sha_verified": true,
+    "frame_30_repeat_identical": true,
+    "scene_motion_visible_between_frame_0_and_frame_30": true,
+    "blink_difference_visible_74_vs_76": true,
+    "neutral_reference_visual_review": "technical screenshot review indicates consistent Loid/Yor; hair neck and finger seams require motion review",
+    "approval": "pending_human_visual_review",
+    "video_official": false,
+    "youtube_uploaded": false
+  },
+  "underlay_alpha_source_fix": {
+    "source_alpha_plateau": 254,
+    "previous_underlay_pixel_count_with_alpha_255_condition": 0,
+    "reconstructed_pixels_with_actual_alpha_plateau": 14803,
+    "hair_mask_total_pixels": 60731,
+    "corrected_workflow_run_id": 43598536256,
+    "neutral_rgb_mean_error": 0.06014,
+    "pixels_with_rgb_error_above_20": 0,
+    "pixels_with_alpha_error_above_3": 0,
+    "status": "pixel_qa_passed_motion_visual_review_pending"
   }
 }
