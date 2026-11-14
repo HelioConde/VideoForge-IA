@@ -32,7 +32,8 @@
     "previous_generated_images": 17,
     "extra_images_this_test": 2,
     "remaining_planned_per_scene": "needs_separate_explicit_budget_review",
-    "no_retry_http_429": true
+    "no_retry_http_429": true,
+    "one_additional_edited_character_image_approved_by_user_for_fix": true
   },
   "scenes": [
     {
@@ -86,7 +87,7 @@
           1310
         ],
         "sprite_name": "eyes-closed.png",
-        "status": "refined_safe_eye_matte_technical_verified_user_review_pending",
+        "status": "new_full_character_edit_pending",
         "requires_real_alpha": true,
         "blink_centers_frames": [
           90,
@@ -99,7 +100,31 @@
         "hair_foreground_sprite": "hair-foreground.png",
         "blink_hair_occlusion_sha256": "ed6769c49700c2d5ba1243d4e388ad285abe27aa076abd7daf150e76d9766670",
         "latest_preview_run_id": 43573042654,
-        "human_visual_approval": false
+        "human_visual_approval": false,
+        "method": "edit_full_original_character_same_reference",
+        "source_file": "character-main.png",
+        "new_ai_output": "character-eyes-closed-ai.png",
+        "safe_full_output": "character-eyes-closed-safe.png",
+        "reference": "a mesma imagem ORIGINAL do personagem RGBA que ja esta na cena, nao a cena-mae com fundo nem outro personagem redesenhado",
+        "prompt": "Use esta mesma imagem do personagem como unica referencia. Altere APENAS os dois olhos da Anya GRANDE em primeiro plano para fechados. Nao mude ABSOLUTAMENTE NADA MAIS: rosto, cabelo, franja, pele, boca, roupas, pose, fundo/transparencia, luz, escala, enquadramento, contornos, Loid, Yor ou Anya pequena. Devolva a mesma imagem INTEIRA do personagem em RGBA, so com os olhos fechados.",
+        "eye_ellipses_original_canvas": [
+          [
+            421,
+            1230,
+            80,
+            52
+          ],
+          [
+            611,
+            1230,
+            88,
+            52
+          ]
+        ],
+        "must_keep_non_eye_pixels_identical": true,
+        "must_keep_alpha_identical": true,
+        "no_overlay": true,
+        "visual_approval": false
       }
     },
     {
@@ -338,5 +363,10 @@
     "eyes_closed_rgba_optional_unless_verified": true,
     "face_opacity_during_blink": 1,
     "individual_parts_requirement_for_official": true
-  }
+  },
+  "blink_method_required_for_future_scenes": "edit_same_original_full_character_png_close_only_target_eyes_swap_complete_frames_retain_non_eye_pixels_and_alpha",
+  "blink_method_legacy_forbidden": [
+    "eyes_closed_sticker_over_hair",
+    "hair_overlay_repair_for_generated_full_face_patch"
+  ]
 }
