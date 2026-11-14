@@ -1,0 +1,254 @@
+{
+  "schema": "videoforge/scene-mother-layer-plan/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "canonical_manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "art_source": "Cena-mae gerada pela producao do VideoForge com referencia real; C01 run 43591342058",
+  "source_artifact_run_first": 43591342058,
+  "source_artifact_name_first": "vf-real-scene-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-1-43591342058",
+  "model": "gpt-image-2",
+  "strategy": "edit_same_scene_mother_never_redraw_independent",
+  "dimensions": {
+    "width": 1024,
+    "height": 1536
+  },
+  "instruction_background": "RECONSTRUA SOMENTE O FUNDO DA EXATA CENA-MÃE RECEBIDA DO JULGAMENTO NO SALÃO REAL DE ARKEN. Remova COMPLETAMENTE Kael ajoelhado em primeiro plano, os DOIS guardas em pé à esquerda/direita, as DUAS lanças cruzadas e o REI Aldric sentado, MAS mantenha o grande trono, escadaria, colunas, vitrais, lustres, bandeiras, tapeçarias e piso exatamente como estão, restaurando as pedras, degraus e partes do encosto antes ocultas. NÃO recrie cenário novo; preserve perspectivas, luz, cores, câmera, reflexos e pixel alignment do quadro vertical 1024x1536. Saída PNG opaco sem personagens, armas nem novo conteúdo.",
+  "instruction_character": "DA MESMÍSSIMA CENA-MÃE RECEBIDA, EXTRAIA APENAS os personagens existentes e inteiros: KAEL ajoelhado em primeiro plano (cabelo preto, jaqueta cinza), REI ALDRIC sentado (barba grisalha e roupa bordô-preto), GUARDA ESQUERDO e GUARDA DIREITO com armaduras completas. Preserve seus rostos, roupas, poses, partes ocultas quando necessário, tamanho e COORDENADAS ABSOLUTAS no canvas original 1024x1536; todo o resto precisa ser alfa RGBA verdadeiramente transparente, sem xadrez nem cor chapada. RETIRE do sprite as duas lanças, pois serão props separados, sem apagar mãos e punhos. Não desenhe a princesa nem invente personagens. Este recorte de grupo é apenas estágio intermediário: separar cada pessoa e cada parte do corpo será obrigatório antes do rig.",
+  "required_to_approve": [
+    "source_hash_sha256",
+    "background_png_reconstructed_real",
+    "characters_group_rgba_real",
+    "spear_prop_independent_pending",
+    "each_character_separated_pending",
+    "head_body_hair_arms_mesh_pending",
+    "underlays_masks_pivots_roundtrip_pending",
+    "rig_three_real_pending",
+    "human_visual_qa_pending"
+  ],
+  "render_fallback": "disabled_official; no animation of flattened group",
+  "no_fixed_scene_count": true,
+  "budget": {
+    "extra_images_this_test": 2,
+    "scope": "primeiro teste apenas: fundo+grupo; gerações seguintes sem teto editorial mas exigem QA, cota e pedido por etapa",
+    "no_retry_http_429": true
+  },
+  "scenes": [
+    {
+      "number": 1,
+      "scene": "c01",
+      "visual_direction": "UMA ÚNICA IMAGEM-MÃE do salão do trono de Arken em enquadramento vertical dramático amplo: no primeiro plano KAEL ajoelhado de costas em 3/4, cabeça baixa; atrás dele DOIS guardas simétricos com lanças cruzadas em X por cima dos ombros (pontos de pega corretos), Rei ALDRIC sentado no enorme trono ao fundo sob vitrais e pedra azul com detalhes de ouro. A princesa NÃO deve aparecer nem como sombra: está fora do quadro. Silhuetas de personagens completas e separáveis, luz e perspectiva coerentes, nenhuma espada nas mãos de Kael. NÃO formar colagem, não desenhar várias cenas, apenas um momento congelado filmável. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C01, plano-base C01-P04: Revelar guardas e lanças cruzadas",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [
+        "lanca_esquerda",
+        "lanca_direita",
+        "kael",
+        "aldric",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 2,
+      "scene": "c02",
+      "visual_direction": "plano frontal de Aldric com coroa, barba e manto bordô; ele se inclina minimamente para declarar acusação; boca exige sincronização fonética real. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C02, plano-base C02-P01: O rei acusa",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 3,
+      "scene": "c03",
+      "visual_direction": "close extremo do olho de Kael; reflexo do monitor nasce dentro da pupila, sem substituir rosto ou cortar franja; áudio afasta o tribunal. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C03, plano-base C03-P01: Reflexo azul na pupila",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 4,
+      "scene": "c04",
+      "visual_direction": "Kael sentado no computador com roupa casual coerente; mão direita opera mouse e esquerda teclado; monitor fornece iluminação azul. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C04, plano-base C04-P01: Último login",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 5,
+      "scene": "c05",
+      "visual_direction": "paisagem estabelece muralhas, estrada e árvores separadas com profundidade parallax real, Kael minúsculo e espantado. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C05, plano-base C05-P02: Muralhas de Arken",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 6,
+      "scene": "c06",
+      "visual_direction": "mercado medieval com bancas e figurantes em layers independentes; Kael abre bolsa com duas mãos, o interior deve estar reconstruído. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C06, plano-base C06-P01: Bolsa vazia",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 7,
+      "scene": "c07",
+      "visual_direction": "Elara disfarçada sob capuz azul aproxima-se pelo beco, olha para trás; cabelo e capa devem ser separados, mesma identidade posterior. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C07, plano-base C07-P01: Jovem corre no beco",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 8,
+      "scene": "c08",
+      "visual_direction": "carrinho inteiro como prop com partes independentes atravessa beco, rodas giram vinculadas ao deslocamento e sombra move; Kael empurra com contato persistente. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C08, plano-base C08-P02: Empurra e gira rodas",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 9,
+      "scene": "c09",
+      "visual_direction": "Kael e Elara respiram no final do beco; ela encosta a mão na dele brevemente, gratidão, não romance imediato. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C09, plano-base C09-P01: Agradecimento",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 10,
+      "scene": "c10",
+      "visual_direction": "Kael flexiona joelhos, agacha e segura broche com pinça entre indicador e polegar; mão e broche mantêm contato depois da pega. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C10, plano-base C10-P02: Kael recolhe",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 11,
+      "scene": "c11",
+      "visual_direction": "Kael tenta devolver o objeto aos guardas, mantendo palma aberta; guardas veem emblema e trocam olhar desconfiado. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C11, plano-base C11-P01: Mostra broche no portão",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 12,
+      "scene": "c12",
+      "visual_direction": "câmera se desloca para revelar Elara à direita do trono pela oclusão natural, sem fade; Kael gira cabeça só 0,6° sem erguer queixo. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C12, plano-base C12-P02: Revelação da princesa",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 13,
+      "scene": "c13",
+      "visual_direction": "HUD azulado surge apenas na visão de Kael; moldura primeiro, título depois; sobrepor na interface e não no rosto. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C13, plano-base C13-P01: Missão desbloqueada",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    },
+    {
+      "number": 14,
+      "scene": "c14",
+      "visual_direction": "princesa encara corte ao declarar noivado; autonomia é central; rei levanta sobrancelhas; sincronizar visemas. A ilustração deve ser uma única cena-mãe coerente e não uma montagem de múltiplos quadros ou sequências.",
+      "story_goal": "Cena C14, plano-base C14-P02: O falso noivado",
+      "required_layers": [
+        "background",
+        "character-main"
+      ],
+      "objects_to_animate": [],
+      "human_visual_approval": false,
+      "individual_character_sprites": "pending",
+      "head_eyes_hair_clothes_rgba": "pending",
+      "rig_status": "pending"
+    }
+  ]
+}
