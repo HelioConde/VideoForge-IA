@@ -25,10 +25,10 @@ class MainImageGenerationPersistenceWiringTests(unittest.TestCase):
                 s=(ROOT/".github"/"workflows"/name).read_text()
                 self.assertIn("contents: write",s)
                 self.assertIn("persist-credentials: true",s)
-                self.assertIn("scripts/persistir-imagens-gh.sh",s)
+                self.assertIn("scripts/arquivar-pngs-se-existirem.sh",s)
                 self.assertIn("actions/upload-artifact@v4",s)
-                self.assertIn("success()",s)
-                self.assertLess(s.index("scripts/persistir-imagens-gh.sh"),
+                self.assertIn("always()",s)
+                self.assertLess(s.index("scripts/arquivar-pngs-se-existirem.sh"),
                                 s.rindex("actions/upload-artifact@v4"))
 
     def test_image_generation_lock_still_applies_to_alchemy(self):
@@ -44,6 +44,14 @@ class MainImageGenerationPersistenceWiringTests(unittest.TestCase):
         self.assertIn("git push origin HEAD:main",script)
         self.assertNotIn("git push --force",script)
         self.assertNotIn("git reset --hard",script)
+
+    def test_archive_wrapper_includes_failed_visual_qa_protection(self):
+        script=(ROOT/"scripts"/"arquivar-pngs-se-existirem.sh").read_text()
+        self.assertIn("PRIOR_STATUS",script)
+        self.assertIn("persistir-imagens-gh.sh",script)
+        self.assertIn("PNG_ORIGINAL_PRESERVED_EVEN_IF_VISUAL_QA_FAILED",script)
+        self.assertIn("if [[ \"$PRIOR_STATUS\" == success ]]",script)
+        self.assertIn("No PNG generated",script)
 
     def test_matrix_jobs_get_independent_per_run_producer_paths(self):
         batch=(ROOT/".github"/"workflows"/"production-scenes-batch-by-request.yml").read_text()
