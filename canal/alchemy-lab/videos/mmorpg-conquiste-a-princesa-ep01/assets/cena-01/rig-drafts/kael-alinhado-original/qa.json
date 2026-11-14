@@ -1,0 +1,39 @@
+{
+  "schema": "videoforge/kael-source-alignment-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "sourceMotherSHA256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "maskOnlyFromPreviousGroupSHA256": "e9d0f6a1e69a4a49e30e8744be6b3ae3b4c8caf46bf1ebcf69fee3572889bcb9",
+  "previousCandidateSHA256": "f910f2df550062267efb17cde99a950c1afa47e1216179372fd963a26b864f41",
+  "output": "kael-alinhado-mesma-cena-mae-CANDIDATO.png",
+  "outputSHA256": "5fab509b5eb72114a780b2a7ae63197e6665ed91e25471187158adf794baf3c0",
+  "sourceRGBCopiedWithoutModification": true,
+  "imageGenerationCalls": 0,
+  "alignment": {
+    "oldCandidateIouVsOriginalMother": 0.27821,
+    "maskPixelOverlap": 120538,
+    "oldCandidateNotAligned": true,
+    "sourceBbox": [
+      306,
+      750,
+      647,
+      1397
+    ],
+    "pixelCount": 134352
+  },
+  "status": "candidate_aligned_needs_visual_QA",
+  "humanReview": false,
+  "facialRig": false,
+  "hairMesh": false,
+  "underlayReconstructed": false,
+  "partSplittingComplete": false,
+  "officialVideo": false,
+  "youtubeUploaded": false,
+  "notes": [
+    "O Kael RGBA anterior está em escala distinta da mãe; não usar suas coordenadas para rig",
+    "Nova cor e silhueta derivadas exclusivamente dos pixels da cena original",
+    "Áreas antes escondidas ainda não existem: mãos, cabelo e ombros não podem girar sem underlays",
+    "O antigo groupRGBA contém trono e fundo, foi usado SOMENTE para obter máscara do Kael"
+  ]
+}
