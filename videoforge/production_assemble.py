@@ -26,6 +26,16 @@ def _sha(path:Path)->str:
 
 def prepare(channel:str,video_id:str,images:Path,voice:Path,
             reference_report:Path,root:Path=ROOT)->dict:
+    # Histórias cinematográficas com EDL por tomada NUNCA podem cair no
+    # montador legado de 14 imagens estáticas e "cinematic-pan".
+    # Esse compositor só produz revisão técnica, não rigs ThreeCanvas.
+    cinematic_plan=root/"canal"/channel/"videos"/video_id/"direcao-cinematografica-planos.json"
+    if cinematic_plan.is_file():
+        from .cinematic_shot_assets import build_edl
+        edl=build_edl(channel,video_id,root)
+        if not edl["renderOfficialAllowed"]:
+            raise VideoForgeError("CINEMATIC_36_SHOTS_REQUIRE_OWN_MOTHERS_RIGS_AND_QA")
+        raise VideoForgeError("CINEMATIC_REMOTION_MULTI_SHOT_RENDERER_NOT_INTEGRATED")
     plan,story=production_art.read_plan(channel,video_id,root)
     video=root/"canal"/channel/"videos"/video_id
     scenes=story["scenes"]
