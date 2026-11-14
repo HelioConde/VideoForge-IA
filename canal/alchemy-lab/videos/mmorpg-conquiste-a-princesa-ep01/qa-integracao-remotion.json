@@ -1,0 +1,74 @@
+{
+  "schema": "videoforge/cinematic-remotion-integration-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "verified_date": "2026-11-14",
+  "status": "software_integrated_assets_pending",
+  "components": {
+    "edl": "timeline-cinematografica.json",
+    "shot_asset_validator": "videoforge/cinematic_shot_assets.py",
+    "remotion_compositor": "motion-remotion/src/cinematic-episode.tsx",
+    "remotion_contract": "motion-remotion/src/cinematic-timeline.ts",
+    "remotion_root": "motion-remotion/src/cinematic-root.tsx",
+    "remotion_entrypoint": "motion-remotion/src/cinematic-index.ts",
+    "remotion_exporter": "videoforge/cinematic_remotion_export.py",
+    "official_preflight": "videoforge/official_production.py"
+  },
+  "format": {
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "duration_seconds": 163,
+    "frames": 4890,
+    "shots": 37
+  },
+  "features_provisioned": [
+    "Black opening without source image",
+    "36 individual visual shot slots",
+    "Frame-exact Sequence hard cuts",
+    "Independent ThreeCanvas actor rigs per shot",
+    "Close-up source is tied to own shot ID",
+    "UI and HUD are separate Remotion layers",
+    "No static poster pan substitute",
+    "Sha256 and cropped RGBA bbox verification",
+    "Renderer/asset export refuses missing approval",
+    "Canonical face and clothing identity conflict blocks official release"
+  ],
+  "quality": {
+    "remotion_typescript_ci": {
+      "run_id": 43639916818,
+      "conclusion": "success",
+      "node_contract_tests": 6
+    },
+    "python_cinematic_edl_ci": {
+      "run_id": 43640378411,
+      "conclusion": "success",
+      "python_tests": 36
+    },
+    "remotion_input_source": "synthetic in-memory test fixtures only; no artwork falsely approved",
+    "official_shots_approved": 0,
+    "black_shots_without_art": 1,
+    "visual_shots_pending": 36,
+    "reference_identity_verified": false,
+    "all_rigs_approved": false,
+    "official_mp4": false,
+    "youtube_uploaded": false,
+    "new_image_generation_calls": 0,
+    "existing_pngs_modified": false
+  },
+  "blockers": [
+    "36 per-shot original mothers/background RGBA parts and QA absent",
+    "Character canon conflicts between earlier bible and approved chat examples",
+    "Both head/eye and independent body rigs, hidden underlays and pivots need approval",
+    "Native audio and final audiovisual QA are still pending"
+  ],
+  "next_steps": [
+    "Import and verify final character references in channel/alchemy-lab",
+    "Agree canonical identity and migrate original art bible",
+    "Obtain per-shot mothers when explicitly authorized; no new images now",
+    "QA each RGBA mesh rig and independent eye movement",
+    "Stage SHA approved pixels to motion-remotion/public, then use dedicated cinematic root",
+    "Verify finished audiovisual MP4 before any upload"
+  ],
+  "image_generation_lock": "SEM-GERACAO-NOVAS-IMAGENS.lock"
+}
