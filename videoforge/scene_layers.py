@@ -18,6 +18,8 @@ import sys
 import zlib
 
 from . import proxy_images as proxy
+from . import image_generation_policy
+from .errors import VideoForgeError
 from .paths import _check_symlinks
 
 SCHEMA = "videoforge/scene-layers/v1"
@@ -226,6 +228,11 @@ def generate_layer(folder: Path, name: str, url: str, key: str, model: str, *, i
     if name not in COMPONENTS or model not in proxy.IMAGE_MODELS:
         raise LayerError("Modelo ou componente invalido")
     manifest = _read_manifest(folder / "manifest.json")
+    try:
+        image_generation_policy.assert_image_generation_allowed(
+            manifest.get("channel"), manifest.get("video_id"))
+    except VideoForgeError as exc:
+        raise LayerError(str(exc)) from None
     target = folder / (name + ".png")
     _check_symlinks(target, stop_at=proxy.ROOT)
     if target.exists() or name in manifest["layers"]:
