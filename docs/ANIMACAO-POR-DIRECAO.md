@@ -25,6 +25,17 @@ episódio. `bbox` significa **x, y, largura, altura** em pixels da mãe;
 o empacotador recorta o bbox preservando os pixels. Nós sem arquivo são grupos.
 O `target` de cada trilha deve coincidir exatamente com um ID de nó.
 
+Para uma costura que se liga a uma região imóvel, `mesh.sourcePin` define
+`startY`/`endY` no canvas original. A malha reduz gradualmente o movimento
+até manter os vértices abaixo de `endY` na posição original, compensando
+também transformações dos pais. Os ombros podem respirar sem arrancar a
+jaqueta da cintura. Escalas não invertíveis nessa hierarquia são rejeitadas.
+
+Um nó com `onlyUncoveredBy: [ids]` recupera pixels visíveis já existentes
+da sua fonte verificada, dentro de seu bbox, somente onde todas as peças
+referenciadas são transparentes. Não cria anatomia oculta nem sobrepõe
+pixels ocupados. `pixelRecovery` registra origem, referências e contagem.
+
 Arquivo ausente, SHA divergente, caminho externo, ciclo na hierarquia,
 trilha sem alvo, timeline inválida e metadados incompatíveis interrompem a
 preparação. Ausências de outros planos aparecem no relatório de cobertura.

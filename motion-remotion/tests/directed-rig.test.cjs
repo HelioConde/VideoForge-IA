@@ -7,7 +7,7 @@ Module._extensions['.ts']=(m,filename)=>m._compile(ts.transpileModule(
   fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,
   target:ts.ScriptTarget.ES2020},fileName:filename}).outputText,filename);
 const {validateDirectedProps,shotAtFrame,trackAtFrame,nodeTransformAtFrame,
-  transformSourcePoint,directedMeshAtFrame,cameraAtFrame,sourceWorldScale}=
+  transformSourcePoint,inverseTransformSourcePoint,directedMeshAtFrame,cameraAtFrame,sourceWorldScale}=
   require('../src/directed-rig-math.ts');
 const node=(id,parent=null,pivot=[100,100])=>({id,parent,pivot,role:'joint',z:1});
 const shot=(id,start,end)=>({id,startFrame:start,endFrameExclusive:end,
@@ -93,4 +93,51 @@ test('existing C01-P03 bindings and absolute direction match the renderer contra
   validateDirectedProps(props);
   assert.equal(shotAtFrame(props.shots,150).id,'C01-P03');
   assert.equal(nodeTransformAtFrame(props.shots[0],'kael.cabeca',239).rotationZ,-.6);
+});
+
+test('waist seam stays in source position while shoulders breathe at every frame',()=>{
+  const s=shot('waist',150,240);
+  s.nodes=[node('shoulders',null,[472,1068]),{
+    ...node('jacket','shoulders',[472,1068]),file:'jacket.png',bbox:[336,809,240,264],
+    mesh:{kind:'cloth',columns:7,rows:9,pinnedRows:[0],amplitudePx:.8,
+      sourcePin:{startY:950,endY:985}},
+  }];
+  s.tracks=[{target:'shoulders',transform:'translateY',unit:'pixels_source_canvas',
+    easing:'easeInOutCubic',keyframes:[{frame:150,value:0},{frame:214,value:-2},{frame:239,value:-2}]}];
+  const jacket=s.nodes[1];
+  const source=directedMeshAtFrame(jacket,s,150,30);
+  for(let frame=150;frame<240;frame++){
+    const mesh=directedMeshAtFrame(jacket,s,frame,30);
+    for(let row=6;row<=9;row++)for(let col=0;col<=7;col++){
+      const i=(row*8+col)*3;
+      const local=[mesh.positions[i]+512,768-mesh.positions[i+1]];
+      const world=transformSourcePoint(s,jacket.id,local,frame);
+      assert.ok(Math.abs(world[0]-(source.positions[i]+512))<1e-9);
+      assert.ok(Math.abs(world[1]-(768-source.positions[i+1]))<1e-9,
+        `waist opened at absolute frame ${frame}, row ${row}`);
+    }
+  }
+  const moving=directedMeshAtFrame(jacket,s,214,30);
+  const shoulder=transformSourcePoint(s,jacket.id,[moving.positions[0]+512,768-moving.positions[1]],214);
+  assert.equal(shoulder[1],807); // Shoulders still rise by the directed 2px.
+});
+
+test('source pin undoes rotated/scaled ancestors and refuses noninvertible scale',()=>{
+  const s=shot('pinned',0,10);
+  s.nodes[1]={...s.nodes[1],file:'cloth.png',bbox:[100,100,100,100],
+    mesh:{kind:'cloth',columns:7,rows:9,pinnedRows:[0],amplitudePx:1,
+      sourcePin:{startY:110,endY:150}}};
+  s.tracks=[track,{target:'arm',transform:'scaleX',unit:'ratio',easing:'linear',keyframes:[{frame:0,value:1.5}]},
+    {target:'hand',transform:'translateY',unit:'pixels_source_canvas',easing:'linear',keyframes:[{frame:0,value:-4}]}];
+  const source=[130,190];
+  const roundtrip=inverseTransformSourcePoint(s,'hand',transformSourcePoint(s,'hand',source,8),8);
+  assert.ok(Math.abs(source[0]-roundtrip[0])<1e-10&&Math.abs(source[1]-roundtrip[1])<1e-10);
+  const mesh=directedMeshAtFrame(s.nodes[1],s,8,30);
+  const i=mesh.positions.length-3;
+  const point=transformSourcePoint(s,'hand',[mesh.positions[i]+512,768-mesh.positions[i+1]],8);
+  assert.ok(Math.abs(point[0]-200)<1e-10&&Math.abs(point[1]-200)<1e-10);
+  const props={...fixture(),durationFrames:10,shots:[s]};
+  validateDirectedProps(props);
+  s.tracks[1].keyframes[0].value=0;
+  assert.throws(()=>validateDirectedProps(props),/NOT_INVERTIBLE/);
 });

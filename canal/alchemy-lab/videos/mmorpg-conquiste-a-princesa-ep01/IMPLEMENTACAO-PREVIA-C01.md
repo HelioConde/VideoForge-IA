@@ -47,3 +47,20 @@ falhas visíveis nos recortes das lanças e nas bordas. A recomposição neutra
 não é exata: 1.075.597 pixels diferem da mãe; erro RGB absoluto médio 11,16/255.
 Parte dessa diferença vem do fundo reconstruído. Não se converteu esse QA
 em aprovação humana ou autorização de vídeo oficial.
+
+## Correção da cintura apontada pelo usuário — 2026-11-14
+
+A primeira prévia abriu uma fenda: `kael.ombros` transladava a jaqueta até
+−2 px, enquanto as calças permaneciam imóveis. Além disso, 84 pixels visíveis
+da cintura em `[500,1060,20,40]` estavam fora das 11 partições selecionadas.
+
+O binding agora mantém a parte inferior da malha da jaqueta fixa no canvas,
+com transição suave entre y=950 e y=985, preservando a respiração dos ombros.
+Uma peça de costura recupera somente os 84 pixels ausentes da fonte original
+alinhada, sem usar o residual rejeitado inteiro, duplicar pixels ou desenhar
+anatomia nova. O teste de regressão verifica a junção nos 90 frames; também
+cobre pais com rotação/escala e recusa escalas não invertíveis.
+
+O registro de execução acima corresponde à primeira prévia, anterior a esta
+correção. Os novos renders são arquivados pelo workflow do PR #48; os demais
+limites de arte, áudio e aprovação continuam explícitos.

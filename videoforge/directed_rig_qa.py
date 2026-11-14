@@ -9,6 +9,7 @@ from pathlib import Path
 import subprocess
 
 from .rig_candidate import _image, _write_png
+from .directed_rig import _mask_uncovered
 
 
 def neutral_review(bindings_path: Path, shot_id: str, output: Path) -> dict:
@@ -19,10 +20,14 @@ def neutral_review(bindings_path: Path, shot_id: str, output: Path) -> dict:
     width, height = shot["canvas"]["width"], shot["canvas"]["height"]
     mother = _image(base / shot["sourceMother"]["file"], width, height)
     composite = _image(base / shot["background"]["file"], width, height)
+    decoded = {node["id"]: _image(base / node["file"], width, height)
+               for node in shot["nodes"] if "file" in node}
     for node in sorted(shot["nodes"], key=lambda item: item["z"]):
         if "file" not in node:
             continue
-        pixels = _image(base / node["file"], width, height)
+        pixels = decoded[node["id"]]
+        if "onlyUncoveredBy" in node:
+            pixels, _ = _mask_uncovered(pixels, [decoded[ref] for ref in node["onlyUncoveredBy"]])
         x, y, w, h = node["bbox"]
         for row in range(y, y + h):
             for col in range(x, x + w):
@@ -135,6 +140,7 @@ def verify_render(props_path: Path, output: Path) -> dict:
         "changedArtPixelsAtFrame": {"frame": frame_mid, "pixels": changed},
         "changedMp4ArtPixelsAtFrame": {"frame": frame_mid, "pixels": changed_video, "minRgbDelta": 8},
         "sha256": hashes, "warnings": props["warnings"],
+        "pixelRecovery": props.get("pixelRecovery", []),
         "imageGenerationCalls": 0, "previewTecnicoNaoOficial": True,
         "rigProductionReady": False, "humanVisualReview": False,
         "publishable": False, "videoOficialDoPrograma": False, "youtubeUploaded": False,

@@ -77,7 +77,7 @@ class DirectedRigQaTests(unittest.TestCase):
     def test_neutral_comparison_measures_real_pixel_difference(self):
         binding = {"shots": {"S": {"canvas": {"width": 2, "height": 2},
                     "sourceMother": {"file": "mother.png"}, "background": {"file": "background.png"},
-                    "nodes": [{"file": "part.png", "bbox": [0, 0, 1, 1], "z": 0}]}}}
+                    "nodes": [{"id": "part", "file": "part.png", "bbox": [0, 0, 1, 1], "z": 0}]}}}
         path = self.output / "bindings.json"
         path.write_text(json.dumps(binding), encoding="utf-8")
         def pixels(path, w, h):

@@ -7,7 +7,8 @@ export type DirectedTrack={target:string;transform:DirectedTransform;unit:string
   easing:'linear'|'easeInOutCubic';keyframes:DirectedKey[]};
 export type DirectedNode={id:string;parent:string|null;pivot:[number,number];
   role:string;file?:string;bbox?:Rect;z:number;mesh?:{
-    kind:Exclude<MeshType,'hand'>;columns:number;rows:number;pinnedRows:[0];amplitudePx:number}};
+    kind:Exclude<MeshType,'hand'>;columns:number;rows:number;pinnedRows:[0];amplitudePx:number;
+    sourcePin?:{startY:number;endY:number}}};
 export type CameraKey={frame:number;z:number;lookAt:[number,number,number];fovDeg:number};
 export type DirectedShot={id:string;startFrame:number;endFrameExclusive:number;
   canvas:{width:number;height:number};background:string|null;nodes:DirectedNode[];
@@ -58,6 +59,9 @@ export function validateDirectedProps(p:DirectedRigProps):void{
         !positiveInt(n.mesh.rows)||n.mesh.rows<2||n.mesh.rows>20||
         !Array.isArray(n.mesh.pinnedRows)||n.mesh.pinnedRows.length!==1||n.mesh.pinnedRows[0]!==0||
         !finite(n.mesh.amplitudePx)||n.mesh.amplitudePx<0||n.mesh.amplitudePx>12))fail('MESH_INVALID');
+      const pin=n.mesh?.sourcePin;
+      if(pin&&(!finite(pin.startY)||!finite(pin.endY)||pin.startY<0||
+        pin.endY<=pin.startY||pin.endY>s.canvas.height))fail('SOURCE_PIN_INVALID');
       nodes.set(n.id,n);
     }
     for(const n of s.nodes){
@@ -82,6 +86,14 @@ export function validateDirectedProps(p:DirectedRigProps):void{
           k.frame<=last||!finite(k.value)||
           (t.transform.startsWith('scale')&&k.value<0))fail('KEYFRAME_INVALID');
         last=k.frame;
+      }
+    }
+    for(const n of s.nodes.filter(v=>v.mesh?.sourcePin)){
+      let current:DirectedNode|undefined=n;
+      while(current){
+        if(s.tracks.some(t=>t.target===current!.id&&t.transform.startsWith('scale')&&
+          t.keyframes.some(k=>k.value<=1e-6)))fail('SOURCE_PIN_SCALE_NOT_INVERTIBLE');
+        current=current.parent===null?undefined:nodes.get(current.parent);
       }
     }
     if(!s.camera||!['none','perspective_3d'].includes(s.camera.type)||
@@ -130,11 +142,40 @@ export function transformSourcePoint(shot:DirectedShot,id:string,point:[number,n
     n.pivot[1]+t.translateY+x*Math.sin(a)+y*Math.cos(a)];
   return n.parent===null?result:transformSourcePoint(shot,n.parent,result,frame);
 }
+/** Undo the actual hierarchy before Three reapplies it to a source-pinned mesh. */
+export function inverseTransformSourcePoint(shot:DirectedShot,id:string,point:[number,number],frame:number):[number,number]{
+  const n=shot.nodes.find(v=>v.id===id)??fail('TARGET_MISSING');
+  const parentPoint=n.parent===null?point:inverseTransformSourcePoint(shot,n.parent,point,frame);
+  const t=nodeTransformAtFrame(shot,id,frame),a=t.rotationZ*Math.PI/180;
+  if(t.scaleX<=1e-6||t.scaleY<=1e-6)fail('SOURCE_PIN_SCALE_NOT_INVERTIBLE');
+  const x=parentPoint[0]-n.pivot[0]-t.translateX,y=parentPoint[1]-n.pivot[1]-t.translateY;
+  return [n.pivot[0]+(x*Math.cos(a)+y*Math.sin(a))/t.scaleX,
+    n.pivot[1]+(-x*Math.sin(a)+y*Math.cos(a))/t.scaleY];
+}
 export function directedMeshAtFrame(node:DirectedNode,shot:DirectedShot,frame:number,fps:number){
   if(!node.mesh||!node.bbox)return fail('MESH_REQUIRED');
-  return meshGridAtFrame({bbox:node.bbox,canvas:shot.canvas,spec:node.mesh,
+  const grid=meshGridAtFrame({bbox:node.bbox,canvas:shot.canvas,spec:node.mesh,
     kind:node.mesh.kind,frame:frame-shot.startFrame,fps,
     duration:shot.endFrameExclusive-shot.startFrame,blinkFrames:[]});
+  const pin=node.mesh.sourcePin;
+  if(!pin)return grid;
+  const [bx,by,bw,bh]=node.bbox;
+  const {width,height}=shot.canvas;
+  for(let i=0;i<grid.positions.length;i+=3){
+    const vertex=i/3,row=Math.floor(vertex/(node.mesh.columns+1)),col=vertex%(node.mesh.columns+1);
+    const original:[number,number]=[bx+bw*col/node.mesh.columns,by+bh*row/node.mesh.rows];
+    const t=clamp01((original[1]-pin.startY)/(pin.endY-pin.startY));
+    if(t===0)continue;
+    const weight=t*t*(3-2*t);
+    const posed=transformSourcePoint(shot,node.id,
+      [grid.positions[i]+width/2,height/2-grid.positions[i+1]],frame);
+    const constrained:[number,number]=weight===1?original:
+      [posed[0]+(original[0]-posed[0])*weight,posed[1]+(original[1]-posed[1])*weight];
+    const local=inverseTransformSourcePoint(shot,node.id,constrained,frame);
+    grid.positions[i]=local[0]-width/2;
+    grid.positions[i+1]=height/2-local[1];
+  }
+  return grid;
 }
 /** Fix pixel/world calibration at baseline camera; camera animation then changes framing. */
 export function sourceWorldScale(canvas:{width:number;height:number},width:number,height:number):number{

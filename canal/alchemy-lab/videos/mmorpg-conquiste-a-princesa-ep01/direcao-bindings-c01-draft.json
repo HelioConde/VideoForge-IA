@@ -250,7 +250,11 @@
             "pinnedRows": [
               0
             ],
-            "amplitudePx": 0.8
+            "amplitudePx": 0.8,
+            "sourcePin": {
+              "startY": 950,
+              "endY": 985
+            }
           }
         },
         {
@@ -342,6 +346,37 @@
           ],
           "sha256": "c944a31f6bc9081172c53051467617f60c7d9dd943bf3b6b9807987026001a8d",
           "z": 11
+        },
+        {
+          "id": "kael.costura-cintura",
+          "parent": null,
+          "pivot": [
+            500,
+            1060
+          ],
+          "role": "existing-pixel-seam",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-original/kael-alinhado-mesma-cena-mae-CANDIDATO.png",
+          "sha256": "5fab509b5eb72114a780b2a7ae63197e6665ed91e25471187158adf794baf3c0",
+          "bbox": [
+            500,
+            1060,
+            20,
+            40
+          ],
+          "z": 20,
+          "onlyUncoveredBy": [
+            "kael.rosto",
+            "kael.cabelo",
+            "kael.punhos",
+            "kael.antebraco",
+            "kael.braco-direito",
+            "kael.braco-esquerdo",
+            "kael.bota-direita",
+            "kael.bota-esquerda",
+            "kael.perna-direita",
+            "kael.perna-esquerda",
+            "kael.jaqueta"
+          ]
         }
       ],
       "warnings": [
@@ -352,7 +387,8 @@
         "Guardas e Aldric estaticos para contexto; lanças ja cruzadas na arte, nao executam C01-P04.",
         "Aldric pode conter pixels do trono; composicao e bordas ainda nao aprovadas.",
         "Particao residual-halo-REJECTED excluida; diferenca de recomposicao deve permanecer documentada.",
-        "Este teste isola C01-P03 e nao representa a montagem ou o audio do episodio."
+        "Este teste isola C01-P03 e nao representa a montagem ou o audio do episodio.",
+        "Costura da cintura fixa; pixels visiveis ausentes recuperados apenas da fonte original, sem reconstruir anatomia oculta."
       ]
     }
   }

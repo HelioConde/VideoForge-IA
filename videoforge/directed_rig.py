@@ -8,12 +8,42 @@ import math
 from pathlib import Path
 import re
 import shutil
+from collections.abc import Sequence
 
 from . import rig_candidate, scene_layers
 
 
 class DirectedRigError(ValueError):
     pass
+
+
+def _mask_uncovered(pixels: bytes | bytearray,
+                    referenced_pixels: Sequence[bytes | bytearray]) -> tuple[bytearray, int]:
+    """Keep a source RGBA pixel only where every reference is transparent.
+
+    Inputs are full-canvas RGBA buffers. Returns a new full-canvas buffer and
+    the number of nontransparent source pixels retained. Source bytes are
+    preserved exactly outside covered pixels; covered pixels become RGBA 0.
+    Neither input buffer is mutated.
+    """
+    if len(pixels) == 0 or len(pixels) % 4:
+        raise DirectedRigError("UNCOVERED_RGBA_INVALID")
+    if not referenced_pixels or any(len(ref) != len(pixels) for ref in referenced_pixels):
+        raise DirectedRigError("UNCOVERED_REFERENCE_CANVAS_MISMATCH")
+    covered = bytearray(len(pixels) // 4)
+    for reference in referenced_pixels:
+        for alpha_offset in range(3, len(reference), 4):
+            if reference[alpha_offset]:
+                covered[alpha_offset // 4] = 1
+    result = bytearray(pixels)
+    uncovered = 0
+    for pixel_index, is_covered in enumerate(covered):
+        offset = pixel_index * 4
+        if is_covered:
+            result[offset:offset + 4] = b"\0\0\0\0"
+        elif pixels[offset + 3]:
+            uncovered += 1
+    return result, uncovered
 
 
 def _require(condition, message):
@@ -208,6 +238,12 @@ def _bindings(direction, bindings, root):
                          and _integer(mesh.get("rows"), 2) and mesh["rows"] <= 20
                          and mesh.get("pinnedRows") == [0] and _number(mesh.get("amplitudePx"))
                          and 0 <= mesh["amplitudePx"] <= 12, "MESH_INVALID")
+                pin = mesh.get("sourcePin")
+                if pin is not None:
+                    _require(isinstance(pin, dict) and set(pin) == {"startY", "endY"}
+                             and all(_number(pin[k]) for k in ("startY", "endY"))
+                             and 0 <= pin["startY"] < pin["endY"] <= canvas["height"],
+                             "SOURCE_PIN_INVALID")
         for node in nodes:
             visited, parent = {node["id"]}, node.get("parent")
             _require("parent" in node, "PARENT_REQUIRED")
@@ -215,6 +251,26 @@ def _bindings(direction, bindings, root):
                 _require(isinstance(parent, str) and parent in by_id and parent not in visited, "NODE_DAG_INVALID")
                 visited.add(parent)
                 parent = by_id[parent].get("parent")
+            if node.get("mesh", {}).get("sourcePin"):
+                ancestors, current = set(), node
+                while current is not None:
+                    ancestors.add(current["id"])
+                    current = by_id.get(current["parent"])
+                _require(not any(t["target"] in ancestors and t["transform"].startswith("scale")
+                                 and any(k["value"] <= 1e-6 for k in t["keyframes"])
+                                 for t in shot["rigKeyframes"]), "SOURCE_PIN_SCALE_NOT_INVERTIBLE")
+        for node in nodes:
+            if "onlyUncoveredBy" not in node:
+                continue
+            _require("file" in node, "UNCOVERED_OWNER_SPRITE_REQUIRED")
+            references = node["onlyUncoveredBy"]
+            _require(isinstance(references, list) and references, "UNCOVERED_REFERENCES_REQUIRED")
+            _require(all(isinstance(ref, str) for ref in references)
+                     and len(set(references)) == len(references)
+                     and node["id"] not in references, "UNCOVERED_REFERENCES_INVALID")
+            for ref in references:
+                _require(ref in by_id and "file" in by_id[ref], "UNCOVERED_REFERENCE_SPRITE_REQUIRED")
+                _require("onlyUncoveredBy" not in by_id[ref], "UNCOVERED_REFERENCE_NESTING_FORBIDDEN")
         missing = sorted({t["target"] for t in shot["rigKeyframes"]} - set(by_id))
         validated[shot["id"]] = (spec, sources, missing)
     return shots, validated
@@ -262,11 +318,31 @@ def prepare(direction_path, bindings_path, shot_id, output_dir, public_dir):
     _require(not output.exists() or output.is_dir(), "OUTPUT_NOT_DIRECTORY")
     _require(not any((output/name).exists() for name in ("props.json", "source-hashes.json")), "OUTPUT_EXISTS")
     # Decode all crops before writing any output. Original pixels are preserved.
+    full_pixels = {}
     crops = {}
+    recovered = []
+    for node in spec["nodes"]:
+        if "file" in node:
+            full_pixels[node["id"]] = rig_candidate._image(
+                sources[node["id"]][0], **spec["canvas"])
     for node in spec["nodes"]:
         if "file" in node:
             x, y, w, h = node["bbox"]
-            pixels = rig_candidate._image(sources[node["id"]][0], **spec["canvas"])
+            pixels = full_pixels[node["id"]]
+            if "onlyUncoveredBy" in node:
+                pixels, _ = _mask_uncovered(
+                    pixels, [full_pixels[ref] for ref in node["onlyUncoveredBy"]])
+                stride = spec["canvas"]["width"] * 4
+                recovered_count = sum(
+                    pixels[row * stride + col * 4 + 3] != 0
+                    for row in range(y, y + h) for col in range(x, x + w))
+                recovered.append({
+                    "nodeId": node["id"],
+                    "sourceFile": str(Path(sources[node["id"]][0]).relative_to(Path(bindings_path).parent)),
+                    "sourceSha256": sources[node["id"]][1],
+                    "onlyUncoveredBy": node["onlyUncoveredBy"],
+                    "uncoveredAlphaPixelsInBbox": recovered_count,
+                })
             stride = spec["canvas"]["width"] * 4
             crops[node["id"]] = bytearray().join(pixels[(y+r)*stride+x*4:(y+r)*stride+(x+w)*4] for r in range(h))
     dest.mkdir(parents=True)
@@ -274,7 +350,8 @@ def prepare(direction_path, bindings_path, shot_id, output_dir, public_dir):
     shutil.copyfile(sources["background"][0], dest / "background.png")
     packaged = []
     for index, node in enumerate(spec["nodes"]):
-        obj = {k: v for k, v in node.items() if k not in ("sha256", "file")}
+        obj = {k: v for k, v in node.items()
+               if k not in ("sha256", "file", "onlyUncoveredBy")}
         if "file" in node:
             filename = f"node-{index}.png"
             rig_candidate._write_png(dest / filename, crops[node["id"]], node["bbox"][2], node["bbox"][3])
@@ -285,6 +362,7 @@ def prepare(direction_path, bindings_path, shot_id, output_dir, public_dir):
              "channel": bindings["channel"], "videoId": bindings["video_id"], "id": shot_id,
              **{k: direction["format"][k] for k in ("width", "height", "fps")},
              "startFrame": shot["startFrame"], "durationFrames": shot["endFrameExclusive"]-shot["startFrame"],
+             "pixelRecovery": recovered,
              "shots": [{"id": shot_id, "startFrame": shot["startFrame"], "endFrameExclusive": shot["endFrameExclusive"],
                         "canvas": spec["canvas"], "background": (relative / "background.png").as_posix(),
                         "nodes": packaged, "tracks": shot["rigKeyframes"], "camera": shot.get("camera", {})}],
