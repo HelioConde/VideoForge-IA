@@ -32,7 +32,7 @@
       "arte_final": false,
       "narracao_final": false,
       "video_oficial_do_programa": false,
-      "pendencia": "A prévia da cena 1 tem piscada corrigida sob a franja, mas aguarda revisão do usuário; faltam os rigs independentes de cabelos/olhos/corpo/objetos e 15 cenas com camadas separadas.",
+      "pendencia": "Prévia 1/16: troca entre imagem original e versão olhos fechados da mesma personagem, pixels não oculares/alpha idênticos. Usuário deve revisar; ainda faltam 15 cenas, rigs individuais de partes e objetos.",
       "render_tech_confirmed": true,
       "workflow_arquivo": ".github/workflows/spy-family-animated.yml",
       "agentes_e_arte_final_integrados": false,
@@ -61,14 +61,17 @@
       "voz_natural_final": false,
       "legendas_embutidas": true,
       "movimento_camera": true,
-      "cena_mae_layer_preview_run_id": 43573042654,
-      "cena_mae_layer_preview_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43573042654/artifacts/14105227418",
+      "cena_mae_layer_preview_run_id": 43575133723,
+      "cena_mae_layer_preview_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43575133723/artifacts/14105378846",
       "verified_layer_scenes": 1,
       "expected_layer_scenes": 16,
       "cena01_blink_anya": true,
       "cena01_micromovimento_vertical_max_px": 2.8,
       "cena01_blink_occlusion_corrected_technical_qa": true,
-      "cena01_blink_approval": "pending_user_review"
+      "cena01_blink_approval": "pending_user_review",
+      "cena01_blink_mode": "full_character_swap_original_eyes_only",
+      "cena01_non_eye_pixels_changed": 0,
+      "cena01_alpha_pixels_changed": 0
     }
   ]
 }
