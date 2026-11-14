@@ -168,13 +168,13 @@ jobs:
             --model "${{ inputs.modelo }}" \
             --size "${{ inputs.tamanho }}"
       - name: Persistir PNG manual no GitHub por canal e video
-        if: inputs.operacao == 'generate' && success()
+        if: inputs.operacao == 'generate' && always()
         shell: bash
         env:
           CH: ${{ inputs.canal }}
           VID: ${{ inputs.video_id }}
         run: |
-          bash scripts/persistir-imagens-gh.sh "$CH" "$VID" "output/$CH/videos/$VID/imagens" "${{ github.run_id }}" "proxy-images-manual"
+          bash scripts/arquivar-pngs-se-existirem.sh "$CH" "$VID" "output/$CH/videos/$VID/imagens" "${{ github.run_id }}" "proxy-images-manual" "${{ job.status }}"
       - name: Entregar imagem e relatorio (nao publica no YouTube)
         if: inputs.operacao == 'generate' && always()
         uses: actions/upload-artifact@v4
