@@ -57,9 +57,7 @@ Antes de desenhar, separar sprites, montar rig ou renderizar personagens de **qu
 
 ## Objetivo inicial
 
-Entregar e comprovar um vídeo MP4 vertical do Otaku Multicena com
-90–180 segundos, áudio audível, legendas e identidade visual consistente.
-Primeiro validar renderizador; agentes e escritório só depois.
+**No MVP técnico**, comprovar MP4 vertical do Otaku Multicena com 90–180 segundos, áudio audível e QA. **Na produção oficial**, usar exclusivamente o programa integrado no GitHub, com agentes/etapas reais, ilustrações e mídia comprovadas. Validar o renderizador não equivale a gerar vídeo final pelo programa.
 
 ## Regras de execução
 
