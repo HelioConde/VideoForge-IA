@@ -1,7 +1,7 @@
 {
   "id": "camadas-animadas",
-  "nome": "Cenas com camadas animadas (planejado)",
-  "descricao": "Previa Remotion baseada no AutoEditorVideo, reutilizando personagens e foreground RGBA; animacao articulada, rig, narracao e producao final ainda nao implementadas.",
+  "nome": "Cenas por rig articulado 2D e malha Three (em preparacao)",
+  "descricao": "Motor ThreeCanvas real testado com sprites sinteticos; so entra em producao quando sprites de personagem separados por canal/cena, hashes, reconstrucoes e QA estao aprovados. Pan/zoom de PNG inteiro nao conta como rig.",
   "operacional": false,
   "etapas": {
     "roteiro": {
@@ -22,7 +22,16 @@
       "motor_legacy_fallback": "ffmpeg",
       "camadas_basicas_reais_testadas": true,
       "rig_individual_partes_implementado_para_spy_family": false,
-      "ultimo_teste_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246"
+      "ultimo_teste_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246",
+      "rig_engine": "remotion-three-v1",
+      "real_mesh_math_tested": true,
+      "three_swangle_render_tested": true,
+      "latest_three_smoke_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43580456827",
+      "real_spy_family_rig_assets_ready": false,
+      "workflow": ".github/workflows/rig-three-real-render.yml",
+      "runner": "ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1",
+      "composition": "VideoForgeMeshRigScene",
+      "legacy_flat_preview_not_rig": true
     },
     "voz": {
       "provedor": null,
@@ -32,7 +41,7 @@
       "motor": "ffmpeg"
     }
   },
-  "padrao_obrigatorio": "cena-mae + background independente reconstruido + personagens e objetos animaveis RGBA derivados da mesma imagem + partes/pivos sem duplicar + rig Remotion + QA",
+  "padrao_obrigatorio": "cena-mae -> background limpo -> body-no-head + head-open/closed + hair/cloth meshes RGBA -> roundtrip QA -> Remotion ThreeCanvas -> swangle -> QA frames -> aprovacao humana; nunca PNG inteiro flutuando",
   "politica_micro_movimento": {
     "body_vertical_max_px": 2.8,
     "body_horizontal_max_px": 1,
