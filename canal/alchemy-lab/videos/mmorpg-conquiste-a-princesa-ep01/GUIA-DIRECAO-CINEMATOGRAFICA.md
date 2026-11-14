@@ -60,3 +60,25 @@ A regra de segurança foi aplicada também a `videoforge/production_assemble.py`
 O validador da EDL impede buracos e sobreposições de frames, caminhos inseguros, SHA inválido, RGBA de outra tomada, imagens sem pivôs ou underlays, QA não aprovado e aprovação falsa. Todos os arquivos ficam na pasta do canal; o workflow apenas escreve a timeline JSON, **não gera PNG, não renderiza MP4 e não publica**.
 
 **Atenção:** o manifesto é um contrato de montagem validado, não uma declaração de que os 36 rigs já existem. O bloqueio `SEM-GERACAO-NOVAS-IMAGENS.lock` segue ativo.
+
+
+## Compositor ThreeCanvas e exportação de rigs aprovados
+
+A montagem de 37 tomadas também ganhou um **compositor real no Remotion** em `motion-remotion/src/cinematic-episode.tsx`, que utiliza `Sequence` com cortes em frames absolutos, `ThreeCanvas` com múltiplos personagens e `CharacterParts` para movimentos independentes de cabeça/cabelo/malha. A proporção 1024×1536 da arte é ajustada à saída 1080×1920 **sem distorção de rosto**; a imagem-mãe achatada nunca é usada como animação principal. A primeira tomada é tela preta sem PNG, e o HUD é desenhado apenas como camada Remotion quando explicitamente aprovado.
+
+A entrada foi isolada em `motion-remotion/src/cinematic-index.ts` (`VideoForgeCinematicEpisode`), preservando o player legado. O contrato `motion-remotion/src/cinematic-timeline.ts` **recusa renderizar todo o episódio** se qualquer tomada estiver sem SHA, procedência do próprio ângulo, rig corporal independente, movimento de malha, aprovação visual e UI, ou se os intervalos de frames estiverem incorretos.
+
+O exportador `videoforge/cinematic_remotion_export.py` prepara no futuro o arquivo de props e copia para `motion-remotion/public/vf-cinema/` **apenas arquivos PNG que já existem, com SHA conferido**. Ele exige que os PNGs das partes estejam recortados de acordo com suas caixas `bbox` originais, tenham proveniência na própria imagem-mãe, underlays aprovados, rig multiator e QA. O comando abaixo é ilustrativo do **procedimento futuro**, não deve ser executado ainda:
+
+```bash
+# Só funcionará quando TODAS as 36 tomadas tiverem assets e rigs aprovados:
+python -m videoforge.cinematic_remotion_export --stage
+cd motion-remotion
+npm run render:cinematic:official -- --props=../output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/cinematic-render-props.json
+```
+
+Sem esses requisitos, o exportador falha antes de copiar qualquer arquivo e a composição Remotion rejeita os argumentos. **Não usar props fictícios de testes como produção!** Os testes do compositor são memórias sintéticas em tempo de teste, nunca imagens falsas arquivadas.
+
+Testes: `npm run typecheck`, `npm run test:cinematic`, `python -m unittest tests.test_cinematic_remotion_export`. O [workflow de QA do compositor](https://github.com/HelioConde/VideoForge-IA/actions/workflows/qa-cinematic-remotion-renderer.yml) não gera imagens, não renderiza vídeo e não acessa YouTube.
+
+**Estado atual:** o código do compositor e seu contrato de asset estão implementados e o typecheck passou; **nenhuma das 36 tomadas visuais do EDL possui pacote independente de arte+rig aprovado**, portanto o MP4 não foi produzido. Os 71 PNGs anteriores permanecem intactos em `canal/alchemy-lab`. O bloqueio de geração permanece ativo.
