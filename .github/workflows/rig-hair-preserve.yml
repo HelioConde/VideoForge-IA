@@ -1,5 +1,11 @@
 name: 'VideoForge - preservar cabelo original e reusar olhos IA (sem gerar imagens)'
 on:
+  # Push neste workflow permite gerar uma previa revisada na main sem alterar
+  # as permissoes de publicacao nem disparar em todos os commits.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/rig-hair-preserve.yml'
   pull_request:
     paths:
       - 'videoforge/rig_candidate.py'
@@ -82,6 +88,7 @@ jobs:
           assert qa["head_mask_variant"]=="head_full_polygon"
           assert qa["head_full_hair_guard_alpha_coverage"] >= .9998
           assert qa["seam_underlay_original_pixels"] > 20000
+          assert qa["cape_seam_overlap_px"] == 36, "O novo recorte sobreposto da capa nao foi aplicado"
           assert qa["seam_underlay_source"] == "character-main.png"
           assert "seam-underlay.png" in rig["assets"]
           assert qa["eye_close_technique"]=="original_masked_ai_edit_rebased_full_hair"
@@ -158,6 +165,7 @@ jobs:
           from pathlib import Path
           q=json.loads(Path("output/otaku-br/videos/teste-proxy-20261113/rig-draft-previews/cena-01/draft-video.qa.json").read_text())
           assert q["cape_wind_active"] and q["eye_closed_from_original_ai_edit"]
+          assert q["seam_underlay_active"]
           assert q["seam_underlay_active"] and q["head_alpha_preserved_by_base_layer"]
           assert q["publishable"] is False and q["youtube_uploaded"] is False
           print("MP4 teste concluido; revisao editorial continua pendente.")
