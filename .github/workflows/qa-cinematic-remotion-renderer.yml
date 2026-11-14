@@ -1,0 +1,57 @@
+name: "VideoForge - validar compositor Remotion cinematografico sem render"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-validar-compositor-cinema.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vf-cinematic-three-remotion-qa
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: motion-remotion/package-lock.json
+      - name: Confirma bloqueio de imagens e vídeo oficial
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          b=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          r=json.loads((b/'pedido-validar-compositor-cinema.json').read_text())
+          assert r["schema"]=="videoforge/qa-cinematic-renderer-request/v1"
+          assert r["image_generation_calls"]==0
+          assert r["render_mp4"] is False
+          assert r["youtube_upload"] is False
+          assert (b/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          print('RENDERER_QA_ONLY; no new images, MP4 or upload')
+          PY
+      - name: Instalar dependencias locais congeladas do Remotion
+        working-directory: motion-remotion
+        run: npm ci --ignore-scripts --no-fund --no-audit
+      - name: Verificar tipagem de todos os componentes TSX e contratos de rig
+        working-directory: motion-remotion
+        run: npm run typecheck
+      - name: Verificar rejeição de planos incompletos, cortes, zoom e HUD
+        working-directory: motion-remotion
+        run: node --test tests/cinematic-contract.test.cjs
+      - name: Confirmar que entrada oficial não altera player legado
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "registerRoot(VideoForgeCinematicRoot)" motion-remotion/src/cinematic-index.ts
+          grep -q "registerRoot(VideoForgeRoot)" motion-remotion/src/index.ts
+          grep -q "validateCinematicRender(props)" motion-remotion/src/cinematic-episode.tsx
+          echo 'Dedicated Remotion entrypoint, legacy untouched, missing rigs cannot be rendered.'
