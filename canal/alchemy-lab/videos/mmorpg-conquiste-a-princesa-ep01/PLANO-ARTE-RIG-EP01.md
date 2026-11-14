@@ -268,3 +268,13 @@ O workflow [QA de pixels dos olhos C12-P01](https://github.com/HelioConde/VideoF
 Quando os arquivos forem anexados à pasta `assets/planos/C12-P01/`, o workflow `.github/workflows/qa-alchemy-eye-pixels.yml` será disparado automaticamente para reavaliar os pixels. **Não há geração de imagens**, reinterpretação artificial de rosto nem MP4 nesta tarefa.
 
 Uma incompatibilidade de testes foi encontrada e corrigida: o workflow MVP legado não instala Pillow, então os novos testes oculares agora se comportam como os testes de recorte existentes — são ignorados naquele ambiente e **obrigatórios nos workflows específicos que instalam Pillow**. O projeto mantém o pipeline antigo separado do QA cinematográfico.
+
+## 18. Continuidade entre os 37 ângulos e segurança subpixel
+
+A auditoria ocular agora considera também a filtragem **subpixel** do Remotion/Three.js. Um deslocamento de pupila de 4,5 px pode revelar um halo mesmo que os testes em 4 e 5 px não revelem falhas; para isso, `videoforge/cinematic_eye_pixel_audit.py` amplia conservadoramente a silhueta alfa em 1 px (filtro 3×3), exigindo cobertura da esclerótica em todas as bordas e antialias. A técnica não muda os PNGs e não cria imagens. Os testes incluem furo no underlay invisível nos deslocamentos inteiros, mas revelado no bilinear.
+
+Também foi criado [qa-inventario-tomadas-cinema.json](qa-inventario-tomadas-cinema.json), com SHA-256 de **14 imagens-mãe arquivadas**, mapeamento de referências para as **37 tomadas** e prioridade de elaboração dos **12 closes de rosto/olhos**. As **52 imagens rascunho da C01** permanecem separadas das 14 mães de referência. Essa catalogação **não** equivale a gerar nem aprovar uma imagem-mãe própria de cada plano. O total de PNGs arquivados no episódio continua **71**.
+
+O [GitHub Actions de QA](https://github.com/HelioConde/VideoForge-IA/actions/runs/43643929373) concluiu com **59 testes Python aprovados**. A timeline original de 4890 frames permaneceu intocada; nenhuma nova imagem foi gerada. O inventário registra que os **36 planos visuais ainda não têm artes e rigs específicos aprovados**, e as imagens aprovadas no chat seguem pendentes de integração ao repositório.
+
+**Apresentação ao usuário:** durante revisões visuais deste dorama, mostrar as imagens disponíveis diretamente na conversa, indicando sua condição (referência, rascunho, aprovada ou rejeitada), além de manter o arquivo original e o histórico dentro de `canal/alchemy-lab`. Não afirmar que a visualização no chat importou uma imagem ao GitHub.
