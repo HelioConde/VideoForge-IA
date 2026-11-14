@@ -1,0 +1,99 @@
+{
+  "schema": "videoforge/chat-approved-cinematic-style-reference/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "feedback": "Usuário elogiou explicitamente os closes apresentados no chat e pediu continuar preservando seu estilo; isso valida a preferência estética, não os rigs finais nem a consistência de todas as cenas.",
+  "visual_style_status": "PREFERRED_STYLE_APPROVED_IN_CHAT",
+  "github_original_pngs_status": "NOT_YET_IMPORTED",
+  "no_new_image_generation_lock": "SEM-GERACAO-NOVAS-IMAGENS.lock",
+  "image_generation_allowed": false,
+  "preferred_illustration_style": {
+    "medium": "manhwa fantasia 2D cinematográfico, pintura digital refinada, sem fotografismo, traço e anatomia coerentes",
+    "lighting": "luz quente lateral e feixes pela janela, sombras profundas vinho e azul, realce dourado na pele e no metal",
+    "cinematography": "closes faciais e sobre-o-ombro com profundidade de campo rasíssima, arquitetura nítida só onde a história exige",
+    "color_palette": [
+      "vinho escuro",
+      "preto castanho",
+      "dourado envelhecido",
+      "violeta real",
+      "branco pérola",
+      "azul da vitral"
+    ],
+    "continuity_requirements": [
+      "manter faces, cores de cabelo, roupas e ornamentos entre tomadas da mesma versão de personagem",
+      "revelação da princesa apenas em C12, não adiantar sua identidade nas cenas C01-C02",
+      "fundo com rei/guardas desfocados só em planos compatíveis com a geografia da câmera",
+      "sem texto do HUD pintado na arte",
+      "não usar zoom de uma imagem geral como substituto de close específico"
+    ]
+  },
+  "approved_samples": [
+    {
+      "id": "ref-kael-close-c12",
+      "expected_repo_path": "assets/referencias/chat-aprovadas/kael-close-salao.png",
+      "original_filename": "olhar_tenso_no_salão_real.png",
+      "original_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+      "expected_bytes": 2491063,
+      "dimensions_px": [
+        941,
+        1672
+      ],
+      "png_mode": "RGB",
+      "scene_context": "sala do trono, momento da revelação C12",
+      "reference_role": "CHARACTER_IDENTITY_AND_SHOT_FRAMING_ONLY; not rig-ready mother",
+      "framing": "close extremo dramático do rosto de Kael, olhos visíveis em tensão; rei, guardas e Elara desfocados ao fundo",
+      "visual_traits": {
+        "hair": "preto castanho, volumoso, desalinhado, fios finos longos caindo sobre a testa",
+        "eyes": "castanho âmbar, olhos semicerrados, olhar lateral com alta expressividade",
+        "face": "jovem adulto, pele marcada por sujeira, suor e cortes superficiais, sobrancelhas escuras",
+        "costume": "tecido de capa cachecol vinho avermelhado rasgado, ombreira metálica escura com friso dourado e detalhe azul",
+        "emotion": "tensão, vigilância, choque contido"
+      },
+      "canonical_contradiction": "bíblia legada descreve roupa sem armadura e sem capa",
+      "use_as_direct_shot_mother": false,
+      "human_style_preference_confirmed": true,
+      "file_bytes_present_in_github": false
+    },
+    {
+      "id": "ref-elara-close-c12",
+      "expected_repo_path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "original_filename": "princesa_intrigada_no_trono_real.png",
+      "original_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "expected_bytes": 2642634,
+      "dimensions_px": [
+        941,
+        1672
+      ],
+      "png_mode": "RGB",
+      "scene_context": "sala do trono, reação da princesa em C12-C14",
+      "reference_role": "CHARACTER_IDENTITY_AND_SHOT_FRAMING_ONLY; not rig-ready mother",
+      "framing": "close médio do rosto e busto da princesa em três quartos, rei e trono desfocados ao fundo",
+      "visual_traits": {
+        "hair": "loiro dourado, muito longo, trança lateral embutida, flores delicadas lilases e brancas",
+        "eyes": "violeta púrpura claro, expressão intrigada e ponderada",
+        "face": "jovem adulta, traço delicado, olhar decidido, pele iluminada por janela",
+        "accessories": "coroa dourada com ametistas, brincos dourados pendentes com cristais violeta",
+        "costume": "vestido branco e violeta imperial com filigranas douradas e broches de pedras púrpuras",
+        "emotion": "surpresa sutil, atenção estratégica"
+      },
+      "canonical_contradiction": "bíblia legada descreve cabelo preto e vestido azul com prata",
+      "use_as_direct_shot_mother": false,
+      "human_style_preference_confirmed": true,
+      "file_bytes_present_in_github": false
+    }
+  ],
+  "quality_gates": {
+    "sha256_and_dimensions_required_on_upload": true,
+    "confirm_exact_source_bytes_before_hard_canon": true,
+    "no_unapproved_wardrobe_mixture": true,
+    "keep_legacy_assets_archived": true,
+    "official_character_bible_migration": "PENDING_IMPORT_AND_REVIEW",
+    "original_37_shots_status": "NOT_CHANGED",
+    "image_generation_calls": 0,
+    "rig_mesh_complete": false,
+    "mp4_official_rendered": false,
+    "youtube_uploaded": false
+  },
+  "qa_output": "qa-referencias-chat-cinematograficas.json",
+  "instructions": "Não converter aprovação estética em aprovação de imagem-mãe, pixel alpha, rosto isolado, rig, geração ou publicação. O feedback define o estilo preferido. Arquivos binários originais ainda precisam estar no repositório."
+}
