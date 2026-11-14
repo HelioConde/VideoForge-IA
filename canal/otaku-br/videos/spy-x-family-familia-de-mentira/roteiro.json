@@ -231,7 +231,7 @@
     }
   ],
   "titulo_editorial": "Spy x Family: por que Anya esconde os segredos dos pais? 👀",
-  "descricao_youtube": "Anya sabe que Loid é um espião e que Yor é uma assassina. Mas, em Spy x Family, por que ela guarda os segredos dos pais? Entenda como a telepatia de Anya, a Operação Strix e o cotidiano dos Forger transformam uma família de fachada em um laço verdadeiro.\n\nAnálise narrativa original para fãs de anime. Ilustrações e narração próprias previstas para a versão final; este material ainda é um roteiro em revisão, não um vídeo publicado. Sem clipes ou trilha sonora oficiais.\n\nFonte de contexto e personagens: https://spy-family.net/tvseries/\n\n#SpyxFamily #AnyaForger #AnimeBrasil",
+  "descricao_youtube": "Anya sabe que Loid é um espião e que Yor é uma assassina. Mas por que ela guarda esses segredos?\n\nEm Spy x Family, a telepatia de Anya, a Operação Strix e as confusões dos Forger revelam como uma família criada para uma missão pode desenvolver um vínculo de verdade.\n\nUma análise narrativa independente do Otaku Multicena. Conteúdo de fã, não oficial. Sem spoilers importantes de temporadas posteriores.\n\n#SpyxFamily #AnyaForger #AnimeBrasil",
   "tags_youtube": [
     "Spy x Family",
     "SPY×FAMILY",
@@ -281,5 +281,13 @@
     "selection": "Cenas determinadas pela necessidade narrativa; nenhuma contagem máxima pré-definida.",
     "duration_constraint": "90-180 segundos no piloto vertical atual; independentemente da quantidade de cenas",
     "safety": "Respeitar orçamento de IA autorizado, limites de recursos da infraestrutura, validação de conteúdo e QA"
+  },
+  "publication_checks": {
+    "art_rights_pending": true,
+    "voice_pending": true,
+    "visual_review_pending": true,
+    "canonical_review": "premissa e personagens conferidos no site oficial",
+    "copyright": "não usar OST nem frames sem licença; rever Content ID antes de um Short de >60s",
+    "upload_authorized": false
   }
 }
