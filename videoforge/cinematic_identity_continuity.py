@@ -75,6 +75,8 @@ def shot_requirements(shot:dict,reference_ids:dict[str,str])->dict:
         "main_character_requirements":roles,
         "is_black_opening":shot["shot_type"]=="black",
         "planned_cast":cast,
+        "princess_reveal_before_C12_forbidden":num<12,
+        "royal_palace_early_reveal_human_qa_required":num in (1,2),
         "art_and_rig_approved":False,
     }
 
@@ -162,6 +164,18 @@ def validate_actor_wardrobe(shot:dict,rig:dict,qa:dict,reference_imported:bool)-
 def verify_shot_continuity(shot:dict,rig:dict,qa:dict,
                            root:Path=ROOT)->None:
     """Recheck import+SHA and the actual actor against this shot's wardrobe."""
+    # In early palace shots the princess must NOT leak into a blurry
+    # background as an identifiable royal. This QA applies even to
+    # sword-only inserts with no protagonist rig.
+    scene=shot.get("scene") or str(shot.get("id",""))[:3]
+    if scene in ("C01","C02"):
+        check=qa.get("visual_spoiler_review")
+        if not isinstance(check,dict) or (
+            check.get("approved") is not True or
+            check.get("elara_identifiable") is not False or
+            check.get("royal_elara_visible") is not False
+        ):
+            raise VideoForgeError("CINEMATIC_EARLY_PALACE_PRINCESS_SPOILER_VISUAL_QA_REQUIRED")
     if not any(x in MAIN_CAST for x in shot.get("characters",[])):
         return
     report=build_continuity(root)
