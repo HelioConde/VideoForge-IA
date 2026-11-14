@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/guard-motion-hole-audit-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "only_existing_pngs": true,
+  "image_generation_calls": 0,
+  "no_png_output": true,
+  "human_visual_approval": false,
+  "youtube_upload": false,
+  "source": "rig-guardas-articulacoes-c01.json",
+  "output": "qa-guardas-envelope-movimento-c01.json",
+  "requested_angles_deg": [
+    -18,
+    -8,
+    -2,
+    0,
+    2,
+    8,
+    18
+  ],
+  "policy": "in-memory alpha-only geometric QA; never enable arm motion without underlay"
+}
