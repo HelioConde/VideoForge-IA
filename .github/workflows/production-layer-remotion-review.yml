@@ -40,6 +40,50 @@ jobs:
           name: vf-otaku-br-spy-family-female-voice-43557582317
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input/voice
+      - name: Recuperar sprite REAL de olhos fechados (sem gerar outra imagem)
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43569915048
+          name: vf-spy-family-blink-rgba-43569915048
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/blink
+      - name: Validar o olho RGBA no runner FFmpeg e criar QA de origem
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from videoforge.production_eye_blink import alpha_bounds
+          from videoforge.production_scene_layers import read_plan
+          from videoforge.scene_layers import _read_manifest, png_info
+          source=Path('input/layers')
+          target=Path('input/blink')
+          sm=_read_manifest(source/'manifest.json')
+          bm=_read_manifest(target/'manifest.json')
+          plan,story,entry=read_plan('otaku-br','spy-x-family-familia-de-mentira',1)
+          overlay=target/'eyes-closed.png'
+          raw=overlay.read_bytes()
+          digest=hashlib.sha256(raw).hexdigest()
+          assert sm['source']['sha256']==bm['source']['sha256']
+          assert bm['layers']['eyes-closed']['sha256']==digest
+          assert bm['layers']['eyes-closed']['technical_status']=='verified'
+          png_info(raw,require_alpha=True)
+          metrics=alpha_bounds(overlay,entry['eyes_closed']['roi_original_canvas'])
+          qa={'schema':'videoforge/eye-overlay-qa/v1',
+              'channel':'otaku-br','video_id':'spy-x-family-familia-de-mentira',
+              'number':1,'scene':entry['scene'],
+              'scene_mother_sha256':sm['source']['sha256'],
+              'eyes_rgba_sha256':digest,
+              **metrics,
+              'blink_centers_frames':entry['eyes_closed']['blink_centers_frames'],
+              'tech_roi_qa':'passed','visual_review':'pending',
+              'face_base_opacity':1,'official_video_created':False,
+              'youtube_uploaded':False}
+          (target/'eye-overlay.qa.json').write_text(
+              json.dumps(qa,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('EYE_OVERLAY_QA_OK',metrics)
+          PY
       - name: Verificar TSC e integridade dos assets de origem
         shell: bash
         run: |
@@ -48,14 +92,15 @@ jobs:
           python -m unittest tests.test_production_scene_layers tests.test_scene_layers -v
           cd motion-remotion
           ./node_modules/.bin/tsc --noEmit
-          node --test tests/mesh-rig.test.cjs
+          node --test tests/mesh-rig.test.cjs tests/idle-motion.test.cjs
       - name: Preparar parametros de Remotion mantendo a cena-mae ORIGINAL
         shell: bash
         run: |
           set -euo pipefail
           python -m videoforge.production_layer_preview prepare \
             --channel otaku-br --video-id spy-x-family-familia-de-mentira \
-            --number 1 --layers ./input/layers --voice ./input/voice
+            --number 1 --layers ./input/layers --voice ./input/voice \
+            --blink ./input/blink
       - name: Remotion renderiza background + sprite RGBA em movimento independente
         shell: bash
         run: |
@@ -78,6 +123,19 @@ jobs:
           python -m videoforge.production_layer_preview verify \
             --channel otaku-br --video-id spy-x-family-familia-de-mentira --number 1
           ffmpeg -nostdin -hide_banner -loglevel error -y -ss 2.5 -i "$p/layered-preview.mp4" -frames:v 1 "$p/qa-frame.png"
+          ffmpeg -nostdin -hide_banner -loglevel error -y -ss 3.0 -i "$p/layered-preview.mp4" -frames:v 1 "$p/qa-blink-closed.png"
+          ffmpeg -nostdin -hide_banner -loglevel error -y -ss 3.3 -i "$p/layered-preview.mp4" -frames:v 1 "$p/qa-blink-open.png"
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          p=Path('output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01')
+          report=json.loads((p/'layered-preview.qa.json').read_text(encoding='utf-8'))
+          assert report['eyes_blink_rgba_verified'] is True
+          assert report['character_motion_reduced_to_max_px']==2.8
+          assert report['rig_head_eyes_hair_clothes'] is False
+          assert hashlib.sha256((p/'qa-blink-closed.png').read_bytes()).digest()!=hashlib.sha256((p/'qa-blink-open.png').read_bytes()).digest()
+          print('BLINK_RGBA_AND_MICRO_MOTION_QA_OK')
+          PY
         env:
           LC_ALL: C.UTF-8
       - name: Entregar MP4 da cena 01 com QA (nao e episodio aprovado)
@@ -88,6 +146,6 @@ jobs:
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/layered-preview.mp4
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/layered-preview.qa.json
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/stage.qa.json
-            output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/qa-frame.png
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/qa-*.png
           retention-days: 14
           if-no-files-found: error
