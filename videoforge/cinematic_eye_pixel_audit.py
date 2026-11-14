@@ -18,7 +18,7 @@ from pathlib import Path
 import sys
 from typing import Any
 
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageFilter
 
 from .errors import VideoForgeError
 
@@ -65,6 +65,7 @@ def verify_alpha_sweep(head_alpha:Image.Image,
     if pixel_count(head)<10:
         raise VideoForgeError("CINEMATIC_EYE_HEAD_UNDERLAY_EMPTY")
     report={"canvas":list(head.size),
+            "subpixelBilinearFringeMarginPx":1,
             "visibleAlphaThreshold":VISIBLE_ALPHA_THRESHOLD,
             "underlayAndSafeAlphaThreshold":SAFE_ALPHA_THRESHOLD,
             "pupilMaxShiftPx":pupil_distance,
@@ -88,20 +89,32 @@ def verify_alpha_sweep(head_alpha:Image.Image,
                 # Only counting high-alpha pixels: fully source-aligned masks.
                 escaped=pixel_count(ImageChops.subtract(shifted,safe))
                 exposed=pixel_count(ImageChops.subtract(shifted,head))
+                # Real Remotion/Three render samples texture at fractional
+                # pixel coordinates between integer keyframes; with linear
+                # filtering a nonzero alpha source can affect 1 neighbor.
+                # A 3x3 max filter conservatively checks this fringe in
+                # both axes, avoiding false safety at half-pixel positions.
+                bilinear_support=shifted.filter(ImageFilter.MaxFilter(3))
+                subpixel_escape=pixel_count(ImageChops.subtract(bilinear_support,safe))
+                subpixel_underlay=pixel_count(ImageChops.subtract(bilinear_support,head))
                 measurements.append({
                     "shiftPx":dx,
                     "maskedPixels":size,
                     "clippedAtCanvasPixels":clipped,
                     "outsideScleraSafePixels":escaped,
                     "withoutHeadUnderlayPixels":exposed,
+                    "fractionalFilterOutsideScleraPixels":subpixel_escape,
+                    "fractionalFilterWithoutHeadUnderlayPixels":subpixel_underlay,
                 })
-                if clipped or escaped or exposed:
+                if clipped or escaped or exposed or subpixel_escape or subpixel_underlay:
                     raise VideoForgeError(
                         "CINEMATIC_EYE_PIXEL_BLEED_OR_UNDERLAY_MISSING:"
                         +kind+"-"+side+":shift="+str(dx)
                         +":clip="+str(clipped)
                         +":escape="+str(escaped)
                         +":underlay="+str(exposed)
+                        +":fractional_escape="+str(subpixel_escape)
+                        +":fractional_underlay="+str(subpixel_underlay)
                     )
             measured[kind]={
                 "opaquePixels":size,
@@ -110,6 +123,8 @@ def verify_alpha_sweep(head_alpha:Image.Image,
                 "maxShiftPx":max_shift,
                 "worstEscapedPixels":0,
                 "worstUnderlayMissingPixels":0,
+                "worstFractionalFilterEscapedPixels":0,
+                "worstFractionalFilterUnderlayMissingPixels":0,
             }
         report["eyes"][side]=measured
     report.update({
