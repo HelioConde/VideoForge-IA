@@ -154,10 +154,10 @@
   },
   "producao": {
     "manifesto_tecnico": "video.json",
-    "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43556709886",
-    "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43556709886/artifacts/14097759273",
-    "sha256": "037287be34cd352ad8e1c269e73e8bcad8d803f4e484820da406274b110d1e1c",
-    "duracao_real_segundos": 130.847,
+    "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43558375270",
+    "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43558375270/artifacts/14100020237",
+    "sha256": "8b28018d468bed938ad89bb5d661ca1ce76d73c9118f79df0912aca832534a92",
+    "duracao_real_segundos": 157.089,
     "versoes_anteriores": [
       {
         "tipo": "previsualizacao_tecnica_antiga",
@@ -181,17 +181,24 @@
         "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43556383292/artifacts/14098691613",
         "sha256": "83e032d1c5b92c15411736f29a7c2d9d45c5fb757a6aa4ed0ca3767e1ab9ccd8",
         "duracao_real_segundos": 130.847
+      },
+      {
+        "tipo": "revisao_com_artes_reais_sem_voz_feminina",
+        "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43556709886",
+        "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43556709886/artifacts/14097759273",
+        "sha256": "037287be34cd352ad8e1c269e73e8bcad8d803f4e484820da406274b110d1e1c",
+        "duracao_real_segundos": 130.847
       }
     ],
     "engine": "videoforge.mvp.render",
     "numero_de_cenas": 16,
-    "nova_versao": "real-artes-16-cenas-no-programa-principal",
-    "classificacao": "revisao_tecnica_com_artes_reais",
+    "nova_versao": "v3-camera-feminina-legendas-qa",
+    "classificacao": "revisao_com_voz_feminina_legendas_e_movimento_cinematografico",
     "video_oficial_do_programa": false,
     "programa_origem": "HelioConde/VideoForge-IA",
-    "workflow_arquivo": ".github/workflows/production-assemble.yml",
-    "modulo_executor": "videoforge.spy_family_animated",
-    "github_actions_run_id": 43556709886,
+    "workflow_arquivo": ".github/workflows/production-female-motion-render.yml",
+    "modulo_executor": "videoforge.production_assemble",
+    "github_actions_run_id": 43558375270,
     "etapas_pendentes": [
       "agentes_produtores_integrados",
       "geracao_de_artes_de_personagens_no_programa",
@@ -230,13 +237,19 @@
     "modelo": "imagem-estatica",
     "art_bible_run_id": 43555226353,
     "art_batch_run_id": 43555715519,
-    "rig_animado_aplicado": false
+    "rig_animado_aplicado": false,
+    "voz_feminina": true,
+    "tipo_voz": "espeak-ng pt-br+f3 sintética",
+    "voz_run_id": 43557582317,
+    "legendas": "SRT de trechos narrados embutidas no MP4",
+    "legendas_visiveis_revisao_amostra": true,
+    "movimento": "pan cinematografico da arte original, sem recorte"
   },
   "qa": {
     "aprovado_tecnicamente": true,
     "aprovado_editorialmente": false,
-    "relatorio_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43556709886/artifacts/14097759273",
-    "nota": "MP4 com 16 artes reais geradas por Codex Proxy, rastreadas por SHA, produzido no compositor principal do VideoForge. QA H264/AAC 1080x1920 130.847s; faixas pretas corrigidas com preenchimento desfocado. Faltam sprites RGBA, movimento articulado, voz natural e aprovação visual."
+    "relatorio_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43558375270/artifacts/14100020237",
+    "nota": "GitHub Actions #43558375270: 16 cenas 1080x1920 H264/AAC, 157.089s, voz feminina pt-BR sintética, legendas SRT embutidas e visíveis na área inferior, movimento suave de câmera verificado por diferença de frames; sprites RGBA e rig articulado pendentes."
   },
   "publicacao": {
     "youtube_video_id": null,
@@ -264,6 +277,7 @@
     "Regra nº 1 (14/11/2026): workflow experimental renderizado no GitHub Actions não é vídeo oficial do programa. Reclassificado para preview_tecnico_nao_oficial, status assets_pendentes; o artefato é mantido somente para auditoria.",
     "14/11/2026: preflight oficial #43553752100 executou 11 testes (OK), bloqueou geracao do MP4 por ausência de pipeline/agents/artes RGBA. Reporta cinco blockers; não substituir por arquivo experimental.",
     "14/11/2026: geração REAL da prancha Loid/Anya/Yor via módulo reutilizável production_art.py no GitHub; PNG 1024x1536 SHA validado, inspeção visual interna sem aprovação humana. Não é produção final.",
-    "14/11/2026: MP4 real de revisão do VideoForge-IA validado no run #43556709886; imagens reais #43555226353/#43555469650/#43555715519, áudio de staging, H264/AAC 1080x1920 130.847s; faixas pretas corrigidas sem cortar personagens. NÃO é animação articulada e NÃO foi publicado."
+    "14/11/2026: MP4 real de revisão do VideoForge-IA validado no run #43556709886; imagens reais #43555226353/#43555469650/#43555715519, áudio de staging, H264/AAC 1080x1920 130.847s; faixas pretas corrigidas sem cortar personagens. NÃO é animação articulada e NÃO foi publicado.",
+    "14/11/2026: implementação no programa: voz feminina eSpeak pt-br+f3 #43557582317, legenda por segmento WAV e SRT embutida, pan sem cortar personagens; vídeo final de revisão #43558375270, qa técnico positivo e quadro visível inspecionado. Não é animação individual de personagem e não foi publicado."
   ]
 }
