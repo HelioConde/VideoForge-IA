@@ -1,0 +1,28 @@
+{
+  "schema": "videoforge/cinematic-camera-candidate/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C12-P02",
+  "source_original_file": "confronto_no_trono_real.png",
+  "source_sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+  "original_width_px": 941,
+  "original_height_px": 1672,
+  "original_mode": "RGB",
+  "original_bytes": 2394242,
+  "status": "EXISTING_ART_SHOW_TO_USER_NOT_YET_APPROVED_FOR_THIS_SHOT",
+  "type": "over_shoulder",
+  "shot_focus": "Kael de costas, princesa no degrau da direita da câmera, rei central ao fundo, guardas laterais",
+  "scene_history": "o quadro mostra a princesa identificável e só pode ser usado depois da revelação C12; não usar como mãe de C01-C02",
+  "image_generation_calls": 0,
+  "source_archive_in_github": false,
+  "view_directly_in_chat": true,
+  "human_shot_approval": false,
+  "rig_ready": false,
+  "source_dimensions_require_adaptive_canvas": true,
+  "notes": [
+    "Candidato de câmera derivado de imagem pré-existente no chat; não foi criado nem editado nesta etapa.",
+    "Mostrar ao usuário para revisão em vez de registrar aprovação implícita.",
+    "Não colar a cabeça de Kael do close sobre este ângulo: precisa de partes RGBA da mesma mãe.",
+    "Caso aprovado, preservar SHA do PNG original, respeitar 9:16 e QA de rig próprio."
+  ]
+}
