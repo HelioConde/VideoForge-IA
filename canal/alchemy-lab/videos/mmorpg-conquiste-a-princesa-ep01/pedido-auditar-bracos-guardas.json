@@ -1,0 +1,18 @@
+{
+  "schema": "videoforge/guard-arm-qa-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "image_generation_calls": 0,
+  "only_existing_pixels": true,
+  "human_visual_approval": false,
+  "youtube_upload": false,
+  "partManifest": "rig-guardas-articulacoes-c01.json",
+  "output": "qa-guardas-articulacoes-c01.json",
+  "checks": [
+    "10 PNG SHA and RGBA size",
+    "hand-spear contact pixel count",
+    "joint hierarchy",
+    "disabled motion lock",
+    "missing underlays reported"
+  ]
+}
