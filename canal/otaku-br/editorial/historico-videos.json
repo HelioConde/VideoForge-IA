@@ -10,11 +10,11 @@
       "titulo": "Spy x Family: por que Anya esconde os segredos dos pais? 👀",
       "obra": "Spy x Family",
       "assunto": "Por que Anya guarda os segredos de Loid e Yor e o que isso revela sobre a família Forger",
-      "status": "assets_pendentes",
-      "tipo": "revisao_editorial_v2",
-      "duracao_segundos": null,
-      "workflow_url": null,
-      "artefato_url": null,
+      "status": "renderizado",
+      "tipo": "preview_animado_remotion_vetorial",
+      "duracao_segundos": 131.136,
+      "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43545398967",
+      "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43545398967/artifacts/14093378535",
       "publicado": false,
       "visual_qa": "pendente",
       "revisoes_anteriores": [
@@ -27,7 +27,10 @@
           "visual_qa": "pendente"
         }
       ],
-      "scene_count": 16
+      "scene_count": 16,
+      "sha256": "acf1e2b6b89f5ec5180bcb410ae8409f7f15d4c7feec63fba75d061ea9278254",
+      "arte_final": false,
+      "narracao_final": false
     }
   ]
 }
