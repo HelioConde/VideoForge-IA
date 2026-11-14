@@ -113,6 +113,28 @@ def preflight(channel: str, video_id: str, *, root: Path = ROOT,
              and (bool(environment.get("CODEX_PROXY_BASE_URL"))
                   or bool(environment.get("CODEX_PROXY_ACCOUNTS_JSON"))))
     check("image_provider_configured", proxy, "CODEX_PROXY_CONFIG_NOT_READY")
+    # Videos com direção por tomadas exigem mães/rigs/QA exclusivos por
+    # plano. Evitar que o modelo de pan estático passe como composição final.
+    if (directory / "direcao-cinematografica-planos.json").is_file():
+        from .cinematic_shot_assets import build_edl
+        try:
+            edl=build_edl(channel,video_id,root)
+            report["cinematic_shot_count"]=edl["shotCount"]
+            report["cinematic_frame_count"]=edl["format"]["totalFrames"]
+            report["cinematic_shots_pending"]=edl["unapprovedShots"]
+            check("cinematic_edl_continuity",
+                  edl["shotCount"]==37 and edl["format"]["totalFrames"]==4890,
+                  "CINEMATIC_EDL_TIMELINE_INVALID")
+            check("cinematic_all_shot_art_and_rigs_approved",
+                  edl["renderOfficialAllowed"],
+                  "CINEMATIC_SHOTS_MISSING_APPROVED_ART_RIG_UNDERLAYS_QA")
+        except (VideoForgeError,OSError,ValueError,KeyError):
+            check("cinematic_edl_continuity",False,
+                  "CINEMATIC_EDL_INVALID")
+        # Um renderer de um único personagem não cobre sozinho 37 tomadas
+        # com duetos, guardas, armas e HUD. Nunca declarar o programa pronto.
+        check("cinematic_37_shot_three_renderer_integrated",
+              False, "CINEMATIC_MULTI_SHOT_THREE_RENDERER_PENDING")
     # Assets de trabalho precisam ser originais do run atual e auditáveis,
     # nunca substituídos por arte vetorial ou MP4 de preview legado.
     check("approved_source_art_available",
