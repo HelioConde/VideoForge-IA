@@ -13,5 +13,13 @@
   "renderer": "art_preparation_only_not_ThreeCanvas",
   "rig_operational": false,
   "human_visual_approval": false,
-  "youtube_upload": false
+  "youtube_upload": false,
+  "revision": "crop-each-original-layer-and-package-blocked-two-lock-three-rig-v2",
+  "additional_qa": [
+    "transparent pixels trimmed to tight bbox while preserving source canvas coordinates",
+    "heads open/closed share identical bbox and approved blink differences",
+    "left/right hair separately assigned 7x9 meshes with roots pinned",
+    "human visual review flag remains false and production validator must reject the rig",
+    "no automatic YouTube upload and no synthetic final replacement"
+  ]
 }
