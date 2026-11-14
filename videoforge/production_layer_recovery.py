@@ -16,6 +16,7 @@ import sys
 
 from . import scene_layers, production_scene_layers, proxy_images
 from .errors import VideoForgeError
+from . import image_generation_policy
 
 def digest(path: Path) -> str:
     if path.is_symlink() or not path.is_file():
@@ -62,6 +63,7 @@ def restore_partial(channel: str, video_id: str, number: int, incoming: Path,
 
 def recover(channel: str, video_id: str, number: int, incoming: Path,
             original_dir: Path, url: str, model: str="gpt-image-2") -> dict:
+    image_generation_policy.assert_image_generation_allowed(channel,video_id)
     plan, _story, entry = production_scene_layers.read_plan(channel, video_id, number)
     if model not in proxy_images.IMAGE_MODELS or plan.get("budget", {}).get("extra_images_this_test") != 2:
         raise VideoForgeError("LAYER_RECOVERY_MODEL_OR_BUDGET_INVALID")
