@@ -13,7 +13,22 @@
   "sourceArtworkFormat": {
     "width": 1024,
     "height": 1536,
-    "fit": "cover_no_stretch"
+    "fit": "cover_no_stretch",
+    "legacySceneMotherFormat": [
+      1024,
+      1536
+    ],
+    "nativePerShotCanvasRequired": true,
+    "allowedNativeCanvasSizes": [
+      [
+        941,
+        1672
+      ],
+      [
+        1024,
+        1536
+      ]
+    ]
   },
   "shotCount": 37,
   "blackShots": 1,
