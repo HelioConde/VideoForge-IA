@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/kael-existing-masks-remap-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "image_generation_calls": 0,
+  "only_existing_pixels": true,
+  "human_visual_approval": false,
+  "youtube_upload": false,
+  "source_aligned": "assets/cena-01/rig-drafts/kael-alinhado-original/kael-alinhado-mesma-cena-mae-CANDIDATO.png",
+  "old_masks": "rig-pixel-partition.json",
+  "output": "assets/cena-01/rig-drafts/kael-alinhado-partes/",
+  "gate": "roundtrip only; underlays and anatomy pending"
+}
