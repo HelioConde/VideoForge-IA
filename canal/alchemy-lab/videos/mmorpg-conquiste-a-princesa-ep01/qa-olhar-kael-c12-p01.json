@@ -73,5 +73,32 @@
     "O compositor bloqueia C12-P01 se faltarem camadas independentes ou QA de pixels ocultos.",
     "Cenários/cores da bíblia antiga e novas imagens aprovadas na conversa ainda precisam de referência canônica registrada.",
     "Não criar olhos/rostos colados sobre imagens de origem ou usar zoom de pôster como substituto."
-  ]
+  ],
+  "pixel_level_checks": {
+    "tool": "videoforge/cinematic_eye_pixel_audit.py",
+    "tests": "tests/test_cinematic_eye_pixel_audit.py",
+    "execution_run": 43642952433,
+    "conclusion": "success",
+    "python_tests_in_workflow": 17,
+    "all_intermediate_eye_positions": 30,
+    "visible_alpha_threshold": 1,
+    "minimum_sclera_underlay_alpha": 254,
+    "invalid_conditions": [
+      "pupil or eyelid leaking outside manually approved sclera region",
+      "missing head underlay where shifted pupil appears",
+      "part clipped by frame edge",
+      "partial alpha face hole",
+      "missing or wrong SHA/RGBA eye assets"
+    ],
+    "readiness_report": "qa-pixel-olhos-c12-p01.json",
+    "readiness_status": "awaiting_own_shot_art",
+    "missing_artifacts": [
+      "assets/planos/C12-P01/rig.json",
+      "assets/planos/C12-P01/qa.json"
+    ],
+    "artifact_alpha_audit_performed": false,
+    "pixel_qa_of_approved_real_art": false,
+    "human_review": false,
+    "no_new_images_created": true
+  }
 }
