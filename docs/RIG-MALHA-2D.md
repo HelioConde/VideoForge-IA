@@ -1,5 +1,7 @@
 # MVP de rig 2D por malha — VideoForge IA / Remotion
 
+> **MOTOR LEGADO / HISTÓRICO:** o rig de capa SVG foi um protótipo de outra arte. O padrão oficial atual é o [MANUAL PRINCIPAL DE ANIMAÇÃO 2D](MANUAL-PRINCIPAL-ANIMACAO-2D.md) e o renderizador [Three.js por malha](RIG-THREE-MALHA.md). Não usar esses sprites de capa/espada para Anya, nem substituir rig Three por movimento de PNG inteiro.
+
 **Estado:** codigo opt-in implementado; **sprites articulados reais e aprovacao visual ainda pendentes**. Nao representa um video publicado nem habilita `modelos/camadas-animadas` para producao. O Remotion legado permanece o padrao quando nao ha rig.
 
 ## Por que essa abordagem
