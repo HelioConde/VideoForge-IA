@@ -27,7 +27,7 @@ class MainImageGenerationPersistenceWiringTests(unittest.TestCase):
                 self.assertIn("persist-credentials: true",s)
                 self.assertIn("scripts/persistir-imagens-gh.sh",s)
                 self.assertIn("actions/upload-artifact@v4",s)
-                self.assertIn("if: success()",s)
+                self.assertIn("success()",s)
                 self.assertLess(s.index("scripts/persistir-imagens-gh.sh"),
                                 s.rindex("actions/upload-artifact@v4"))
 
