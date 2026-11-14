@@ -158,6 +158,15 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
         if (part.get("underlay_verified") is not True
                 or part.get("pivot_measured") is not True):
             failures.append("SHOT_PART_UNDERLAY_OR_PIVOT_NOT_VERIFIED")
+    # Mark the focus coordinates (eyes/object) on the ORIGINAL canvas
+    # so cover=9:16 cannot crop the very expression this shot requires.
+    if shot.get("shot_type") in ("close_up","extreme_close_up","insert"):
+        from .cinematic_frame_fit import validate_focal_box
+        try:
+            focal=validate_focal_box(native_canvas,qa.get("focal_bbox"))
+            data["focal_fit"]=focal
+        except VideoForgeError as exc:
+            failures.append(str(exc))
     # O renderer multipersonagem precisa de rigs reais e cropped RGBA
     # correspondentes às peças do inventário, não só um grupo de sprites.
     actors=rig.get("actors")
@@ -238,6 +247,7 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
         "background_sha256":rig.get("background_sha256"),
         "rig_parts":len(parts),
         "native_canvas":{"width":native_canvas[0],"height":native_canvas[1]},
+        "focal_fit":data.get("focal_fit"),
         "qa_frames":qa.get("qa_frames"),
     }
     return not failures, sorted(set(failures)), data
