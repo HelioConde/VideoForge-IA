@@ -1,0 +1,60 @@
+{
+  "schema": "videoforge/rig-three-scene-status/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "reference_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
+  "latest_workflow": {
+    "name": "rig-three-anya-hand-layer.yml",
+    "run_id": 43591918632,
+    "conclusion": "success",
+    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43591918632",
+    "artifact_id": 14112921248,
+    "artifact_name": "vf-anya-hand-head-separate-draft-43591918632"
+  },
+  "earlier_artifacts": {
+    "isolation_run": 43589190537,
+    "head_roundtrip_run": 43589485833,
+    "hand_split_run": 43590074890
+  },
+  "confirmed_machine_qa": {
+    "recovered_original_uniform_pixels": 19666,
+    "restored_exposed_original_body_pixels": 24274,
+    "corrected_partition_alpha_differences": 0,
+    "neutral_roundtrip_visible_pixels": 235865,
+    "neutral_roundtrip_mean_abs_rgb_error": 0.1039,
+    "neutral_roundtrip_large_error_pixels_gt20": 82,
+    "neutral_roundtrip_missing_opaque_pixels": 0,
+    "neutral_roundtrip_stray_alpha_pixels": 0,
+    "neutral_roundtrip_alpha_error_pixels_gt30": 0,
+    "original_blink_pair_retained": true,
+    "tests": "tests.test_animation_manual and tests.test_rig_three_hand_roundtrip passed in Actions"
+  },
+  "staged_assets": [
+    "head-open-without-hand-candidate.png",
+    "head-closed-without-hand-candidate.png",
+    "hand-foreground-candidate.png",
+    "body-visible-restored-candidate.png",
+    "anya-complete-source-isolated-candidate.png",
+    "other-characters-without-anya-candidate.png",
+    "neutral-composition-corrected-candidate.png",
+    "neutral-diff-corrected.png"
+  ],
+  "pending_visual_and_motion_checks": [
+    "reconstruct face and scalp behind detachable hair/front bangs using the same mother art, not arbitrary external art",
+    "split hair into individually riggable coherent locks without hard cropped rectangular edges",
+    "keep head/hand/collar underlays visually consistent at +/-2 degrees around the neck pivot",
+    "validate neutral and rotation frames of head and independently positioned pointing hand",
+    "approve sprite z-order and seam anti-aliasing under light and dark backgrounds",
+    "run real ThreeCanvas frames and deterministic render QA only after art approval"
+  ],
+  "human_review_approved": false,
+  "hair_underlay_approved": false,
+  "head_neck_motion_approved": false,
+  "rig_operational": false,
+  "rig_animado_aplicado": false,
+  "video_oficial_do_programa": false,
+  "youtube_uploaded": false,
+  "status": "neutral_pixel_qa_passed_art_and_motion_approval_pending"
+}
