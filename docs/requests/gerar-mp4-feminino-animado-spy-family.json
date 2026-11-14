@@ -11,5 +11,9 @@
   "motion": "cinematic-pan on original full artworks without crop",
   "rig_character_animation": false,
   "youtube_upload": false,
-  "requested_at": "2026-11-14"
+  "requested_at": "2026-11-14",
+  "revision": "r2_legendas_visiveis",
+  "fix": "FontSize 11, MarginV 55: legendas reais aparecem na regiao inferior e nao fora do quadro",
+  "source_voice_run_id": 43557582317,
+  "preserve_assets": true
 }
