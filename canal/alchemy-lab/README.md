@@ -19,6 +19,10 @@ Identificador: `alchemy-lab` · idioma: `pt-BR`.
 
 ## Nova regra de quadros cinematográficos
 
+**Atuação facial por rig:** o plano `C12-P01` ganhou [controle de pupilas 12px e pálpebras 1px](videos/mmorpg-conquiste-a-princesa-ep01/rig-olhar-kael-c12-p01.json), com cabeça e cabelo estáticos. [QA](videos/mmorpg-conquiste-a-princesa-ep01/qa-olhar-kael-c12-p01.json) aprovado no código; sprites oculares e revisão artística ainda pendentes, sem render.
+
+
+
 No dorama **Conquiste a Princesa**, a direção do programa agora separa **37 tomadas cinematográficas**, com **12 closes de rosto/olhos, 5 planos sobre o ombro e 4 planos gerais**. O gerador suporta `--shot-id` por imagem-mãe, preservando a duração e o elenco de cada tomada. As expressões de Kael, rei e princesa são focos importantes, com HUD adicionado depois no Remotion.
 
 - [Direção JSON dos 37 enquadramentos](videos/mmorpg-conquiste-a-princesa-ep01/direcao-cinematografica-planos.json)
