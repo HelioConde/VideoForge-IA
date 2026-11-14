@@ -43,8 +43,8 @@ jobs:
       - name: Baixar MESMA imagem inteira da personagem, editada com olhos fechados
         uses: actions/download-artifact@v4
         with:
-          run-id: 43574602245
-          name: vf-spy-character-same-image-closed-eyes-43574602245
+          run-id: 43574833995
+          name: vf-spy-character-same-image-closed-eyes-43574833995
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input/blink
       - name: Preservar cabelo/rosto/corpo/resto EXATAMENTE da origem
