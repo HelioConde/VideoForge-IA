@@ -91,8 +91,8 @@ jobs:
           set -euo pipefail
           folder=output/otaku-br/videos/spy-x-family-familia-de-mentira/ornament-head-qa
           for part in left right; do
-            if [[ "$part" = left ]]; then rect=24:36:325:1282
-            else rect=24:36:718:1288
+            if [[ "$part" = left ]]; then rect=125:180:260:1220
+            else rect=125:180:660:1215
             fi
             for frame in 0 30; do
               ffmpeg -nostdin -v error -y -i "$folder/frame-$frame.png" \
