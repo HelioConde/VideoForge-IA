@@ -38,8 +38,10 @@ def _checked(path:Path,hash_value:str)->Path:
 
 
 def prepare(original_dir:Path,corrected_dir:Path,
-            candidate_dir:Path,output:Path)->dict:
+            candidate_dir:Path,output:Path,art_run_id:int)->dict:
     enforce_animation_manual()
+    if not isinstance(art_run_id,int) or art_run_id<=0:
+        raise VideoForgeError("ANYA_DRAFT_SOURCE_RUN_ID_REQUIRED")
     source_manifest=json.loads(
         _checked(original_dir/"manifest.json",sha(original_dir/"manifest.json"))
         .read_text(encoding="utf-8"))
@@ -149,7 +151,7 @@ def prepare(original_dir:Path,corrected_dir:Path,
       "deformable_hair_meshes":2,
       "real_threecanvas_review":True,
       "frames_requested":FRAMES,
-      "source_artifact_run":43598536256,
+      "source_artifact_run":art_run_id,
       "static_others_run":43591918632,
       "rig_art_reapproved":False,
       "human_visual_approval":False,
@@ -168,9 +170,10 @@ def main()->int:
     p.add_argument("--corrected",type=Path,required=True)
     p.add_argument("--candidate",type=Path,required=True)
     p.add_argument("--dest",type=Path,required=True)
+    p.add_argument("--art-run-id",type=int,required=True)
     a=p.parse_args()
     try:
-        prepare(a.original,a.corrected,a.candidate,a.dest)
+        prepare(a.original,a.corrected,a.candidate,a.dest,a.art_run_id)
         return 0
     except (VideoForgeError,ThreeRigError,OSError,ValueError,KeyError,
             TypeError) as exc:
