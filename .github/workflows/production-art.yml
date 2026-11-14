@@ -96,10 +96,10 @@ jobs:
             --model gpt-image-2 \
             --url "$PROXY_ENDPOINT"
       - name: Commitar PNG, hash e proveniencia no canal de forma permanente
-        if: success()
+        if: always()
         shell: bash
         run: |
-          bash scripts/persistir-imagens-gh.sh "otaku-br" "spy-x-family-familia-de-mentira" "output/otaku-br/videos/spy-x-family-familia-de-mentira/imagens" "${{ github.run_id }}" "production-art"
+          bash scripts/arquivar-pngs-se-existirem.sh "otaku-br" "spy-x-family-familia-de-mentira" "output/otaku-br/videos/spy-x-family-familia-de-mentira/imagens" "${{ github.run_id }}" "production-art" "${{ job.status }}"
       - name: Arquivar PNG real, hash e QA na pasta do episodio
         if: always()
         uses: actions/upload-artifact@v4
