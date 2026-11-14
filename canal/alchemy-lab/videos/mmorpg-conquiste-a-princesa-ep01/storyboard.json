@@ -1,10 +1,10 @@
 {
-  "schema": "videoforge/storyboard-preproduction/v1",
+  "schema": "videoforge/storyboard-preproduction/v2",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "version": "2026-11-14",
-  "status": "roteiro_pronto_assets_pendentes",
-  "total_duration_seconds": 134,
+  "version": "2026-11-14-rig-remotion",
+  "status": "arte_referencia_em_execucao_assets_e_rig_pendentes",
+  "total_duration_seconds": 163,
   "format": {
     "width": 1080,
     "height": 1920,
@@ -14,211 +14,310 @@
   "scenes": [
     {
       "id": "C01",
+      "number": 1,
       "start_seconds": 0,
-      "end_seconds": 8,
-      "duration_seconds": 8,
-      "description": "Trono: acusação",
+      "end_seconds": 12,
+      "duration_seconds": 12,
+      "description": "Prólogo: lâmina e julgamento",
       "characters": [
-        "rei",
-        "guarda",
-        "kael"
+        "carrasco",
+        "kael",
+        "aldric",
+        "guarda_esquerdo",
+        "guarda_direito"
       ],
       "location": "sala-do-trono",
-      "rig_notes": "rei inclina cabeça; guardas seguram lanças",
+      "shots": [
+        "C01-P01",
+        "C01-P02",
+        "C01-P03",
+        "C01-P04"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C02",
-      "start_seconds": 8,
-      "end_seconds": 17,
-      "duration_seconds": 9,
-      "description": "Pânico de Kael",
+      "number": 2,
+      "start_seconds": 12,
+      "end_seconds": 24,
+      "duration_seconds": 12,
+      "description": "Acusação",
       "characters": [
+        "aldric",
         "kael"
       ],
       "location": "sala-do-trono",
-      "rig_notes": "piscar e respiração por peças",
+      "shots": [
+        "C02-P01",
+        "C02-P02"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C03",
-      "start_seconds": 17,
-      "end_seconds": 23,
-      "duration_seconds": 6,
-      "description": "Transição de memória",
+      "number": 3,
+      "start_seconds": 24,
+      "end_seconds": 31,
+      "duration_seconds": 7,
+      "description": "Memória",
       "characters": [
         "kael"
       ],
       "location": "sala-do-trono",
-      "rig_notes": "pupila e corte para flashback",
+      "shots": [
+        "C03-P01",
+        "C03-P02"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C04",
-      "start_seconds": 23,
-      "end_seconds": 34,
-      "duration_seconds": 11,
+      "number": 4,
+      "start_seconds": 31,
+      "end_seconds": 44,
+      "duration_seconds": 13,
       "description": "Último login",
       "characters": [
         "kael"
       ],
       "location": "quarto-moderno",
-      "rig_notes": "mãos no teclado; luz da interface",
+      "shots": [
+        "C04-P01",
+        "C04-P02",
+        "C04-P03"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C05",
-      "start_seconds": 34,
-      "end_seconds": 46,
-      "duration_seconds": 12,
-      "description": "Nível 1",
+      "number": 5,
+      "start_seconds": 44,
+      "end_seconds": 58,
+      "duration_seconds": 14,
+      "description": "Nível um",
       "characters": [
         "kael"
       ],
       "location": "estrada-arken",
-      "rig_notes": "cabelo/jaqueta ao vento; mãos",
+      "shots": [
+        "C05-P01",
+        "C05-P02",
+        "C05-P03"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C06",
-      "start_seconds": 46,
-      "end_seconds": 57,
+      "number": 6,
+      "start_seconds": 58,
+      "end_seconds": 69,
       "duration_seconds": 11,
-      "description": "Mercado sem ouro",
+      "description": "Mercado",
       "characters": [
         "kael",
         "figurantes"
       ],
       "location": "mercado-arken",
-      "rig_notes": "bolsa e dedos separados",
+      "shots": [
+        "C06-P01",
+        "C06-P02"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C07",
-      "start_seconds": 57,
-      "end_seconds": 69,
-      "duration_seconds": 12,
-      "description": "Jovem encapuzada",
+      "number": 7,
+      "start_seconds": 69,
+      "end_seconds": 82,
+      "duration_seconds": 13,
+      "description": "Desconhecida",
       "characters": [
-        "kael",
         "elara",
-        "mascarados"
+        "mascarado_1",
+        "mascarado_2",
+        "kael"
       ],
       "location": "beco-arken",
-      "rig_notes": "corrida somente se rig de membros real",
+      "shots": [
+        "C07-P01",
+        "C07-P02",
+        "C07-P03"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C08",
-      "start_seconds": 69,
-      "end_seconds": 83,
-      "duration_seconds": 14,
-      "description": "O salvamento",
+      "number": 8,
+      "start_seconds": 82,
+      "end_seconds": 98,
+      "duration_seconds": 16,
+      "description": "Carrinho",
       "characters": [
         "kael",
         "elara",
         "mascarados"
       ],
       "location": "beco-arken",
-      "rig_notes": "braços e carrinho independentes",
+      "shots": [
+        "C08-P01",
+        "C08-P02",
+        "C08-P03"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C09",
-      "start_seconds": 83,
-      "end_seconds": 93,
+      "number": 9,
+      "start_seconds": 98,
+      "end_seconds": 108,
       "duration_seconds": 10,
-      "description": "Broche da princesa",
+      "description": "Separação",
       "characters": [
         "kael",
         "elara"
       ],
       "location": "beco-arken",
-      "rig_notes": "mãos, cabelo, broche RGBA",
+      "shots": [
+        "C09-P01",
+        "C09-P02"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C10",
-      "start_seconds": 93,
-      "end_seconds": 104,
-      "duration_seconds": 11,
-      "description": "Acusado no portão",
+      "number": 10,
+      "start_seconds": 108,
+      "end_seconds": 120,
+      "duration_seconds": 12,
+      "description": "Broche",
       "characters": [
-        "kael",
-        "guardas"
+        "elara",
+        "kael"
       ],
-      "location": "portao-palacio",
-      "rig_notes": "braços dos guardas e broche",
+      "location": "beco-arken",
+      "shots": [
+        "C10-P01",
+        "C10-P02"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C11",
-      "start_seconds": 104,
-      "end_seconds": 113,
-      "duration_seconds": 9,
-      "description": "Olhar furtivo",
+      "number": 11,
+      "start_seconds": 120,
+      "end_seconds": 133,
+      "duration_seconds": 13,
+      "description": "Prisão",
       "characters": [
         "kael",
-        "elara",
-        "rei"
+        "guarda_esquerdo",
+        "guarda_direito"
       ],
-      "location": "sala-do-trono",
-      "rig_notes": "somente olhar lateral e cabeça em pivô; face opaca",
+      "location": "portao-palacio",
+      "shots": [
+        "C11-P01",
+        "C11-P02",
+        "C11-P03"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C12",
-      "start_seconds": 113,
-      "end_seconds": 124,
-      "duration_seconds": 11,
-      "description": "Conquiste a princesa",
+      "number": 12,
+      "start_seconds": 133,
+      "end_seconds": 145,
+      "duration_seconds": 12,
+      "description": "Olhar de lado",
       "characters": [
         "kael",
         "elara",
-        "rei"
+        "aldric"
       ],
       "location": "sala-do-trono",
-      "rig_notes": "rig real da expressão + HUD como overlay",
+      "shots": [
+        "C12-P01",
+        "C12-P02",
+        "C12-P03"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
     },
     {
       "id": "C13",
-      "start_seconds": 124,
-      "end_seconds": 134,
+      "number": 13,
+      "start_seconds": 145,
+      "end_seconds": 155,
       "duration_seconds": 10,
-      "description": "O falso noivado",
+      "description": "Conquiste a princesa",
       "characters": [
         "kael",
         "elara",
-        "rei",
-        "guardas"
+        "aldric"
       ],
       "location": "sala-do-trono",
-      "rig_notes": "gesto da princesa e reação de Kael",
+      "shots": [
+        "C13-P01",
+        "C13-P02"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
+      "scene_mother": null,
+      "rig_json": null,
+      "qa_approved": false
+    },
+    {
+      "id": "C14",
+      "number": 14,
+      "start_seconds": 155,
+      "end_seconds": 163,
+      "duration_seconds": 8,
+      "description": "Noivado falso",
+      "characters": [
+        "elara",
+        "aldric",
+        "kael"
+      ],
+      "location": "sala-do-trono",
+      "shots": [
+        "C14-P01",
+        "C14-P02",
+        "C14-P03"
+      ],
+      "rig_notes": "Ver microações, câmera e keyframes em direcao-rig-remotion.json",
       "scene_mother": null,
       "rig_json": null,
       "qa_approved": false
@@ -226,5 +325,6 @@
   ],
   "youtube_upload": false,
   "video_oficial_do_programa": false,
-  "rig_animado_aplicado": false
+  "rig_animado_aplicado": false,
+  "direction_spec": "direcao-rig-remotion.json"
 }
