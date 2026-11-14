@@ -35,7 +35,20 @@
       "pendencia": "Falta gerar arte real por fluxo do programa/agentes e montar vídeo definitivo com QA; artefato existente é prévia técnica do workflow separado.",
       "render_tech_confirmed": true,
       "workflow_arquivo": ".github/workflows/spy-family-animated.yml",
-      "agentes_e_arte_final_integrados": false
+      "agentes_e_arte_final_integrados": false,
+      "producao_oficial_pendente": true,
+      "ultima_tentativa_oficial": {
+        "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43553752100",
+        "diagnostico_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43553752100/artifacts/14096174813",
+        "mp4_gerado": false,
+        "pendencias": [
+          "LAYERED_ANIMATION_MODEL_NOT_OPERATIONAL",
+          "OFFICIAL_RENDERER_HAS_NO_LAYERED_PIPELINE",
+          "OFFICIAL_AGENTS_NOT_INTEGRATED",
+          "SCENE_ART_GENERATOR_NOT_INTEGRATED",
+          "SCENE_ART_AND_RGBA_LAYERS_NOT_GENERATED"
+        ]
+      }
     }
   ]
 }
