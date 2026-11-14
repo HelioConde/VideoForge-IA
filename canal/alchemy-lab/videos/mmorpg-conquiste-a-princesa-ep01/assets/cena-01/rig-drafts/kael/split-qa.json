@@ -1,0 +1,253 @@
+{
+  "schema": "videoforge/existing-pixel-split-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/candidatos/kael-rgba-candidate.png",
+  "source_sha256": "f910f2df550062267efb17cde99a950c1afa47e1216179372fd963a26b864f41",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "pieces": [
+    {
+      "id": "rosto-orelha",
+      "file": "rosto-orelha.png",
+      "sha256": "a81fbbb5e291782cf1a3f318e20988f8560de596b7c5ea63c65f16572150410e",
+      "bbox_global": [
+        568,
+        516,
+        669,
+        589
+      ],
+      "pivot_xy_provisional": [
+        583,
+        547
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "cabelo",
+      "file": "cabelo.png",
+      "sha256": "2210bab86b15f629d854a2ef8fa5df46bfe482a653bdc0dc497ee2f065337af7",
+      "bbox_global": [
+        452,
+        389,
+        700,
+        586
+      ],
+      "pivot_xy_provisional": [
+        586,
+        529
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "mao-direita",
+      "file": "mao-direita.png",
+      "sha256": "ec61a1b8606e6458141d1966f10f6f64a129e266f2b1407be47af7def7387f54",
+      "bbox_global": [
+        639,
+        837,
+        800,
+        994
+      ],
+      "pivot_xy_provisional": [
+        663,
+        888
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "antebraco-direito",
+      "file": "antebraco-direito.png",
+      "sha256": "b60682e6ba88df5136413b4c0425fe3f39ff5f31125952113ffa211caefdb38a",
+      "bbox_global": [
+        544,
+        798,
+        658,
+        931
+      ],
+      "pivot_xy_provisional": [
+        579,
+        822
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "braco-superior-direito",
+      "file": "braco-superior-direito.png",
+      "sha256": "72f539387056996de30a2046d2a3e0d40a6551aeb4e5c0b8cca47455460a43f9",
+      "bbox_global": [
+        501,
+        561,
+        673,
+        829
+      ],
+      "pivot_xy_provisional": [
+        548,
+        624
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "braco-esquerdo",
+      "file": "braco-esquerdo.png",
+      "sha256": "dcf26dc3c731fd0458d82beada8ac25856137171275f0f83f8ef773c43aa5cb0",
+      "bbox_global": [
+        221,
+        574,
+        322,
+        928
+      ],
+      "pivot_xy_provisional": [
+        268,
+        622
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "bota-direita",
+      "file": "bota-direita.png",
+      "sha256": "048e22a52688a9b52d47a945b20ec74d81803bb9cbf9d84530ce642dfd470066",
+      "bbox_global": [
+        548,
+        1229,
+        742,
+        1448
+      ],
+      "pivot_xy_provisional": [
+        610,
+        1246
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "bota-esquerda",
+      "file": "bota-esquerda.png",
+      "sha256": "e2c64aee46b8b1cb100915e834dfe3c0ac7f935a0107ca4757b9eccd5a783a69",
+      "bbox_global": [
+        268,
+        1225,
+        426,
+        1523
+      ],
+      "pivot_xy_provisional": [
+        348,
+        1257
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "perna-direita-levantada",
+      "file": "perna-direita-levantada.png",
+      "sha256": "ea9e324d1daa8e4b463fd7f37af387f56ca1ff88801206bcdfaf7ac882f9305c",
+      "bbox_global": [
+        531,
+        899,
+        798,
+        1259
+      ],
+      "pivot_xy_provisional": [
+        572,
+        970
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "perna-esquerda-ajoelhada",
+      "file": "perna-esquerda-ajoelhada.png",
+      "sha256": "b8da187765237617ea7454e11cc6c0f2b0534babfbb5c7e33a0a6a3f45d21ebe",
+      "bbox_global": [
+        182,
+        909,
+        555,
+        1453
+      ],
+      "pivot_xy_provisional": [
+        303,
+        988
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "tronco-jaqueta",
+      "file": "tronco-jaqueta.png",
+      "sha256": "895a0cb48ff5e55ffb1dc845a5e52a2be4d29ebcb9ac59f627183baf499faf55",
+      "bbox_global": [
+        223,
+        494,
+        664,
+        956
+      ],
+      "pivot_xy_provisional": [
+        480,
+        946
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_anatomical_cutout"
+    },
+    {
+      "id": "residual-halo-REJECTED",
+      "file": "residual-halo-REJECTED.png",
+      "sha256": "fa7e68004463d05c057c50f8edaf18563e8413f0dbffebf3456c661acc82f7a8",
+      "bbox_global": [
+        0,
+        31,
+        998,
+        1496
+      ],
+      "pivot_xy_provisional": null,
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "rejected_residual"
+    }
+  ],
+  "piece_count": 12,
+  "neutral_roundtrip_pixel_exact": true,
+  "source_pixels_created_or_painted": 0,
+  "source_pixels_discarded": 0,
+  "alpha_alignment": "unverified_for_actual_joint_deformation",
+  "hidden_anatomy_underlays": "missing",
+  "halo_and_background_contamination": "requires_human_review",
+  "pivots": "provisional",
+  "head_closed_same_image": "not_available_no_eyes_visible",
+  "actual_rig": "pending",
+  "human_visual_approval": false,
+  "video_official": false,
+  "youtube_uploaded": false,
+  "explicit_restriction": "Não usar estes recortes diretamente como rig aprovado."
+}
