@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/production-scene-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "number": 1,
+  "reference_run_id": 43555226353,
+  "reference_artifact_id": 14097349545,
+  "max_generated_images_this_run": 1,
+  "reuse_art_bible": true,
+  "youtube_upload": false,
+  "request": "Gerar cena genuína com identidade visual do programa, não cartão/SVG; não repetir em caso 429.",
+  "requested_at": "2026-11-14"
+}
