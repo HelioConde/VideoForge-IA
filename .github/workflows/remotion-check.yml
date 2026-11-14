@@ -15,6 +15,8 @@ on:
       - 'tests/test_mesh_rig.py'
       - 'tests/make_mesh_smoke.py'
       - 'tests/test_remotion_preview.py'
+      - 'tests/test_rig_three_contract.py'
+      - 'videoforge/rig_three_contract.py'
       - '.github/workflows/remotion-check.yml'
       - '.github/workflows/remotion-animate-layers.yml'
   push:
@@ -60,11 +62,11 @@ jobs:
           cd motion-remotion
           ./node_modules/.bin/tsc --noEmit
       - name: Testar contrato de props e integridade sem IA
-        run: python -m unittest tests.test_remotion_preview tests.test_mesh_rig tests.test_rig_candidate tests.test_eye_refine tests.test_rig_eye_ai -v
+        run: python -m unittest tests.test_remotion_preview tests.test_mesh_rig tests.test_rig_candidate tests.test_eye_refine tests.test_rig_eye_ai tests.test_rig_three_contract -v
       - name: Testar matematica de malha, pivô e piscadas quadro a quadro
         run: |
           cd motion-remotion
-          node --test tests/mesh-rig.test.cjs
+          node --test tests/mesh-rig.test.cjs tests/rig-three-math.test.cjs tests/blink-motion-sync.test.cjs
       - name: Renderizar malha SVG real em Chromium com sprites sinteticos
         shell: bash
         run: |
