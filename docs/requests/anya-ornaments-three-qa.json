@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/anya-ornament-threecanvas-review-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "source_original_run": 43560159589,
+  "source_corrected_run": 43591918632,
+  "source_hair_art_run": 43599799485,
+  "source_original_ornaments_run": 43602371052,
+  "goal": "enfeites dourados/pretos devem acompanhar cabeca com mesmo neck pivot, novos sprites rigidos atras do cabelo, removidos do PNG estatico",
+  "renderer": "real ThreeCanvas technical draft, 180 frames",
+  "new_image_calls": 0,
+  "human_visual_approval": false,
+  "video_official": false,
+  "youtube_uploaded": false
+}
