@@ -47,6 +47,9 @@ jobs:
       - name: Verificar rejeição de planos incompletos, cortes, zoom e HUD
         working-directory: motion-remotion
         run: node --test tests/cinematic-contract.test.cjs
+      - name: Testar malha 2D verdadeira (capa, mechas, brinco por pivô)
+        working-directory: motion-remotion
+        run: node --test tests/rig-three-math.test.cjs
       - name: Confirmar que entrada oficial não altera player legado
         shell: bash
         run: |
