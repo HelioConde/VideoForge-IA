@@ -14,6 +14,6 @@
     "prompts": 36
   },
   "new_images_permitted": false,
-  "attempt": 2,
-  "reason": "Corrigida propagacao do erro de quadro preto e integrado --shot-id ao workflow de geracao, executar novamente QA sem imagens"
+  "attempt": 3,
+  "reason": "Validar template especifico de close, guard de canon e workflow --shot-id com 16 testes; somente texto, nenhuma imagem"
 }
