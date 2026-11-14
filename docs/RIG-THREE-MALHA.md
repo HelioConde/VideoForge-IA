@@ -49,3 +49,13 @@ Etapas artísticas necessárias:
 Já existem imagem-mãe, background separado, sprite geral do personagem e variantes da mesma imagem com olhos abertos/fechados. Ainda **faltam** corpo sem cabeça, cabeça individual nas duas variantes, cabelo separado com pixels ocultos reconstruídos, medidas de pivô e manifesto validado. **Não gerar capa/espada do personagem antigo.**
 
 Sem essas peças, o workflow de malha REAL deve permanecer bloqueado. Não renderizar um simples personagem flutuando como substituto. Só após uma candidata validada para a cena 01 devem ser preparados os mesmos assets das demais 15 cenas.
+
+## Aprendizado verificável — Anya cena 01 (14/11/2026)
+
+- **Nunca inferir que "opaco" significa alfa igual a 255.** O PNG canônico da Anya tem máximo de alfa **254**. Uma condição `alpha == 255` ocultava todos os pixels reconstruídos atrás do cabelo, embora o arquivo e o QA da máscara fossem válidos. O QA deve contar pixels reconstruídos **com alfa realmente não zero**, além do total da máscara.
+- O candidato inicial preenchia 14.803 pixels reais; o refinamento posterior acrescenta uma faixa interna de 7 px para pixels originais alfa 253, chegando a 24.042 pixels reconstruídos. A cor e o alfa da arte visível continuam sob QA e o movimento OpenCV rígido é **diagnóstico**, nunca aprovação do ThreeCanvas.
+- Revisar a integração de Loid/Yor na mesma cena: usar `other-characters-without-anya-candidate.png` da partição corrigida, não o PNG original contendo Anya inteira por baixo do rig.
+- O render **de revisão isolada** usa `src/rig-three-review-index.ts` e exige manifesto explicitamente não aprovado. A renderização oficial em `rig-three-real-render.yml` segue bloqueada por `THREE_RIG_HUMAN_REVIEW_REQUIRED`, sem qualquer bypass.
+- Nenhuma execução técnica, GIF/MP4 de teste, teste de frames ou teste de piscar autoriza publicar no YouTube. Para aprovar, revisar costuras, estabilidade no movimento, duplicações, personagem, olhos e suas transições com a arte no ThreeCanvas real.
+
+Referências: [candidato com preenchimento](https://github.com/HelioConde/VideoForge-IA/actions/runs/43599799485), [frames de revisão real](https://github.com/HelioConde/VideoForge-IA/actions/runs/43598866124), [MP4 técnico sem publicação](https://github.com/HelioConde/VideoForge-IA/actions/runs/43599312201).
