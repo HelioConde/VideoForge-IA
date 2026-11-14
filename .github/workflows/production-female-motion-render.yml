@@ -4,6 +4,10 @@ on:
     workflows:
       - "VideoForge - Narracao feminina e legendas pt-BR"
     types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/gerar-mp4-feminino-animado-spy-family.json'
   workflow_dispatch:
     inputs:
       voice_run_id:
@@ -22,7 +26,7 @@ concurrency:
 
 jobs:
   renderizar-compositor-principal:
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'))
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'))
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     container:
@@ -59,8 +63,8 @@ jobs:
       - name: Baixar audio FEMININO e legendas SRT deste programa
         uses: actions/download-artifact@v4
         with:
-          run-id: ${{ github.event.workflow_run.id || inputs.voice_run_id }}
-          name: vf-otaku-br-spy-family-female-voice-${{ github.event.workflow_run.id || inputs.voice_run_id }}
+          run-id: ${{ github.event.workflow_run.id || inputs.voice_run_id || '43557582317' }}
+          name: vf-otaku-br-spy-family-female-voice-${{ github.event.workflow_run.id || inputs.voice_run_id || '43557582317' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input/voice
       - name: Testar integridade dos assets e filtros de movimento e legenda
