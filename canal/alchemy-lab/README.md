@@ -17,10 +17,15 @@ Identificador: `alchemy-lab` · idioma: `pt-BR`.
 **Estado:** Canal catalogado; sem integração de geração nem YouTube. Nenhuma produção nem aprovação editorial está implícita nestes arquivos.
 
 
-## Produção em andamento: dorama MMORPG original — Conquiste a Princesa
+## Produção em andamento: dorama MMORPG — Conquiste a Princesa
 
-- [Roteiro revisado](videos/mmorpg-conquiste-a-princesa-ep01/roteiro.md), [direção técnica por rigs/Remotion](videos/mmorpg-conquiste-a-princesa-ep01/direcao-rig-remotion.json) e [plano técnico de separação](videos/mmorpg-conquiste-a-princesa-ep01/PLANO-ARTE-RIG-EP01.md).
-- [Assets arquivados neste canal](videos/mmorpg-conquiste-a-princesa-ep01/assets/): 14 PNGs de imagens-mãe, referência dos personagens, fundo reconstruído e candidatos RGBA com origem e SHA256. As cenas 02 e 03 e a camada conjunta têm apontamentos de QA/reprovação.
-- [12 partes separadas de Kael, somente por pixels existentes](videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/kael/) — QA determinístico de recomposição verificado; underlays, pivôs, halo e rig real ainda não aprovados.
-- **Regra desta etapa: não gerar imagens novas.** Bloqueio técnico em `videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock` aplicado aos seis workflows que poderiam chamar IA de imagem. **38 PNGs arquivados no GitHub**, incluindo duas lanças candidatas extraídas da cena-mãe (uma camada residual retida para QA). **19 PNGs auditados por SHA** no inventário técnico; rig oficial ainda bloqueado. Usar os PNGs existentes e os scripts de separação/arquivo. As oito variações feitas anteriormente no chat podem ser importadas pelo [workflow sem geração](../../.github/workflows/import-alchemy-existing-chat-assets.yml) após upload do ZIP existente.
-- **Não há MP4 oficial, render aprovado, nem upload ao YouTube.** Os assets arquivados não alteram as permissões de publicação nem a regra do manual global.
+**Arte em pré-produção, sem geração de novas imagens:** o episódio tem [roteiro de 14 cenas](videos/mmorpg-conquiste-a-princesa-ep01/roteiro.md), [direção de 37 planos para rigs/Remotion](videos/mmorpg-conquiste-a-princesa-ep01/direcao-rig-remotion.json) e [plano de QA](videos/mmorpg-conquiste-a-princesa-ep01/PLANO-ARTE-RIG-EP01.md).
+
+- [55+ arquivos PNG arquivados neste canal](videos/mmorpg-conquiste-a-princesa-ep01/assets/), incluindo 14 imagens-mãe, referência de personagens, fundo reconstruído e rascunhos de recortes. A contagem verificada em 14/11/2026 é de **56 PNGs**.
+- [Seleção recomendada de sprites C01](videos/mmorpg-conquiste-a-princesa-ep01/rig-selecao-artes-c01.json): Kael **alinhado à cena-mãe**, guardas com textura RGB original, lanças cruzadas originais e candidato de Aldric recortado por máscara. Nenhuma camada é considerada rig aprovada.
+- [Kael alinhado e suas 12 partições](videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/kael-alinhado-partes/) substituem **para fins de pré-produção** os recortes em escala errada anteriores. A recomposição preserva os pixels visíveis, mas não resolve braços e anatomia ocultos.
+- [Guardas refinados](videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/guardas-refinados/) têm versões com e sem lança (esta última possui buracos a reconstruir); [Aldric](videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/aldric-origem/) é apenas candidato devido ao contato com os braços do trono.
+- **Regra máxima deste episódio:** [NÃO GERAR NOVAS IMAGENS](videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock). Seis workflows que chamariam IA de imagem respeitam esse bloqueio; scripts de máscara usam apenas pixels anteriores.
+- As oito variações geradas no chat permanecem em [catálogo de importação pendente](videos/mmorpg-conquiste-a-princesa-ep01/IMAGENS-EXTERNAS-PENDENTES.json): o ZIP está na conversa, mas a transferência binária para este GitHub ainda precisa ocorrer pela [pasta de importação](videos/mmorpg-conquiste-a-princesa-ep01/uploads/).
+
+**Ainda não há MP4 oficial, rig articulado aprovado ou publicação no YouTube.** As cenas 02 e 03 continuam visualmente reprovadas e não devem ser tratadas como artes validadas.
