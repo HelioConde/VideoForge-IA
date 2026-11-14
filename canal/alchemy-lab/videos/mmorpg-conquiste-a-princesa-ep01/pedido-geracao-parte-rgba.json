@@ -1,0 +1,12 @@
+{
+  "schema": "videoforge/rgba-part-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene_number": 1,
+  "part_id": "kael",
+  "source_run_id": 43591342058,
+  "max_calls_per_run": 1,
+  "retry_on_429": false,
+  "youtube_upload": false,
+  "purpose": "Extrair SOMENTE Kael da mesma cena-mãe do julgamento, como PNG RGBA real independente do trono, guardas e fundo. Depois inspecionar e só então fazer rig e demais partes; não confundir candidato com aprovado."
+}
