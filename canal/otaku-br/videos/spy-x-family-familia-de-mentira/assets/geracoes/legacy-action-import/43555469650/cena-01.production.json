@@ -1,0 +1,16 @@
+{
+  "schema": "videoforge/production-scene/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "number": 1,
+  "scene": "gancho-anya",
+  "reference_sha256": "6021f2b2360808c20fc77a55c2b9fd37f19ea36787d2ab1c3e9dce696aded8dd",
+  "sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
+  "model": "gpt-image-2",
+  "size": "1024x1536",
+  "technical_qa": "valid_png_opaque",
+  "visual_consistency_review": "pending",
+  "layers_generated": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
