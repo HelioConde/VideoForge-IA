@@ -1,0 +1,550 @@
+{
+  "schema": "videoforge/episode-production-story/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "title": "A Missão Impossível — Episódio 1: O Julgamento",
+  "language": "pt-BR",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 163,
+    "duration_frames": 4890
+  },
+  "mode": "official_preproduction_assets_pending",
+  "youtube_upload": false,
+  "source_of_truth": "direcao-rig-remotion.json",
+  "notes": [
+    "O roteiro anterior de 13 cenas/134s fica como histórico editorial; aqui está a versão 14 cenas/163s.",
+    "A abertura da espada pertence ao carrasco/tribunal, NÃO a Kael.",
+    "Antes de animar cada plano, imagem-mãe e PNGs RGBA reais da mesma origem são obrigatórios.",
+    "Não há imagens, vozes ou rigs declarados prontos; não criar manifesto video.json antes de existirem mídias reais."
+  ],
+  "scenes": [
+    {
+      "number": 1,
+      "id": "c01",
+      "scene_id": "C01",
+      "location": "sala-do-trono",
+      "duration_frames": 360,
+      "duration_seconds": 12,
+      "card": "Prólogo: lâmina e julgamento",
+      "narration": "",
+      "caption": "Prólogo: lâmina e julgamento",
+      "visual_direction": "frame 0-59: tela totalmente preta, nenhuma arte visível. O som de aço começa no silêncio. frame 60-149: mostrar exclusivamente a mão enluvada, punho, guarda, bainha e lâmina. A máscara da bainha revela somente o metal que sai; brilho percorre lâmina e desaparece. frame 150-239: corte seco ao Kael ajoelhado diante de um trono imenso; manter cabeça baixa; nada de princesa no enquadramento. frame 240-359: câmera perspectiva recua do rosto de Kael até mostrar dois guardas ATRÁS dele; cada guarda move braços e mãos, lanças distintas se cruzam em X acima do réu; trono domina fundo.",
+      "story_goal": "Prólogo: lâmina e julgamento",
+      "shots": [
+        {
+          "shot_id": "C01-P01",
+          "start_frame": 0,
+          "end_exclusive": 60,
+          "framing": "Preto absoluto",
+          "spoken": "SFX: fricção de bainha distante"
+        },
+        {
+          "shot_id": "C01-P02",
+          "start_frame": 60,
+          "end_exclusive": 150,
+          "framing": "Lâmina desembainhada",
+          "spoken": "SFX: desembainhar, lâmina separada, sem sangue"
+        },
+        {
+          "shot_id": "C01-P03",
+          "start_frame": 150,
+          "end_exclusive": 240,
+          "framing": "Kael ajoelhado",
+          "spoken": "SFX: joelho no piso de pedra"
+        },
+        {
+          "shot_id": "C01-P04",
+          "start_frame": 240,
+          "end_exclusive": 360,
+          "framing": "Revelar guardas e lanças cruzadas",
+          "spoken": "SFX: metal contra metal ao cruzar lanças"
+        }
+      ],
+      "image": "imagens/cena-01.png",
+      "audio": "voz/cena-01.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 2,
+      "id": "c02",
+      "scene_id": "C02",
+      "location": "sala-do-trono",
+      "duration_frames": 360,
+      "duration_seconds": 12,
+      "card": "Acusação",
+      "narration": "REI: Kael! Você é acusado de sequestrar a princesa deste reino!",
+      "caption": "Acusação",
+      "visual_direction": "plano frontal de Aldric com coroa, barba e manto bordô; ele se inclina minimamente para declarar acusação; boca exige sincronização fonética real. pupilas de Kael fixas no chão; testa contrai; não ergue cabeça por respeito; duas mãos tensas no campo.",
+      "story_goal": "Acusação",
+      "shots": [
+        {
+          "shot_id": "C02-P01",
+          "start_frame": 360,
+          "end_exclusive": 570,
+          "framing": "O rei acusa",
+          "spoken": "REI: Kael! Você é acusado de sequestrar a princesa deste reino!"
+        },
+        {
+          "shot_id": "C02-P02",
+          "start_frame": 570,
+          "end_exclusive": 720,
+          "framing": "Pânico contido",
+          "spoken": "KAEL (pensamento): Ontem eu era só um jogador. Agora posso ser executado?"
+        }
+      ],
+      "image": "imagens/cena-02.png",
+      "audio": "voz/cena-02.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 3,
+      "id": "c03",
+      "scene_id": "C03",
+      "location": "sala-do-trono",
+      "duration_frames": 210,
+      "duration_seconds": 7,
+      "card": "Memória",
+      "narration": "",
+      "caption": "Memória",
+      "visual_direction": "close extremo do olho de Kael; reflexo do monitor nasce dentro da pupila, sem substituir rosto ou cortar franja; áudio afasta o tribunal. a forma azul no olho torna-se brilho do monitor no mesmo estilo 2D; corte por correspondência, sem morphing do rosto.",
+      "story_goal": "Memória",
+      "shots": [
+        {
+          "shot_id": "C03-P01",
+          "start_frame": 720,
+          "end_exclusive": 810,
+          "framing": "Reflexo azul na pupila",
+          "spoken": "KAEL (pensamento): Como foi que cheguei até aqui?"
+        },
+        {
+          "shot_id": "C03-P02",
+          "start_frame": 810,
+          "end_exclusive": 930,
+          "framing": "Passagem ao quarto",
+          "spoken": "SFX: transição digital abafada"
+        }
+      ],
+      "image": "imagens/cena-03.png",
+      "audio": "voz/cena-03.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 4,
+      "id": "c04",
+      "scene_id": "C04",
+      "location": "quarto-moderno",
+      "duration_frames": 390,
+      "duration_seconds": 13,
+      "card": "Último login",
+      "narration": "KAEL: Só mais uma missão antes de dormir... KAEL: O quê?!",
+      "caption": "Último login",
+      "visual_direction": "Kael sentado no computador com roupa casual coerente; mão direita opera mouse e esquerda teclado; monitor fornece iluminação azul. zoom óptico da câmera no monitor, enquanto HUD de erro é composto separadamente no Remotion, nunca na arte-mãe. clarão azulado envolve primeiro teclado, mãos e rosto, com máscara de luminosidade e sombras coerentes; Kael levanta braços em defesa.",
+      "story_goal": "Último login",
+      "shots": [
+        {
+          "shot_id": "C04-P01",
+          "start_frame": 930,
+          "end_exclusive": 1050,
+          "framing": "Último login",
+          "spoken": "KAEL: Só mais uma missão antes de dormir..."
+        },
+        {
+          "shot_id": "C04-P02",
+          "start_frame": 1050,
+          "end_exclusive": 1170,
+          "framing": "Conexão interrompida",
+          "spoken": "HUD: ERRO DE CONEXÃO — TRANSFERÊNCIA INICIADA"
+        },
+        {
+          "shot_id": "C04-P03",
+          "start_frame": 1170,
+          "end_exclusive": 1320,
+          "framing": "Luz no quarto",
+          "spoken": "KAEL: O quê?!"
+        }
+      ],
+      "image": "imagens/cena-04.png",
+      "audio": "voz/cena-04.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 5,
+      "id": "c05",
+      "scene_id": "C05",
+      "location": "estrada-arken",
+      "duration_frames": 420,
+      "duration_seconds": 14,
+      "card": "Nível um",
+      "narration": "KAEL: Espera... eu entrei no jogo?!",
+      "caption": "Nível um",
+      "visual_direction": "Kael desperta caído em estrada gramada; desloca peso do quadril para a mão, ergue o tronco e só então o pescoço; veste roupa simples de aventureiro. paisagem estabelece muralhas, estrada e árvores separadas com profundidade parallax real, Kael minúsculo e espantado. menu RPG aparece ao lado de Kael sem cobrir face; ele experimenta abrir a mão e acompanha o texto com pupilas.",
+      "story_goal": "Nível um",
+      "shots": [
+        {
+          "shot_id": "C05-P01",
+          "start_frame": 1320,
+          "end_exclusive": 1470,
+          "framing": "Despertar na estrada",
+          "spoken": "SFX: grama e vento"
+        },
+        {
+          "shot_id": "C05-P02",
+          "start_frame": 1470,
+          "end_exclusive": 1590,
+          "framing": "Muralhas de Arken",
+          "spoken": "KAEL: Espera... eu entrei no jogo?!"
+        },
+        {
+          "shot_id": "C05-P03",
+          "start_frame": 1590,
+          "end_exclusive": 1740,
+          "framing": "Interface nível um",
+          "spoken": "HUD: MUNDO ARKEN / CLASSE AVENTUREIRO / NÍVEL 1"
+        }
+      ],
+      "image": "imagens/cena-05.png",
+      "audio": "voz/cena-05.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 6,
+      "id": "c06",
+      "scene_id": "C06",
+      "location": "mercado-arken",
+      "duration_frames": 330,
+      "duration_seconds": 11,
+      "card": "Mercado",
+      "narration": "",
+      "caption": "Mercado",
+      "visual_direction": "mercado medieval com bancas e figurantes em layers independentes; Kael abre bolsa com duas mãos, o interior deve estar reconstruído. o sistema informa missão secundária, Kael reage com ironia silenciosa, sem saltar a imagem ou fazer zoom substituindo movimento.",
+      "story_goal": "Mercado",
+      "shots": [
+        {
+          "shot_id": "C06-P01",
+          "start_frame": 1740,
+          "end_exclusive": 1920,
+          "framing": "Bolsa vazia",
+          "spoken": "KAEL (pensamento): Nível um, sem dinheiro e sem mapa..."
+        },
+        {
+          "shot_id": "C06-P02",
+          "start_frame": 1920,
+          "end_exclusive": 2070,
+          "framing": "Sobreviva ao primeiro dia",
+          "spoken": "HUD: MISSÃO SECUNDÁRIA — SOBREVIVA AO PRIMEIRO DIA"
+        }
+      ],
+      "image": "imagens/cena-06.png",
+      "audio": "voz/cena-06.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 7,
+      "id": "c07",
+      "scene_id": "C07",
+      "location": "beco-arken",
+      "duration_frames": 390,
+      "duration_seconds": 13,
+      "card": "Desconhecida",
+      "narration": "ELARA: Não me entregue a eles! KAEL: Fique atrás de mim.",
+      "caption": "Desconhecida",
+      "visual_direction": "Elara disfarçada sob capuz azul aproxima-se pelo beco, olha para trás; cabelo e capa devem ser separados, mesma identidade posterior. mascarados emergem de trás do muro, freiam à curva; corrida com perna e braço reais e contatos alternados sem deslizar. Elara para junto a Kael; estende mão pedindo ajuda, não é apaixonada; ele olha para o carrinho atrás deles.",
+      "story_goal": "Desconhecida",
+      "shots": [
+        {
+          "shot_id": "C07-P01",
+          "start_frame": 2070,
+          "end_exclusive": 2190,
+          "framing": "Jovem corre no beco",
+          "spoken": "SFX: passos apressados"
+        },
+        {
+          "shot_id": "C07-P02",
+          "start_frame": 2190,
+          "end_exclusive": 2340,
+          "framing": "Dois perseguidores",
+          "spoken": "ELARA: Não me entregue a eles!"
+        },
+        {
+          "shot_id": "C07-P03",
+          "start_frame": 2340,
+          "end_exclusive": 2460,
+          "framing": "Pedido a Kael",
+          "spoken": "KAEL: Fique atrás de mim."
+        }
+      ],
+      "image": "imagens/cena-07.png",
+      "audio": "voz/cena-07.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 8,
+      "id": "c08",
+      "scene_id": "C08",
+      "location": "beco-arken",
+      "duration_frames": 480,
+      "duration_seconds": 16,
+      "card": "Carrinho",
+      "narration": "KAEL: Não sei lutar... mas sei atrapalhar! KAEL: Corra!",
+      "caption": "Carrinho",
+      "visual_direction": "carrinho de madeira nas proximidades da banca; Kael firma os pés e alcança a lateral com braço articulado. carrinho inteiro como prop com partes independentes atravessa beco, rodas giram vinculadas ao deslocamento e sombra move; Kael empurra com contato persistente. carrinho atravessado obriga mascarados a pararem; Elara foge pelo corredor lateral; câmera completamente parada durante rig.",
+      "story_goal": "Carrinho",
+      "shots": [
+        {
+          "shot_id": "C08-P01",
+          "start_frame": 2460,
+          "end_exclusive": 2610,
+          "framing": "Percebe o carrinho",
+          "spoken": "KAEL: Não sei lutar... mas sei atrapalhar!"
+        },
+        {
+          "shot_id": "C08-P02",
+          "start_frame": 2610,
+          "end_exclusive": 2790,
+          "framing": "Empurra e gira rodas",
+          "spoken": "SFX: madeira e pedra"
+        },
+        {
+          "shot_id": "C08-P03",
+          "start_frame": 2790,
+          "end_exclusive": 2940,
+          "framing": "Bloqueia passagem",
+          "spoken": "KAEL: Corra!"
+        }
+      ],
+      "image": "imagens/cena-08.png",
+      "audio": "voz/cena-08.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 9,
+      "id": "c09",
+      "scene_id": "C09",
+      "location": "beco-arken",
+      "duration_frames": 300,
+      "duration_seconds": 10,
+      "card": "Separação",
+      "narration": "ELARA: Você me salvou. Não vou esquecer. KAEL: Espere! Qual o seu nome?",
+      "caption": "Separação",
+      "visual_direction": "Kael e Elara respiram no final do beco; ela encosta a mão na dele brevemente, gratidão, não romance imediato. Elara solta a mão, segura capuz e desaparece pela esquina na direção que liga ao palácio; Kael fica parado.",
+      "story_goal": "Separação",
+      "shots": [
+        {
+          "shot_id": "C09-P01",
+          "start_frame": 2940,
+          "end_exclusive": 3090,
+          "framing": "Agradecimento",
+          "spoken": "ELARA: Você me salvou. Não vou esquecer."
+        },
+        {
+          "shot_id": "C09-P02",
+          "start_frame": 3090,
+          "end_exclusive": 3240,
+          "framing": "Ela desaparece",
+          "spoken": "KAEL: Espere! Qual o seu nome?"
+        }
+      ],
+      "image": "imagens/cena-09.png",
+      "audio": "voz/cena-09.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 10,
+      "id": "c10",
+      "scene_id": "C10",
+      "location": "beco-arken",
+      "duration_frames": 360,
+      "duration_seconds": 12,
+      "card": "Broche",
+      "narration": "KAEL: Ela deixou isso cair...",
+      "caption": "Broche",
+      "visual_direction": "flor prateada se solta do manto de Elara; próprio sprite do broche cai, gira e projeta sombra no chão; ausência na capa após queda é verificada. Kael flexiona joelhos, agacha e segura broche com pinça entre indicador e polegar; mão e broche mantêm contato depois da pega.",
+      "story_goal": "Broche",
+      "shots": [
+        {
+          "shot_id": "C10-P01",
+          "start_frame": 3240,
+          "end_exclusive": 3390,
+          "framing": "Broche cai",
+          "spoken": "SFX: pequeno tilintar"
+        },
+        {
+          "shot_id": "C10-P02",
+          "start_frame": 3390,
+          "end_exclusive": 3600,
+          "framing": "Kael recolhe",
+          "spoken": "KAEL: Ela deixou isso cair..."
+        }
+      ],
+      "image": "imagens/cena-10.png",
+      "audio": "voz/cena-10.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 11,
+      "id": "c11",
+      "scene_id": "C11",
+      "location": "portao-palacio",
+      "duration_frames": 390,
+      "duration_seconds": 13,
+      "card": "Prisão",
+      "narration": "KAEL: Encontrei isto... GUARDA: O broche da princesa! Então está envolvido no desaparecimento! KAEL: Eu só estava devolvendo!",
+      "caption": "Prisão",
+      "visual_direction": "Kael tenta devolver o objeto aos guardas, mantendo palma aberta; guardas veem emblema e trocam olhar desconfiado. guardas sabem que princesa está desaparecida; lança bloqueia Kael sem atravessar corpo; ele recua e tenta explicar. duas lanças e corpos dos guardas fecham a passagem, conduzem Kael; rima visual com tribunal para o corte.",
+      "story_goal": "Prisão",
+      "shots": [
+        {
+          "shot_id": "C11-P01",
+          "start_frame": 3600,
+          "end_exclusive": 3720,
+          "framing": "Mostra broche no portão",
+          "spoken": "KAEL: Encontrei isto..."
+        },
+        {
+          "shot_id": "C11-P02",
+          "start_frame": 3720,
+          "end_exclusive": 3870,
+          "framing": "Acusam Kael",
+          "spoken": "GUARDA: O broche da princesa! Então está envolvido no desaparecimento!"
+        },
+        {
+          "shot_id": "C11-P03",
+          "start_frame": 3870,
+          "end_exclusive": 3990,
+          "framing": "Detenção",
+          "spoken": "KAEL: Eu só estava devolvendo!"
+        }
+      ],
+      "image": "imagens/cena-11.png",
+      "audio": "voz/cena-11.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 12,
+      "id": "c12",
+      "scene_id": "C12",
+      "location": "sala-do-trono",
+      "duration_frames": 360,
+      "duration_seconds": 12,
+      "card": "Olhar de lado",
+      "narration": "",
+      "caption": "Olhar de lado",
+      "visual_direction": "Kael ajoelhado mantém cabeça abaixo da linha do rei e câmera imóvel. Primeiro só pupilas deslocam 12px, depois pálpebras 1px; cabeça fica exatamente estática. câmera se desloca para revelar Elara à direita do trono pela oclusão natural, sem fade; Kael gira cabeça só 0,6° sem erguer queixo. alternância de olhos e flor prateada; mesma aparência da garota encapuzada; Kael mal disfarça espanto.",
+      "story_goal": "Olhar de lado",
+      "shots": [
+        {
+          "shot_id": "C12-P01",
+          "start_frame": 3990,
+          "end_exclusive": 4110,
+          "framing": "Rabo de olho",
+          "spoken": "SFX: silêncio tenso"
+        },
+        {
+          "shot_id": "C12-P02",
+          "start_frame": 4110,
+          "end_exclusive": 4230,
+          "framing": "Revelação da princesa",
+          "spoken": "SFX: nota de reconhecimento"
+        },
+        {
+          "shot_id": "C12-P03",
+          "start_frame": 4230,
+          "end_exclusive": 4350,
+          "framing": "Reconhecimento",
+          "spoken": "KAEL (pensamento): Não pode ser... ela é a princesa?!"
+        }
+      ],
+      "image": "imagens/cena-12.png",
+      "audio": "voz/cena-12.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 13,
+      "id": "c13",
+      "scene_id": "C13",
+      "location": "sala-do-trono",
+      "duration_frames": 300,
+      "duration_seconds": 10,
+      "card": "Conquiste a princesa",
+      "narration": "",
+      "caption": "Conquiste a princesa",
+      "visual_direction": "HUD azulado surge apenas na visão de Kael; moldura primeiro, título depois; sobrepor na interface e não no rosto. missão explicita recompensa de volta ao mundo original e morte em caso de falha; Kael reage só com rig facial; hud permanece legível.",
+      "story_goal": "Conquiste a princesa",
+      "shots": [
+        {
+          "shot_id": "C13-P01",
+          "start_frame": 4350,
+          "end_exclusive": 4500,
+          "framing": "Missão desbloqueada",
+          "spoken": "HUD: MISSÃO PRINCIPAL — CONQUISTE O CORAÇÃO DA PRINCESA"
+        },
+        {
+          "shot_id": "C13-P02",
+          "start_frame": 4500,
+          "end_exclusive": 4650,
+          "framing": "Recompensa e risco",
+          "spoken": "KAEL (pensamento): CONQUISTAR A PRINCESA?! Eu nem vou sobreviver!"
+        }
+      ],
+      "image": "imagens/cena-13.png",
+      "audio": "voz/cena-13.wav",
+      "art_approved": false,
+      "rig_approved": false
+    },
+    {
+      "number": 14,
+      "id": "c14",
+      "scene_id": "C14",
+      "location": "sala-do-trono",
+      "duration_frames": 240,
+      "duration_seconds": 8,
+      "card": "Noivado falso",
+      "narration": "ELARA: Pai, não o execute. ELARA: Esse homem... é meu noivo!",
+      "caption": "Noivado falso",
+      "visual_direction": "Elara dá um passo à frente e segura saia do vestido com mão real; rei se surpreende; posições e iluminação coerentes. princesa encara corte ao declarar noivado; autonomia é central; rei levanta sobrancelhas; sincronizar visemas. Kael arregala os olhos; HUD 'VÍNCULO 1/100' aparece e corte seco para preto, deixando cliffhanger.",
+      "story_goal": "Noivado falso",
+      "shots": [
+        {
+          "shot_id": "C14-P01",
+          "start_frame": 4650,
+          "end_exclusive": 4740,
+          "framing": "Elara avança",
+          "spoken": "ELARA: Pai, não o execute."
+        },
+        {
+          "shot_id": "C14-P02",
+          "start_frame": 4740,
+          "end_exclusive": 4830,
+          "framing": "O falso noivado",
+          "spoken": "ELARA: Esse homem... é meu noivo!"
+        },
+        {
+          "shot_id": "C14-P03",
+          "start_frame": 4830,
+          "end_exclusive": 4890,
+          "framing": "Choque e corte",
+          "spoken": "KAEL (pensamento): SEU O QUÊ?!"
+        }
+      ],
+      "image": "imagens/cena-14.png",
+      "audio": "voz/cena-14.wav",
+      "art_approved": false,
+      "rig_approved": false
+    }
+  ]
+}
