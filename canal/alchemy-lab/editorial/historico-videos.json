@@ -1,8 +1,20 @@
 {
   "schema": "videoforge/channel-video-history/v1",
   "canal_id": "alchemy-lab",
-  "atualizado_em": "2026-11-13",
+  "atualizado_em": "2026-11-14",
   "historico_youtube_importado": false,
   "nota": "Indice editorial inicialmente vazio. Nao conclua que o canal nao possui videos publicados.",
-  "videos": []
+  "videos": [
+    {
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "titulo": "A Missão Impossível — Episódio 1: O Julgamento",
+      "status": "pre_producao_assets_pendentes",
+      "data_criacao": "2026-11-14",
+      "tema": "Dorama MMORPG original / julgamento / missão conquistar a princesa",
+      "arquivo_editorial": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/editorial.json",
+      "youtube_video_id": null,
+      "mp4_gerado": false,
+      "nota": "Roteiro, biblia visual e storyboard registrados. Historico YouTube não verificado; sem reservas, imagens, render ou publicação."
+    }
+  ]
 }
