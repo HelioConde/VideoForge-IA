@@ -1,0 +1,169 @@
+{
+  "schema": "videoforge/guard-motion-hole-envelope/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "C01",
+  "shot": "C01-P04",
+  "inputRig": "rig-guardas-articulacoes-c01.json",
+  "algorithm": "rotate only arm masks around provisional elbow pivots and measure alpha holes",
+  "anglesDeg": [
+    -18,
+    -8,
+    -2,
+    0,
+    2,
+    8,
+    18
+  ],
+  "pixelsRGBGeneratedOrModified": 0,
+  "imageGenerationCalls": 0,
+  "writtenImageFiles": 0,
+  "renderMP4": false,
+  "youtubeUploaded": false,
+  "humanVisualApproval": false,
+  "preservesSourcePNG": true,
+  "roundtripNeutralVerified": true,
+  "underlaysAvailable": false,
+  "rotationsAreExecutedInOfficialRig": false,
+  "rigReady": false,
+  "officialRenderAllowed": false,
+  "limitations": [
+    "Conserva a capa, pernas e a pose de cabeça existentes; só antebraço+mão são testados",
+    "O teste é de silhueta: não identifica costuras de textura, dedos ocultos nem detalhes inventados",
+    "A lança está já cruzada na arte original e não foi rotacionada nem apagada neste teste",
+    "Pivôs ainda são estimados, não aprovados",
+    "Qualquer buraco exposto sem underlay impede o movimento; zero buracos NÃO equivale a aprovação do rig"
+  ],
+  "guards": [
+    {
+      "id": "guarda-esquerdo",
+      "sourceSHA256": "5a5fff118860911c4d978fc985ec173e8a8cad311964045c6f2f475278d3f9b4",
+      "elbowPivotProvisionalXY": [
+        303,
+        670
+      ],
+      "referenceOpaquePixels": 150455,
+      "neutralRoundtrip": true,
+      "proposedTargetForearmRotationDeg": 18,
+      "targetMissingOpaquePixels": 2410,
+      "targetNewlyExposedAreaPixels": 2395,
+      "motionSafeWithoutUnderlay": false,
+      "samples": [
+        {
+          "missingExistingOpaquePixels": 2407,
+          "movedToPreviouslyEmptyPixels": 2169,
+          "silhouettePreservedPct": 98.4002,
+          "forearmAngleDeg": -18,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 1093,
+          "movedToPreviouslyEmptyPixels": 938,
+          "silhouettePreservedPct": 99.2735,
+          "forearmAngleDeg": -8,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 285,
+          "movedToPreviouslyEmptyPixels": 220,
+          "silhouettePreservedPct": 99.8106,
+          "forearmAngleDeg": -2,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 0,
+          "movedToPreviouslyEmptyPixels": 0,
+          "silhouettePreservedPct": 100.0,
+          "forearmAngleDeg": 0,
+          "underlayMissing": false
+        },
+        {
+          "missingExistingOpaquePixels": 286,
+          "movedToPreviouslyEmptyPixels": 278,
+          "silhouettePreservedPct": 99.8099,
+          "forearmAngleDeg": 2,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 1094,
+          "movedToPreviouslyEmptyPixels": 1080,
+          "silhouettePreservedPct": 99.2729,
+          "forearmAngleDeg": 8,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 2410,
+          "movedToPreviouslyEmptyPixels": 2395,
+          "silhouettePreservedPct": 98.3982,
+          "forearmAngleDeg": 18,
+          "underlayMissing": true
+        }
+      ]
+    },
+    {
+      "id": "guarda-direito",
+      "sourceSHA256": "896067295f1ff526a33d7a910470ed548717002d5f9e799241a33f9a2ef75720",
+      "elbowPivotProvisionalXY": [
+        722,
+        670
+      ],
+      "referenceOpaquePixels": 149326,
+      "neutralRoundtrip": true,
+      "proposedTargetForearmRotationDeg": -18,
+      "targetMissingOpaquePixels": 2462,
+      "targetNewlyExposedAreaPixels": 2441,
+      "motionSafeWithoutUnderlay": false,
+      "samples": [
+        {
+          "missingExistingOpaquePixels": 2462,
+          "movedToPreviouslyEmptyPixels": 2441,
+          "silhouettePreservedPct": 98.3513,
+          "forearmAngleDeg": -18,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 1120,
+          "movedToPreviouslyEmptyPixels": 1107,
+          "silhouettePreservedPct": 99.25,
+          "forearmAngleDeg": -8,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 294,
+          "movedToPreviouslyEmptyPixels": 292,
+          "silhouettePreservedPct": 99.8031,
+          "forearmAngleDeg": -2,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 0,
+          "movedToPreviouslyEmptyPixels": 0,
+          "silhouettePreservedPct": 100.0,
+          "forearmAngleDeg": 0,
+          "underlayMissing": false
+        },
+        {
+          "missingExistingOpaquePixels": 295,
+          "movedToPreviouslyEmptyPixels": 198,
+          "silhouettePreservedPct": 99.8024,
+          "forearmAngleDeg": 2,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 1118,
+          "movedToPreviouslyEmptyPixels": 901,
+          "silhouettePreservedPct": 99.2513,
+          "forearmAngleDeg": 8,
+          "underlayMissing": true
+        },
+        {
+          "missingExistingOpaquePixels": 2461,
+          "movedToPreviouslyEmptyPixels": 2082,
+          "silhouettePreservedPct": 98.3519,
+          "forearmAngleDeg": 18,
+          "underlayMissing": true
+        }
+      ]
+    }
+  ]
+}
