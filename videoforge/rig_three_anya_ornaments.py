@@ -106,7 +106,28 @@ def separate(original_dir:Path,corrected_dir:Path,dest:Path):
     mask=masks["left"]|masks["right"]
     # The existing static image contains Loid/Yor and the clips. Reconstruct
     # ONLY hidden background RGB inside these source-qualified pixels.
-    bgr=cv2.cvtColor(others[:,:,:3],cv2.COLOR_RGB2BGR)
+    # Original RGB under fully transparent Anya pixels still contains PINK
+    # hair colours. Feeding those RGB values to Telea created a pink ghost
+    # on Loid/Yor; sampling residual GOLD on the horn edges duplicated the
+    # ornament in the static plate. Neutralize inpainting *context only*
+    # using the original Loid jacket/Yor coat pixels nearest each horn.
+    # Outside the actual horn masks the saved source image is unchanged.
+    working=others[:,:,:3].copy()
+    anchors={
+       "left":((260,1030,375,1182),(250,1100)),
+       "right":((630,1020,761,1200),(763,1110)),
+    }
+    for side,((x1,y1,x2,y2),(ax,ay)) in anchors.items():
+        if others[ay,ax,3]<250:
+            raise VideoForgeError("ANYA_ORNAMENT_UNDERLAY_ANCHOR_INVALID")
+        donor=others[ay,ax,:3]
+        r,g,b,a=[others[y1:y2,x1:x2,i].astype(np.int16)
+                 for i in range(4)]
+        gold_context=((r>117)&(g>78)&((r-g)>14)&
+                      ((g-b)>9)&(b<170))
+        contaminated=(a<100)|gold_context
+        working[y1:y2,x1:x2][contaminated]=donor
+    bgr=cv2.cvtColor(working,cv2.COLOR_RGB2BGR)
     reconstructed=cv2.inpaint(bgr,mask.astype(np.uint8)*255,
                              5,cv2.INPAINT_TELEA)
     backdrop=others.copy()
@@ -138,6 +159,19 @@ def separate(original_dir:Path,corrected_dir:Path,dest:Path):
     delta=float(np.mean(diff[mask]))
     gt20=int(np.count_nonzero(mask&(diff>20)))
     alpha_gt3=int(np.count_nonzero(mask&(alpha_diff>3)))
+    # Reject a stationary yellow double-exposure under the new moving
+    # ornaments. Both source-local regions had hundreds of gold pixels.
+    residual_gold={}
+    for side,(x1,y1,x2,y2) in (
+        ("left",(260,1040,370,1180)),
+        ("right",(630,1030,760,1190))):
+        sub=backdrop[y1:y2,x1:x2].astype(np.int16)
+        r,g,b,a=[sub[:,:,i] for i in range(4)]
+        gold=((a>100)&(r>170)&(g>95)&(b<155)&
+              ((r-g)>20)&((g-b)>10))
+        residual_gold[side]=int(np.count_nonzero(gold))
+    if any(value>20 for value in residual_gold.values()):
+        raise VideoForgeError("ANYA_ORNAMENT_YELLOW_GHOST_REMAINS")
     if (delta>2 or gt20>0 or alpha_gt3>0 or
         not np.array_equal(others[~mask],backdrop[~mask])):
         raise VideoForgeError("ANYA_ORNAMENT_NEUTRAL_QA_FAILED_"+str(
@@ -161,6 +195,10 @@ def separate(original_dir:Path,corrected_dir:Path,dest:Path):
         "original_gold_pixels_per_ornament":gold_counts,
         "bbox_original_canvas":bboxes,
         "total_original_pixels_moved":int(mask.sum()),
+        "static_underlay_donor_pixels_original_scene":{
+            "left":[250,1100],"right":[763,1110]
+        },
+        "remaining_stationary_gold_pixels_in_source_regions":residual_gold,
         "original_pixels_preserved_inside_sprites":True,
         "other_characters_unchanged_outside_exact_ornament_mask":True,
         "neutral_recomposition_mean_rgb_delta":round(delta,5),
