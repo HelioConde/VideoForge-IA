@@ -91,8 +91,12 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
     original_path=input_source/plan["reference_file"]
     orig=decode(original_path)
     # Same source PNG edited previously; alpha outside eyes is identical.
-    closed_path=input_eyes/"character-eyes-closed-safe.png"
-    eye_report=input_eyes/"closed-character.qa.json"
+    closed_files=list(input_eyes.rglob("character-eyes-closed-safe.png"))
+    reports=list(input_eyes.rglob("closed-character.qa.json"))
+    if len(closed_files)!=1 or len(reports)!=1:
+        raise VideoForgeError("RIG_CANDIDATE_APPROVED_BLINK_ARTIFACT_MISSING")
+    closed_path=closed_files[0]
+    eye_report=reports[0]
     e=json.loads(eye_report.read_text(encoding="utf-8"))
     if (e.get("schema")!="videoforge/closed-character-pixel-qa/v1" or
         e.get("original_character_sha256")!=sha(original_path) or
