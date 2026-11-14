@@ -11,6 +11,6 @@
   "visual_shots": 36,
   "initial_black_shot": 1,
   "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon",
-  "revision": 12,
-  "reason": "QA 37 planos com canvas nativo 941x1672 ou 1024x1536, IDs SHA e bboxes RGBA sem geracao de imagens"
+  "revision": 13,
+  "reason": "Testar nova regra: focal_bbox de closes e inserts nunca cortado pela camera 9:16 nativa; fotos 941x1672"
 }
