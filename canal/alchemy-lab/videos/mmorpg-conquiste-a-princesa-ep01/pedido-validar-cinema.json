@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/cinematic-qa-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "image_generation_calls": 0,
+  "youtube_upload": false,
+  "render_mp4": false,
+  "only_generate_prompt_text": true,
+  "plan": "direcao-cinematografica-planos.json",
+  "expect": {
+    "shots": 37,
+    "closeups": 12,
+    "otss": 5,
+    "prompts": 36
+  },
+  "new_images_permitted": false
+}
