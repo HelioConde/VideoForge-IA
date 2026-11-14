@@ -11,6 +11,6 @@
   "visual_shots": 36,
   "initial_black_shot": 1,
   "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon",
-  "revision": 7,
-  "reason": "Testar filtro Python C12-P01, olho independente, underlays, frames e export de performance"
+  "revision": 8,
+  "reason": "Auditoria real de mascaras alpha da esclerotica: pupilas 0-12 px, palpebras 0-1 px; proibir buracos e vazamento antes do Remotion sem gerar PNG"
 }
