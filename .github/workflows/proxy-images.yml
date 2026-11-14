@@ -176,7 +176,7 @@ jobs:
         run: |
           bash scripts/persistir-imagens-gh.sh "$CH" "$VID" "output/$CH/videos/$VID/imagens" "${{ github.run_id }}" "proxy-images-manual"
       - name: Entregar imagem e relatorio (nao publica no YouTube)
-        if: inputs.operacao == 'generate'
+        if: inputs.operacao == 'generate' && always()
         uses: actions/upload-artifact@v4
         with:
           name: imagem-${{ inputs.canal }}-${{ inputs.video_id }}-${{ github.run_id }}
