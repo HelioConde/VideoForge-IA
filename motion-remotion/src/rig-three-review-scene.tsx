@@ -36,12 +36,16 @@ export const AnyaDraftReviewScene:React.FC<AnyaDraftReviewProps>=({
      rig.video_id!=='spy-x-family-familia-de-mentira' ||
      rig.scene!=='cena-01' || rig.provisional!==true ||
      !rig.humanReview || Object.values(rig.humanReview).some(Boolean) ||
-     rig.layers.length!==6 ||
+     (rig.layers.length!==6 && rig.layers.length!==8) ||
+     (rig.layers.length===8 && !(['ornament-left','ornament-right'].every(
+       id=>rig.layers.some(l=>l.id===id && !l.mesh)))) ||
+     (rig.layers.length===6 && rig.layers.some(l=>
+       l.id==='ornament-left'||l.id==='ornament-right')) ||
      !(['body-no-head','head-open','head-closed','hair-front-left',
         'hair-front-right','hand'].every(id=>rig.layers.some(l=>l.id===id))) ||
      !rig.layers.find(l=>l.id==='hair-front-left')?.mesh ||
      !rig.layers.find(l=>l.id==='hair-front-right')?.mesh){
-    throw new Error('ANYA_DRAFT_REVIEW_MUST_USE_UNAPPROVED_ART_AND_ALL_6_LAYERS');
+    throw new Error('ANYA_DRAFT_REVIEW_MUST_USE_UNAPPROVED_ART_AND_ALL_REQUIRED_LAYERS');
   }
   const scale=Math.min(width/rig.canvas.width,height/rig.canvas.height);
   const motion:CharacterMotion={frame,fps,duration:durationFrames,
