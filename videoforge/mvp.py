@@ -106,43 +106,81 @@ def _load_manifest(path: Path) -> tuple[dict, list[dict]]:
             raise VideoForgeError("SCENE_CAPTION_INVALID")
         image = _safe_asset(path.parent, scene.get("image"), IMAGE_EXTENSIONS)
         audio = _safe_asset(path.parent, scene.get("audio"), AUDIO_EXTENSIONS)
-        resolved.append({"image": image, "audio": audio, "caption": caption.strip()})
+        motion = scene.get("motion", "none")
+        if motion not in ("none", "cinematic-pan"):
+            raise VideoForgeError("SCENE_MOTION_INVALID")
+        subtitle = scene.get("subtitles")
+        if subtitle is not None:
+            subtitle = _safe_asset(path.parent, subtitle, {".srt"})
+            if subtitle.stat().st_size > 20_000:
+                raise VideoForgeError("SCENE_SUBTITLES_TOO_LARGE")
+        resolved.append({"image": image, "audio": audio, "caption": caption.strip(),
+                         "motion": motion, "subtitles": subtitle})
     return manifest, resolved
 
 
-def _drawtext_filter(caption_filename: str) -> str:
-    # O storyboard 2:3 precisa caber no Short 9:16 sem cortar cabelo,
-    # ponta de roupas ou personagens nas laterais. O fundo desfocado
-    # preenche a tela sem barras pretas; a arte original fica INTEIRA
-    # e sem ampliacao que elimine partes do enquadramento.
-    return (
+def _drawtext_filter(caption_filename: str, *,
+                     subtitle_filename: str | None = None,
+                     motion: str = "none") -> str:
+    """Preserve whole reference artwork; optional cinematic pan and real subtitles.
+
+    Pan moves the FULL image ~8px over its blurred extension. This is camera
+    motion, not articulated movement of faces/arms. No misleading rig claims.
+    """
+    fg_scale = ("scale=1024:1536:force_original_aspect_ratio=decrease"
+                if motion == "cinematic-pan" else
+                "scale=1080:1920:force_original_aspect_ratio=decrease")
+    placement = ("overlay=x='(W-w)/2+8*sin(t*0.45)':"
+                 "y='(H-h)/2+6*sin(t*0.27)':eval=frame"
+                 if motion == "cinematic-pan" else
+                 "overlay=(W-w)/2:(H-h)/2")
+    chain = (
         "split=2[back_source][original_source];"
         "[back_source]scale=1080:1920:force_original_aspect_ratio=increase,"
         "crop=1080:1920,boxblur=28:2[soft_background];"
-        "[original_source]scale=1080:1920:"
-        "force_original_aspect_ratio=decrease[original];"
-        "[soft_background][original]overlay=(W-w)/2:(H-h)/2,"
-        "drawtext=font=Sans:textfile=" + caption_filename +
-        ":fontsize=44:fontcolor=white:line_spacing=12:"
-        "box=1:boxcolor=black@0.68:boxborderw=18:"
-        "x=(w-text_w)/2:y=h-350,"
-        "format=yuv420p"
+        "[original_source]" + fg_scale + "[original];"
+        "[soft_background][original]" + placement + ","
     )
+    if subtitle_filename:
+        # Input path is a sanitized staging basename, not untrusted text.
+        # Subtitles are short phrases, not fixed cards unrelated to narration.
+        chain += (
+            "subtitles=filename=" + subtitle_filename +
+            ":force_style='FontName=DejaVu Sans,FontSize=23,"
+            "PrimaryColour=&H00FFFFFF,OutlineColour=&H65000000,"
+            "BorderStyle=3,BackColour=&H90000000,"
+            "Alignment=2,MarginV=330',"
+        )
+    else:
+        chain += (
+            "drawtext=font=Sans:textfile=" + caption_filename +
+            ":fontsize=44:fontcolor=white:line_spacing=12:"
+            "box=1:boxcolor=black@0.68:boxborderw=18:"
+            "x=(w-text_w)/2:y=h-350,"
+        )
+    return chain + "format=yuv420p"
 
 
 def _render_scene(scene: dict, output: Path, *, workspace: Path, index: int) -> None:
     caption = workspace / ("caption-%03d.txt" % index)
     caption.write_text(textwrap.fill(scene["caption"], width=30), encoding="utf-8")
+    subtitle_name = None
+    if scene.get("subtitles") is not None:
+        subtitle_name = "subtitle-%03d.srt" % index
+        shutil.copyfile(scene["subtitles"], workspace / subtitle_name)
     _command([
         "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
         "-loop", "1", "-framerate", str(FPS), "-i", str(scene["image"]),
         "-i", str(scene["audio"]),
-        "-vf", _drawtext_filter(caption.name),
+        "-vf", _drawtext_filter(
+            caption.name, subtitle_filename=subtitle_name,
+            motion=scene.get("motion", "none")),
         "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast",
         "-crf", "23", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-ar", "48000", "-ac", "2",
         "-shortest", "-movflags", "+faststart", str(output),
     ], cwd=workspace)
+
 
 
 def _verify_mp4(path: Path, *, expected: float, minimum: float, maximum: float) -> dict:
