@@ -278,3 +278,25 @@ Também foi criado [qa-inventario-tomadas-cinema.json](qa-inventario-tomadas-cin
 O [GitHub Actions de QA](https://github.com/HelioConde/VideoForge-IA/actions/runs/43643929373) concluiu com **59 testes Python aprovados**. A timeline original de 4890 frames permaneceu intocada; nenhuma nova imagem foi gerada. O inventário registra que os **36 planos visuais ainda não têm artes e rigs específicos aprovados**, e as imagens aprovadas no chat seguem pendentes de integração ao repositório.
 
 **Apresentação ao usuário:** durante revisões visuais deste dorama, mostrar as imagens disponíveis diretamente na conversa, indicando sua condição (referência, rascunho, aprovada ou rejeitada), além de manter o arquivo original e o histórico dentro de `canal/alchemy-lab`. Não afirmar que a visualização no chat importou uma imagem ao GitHub.
+
+
+## 19. Canvas nativo por plano — preservar os closes v2 sem cortar rosto
+
+**Correção do render:** as referências de Kael e Elara aprovadas como estilo estão em **941×1672 pixels RGB**, muito próximas de 9:16. As 14 imagens-mãe históricas do episódio estão em **1024×1536 (2:3)**. O programa não deve exigir que uma foto 941×1672 seja redimensionada/esticada para 1024×1536.
+
+Os módulos \`videoforge/cinematic_shot_assets.py\`, \`videoforge/cinematic_remotion_export.py\` e \`videoforge/cinematic_eye_pixel_audit.py\` agora aceitam, após declaração e aprovação por tomada, **uma destas duas dimensões nativas**:
+
+- \`{"canvas":{"width":941,"height":1672}}\` — closes/referências cinematográficas em quase 9:16.
+- \`{"canvas":{"width":1024,"height":1536}}\` — cenas-mãe legadas 2:3.
+
+Mãe, fundo reconstruído, recortes de partes e rig do MESMO plano precisam ter dimensões e \`bbox\` coerentes, hashes SHA-256 e QA visual. O Remotion recebe \`sourceCanvas\` por shot e recusa divergências. A matemática de \`cover\` do canvas e do background usa escala **uniforme**, sem esticar e deformar a face.
+
+**Comparação objetiva para saída 1080×1920 (9:16):**
+- Original **941×1672** → corte horizontal de **0,25 pixel em cada lado** da arte original; praticamente a imagem inteira permanece visível.
+- Original **1024×1536** → corte horizontal de **80 pixels de cada lado** da arte original no enquadramento vertical.
+
+Para todo plano \`close_up\`, \`extreme_close_up\` ou \`insert\`, o arquivo \`qa.json\` precisa informar \`focal_bbox:[x,y,largura,altura]\`, medido **na mãe original** e centrado nos olhos, expressão ou objeto focal. \`videoforge/cinematic_frame_fit.py\` verifica que essa região continua 100% visível após \`cover\`, respeitando margem de segurança de 2px; o TypeScript do Remotion repete a verificação antes de montar o vídeo. Cortar cabelo/ombro deliberadamente em um close pode ser correto, mas **cortar olhos e objeto focal por erro de proporção é bloqueado**.
+
+Os testes foram executados com sucesso: [65 testes Python](https://github.com/HelioConde/VideoForge-IA/actions/runs/43646668407) e [TypeScript/Remotion](https://github.com/HelioConde/VideoForge-IA/actions/runs/43646674144). Estas são **verificações geométricas**, não aprovação das imagens-mãe, fundos/underlays ou 36 rigs ausentes.
+
+O episódio permanece com \`SEM-GERACAO-NOVAS-IMAGENS.lock\` ativo; os arquivos históricos seguem intactos. O MP4 oficial continua bloqueado por falta de arte e rig próprios de cada um dos 36 planos visuais. As imagens de referência exibidas no chat não podem ser tratadas como PNGs já importados no GitHub.
