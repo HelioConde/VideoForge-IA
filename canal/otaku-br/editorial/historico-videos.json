@@ -32,7 +32,7 @@
       "arte_final": false,
       "narracao_final": false,
       "video_oficial_do_programa": false,
-      "pendencia": "Anya cena 01: head/body candidatos editados a partir da mesma arte, QA gerado mas máscara de cabeça ainda inclui Loid/Yor. Refinar isolamento, reconstruir pescoço/cabelo e obter sprite de cabelo mesh real; não renderizar como vídeo oficial.",
+      "pendencia": "Isolamento de Anya da cena 01 feito e head aberta/fechada revisada por SHA/QA técnico, mas dedo/mão presos na cabeça, underlay pescoço e cabelo removido da base pendentes. Gerar camada hand-foreground independente e reconstruir underlay; não renderizar MP4 oficial enquanto faltar.",
       "render_tech_confirmed": true,
       "workflow_arquivo": ".github/workflows/spy-family-animated.yml",
       "agentes_e_arte_final_integrados": false,
@@ -79,7 +79,13 @@
       "manual_principal_animacao": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
       "rig_three_art_candidate_run_id": 43586783907,
       "rig_three_review_run_id": 43587264889,
-      "rig_three_preview_ready": false
+      "rig_three_preview_ready": false,
+      "rig_three_isolation_run_id": 43589190537,
+      "rig_three_isolation_qa_run_id": 43589485833,
+      "rig_three_isolation_status": "candidate_refined_from_original_source_qa_passed_human_pending",
+      "cena01_anyas_head_other_characters_removed": true,
+      "cena01_head_hand_foreground_sep": false,
+      "cena01_hair_mesh_ready": false
     }
   ]
 }
