@@ -203,3 +203,17 @@ Regressões em `tests/test_alchemy_no_image_generation.py` verificam que a gera�
 4. Só com essas validações medir pivôs definitivos, verificar o plano de frente/atrás das lanças e executar os keyframes no ThreeCanvas/Remotion.
 
 **Estado mantido:** 71 PNGs já arquivados no episódio; 8 artes externas do ZIP ainda não importadas; rig do cruzamento bloqueado; MP4 oficial de 163 segundos não renderizado.
+
+## 14. Direção cinematográfica por plano, closes de rosto e olhos
+
+**Pedido implementado:** alternar os enquadramentos do dorama, em vez de repetir a mesma arte de grupo/trono. A primeira imagem pode ser um establishing shot impactante, mas os planos seguintes são retratos expressivos, enquadramentos sobre o ombro, contraplano, inserts e momentos de ação com ângulo adequado.
+
+- [Planejamento de 37 tomadas](direcao-cinematografica-planos.json) com tipo, lente, profundidade de campo, foco, emoção, elenco e frames do roteiro.
+- [Guia do episódio com exemplos](GUIA-DIRECAO-CINEMATOGRAFICA.md); [guia reutilizável do projeto](../../../../docs/GUIA-ENQUADRAMENTOS-CINEMATOGRAFICOS.md).
+- [QA de 36 prompts distintos](qa-direcao-cinematografica.json), sem chamar IA. Um dos 37 planos é preto absoluto, não exige PNG.
+- Motor reutilizável `videoforge/cinematic_direction.py`; `production_scenes.py --shot-id C12-P01` (apenas após autorização) e campo opcional `shot_id` no workflow `production-scene-by-request.yml`.
+- `C02-P01`: close do rei acusando; `C03-P01`: macro de olhos de Kael; `C12-P01`: pupilas para o lado com cabeça imóvel; `C12-P02`: over-the-shoulder revelando Elara; `C12-P03`: close de reação dela; `C14-P03`: close de Kael no cliffhanger.
+- **Regra de corte:** plano geral não serve para extrair um close de rosto como resultado oficial. Precisará de uma mãe do MESMO ângulo, fundo RGBA, partes/malhas, underlays e QA; sem imagens liberadas, estes assets seguem pendentes.
+- **Canonicidade visual em revisão:** os novos exemplos aprovados na conversa apresentam Kael com pano vermelho/ombreira de metal e Elara loira em vestido branco-violeta; a bíblia antiga tem roupas e cabelos distintos. O programa bloqueia novos pedidos do episódio até reconciliar essa identidade e anexar as referências reais, evitando misturar designs.
+- A interface de missão é camada exclusiva do Remotion. Nada de letras ou HUD impressos no quadro. O primeiro título é elemento de montagem, não deve se repetir nas tomadas.
+- **Nenhuma nova imagem foi gerada nesta etapa.** `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo. Não há rig final nem MP4 oficial de 163 segundos.
