@@ -168,6 +168,11 @@ def build_props(channel:str,video_id:str,root:Path=ROOT)->tuple[dict,list[tuple[
             )
         elif data.get("performance") is not None:
             raise VideoForgeError("CINEMATIC_EXPORT_GAZE_UNEXPECTED_SHOT")
+        if shot["type"] in ("close_up","extreme_close_up","insert"):
+            from .cinematic_frame_fit import validate_focal_box
+            record["focalBbox"]=validate_focal_box(
+                native_canvas,review.get("focal_bbox")
+            )["focalBbox"]
         record.update({
             "status":"ready_for_render",
             "backgroundFile":background,
