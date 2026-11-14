@@ -58,7 +58,7 @@ jobs:
         run: |
           set -euo pipefail
           ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
-          python -m unittest tests.test_animation_manual tests.test_rig_three_contract -v
+          python -m unittest tests.test_animation_manual tests.test_rig_three_contract tests.test_rig_three_ornament_render_qa -v
           cd motion-remotion
           ./node_modules/.bin/tsc --noEmit
           node --test tests/rig-three-math.test.cjs tests/blink-motion-sync.test.cjs
