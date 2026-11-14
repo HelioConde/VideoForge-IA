@@ -268,15 +268,21 @@ def main()->int:
             print(content)
         else:
             target=args.output
-            if target.is_symlink() or target.exists():
-                raise VideoForgeError("CINEMATIC_EDL_NO_OVERWRITE")
+            if target.is_symlink():
+                raise VideoForgeError("CINEMATIC_EDL_SYMLINK_BLOCKED")
             base=ROOT/"canal"/args.channel/"videos"/args.video_id
             if target.parent.resolve()!=base.resolve() or target.suffix!=".json":
                 raise VideoForgeError("CINEMATIC_EDL_OUTPUT_MUST_BE_LOCAL_JSON")
-            target.write_text(content,encoding="utf8")
-            print("CINEMATIC_EDL_CREATED",target,doc["shotCount"],
-                  "shots, approved",doc["artAndRigApprovedShots"],
-                  "render",doc["renderOfficialAllowed"])
+            if target.exists():
+                if target.read_text(encoding="utf8")!=content:
+                    raise VideoForgeError("CINEMATIC_EDL_CHANGED_REQUIRES_REVIEW")
+                print("CINEMATIC_EDL_IDENTICAL_VERIFIED",target,
+                      doc["shotCount"],"shots, no overwrite")
+            else:
+                target.write_text(content,encoding="utf8")
+                print("CINEMATIC_EDL_CREATED",target,doc["shotCount"],
+                      "shots, approved",doc["artAndRigApprovedShots"],
+                      "render",doc["renderOfficialAllowed"])
         return 0
     except (VideoForgeError,OSError,ValueError,KeyError) as exc:
         print("CINEMATIC_EDL_BLOCKED",str(exc),file=sys.stderr)
