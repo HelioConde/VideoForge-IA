@@ -12,6 +12,6 @@
     "37 shot timeline and 4890 frames"
   ],
   "status": "qa_request_only",
-  "revision": 5,
-  "reason": "Verificar Remotion contra foco cortado no enquadramento 9:16, com 941x1672 e 1024x1536"
+  "revision": 6,
+  "reason": "QA rig Three.js earring pivot per sprite + testes de 512 triangulos C12 com quadro neutro"
 }
