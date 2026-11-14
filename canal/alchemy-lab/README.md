@@ -17,6 +17,15 @@ Identificador: `alchemy-lab` · idioma: `pt-BR`.
 **Estado:** Canal catalogado; sem integração de geração nem YouTube. Nenhuma produção nem aprovação editorial está implícita nestes arquivos.
 
 
+## Continuidade do elenco em 37 tomadas (EP01)
+
+O novo contrato [continuidade-figurinos-37-planos.json](videos/mmorpg-conquiste-a-princesa-ep01/continuidade-figurinos-37-planos.json) registra o mesmo rosto/cabelo dos protagonistas e a variação deliberada de roupas entre realidades: Kael no tribunal com capa vinho, Kael no mundo moderno (C04) e Kael em Arken; Elara incógnita no mercado/becos (C07–C10) e princesa em branco-violeta somente da revelação C12 em diante.
+
+O motor `videoforge/cinematic_identity_continuity.py` impede que um QA marque como aprovada uma tomada com hash de referência diferente, roupas trocadas ou revelação precoce. Mesmo nos inserts sem personagens principais das cenas C01–C02, exige revisão humana de que a princesa **não aparece identificável ao fundo**. Essas verificações são reaplicadas antes de entregar o rig ao Remotion. Aprovação de estética não equivale a arte final.
+
+- [Execução dos testes de continuidade](https://github.com/HelioConde/VideoForge-IA/actions/runs/43647560925) — 14 testes aprovados, sem gerar imagem ou MP4.
+- Os originais dos dois retratos de referência ainda **não foram importados no repositório**. O lock `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo; nenhum dos 36 planos visuais foi declarado pronto.
+
 ## Estilo aprovado no chat — Kael e Elara (v2)
 
 A nova **[bíblia visual descritiva v2](videos/mmorpg-conquiste-a-princesa-ep01/biblia-visual.md)** segue os closes que o usuário elogiou: Kael com cabelo escuro volumoso, tecido vinho rasgado e ombreira metálica; Elara loira, olhos violeta e vestido branco-violeta com ornamentos dourados. A **[v1 original foi arquivada](videos/mmorpg-conquiste-a-princesa-ep01/biblia-visual-v1-arquivada.md)** sem apagar os 71 PNGs ou as 14 imagens-mãe antigas.
