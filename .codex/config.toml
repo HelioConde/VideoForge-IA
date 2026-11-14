@@ -1,0 +1,20 @@
+# Configuração inicial conservadora para Codex CLI, por projeto.
+# Fonte: https://learn.chatgpt.com/docs/config-file/config-reference
+# Pesquisa: https://github.com/HelioConde/codex/blob/main/docs/07-pesquisa-comunidades-economia-astra.md
+#
+# IMPORTANTE:
+# - Não configura o Codex Proxy usado nos GitHub Actions nem custos de APIs de vídeo.
+# - Requer versões/modelos disponíveis na conta e projeto confiável na CLI.
+# - Astra Standard deve ser escolhido explicitamente para problemas difíceis.
+# - Ultrafast não é modo econômico.
+# - Os limites abaixo são hipóteses para teste A/B, não economias comprovadas.
+
+model = "gpt-6.1-sol"
+model_reasoning_effort = "medium"
+tool_output_token_limit = 8000
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+default_subagent_model = "gpt-6-luna"
+default_subagent_reasoning_effort = "low"
