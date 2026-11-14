@@ -1,0 +1,52 @@
+name: "VideoForge - Narracao feminina e legendas pt-BR"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/narracao-feminina-spy-family.json'
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: vf-female-voice-otaku-br-spy-family
+  cancel-in-progress: false
+
+jobs:
+  produzir-voz-legendas:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-espeak-v3
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verificar sintese feminina, legenda e ambiente sem IA paga
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_female_voice -v
+          command -v espeak-ng
+          command -v ffprobe
+          espeak-ng --voices=pt | grep -i Portuguese
+          ffmpeg -hide_banner -filters | grep subtitles
+      - name: Gerar 16 narracoes femininas e legendas cronometradas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.female_voice \
+            --channel otaku-br --video-id spy-x-family-familia-de-mentira
+      - name: Arquivar WAV, SRT e QA do programa sem publicar
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-otaku-br-spy-family-female-voice-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/female-voice-stage/
+          retention-days: 14
+          if-no-files-found: error
