@@ -1,0 +1,286 @@
+{
+  "schema": "videoforge/cinematic-reference-visual-signature/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "status": "three_originals_verified_locally_not_imported_to_github",
+  "source": "three existing 941x1672 RGB original PNGs from chat",
+  "sampling": {
+    "resize": [
+      188,
+      334
+    ],
+    "filter": "Pillow BOX",
+    "color_quantization": "8 levels per channel; bin center=floor(channel/32)*32+16",
+    "dhash": "64-bit horizontal grayscale difference on 9x8 BOX thumbnail",
+    "dark_fraction": "greyscale <=51/255",
+    "bright_fraction": "greyscale >=205/255",
+    "palette": "8 most frequent 5-bit quantized RGB bins; percentages from 188x334"
+  },
+  "hard_checks": [
+    "Exact original PNG SHA-256 must match before any automated approval",
+    "No transparent or resized substitutions may replace the RGB reference originals"
+  ],
+  "soft_checks": [
+    "dHash and palette are descriptive style/scene cues, NOT proof of identity or approved rig",
+    "Color may differ between lighting and cameras; never automatically reject valid acting based only on palette"
+  ],
+  "art_generated": false,
+  "rig_or_shot_approved": false,
+  "pngs_saved_to_github": false,
+  "originals": [
+    {
+      "id": "kael",
+      "file": "assets/referencias/chat-aprovadas/kael-close-salao.png",
+      "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "mode": "RGB",
+      "dhash64": "0904400420267471",
+      "topColors": [
+        {
+          "rgb": [
+            16,
+            16,
+            16
+          ],
+          "percentage": 23.85
+        },
+        {
+          "rgb": [
+            48,
+            16,
+            16
+          ],
+          "percentage": 17.12
+        },
+        {
+          "rgb": [
+            80,
+            48,
+            48
+          ],
+          "percentage": 9.96
+        },
+        {
+          "rgb": [
+            144,
+            80,
+            80
+          ],
+          "percentage": 5.81
+        },
+        {
+          "rgb": [
+            112,
+            80,
+            80
+          ],
+          "percentage": 4.96
+        },
+        {
+          "rgb": [
+            112,
+            48,
+            48
+          ],
+          "percentage": 4.28
+        },
+        {
+          "rgb": [
+            48,
+            48,
+            48
+          ],
+          "percentage": 3.47
+        },
+        {
+          "rgb": [
+            112,
+            80,
+            48
+          ],
+          "percentage": 3.47
+        }
+      ],
+      "darkPercent": 55.5,
+      "brightPercent": 2,
+      "renderStatus": "style_reference_only",
+      "possibleShots": [
+        "C12-P01"
+      ],
+      "specialRestriction": "Princess is identifiable in distant background; never reuse prior to C12"
+    },
+    {
+      "id": "elara",
+      "file": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "mode": "RGB",
+      "dhash64": "42412c804b13a642",
+      "topColors": [
+        {
+          "rgb": [
+            80,
+            48,
+            48
+          ],
+          "percentage": 7.79
+        },
+        {
+          "rgb": [
+            176,
+            112,
+            80
+          ],
+          "percentage": 6.07
+        },
+        {
+          "rgb": [
+            112,
+            80,
+            80
+          ],
+          "percentage": 5.82
+        },
+        {
+          "rgb": [
+            144,
+            80,
+            80
+          ],
+          "percentage": 5.14
+        },
+        {
+          "rgb": [
+            48,
+            48,
+            48
+          ],
+          "percentage": 4.89
+        },
+        {
+          "rgb": [
+            208,
+            144,
+            144
+          ],
+          "percentage": 4.89
+        },
+        {
+          "rgb": [
+            176,
+            112,
+            112
+          ],
+          "percentage": 4.73
+        },
+        {
+          "rgb": [
+            112,
+            80,
+            48
+          ],
+          "percentage": 4.4
+        }
+      ],
+      "darkPercent": 13.1,
+      "brightPercent": 6.7,
+      "renderStatus": "style_reference_only",
+      "possibleShots": [
+        "C12-P02",
+        "C12-P03",
+        "C13"
+      ],
+      "specialRestriction": "Royal princess reveal only at or after C12"
+    },
+    {
+      "id": "c12-p02",
+      "file": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+      "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "mode": "RGB",
+      "dhash64": "aaa011381c414109",
+      "topColors": [
+        {
+          "rgb": [
+            48,
+            48,
+            48
+          ],
+          "percentage": 10.06
+        },
+        {
+          "rgb": [
+            16,
+            16,
+            16
+          ],
+          "percentage": 8.86
+        },
+        {
+          "rgb": [
+            48,
+            16,
+            16
+          ],
+          "percentage": 8.58
+        },
+        {
+          "rgb": [
+            80,
+            48,
+            48
+          ],
+          "percentage": 8.51
+        },
+        {
+          "rgb": [
+            48,
+            16,
+            48
+          ],
+          "percentage": 6.24
+        },
+        {
+          "rgb": [
+            112,
+            80,
+            80
+          ],
+          "percentage": 5.12
+        },
+        {
+          "rgb": [
+            80,
+            48,
+            80
+          ],
+          "percentage": 4.05
+        },
+        {
+          "rgb": [
+            80,
+            16,
+            48
+          ],
+          "percentage": 3.89
+        }
+      ],
+      "darkPercent": 41.4,
+      "brightPercent": 3,
+      "renderStatus": "candidate_camera_only",
+      "possibleShots": [
+        "C12-P02"
+      ],
+      "specialRestriction": "Princess may be revealed but shot still lacks independent RGBA rigs and visual QA"
+    }
+  ]
+}
