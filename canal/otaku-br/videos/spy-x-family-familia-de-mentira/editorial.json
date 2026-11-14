@@ -2,7 +2,7 @@
   "schema": "videoforge/video-editorial/v1",
   "canal_id": "otaku-br",
   "video_id": "spy-x-family-familia-de-mentira",
-  "status": "roteiro",
+  "status": "renderizado",
   "titulo_provisorio": "Spy x Family: FAMÍLIA DE MENTIRA 👀 #Shorts",
   "tema": "Família Forger e os segredos de Loid, Yor e Anya",
   "assuntos_relacionados": [
@@ -85,15 +85,15 @@
   },
   "producao": {
     "manifesto_tecnico": "video.json",
-    "workflow_url": null,
-    "artefato_url": null,
-    "sha256": null,
-    "duracao_real_segundos": null
+    "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091",
+    "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091/artifacts/14092490361",
+    "sha256": "60fe4808a890e0d47af10e46984b19b78eda29a1b43217f44aa8db09a9e59f19",
+    "duracao_real_segundos": 104.782
   },
   "qa": {
-    "aprovado_tecnicamente": false,
+    "aprovado_tecnicamente": true,
     "aprovado_editorialmente": false,
-    "relatorio_url": null
+    "relatorio_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091/artifacts/14092490361"
   },
   "publicacao": {
     "youtube_video_id": null,
@@ -114,6 +114,7 @@
   "notas": [
     "Fonte antiga indica roteiro pronto aguardando vídeo, sem arquivo MP4 confirmado.",
     "Prévia gerada com tipografia e voz sintética offline não equivale a arte final.",
-    "Sem publicação nem autorização de uso de imagens oficiais."
+    "Sem publicação nem autorização de uso de imagens oficiais.",
+    "Workflow #43541390091 gerou MP4 tecnico com 10 cenas e voz sintetica offline; sem arte final, sem animação de personagens. 104.782s, QA tecnico aprovado."
   ]
 }
