@@ -140,6 +140,52 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
         if (part.get("underlay_verified") is not True
                 or part.get("pivot_measured") is not True):
             failures.append("SHOT_PART_UNDERLAY_OR_PIVOT_NOT_VERIFIED")
+    # O renderer multipersonagem precisa de rigs reais e cropped RGBA
+    # correspondentes às peças do inventário, não só um grupo de sprites.
+    actors=rig.get("actors")
+    if not isinstance(actors,list):
+        failures.append("SHOT_ACTORS_NOT_DEFINED_FOR_REMOTION")
+        actors=[]
+    if shot.get("shot_type") in ("close_up","extreme_close_up") and not actors:
+        failures.append("SHOT_CLOSE_WITHOUT_INDEPENDENT_FACE_RIG")
+    if not actors and qa.get("static_shot_approved") is not True:
+        failures.append("SHOT_NO_RIG_AND_NO_STATIC_APPROVAL")
+    indexed_parts={p.get("path"):(p.get("sha256"),p.get("bbox"))
+                   for p in parts if isinstance(p,dict)}
+    actor_ids=set()
+    for actor in actors:
+        if not isinstance(actor,dict) or not isinstance(actor.get("id"),str):
+            failures.append("SHOT_ACTOR_ENTRY_INVALID")
+            continue
+        if actor["id"] in actor_ids:
+            failures.append("SHOT_DUPLICATE_ACTOR")
+        actor_ids.add(actor["id"])
+        a=actor.get("rig")
+        if not isinstance(a,dict):
+            failures.append("SHOT_ACTOR_RIG_MISSING")
+            continue
+        if (a.get("schema")!="videoforge/rig-three/v1"
+                or a.get("rigType")!="independent-parts-and-deformable-mesh"
+                or a.get("sceneMotherSha256")!=rig.get("source_sha256")
+                or a.get("technicalAssetsVerified") is not True
+                or a.get("humanVisualReview") is not True
+                or a.get("youtubeUploaded") is not False
+                or a.get("canvas")!={"width":1024,"height":1536}):
+            failures.append("SHOT_ACTOR_RIG_PROVENANCE_OR_APPROVAL_INVALID")
+        layers=a.get("layers")
+        if not isinstance(layers,list) or len(layers)<3:
+            failures.append("SHOT_ACTOR_INDEPENDENT_LAYERS_MISSING")
+            continue
+        layer_names={l.get("id") for l in layers if isinstance(l,dict)}
+        if not {"body-no-head","head-open","head-closed"}.issubset(layer_names):
+            failures.append("SHOT_ACTOR_HEAD_BODY_INDEPENDENCE_MISSING")
+        if not any(isinstance(l,dict) and isinstance(l.get("mesh"),dict)
+                   for l in layers):
+            failures.append("SHOT_ACTOR_MESH_MISSING")
+        for layer in layers:
+            if not isinstance(layer,dict) or indexed_parts.get(layer.get("file"))!=(
+                    layer.get("sha256"),layer.get("bbox")):
+                failures.append("SHOT_ACTOR_LAYER_NOT_OWN_ASSET")
     if rig.get("whole_png_motion") is not False:
         failures.append("SHOT_FLAT_PNG_MOTION_FORBIDDEN")
     if rig.get("all_parts_from_same_mother") is not True:
@@ -219,7 +265,12 @@ def build_edl(channel:str,video_id:str,root:Path=ROOT)->dict:
     first=scenes=shots[0]
     if first["type"]!="black" or first["renderAllowed"] is not True:
         raise VideoForgeError("CINEMATIC_EDL_BLACK_OPENING_INVALID")
-    can_render=all(s["renderAllowed"] for s in shots)
+    reference_conflict=bool(plan["reference_approval"].get("canonical_identity_conflict_detected"))
+    references_in_repository=(
+        plan["reference_approval"].get("chat_generated_reference_files")!="not_uploaded_to_this_repository"
+    )
+    can_render=(all(s["renderAllowed"] for s in shots)
+                and not reference_conflict and references_in_repository)
     return {
         "schema":SCHEMA,"channel":channel,"video_id":video_id,
         "source":"direcao-cinematografica-planos.json",
@@ -233,6 +284,7 @@ def build_edl(channel:str,video_id:str,root:Path=ROOT)->dict:
         "artAndRigApprovedShots":ready_count,
         "unapprovedShots":len(shots)-1-ready_count,
         "visualReferenceConflict":bool(plan["reference_approval"]["canonical_identity_conflict_detected"]),
+        "canonicalReferencesArchived":references_in_repository,
         "noImageGenerationLock":locked,
         "newImageGenerationCalls":0,
         "pixelFilesCreated":0,
@@ -260,7 +312,10 @@ def validate_edl(doc:dict)->None:
             raise VideoForgeError("CINEMATIC_EDL_UNAPPROVED_RIG_EXPOSED")
     if cursor!=doc["format"]["totalFrames"]:
         raise VideoForgeError("CINEMATIC_EDL_LENGTH_INVALID")
-    if doc["renderOfficialAllowed"]!=all(s["renderAllowed"] for s in shots):
+    expected=(all(s["renderAllowed"] for s in shots)
+              and doc.get("visualReferenceConflict") is False
+              and doc.get("canonicalReferencesArchived") is True)
+    if doc["renderOfficialAllowed"]!=expected:
         raise VideoForgeError("CINEMATIC_EDL_GATES_INCONSISTENT")
 
 def main()->int:
