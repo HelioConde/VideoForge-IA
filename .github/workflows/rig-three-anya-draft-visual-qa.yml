@@ -43,8 +43,8 @@ jobs:
       - name: Recuperar sprites da Anya com underlay alfa 254 corrigido
         uses: actions/download-artifact@v4
         with:
-          run-id: 43598536256
-          name: vf-anya-hair-underlay-candidate-43598536256
+          run-id: 43599799485
+          name: vf-anya-hair-underlay-candidate-43599799485
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input/draft
       - name: Validar dependências ThreeCanvas fixas e contrato de rig
@@ -64,6 +64,7 @@ jobs:
             --original ./input/original \
             --corrected ./input/corrected \
             --candidate ./input/draft \
+            --art-run-id 43599799485 \
             --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-qa
       - name: Renderizar quadros REAIS em ThreeCanvas com malha SWANGLE (somente QA)
         shell: bash
