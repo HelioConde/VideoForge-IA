@@ -12,8 +12,8 @@
   "rig_character_animation": false,
   "youtube_upload": false,
   "requested_at": "2026-11-14",
-  "revision": "r2_legendas_visiveis",
-  "fix": "FontSize 11, MarginV 55: legendas reais aparecem na regiao inferior e nao fora do quadro",
+  "revision": "r3_legendas_inferiores",
+  "fix": "Subtitles burn visible and placed in lower blurred safe zone, without covering character faces, MarginV=12",
   "source_voice_run_id": 43557582317,
   "preserve_assets": true
 }
