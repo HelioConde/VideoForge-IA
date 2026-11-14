@@ -16,5 +16,7 @@
   "reports": [
     "qa-referencias-chat-cinematograficas.json"
   ],
-  "review_policy": "Visual style preference approved; full canonical identity/rig not yet approved."
+  "review_policy": "Visual style preference approved; full canonical identity/rig not yet approved.",
+  "revision": 2,
+  "reason": "Validar migracao de descricoes v2 ao estilo preferido, preservando os 14 cenarios e o lock, e conferir SHA do pacote de 2 PNGs originais"
 }
