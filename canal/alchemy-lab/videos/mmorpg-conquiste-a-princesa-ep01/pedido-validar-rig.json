@@ -1,0 +1,10 @@
+{
+  "schema": "videoforge/rig-qa-only-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "image_generation_calls": 0,
+  "official_render_allowed": false,
+  "youtube_upload": false,
+  "rig_inventory": "rig-inventario-c01.json",
+  "purpose": "Check all 14 assets' SHA, PNG channels and canvas; rig unapproved remains explicitly blocked."
+}
