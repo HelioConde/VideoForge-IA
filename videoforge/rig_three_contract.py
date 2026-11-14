@@ -83,7 +83,7 @@ def validate_rig_folder(folder:Path,*,channel:str,video_id:str,scene:str,
     canvas=doc.get("canvas")
     if not isinstance(canvas,dict) or set(canvas)!={"width","height"}:
         raise ThreeRigError("THREE_RIG_CANVAS_INVALID")
-    width,height=canvas.values()
+    width,height=canvas["width"],canvas["height"]
     if type(width) is not int or type(height) is not int or not 64<=width<=4096 or not 64<=height<=4096:
         raise ThreeRigError("THREE_RIG_CANVAS_INVALID")
     layers=doc.get("layers")
@@ -127,6 +127,8 @@ def validate_rig_folder(folder:Path,*,channel:str,video_id:str,scene:str,
             raise ThreeRigError("THREE_RIG_ASSET_HASH_MISMATCH")
         info=png_info(raw,require_alpha=True)
         bbox=_rect(item.get("bbox"),width,height)
+        if not all(float(v).is_integer() for v in bbox):
+            raise ThreeRigError("THREE_RIG_BBOX_PIXEL_COORDS_REQUIRED")
         if (info["width"],info["height"])!=(int(bbox[2]),int(bbox[3])):
             raise ThreeRigError("THREE_RIG_CROP_CANVAS_MISMATCH")
         mesh=_mesh(item)
