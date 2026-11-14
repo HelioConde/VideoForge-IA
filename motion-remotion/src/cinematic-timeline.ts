@@ -33,6 +33,8 @@ export type CinematicShot = {
   backgroundSha256?:string;
   sourceMotherSha256?:string;
   sourceCanvas?:{width:number;height:number};
+  /** Human-QA focal eye/object box in unscaled original pixels. */
+  focalBbox?:[number,number,number,number];
   actors?:CinematicActor[];
   staticShotApproved?:boolean;
   audioFile?:string|null;
@@ -108,6 +110,20 @@ export const validateCinematicRender=(input:CinematicEpisodeProps):void=>{
       !SHA.test(shot.sourceMotherSha256) ||
       !SHA.test(shot.backgroundSha256??''))
       throw new Error('CINEMATIC_SHOT_VISUAL_QA_OR_ORIGIN_MISSING');
+    if(['close_up','extreme_close_up','insert'].includes(shot.type)){
+      const c=shot.sourceCanvas!;
+      const box=shot.focalBbox;
+      const scale=Math.max(input.width/c.width,input.height/c.height);
+      const left=(c.width-input.width/scale)/2;
+      const top=(c.height-input.height/scale)/2;
+      if(!box || box.length!==4 ||
+        !box.every(Number.isSafeInteger) ||
+        box[2]<1 || box[3]<1 ||
+        box[0]<left+2 || box[1]<top+2 ||
+        box[0]+box[2]>c.width-left-2 ||
+        box[1]+box[3]>c.height-top-2)
+        throw new Error('CINEMATIC_FOCAL_POINT_CLIPPED_BY_9_16_CROP');
+    }
     if(shot.backgroundFile.includes('..') ||
       shot.backgroundFile.startsWith('/') ||
       !shot.backgroundFile.endsWith('.png') ||
