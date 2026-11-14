@@ -13,7 +13,10 @@
   "rigOfficial": false,
   "youtubeUpload": false,
   "workflowMode": "normal_push_no_private",
-  "revision": "v2_ffmpeg_rgba_composition_clamp",
+  "revision": "v3_qa_reject_foreign_character_contamination_even_when_roundtrip_mean_small",
   "previous_failed_run": 43587154254,
-  "new_image_calls": 0
+  "new_image_calls": 0,
+  "expected_result": "candidate_rejected_until_isolation_rebuilt",
+  "previous_pass_numeric_but_failed_visual_run": 43587264889,
+  "additional_image_calls": 0
 }
