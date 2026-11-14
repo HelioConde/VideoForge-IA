@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'videoforge/rig_three_hair_underlay.py'
+      - 'videoforge/rig_three_pack_candidates.py'
       - 'tests/test_rig_three_hair_underlay.py'
       - 'docs/requests/anya-hair-underlay-qa.json'
 permissions:
@@ -69,6 +70,15 @@ jobs:
             --corrected ./input/corrected \
             --hair ./input/hair \
             --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hair-underlay-candidate
+      - name: Recortar sprites e construir rig.json CANDIDATO com gate visual bloqueado
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_rig_three_contract -v
+          python -m videoforge.rig_three_pack_candidates \
+            --art ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hair-underlay-candidate \
+            --corrected ./input/corrected \
+            --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hair-underlay-candidate/rig-candidate
       - name: Publicar camadas candidatas, prévia e relatório (NÃO aprovar rig)
         if: always()
         uses: actions/upload-artifact@v4
