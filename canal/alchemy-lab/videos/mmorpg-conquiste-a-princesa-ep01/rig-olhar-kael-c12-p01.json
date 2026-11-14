@@ -93,7 +93,9 @@
       3994,
       4076,
       4109
-    ]
+    ],
+    "alpha_sweep_real_verified": false,
+    "sclera_mask_source_verified": false
   },
   "production_gates": {
     "image_generation_calls": 0,
@@ -103,5 +105,58 @@
     "rig_ready": false,
     "official_render_allowed": false,
     "youtube_uploaded": false
+  },
+  "pixel_qa_contract": {
+    "engine": "videoforge/cinematic_eye_pixel_audit.py",
+    "report": "qa-pixel-olhos-c12-p01.json",
+    "current_state": "awaiting_own_shot_art",
+    "required_scene_folder": "assets/planos/C12-P01/",
+    "required_head": "head-open RGBA crop from original C12-P01 mother",
+    "required_mask_files": [
+      {
+        "side": "left",
+        "expected": "assets/planos/C12-P01/qa/sclera-safe-left.png",
+        "status": "not_present"
+      },
+      {
+        "side": "right",
+        "expected": "assets/planos/C12-P01/qa/sclera-safe-right.png",
+        "status": "not_present"
+      }
+    ],
+    "expected_part_ids": [
+      "pupil-left",
+      "pupil-right",
+      "eyelid-left",
+      "eyelid-right"
+    ],
+    "coordinates": "crop bboxes are x,y,width,height in original 1024x1536 scene-mother",
+    "masks_are_visual_source_only": true,
+    "alpha_policy": {
+      "visible_alpha_from": 1,
+      "sclera_and_head_underlay_min_alpha": 254
+    },
+    "swept_distances": {
+      "pupil_source_px": [
+        0,
+        12
+      ],
+      "eyelid_source_px": [
+        0,
+        1
+      ],
+      "total_positions": 30
+    },
+    "cannot_approve_without": [
+      "art-specific source mother SHA-256",
+      "5 SHA-verified RGBA crops including face and 4 eye pieces",
+      "2 manually reviewed sclera safety masks with source mother provenance",
+      "verified alpha coverage at every intermediate frame",
+      "human-reviewed sclera colors, no duplicate pupils in source face"
+    ],
+    "imageGenerationCalls": 0,
+    "newImagesGenerated": 0,
+    "humanApproval": false,
+    "officialRenderAllowed": false
   }
 }
