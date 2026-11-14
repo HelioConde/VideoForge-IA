@@ -1,6 +1,23 @@
 name: "VideoForge - Gerar cena com personagens consistentes (1 chamada)"
 on:
+  workflow_call:
+    inputs:
+      scene_number:
+        type: number
+        required: true
+      reference_run_id:
+        type: string
+        required: true
   workflow_dispatch:
+    inputs:
+      scene_number:
+        type: number
+        default: 1
+        required: true
+      reference_run_id:
+        type: string
+        default: '43555226353'
+        required: true
   push:
     branches: [main]
     paths:
@@ -88,8 +105,8 @@ jobs:
       - name: Baixar a referencia REAL da mesma producao
         uses: actions/download-artifact@v4
         with:
-          run-id: 43555226353
-          name: vf-otaku-br-spy-family-arte-real-43555226353
+          run-id: ${{ inputs.reference_run_id || '43555226353' }}
+          name: vf-otaku-br-spy-family-arte-real-${{ inputs.reference_run_id || '43555226353' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input
       - name: Gerar cena 01 com IA real e manter referencia de design
@@ -99,16 +116,16 @@ jobs:
           python -m unittest tests.test_production_art tests.test_production_scenes -v
           python -m videoforge.production_scenes \
             --channel otaku-br --video-id spy-x-family-familia-de-mentira \
-            --number 1 --reference ./input/character-bible.png \
+            --number ${{ inputs.scene_number || 1 }} --reference ./input/character-bible.png \
             --reference-report ./input/character-bible.production.json \
             --url "$PROXY_ENDPOINT" --model gpt-image-2
       - name: Entregar nova cena real para conferencia
         uses: actions/upload-artifact@v4
         with:
-          name: vf-otaku-br-spy-scene-01-${{ github.run_id }}
+          name: vf-otaku-br-spy-scene-${{ inputs.scene_number || 1 }}-${{ github.run_id }}
           path: |
-            output/otaku-br/videos/spy-x-family-familia-de-mentira/imagens/cena-01.png
-            output/otaku-br/videos/spy-x-family-familia-de-mentira/imagens/cena-01.production.json
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/imagens/cena-*.png
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/imagens/cena-*.production.json
           retention-days: 14
           if-no-files-found: error
       - name: Apagar tokens temporarios
