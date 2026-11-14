@@ -1,0 +1,660 @@
+{
+  "schema": "videoforge/existing-pixel-partition/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "shot": "C01-P03/C01-P04",
+  "source_path": "assets/cena-01/candidatos/kael-rgba-candidate.png",
+  "source_sha256": "f910f2df550062267efb17cde99a950c1afa47e1216179372fd963a26b864f41",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "no_generation": true,
+  "only_source_pixel_cutouts": true,
+  "source_is_character_candidate_not_approved": true,
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "human_visual_approval": false,
+  "alpha_contamination": "source file has substantial shadow/glow; residual tracked separately; do NOT consider silhouette clean",
+  "pose_roundtrip_requirement": "exact source RGBA reconstruction including rejected residual",
+  "layers": [
+    {
+      "id": "rosto-orelha",
+      "kind": "polygon",
+      "vertices": [
+        [
+          568,
+          517
+        ],
+        [
+          604,
+          516
+        ],
+        [
+          652,
+          526
+        ],
+        [
+          668,
+          550
+        ],
+        [
+          656,
+          579
+        ],
+        [
+          622,
+          588
+        ],
+        [
+          581,
+          571
+        ]
+      ],
+      "pivot_xy": [
+        583,
+        547
+      ],
+      "note": "Rosto parcialmente visível; olhos não aparecem nesta pose; NÃO criar piscar fictício"
+    },
+    {
+      "id": "cabelo",
+      "kind": "polygon",
+      "vertices": [
+        [
+          468,
+          494
+        ],
+        [
+          476,
+          450
+        ],
+        [
+          496,
+          420
+        ],
+        [
+          538,
+          395
+        ],
+        [
+          592,
+          389
+        ],
+        [
+          635,
+          400
+        ],
+        [
+          672,
+          424
+        ],
+        [
+          694,
+          468
+        ],
+        [
+          699,
+          521
+        ],
+        [
+          683,
+          557
+        ],
+        [
+          650,
+          585
+        ],
+        [
+          618,
+          580
+        ],
+        [
+          575,
+          561
+        ],
+        [
+          531,
+          537
+        ],
+        [
+          470,
+          516
+        ],
+        [
+          452,
+          503
+        ]
+      ],
+      "pivot_xy": [
+        586,
+        529
+      ],
+      "note": "Cabelo de Kael da própria ilustração; malha e underlay ainda pendentes"
+    },
+    {
+      "id": "mao-direita",
+      "kind": "polygon",
+      "vertices": [
+        [
+          652,
+          837
+        ],
+        [
+          698,
+          839
+        ],
+        [
+          736,
+          857
+        ],
+        [
+          770,
+          882
+        ],
+        [
+          795,
+          924
+        ],
+        [
+          799,
+          971
+        ],
+        [
+          783,
+          995
+        ],
+        [
+          754,
+          975
+        ],
+        [
+          759,
+          943
+        ],
+        [
+          732,
+          916
+        ],
+        [
+          702,
+          898
+        ],
+        [
+          674,
+          908
+        ],
+        [
+          639,
+          907
+        ]
+      ],
+      "pivot_xy": [
+        663,
+        888
+      ],
+      "note": "Dedos repousando no joelho; contato do rig com o joelho ainda precisa QA"
+    },
+    {
+      "id": "antebraco-direito",
+      "kind": "polygon",
+      "vertices": [
+        [
+          570,
+          802
+        ],
+        [
+          631,
+          798
+        ],
+        [
+          654,
+          834
+        ],
+        [
+          692,
+          845
+        ],
+        [
+          675,
+          895
+        ],
+        [
+          623,
+          926
+        ],
+        [
+          569,
+          930
+        ],
+        [
+          544,
+          900
+        ],
+        [
+          547,
+          858
+        ]
+      ],
+      "pivot_xy": [
+        579,
+        822
+      ],
+      "note": "Manga e antebraço; separar articulação do cotovelo"
+    },
+    {
+      "id": "braco-superior-direito",
+      "kind": "polygon",
+      "vertices": [
+        [
+          522,
+          575
+        ],
+        [
+          589,
+          556
+        ],
+        [
+          651,
+          581
+        ],
+        [
+          672,
+          628
+        ],
+        [
+          666,
+          699
+        ],
+        [
+          653,
+          779
+        ],
+        [
+          623,
+          841
+        ],
+        [
+          563,
+          839
+        ],
+        [
+          534,
+          771
+        ],
+        [
+          501,
+          680
+        ]
+      ],
+      "pivot_xy": [
+        548,
+        624
+      ],
+      "note": "Ombro e manga; não mover até reconstrução da região atrás do ombro"
+    },
+    {
+      "id": "braco-esquerdo",
+      "kind": "polygon",
+      "vertices": [
+        [
+          249,
+          573
+        ],
+        [
+          307,
+          568
+        ],
+        [
+          321,
+          649
+        ],
+        [
+          298,
+          757
+        ],
+        [
+          274,
+          840
+        ],
+        [
+          269,
+          924
+        ],
+        [
+          231,
+          927
+        ],
+        [
+          215,
+          854
+        ],
+        [
+          226,
+          721
+        ]
+      ],
+      "pivot_xy": [
+        268,
+        622
+      ],
+      "note": "Braço esquerdo parcialmente ocluído pelo corpo; underlay não reconstruído"
+    },
+    {
+      "id": "bota-direita",
+      "kind": "polygon",
+      "vertices": [
+        [
+          556,
+          1229
+        ],
+        [
+          677,
+          1229
+        ],
+        [
+          677,
+          1302
+        ],
+        [
+          699,
+          1354
+        ],
+        [
+          746,
+          1361
+        ],
+        [
+          755,
+          1422
+        ],
+        [
+          715,
+          1448
+        ],
+        [
+          558,
+          1454
+        ],
+        [
+          548,
+          1418
+        ]
+      ],
+      "pivot_xy": [
+        610,
+        1246
+      ],
+      "note": "Bota direita do joelho levantado"
+    },
+    {
+      "id": "bota-esquerda",
+      "kind": "polygon",
+      "vertices": [
+        [
+          275,
+          1233
+        ],
+        [
+          380,
+          1225
+        ],
+        [
+          425,
+          1277
+        ],
+        [
+          420,
+          1401
+        ],
+        [
+          407,
+          1497
+        ],
+        [
+          375,
+          1535
+        ],
+        [
+          279,
+          1529
+        ],
+        [
+          268,
+          1467
+        ],
+        [
+          280,
+          1372
+        ]
+      ],
+      "pivot_xy": [
+        348,
+        1257
+      ],
+      "note": "Sola da bota esquerda ajoelhada, sem inventar sola oculta"
+    },
+    {
+      "id": "perna-direita-levantada",
+      "kind": "polygon",
+      "vertices": [
+        [
+          565,
+          907
+        ],
+        [
+          701,
+          892
+        ],
+        [
+          778,
+          912
+        ],
+        [
+          798,
+          982
+        ],
+        [
+          762,
+          1066
+        ],
+        [
+          712,
+          1162
+        ],
+        [
+          699,
+          1259
+        ],
+        [
+          585,
+          1251
+        ],
+        [
+          551,
+          1191
+        ],
+        [
+          561,
+          1104
+        ],
+        [
+          531,
+          1055
+        ]
+      ],
+      "pivot_xy": [
+        572,
+        970
+      ],
+      "note": "Coxa e canela direita; rotação bloqueada até separar joelho e preencher áreas ocultas"
+    },
+    {
+      "id": "perna-esquerda-ajoelhada",
+      "kind": "polygon",
+      "vertices": [
+        [
+          267,
+          908
+        ],
+        [
+          415,
+          912
+        ],
+        [
+          534,
+          952
+        ],
+        [
+          574,
+          1058
+        ],
+        [
+          525,
+          1150
+        ],
+        [
+          470,
+          1226
+        ],
+        [
+          459,
+          1402
+        ],
+        [
+          403,
+          1460
+        ],
+        [
+          253,
+          1452
+        ],
+        [
+          178,
+          1393
+        ],
+        [
+          198,
+          1307
+        ],
+        [
+          232,
+          1212
+        ],
+        [
+          243,
+          1082
+        ]
+      ],
+      "pivot_xy": [
+        303,
+        988
+      ],
+      "note": "Quadril e perna dobrada; underlay ausente"
+    },
+    {
+      "id": "tronco-jaqueta",
+      "kind": "polygon",
+      "vertices": [
+        [
+          459,
+          493
+        ],
+        [
+          532,
+          502
+        ],
+        [
+          602,
+          561
+        ],
+        [
+          663,
+          593
+        ],
+        [
+          651,
+          695
+        ],
+        [
+          614,
+          815
+        ],
+        [
+          565,
+          944
+        ],
+        [
+          482,
+          975
+        ],
+        [
+          390,
+          969
+        ],
+        [
+          293,
+          948
+        ],
+        [
+          220,
+          945
+        ],
+        [
+          223,
+          600
+        ],
+        [
+          264,
+          571
+        ],
+        [
+          364,
+          532
+        ]
+      ],
+      "pivot_xy": [
+        480,
+        946
+      ],
+      "note": "Inclui costuras e parte da camiseta. Está contaminado por pixels de halo próximo à silhueta"
+    },
+    {
+      "id": "residual-halo-REJECTED",
+      "kind": "remainder",
+      "pivot_xy": null,
+      "note": "Resto não classificado / halo / possíveis pixels remanescentes; PROIBIDO no rig. Preservado para recuperar pixels da origem."
+    }
+  ],
+  "rig_plan": {
+    "hierarchy": [
+      "root",
+      "pelvis",
+      "leg-kneeling",
+      "leg-raised",
+      "boots",
+      "torso",
+      "arm-left",
+      "upper-arm-right",
+      "forearm-right",
+      "hand-right",
+      "neck",
+      "head",
+      "hair"
+    ],
+    "pivot_status": "provisional_not_measured",
+    "head_rotation_max_deg": 2,
+    "underlays": "missing",
+    "blink": "not_applicable_to_back_view",
+    "cloth_mesh": "pending",
+    "secondary_shadows": "pending",
+    "frame_driven_remotion": "pending"
+  },
+  "next": [
+    "Revisar máscaras e sombras e fotografar contact sheet na própria arte-mãe",
+    "Extrair pixels da área de silhueta, limpar halo sem perder cabelo",
+    "Criar underlay real de pescoço/ombro sob movimento sem imagem nova não é possível; bloquear até asset existente adequado",
+    "Medir pivôs de cada peça e QA",
+    "Não abrir tela de render como vídeo aprovado sem rigs"
+  ]
+}
