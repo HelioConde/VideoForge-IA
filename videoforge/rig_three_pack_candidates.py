@@ -68,6 +68,13 @@ def pack(art_dir:Path,corrected_dir:Path,dest:Path):
         if corresponding.get("files",{}).get(filename)!=sha(source):
             raise VideoForgeError("RIG_CANDIDATE_PACK_FILE_SHA_INVALID_"+layer)
         pixels=read_rgba(source,cv2,np)
+        if layer=="hand":
+            x,y,w,h=corrected["hand_bbox_original_canvas"]
+            if pixels.shape!=(h,w,4):
+                raise VideoForgeError("RIG_CANDIDATE_PACK_HAND_BBOX_INVALID")
+            original_canvas=np.zeros((H,W,4),dtype=np.uint8)
+            original_canvas[y:y+h,x:x+w]=pixels
+            pixels=original_canvas
         if pixels.shape!=(H,W,4):
             raise VideoForgeError("RIG_CANDIDATE_PACK_INPUT_CANVAS_INVALID")
         images[layer]=pixels
