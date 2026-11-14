@@ -48,7 +48,16 @@
       "objects_visual_review": "pending",
       "individual_character_sprites": "pending",
       "head_eyes_hair_clothes_rgba": "pending",
-      "human_visual_approval": false
+      "human_visual_approval": false,
+      "layer_preview": {
+        "status": "technical_verified",
+        "run_id": 43560582246,
+        "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246/artifacts/14099899544",
+        "sha256": "246464fa7b254034a85f99e698a444dd4d63af4b421c239eda840965936c9d23",
+        "duration_seconds": 8.32,
+        "source_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
+        "rig_individual_parts": false
+      }
     },
     {
       "number": 2,
