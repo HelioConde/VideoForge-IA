@@ -129,6 +129,22 @@
         "pixel_qa_alpha_changed": 0,
         "generated_run_id": 43574833995,
         "preview_run_id": 43575133723
+      },
+      "motion_sync": {
+        "schema": "videoforge/blink-neutral-motion/v1",
+        "blink_centers_frames": [
+          90,
+          188
+        ],
+        "neutral_hold_frames": 3,
+        "neutral_ramp_frames": 12,
+        "body_movement": "subtle_breathing",
+        "head_movement": "optional_if_verified_head_body_rgba_layers",
+        "independent_head_sprites_status": "pending",
+        "camera_resets_at_image_switch": true,
+        "body_and_camera_poses_identical_for_open_closed": true,
+        "head_neck_pivot_verified": false,
+        "preview_visual_approval": false
       }
     },
     {
@@ -372,5 +388,10 @@
   "blink_method_legacy_forbidden": [
     "eyes_closed_sticker_over_hair",
     "hair_overlay_repair_for_generated_full_face_patch"
-  ]
+  ],
+  "animation_policies": {
+    "blink_neutral_phase": "12 frames ease->3 frames neutral each side->12 frames ease",
+    "require_head_body_independent_sprites_for_head_motion": true,
+    "never_duplicate_head_at_swap": true
+  }
 }
