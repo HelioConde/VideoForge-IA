@@ -300,3 +300,20 @@ Para todo plano \`close_up\`, \`extreme_close_up\` ou \`insert\`, o arquivo \`qa
 Os testes foram executados com sucesso: [65 testes Python](https://github.com/HelioConde/VideoForge-IA/actions/runs/43646668407) e [TypeScript/Remotion](https://github.com/HelioConde/VideoForge-IA/actions/runs/43646674144). Estas são **verificações geométricas**, não aprovação das imagens-mãe, fundos/underlays ou 36 rigs ausentes.
 
 O episódio permanece com \`SEM-GERACAO-NOVAS-IMAGENS.lock\` ativo; os arquivos históricos seguem intactos. O MP4 oficial continua bloqueado por falta de arte e rig próprios de cada um dos 36 planos visuais. As imagens de referência exibidas no chat não podem ser tratadas como PNGs já importados no GitHub.
+
+
+## 20. Primeiro MP4 de aprovação produzido — C12 (12 segundos)
+
+**Resultado real de 14/11/2026:** foi renderizado um MP4 de 12 segundos a partir dos três PNGs originais disponíveis na conversa, com composição em memória e sem gerar novos PNGs. O arquivo está disponível na própria conversa para aprovação, **não** no GitHub/YouTube.
+
+- Arquivo: alchemy_c12_primeiro_mp4_aprovacao.mp4
+- SHA-256: 22417e6023f90a8c68d48b21c3a28903f719c63f5290b7152821f9f7b67d5a58
+- Formato: 720×1280, 30 FPS, 360 quadros, 12 segundos, H.264 + AAC; 975443 bytes.
+- C12-P01 (0–4s): close de Kael, fonte olhar_tenso_no_salão_real.png, pequenas camadas de pupila alpha independentes.
+- C12-P02 (4–8s): plano OTS Kael/Elara/Aldric, fonte confronto_no_trono_real.png, efeitos de ambiente separados.
+- C12-P03 (8–12s): reação de Elara, fonte princesa_intrigada_no_trono_real.png, pequenos movimentos de pupila e pensamento original do roteiro.
+- Áudio: atmosfera e nota de reconhecimento sintetizadas especialmente para a cena, sem música comercial.
+
+**Escopo:** este arquivo é um **animatic para aprovação visual**, não animação 2D definitiva por malha. Cabelo, capa, vestes, braços, underlays e rigs não estão aprovados. Os pixels dos três PNGs fontes não foram modificados. Este preview não valida automaticamente os 36 planos visuais nem libera o MP4 oficial de 163s.
+
+Ver [qa-primeiro-mp4-c12.json](qa-primeiro-mp4-c12.json) para hashes, duração e fontes. Ainda é necessário importar os bytes do vídeo e dos PNGs para o GitHub e obter revisão do usuário. O lock SEM-GERACAO-NOVAS-IMAGENS.lock continua ativo; não fazer upload ao YouTube.
