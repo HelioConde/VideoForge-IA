@@ -1,0 +1,63 @@
+name: "VideoForge - corrigir Kael pela imagem-mãe sem IA"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-alinhar-kael.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-alchemy-align-kael-to-mother
+  cancel-in-progress: false
+
+jobs:
+  corrigir-kael:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar pedido sem geração
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
+          assert (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          obj=json.loads((base/"pedido-alinhar-kael.json").read_text(encoding="utf8"))
+          assert obj.get("schema")=="videoforge/align-existing-kael/v1"
+          assert obj.get("image_generation_calls")==0
+          assert obj.get("source_only") is True
+          assert obj.get("human_visual_approval") is False
+          assert obj.get("youtube_upload") is False
+          print("NO_IMAGE_AI; source only")
+          PY
+      - name: Bibliotecas de mascaramento local (sem modelo de IA)
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Corrigir Kael a partir de pixels da mesma imagem-mãe
+        run: python -m videoforge.refine_existing_kael
+      - name: Arquivar Kael corrigido e relatório SHA no canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEST='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/kael-alinhado-original'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$DEST"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'assets(alchemy): arquivar Kael alinhado por pixels da cena-mãe'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Estado de QA
+        run: echo "Kael alinhado é candidato; underlays e rig ainda não existem."
