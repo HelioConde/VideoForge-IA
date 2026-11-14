@@ -76,7 +76,7 @@ jobs:
           python -m unittest tests.test_production_scene_layers tests.test_scene_layers tests.test_full_character_blink -v
           cd motion-remotion
           ./node_modules/.bin/tsc --noEmit
-          node --test tests/mesh-rig.test.cjs tests/idle-motion.test.cjs
+          node --test tests/mesh-rig.test.cjs tests/idle-motion.test.cjs tests/blink-motion-sync.test.cjs
       - name: Preparar parametros de Remotion mantendo a cena-mae ORIGINAL
         shell: bash
         run: |
