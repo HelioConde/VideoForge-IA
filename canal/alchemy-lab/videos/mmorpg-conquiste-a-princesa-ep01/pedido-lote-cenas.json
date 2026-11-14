@@ -1,0 +1,27 @@
+{
+  "schema": "videoforge/scene-batch-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "reference_run_id": 43590930215,
+  "scene_numbers": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "max_calls_total": 13,
+  "retry_on_429": false,
+  "youtube_upload": false,
+  "require_same_character_bible": true,
+  "review_status": "pending_human_visual_review",
+  "purpose": "Lote das outras 13 cenas-mãe (cenas 2–14) no VideoForge, com mesma referência Kael/Elara/Aldric, uma chamada por job, max-parallel=1. Não confundir imagens-mãe com sprites separados ou vídeo pronto."
+}
