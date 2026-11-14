@@ -13,7 +13,7 @@
   "all_16_scenes_require_future_layers": true,
   "youtube_upload": false,
   "notes": "Teste verdadeiro de composicao por camadas; nao substituir pelo pan da imagem completa.",
-  "revision": "r5_exact_same_character_closed_eye_variant",
+  "revision": "r6_synchronized_motion_body_head_blink_neutral",
   "fix": "Editar exatamente a imagem inteira do personagem original, fechar apenas os olhos da Anya grande. Recuperar pixels e alpha original fora dos olhos, trocar PNGs completos durante piscada no Remotion; nao utilizar overlay de palpebras ou hair-foreground.",
   "previous_failed_run_id": 43560470819,
   "retry_image_generation": false,
@@ -28,10 +28,16 @@
   "require_hair_foreground": true,
   "source_eye_run_id": 43569915048,
   "source_bg_run_id": 43560159589,
-  "previous_preview_run_id": 43570324901,
+  "previous_preview_run_id": 43575133723,
   "source_ai_full_character_run_id": 43574833995,
   "source_ai_full_character_artifact_id": 14105882490,
   "new_blink_mode": "swap_entire_character_frame_same_image_reference",
   "old_overlay_method_rejected": true,
-  "no_new_image_calls_in_render": true
+  "no_new_image_calls_in_render": true,
+  "motion_change": "Voltar gradualmente a pose original 12 quadros antes e depois da piscada, neutralizar em frames +/-3, sincronizar corpo+cabeça(validada)+câmera. Manter caracter inteiro aberto/fechado da mesma imagem original; não pular ou reinicializar seno abruptamente.",
+  "motion_sync_tests": "motion-remotion/tests/blink-motion-sync.test.cjs",
+  "head_separate_rgba_status": "not_available_for_scene01; renderer opt-in only",
+  "expected_test_scene": "cena-01",
+  "workflow_mode": "normal_push_no_private",
+  "official_video": false
 }
