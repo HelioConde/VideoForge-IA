@@ -94,12 +94,31 @@ def foreign_character_pixel(original:bytes,ai:bytes)->bool:
 
 
 def compose(input_source:Path,input_head:Path,input_body:Path,
-            input_eyes:Path,destination:Path,channel:str,video_id:str)->dict:
+            input_eyes:Path,destination:Path,channel:str,video_id:str,
+            isolation_dir:Path|None=None)->dict:
     enforce_animation_manual()
     plan=load_plan(channel,video_id)
     check_source(input_source,plan)
     original_path=input_source/plan["reference_file"]
     orig=decode(original_path)
+    isolated=None
+    isolation_qa=None
+    if isolation_dir is not None:
+        masks=list(isolation_dir.rglob("anya-original-isolated.png"))
+        reports=list(isolation_dir.rglob("qa.json"))
+        if len(masks)!=1 or len(reports)!=1:
+            raise VideoForgeError("RIG_CANDIDATE_ISOLATION_ARTIFACT_MISSING")
+        isolation_qa=json.loads(reports[0].read_text(encoding="utf-8"))
+        if (isolation_qa.get("schema")!="videoforge/rig-three-character-isolation-qa/v1" or
+            isolation_qa.get("original_sha256")!=sha(original_path) or
+            isolation_qa.get("files",{}).get("anya-original-isolated.png")!=sha(masks[0]) or
+            isolation_qa.get("original_partition_alpha_differences")!=0 or
+            isolation_qa.get("human_visual_approval") is not False):
+            raise VideoForgeError("RIG_CANDIDATE_ISOLATION_QA_INVALID")
+        isolated=decode(masks[0])
+        for i in range(3,len(orig),4):
+            if isolated[i]>orig[i]:
+                raise VideoForgeError("RIG_CANDIDATE_ISOLATION_ALPHA_INVALID")
     # Same source PNG edited previously; alpha outside eyes is identical.
     closed_files=list(input_eyes.rglob("character-eyes-closed-safe.png"))
     reports=list(input_eyes.rglob("closed-character.qa.json"))
@@ -142,11 +161,13 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
         for x in range(WIDTH):
             k=(y*WIDTH+x)*4
             if head_roi[0]<=x<head_roi[2] and head_roi[1]<=y<head_roi[3]:
-                a=min(orig[k+3],head_mask[k+3])
+                a=min(orig[k+3],head_mask[k+3],
+                      isolated[k+3] if isolated is not None else 255)
                 if a>20:
                     if y<1180 and orig[k+3]>100 and head_mask[k+3]>100:
                         inspected_upper_pixels+=1
-                        if foreign_character_pixel(orig[k:k+3],head_mask[k:k+3]):
+                        if isolated is None and foreign_character_pixel(
+                                orig[k:k+3],head_mask[k:k+3]):
                             foreign_upper_pixels+=1
                     head[k:k+3]=orig[k:k+3]
                     head_closed[k:k+3]=closed[k:k+3]
@@ -182,7 +203,9 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
     error=diff/(3*max(1,pixels))
     overlapping_fraction=overlap/max(1,total_head_visible+total_body_visible)
     foreign_ratio=foreign_upper_pixels/max(1,inspected_upper_pixels)
-    isolation_status=("rejected_foreign_character_or_background_fragments"
+    isolation_status=("refined_with_same_image_anya_mask_review_pending"
+                      if isolated is not None else
+                      "rejected_foreign_character_or_background_fragments"
                       if foreign_upper_pixels>1800 or foreign_ratio>.08
                       else "candidate_only_requires_human_review")
     # Export real neutral assembly and a visible RGB-diff image for review.
@@ -227,6 +250,11 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
       "upper_mask_inspected_pixels":inspected_upper_pixels,
       "foreign_character_suspect_ratio":round(foreign_ratio,5),
       "silhouette_isolation_qa":isolation_status,
+      "isolated_anya_mask_sha256":isolation_qa.get("files",{}).get(
+          "anya-original-isolated.png") if isolation_qa else None,
+      "non_anya_original_pixels_in_head":0 if isolated is not None else None,
+      "hand_and_neck_qa":"pending_manual_reconstruction",
+      "hair_mesh_qa":"pending_no_duplicate_approved_hair_underlay",
       "ready_for_rig":False,
       "head_color_source":"pixel_identical_original_character",
       "closed_head_source":"user_approved_safe_full_closed_png",
@@ -255,12 +283,14 @@ def main()->int:
     p.add_argument("--head",required=True,type=Path)
     p.add_argument("--body",required=True,type=Path)
     p.add_argument("--closed",required=True,type=Path)
+    p.add_argument("--isolation",type=Path)
     p.add_argument("--dest",required=True,type=Path)
     p.add_argument("--channel",required=True)
     p.add_argument("--video-id",required=True)
     a=p.parse_args()
     try:
-        result=compose(a.source,a.head,a.body,a.closed,a.dest,a.channel,a.video_id)
+        result=compose(a.source,a.head,a.body,a.closed,a.dest,a.channel,
+                       a.video_id,a.isolation)
         if result["silhouette_isolation_qa"].startswith("rejected"):
             print("RIG_THREE_CANDIDATE_REJECTED_OTHER_CHARACTERS",
                   result["foreign_character_suspect_pixels"],file=sys.stderr)
