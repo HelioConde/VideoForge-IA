@@ -14,5 +14,16 @@
   "human_visual_approval": false,
   "video_official": false,
   "youtube_upload": false,
-  "workflow_mode": "normal_no_private"
+  "workflow_mode": "normal_no_private",
+  "revision": "recover-body-original-pixels-and-complete-anya-partition-v2",
+  "previous_hand_candidate_run": 43590074890,
+  "qa_requirements": [
+    "restore visible original uniform pixels not included in prior isolation",
+    "lossless split of Anya including torso versus Loid/Yor static",
+    "neutral RGBA recomposition and source pixel diff report",
+    "preserve approved closed-eye pair unchanged outside eyes",
+    "keep hair mesh and independent head rig disabled pending reconstruction and motion QA"
+  ],
+  "status": "technical_qa_requested_not_visual_approved",
+  "rig_operational": false
 }
