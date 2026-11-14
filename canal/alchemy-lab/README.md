@@ -26,6 +26,12 @@ O motor `videoforge/cinematic_identity_continuity.py` impede que um QA marque co
 - [Execução dos testes de continuidade](https://github.com/HelioConde/VideoForge-IA/actions/runs/43647560925) — 14 testes aprovados, sem gerar imagem ou MP4.
 - Os originais dos dois retratos de referência ainda **não foram importados no repositório**. O lock `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo; nenhum dos 36 planos visuais foi declarado pronto.
 
+## Assinaturas visuais das referências originais (sem criar imagens)
+
+Foram calculadas a partir dos 3 PNGs **existentes no chat** assinaturas de conteúdo (SHA-256, dHash de 64 bits), cores dominantes e níveis de luminosidade, preservando os 941×1672 pixels originais. Os dados foram registrados em [fingerprints-visuais-referencias.json](videos/mmorpg-conquiste-a-princesa-ep01/fingerprints-visuais-referencias.json); o validador `videoforge/cinematic_reference_fingerprint.py` reavalia os arquivos automaticamente quando eles estiverem disponíveis no repositório e gera [qa-fingerprints-referencias.json](videos/mmorpg-conquiste-a-princesa-ep01/qa-fingerprints-referencias.json).
+
+**Importante:** dHash e cores descrevem apenas as imagens. **Não comprovam que um personagem pertence a outro enquadramento**, nem aprovam rosto, figurino, camada RGBA ou render. A validação de origem obrigatória continua sendo SHA-256 exato. O ZIP original ainda está pendente no GitHub; este registro não importa bytes.
+
 ## Pacote único de três referências cinematográficas
 
 O pacote ZIP original de Kael, Elara e do plano sobre o ombro `C12-P02` pode ser importado em uma única operação, **sem gerar ou alterar os três PNGs**. O script `scripts/enviar-referencias-cinema.ps1` confere os SHA-256 no Windows e envia o ZIP para `uploads/`; o workflow de referência extrai e confere novamente cada arquivo. [Instruções completas](videos/mmorpg-conquiste-a-princesa-ep01/IMPORTAR-TRES-REFERENCIAS-ORIGINAIS.md).
