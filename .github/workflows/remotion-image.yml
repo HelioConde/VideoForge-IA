@@ -1,4 +1,4 @@
-name: Preparar imagem Remotion reutilizavel
+name: Preparar imagem Remotion Three reutilizavel
 on:
   push:
     branches: [main]
@@ -38,14 +38,14 @@ jobs:
           context: .
           file: infra/containers/Dockerfile.remotion
           push: true
-          tags: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+          tags: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
           cache-from: type=gha,scope=videoforge-remotion
           cache-to: type=gha,mode=max,scope=videoforge-remotion
       - name: Validar Node/Remotion/Chrome/FFmpeg na imagem publicada
         shell: bash
         run: |
           set -euo pipefail
-          image=ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+          image=ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
           docker pull "$image"
           docker run --rm "$image" sh -ec '
             node --version
