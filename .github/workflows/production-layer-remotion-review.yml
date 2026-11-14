@@ -40,75 +40,40 @@ jobs:
           name: vf-otaku-br-spy-family-female-voice-43557582317
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input/voice
-      - name: Recuperar sprite REAL de olhos fechados (sem gerar outra imagem)
+      - name: Baixar MESMA imagem inteira da personagem, editada com olhos fechados
         uses: actions/download-artifact@v4
         with:
-          run-id: 43569915048
-          name: vf-spy-family-blink-rgba-43569915048
+          run-id: 43574602245
+          name: vf-spy-character-same-image-closed-eyes-43574602245
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input/blink
-      - name: Validar o olho RGBA no runner FFmpeg e criar QA de origem
+      - name: Preservar cabelo/rosto/corpo/resto EXATAMENTE da origem
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          import hashlib, json
-          from pathlib import Path
-          from videoforge.production_eye_blink import alpha_bounds
-          from videoforge.production_scene_layers import read_plan
-          from videoforge.scene_layers import _read_manifest, png_info
-          source=Path('input/layers')
-          target=Path('input/blink')
-          sm=_read_manifest(source/'manifest.json')
-          bm=_read_manifest(target/'manifest.json')
-          plan,story,entry=read_plan('otaku-br','spy-x-family-familia-de-mentira',1)
-          overlay=target/'eyes-closed.png'
-          raw=overlay.read_bytes()
-          digest=hashlib.sha256(raw).hexdigest()
-          assert sm['source']['sha256']==bm['source']['sha256']
-          assert bm['layers']['eyes-closed']['sha256']==digest
-          assert bm['layers']['eyes-closed']['technical_status']=='verified'
-          png_info(raw,require_alpha=True)
-          metrics=alpha_bounds(overlay,entry['eyes_closed']['roi_original_canvas'])
-          qa={'schema':'videoforge/eye-overlay-qa/v1',
-              'channel':'otaku-br','video_id':'spy-x-family-familia-de-mentira',
-              'number':1,'scene':entry['scene'],
-              'scene_mother_sha256':sm['source']['sha256'],
-              'eyes_rgba_sha256':digest,
-              **metrics,
-              'blink_centers_frames':entry['eyes_closed']['blink_centers_frames'],
-              'tech_roi_qa':'passed','visual_review':'pending',
-              'face_base_opacity':1,'official_video_created':False,
-              'youtube_uploaded':False}
-          (target/'eye-overlay.qa.json').write_text(
-              json.dumps(qa,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          print('EYE_OVERLAY_QA_OK',metrics)
-          PY
-      - name: Corrigir piscada com alfa restrito e franja ORIGINAL acima dos olhos
-        shell: bash
-        run: |
-          set -euo pipefail
-          python -m unittest tests.test_blink_hair_occlusion -v
-          SOURCE_SHA="$(python - <<'PY'
-          from pathlib import Path
+          python -m unittest tests.test_full_character_blink -v
+          EYES_JSON="$(python - <<'PY'
           import json
-          obj=json.loads(Path('input/layers/manifest.json').read_text(encoding='utf-8'))
-          print(obj['source']['sha256'])
+          from videoforge.production_scene_layers import read_plan
+          _,_,scene=read_plan('otaku-br','spy-x-family-familia-de-mentira',1)
+          spec=scene['eyes_closed']
+          assert spec['method']=='edit_full_original_character_same_reference'
+          print(json.dumps(spec['eye_ellipses_original_canvas']))
           PY
           )"
-          python -m videoforge.blink_hair_occlusion \
-            --character ./input/layers/character-main.png \
-            --eyes ./input/blink/eyes-closed.png \
-            --safe-eyes ./input/blink/eyes-closed-safe.png \
-            --hair-foreground ./input/blink/hair-foreground.png \
-            --qa ./input/blink/occlusion.qa.json \
-            --scene-mother-sha256 "$SOURCE_SHA"
+          python -m videoforge.full_character_blink compose \
+            --original ./input/layers/character-main.png \
+            --ai-edited ./input/blink/character-eyes-closed-ai.png \
+            --production-report ./input/blink/character-eyes-closed-ai.production.json \
+            --safe-output ./input/blink/character-eyes-closed-safe.png \
+            --qa-output ./input/blink/closed-character.qa.json \
+            --eye-regions "$EYES_JSON"
       - name: Verificar TSC e integridade dos assets de origem
         shell: bash
         run: |
           set -euo pipefail
           ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
-          python -m unittest tests.test_production_scene_layers tests.test_scene_layers tests.test_blink_hair_occlusion -v
+          python -m unittest tests.test_production_scene_layers tests.test_scene_layers tests.test_full_character_blink -v
           cd motion-remotion
           ./node_modules/.bin/tsc --noEmit
           node --test tests/mesh-rig.test.cjs tests/idle-motion.test.cjs
@@ -150,8 +115,10 @@ jobs:
           p=Path('output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01')
           report=json.loads((p/'layered-preview.qa.json').read_text(encoding='utf-8'))
           assert report['eyes_blink_rgba_verified'] is True
-          assert report['bangs_over_blink_technical_qa'] is True
-          assert report['hair_foreground_rgba_verified'] is True
+          assert report['full_character_swap_verified'] is True
+          assert report['only_eyes_modified_technical_qa'] == 'passed'
+          assert report['non_eye_pixels_changed'] == 0
+          assert report['alpha_pixels_changed'] == 0
           assert report['character_motion_reduced_to_max_px']==2.8
           assert report['rig_head_eyes_hair_clothes'] is False
           assert hashlib.sha256((p/'qa-blink-closed.png').read_bytes()).digest()!=hashlib.sha256((p/'qa-blink-open.png').read_bytes()).digest()
@@ -167,9 +134,9 @@ jobs:
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/layered-preview.mp4
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/layered-preview.qa.json
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/stage.qa.json
-            input/blink/eyes-closed-safe.png
-            input/blink/hair-foreground.png
-            input/blink/occlusion.qa.json
+            input/blink/character-eyes-closed-ai.png
+            input/blink/character-eyes-closed-safe.png
+            input/blink/closed-character.qa.json
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/qa-*.png
           retention-days: 14
           if-no-files-found: error
