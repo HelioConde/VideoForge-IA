@@ -1,0 +1,64 @@
+name: "VideoForge - remapear 12 peças do Kael alinhado sem IA"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-remap-kael.json'
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-alchemy-kael-remap-source-only
+  cancel-in-progress: false
+
+jobs:
+  refazer-mascaras:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Bloquear nova geração, aprovações falsas ou render
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          q=json.loads((root/'pedido-remap-kael.json').read_text(encoding='utf8'))
+          assert q['schema']=='videoforge/kael-existing-masks-remap-request/v1'
+          assert q['image_generation_calls']==0
+          assert q['only_existing_pixels'] is True
+          assert q['human_visual_approval'] is False
+          assert q['youtube_upload'] is False
+          assert (root/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          PY
+      - name: Preparar Pillow de recorte local (sem IA)
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Reaplicar máscaras aos pixels do Kael corrigido e validar roundtrip
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remap_kael_masks
+      - name: Guardar máscaras e todos os PNGs derivados no próprio canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$BASE/rig-kael-alinhado-pixel-partition.json"
+          git add -f -- "$BASE/assets/cena-01/rig-drafts/kael-alinhado-partes"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'assets(alchemy): separar Kael alinhado em partes originais por máscaras remapeadas'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Proibir uso como rig aprovado
+        run: echo 'Peças são máscaras draft. Underlays e aprovação humana continuam pendentes.'
