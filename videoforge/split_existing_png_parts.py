@@ -35,7 +35,7 @@ def read_plan(path:Path)->dict:
         or data.get("no_generation") is not True
         or data.get("human_visual_approval") is not False):
         raise SplitError("PARTITION_ORIGIN_INVALID")
-    if not isinstance(data.get("layers"),list) or len(data["layers"])<5:
+    if not isinstance(data.get("layers"),list) or len(data["layers"])<2:
         raise SplitError("PARTITION_LAYERS_MISSING")
     return data
 
@@ -47,6 +47,10 @@ def split_existing(source:Path, plan_path:Path, dest:Path)->dict:
     if dest.exists():
         raise SplitError("SPLIT_DESTINATION_EXISTS_NO_OVERWRITE")
     im=Image.open(source)
+    if im.mode == "RGB" and plan.get("allow_opaque_scene_mother") is True:
+        # A alfa opaca é apenas representação dos pixels RGB EXISTENTES;
+        # nenhum personagem, cenário ou detalhe é gerado.
+        im=im.convert("RGBA")
     if im.mode!="RGBA" or im.size!=EXPECTED_SIZE:
         raise SplitError("SOURCE_REQUIRES_CANONICAL_1024x1536_RGBA")
     width,height=im.size
@@ -75,6 +79,30 @@ def split_existing(source:Path, plan_path:Path, dest:Path)->dict:
                        for x in poly)):
                 raise SplitError("PARTITION_POLYGON_INVALID")
             ImageDraw.Draw(mask).polygon([tuple(x) for x in poly],fill=255)
+            mask=ImageChops.subtract(mask,accumulated)
+        elif cfg.get("kind")=="stroke":
+            points=cfg.get("points")
+            width_px=cfg.get("width_px")
+            head=cfg.get("head_polygon")
+            butt=cfg.get("butt_polygon")
+            def valid_points(items, minimum=2, maximum=30):
+                return (isinstance(items,list) and minimum<=len(items)<=maximum
+                        and all(isinstance(pair,list) and len(pair)==2
+                                and all(type(n) is int and 0<=n<=max(width,height)
+                                        for n in pair) for pair in items))
+            if (not valid_points(points) or type(width_px) is not int
+                    or not 1<=width_px<=30
+                    or (head is not None and not valid_points(head,3))
+                    or (butt is not None and not valid_points(butt,3))):
+                raise SplitError("PARTITION_STROKE_INVALID")
+            painter=ImageDraw.Draw(mask)
+            painter.line([tuple(p) for p in points],fill=255,width=width_px,joint="curve")
+            if head is not None:
+                painter.polygon([tuple(p) for p in head],fill=255)
+            if butt is not None:
+                painter.polygon([tuple(p) for p in butt],fill=255)
+            # No cruzamento, cada pixel vai APENAS à primeira lança
+            # desenhada no plano. Contato/mãos ainda exigem QA.
             mask=ImageChops.subtract(mask,accumulated)
         else:
             raise SplitError("PARTITION_MASK_KIND_INVALID")
@@ -118,6 +146,7 @@ def split_existing(source:Path, plan_path:Path, dest:Path)->dict:
         "scene":plan["scene"],"source_file":str(source),
         "source_sha256":sha(source),"canvas":{"width":width,"height":height},
         "pieces":components,"piece_count":len(components),
+        "source_mode":("RGB_opaque" if plan.get("allow_opaque_scene_mother") else "RGBA"),
         "neutral_roundtrip_pixel_exact":True,
         "source_pixels_created_or_painted":0,
         "source_pixels_discarded":0,
