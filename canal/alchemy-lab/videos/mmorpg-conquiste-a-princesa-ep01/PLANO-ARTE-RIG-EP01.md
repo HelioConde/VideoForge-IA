@@ -246,3 +246,25 @@ Implementação concluída no código:
 O contrato de arte está em [rig-olhar-kael-c12-p01.json](rig-olhar-kael-c12-p01.json). Ele está explicitamente marcado como **rascunho**, não como imagem existente ou rig pronto. O [QA automatizado](qa-olhar-kael-c12-p01.json) passou em [42 testes Python](https://github.com/HelioConde/VideoForge-IA/actions/runs/43641372475) e [9 testes Node + TypeScript](https://github.com/HelioConde/VideoForge-IA/actions/runs/43641389882).
 
 **Bloqueios que permanecem:** falta a própria imagem-mãe do close, as quatro partes RGBA recortadas da mesma arte, preenchimento comprovado da esclerótica atrás das pupilas, QA da máscara sem vazamento e aprovação visual. Portanto nenhum MP4 oficial foi renderizado e nenhum PNG novo gerado. O lock `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo.
+
+
+## 17. Auditoria de transparência das pupilas e esclerótica (C12-P01)
+
+O código passou a medir **a silhueta real de todos os pixels de alfa maior ou igual a 1**, incluindo franjas semitransparentes, no deslocamento de pupilas e pálpebras do close de Kael. Essa validação não é apenas uma flag de `qa.json`: ela precisa abrir os arquivos PNG originais por SHA-256, aplicar os deslocamentos em memória e verificar a cobertura da esclerótica/rosto.
+
+O módulo `videoforge/cinematic_eye_pixel_audit.py` exige:
+
+- Quatro peças oculares RGBA separadas (`pupil-left/right` e `eyelid-left/right`), mais `head-open` da mesma imagem-mãe `C12-P01`.
+- Duas máscaras de segurança de esclerótica, esquerda e direita, com proveniência por SHA da mesma arte.
+- Teste de **30 deslocamentos inteiros**: pupilas de 0 a 12px, pálpebras de 0 a 1px, ambas para cada olho.
+- Zero pixel da pupila/pálpebra ultrapassando a região segura, zero recorte na borda do canvas e zero pixel sem cobertura do rosto.
+- Esclerótica e underlay da cabeça com **alfa mínimo de 254** nas regiões alcançadas; detectar inclusive franjas com alfa **1**.
+- Aprovação visual **independente** para cor natural do branco dos olhos, ausência de pupila duplicada na pintura do rosto e máscaras do enquadramento.
+
+Os resultados automáticos de máscara **não comprovam sozinhos que a cor/anatomia está correta**, portanto nenhuma aprovação humana é inferida. O código que envia material ao Remotion executa essa auditoria novamente, para impedir falsos positivos por JSON alterado.
+
+O workflow [QA de pixels dos olhos C12-P01](https://github.com/HelioConde/VideoForge-IA/actions/runs/43642952433) executou **17 testes com sucesso**, sem criar PNGs; o relatório [qa-pixel-olhos-c12-p01.json](qa-pixel-olhos-c12-p01.json) registra o estado **`awaiting_own_shot_art`**, com bloqueios para `assets/planos/C12-P01/rig.json` e `qa.json`, ainda ausentes.
+
+Quando os arquivos forem anexados à pasta `assets/planos/C12-P01/`, o workflow `.github/workflows/qa-alchemy-eye-pixels.yml` será disparado automaticamente para reavaliar os pixels. **Não há geração de imagens**, reinterpretação artificial de rosto nem MP4 nesta tarefa.
+
+Uma incompatibilidade de testes foi encontrada e corrigida: o workflow MVP legado não instala Pillow, então os novos testes oculares agora se comportam como os testes de recorte existentes — são ignorados naquele ambiente e **obrigatórios nos workflows específicos que instalam Pillow**. O projeto mantém o pipeline antigo separado do QA cinematográfico.
