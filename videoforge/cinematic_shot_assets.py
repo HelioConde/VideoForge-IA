@@ -338,7 +338,10 @@ def main()->int:
             if target.parent.resolve()!=base.resolve() or target.suffix!=".json":
                 raise VideoForgeError("CINEMATIC_EDL_OUTPUT_MUST_BE_LOCAL_JSON")
             if target.exists():
-                if target.read_text(encoding="utf8")!=content:
+                # Equivalência semântica: Python escreve 163.0 para float,
+                # alguns validadores normalizam como 163. Não sobrescrever.
+                existing=_load_json(target,limit=700_000)
+                if existing!=doc:
                     raise VideoForgeError("CINEMATIC_EDL_CHANGED_REQUIRES_REVIEW")
                 print("CINEMATIC_EDL_IDENTICAL_VERIFIED",target,
                       doc["shotCount"],"shots, no overwrite")
