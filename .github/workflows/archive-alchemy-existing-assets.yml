@@ -92,7 +92,7 @@ jobs:
           DEST='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets'
           git config user.name 'videoforge-archive[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- "$DEST"
+          git add -f -- "$DEST"  # Excecao explicita apenas para PNGs arquivados do episódio
           if git diff --cached --quiet; then
             echo 'Nenhum PNG novo: conteúdo já arquivado e igual.'
             exit 0
