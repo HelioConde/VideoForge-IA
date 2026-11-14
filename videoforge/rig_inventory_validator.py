@@ -20,7 +20,7 @@ class RigInventoryError(ValueError):
     pass
 
 def validate_file(root: Path, rel_path: str, sha256: str, require_rgba: bool=True) -> dict:
-    if not isinstance(rel_path,str) or not rel_path or "\" in rel_path:
+    if not isinstance(rel_path,str) or not rel_path or chr(92) in rel_path:
         raise RigInventoryError("UNSAFE_ASSET_PATH")
     relative=Path(rel_path)
     if relative.is_absolute() or ".." in relative.parts or relative.suffix!=".png":
