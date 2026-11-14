@@ -14,7 +14,7 @@ import {bodyBreathAtFrame,headRotationDegAtFrame,isClosedAtFrame,meshGridAtFrame
 type Canvas={width:number;height:number};
 type Motion={frame:number;fps:number;duration:number;blinkFrames:number[]};
 export type VideoForgeMeshRigProps={
-  id:string;scene:string;durationFrames:number;rig:ThreeRigManifest;
+  id:string;scene:string;durationFrames:number;rig:ThreeRigManifest|null;
   background:string;foreground?:string|null;audio?:string|null;draftPreview?:boolean;
 };
 
