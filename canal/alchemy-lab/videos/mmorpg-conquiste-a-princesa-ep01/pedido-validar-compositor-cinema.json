@@ -12,6 +12,6 @@
     "37 shot timeline and 4890 frames"
   ],
   "status": "qa_request_only",
-  "revision": 3,
-  "reason": "Validar depois de corrigir a interpolacao ocular e exigir 4 mascaras; nunca renderizar sem arte"
+  "revision": 4,
+  "reason": "TypeScript e testes Remotion para 37 shots com resolucoes nativas e sem esticar rosto"
 }
