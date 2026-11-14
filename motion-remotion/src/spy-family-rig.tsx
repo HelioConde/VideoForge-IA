@@ -79,7 +79,7 @@ const PersonFigure:React.FC<{who:Person;x:number;y:number;scale:number;frame:num
     const secondary=coatSway(frame,fps,duration,true);
     const hairMove=coatSway(frame,fps,duration,true)*.38;
     return <g transform={'translate('+x+' '+y+') scale('+scale+')'}
-      opacity={dimmed?.58:1}>
+      opacity={dimmed?0.58:1}>
       {/* Corpo e abrigo visual sempre presentes: recorte sobrepoe o tecido
           original do ombro. Nenhum fundo pode aparecer em frestas. */}
       <g transform={'translate('+pose.translateX.toFixed(2)+' '+pose.translateY.toFixed(2)+
@@ -252,7 +252,7 @@ export const SpyFamilyRigScene:React.FC<SpySceneProps>=({id,card,focus,setting,d
         <text x="270" y="769" fontSize="17" textAnchor="middle" fontWeight="bold"
           fill="#d1b98f" letterSpacing="3">OTAKU MULTICENA • SPY x FAMILY</text>
         <foreignObject x="39" y="787" width="462" height="87">
-          <div xmlns="http://www.w3.org/1999/xhtml" style={{
+          <div style={{
             color:'#fff6e6',textAlign:'center',fontWeight:800,
             fontSize:30,lineHeight:1.16,width:'100%',
             textShadow:'0 2px 3px #0008',
