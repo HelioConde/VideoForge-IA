@@ -89,6 +89,7 @@ function syntheticApprovedManifest(nativePortrait=false){
       ...base,status:'ready_for_render',
       sourceMotherSha256:sha,backgroundSha256:other,
       sourceCanvas:{...nativeCanvas},
+      focalBbox:[120,350,250,160], // QA fixture only; no photo approval
       backgroundFile:p+'background-reconstructed.png',
       actors:[{id:s.id==='C12-P01'?'kael':'fixture-character',
                rig:rigFor(s.id,nativeCanvas),
@@ -237,4 +238,25 @@ test('source canvas mismatch and invented resolutions are blocked',()=>{
   const f=syntheticApprovedManifest();
   delete f.shots[1].sourceCanvas;
   assert.throws(()=>validateCinematicRender(f),/QA_OR_ORIGIN_MISSING/);
+});
+
+test('legacy 2:3 image face near x=10 would be clipped in 9:16 output',()=>{
+  const d=syntheticApprovedManifest();
+  const close=d.shots.find(s=>s.type==='close_up');
+  close.focalBbox=[10,350,45,80];
+  assert.throws(()=>validateCinematicRender(d),/FOCAL_POINT_CLIPPED_BY_9_16_CROP/);
+  const e=syntheticApprovedManifest(true);
+  const portraitClose=e.shots.find(s=>s.type==='close_up');
+  portraitClose.focalBbox=[10,350,45,80];
+  assert.doesNotThrow(()=>validateCinematicRender(e));
+});
+test('missing or malformed focal region cannot be marked render-ready',()=>{
+  const d=syntheticApprovedManifest(true);
+  const s=d.shots.find(x=>x.type==='extreme_close_up');
+  delete s.focalBbox;
+  assert.throws(()=>validateCinematicRender(d),/FOCAL_POINT_CLIPPED_BY_9_16_CROP/);
+  const e=syntheticApprovedManifest();
+  const detail=e.shots.find(x=>x.type==='insert');
+  detail.focalBbox=[120,350,0,40];
+  assert.throws(()=>validateCinematicRender(e),/FOCAL_POINT_CLIPPED_BY_9_16_CROP/);
 });
