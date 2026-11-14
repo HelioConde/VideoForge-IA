@@ -39,6 +39,17 @@ class OfficialProductionTests(unittest.TestCase):
         self.assertFalse(result["official_mp4_created"])
         self.assertIn("qa_visual", REQUIRED_STAGES)
 
+    def test_alchemy_cinematic_preflight_exposes_missing_shot_assets(self):
+        result=preflight("alchemy-lab","mmorpg-conquiste-a-princesa-ep01",env={})
+        self.assertEqual(result["cinematic_shot_count"],37)
+        self.assertEqual(result["cinematic_frame_count"],4890)
+        self.assertEqual(result["cinematic_shots_pending"],36)
+        self.assertFalse(result["ready"])
+        self.assertFalse(result["checks"]["cinematic_all_shot_art_and_rigs_approved"])
+        self.assertFalse(result["checks"]["cinematic_37_shot_three_renderer_integrated"])
+        self.assertIn("CINEMATIC_SHOTS_MISSING_APPROVED_ART_RIG_UNDERLAYS_QA",result["blockers"])
+        self.assertIn("CINEMATIC_MULTI_SHOT_THREE_RENDERER_PENDING",result["blockers"])
+
     def test_invalid_channel_rejected(self):
         with self.assertRaisesRegex(VideoForgeError,"OFFICIAL_CHANNEL_OR_VIDEO_ID_INVALID"):
             preflight("../out", "spy-family")
