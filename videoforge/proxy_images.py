@@ -20,6 +20,8 @@ import urllib.parse
 import urllib.request
 
 from .paths import CHANNEL_IDS, IDENTIFIER, _check_symlinks
+from . import image_generation_policy
+from .errors import VideoForgeError
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_RESPONSE = 48 * 1024 * 1024
@@ -143,6 +145,10 @@ def decode_image(data: dict) -> tuple[bytes, str]:
 
 def generate(base_url: str, api_key: str, channel: str, video_id: str,
              scene: str, model: str, size: str, prompt: str) -> Path:
+    try:
+        image_generation_policy.assert_image_generation_allowed(channel,video_id)
+    except VideoForgeError as exc:
+        raise ProxyImageError(str(exc)) from None
     target = destination(channel, video_id, scene)
     if model not in IMAGE_MODELS or size not in IMAGE_SIZES:
         raise ProxyImageError("Modelo ou tamanho fora da lista permitida.")
