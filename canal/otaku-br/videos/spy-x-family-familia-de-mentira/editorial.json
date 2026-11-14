@@ -2,22 +2,22 @@
   "schema": "videoforge/video-editorial/v1",
   "canal_id": "otaku-br",
   "video_id": "spy-x-family-familia-de-mentira",
-  "status": "renderizado",
-  "titulo_provisorio": "Spy x Family: FAMÍLIA DE MENTIRA 👀 #Shorts",
-  "tema": "Família Forger e os segredos de Loid, Yor e Anya",
+  "status": "assets_pendentes",
+  "titulo_provisorio": "Spy x Family: por que Anya esconde os segredos dos pais? 👀",
+  "tema": "Por que Anya guarda os segredos de Loid e Yor e o que isso revela sobre a família Forger",
   "assuntos_relacionados": [
     "Spy x Family",
-    "Anya",
-    "Loid Forger",
-    "Yor Forger",
-    "família fictícia"
+    "Anya e sua telepatia",
+    "Operação Strix",
+    "Segredos de Loid e Yor",
+    "Família Forger"
   ],
   "obra_ou_anime": "Spy x Family",
   "formato": "shorts_vertical_9_16",
   "idioma": "pt-BR",
   "publico": "Fãs brasileiros de anime e curiosidades narrativas",
-  "hipotese": "O contraste entre segredos e afeto cria curiosidade sem spoiler forte.",
-  "duracao_prevista_segundos": 100,
+  "hipotese": "Gancho imediato sobre telepatia e segredos; resposta emocional satisfatória. Não afirmar tendência ou dados de audiência sem pesquisa de Analytics.",
+  "duracao_prevista_segundos": 150,
   "data_criacao": "2026-11-13",
   "pesquisa": {
     "consultas": [],
@@ -26,6 +26,18 @@
         "tipo": "repo_legado",
         "url": "https://github.com/HelioConde/AutoEditorVideo/blob/main/conteudos/otaku-multicena-grade-50-b.json",
         "id": "5027-spy-x-family"
+      },
+      {
+        "tipo": "site_oficial_spy_family",
+        "url": "https://spy-family.net/tvseries/",
+        "consulta_data": "2026-11-13",
+        "escopo": "resumo e biografias de Loid/Anya/Yor"
+      },
+      {
+        "tipo": "ajuda_oficial_youtube",
+        "url": "https://support.google.com/youtube/answer/146402",
+        "consulta_data": "2026-11-13",
+        "escopo": "tags têm peso secundário a título, descrição e thumbnail"
       }
     ],
     "dados_canal_verificados": false,
@@ -45,55 +57,110 @@
   },
   "roteiro": {
     "arquivo": "roteiro.json",
-    "gancho": "Um espião, uma assassina e uma telepata. Parece uma combinação impossível, mas essa é a família Forger em Spy x Family.",
-    "progressao": "identidade de Loid → segredo de Yor → telepatia de Anya → cotidiano → vínculo real",
+    "gancho": "Anya sabe que Loid é espião e que Yor é assassina. Só que nenhum dos dois sabe que ela conhece os segredos.",
+    "progressao": "A revelação da telepatia de Anya → Operação Strix → segredos de Loid e Yor → comédia de erros → escola e laços → por que Anya guarda segredo → conclusão afetiva",
     "cenas_previstas": [
-      "trio-improvavel",
-      "loid",
-      "disfarce",
-      "yor",
-      "anya",
-      "mal-entendidos",
-      "cotidiano",
+      "gancho-anya",
+      "operacao-strix",
+      "identidade-loid",
+      "adocao-anya",
+      "telepatia",
+      "entrada-yor",
+      "tres-verdades",
+      "ironia",
+      "limite-do-poder",
+      "academia-eden",
+      "damian",
+      "rotina",
       "afeto",
-      "vinculo",
-      "resposta"
-    ]
+      "escolha-anya",
+      "verdade-da-familia",
+      "desfecho"
+    ],
+    "quantidade_cenas_editorial": 16,
+    "regra_cenas": "O número de cenas depende do roteiro, sem teto fixo. Duração do piloto continua 90–180s."
   },
   "arte": {
-    "guia_estilo": "prévia técnica tipográfica; arte de personagens finais pendente",
+    "guia_estilo": "Anime 2D ilustrativo coerente, sem fotorrealismo; proporções, olhos, cabelos, figurino e iluminação fixos nas cenas; gerar primeiro o guia visual e referência de cada personagem; separar objetos/personagens para animar sem recortes transparentes.",
     "personagens": [
+      "Anya Forger",
       "Loid Forger",
-      "Yor Forger",
-      "Anya Forger"
+      "Yor Forger"
     ],
-    "cenario": "residência fictícia e entrevista escolar em estética ilustrativa",
+    "cenario": "Apartamento dos Forger e Academia Eden em ilustração anime 2D consistente; variações de câmera com continuidade visual",
     "referencias": [],
-    "consistencia_verificada": false
+    "consistencia_verificada": false,
+    "plano_visual": "roteiro.json > scenes[].visual_direction",
+    "regras": [
+      "Loid: cabelo loiro curto, terno verde quando em missão; identidade distinta e constante",
+      "Yor: cabelos longos escuros, acessórios vermelhos; não alternar design",
+      "Anya: cabelo rosa, acessórios escuros, proporções infantis estáveis",
+      "Casa dos Forger e Academia Eden com composição, paleta e direção de luz consistentes",
+      "Movimentos suaves com rig por camadas sem fendas, transparências ou duplicação de sprites"
+    ]
   },
   "seo": {
     "palavras_chave": [
       "Spy x Family",
       "Anya Forger",
+      "segredos da Anya",
       "Loid Forger",
-      "Yor Forger"
+      "Yor Forger",
+      "Operação Strix",
+      "anime explicado"
     ],
-    "titulo_final": null,
-    "descricao": null,
-    "tags": [],
-    "thumbnail_plano": "revisão futura com ilustração original coerente"
+    "titulo_final": "Spy x Family: por que Anya esconde os segredos dos pais? 👀",
+    "descricao": "Anya sabe que Loid é um espião e que Yor é uma assassina. Mas, em Spy x Family, por que ela guarda os segredos dos pais? Entenda como a telepatia de Anya, a Operação Strix e o cotidiano dos Forger transformam uma família de fachada em um laço verdadeiro.\n\nAnálise narrativa original para fãs de anime. Ilustrações e narração próprias previstas para a versão final; este material ainda é um roteiro em revisão, não um vídeo publicado. Sem clipes ou trilha sonora oficiais.\n\nFonte de contexto e personagens: https://spy-family.net/tvseries/\n\n#SpyxFamily #AnyaForger #AnimeBrasil",
+    "tags": [
+      "Spy x Family",
+      "SPY×FAMILY",
+      "Spy Family",
+      "Spy x Family Brasil",
+      "Anya Forger",
+      "Anya",
+      "Loid Forger",
+      "Yor Forger",
+      "Operação Strix",
+      "Operation Strix",
+      "família Forger",
+      "segredos da família Forger",
+      "telepatia da Anya",
+      "anime explicado",
+      "curiosidades anime",
+      "anime em português",
+      "Otaku Multicena"
+    ],
+    "hashtags": [
+      "#SpyxFamily",
+      "#AnyaForger",
+      "#AnimeBrasil"
+    ],
+    "thumbnail_plano": "Texto curto 'ANYA SABE TUDO?' sobre ilustração coerente de Anya com Loid e Yor ao fundo; miniatura deve refletir apenas a premissa real. Não usar arte oficial sem licença.",
+    "metadados_validados": false,
+    "nota": "Tags específicas e variantes de grafia; priorizar fidelidade do título, descrição, visual e retenção."
   },
   "producao": {
     "manifesto_tecnico": "video.json",
-    "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091",
-    "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091/artifacts/14092490361",
-    "sha256": "60fe4808a890e0d47af10e46984b19b78eda29a1b43217f44aa8db09a9e59f19",
-    "duracao_real_segundos": 104.782
+    "workflow_url": null,
+    "artefato_url": null,
+    "sha256": null,
+    "duracao_real_segundos": null,
+    "versoes_anteriores": [
+      {
+        "tipo": "previsualizacao_tecnica_antiga",
+        "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091",
+        "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091/artifacts/14092490361",
+        "sha256": "60fe4808a890e0d47af10e46984b19b78eda29a1b43217f44aa8db09a9e59f19",
+        "duracao_real_segundos": 104.782,
+        "qa_tecnico_aprovado": true
+      }
+    ]
   },
   "qa": {
-    "aprovado_tecnicamente": true,
+    "aprovado_tecnicamente": false,
     "aprovado_editorialmente": false,
-    "relatorio_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091/artifacts/14092490361"
+    "relatorio_url": null,
+    "nota": "Nova V2 com roteiro diferente: arquivo MP4 ainda não gerado e arte final pendente; a QA anterior permanece em producao.versoes_anteriores."
   },
   "publicacao": {
     "youtube_video_id": null,
@@ -115,6 +182,7 @@
     "Fonte antiga indica roteiro pronto aguardando vídeo, sem arquivo MP4 confirmado.",
     "Prévia gerada com tipografia e voz sintética offline não equivale a arte final.",
     "Sem publicação nem autorização de uso de imagens oficiais.",
-    "Workflow #43541390091 gerou MP4 tecnico com 10 cenas e voz sintetica offline; sem arte final, sem animação de personagens. 104.782s, QA tecnico aprovado."
+    "Workflow #43541390091 gerou MP4 tecnico com 10 cenas e voz sintetica offline; sem arte final, sem animação de personagens. 104.782s, QA tecnico aprovado.",
+    "Revisão editorial de 13/11/2026: roteiro renovado para 16 cenas com gancho sobre Anya, título, descrição, tags e plano visual. A versão renderizada em 104,782s é anterior à revisão; não descrever esse MP4 como atualizado."
   ]
 }
