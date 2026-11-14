@@ -19,7 +19,8 @@ from PIL import Image, ImageChops
 
 from .errors import VideoForgeError
 
-ALPHA_THRESHOLD=128
+VISIBLE_ALPHA_THRESHOLD=1
+SAFE_ALPHA_THRESHOLD=254
 REQUIRED_PARTS={
     "head-open",
     "pupil-left","pupil-right","eyelid-left","eyelid-right",
@@ -27,10 +28,13 @@ REQUIRED_PARTS={
 EYE_SIDES=("left","right")
 CANVAS=(1024,1536)
 
-def opaque(mask:Image.Image)->Image.Image:
+def opaque(mask:Image.Image,threshold:int=VISIBLE_ALPHA_THRESHOLD)->Image.Image:
     if mask.mode!="L":
         raise VideoForgeError("CINEMATIC_EYE_ALPHA_EXPECTED")
-    return mask.point(lambda value:255 if value>=ALPHA_THRESHOLD else 0)
+    # Include antialiased edges with alpha >= 1; they can bleed visibly
+    # during motion against light-colored sclera. Head and safe masks
+    # require near-total opacity to prevent transparent face holes.
+    return mask.point(lambda value:255 if value>=threshold else 0)
 
 def pixel_count(mask:Image.Image)->int:
     return mask.histogram()[255]
@@ -54,15 +58,17 @@ def verify_alpha_sweep(head_alpha:Image.Image,
                    for im in [*layers.values(),*safe_masks.values()])
             or not 0<pupil_distance<=12 or not 0<eyelid_distance<=1):
         raise VideoForgeError("CINEMATIC_EYE_MASK_INPUT_INVALID")
-    head=opaque(head_alpha)
+    head=opaque(head_alpha,SAFE_ALPHA_THRESHOLD)
     if pixel_count(head)<10:
         raise VideoForgeError("CINEMATIC_EYE_HEAD_UNDERLAY_EMPTY")
-    report={"canvas":list(head.size),"alphaThreshold":ALPHA_THRESHOLD,
+    report={"canvas":list(head.size),
+            "visibleAlphaThreshold":VISIBLE_ALPHA_THRESHOLD,
+            "underlayAndSafeAlphaThreshold":SAFE_ALPHA_THRESHOLD,
             "pupilMaxShiftPx":pupil_distance,
             "eyelidMaxShiftPx":eyelid_distance,
             "eyes":{}}
     for side in EYE_SIDES:
-        safe=opaque(safe_masks[side])
+        safe=opaque(safe_masks[side],SAFE_ALPHA_THRESHOLD)
         if pixel_count(safe)<10:
             raise VideoForgeError("CINEMATIC_EYE_SCLERA_MASK_EMPTY_"+side)
         measured={}
