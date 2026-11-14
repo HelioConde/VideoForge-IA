@@ -1,0 +1,47 @@
+name: "VideoForge - importar PNGs existentes do chat sem gerar"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/uploads/alchemy-lab-imagens-geradas-anteriormente.zip'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-import-alchemy-chat-existing-images
+  cancel-in-progress: false
+
+jobs:
+  importar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Importar somente bytes de 8 PNGs ja existentes com SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIP='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/uploads/alchemy-lab-imagens-geradas-anteriormente.zip'
+          test -s "$ZIP"
+          python -m videoforge.import_external_alchemy_bundle "$ZIP"
+          echo 'Nenhum modelo de imagem foi chamado nem sera chamado.'
+      - name: Guardar variacoes em assets do canal e retirar ZIP intermediario
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$BASE/assets/cena-01/variacoes-geradas-na-conversa"
+          git rm -- "$BASE/uploads/alchemy-lab-imagens-geradas-anteriormente.zip"
+          git commit -m 'assets(alchemy): arquivar 8 PNGs ja gerados no chat, com SHA e QA pendente'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Estado de producao
+        run: echo 'Imagens importadas como variacoes NAO aprovadas para rigs; sem novos prompts ou render.'
