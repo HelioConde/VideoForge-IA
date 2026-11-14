@@ -42,7 +42,7 @@ class CinematicChatReferencesTests(unittest.TestCase):
                 self.assertFalse(s["approved_for_shot_mother"])
 
     def test_unsafe_image_and_hash_are_rejected(self):
-        problems=check_png_source(b"not an image",941,1672,"0"*64,12)
+        problems=check_png_source(b"not an image",941,1672,"0"*64,13)
         self.assertIn("NOT_PNG_IHDR",problems)
         self.assertIn("SHA256_MISMATCH",problems)
         self.assertIn("UNEXPECTED_FILE_SIZE",problems)
