@@ -38,6 +38,12 @@ Ver `docs/PADRAO-ANIMACAO-POR-CAMADAS.md` e `docs/TESTE-CAMADAS-CENA.md`. O exem
 - O teste Spy Family cena 01 contém personagem RGBA de grupo e agora uma camada de pálpebras da Anya. **Ainda não** há rig individual de corpo, braços, cabelo e objetos; registrar sempre `rig_animado_aplicado=false` até que todas essas partes sejam produzidas e validadas.
 - Usar workflow normal GitHub Actions por `push` ou `workflow_dispatch`; **não usar modo privado de cota/proxy** que anteriormente bloqueava as execuções. O proxy autenticado utilizado no runner é uma dependência técnica distinta de um "private workflow mode".
 
+## Correção contra piscada desenhada sobre a franja (14/11/2026)
+
+O erro observado na cena 1 foi causado por uma camada generativa de pálpebras com **mancha de pele/transparência muito ampla**. O sprite cru não pode mais ser usado diretamente no render. O módulo reutilizável `videoforge/blink_hair_occlusion.py` cria duas saídas **sem nova geração de imagem** a partir dos PNGs originais com SHA: `eyes-closed-safe.png`, com máscara suave em duas regiões oculares e alfa nulo sobre a franja, e `hair-foreground.png`, extraída dos pixels de cabelo existentes na **mesma cena-mãe**. O compositor Remotion coloca a franja acima da piscada e move as duas camadas com o mesmo pivô do personagem, para não abrir costuras. **Isso não prova que há rig independente de cabelo/cabeça.**
+
+QA obrigatório por cena: máscaras validadas por SHA, máscara ocular de região específica (nunca usar coordenadas de Anya para outra cena), alfa verdadeiro sem vazamento nos pixels protegidos do cabelo, continuidade de rosto opaco, captura de quadros abertos/fechados e revisão visual humana. Se falhar, a piscada permanece desabilitada e `video_oficial_do_programa=false`. O padrão de movimento corporal continua mínimo, com limite absoluto 2,8 px no quadro 1080×1920 e sem deslocar objetos inexistentes.
+
 ## Referências de código
 
 - `motion-remotion/src/mesh-rig.tsx`: piscada, cabeça sólida, malha de tecido, vento e proteção de costura.
