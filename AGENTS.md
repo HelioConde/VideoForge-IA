@@ -38,6 +38,10 @@ Consultar [docs/PREPARAR-RIG-CANDIDATO.md](docs/PREPARAR-RIG-CANDIDATO.md) e `ca
 
 Nunca acrescentar `MAX_SCENES`, faixas como `3 <= len(scenes) <= 24`, ou checagens exigindo exatamente 10 cenas nos geradores de vídeo. O número de cenas é consequência do **roteiro e dos cortes visuais necessários**, não um teto arbitrário. Validar que a lista é não vazia, caminhos e conteúdo de cada cena, direitos, tempo final do formato, QA e uso de recursos; jamais truncar ou descartar cenas automaticamente para caber em número máximo. Dividir trabalhos em lotes técnicos quando necessário preservando a ordem e o conteúdo, sem limitar o número total de cenas. Orçamento de geração de imagens, quotas de APIs, timeout e limites de duração do Shorts permanecem controles separados e não podem ser burlados.
 
+## Padrão universal da animação de personagens
+
+Antes de desenhar, separar sprites, montar rig ou renderizar personagens de **qualquer canal**, leia [`docs/PADRAO-ANIMACAO-POR-CAMADAS.md`](docs/PADRAO-ANIMACAO-POR-CAMADAS.md). A regra geral é: base do rosto sempre opaca durante a piscada; cabelo e roupas separados apenas quando houver underlay e sobreposição nas costuras; junções ancoradas nos ombros/pescoço; movimento determinístico de corpo, cabelo, roupa e câmera sem fendas, duplicação ou esticar a cabeça. Todo vídeo exige continuidade entre cenas, QA de quadros e aprovação visual. A prévia vetorial de Spy x Family prova apenas o motor: **não** tratá-la como ilustração final ou publicação.
+
 ## Objetivo inicial
 
 Entregar e comprovar um vídeo MP4 vertical do Otaku Multicena com
