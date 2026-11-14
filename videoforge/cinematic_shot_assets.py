@@ -213,6 +213,13 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
             if not isinstance(layer,dict) or indexed_parts.get(layer.get("file"))!=(
                     layer.get("sha256"),layer.get("bbox")):
                 failures.append("SHOT_ACTOR_LAYER_NOT_OWN_ASSET")
+    # A fonte de estilo v2 e os figurinos precisam estar de acordo com
+    # este shot. Um JPG do traje real durante o disfarce quebra a trama.
+    from .cinematic_identity_continuity import verify_shot_continuity
+    try:
+        verify_shot_continuity(shot,rig,qa)
+    except VideoForgeError as exc:
+        failures.append(str(exc))
     if sid=="C12-P01":
         # Face and pupil glance must use an independently painted sclera
         # underlay, four RGBA eye layers and zero head/body movement.
