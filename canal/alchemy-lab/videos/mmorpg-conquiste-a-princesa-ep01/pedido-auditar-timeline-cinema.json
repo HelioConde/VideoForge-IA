@@ -10,5 +10,7 @@
   "required_shots": 37,
   "visual_shots": 36,
   "initial_black_shot": 1,
-  "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon"
+  "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon",
+  "revision": 2,
+  "reason": "Retestar EDL depois de bloquear compositor legado de 14 PNGs e adicionar preflight oficial de tomadas independentes"
 }
