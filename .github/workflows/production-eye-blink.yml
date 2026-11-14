@@ -85,7 +85,7 @@ jobs:
           set -euo pipefail
           python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
           echo "PROXY_HEALTH_OK — contas acessiveis; nao confirma disponibilidade do modelo de imagem."
-            - name: Baixar as camadas reais da cena-mae do proprio VideoForge
+      - name: Baixar as camadas reais da cena-mae do proprio VideoForge
         uses: actions/download-artifact@v4
         with:
           run-id: 43560159589
@@ -125,7 +125,7 @@ jobs:
           path: output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/
           retention-days: 14
           if-no-files-found: warn
-- name: Apagar tokens temporarios
+      - name: Apagar tokens temporarios
         if: always()
         shell: bash
         run: |
