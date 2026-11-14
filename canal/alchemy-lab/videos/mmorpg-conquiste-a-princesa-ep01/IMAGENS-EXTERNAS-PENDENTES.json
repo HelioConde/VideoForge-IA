@@ -1,0 +1,126 @@
+{
+  "schema": "videoforge/chat-created-assets-staging/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "state": "zip_prepared_locally_not_uploaded_to_github",
+  "explanation": "O ZIP de imagens já produzidas nesta conversa está disponível ao usuário em anexo. Os bytes binários deste ZIP não foram enviados pelo conector GitHub. Não declarar importação antes de validar um commit de 8 PNGs.",
+  "new_generation_calls": 0,
+  "zip_filename": "alchemy-lab-imagens-geradas-anteriormente.zip",
+  "upload_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/uploads/alchemy-lab-imagens-geradas-anteriormente.zip",
+  "import_workflow": ".github/workflows/import-alchemy-existing-chat-assets.yml",
+  "destination": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/variacoes-geradas-na-conversa/",
+  "files": [
+    {
+      "name": "rei-aldric-v1.png",
+      "sha256": "2ad1555c4caf75db21a488c0cd4dc4ab136b733b407d3f9d29d0e9b6ba2cd4b1",
+      "bytes": 2003849,
+      "canvas": [
+        1086,
+        1448
+      ],
+      "source": "already_generated_in_chat",
+      "github_uploaded": false,
+      "visual_quality": "pending",
+      "aligned_with_original_mother": false,
+      "usable_as_final_rig": false
+    },
+    {
+      "name": "guarda-esquerdo-v1.png",
+      "sha256": "69b9c41582a89470d60e5bc0b8ea38ca7c27b0a676187aea71bd425dac4eb245",
+      "bytes": 1209943,
+      "canvas": [
+        1086,
+        1448
+      ],
+      "source": "already_generated_in_chat",
+      "github_uploaded": false,
+      "visual_quality": "pending",
+      "aligned_with_original_mother": false,
+      "usable_as_final_rig": false
+    },
+    {
+      "name": "guarda-direito-v1.png",
+      "sha256": "884943f955bb23a54bdc5cd6bde73de3fbc617808a2394084ffcdc64c37d7cce",
+      "bytes": 1291350,
+      "canvas": [
+        1086,
+        1448
+      ],
+      "source": "already_generated_in_chat",
+      "github_uploaded": false,
+      "visual_quality": "pending",
+      "aligned_with_original_mother": false,
+      "usable_as_final_rig": false
+    },
+    {
+      "name": "lanca-esquerda-v1.png",
+      "sha256": "7d7bb1c145d2fc1de2ed915a2bfb3d56005b7ea4a08cb1cd17682bb196641db2",
+      "bytes": 264698,
+      "canvas": [
+        1086,
+        1448
+      ],
+      "source": "already_generated_in_chat",
+      "github_uploaded": false,
+      "visual_quality": "pending",
+      "aligned_with_original_mother": false,
+      "usable_as_final_rig": false
+    },
+    {
+      "name": "lanca-direita-v1.png",
+      "sha256": "2062bad746bf3eed6e1b1ba016a70ab84cfd9fc6626b924a9ee9b463281f57a5",
+      "bytes": 264158,
+      "canvas": [
+        1086,
+        1448
+      ],
+      "source": "already_generated_in_chat",
+      "github_uploaded": false,
+      "visual_quality": "pending",
+      "aligned_with_original_mother": false,
+      "usable_as_final_rig": false
+    },
+    {
+      "name": "guarda-esquerdo-v2.png",
+      "sha256": "5ea9490e0af44b5e3d90bb427f93d8bac13b805f1a72856fdfa71d01669faec9",
+      "bytes": 1104506,
+      "canvas": [
+        1086,
+        1448
+      ],
+      "source": "already_generated_in_chat",
+      "github_uploaded": false,
+      "visual_quality": "pending",
+      "aligned_with_original_mother": false,
+      "usable_as_final_rig": false
+    },
+    {
+      "name": "guarda-direito-v2.png",
+      "sha256": "4b12648d039610b4ef0d0fdb8f513c3497f4d5cd80064d1a13127acab7de64a1",
+      "bytes": 1178252,
+      "canvas": [
+        1086,
+        1448
+      ],
+      "source": "already_generated_in_chat",
+      "github_uploaded": false,
+      "visual_quality": "pending",
+      "aligned_with_original_mother": false,
+      "usable_as_final_rig": false
+    },
+    {
+      "name": "trono-ornamental-v1.png",
+      "sha256": "c8b35844b079a69cab5b2a34fb474e73a94dfd8d5d6d404ae00b92f7cb1747c4",
+      "bytes": 1887413,
+      "canvas": [
+        1086,
+        1448
+      ],
+      "source": "already_generated_in_chat",
+      "github_uploaded": false,
+      "visual_quality": "pending",
+      "aligned_with_original_mother": false,
+      "usable_as_final_rig": false
+    }
+  ]
+}
