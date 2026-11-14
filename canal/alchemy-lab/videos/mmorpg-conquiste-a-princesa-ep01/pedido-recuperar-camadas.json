@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/layer-recovery-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene_number": 1,
+  "scene_source_run_id": 43591342058,
+  "partial_layers_run_id": 43591620396,
+  "max_calls_per_run": 1,
+  "retry_on_429": false,
+  "youtube_upload": false,
+  "reason": "O background da cena-mãe foi gerado, validado em RGB e SHA mas a extração RGBA retornou HTTP 502. Aproveitar o background, origem e hashes, executar SOMENTE a extração de personagem ausente por edição da mesma cena-mãe.",
+  "human_visual_approval": false
+}
