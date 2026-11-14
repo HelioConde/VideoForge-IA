@@ -94,7 +94,10 @@ def generate(source:Path,manifest:Path,channel:str,video_id:str,number:int,
     edited,ext=proxy.decode_image(response)
     if ext!=".png":
         raise VideoForgeError("BLINK_FULL_EDIT_MUST_BE_PNG")
-    info=scene_layers.png_info(edited,require_alpha=True)
+    # Modelos de edicao podem ignorar `background:transparent` e devolver
+    # PNG RGB/opaque. NUNCA usar esse alfa de IA no video. A composicao
+    # restaura SEMPRE o alpha e pixels originais, independente do retorno.
+    info=scene_layers.png_info(edited)
     if (info["width"],info["height"])!=(WIDTH,HEIGHT):
         raise VideoForgeError("BLINK_FULL_EDIT_CHANGED_CANVAS")
     output.parent.mkdir(parents=True,exist_ok=True)
@@ -107,6 +110,8 @@ def generate(source:Path,manifest:Path,channel:str,video_id:str,number:int,
         "source_scene_mother_sha256":m["source"]["sha256"],
         "ai_full_closed_sha256":hashlib.sha256(edited).hexdigest(),
         "original_reference_used":True,"image_edit_calls":1,
+        "ai_png_color_type":info["color_type"],
+        "ai_alpha_never_used_in_final":True,
         "closed_eyes_after_pixel_qa":False,
         "visual_approval":False,"official_video_created":False,
         "youtube_uploaded":False,
@@ -117,8 +122,8 @@ def generate(source:Path,manifest:Path,channel:str,video_id:str,number:int,
     return qa
 
 
-def _raw_rgba(path:Path)->bytearray:
-    info=scene_layers.png_info(path.read_bytes(),require_alpha=True)
+def _raw_rgba(path:Path,*,source:bool=False)->bytearray:
+    info=scene_layers.png_info(path.read_bytes(),require_alpha=True if source else None)
     if (info["width"],info["height"])!=(WIDTH,HEIGHT):
         raise VideoForgeError("BLINK_FULL_RGBA_SIZE_INVALID")
     try:
@@ -181,7 +186,7 @@ def compose_same_character(original:Path,edited:Path,production_report:Path,
     if not (isinstance(eyes,list) and len(eyes)==2 and
             all(isinstance(e,list) and len(e)==4 and all(isinstance(n,(int,float)) for n in e) for e in eyes)):
         raise VideoForgeError("BLINK_FULL_EYE_REGIONS_REQUIRED")
-    base=_raw_rgba(original)
+    base=_raw_rgba(original,source=True)
     ai=_raw_rgba(edited)
     safe=bytearray(base)  # exactly preserves every non-eye pixel, including ALPHA
     modified=0;hair_protected=0;diff_sum=0
