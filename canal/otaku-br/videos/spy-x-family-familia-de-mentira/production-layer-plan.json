@@ -159,7 +159,7 @@
         "latest_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439/artifacts/14106521460",
         "technical_test_status": "passed_17_node_tests"
       },
-      "rig_three_status": "pending_articulated_rgba_assets_not_rendered",
+      "rig_three_status": "draft_sprite_qa_rejected_foreign_characters",
       "rig_three_human_approval": false
     },
     {
@@ -423,22 +423,27 @@
       "background": "available",
       "original_character_rgba": "available",
       "full_character_open_closed": "available",
-      "body_no_head_rgba": "pending",
-      "head_open_rgba": "pending",
-      "head_closed_rgba": "pending",
-      "hair_front_rgba": "pending",
+      "body_no_head_rgba": "draft_generated_not_human_approved",
+      "head_open_rgba": "draft_generated_not_human_approved",
+      "head_closed_rgba": "derived_from_previous_approved_full_closed_png_draft",
+      "hair_front_rgba": "not_generated_independent_hair_mesh_pending",
       "hair_back_rgba": "optional_pending",
       "cape": "not_present_do_not_generate",
       "arm_and_objects": "review_which_exist_before_generating",
-      "neck_pivot": "pending_measurement",
-      "roundtrip_visual_qa": "pending",
+      "neck_pivot": "pending_measurement_and_seam_reconstruction",
+      "roundtrip_visual_qa": "diagnostic_generated_rejected_foreign_people_in_head_mask",
       "real_rig_json": "pending",
-      "human_visual_approval": false
+      "human_visual_approval": false,
+      "rig_json_status": "blocked_until_proper_head_isolation_and_hair"
     },
     "all_16_scenes_complete": false,
     "previous_bob_preview_not_acceptable_as_rig": true,
     "render_blocked_until_rgba_parts_verified": true,
     "requires_no_pixel_change_outside_eyes": true,
-    "notes": "O usuario pediu movimento interno de cabeça/corpo/cabelo por malha, não PNG inteiro subindo e descendo. Preservar visual aprovado da Anya e editar original para reconstruir peças sem duplicacao."
-  }
+    "notes": "O usuario pediu movimento interno de cabeça/corpo/cabelo por malha, não PNG inteiro subindo e descendo. Preservar visual aprovado da Anya e editar original para reconstruir peças sem duplicacao.",
+    "art_candidate_run_id": 43586783907,
+    "roundtrip_qa_run_id": 43587264889,
+    "roundtrip_qa_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43587264889/artifacts/14110902679"
+  },
+  "manual_principal": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md"
 }
