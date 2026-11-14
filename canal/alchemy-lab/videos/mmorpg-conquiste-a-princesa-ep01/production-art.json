@@ -5,26 +5,28 @@
   "purpose": "referencia_personagens_para_arte_mae_e_rig_2d_real",
   "source_storyboard": "roteiro.json",
   "source_scene_count": 14,
-  "style": "manhwa 2D cinematográfico coerente, line art refinado, luz cinematográfica suave, cores azul ardósia/âmbar/prata/bordô e tecidos detalhados, sem realismo fotográfico, sem 3D",
+  "style": "Manhwa 2D cinematográfico de fantasia romântica; pintura digital refinada e expressiva, vitrais azul-violeta, feixes de luz dourada, contraste vinho/cobre/ouro antigo, cabelos naturais detalhados, foco nos olhos e profundidade de campo em closes; sem realismo fotográfico, sem render 3D ou traço inconsistente.",
   "character_bible": {
-    "kael": "Kael, homem de 23 anos, cabelo preto curto ondulado, olhos âmbar, jaqueta curta cinza, camisa creme, calça marrom simples, botas marrons, sem armadura/espada/capa vermelha, expressivo e humano.",
-    "elara": "Elara, princesa de 21 anos, cabelo preto longo reflexos azuis, olhos cinza-violeta, flor prateada no cabelo, vestido medieval azul meia-noite, capuz azul escuro opcional como disfarce com MESMO ROSTO.",
-    "aldric": "Rei Aldric, 55 anos, rosto severo, barba grisalha, coroa discreta, túnica bordô com detalhes dourados e manto preto.",
-    "guardas": "Dois guardas da corte, armaduras metálicas coerentes e lanças longas, papéis de ameaça sem agressão gráfica."
+    "kael": "Kael, homem de 23 anos, cabelo castanho quase preto volumoso, mechas longas desalinhadas sobre a testa, olhos âmbar e sobrancelhas marcantes. No tribunal, rosto com poeira/suor e cortes leves, capa/cachecol vinho-vermelho rasgado, ombreira de metal escuro com filigranas douradas e pedra azul; roupas escuras. Identidade da imagem aprovada no chat; ele NÃO empunha a espada do insert. Cabelo, cicatrizes, roupa e rosto consistentes nos cortes.",
+    "elara": "Princesa Elara, mulher de 21 anos, rosto delicado e olhos violetas, cabelos loiro-dourados longos ondulados com trança lateral, flores brancas e lilases. No palácio, coroa dourada com ametistas, brincos violetas, vestido branco-pérola e violeta imperial com bordados dourados e broches púrpuras. Usa capuz como disfarce no beco mas permanece a mesma mulher; identidade como princesa só é revelada em C12.",
+    "aldric": "Rei Aldric, 55 anos, barba volumosa grisalha a branca, cabelo grisalho, coroa dourada, traje vinho com ouro e gola clara. Sentado no trono dourado de veludo vermelho, presença severa e digna, proporções e iluminação consistentes.",
+    "guardas": "Dois guardas reais com armadura prateada ornamentada, elmos fechados, panos vinho escuro e lanças longas coerentes com as mãos; nenhuma movimentação sem underlay real e pivôs aprovados."
   },
   "visual_rules": [
     "Identidade original única e consistente entre prancha, imagens-mãe e camadas RGBA.",
-    "A arte inicial nunca deve cortar cabelo, rosto, braços nem pernas.",
+    "Na prancha de referência de corpo inteiro não cortar rosto, mãos ou roupas; nas tomadas close/close extremo o recorte deliberado do enquadramento é permitido sem deformar o rosto ou foco.",
     "Sem texto/UI em imagem AI; legendas e HUD são renderizados no Remotion.",
     "Sem personagem, item ou roupa inventada entre cenas; Kael NÃO porta espada.",
     "Expressão e composição com espaço seguro para legendas verticais.",
     "Cada recorte e reconstrução deriva da MESMA cena-mãe, preservando luz e perspectiva.",
-    "A roupa de Elara muda para manto no beco, mas rosto e flor prateada mantêm identidade.",
+    "Elara usa capuz no beco, sem mudar rosto/olhos violeta ou cabelo loiro; no palácio usa coroa ametista e vestido branco-violeta-dourado; só revelar identidade como princesa em C12.",
     "Fundo sem duplicações dos elementos móveis, rig real por pivôs e malha, nada de só zoom de PNG.",
     "Alternar plano geral, close do rosto, extremo close dos olhos, OTS, reações e inserts segundo o plano cinematográfico.",
     "Ângulo novo exige imagem-mãe individual quando autorizado; não usar zoom de plano geral para simular expressões faciais.",
     "Sem personagens extras no fundo desfocado, sem revelar Elara no trono antes do momento previsto.",
-    "O figurino/rosto entre a bíblia antiga e quadros recentes aprovados está em conflito; bloquear geração antes de unificar as referências no canal."
+    "A bíblia textual v2 segue os closes elogiados no chat, mas os 14 cenários e a prancha PNG antigos são v1: bloquear geração/rig até importar referências exatas e revisar continuidade, sem misturar duas versões.",
+    "Kael da v2: cabelo escuro volumoso, olhos âmbar, capa vinho rasgada e ombreira escura dourada; nunca voltar ao modelo sem capa da prancha v1.",
+    "Referências cinematográficas amadas pelo usuário medem 941×1672 (quase 9:16) e NÃO são imagens-mãe antigas de 1024×1536; não esticar nem cortar rosto para fingir compatibilidade."
   ],
   "request_limit": {
     "per_run": 1,
@@ -38,7 +40,7 @@
       "kind": "reference",
       "size": "1024x1536",
       "background": "opaque",
-      "prompt": "PRANCHA ORIGINAL DE REFERÊNCIA DE PERSONAGENS PARA SÉRIE DORAMA MMORPG ARKEN. Manhwa 2D cinematográfico profissional, quadro vertical 2:3; mostrar 3 personagens em pé de corpo inteiro, sem cortar mãos/cabelo/roupas, separados com espaço claro: à esquerda Kael, jovem de 23 anos com cabelo curto preto ondulado, olhos âmbar, jaqueta curta cinza, camisa creme, calça marrom simples, botas, SEM espada, SEM armadura, sem capa; no centro Princesa Elara, jovem de 21 anos com cabelo longo preto e reflexos azul-escuro, olhos cinza-violeta, adorno de flor de prata sobre o cabelo e vestido royal azul meia-noite bordado de forma sutil, expressão independente e decidida; à direita Rei Aldric, 55 anos barba grisalha, coroa real discreta, túnica bordô e manto preto, autoridade severa. Todos de proporções humanas coerentes, lineart refinado, shading ilustrado 2D, luz cinematográfica macia, paleta azul prata âmbar bordô; fundo palaciano neutro coerente. APENAS os personagens originais; sem texto, sem logotipo, sem HUD, sem cenário que oculte silhuetas. Essa prancha será a referência obrigatória das 14 cenas e 37 planos; para a versão de Elara com capuz, conservar exatamente o mesmo rosto e cabelo, mudando apenas manto."
+      "prompt": "PRANCHA DE IDENTIDADE PARA DORAMA MMORPG ARKEN, VERSÃO VISUAL 2D MANHWA CINEMATOGRÁFICA, PINTURA DIGITAL REFINADA, LUZ DOURADA E VITRAIS VIOLETA, 3 personagens de corpo inteiro separados para conferência. KAEL: jovem adulto, cabelo escuro quase preto volumoso e desfiado, sobrancelhas marcantes, olhos âmbar, marcas leves de poeira e cortes superficiais, capa/cachecol vinho vermelho rasgado, ombreira de metal escuro com detalhes dourados e pedra azul; sem espada própria. ELARA: jovem princesa loira de cabelos longos ondulados e trança lateral, flores claras/lilases, olhos violeta, coroa dourada com ametistas, vestido branco-pérola e violeta com bordados ouro e brincos de cristal violeta. ALDRIC: rei grisalho de barba branca volumosa, coroa dourada, túnica bordô e ouro com gola clara. Reproduzir as proporções e aparência dos arquivos de referência aprovados e verificados no repositório; se ausentes, RECUSAR A GERAÇÃO. Sem texto, marca, HUD ou montagem de múltiplas cenas; fundo palaciano neutro. Esta prancha futura NÃO valida as imagens-mãe v1 arquivadas. Nenhuma arte pode ser gerada enquanto existir o lock do episódio."
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",
@@ -59,6 +61,11 @@
     "prohibited": "single-wide-poster-repeated-as-entire-video",
     "new_image_generation_allowed": false,
     "reference_photos_uploaded": false,
-    "canonical_identity_migration_pending": true
+    "canonical_identity_migration_pending": true,
+    "preferred_style_text_migrated_to_bible_v2": true,
+    "old_bible_archived": "biblia-visual-v1-arquivada.md",
+    "preferred_bible": "biblia-visual.md",
+    "pending_exact_original_sources": "referencias-cinematograficas-aprovadas-no-chat.json",
+    "legacy_14_mothers_and_71_pngs_incompatible_without_visual_review": true
   }
 }
