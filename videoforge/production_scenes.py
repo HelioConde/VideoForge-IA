@@ -32,7 +32,21 @@ def scene_prompt(channel:str,video_id:str,number:int,shot_id:str|None=None)->tup
     if not isinstance(scene,dict) or scene.get("number")!=number:
         raise VideoForgeError("PRODUCTION_SCENE_ORDER_INVALID")
     cinematic=cinematic_direction.resolve_shot(channel,video_id,number,shot_id)
-    guide=plan.get("scene_prompt_template","")
+    # O template legado foi escrito para corpos inteiros. Em close de olhos,
+    # cortar cabelo/ombro é uma decisão de câmera válida; usar outro template.
+    # Cada tomada ganha imagem-mãe distinta antes de sprites/rig.
+    if cinematic is not None:
+        guide=("Um único frame de dorama MMORPG 2D, uma tomada de câmera cinematográfica; "
+               "não criar pôster, montagem, múltiplos quadros nem grupo de personagens se não pedido. "
+               "{visual_direction} "
+               "Contexto narrativo: {story_goal} "
+               "O enquadramento pode cortar intencionalmente cabelo, corpo ou cenário "
+               "quando o plano é close de rosto/olhos. Nunca cortar a expressão ou "
+               "deformar olhos, mãos, boca, anatomia nem o objeto focal. "
+               "Preservar identidade e luz entre planos do mesmo local. "
+               "Nenhuma UI ou texto pintado. Arte vertical com área segura para 9:16.")
+    else:
+        guide=plan.get("scene_prompt_template","")
     if not isinstance(guide,str) or not guide:
         raise VideoForgeError("PRODUCTION_SCENE_TEMPLATE_MISSING")
     try:
