@@ -217,3 +217,17 @@ Regressões em `tests/test_alchemy_no_image_generation.py` verificam que a gera�
 - **Canonicidade visual em revisão:** os novos exemplos aprovados na conversa apresentam Kael com pano vermelho/ombreira de metal e Elara loira em vestido branco-violeta; a bíblia antiga tem roupas e cabelos distintos. O programa bloqueia novos pedidos do episódio até reconciliar essa identidade e anexar as referências reais, evitando misturar designs.
 - A interface de missão é camada exclusiva do Remotion. Nada de letras ou HUD impressos no quadro. O primeiro título é elemento de montagem, não deve se repetir nas tomadas.
 - **Nenhuma nova imagem foi gerada nesta etapa.** `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo. Não há rig final nem MP4 oficial de 163 segundos.
+
+## 15. Timeline editorial por tomada conectada ao QA de assets
+
+O programa agora escreve a [timeline-cinematografica.json](timeline-cinematografica.json), preparada para o compositor Remotion, com **37 tomadas contínuas, 4890 frames a 30fps e 163 segundos**, tendo corte seco entre planos (sem interpolar quadro/objeto indevidamente). A abertura `C01-P01` é preta e não precisa de PNG.
+
+O novo módulo reutilizável `videoforge/cinematic_shot_assets.py` exige **um conjunto de assets por ângulo** para cada uma das 36 tomadas visuais, em `assets/planos/CXX-PXX/`: `scene-mother.png`, `background-reconstructed.png`, `rig.json`, `qa.json` e PNGs RGBA indicados pelo rig. O programa verifica SHA-256, tamanho 1024×1536, transparência, vinculação ao próprio plano, pivôs medidos, regiões antes ocultas, fidelidade visual, ausência de movimentação de PNG achatado e aprovação de QA.
+
+**Situação verificada:** 1 tomada preta tecnicamente liberada; **36 tomadas visuais com imagem-mãe/rig/QA específicos pendentes**; **nenhum rig cinematográfico aprovado**. Os antigos 71 PNGs permanecem arquivados e não são apagados. Eles são candidatos e referências, mas não autorizam simular 36 ângulos novos.
+
+O montador legado `videoforge/production_assemble.py` agora **recusa este episódio** para impedir um vídeo de 14 fotos com pan/zoom de PNG inteiro apresentado como sequência de 37 tomadas articuladas. Outros projetos sem direção cinematográfica continuam no fluxo anterior. O preflight `videoforge/official_production.py` documenta os bloqueios específicos: assets/rigs de cada plano e integração do renderer de múltiplos personagens/planos com ThreeCanvas.
+
+O workflow [VideoForge — auditar timeline cinematográfica](https://github.com/HelioConde/VideoForge-IA/actions/workflows/qa-cinematic-edl.yml) verifica timeline, SHA, disponibilidade e bloqueios, publicando **somente JSON**. Se a timeline já existe, a reexecução aceita apenas conteúdo **idêntico**, sem sobrescrever silenciosamente alterações. A revisão de arte exige um passo próprio.
+
+**Importante:** nenhuma nova imagem com IA, nenhum MP4 oficial de 163 segundos e nenhuma publicação no YouTube ocorreram nesta etapa. O arquivo `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo. Antes de futuras imagens focadas em rostos, as referências oficiais de Kael e Elara precisam ser reconciliadas com a bíblia antiga, para não trocar cabelo, roupa ou rosto entre planos.
