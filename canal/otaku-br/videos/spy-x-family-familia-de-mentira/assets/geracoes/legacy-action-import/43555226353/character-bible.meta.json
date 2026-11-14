@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/proxy-image/v1",
+  "canal": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "cena": "character-bible",
+  "modelo": "gpt-image-2",
+  "tamanho_solicitado": "1024x1536",
+  "arquivo": "character-bible.png",
+  "bytes": 2380430,
+  "sha256": "6021f2b2360808c20fc77a55c2b9fd37f19ea36787d2ab1c3e9dce696aded8dd",
+  "criado_em_utc": "2026-11-14T04:10:27.507534+00:00",
+  "publicado_youtube": false,
+  "qa_visual": "pendente",
+  "origem": "codex-proxy (modelo e disponibilidade dependem do upstream)"
+}

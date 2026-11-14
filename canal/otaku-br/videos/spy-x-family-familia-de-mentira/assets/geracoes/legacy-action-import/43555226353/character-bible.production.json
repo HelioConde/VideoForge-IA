@@ -1,0 +1,14 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "asset_id": "character-bible",
+  "file": "output/otaku-br/videos/spy-x-family-familia-de-mentira/imagens/character-bible.png",
+  "size": "1024x1536",
+  "sha256": "6021f2b2360808c20fc77a55c2b9fd37f19ea36787d2ab1c3e9dce696aded8dd",
+  "model": "gpt-image-2",
+  "technical_qa": "valid_png_dimensions",
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "youtube_uploaded": false
+}
