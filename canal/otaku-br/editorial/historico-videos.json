@@ -32,7 +32,7 @@
       "arte_final": false,
       "narracao_final": false,
       "video_oficial_do_programa": false,
-      "pendencia": "Cena 1: corpo/camera sincronizados em pose neutra na piscada, QA passou. Para movimento INDEPENDENTE da cabeça faltam sprites RGBA da cabeça e corpo-sem-cabeça da mesma cena-mãe; restantes 15 cenas também pendentes.",
+      "pendencia": "Anya cena 01: head/body candidatos editados a partir da mesma arte, QA gerado mas máscara de cabeça ainda inclui Loid/Yor. Refinar isolamento, reconstruir pescoço/cabelo e obter sprite de cabelo mesh real; não renderizar como vídeo oficial.",
       "render_tech_confirmed": true,
       "workflow_arquivo": ".github/workflows/spy-family-animated.yml",
       "agentes_e_arte_final_integrados": false,
@@ -75,7 +75,11 @@
       "cena01_movimento_sincronizado": true,
       "cena01_blink_neutral_ease_frames": 12,
       "cena01_blink_neutral_hold_frames": 3,
-      "cena01_independent_head_motion": false
+      "cena01_independent_head_motion": false,
+      "manual_principal_animacao": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+      "rig_three_art_candidate_run_id": 43586783907,
+      "rig_three_review_run_id": 43587264889,
+      "rig_three_preview_ready": false
     }
   ]
 }
