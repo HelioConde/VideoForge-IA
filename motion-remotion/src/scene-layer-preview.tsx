@@ -22,7 +22,7 @@ export type LayerSceneProps={
   preset:CharacterPreset;
   background:string;
   character:string;
-  foreground?:string;
+  foreground?:string|null;
   silence:string;
   layerSourceHash:string;
   /** Ativado somente com sprites RGBA verificados, sem partes duplicadas. */
