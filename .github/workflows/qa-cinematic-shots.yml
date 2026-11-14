@@ -1,0 +1,98 @@
+name: "VideoForge - QA de 37 quadros cinematograficos sem gerar imagens"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-validar-cinema.json'
+permissions:
+  contents: write
+concurrency:
+  group: vf-alchemy-cinematic-shots-validation
+  cancel-in-progress: false
+
+jobs:
+  auditar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Conferir pedido de QA sem gerar imagens ou videos
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
+          doc=json.loads((root/"pedido-validar-cinema.json").read_text(encoding="utf8"))
+          assert doc["schema"]=="videoforge/cinematic-qa-request/v1"
+          assert doc["channel"]=="alchemy-lab"
+          assert doc["video_id"]=="mmorpg-conquiste-a-princesa-ep01"
+          assert doc["image_generation_calls"]==0
+          assert doc["youtube_upload"] is False
+          assert doc["render_mp4"] is False
+          assert (root/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          PY
+      - name: Testar direção cinematográfica, prompt e regressões dos demais canais
+        run: |
+          python -m unittest tests.test_cinematic_direction tests.test_production_scenes tests.test_alchemy_no_image_generation -v
+      - name: Gerar somente relatorio JSON de planos e prompts (sem imagens)
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          from videoforge.cinematic_direction import load_plan, validate_plan, validate_visual_reference_gate
+          from videoforge.production_scenes import scene_prompt
+          channel="alchemy-lab"
+          video="mmorpg-conquiste-a-princesa-ep01"
+          root=Path("canal")/channel/"videos"/video
+          data=load_plan(channel,video)
+          result=validate_plan(channel,video,data)
+          hashes={}
+          for shot in data["shots"]:
+              if shot["shot_type"]=="black":
+                  continue
+              n=int(shot["id"][1:3])
+              text,_=scene_prompt(channel,video,n,shot["id"])
+              hashes[shot["id"]]=hashlib.sha256(text.encode()).hexdigest()
+          report={
+              "schema":"videoforge/cinematic-shots-qa/v1",
+              "channel":channel,"video_id":video,
+              "shotCount":result["shot_count"],
+              "faceCloseups":result["face_closeups"],
+              "framingDistribution":result["types"],
+              "generatedPromptCount":len(hashes),
+              "promptSha256":hashes,
+              "references":validate_visual_reference_gate(channel,video),
+              "source":"direcao-cinematografica-planos.json",
+              "onlyTextPlansCreated":True,"imageGenerationCalls":0,
+              "newImagesSaved":0,"shotMothersApproved":False,
+              "humanVisualApproval":False,"realRigApplied":False,
+              "renderOfficialAllowed":False,"youtubeUploaded":False
+          }
+          (root/"qa-direcao-cinematografica.json").write_text(
+              json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
+          print("CINEMATIC_QA_OK",result["shot_count"],"shots",
+                result["face_closeups"],"closeups",len(hashes),"prompts")
+          PY
+      - name: Arquivar relatorio no canal Alchemy Lab
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-direcao-cinematografica.json'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$FILE"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(alchemy): registrar planos e hashes de prompts cinematograficos'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: QA e nao producao oficial
+        run: |
+          echo 'Nenhuma imagem nova. Referencias aprovadas de chat ainda pendem upload e revisao de figurino.'
