@@ -10,8 +10,8 @@
       "titulo": "Spy x Family: por que Anya esconde os segredos dos pais? 👀",
       "obra": "Spy x Family",
       "assunto": "Por que Anya guarda os segredos de Loid e Yor e o que isso revela sobre a família Forger",
-      "status": "renderizado",
-      "tipo": "preview_animado_remotion_vetorial",
+      "status": "assets_pendentes",
+      "tipo": "preview_tecnico_nao_oficial",
       "duracao_segundos": 131.136,
       "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43545398967",
       "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43545398967/artifacts/14093378535",
@@ -30,7 +30,12 @@
       "scene_count": 16,
       "sha256": "acf1e2b6b89f5ec5180bcb410ae8409f7f15d4c7feec63fba75d061ea9278254",
       "arte_final": false,
-      "narracao_final": false
+      "narracao_final": false,
+      "video_oficial_do_programa": false,
+      "pendencia": "Falta gerar arte real por fluxo do programa/agentes e montar vídeo definitivo com QA; artefato existente é prévia técnica do workflow separado.",
+      "render_tech_confirmed": true,
+      "workflow_arquivo": ".github/workflows/spy-family-animated.yml",
+      "agentes_e_arte_final_integrados": false
     }
   ]
 }
