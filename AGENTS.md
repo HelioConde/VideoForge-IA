@@ -28,6 +28,10 @@
 
 Ver `docs/PADRAO-ANIMACAO-POR-CAMADAS.md` e `docs/TESTE-CAMADAS-CENA.md`. O exemplo da capa vermelha foi um experimento de rig para outra cena: jamais reutilizar automaticamente seus prompts de aventureiro, cabelo castanho, espada ou capa em outros personagens.
 
+## Regra de microanimação e QA visual
+
+Evitar flutuação: amplitude vertical máxima de **2,8 pixels por personagem** na composição 1080×1920; câmera e objetos mais sutis que a animação principal. Piscar somente com overlay RGBA de pálpebras compatível com a cena-mãe, mantendo cabeça/rosto-base opacos; nunca fingir piscada via transparência do rosto. Cabelo, roupas e objetos exigem sprites próprios e prova de remoção da base; não inventar elementos nem afirmar rig completo quando só há movimento de grupo/câmera. Testar quadros de olhos abertos/fechados e cortes; manter workflow **normal**, nunca o modo `private-quota-live`. Toda prévia sem rig integral é teste técnico não oficial.
+
 ## Instruções obrigatórias para cada tarefa
 
 **Ler nesta ordem, antes de pesquisar ou produzir qualquer vídeo:** `README.md`, `AGENTS.md`, `docs/ARQUITETURA.md`, `docs/REGRAS-EDITORIAIS.md`, `canal/README.md`, `canal/<id>/README.md`, **`canal/<id>/ESTRATEGIA.md`**, `canal/<id>/canal.json`, histórico e reservas do canal e, se útil, `docs/referencias/CATALOGO-CURSOS-YOUTUBE.md` e `docs/referencias/GUIA-OFICIAL-YOUTUBE-CREATORS.md` (para pesquisa, Analytics, SEO, Shorts, direitos, classificação infantil e IA) e **`docs/CODEX-PROXY-ACTIONS.md` antes de qualquer trabalho envolvendo ferramentas de IA, Go ou Actions**.
