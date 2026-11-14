@@ -1,0 +1,46 @@
+name: "VideoForge - QA arquivamento permanente de PNG por canal"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/qa-arquivamento-imagens.json'
+      - 'videoforge/persist_generated_assets.py'
+      - 'tests/test_persist_generated_assets.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Garantir somente teste em memória e nenhum custo de geração
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          d=json.loads(Path('docs/requests/qa-arquivamento-imagens.json').read_text())
+          assert d['schema']=='videoforge/image-persistence-test-request/v1'
+          assert d['generate_images'] is False
+          assert d['render_mp4'] is False
+          assert d['youtube_upload'] is False
+          assert (Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')/
+                  'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          print('PERSISTENCE_TESTS_ONLY; NO INFERENCE')
+          PY
+      - name: Testar 9 cenarios de armazenamento por canal com SHA
+        run: python -m unittest tests.test_persist_generated_assets -v
+      - name: Confirmar que o teste não deixou PNGs no canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --exit-code
+          git diff --exit-code --cached
+          echo 'QA_COMPLETED_WITHOUT_NEW_ARTWORK'
