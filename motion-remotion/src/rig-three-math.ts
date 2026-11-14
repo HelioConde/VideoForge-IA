@@ -44,11 +44,12 @@ export const headRotationDegAtFrame=(
 ):number=>{
   if(!Number.isFinite(fps)||fps<=0||maxDegrees<0||maxDegrees>2)
     throw new Error('RIG_HEAD_MOTION_PARAMETERS_INVALID');
+  const weight=sharedNeutralEnvelope(frame,duration,centers);
+  if(weight===0)return 0;
   const t=frame/fps;
   const raw=.73*(Math.sin(t*.72)-Math.sin(0))+
     .27*(Math.sin(t*.31+1.1)-Math.sin(1.1));
-  return clamp(maxDegrees*raw,-maxDegrees,maxDegrees)*
-    sharedNeutralEnvelope(frame,duration,centers);
+  return clamp(maxDegrees*raw,-maxDegrees,maxDegrees)*weight;
 };
 
 export const bodyBreathAtFrame=(
@@ -56,6 +57,7 @@ export const bodyBreathAtFrame=(
 ):{scaleX:number;scaleY:number;translateY:number}=>{
   if(!Number.isFinite(fps)||fps<=0)throw new Error('RIG_BODY_FPS_INVALID');
   const neutral=sharedNeutralEnvelope(frame,duration,centers);
+  if(neutral===0)return {scaleX:1,scaleY:1,translateY:0};
   const cyc=Math.sin(frame/fps*2*Math.PI*.21);
   return {
     scaleX:1+cyc*.0006*neutral,
@@ -123,7 +125,7 @@ export const meshGridAtFrame=(args:{
       const p=meshVertexAtFrame({original,uv:{x:u,y:v},kind,
         amplitudePx:spec.amplitudePx,frame,fps,duration,blinkFrames});
       positions.push(p.x-canvas.width/2,canvas.height/2-p.y,0);
-      uvs.push(p.x===Infinity?0:original.x/canvas.width,
+      uvs.push(original.x/canvas.width,
         1-original.y/canvas.height);
     }
   }
