@@ -1,0 +1,19 @@
+{
+  "schema": "videoforge/rig-three-anya-draft-mp4-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "source_real_art_run": 43598536256,
+  "stills_visual_review_run": 43598866124,
+  "goal": "Criar MP4 curto h264 1080x1920 em ThreeCanvas para revisar continuidade de cabelo, cabeça e piscada com Loid/Yor estáticos",
+  "duration_frames": 180,
+  "fps": 30,
+  "gl": "swangle",
+  "workflow_mode": "normal_no_private",
+  "classification": "preview_tecnico_nao_oficial",
+  "new_image_calls": 0,
+  "human_visual_approval": false,
+  "rig_operational": false,
+  "youtube_upload": false
+}
