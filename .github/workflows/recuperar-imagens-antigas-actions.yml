@@ -1,0 +1,105 @@
+name: "VideoForge - recuperar PNG antigo de Actions para GitHub permanente"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/recuperar-imagens-do-actions.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: vf-import-historical-action-images
+  cancel-in-progress: false
+
+jobs:
+  recover-existing-pngs-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar origem e proibir geracao de imagens
+        id: request
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os,re
+          from pathlib import Path
+          from videoforge.paths import CHANNEL_IDS,IDENTIFIER
+          q=Path('docs/requests/recuperar-imagens-do-actions.json')
+          req=json.loads(q.read_text(encoding='utf8'))
+          if (req.get('schema')!='videoforge/restore-existing-action-artifact/v1'
+              or req.get('generate_new_image') is not False
+              or req.get('youtube_upload') is not False
+              or req.get('render_mp4') is not False):
+              raise SystemExit('RECOVERY_IMAGE_GENERATION_DENIED')
+          ch=req.get('channel')
+          vid=req.get('video_id')
+          run=req.get('source_run_id')
+          name=req.get('artifact_name')
+          if (ch not in CHANNEL_IDS or
+              not isinstance(vid,str) or not IDENTIFIER.fullmatch(vid)
+              or type(run) is not int or run<=0
+              or not isinstance(name,str) or not re.fullmatch(r'[a-zA-Z0-9_.-]{8,180}',name)
+              or str(run) not in name
+              or req.get('source_folder')!='imagens'):
+              raise SystemExit('RECOVERY_ARTIFACT_IDENTIFIER_INVALID')
+          output=os.environ['GITHUB_OUTPUT']
+          with open(output,'a',encoding='utf-8') as fd:
+              for k,v in dict(ch=ch,vid=vid,run=run,name=name).items():
+                  fd.write(f'{k}={v}\n')
+          print('RECOVERY_ONLY_EXISTING_GITHUB_ACTIONS_ARTIFACT',ch,vid,run)
+          PY
+      - name: Baixar PNG e proveniencia de execucao existente
+        uses: actions/download-artifact@v4
+        with:
+          run-id: \${{ steps.request.outputs.run }}
+          name: \${{ steps.request.outputs.name }}
+          github-token: \${{ secrets.GITHUB_TOKEN }}
+          path: output/\${{ steps.request.outputs.ch }}/videos/\${{ steps.request.outputs.vid }}/imagens/
+      - name: Verificar PNG e copiar apenas os bytes existentes
+        shell: bash
+        env:
+          CH: \${{ steps.request.outputs.ch }}
+          VID: \${{ steps.request.outputs.vid }}
+          SOURCE_RUN: \${{ steps.request.outputs.run }}
+        run: |
+          set -euo pipefail
+          INPUT="output/$CH/videos/$VID/imagens"
+          find "$INPUT" -maxdepth 3 -type f -printf '%P %s bytes\n'
+          test -n "$(find "$INPUT" -type f -name '*.png' -print -quit)"
+          python -m videoforge.persist_generated_assets \
+            --channel "$CH" --video-id "$VID" \
+            --input "$INPUT" --run-id "$SOURCE_RUN" --producer "legacy-action-import"
+      - name: Enviar PNG original para historico permanente do canal
+        shell: bash
+        env:
+          CH: \${{ steps.request.outputs.ch }}
+          VID: \${{ steps.request.outputs.vid }}
+          SOURCE_RUN: \${{ steps.request.outputs.run }}
+        run: |
+          set -euo pipefail
+          FILE="canal/$CH/videos/$VID/assets/geracoes/legacy-action-import/$SOURCE_RUN"
+          git config user.name 'videoforge-assets[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$FILE"
+          if git diff --cached --quiet; then
+            echo 'ALREADY_ARCHIVED_SHA_IDENTICAL'
+            exit 0
+          fi
+          git commit -m "assets($CH): recuperar PNG original e SHA do Actions run-$SOURCE_RUN"
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+          echo "RECOVERED_EXISTING_PNG_ARCHIVED $FILE"
