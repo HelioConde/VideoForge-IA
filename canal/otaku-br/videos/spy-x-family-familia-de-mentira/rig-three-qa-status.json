@@ -56,5 +56,21 @@
   "rig_animado_aplicado": false,
   "video_oficial_do_programa": false,
   "youtube_uploaded": false,
-  "status": "neutral_pixel_qa_passed_art_and_motion_approval_pending"
+  "status": "neutral_roundtrip_passed_geometric_stress_seams_pending",
+  "provisional_neck_pivot_review": {
+    "source": "local exploratory OpenCV geometry check; NOT a ThreeCanvas render or official motion QA",
+    "pivot_candidate_original_canvas": [
+      515,
+      1429
+    ],
+    "angles_degrees": [
+      -2,
+      0,
+      2
+    ],
+    "observation": "At ±2° the collar and hair-to-shoulder intersections expose edge seams. The visible original torso fixes the neutral pose but does not prove the hidden neckline/hair underlay under rotation.",
+    "outcome": "failed_visual_motion_candidate_needs_underlay_and_pivot_revision",
+    "permitted_next_step": "reconstruct originally occluded shoulder/neck pixels; validate joint pivots; separate coherent hair locks with their own underlay; then rerender actual Three.js",
+    "head_motion_approved": false
+  }
 }
