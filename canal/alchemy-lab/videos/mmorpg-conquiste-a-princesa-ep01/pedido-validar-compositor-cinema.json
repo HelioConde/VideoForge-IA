@@ -12,6 +12,6 @@
     "37 shot timeline and 4890 frames"
   ],
   "status": "qa_request_only",
-  "revision": 4,
-  "reason": "TypeScript e testes Remotion para 37 shots com resolucoes nativas e sem esticar rosto"
+  "revision": 5,
+  "reason": "Verificar Remotion contra foco cortado no enquadramento 9:16, com 941x1672 e 1024x1536"
 }
