@@ -1,0 +1,94 @@
+name: "VideoForge - auditar timeline cinematografica 37 planos sem IA"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-auditar-timeline-cinema.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-alchemy-cinematic-edl-qa
+  cancel-in-progress: false
+
+jobs:
+  edl:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Proibir geração, publicação e render não autorizado
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
+          req=json.loads((base/"pedido-auditar-timeline-cinema.json").read_text(encoding="utf8"))
+          assert req["schema"]=="videoforge/cinematic-edl-request/v1"
+          assert req["channel"]=="alchemy-lab"
+          assert req["video_id"]=="mmorpg-conquiste-a-princesa-ep01"
+          assert req["no_new_images"] is True
+          assert req["render_video"] is False
+          assert req["youtube_upload"] is False
+          assert (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          print("READ_ONLY_EXISTING_IMAGES: no new image generation and no render")
+          PY
+      - name: Testar todos os cortes, SHA/QA fail-closed e regressões
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_cinematic_shot_assets tests.test_cinematic_direction tests.test_production_scenes tests.test_alchemy_no_image_generation -v
+      - name: Gerar somente manifesto JSON de timeline para Remotion
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.cinematic_shot_assets \
+            --channel alchemy-lab \
+            --video-id mmorpg-conquiste-a-princesa-ep01 \
+            --output canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/timeline-cinematografica.json
+      - name: Revalidar que nenhum plano pendente habilitou render
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/timeline-cinematografica.json")
+          d=json.loads(p.read_text(encoding="utf8"))
+          assert d["format"]["totalFrames"]==4890
+          assert d["shotCount"]==37
+          assert d["blackShots"]==1
+          assert d["artRequiredShots"]==36
+          assert d["artAndRigApprovedShots"]==0
+          assert d["unapprovedShots"]==36
+          assert d["renderOfficialAllowed"] is False
+          assert d["noImageGenerationLock"] is True
+          assert d["newImageGenerationCalls"]==0
+          assert d["pixelFilesCreated"]==0
+          print("TIMELINE_READY_FOR_ASSET_PRODUCTION_ONLY; official video BLOCKED")
+          PY
+      - name: Versionar timeline no canal Alchemy Lab
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/timeline-cinematografica.json'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$FILE"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(alchemy): versionar timeline cinematografica de 37 cortes e bloqueios por shot'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Aviso de estado real
+        run: |
+          echo 'Somente timeline de cortes. Os 36 planos visuais carecem de mães e rigs próprios aprovados. Nenhum MP4 criado.'
