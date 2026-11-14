@@ -25,6 +25,8 @@ export const synchronizedPoseAtFrame=(
   holdFrames=3,rampFrames=12
 ):SynchronizedPose=>{
   const scale=blinkNeutralWeightAtFrame(frame,centers,holdFrames,rampFrames);
+  // Explicit +0 avoids -0 from negative sine waves at a blink boundary.
+  if(scale===0)return {translateX:0,translateY:0,rotateDeg:0};
   return {
     translateX:pose.translateX*scale,
     translateY:pose.translateY*scale,
