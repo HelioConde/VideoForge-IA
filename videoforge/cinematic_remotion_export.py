@@ -158,8 +158,10 @@ def build_props(channel:str,video_id:str,root:Path=ROOT)->tuple[dict,list[tuple[
                 raise VideoForgeError("CINEMATIC_EXPORT_HUD_NOT_APPROVED")
         if shot["id"]=="C12-P01":
             from .cinematic_eye_motion import check_eye_performance
-            # This can only return a performance with TRUE visual QA.
-            # Never elevate the draft plan's humanMotionApproved=false.
+            from .cinematic_eye_pixel_audit import audit_existing_eye_assets
+            # The exporter repeats the pixel sweep (including sclera coverage)
+            # even if someone bypasses a cached EDL / QA report.
+            audit_existing_eye_assets(base,shot["id"],data,review)
             record["performance"]=check_eye_performance(
                 shot["id"],data,review
             )
