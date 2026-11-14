@@ -62,8 +62,17 @@ def _hair_partition(head_open, head_closed, hair_seed, np):
         raise VideoForgeError("RIG_HAIR_HEAD_DUPLICATED")
     # Since these are disjoint alpha partitions, they reconstruct the source
     # in neutral pose EXACTLY. This does not validate motion or underlays.
-    reassembled=rgba_over(rgba_over(base_open,locks[0],np),locks[1],np)
-    if not np.array_equal(reassembled[:,:,3],head_open[:,:,3]):
+    # Exact integer recomposition for disjoint alpha masks. Float
+    # alpha-over truncates +/-1 RGB at antialiased edges, even when
+    # source pixels are unmodified; don't create false QA failures.
+    parts=(base_open,locks[0],locks[1])
+    total=np.zeros((H,W),dtype=np.uint16)
+    reassembled=np.zeros_like(head_open)
+    for part in parts:
+        mask=part[:,:,3]>0
+        total += part[:,:,3].astype(np.uint16)
+        reassembled[mask]=part[mask]
+    if not np.array_equal(total,head_open[:,:,3].astype(np.uint16)):
         raise VideoForgeError("RIG_HAIR_NEUTRAL_ALPHA_MISMATCH")
     visible=head_open[:,:,3]>0
     if np.any(reassembled[:,:,:3][visible]!=head_open[:,:,:3][visible]):
@@ -157,8 +166,10 @@ def produce(original_dir, correct_dir, isolation_dir, dest):
     rgb_part=rgba_over(rgba_over(body_full,base_open,np),locks[0],np)
     rgb_part=rgba_over(rgba_over(rgb_part,locks[1],np),hand,np)
     visible=(neutral[:,:,3]>0)
-    if np.any(rgb_part[:,:,3]!=neutral[:,:,3]) or np.any(
-            rgb_part[:,:,:3][visible]!=neutral[:,:,:3][visible]):
+    rgb_delta=np.abs(rgb_part[:,:,:3][visible].astype(np.int16)-
+                     neutral[:,:,:3][visible].astype(np.int16))
+    if (np.any(rgb_part[:,:,3]!=neutral[:,:,3]) or
+        int(rgb_delta.max(initial=0))>2):
         raise VideoForgeError("RIG_HAIR_FULL_NEUTRAL_PARTITION_FAILED")
     result={
         "schema":"videoforge/rig-three-anya-hair-side-draft/v1",
@@ -171,6 +182,7 @@ def produce(original_dir, correct_dir, isolation_dir, dest):
         "left_hair_source_pixels":counts[0],
         "right_hair_source_pixels":counts[1],
         "head_hair_disjoint_neutral_rgb_alpha_exact":True,
+        "full_compositor_max_rgb_rounding_delta":int(rgb_delta.max(initial=0)),
         "approved_blink_delta_retained":True,
         "neck_rotation_preview_pivot_original":[515,1429],
         "neck_rotation_stress_missing_alpha_pixels_roi":exposures,
