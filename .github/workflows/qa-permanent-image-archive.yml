@@ -7,7 +7,9 @@ on:
       - 'videoforge/persist_generated_assets.py'
       - 'tests/test_persist_generated_assets.py'
       - 'tests/test_persist_workflow_wiring.py'
+      - 'tests/test_archive_failed_qa_wrapper.py'
       - 'scripts/persistir-imagens-gh.sh'
+      - 'scripts/arquivar-pngs-se-existirem.sh'
       - '.github/workflows/production-*.yml'
       - '.github/workflows/proxy-images.yml'
       - '.github/workflows/qa-permanent-image-archive.yml'
@@ -41,7 +43,7 @@ jobs:
           print('PERSISTENCE_TESTS_ONLY; NO INFERENCE')
           PY
       - name: Testar arquivo SHA e conexao dos nove workflows com GitHub
-        run: python -m unittest tests.test_persist_generated_assets tests.test_persist_workflow_wiring -v
+        run: python -m unittest tests.test_persist_generated_assets tests.test_persist_workflow_wiring tests.test_archive_failed_qa_wrapper -v
       - name: Confirmar que o teste não deixou PNGs no canal
         shell: bash
         run: |
