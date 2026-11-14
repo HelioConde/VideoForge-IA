@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/anya-black-gold-head-ornaments-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "goal": "extrair dois enfeites pretos amarelos parados do compositor estatico e preparar sprites RGBA para acompanhar cabeca",
+  "source_original_run": 43560159589,
+  "source_corrected_run": 43591918632,
+  "render_only_technical_review": true,
+  "new_image_calls": 0,
+  "rig_operational": false,
+  "human_visual_approval": false,
+  "youtube_uploaded": false
+}
