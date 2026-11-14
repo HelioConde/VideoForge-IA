@@ -7,6 +7,7 @@ import React from 'react';
 import {AbsoluteFill,Audio,Img,Sequence,staticFile,useCurrentFrame,useVideoConfig} from 'remotion';
 import {ThreeCanvas} from '@remotion/three';
 import {CharacterParts} from './rig-three-scene';
+import {evaluateGaze} from './eye-gaze-timeline';
 import {
   shotDurationFrames,validateCinematicRender,
   type CinematicEpisodeProps,type CinematicShot,
@@ -53,9 +54,19 @@ const ShotFrame:React.FC<{shot:CinematicShot}>=({shot})=>{
           width/actor.rig.canvas.width,
           height/actor.rig.canvas.height,
         );
+        const pupilOnly=shot.performance?.mode==='pupils_only_locked_head'
+          && shot.performance.actorId===actor.id;
+        const eyeMotion=pupilOnly && shot.performance ? {
+          freezeHead:true,freezeBody:true,eyePerformanceApproved:true as const,
+          pupilOffsetPx:evaluateGaze(
+            shot.performance.pupilKeyframes,frame,duration,12),
+          eyelidOffsetPx:evaluateGaze(
+            shot.performance.eyelidKeyframes,frame,duration,1),
+        }:{};
         return <group key={actor.id} scale={[scale,scale,1]}>
           <CharacterParts rig={actor.rig} motion={{
             frame,fps,duration,blinkFrames:actor.rig.blinkFrames,
+            ...eyeMotion,
           }}/>
         </group>;
       })}
