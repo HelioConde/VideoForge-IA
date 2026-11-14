@@ -1,0 +1,18 @@
+{
+  "schema": "videoforge/anya-isolation-request/v1",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "original_artifact_run": 43560159589,
+  "head_guide_run": 43586783907,
+  "closed_eyes_approved_run": 43576834439,
+  "source_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
+  "algorithm": "grabcut_with_seed_from_original+head_candidate",
+  "output": "separate_anya_open_closed+others_static+head_silhouette_draft+hair_mask_draft",
+  "new_image_calls": 0,
+  "workflow_mode": "normal_no_private",
+  "reconstruction_status": "draft",
+  "human_approved": false,
+  "youtube_upload": false
+}
