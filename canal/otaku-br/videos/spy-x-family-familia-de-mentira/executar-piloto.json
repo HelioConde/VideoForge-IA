@@ -1,0 +1,11 @@
+{
+  "schema": "videoforge/manual-test-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "request": "render_technical_animatic_90_to_180_seconds",
+  "approved_by_user_for_test": true,
+  "youtube_upload": false,
+  "model_calls": 0,
+  "source_file": "roteiro.json",
+  "note": "Teste oficial de execução do pipeline, não aprovação da arte final nem licença de publicação."
+}
