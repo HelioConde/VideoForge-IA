@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/scene-mother-layer-request/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene_number": 1,
+  "source_run_id": 43555469650,
+  "original_png": "cena-01.png",
+  "request": "background reconstruido e personagem transparente derivados da MESMA cena-mae; sem avatar novo, sem prompt aventureiro",
+  "max_new_image_calls": 2,
+  "run_as_official_video": false,
+  "technical_preview_only": true,
+  "youtube_upload": false,
+  "required_qa": [
+    "SHA256",
+    "same_canvas",
+    "actual_RGBA",
+    "background_opaque",
+    "human_review_pending"
+  ]
+}
