@@ -1,5 +1,7 @@
 # Padrão visual e técnico — animação por camadas (VideoForge IA)
 
+> **REGRA PRIORITÁRIA ATUAL:** este documento contém procedimentos históricos e testes legados. Para TODAS as animações oficiais, consultar primeiro [MANUAL PRINCIPAL DE ANIMAÇÃO 2D](MANUAL-PRINCIPAL-ANIMACAO-2D.md). Se houver conflito, prevalece o manual: Remotion Three.js, sprites articulados reais, olhos fechados pela edição da MESMA imagem, sem pálpebras adesivas, sem PNG inteiro flutuando. O padrão antigo vale apenas como documentação técnica de testes.
+
 > Registro de implementação. O workflow **Spy x Family animado** usa desenhos vetoriais provisórios para provar a movimentação. Não representa sprites finais ou uso de IA generativa neste teste. O padrão vem do rig validado no piloto Otaku BR em `rig-hair-preserve.yml`.
 
 ## Fluxo canônico obrigatório — cena-mãe → camadas RGBA → rig → montagem
