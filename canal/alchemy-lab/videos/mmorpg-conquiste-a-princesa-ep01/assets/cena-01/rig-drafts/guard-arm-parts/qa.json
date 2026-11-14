@@ -1,0 +1,246 @@
+{
+  "schema": "videoforge/existing-guard-arm-partition-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "C01",
+  "canvas": [
+    1024,
+    1536
+  ],
+  "method": "exclusive binary polygon partition of existing RGBA",
+  "sourceRigInventory": "rig-selecao-artes-c01.json",
+  "guardCount": 2,
+  "candidatePartPNGCount": 8,
+  "pixelsLostOrDrawn": 0,
+  "newImageGenerationCalls": 0,
+  "roundtripExact": true,
+  "humanVisualApproval": false,
+  "realJointMotionReady": false,
+  "officialRemotionRenderReady": false,
+  "youtubeUploaded": false,
+  "knownBlockers": [
+    "Part joint cuts can have seams if any rotation is applied",
+    "Hands were drawn overlapping spear shafts; missing glove pixels cannot be reconstructed by pixel extraction",
+    "No background/arm anatomy is available behind moved shoulders",
+    "Pivots are provisional scene-image coordinates, not measured with a rig review",
+    "Do not animate the whole PNG as replacement for articulations"
+  ],
+  "guards": [
+    {
+      "id": "guarda-esquerdo",
+      "source": "guarda-esquerdo-origem-rgb-candidato.png",
+      "sourceOpaquePixelCount": 150455,
+      "roundtripExact": true,
+      "sourcePixelColorsModified": false,
+      "armament": "lanca-guarda-esquerdo-CANDIDATE",
+      "contactPointSourceXY": [
+        381,
+        751
+      ],
+      "jointCandidateSourceXY": {
+        "shoulder": [
+          254,
+          572
+        ],
+        "elbow": [
+          303,
+          670
+        ],
+        "wrist": [
+          360,
+          730
+        ]
+      },
+      "jointsMeasuredAndApproved": false,
+      "underlaysReconstructed": false,
+      "handAlreadyOverlappedBySpearInSource": true,
+      "parts": [
+        {
+          "id": "body-remainder",
+          "path": "guarda-esquerdo-body-remainder-DRAFT.png",
+          "sha256": "93f7c191433b7850b2342f5e1564a3bf2e340785a4bac31c8080ee4338f7b0d9",
+          "bboxXYXY": [
+            9,
+            408,
+            393,
+            1203
+          ],
+          "sourceOpaquePixels": 139096,
+          "alphaOverlapWithSpearPixels": null,
+          "pivotProvisionalXY": null,
+          "underlayAvailable": false,
+          "poseMotionEnabled": false,
+          "reviewStatus": "DRAFT_ARMS_MASKED_OUT"
+        },
+        {
+          "id": "upper-arm",
+          "path": "guarda-esquerdo-upper-arm-DRAFT.png",
+          "sha256": "f0dca7a6bb35753e26561cc710dcde5d7140b5e579e7bfce356a0df97162f38b",
+          "bboxXYXY": [
+            216,
+            551,
+            323,
+            701
+          ],
+          "sourceOpaquePixels": 7073,
+          "alphaOverlapWithSpearPixels": 0,
+          "pivotProvisionalXY": [
+            254,
+            572
+          ],
+          "underlayAvailable": false,
+          "poseMotionEnabled": false,
+          "reviewStatus": "DRAFT_UNDERLAY_REQUIRED"
+        },
+        {
+          "id": "forearm",
+          "path": "guarda-esquerdo-forearm-DRAFT.png",
+          "sha256": "294e720a91cfdc794b9a62c93b0e4d2460a68396040cafb94d483c68a9d7f313",
+          "bboxXYXY": [
+            289,
+            668,
+            384,
+            754
+          ],
+          "sourceOpaquePixels": 3133,
+          "alphaOverlapWithSpearPixels": 0,
+          "pivotProvisionalXY": [
+            303,
+            670
+          ],
+          "underlayAvailable": false,
+          "poseMotionEnabled": false,
+          "reviewStatus": "DRAFT_UNDERLAY_REQUIRED"
+        },
+        {
+          "id": "gripping-hand",
+          "path": "guarda-esquerdo-gripping-hand-DRAFT.png",
+          "sha256": "34107b1f7da32578931515f2447b7ed8bcedde3569e1eb51c945a2080c34f7a2",
+          "bboxXYXY": [
+            352,
+            721,
+            406,
+            769
+          ],
+          "sourceOpaquePixels": 1153,
+          "alphaOverlapWithSpearPixels": 458,
+          "pivotProvisionalXY": [
+            360,
+            730
+          ],
+          "underlayAvailable": false,
+          "poseMotionEnabled": false,
+          "reviewStatus": "DRAFT_UNDERLAY_REQUIRED"
+        }
+      ]
+    },
+    {
+      "id": "guarda-direito",
+      "source": "guarda-direito-origem-rgb-candidato.png",
+      "sourceOpaquePixelCount": 149326,
+      "roundtripExact": true,
+      "sourcePixelColorsModified": false,
+      "armament": "lanca-guarda-direito-CANDIDATE",
+      "contactPointSourceXY": [
+        644,
+        749
+      ],
+      "jointCandidateSourceXY": {
+        "shoulder": [
+          773,
+          573
+        ],
+        "elbow": [
+          722,
+          670
+        ],
+        "wrist": [
+          666,
+          732
+        ]
+      },
+      "jointsMeasuredAndApproved": false,
+      "underlaysReconstructed": false,
+      "handAlreadyOverlappedBySpearInSource": true,
+      "parts": [
+        {
+          "id": "body-remainder",
+          "path": "guarda-direito-body-remainder-DRAFT.png",
+          "sha256": "3956b9a4540576a31b8c51a58f166b374dcda8f321adb2ad289151ce5494d930",
+          "bboxXYXY": [
+            631,
+            407,
+            1015,
+            1203
+          ],
+          "sourceOpaquePixels": 139035,
+          "alphaOverlapWithSpearPixels": null,
+          "pivotProvisionalXY": null,
+          "underlayAvailable": false,
+          "poseMotionEnabled": false,
+          "reviewStatus": "DRAFT_ARMS_MASKED_OUT"
+        },
+        {
+          "id": "upper-arm",
+          "path": "guarda-direito-upper-arm-DRAFT.png",
+          "sha256": "178e73370e42824cbcc115cce18adf6fd7c4b239e62c17d35186b3e190c9c08a",
+          "bboxXYXY": [
+            705,
+            556,
+            811,
+            702
+          ],
+          "sourceOpaquePixels": 6148,
+          "alphaOverlapWithSpearPixels": 0,
+          "pivotProvisionalXY": [
+            773,
+            573
+          ],
+          "underlayAvailable": false,
+          "poseMotionEnabled": false,
+          "reviewStatus": "DRAFT_UNDERLAY_REQUIRED"
+        },
+        {
+          "id": "forearm",
+          "path": "guarda-direito-forearm-DRAFT.png",
+          "sha256": "0e2858d4556a4ae31326aa7ba7bba57e9d8f00fb53c8f91bac97df419885b9e6",
+          "bboxXYXY": [
+            635,
+            668,
+            729,
+            758
+          ],
+          "sourceOpaquePixels": 3245,
+          "alphaOverlapWithSpearPixels": 108,
+          "pivotProvisionalXY": [
+            722,
+            670
+          ],
+          "underlayAvailable": false,
+          "poseMotionEnabled": false,
+          "reviewStatus": "DRAFT_UNDERLAY_REQUIRED"
+        },
+        {
+          "id": "gripping-hand",
+          "path": "guarda-direito-gripping-hand-DRAFT.png",
+          "sha256": "3048cd17ede898c4001df003e3c03a5fdc23acdeecaf37d8a816359a20bdabb5",
+          "bboxXYXY": [
+            617,
+            720,
+            674,
+            768
+          ],
+          "sourceOpaquePixels": 898,
+          "alphaOverlapWithSpearPixels": 369,
+          "pivotProvisionalXY": [
+            666,
+            732
+          ],
+          "underlayAvailable": false,
+          "poseMotionEnabled": false,
+          "reviewStatus": "DRAFT_UNDERLAY_REQUIRED"
+        }
+      ]
+    }
+  ]
+}
