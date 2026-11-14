@@ -1,0 +1,158 @@
+name: "VideoForge - lote de cenas-mae reais por canal"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/*/videos/*/pedido-lote-cenas.json'
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+jobs:
+  preparar:
+    runs-on: ubuntu-24.04
+    outputs:
+      channel: ${{ steps.plan.outputs.channel }}
+      video_id: ${{ steps.plan.outputs.video_id }}
+      reference_run_id: ${{ steps.plan.outputs.reference_run_id }}
+      reference_artifact: ${{ steps.plan.outputs.reference_artifact }}
+      scene_numbers: ${{ steps.plan.outputs.scene_numbers }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - name: Validar lote e roteiro sem chamadas de IA
+        id: plan
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os,pathlib,re,subprocess
+          files=subprocess.check_output(["git","diff-tree","--no-commit-id","--name-only","-r","HEAD"],text=True).splitlines()
+          names=[x for x in files if re.fullmatch(r"canal/[a-z0-9-]+/videos/[a-z0-9-]+/pedido-lote-cenas\.json",x)]
+          if len(names)!=1: raise SystemExit("BATCH_AMBIGUOUS_REQUEST")
+          path=pathlib.Path(names[0])
+          req=json.loads(path.read_text(encoding="utf8"))
+          ch,vid=path.parts[1],path.parts[3]
+          if (req.get("schema")!="videoforge/scene-batch-request/v1" or req.get("channel")!=ch or req.get("video_id")!=vid
+              or req.get("youtube_upload") is not False or req.get("retry_on_429") is not False):
+              raise SystemExit("BATCH_REQUEST_INVALID")
+          reference=req.get("reference_run_id")
+          numbers=req.get("scene_numbers")
+          if type(reference) is not int or reference<=0 or not isinstance(numbers,list) or len(numbers)!=len(set(numbers)) or not numbers or any(type(n) is not int for n in numbers):
+              raise SystemExit("BATCH_SCENE_LIST_INVALID")
+          if req.get("max_calls_total")!=len(numbers):
+              raise SystemExit("BATCH_CALL_BUDGET_MISMATCH")
+          from videoforge.production_art import read_plan
+          from videoforge.production_scenes import scene_prompt
+          p,story=read_plan(ch,vid)
+          if any(n<1 or n>len(story["scenes"]) for n in numbers):
+              raise SystemExit("BATCH_SCENE_OUT_OF_RANGE")
+          for n in numbers:
+              prompt,scene=scene_prompt(ch,vid,n)
+              assert len(prompt)<5001
+          artifact=f"vf-real-art-{ch}-{vid}-character-bible-{reference}"
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf8") as out:
+              for key,value in {"channel":ch,"video_id":vid,"reference_run_id":str(reference),"reference_artifact":artifact,"scene_numbers":json.dumps(numbers,separators=(",",":"))}.items():
+                  out.write(f"{key}={value}\n")
+          print("BATCH_VALIDATED",ch,vid,"scenes",numbers,"calls",len(numbers),"no retry")
+          PY
+
+  gerar:
+    needs: preparar
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        scene: ${{ fromJSON(needs.preparar.outputs.scene_numbers) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 26
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      CHANNEL: ${{ needs.preparar.outputs.channel }}
+      VIDEO_ID: ${{ needs.preparar.outputs.video_id }}
+      SCENE_NUMBER: ${{ matrix.scene }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar proxy conectado
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then echo "::error::Falta CODEX_PROXY_API_KEY"; exit 1; fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else echo "::error::Proxy nao configurado"; exit 1; fi
+      - name: Iniciar proxy precompilado quando necessario
+        if: env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          x=json.loads(os.environ["CODEX_PROXY_ACCOUNTS_JSON"])
+          assert isinstance(x,dict) and isinstance(x.get("records"),list)
+          assert x["records"] and all(isinstance(i,dict) and isinstance(i.get("token"),dict) for i in x["records"])
+          p=Path(os.environ["RUNNER_TEMP"])/"vf-proxy-state"/"accounts.json"
+          p.write_text(json.dumps(x),encoding="utf8");p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-scene-batch --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy nao iniciou"; exit 1
+      - name: Recuperar prancha verdadeira e proveniencia verificavel
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ needs.preparar.outputs.reference_run_id }}
+          name: ${{ needs.preparar.outputs.reference_artifact }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input
+      - name: Gerar uma cena-mae por job usando a mesma referencia
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_production_scenes -v
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          python -m videoforge.production_scenes --channel "$CHANNEL" --video-id "$VIDEO_ID" \
+            --number "$SCENE_NUMBER" --reference ./input/character-bible.png \
+            --reference-report ./input/character-bible.production.json \
+            --url "$PROXY_ENDPOINT" --model gpt-image-2
+      - name: Salvar PNG individual e SHA, mesmo com falha de outras cenas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-real-batch-scene-${{ needs.preparar.outputs.channel }}-${{ needs.preparar.outputs.video_id }}-${{ matrix.scene }}-${{ github.run_id }}
+          path: output/${{ needs.preparar.outputs.channel }}/videos/${{ needs.preparar.outputs.video_id }}/imagens/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Limpar credenciais
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-scene-batch >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
