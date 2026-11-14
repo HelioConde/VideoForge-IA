@@ -22,7 +22,7 @@ export type LayerSceneProps={
   preset:CharacterPreset;
   background:string;
   character:string;
-  foreground:string;
+  foreground?:string;
   silence:string;
   layerSourceHash:string;
   /** Ativado somente com sprites RGBA verificados, sem partes duplicadas. */
@@ -43,7 +43,7 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
   const {fps}=useVideoConfig();
   const camera=motionAtFrame(frame,0,durationFrames,'establish',id,'cinematica');
   const characterPose=characterPoseAtFrame({
-    role:'front_character',id:'adventurer-otaku-br',coverage:0.3815,
+    role:'front_character',id:id,coverage:0.3815,
     contactRisk:.12,heroRisk:0,heightFraction:.72,
     frame,sceneStart:0,sceneEnd:durationFrames,fps,preset,enabled:true,
   });
@@ -82,18 +82,18 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
         ...imgStyle,zIndex:20,transform:characterTransform,
         transformOrigin:'50% 85%',
       }}/>}
-      <Img src={staticFile(foreground)} style={{
+      {foreground && <Img src={staticFile(foreground)} style={{
         ...imgStyle,zIndex:50,
         transform:roofMotion.transform,
         transformOrigin:'50% 90%',
         opacity:roofMotion.opacity,
-      }}/>
+      }}/>}
     </div>
     <AbsoluteFill style={{
       zIndex:90,pointerEvents:'none',opacity:cameraGlow,
       background:'linear-gradient(145deg,rgba(255,182,109,.26),transparent 70%)',
     }}/>
-    {/* Silencio para preservar trilha AAC tecnica sem narracao falsa. */}
+    {/* Trilha vinculada ao manifesto: silencio tecnico OU narracao real revisavel. */}
     <Audio src={staticFile(silence)} />
     {draftPreview && <div style={{
       position:'absolute',zIndex:110,left:25,right:25,bottom:48,
