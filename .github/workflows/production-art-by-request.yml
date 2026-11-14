@@ -1,0 +1,164 @@
+name: "VideoForge - arte de referencia por pedido do canal"
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "ID do canal"
+        required: true
+        type: choice
+        options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
+        default: alchemy-lab
+      video_id:
+        description: "ID do video"
+        required: true
+        type: string
+        default: mmorpg-conquiste-a-princesa-ep01
+      asset:
+        description: "ID do asset de production-art.json"
+        required: true
+        type: string
+        default: character-bible
+  push:
+    branches: [main]
+    paths:
+      - 'canal/*/videos/*/pedido-geracao-arte.json'
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: art-request-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: false
+
+jobs:
+  gerar-arte:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      INPUT_CHANNEL: ${{ inputs.channel }}
+      INPUT_VIDEO_ID: ${{ inputs.video_id }}
+      INPUT_ASSET: ${{ inputs.asset }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Resolver pedido validado e limitar a uma chamada por run
+        id: request
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, pathlib, re, subprocess
+          if os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch':
+              ch, vid, asset = [os.environ[k] for k in ('INPUT_CHANNEL','INPUT_VIDEO_ID','INPUT_ASSET')]
+          else:
+              names=subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','-r','HEAD'],text=True).splitlines()
+              names=[n for n in names if re.fullmatch(r'canal/[a-z0-9-]+/videos/[a-z0-9-]+/pedido-geracao-arte\.json',n)]
+              if len(names)!=1:
+                  raise SystemExit(f'REQUEST_AMBIGUOUS: expected 1 changed request, got {len(names)}')
+              path=pathlib.Path(names[0])
+              request=json.loads(path.read_text(encoding='utf-8'))
+              if request.get('schema')!='videoforge/image-generation-request/v1' or request.get('youtube_upload') is not False or request.get('max_calls_per_run')!=1:
+                  raise SystemExit('REQUEST_INVALID_OR_BUDGET_NOT_BOUND')
+              ch,vid=path.parts[1],path.parts[3]
+              if request.get('channel')!=ch or request.get('video_id')!=vid:
+                  raise SystemExit('REQUEST_CHANNEL_MISMATCH')
+              asset=request.get('asset')
+          from videoforge.production_art import read_plan,asset_prompt
+          from videoforge.paths import CHANNEL_IDS,IDENTIFIER
+          if ch not in CHANNEL_IDS or not IDENTIFIER.fullmatch(vid) or not isinstance(asset,str) or not IDENTIFIER.fullmatch(asset):
+              raise SystemExit('REQUEST_IDENTIFIERS_INVALID')
+          plan,story=read_plan(ch,vid)
+          asset_prompt(plan,story,asset)
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as out:
+              out.write(f'channel={ch}\nvideo_id={vid}\nasset={asset}\n')
+          print('REQUEST_VALIDATED',ch,vid,asset,'calls=1; do not retry 429; no upload')
+          PY
+      - name: Verificar configuracao do Codex Proxy sem revelar credenciais
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then
+            echo "::error::CODEX_PROXY_API_KEY ausente"
+            exit 1
+          fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            echo 'Modo: proxy persistente'
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'Modo: proxy efemero autorizado'
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else
+            echo "::error::Falta CODEX_PROXY_BASE_URL ou CODEX_PROXY_ACCOUNTS_JSON"
+            exit 1
+          fi
+      - name: Iniciar proxy precompilado se necessario
+        if: env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          value=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+          assert isinstance(value,dict) and isinstance(value.get('records'),list)
+          assert value['records'] and all(isinstance(r,dict) and isinstance(r.get('token'),dict) for r in value['records'])
+          p=Path(os.environ['RUNNER_TEMP'])/'vf-proxy-state'/'accounts.json'
+          p.write_text(json.dumps(value),encoding='utf-8')
+          p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-art-on-request \
+            --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy nao respondeu /health/live"
+          exit 1
+      - name: Executar gerador REAL do VideoForge sem retry
+        shell: bash
+        env:
+          CHANNEL: ${{ steps.request.outputs.channel }}
+          VIDEO_ID: ${{ steps.request.outputs.video_id }}
+          ASSET: ${{ steps.request.outputs.asset }}
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_production_art -v
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          python -m videoforge.production_art --channel "$CHANNEL" --video-id "$VIDEO_ID" \
+            --asset "$ASSET" --model gpt-image-2 --url "$PROXY_ENDPOINT"
+      - name: Guardar imagem, proveniencia e diagnostico
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-real-art-${{ steps.request.outputs.channel }}-${{ steps.request.outputs.video_id }}-${{ steps.request.outputs.asset }}-${{ github.run_id }}
+          path: output/${{ steps.request.outputs.channel }}/videos/${{ steps.request.outputs.video_id }}/imagens/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Apagar tokens temporarios
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-art-on-request >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
