@@ -236,6 +236,29 @@ class CandidateRigTests(unittest.TestCase):
                  patch.object(rig_eye_ai,"_weight",side_effect=weight):
                 rig_hair_repair.restore(self.output,old,self.plan_path,self.source)
 
+    def test_cape_seam_overlap_fills_both_sides_without_repainting(self):
+        w,h=20,12
+        original=bytearray()
+        for _ in range(w*h):
+            original.extend((177,38,26,255))
+        mask=bytearray(255 if x>=10 else 0 for y in range(h) for x in range(w))
+        legacy_back,legacy_front=r._cape_split(original,mask)
+        self.assertEqual(legacy_back[4*(5*w+10)+3],0)
+        self.assertEqual(legacy_front[4*(5*w+9)+3],0)
+        back,front=r._cape_split(original,mask,w,h,overlap_px=3)
+        for x in range(7,13):
+            p=4*(5*w+x)
+            self.assertEqual(back[p:p+4],original[p:p+4])
+            self.assertEqual(front[p:p+4],original[p:p+4])
+        self.assertEqual(front[4*(5*w+2)+3],0)
+        self.assertEqual(back[4*(5*w+18)+3],0)
+
+    def test_cape_seam_overlap_rejects_unbounded_values(self):
+        with self.assertRaisesRegex(r.CandidateError,"RIG_CAPE_OVERLAP_INVALID"):
+            r._cape_split(bytearray(4),bytearray(1),1,1,overlap_px=49)
+        with self.assertRaisesRegex(r.CandidateError,"RIG_CAPE_OVERLAP_DIMENSIONS"):
+            r._cape_split(bytearray(4),bytearray(1),2,1,overlap_px=2)
+
     def test_source_seam_underlay_is_feathered_and_does_not_repaint(self):
         w,h=64,96
         source=r._image(self.source/"character-main.png",w,h)
