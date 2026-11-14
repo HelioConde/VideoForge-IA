@@ -16,14 +16,14 @@ import sys
 
 from . import proxy_images as proxy
 from .errors import VideoForgeError
-from . import image_generation_policy
+from . import image_generation_policy, cinematic_direction
 from .production_art import read_plan
 from .scene_layers import png_info
 
 ROOT=Path(__file__).resolve().parents[1]
 
 
-def scene_prompt(channel:str,video_id:str,number:int)->tuple[str,dict]:
+def scene_prompt(channel:str,video_id:str,number:int,shot_id:str|None=None)->tuple[str,dict]:
     plan,story=read_plan(channel,video_id)
     scenes=story["scenes"]
     if type(number) is not int or number<1 or number>len(scenes):
@@ -31,13 +31,14 @@ def scene_prompt(channel:str,video_id:str,number:int)->tuple[str,dict]:
     scene=scenes[number-1]
     if not isinstance(scene,dict) or scene.get("number")!=number:
         raise VideoForgeError("PRODUCTION_SCENE_ORDER_INVALID")
+    cinematic=cinematic_direction.resolve_shot(channel,video_id,number,shot_id)
     guide=plan.get("scene_prompt_template","")
     if not isinstance(guide,str) or not guide:
         raise VideoForgeError("PRODUCTION_SCENE_TEMPLATE_MISSING")
     try:
         prompt=guide.format(
-            visual_direction=scene["visual_direction"],
-            story_goal=scene["story_goal"],
+            visual_direction=(cinematic_direction.prompt_direction(cinematic) if cinematic else scene["visual_direction"]),
+            story_goal=(f"Tomada individual {cinematic['id']} deste episodio; manter evento, local e cronologia." if cinematic else scene["story_goal"]),
         )
     except (KeyError,ValueError) as exc:
         raise VideoForgeError("PRODUCTION_SCENE_PROMPT_INVALID") from exc
@@ -50,9 +51,9 @@ def scene_prompt(channel:str,video_id:str,number:int)->tuple[str,dict]:
         raise VideoForgeError("PRODUCTION_SCENE_BIBLE_MISSING")
     # Para vídeos com elenco explícito, NÃO enviar descrição de
     # personagens fora do enquadramento. Mantém formato legado Spy Family.
-    cast=scene.get("reference_cast")
+    cast=scene.get("reference_cast") if cinematic is None else list(cinematic_direction.canon_cast_for_shot(cinematic,bible)[0])
     if cast is not None:
-        if (not isinstance(cast,list) or not cast or len(cast)>len(bible)
+        if (not isinstance(cast,list) or (not cast and cinematic is None) or len(cast)>len(bible)
                 or len(set(cast))!=len(cast)
                 or any(not isinstance(name,str) or name not in bible for name in cast)):
             raise VideoForgeError("PRODUCTION_SCENE_CAST_INVALID")
@@ -70,6 +71,9 @@ def scene_prompt(channel:str,video_id:str,number:int)->tuple[str,dict]:
         "Direcao de arte: "+plan["style"],
         *character_lines,
         "Desenhar SOMENTE as figuras presentes na direcao visual.",
+        *(["Nao repetir cartaz: camera, lente e foco devem ser especificos desta tomada.",
+           "Close ou over-the-shoulder exige imagem-mae propria: jamais zoom do rosto minusculo de um plano geral.",
+           "Separar camadas RGBA da propria imagem-mae para rig real, nao pan/zoom de PNG."] if cinematic else []),
         exclusion,
         "Mensagem da cena: "+str(scene.get("narration","")),
         "NUNCA desenhar personagens ausentes do enquadramento descrito.",
@@ -101,13 +105,14 @@ def reference_bytes(image:Path,report:Path)->tuple[bytes,str]:
 
 
 def generate_scene(channel:str,video_id:str,number:int,reference:Path,
-                   report:Path,url:str,model:str="gpt-image-2")->dict:
+                   report:Path,url:str,model:str="gpt-image-2",
+                   shot_id:str|None=None)->dict:
     image_generation_policy.assert_image_generation_allowed(channel,video_id)
-    prompt,scene=scene_prompt(channel,video_id,number)
+    prompt,scene=scene_prompt(channel,video_id,number,shot_id)
     if model not in proxy.IMAGE_MODELS:
         raise VideoForgeError("PRODUCTION_SCENE_MODEL_INVALID")
     source,source_sha=reference_bytes(reference,report)
-    scene_id=f"cena-{number:02d}"
+    scene_id=f"cena-{number:02d}" + (f"-{shot_id.lower()}" if shot_id else "")
     target=proxy.destination(channel,video_id,scene_id).with_suffix(".png")
     if target.exists() or target.is_symlink():
         raise VideoForgeError("PRODUCTION_SCENE_ALREADY_EXISTS")
@@ -132,6 +137,7 @@ def generate_scene(channel:str,video_id:str,number:int,reference:Path,
         "schema":"videoforge/production-scene/v1",
         "channel":channel,"video_id":video_id,
         "number":number,"scene":scene["id"],
+        "shot_id":shot_id,"shot_specific":shot_id is not None,
         "reference_sha256":source_sha,"sha256":hashlib.sha256(blob).hexdigest(),
         "model":model,"size":"1024x1536","technical_qa":"valid_png_opaque",
         "visual_consistency_review":"pending","layers_generated":False,
@@ -151,10 +157,11 @@ def main()->int:
     p.add_argument("--reference-report",type=Path,required=True)
     p.add_argument("--url",required=True)
     p.add_argument("--model",default="gpt-image-2")
+    p.add_argument("--shot-id",default=None,help="Tomada individual CXX-PXX, opcional")
     a=p.parse_args()
     try:
         result=generate_scene(a.channel,a.video_id,a.number,a.reference,
-                              a.reference_report,a.url,a.model)
+                              a.reference_report,a.url,a.model,a.shot_id)
         print("PRODUCTION_SCENE_OK",json.dumps(result,ensure_ascii=False))
         return 0
     except (VideoForgeError,proxy.ProxyImageError,ValueError,OSError) as exc:
