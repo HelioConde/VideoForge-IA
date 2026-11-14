@@ -159,7 +159,7 @@
         "latest_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439/artifacts/14106521460",
         "technical_test_status": "passed_17_node_tests"
       },
-      "rig_three_status": "mask_isolated_head_and_hair_draft_validated_no_full_articulated_rig",
+      "rig_three_status": "head_hand_separation_draft_seam_and_hair_pending",
       "rig_three_human_approval": false
     },
     {
@@ -424,18 +424,18 @@
       "original_character_rgba": "available",
       "full_character_open_closed": "available",
       "body_no_head_rgba": "candidate_neck_and_collar_visual_qa_pending",
-      "head_open_rgba": "technical_draft_isolated_anya_only_no_human_approval",
-      "head_closed_rgba": "technical_draft_same_eye_variant_no_human_approval",
-      "hair_front_rgba": "segmentation_mask_candidate_not_deformable_without_reconstructed_underlay",
+      "head_open_rgba": "technical_draft_without_hand_neck_seam_review_pending",
+      "head_closed_rgba": "technical_draft_without_hand_neck_seam_review_pending",
+      "hair_front_rgba": "candidate_mask_only_no_approved_underlay_or_mesh",
       "hair_back_rgba": "optional_pending",
       "cape": "not_present_do_not_generate",
       "arm_and_objects": "review_which_exist_before_generating",
-      "neck_pivot": "pending_measurement_and_seam_reconstruction",
+      "neck_pivot": "must_be_measured_after_seam_and_hand_underlay_fix",
       "roundtrip_visual_qa": "diagnostic_generated_rejected_foreign_people_in_head_mask",
       "real_rig_json": "pending",
       "human_visual_approval": false,
       "rig_json_status": "blocked_until_proper_head_isolation_and_hair",
-      "hand_foreground": "not_generated_separately_from_head_yet"
+      "hand_foreground": "technical_draft_generated_original_source_qa_passed_visual_seam_pending"
     },
     "all_16_scenes_complete": false,
     "previous_bob_preview_not_acceptable_as_rig": true,
@@ -488,6 +488,34 @@
       "human_visual_approval": false,
       "rig_animado_aplicado": false,
       "video_oficial_do_programa": false,
+      "youtube_uploaded": false
+    },
+    "scene01_hand_candidate": {
+      "schema": "videoforge/rig-three-hand-separation-candidate/v1",
+      "run_id": 43590074890,
+      "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43590074890/artifacts/14111754256",
+      "hand_original_rgba": true,
+      "hand_original_pixels": 12572,
+      "hand_bbox": [
+        380,
+        1351,
+        158,
+        185
+      ],
+      "hidden_underlay_pixels_reconstructed_total_two_frames": 14220,
+      "head_open_original_eyes": true,
+      "head_closed_original_eyes": true,
+      "head_foreground_isolated_from_loid_yor": true,
+      "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+      "human_visual_review": "not_approved_visible_neck_hand_seam",
+      "independent_hair_mesh": false,
+      "needs": [
+        "corrigir a junção do dedo no pescoço e gola para retirar halo/pele extra",
+        "separar cabelo em malhas com base sem cabelo e underlay",
+        "comparar rig em várias inclinações de cabeça antes de aprovar"
+      ],
+      "rig_operational": false,
+      "video_official": false,
       "youtube_uploaded": false
     }
   },
