@@ -1,0 +1,79 @@
+name: "VideoForge - reconstruir cabelo e gola Anya (candidate QA)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/rig_three_hair_underlay.py'
+      - 'tests/test_rig_three_hair_underlay.py'
+      - 'docs/requests/anya-hair-underlay-qa.json'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vf-rig-anya-hair-underlay-candidate
+  cancel-in-progress: false
+jobs:
+  art-candidate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar OpenCV somente na preparação artística
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir \
+            "numpy==1.26.4" "opencv-python-headless==4.10.0.84"
+      - name: Recuperar imagem-mãe e proveniência
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/original
+      - name: Recuperar cabeça/corpo/mão e QA corrigidos
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43591918632
+          name: vf-anya-hand-head-separate-draft-43591918632
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/corrected
+      - name: Recuperar mechas separadas e hashes
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43593183590
+          name: vf-anya-hair-side-seam-draft-43593183590
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/hair
+      - name: Testar preservação do original, isolamento do corpo e piscada
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_animation_manual \
+            tests.test_rig_three_hand_roundtrip \
+            tests.test_rig_three_hair_draft \
+            tests.test_rig_three_hair_underlay -v
+      - name: Reconstruir pixels ocultos e gerar QA de recomposição
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_three_hair_underlay \
+            --original ./input/original \
+            --corrected ./input/corrected \
+            --hair ./input/hair \
+            --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hair-underlay-candidate
+      - name: Publicar camadas candidatas, prévia e relatório (NÃO aprovar rig)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-anya-hair-underlay-candidate-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/hair-underlay-candidate/
+          if-no-files-found: warn
+          retention-days: 14
