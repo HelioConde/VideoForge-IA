@@ -156,6 +156,15 @@ def build_props(channel:str,video_id:str,root:Path=ROOT)->tuple[dict,list[tuple[
                 review.get("hud_text_approved") is not True
             ):
                 raise VideoForgeError("CINEMATIC_EXPORT_HUD_NOT_APPROVED")
+        if shot["id"]=="C12-P01":
+            from .cinematic_eye_motion import check_eye_performance
+            # This can only return a performance with TRUE visual QA.
+            # Never elevate the draft plan's humanMotionApproved=false.
+            record["performance"]=check_eye_performance(
+                shot["id"],data,review
+            )
+        elif data.get("performance") is not None:
+            raise VideoForgeError("CINEMATIC_EXPORT_GAZE_UNEXPECTED_SHOT")
         record.update({
             "status":"ready_for_render",
             "backgroundFile":background,
