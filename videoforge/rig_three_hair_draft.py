@@ -130,7 +130,7 @@ def produce(original_dir, correct_dir, isolation_dir, dest):
     # Validate this bounded reference instead of inferring from a raster edge.
     if body.shape!=(129,454,4):
         raise VideoForgeError("RIG_HAIR_BODY_BBOX_CHANGED")
-    body_full=_full(body,[281,1407,454,129],np)
+    body_full=_full(body,[285,1407,454,129],np)
     hand=_full(read_rgba(handfile,cv2,np),
                manifest["hand_bbox_original_canvas"],np)
     neutral=rgba_over(rgba_over(body_full,head_open,np),hand,np)
