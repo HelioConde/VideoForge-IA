@@ -1,0 +1,68 @@
+name: "VideoForge - separar rosto, mãos e manto do rei sem IA"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-dividir-aldric.json'
+permissions:
+  contents: write
+concurrency:
+  group: vf-alchemy-aldric-existing-partition
+  cancel-in-progress: false
+jobs:
+  dividir-rei:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar ausência de geração de imagens
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          d=json.loads((base/'pedido-dividir-aldric.json').read_text(encoding='utf8'))
+          assert d.get('schema')=='videoforge/aldric-existing-pixel-partition-request/v1'
+          assert d.get('channel')=='alchemy-lab'
+          assert d.get('image_generation_calls')==0
+          assert d.get('only_existing_pixels') is True
+          assert d.get('human_visual_approval') is False
+          assert d.get('youtube_upload') is False
+          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          PY
+      - name: Instalar biblioteca local de máscaras (sem IA)
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Separar seis camadas de pixels já existentes e verificar recomposição
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          python -m videoforge.split_existing_png_parts \
+            --source "$BASE/assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png" \
+            --plan "$BASE/rig-aldric-pixel-partition.json" \
+            --dest "$BASE/assets/cena-01/rig-drafts/aldric-partes"
+      - name: Arquivar as peças e QA no canal Alchemy Lab
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEST='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/aldric-partes'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$DEST"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'assets(alchemy): dividir Aldric em seis partes de pixels existentes sem IA'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Estado da animação
+        run: |
+          echo 'Separação draft; olhos, underlays, pivôs e QA humano faltam. Rig ainda bloqueado.'
