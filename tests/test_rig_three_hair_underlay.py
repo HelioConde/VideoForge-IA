@@ -32,11 +32,16 @@ class HairUnderlayTests(unittest.TestCase):
         body[1465:1480,582:602]=[230,125,126,255]
         source[:]=body
         source[head[:,:,3]>0]=head[head[:,:,3]>0]
-        return body,head,closed,hand,left,right,source
+        mask=(left[:,:,3]>0)|(right[:,:,3]>0)
+        base_open=head.copy()
+        base_closed=closed.copy()
+        base_open[:,:,3][mask]=0
+        base_closed[:,:,3][mask]=0
+        return body,head,closed,base_open,base_closed,hand,left,right,source
 
     def test_original_shoulder_pixels_are_transferred_not_repainted(self):
-        body,head,closed,hand,left,right,source=self.scene()
-        result=reconstruct(body,head,closed,hand,left,right,source,cv2,np)
+        body,head,closed,base_open,base_closed,hand,left,right,source=self.scene()
+        result=reconstruct(body,head,closed,base_open,base_closed,hand,left,right,source,cv2,np)
         self.assertGreater(result["fragment_left"],60)
         self.assertGreater(result["fragment_right"],300)
         self.assertGreater(result["underlay_pixels"],15000)
@@ -53,21 +58,21 @@ class HairUnderlayTests(unittest.TestCase):
             head[1150:1170,490:515])
 
     def test_original_source_mismatch_is_blocking(self):
-        body,head,closed,hand,left,right,source=self.scene()
+        body,head,closed,base_open,base_closed,hand,left,right,source=self.scene()
         source[1470,590,:3]=[1,2,3]
         with self.assertRaisesRegex(VideoForgeError,
                                     "FRAGMENT_SOURCE_RGB_DIFFERENT"):
-            reconstruct(body,head,closed,hand,left,right,source,cv2,np)
+            reconstruct(body,head,closed,base_open,base_closed,hand,left,right,source,cv2,np)
 
     def test_wrong_mask_or_canvas_is_blocking(self):
-        body,head,closed,hand,left,right,source=self.scene()
+        body,head,closed,base_open,base_closed,hand,left,right,source=self.scene()
         body[1463:1480,420:635]=[55,45,40,255]
         with self.assertRaisesRegex(VideoForgeError,
                                     "UNSAFE_PINK_BODY_FRAGMENT"):
             pink_shoulder_mask(body,head,hand,left,right,cv2,np)
         with self.assertRaisesRegex(VideoForgeError,
                                     "UNDERLAY_CANVAS_INVALID"):
-            reconstruct(body[:-1],head,closed,hand,left,right,
+            reconstruct(body[:-1],head,closed,base_open,base_closed,hand,left,right,
                         source,cv2,np)
 
 
