@@ -1,0 +1,71 @@
+name: "VideoForge - separar Kael por pixels existentes (sem IA)"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-dividir-kael.json'
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-alchemy-split-existing-pixels
+  cancel-in-progress: false
+
+jobs:
+  separar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar solicitação SOMENTE por pixels existentes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-dividir-kael.json")
+          obj=json.loads(p.read_text(encoding="utf8"))
+          assert obj.get("schema")=="videoforge/split-existing-asset-request/v1"
+          assert obj.get("channel")=="alchemy-lab"
+          assert obj.get("image_generation_calls")==0
+          assert obj.get("source_only")==True
+          assert obj.get("human_visual_approval")==False
+          assert obj.get("youtube_upload")==False
+          print("NO_IMAGE_GENERATION_CONFIRMED: extração de pixels existentes apenas")
+          PY
+      - name: Instalar apenas Pillow para separação de pixels, não para gerar ilustrações
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Dividir Kael no mesmo canvas, conferir roundtrip sem pixel novo
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          python -m videoforge.split_existing_png_parts \
+            --source "$BASE/assets/cena-01/candidatos/kael-rgba-candidate.png" \
+            --plan "$BASE/rig-pixel-partition.json" \
+            --dest "$BASE/assets/cena-01/rig-drafts/kael"
+      - name: Commitar peças rascunho e QA no próprio canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEST='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/kael'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$DEST"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'assets(alchemy): extrair 12 camadas de pixels existentes de Kael sem IA'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Informar QA pendente
+        run: echo 'PEÇAS RASCUNHO; underlay e validação visual pendentes. NÃO renderizar rig final.'
