@@ -16,6 +16,7 @@ import sys
 
 from . import proxy_images as proxy
 from .errors import VideoForgeError
+from . import image_generation_policy
 from .production_art import read_plan
 from .scene_layers import png_info
 
@@ -101,6 +102,7 @@ def reference_bytes(image:Path,report:Path)->tuple[bytes,str]:
 
 def generate_scene(channel:str,video_id:str,number:int,reference:Path,
                    report:Path,url:str,model:str="gpt-image-2")->dict:
+    image_generation_policy.assert_image_generation_allowed(channel,video_id)
     prompt,scene=scene_prompt(channel,video_id,number)
     if model not in proxy.IMAGE_MODELS:
         raise VideoForgeError("PRODUCTION_SCENE_MODEL_INVALID")
