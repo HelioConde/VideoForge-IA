@@ -115,14 +115,14 @@ jobs:
             --source-report ./input/cena-01.production.json \
             --url "$PROXY_ENDPOINT" --model gpt-image-2
       - name: Commitar PNGs originais permanentemente no canal, com QA separado
-        if: success()
+        if: always()
         shell: bash
         env:
           VF_CH: otaku-br
           VF_VID: spy-x-family-familia-de-mentira
           VF_PRODUCER: scene-mother-layers
         run: |
-          bash scripts/persistir-imagens-gh.sh "$VF_CH" "$VF_VID" "output/$VF_CH/videos/$VF_VID/assets/cena-01" "${{ github.run_id }}" "$VF_PRODUCER"
+          bash scripts/arquivar-pngs-se-existirem.sh "$VF_CH" "$VF_VID" "output/$VF_CH/videos/$VF_VID/assets/cena-01" "${{ github.run_id }}" "$VF_PRODUCER" "${{ job.status }}"
       - name: Guardar todas as camadas, hash e QA (incluindo erro parcial)
         if: always()
         uses: actions/upload-artifact@v4
