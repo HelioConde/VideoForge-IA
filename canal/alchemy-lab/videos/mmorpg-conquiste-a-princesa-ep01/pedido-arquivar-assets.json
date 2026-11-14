@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/existing-asset-archive-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "only_copy_preexisting_images": true,
+  "image_generation_calls": 0,
+  "youtube_upload": false,
+  "existing_runs": {
+    "character_bible": 43590930215,
+    "scene_01": 43591342058,
+    "scenes_02_to_14": 43591745279,
+    "layers_scene01": 43592098806,
+    "kael_rgba": 43592844393
+  },
+  "destination": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets",
+  "quality_policy": "Todos PNGs arquivados com origem e SHA; não implica aceite visual. Nenhum modelo é invocado."
+}
