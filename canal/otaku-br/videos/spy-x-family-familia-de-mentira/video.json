@@ -1,0 +1,58 @@
+{
+  "schema": "videoforge/mvp/v1",
+  "channel": "otaku-br",
+  "modelo": "imagem-estatica",
+  "youtube_upload": false,
+  "scenes": [
+    {
+      "image": "imagens/cena-01.png",
+      "audio": "voz/cena-01.wav",
+      "caption": "UM SEGREDO POR PESSOA"
+    },
+    {
+      "image": "imagens/cena-02.png",
+      "audio": "voz/cena-02.wav",
+      "caption": "A MISSÃO DE LOID"
+    },
+    {
+      "image": "imagens/cena-03.png",
+      "audio": "voz/cena-03.wav",
+      "caption": "O PAI PERFEITO?"
+    },
+    {
+      "image": "imagens/cena-04.png",
+      "audio": "voz/cena-04.wav",
+      "caption": "O SEGREDO DE YOR"
+    },
+    {
+      "image": "imagens/cena-05.png",
+      "audio": "voz/cena-05.wav",
+      "caption": "ANYA SABE DE TUDO"
+    },
+    {
+      "image": "imagens/cena-06.png",
+      "audio": "voz/cena-06.wav",
+      "caption": "NINGUÉM CONTA TUDO"
+    },
+    {
+      "image": "imagens/cena-07.png",
+      "audio": "voz/cena-07.wav",
+      "caption": "UM DIA NADA NORMAL"
+    },
+    {
+      "image": "imagens/cena-08.png",
+      "audio": "voz/cena-08.wav",
+      "caption": "ALÉM DOS DISFARCES"
+    },
+    {
+      "image": "imagens/cena-09.png",
+      "audio": "voz/cena-09.wav",
+      "caption": "UM LAÇO DE VERDADE"
+    },
+    {
+      "image": "imagens/cena-10.png",
+      "audio": "voz/cena-10.wav",
+      "caption": "A VERDADE DA FAMÍLIA"
+    }
+  ]
+}
