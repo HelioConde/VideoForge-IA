@@ -88,3 +88,19 @@ test('left/right Anya hair meshes stay rooted, deterministic and blink-neutral',
     assert.equal(moving.indices.length,7*9*6);
   }
 });
+
+
+test('left and right side locks have different but deterministic follow-through',()=>{
+  const settings={bbox:[220,1280,260,230],canvas:{width:1024,height:1536},
+    spec:{columns:7,rows:9,pinnedRows:[0],amplitudePx:4},
+    frame:111,fps:30,duration:240,blinkFrames:[74,173]};
+  const l=meshGridAtFrame({...settings,kind:'hair-front-left'});
+  const r=meshGridAtFrame({...settings,kind:'hair-front-right'});
+  assert.notDeepEqual(l.positions,r.positions);
+  assert.deepEqual(l.positions,
+    meshGridAtFrame({...settings,kind:'hair-front-left'}).positions);
+  assert.deepEqual(r.positions,
+    meshGridAtFrame({...settings,kind:'hair-front-right'}).positions);
+  const top=8*3;
+  assert.deepEqual(l.positions.slice(0,top),r.positions.slice(0,top));
+});
