@@ -5,6 +5,8 @@ on:
       - 'motion-remotion/**'
       - 'videoforge/remotion_preview.py'
       - 'videoforge/mesh_rig.py'
+      - 'videoforge/rig_three_preview.py'
+      - 'videoforge/rig_three_contract.py'
       - 'videoforge/rig_candidate.py'
       - 'videoforge/eye_refine.py'
       - 'videoforge/rig_eye_ai.py'
@@ -46,7 +48,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     container:
-      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
