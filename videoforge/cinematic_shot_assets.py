@@ -186,6 +186,16 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
             if not isinstance(layer,dict) or indexed_parts.get(layer.get("file"))!=(
                     layer.get("sha256"),layer.get("bbox")):
                 failures.append("SHOT_ACTOR_LAYER_NOT_OWN_ASSET")
+    if sid=="C12-P01":
+        # Face and pupil glance must use an independently painted sclera
+        # underlay, four RGBA eye layers and zero head/body movement.
+        from .cinematic_eye_motion import check_eye_performance
+        try:
+            check_eye_performance(sid,rig,qa)
+        except VideoForgeError as exc:
+            failures.append(str(exc))
+    elif rig.get("performance") is not None:
+        failures.append("SHOT_EYE_GAZE_NOT_ALLOWED_OUTSIDE_C12_P01")
     if rig.get("whole_png_motion") is not False:
         failures.append("SHOT_FLAT_PNG_MOTION_FORBIDDEN")
     if rig.get("all_parts_from_same_mother") is not True:
