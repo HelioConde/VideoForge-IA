@@ -1,0 +1,68 @@
+name: "VideoForge - separar enfeites da Anya do PNG estatico (sem IA)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/rig_three_anya_ornaments.py'
+      - 'tests/test_rig_three_anya_ornaments.py'
+      - 'docs/requests/anya-ornaments-qa.json'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vf-anya-ornaments-source-isolation
+  cancel-in-progress: false
+jobs:
+  extract:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias de segmentacao pinadas, sem novas imagens
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir \
+            "numpy==1.26.4" "opencv-python-headless==4.10.0.84"
+      - name: Cena-mae imutavel
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/original
+      - name: Composicao estavel com Loid Yor e Anya separada
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43591918632
+          name: vf-anya-hand-head-separate-draft-43591918632
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/corrected
+      - name: Testar discriminacao cabelo vs Loid e Yor
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_animation_manual tests.test_rig_three_anya_ornaments -v
+      - name: Recortar enfeites pretos/dourados e reconstruir fundo estatico
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_three_anya_ornaments \
+            --original ./input/original \
+            --corrected ./input/corrected \
+            --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/head-ornaments-draft
+      - name: Guardar sprites e QA sem aprovar o rig
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-anya-head-ornaments-from-original-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/head-ornaments-draft/
+          if-no-files-found: warn
+          retention-days: 14
