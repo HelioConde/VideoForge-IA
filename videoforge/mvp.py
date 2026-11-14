@@ -92,7 +92,9 @@ def _load_manifest(path: Path) -> tuple[dict, list[dict]]:
     if manifest.get("youtube_upload") is not False:
         raise VideoForgeError("YOUTUBE_UPLOAD_MUST_BE_DISABLED")
     scenes = manifest.get("scenes")
-    if not isinstance(scenes, list) or not 3 <= len(scenes) <= 24:
+    # Nenhum teto artificial de quantidade de cenas: a narrativa determina os cortes.
+    # Conservamos apenas ao menos uma cena; duracao/QA/seguranca seguem ativas.
+    if not isinstance(scenes, list) or not scenes:
         raise VideoForgeError("SCENE_COUNT_INVALID")
     resolved = []
     for scene in scenes:
@@ -162,7 +164,8 @@ def _compose(scenes: list[dict], output: Path, *, minimum: float, maximum: float
     _require_tools()
     if output.exists():
         raise VideoForgeError("OUTPUT_ALREADY_EXISTS")
-    if not 3 <= len(scenes) <= 24:
+    # A quantidade e livre; o total de duracao do formato segue validado abaixo.
+    if not scenes:
         raise VideoForgeError("SCENE_COUNT_INVALID")
     expected = 0.0
     for scene in scenes:
