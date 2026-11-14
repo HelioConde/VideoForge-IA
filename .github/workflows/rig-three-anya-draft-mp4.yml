@@ -43,8 +43,8 @@ jobs:
       - name: Recuperar as 6 camadas originais corrigidas da Anya
         uses: actions/download-artifact@v4
         with:
-          run-id: 43598536256
-          name: vf-anya-hair-underlay-candidate-43598536256
+          run-id: 43599799485
+          name: vf-anya-hair-underlay-candidate-43599799485
           path: ./input/draft
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Preparar props SHA-verificados com aprovacao humana BLOQUEADA
@@ -60,6 +60,7 @@ jobs:
             --original ./input/original \
             --corrected ./input/corrected \
             --candidate ./input/draft \
+            --art-run-id 43599799485 \
             --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-mp4
       - name: Renderizar 6s por Remotion/ThreeCanvas SWANGLE sem movimentos falsos
         shell: bash
