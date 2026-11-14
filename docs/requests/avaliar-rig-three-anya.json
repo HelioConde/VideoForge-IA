@@ -1,0 +1,16 @@
+{
+  "schema": "videoforge/rig-three-roundtrip-request/v1",
+  "manual_principal": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "source_run": 43560159589,
+  "generated_sprites_run": 43586783907,
+  "approved_same_image_eye_run": 43576834439,
+  "do_not_generate_images": true,
+  "expected": "pixel-identical open head + closed approved eyes + reconstructed body candidate + diff.png",
+  "humanVisualApproval": false,
+  "rigOfficial": false,
+  "youtubeUpload": false,
+  "workflowMode": "normal_push_no_private"
+}
