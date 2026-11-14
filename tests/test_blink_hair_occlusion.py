@@ -22,7 +22,7 @@ class BlinkHairOcclusionTests(unittest.TestCase):
     def test_eyelid_alpha_feather_not_hard_rectangle(self):
         center=eye_weight(421,1230)
         border=eye_weight(495,1230)
-        outside=eye_weight(560,1230)
+        outside=eye_weight(520,1230)
         self.assertGreater(center,border)
         self.assertGreater(border,outside)
         self.assertEqual(outside,0)
