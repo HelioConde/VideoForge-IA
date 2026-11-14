@@ -1,0 +1,126 @@
+name: "VideoForge - Remotion Three rig real por cena"
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        required: true
+        type: choice
+        options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
+      video_id:
+        required: true
+        type: string
+      scene:
+        required: true
+        type: string
+        default: cena-01
+      frames:
+        required: true
+        type: string
+        default: '240'
+      source_run_id:
+        required: true
+        type: string
+      source_artifact:
+        required: true
+        type: string
+      rig_run_id:
+        required: true
+        type: string
+      rig_artifact:
+        required: true
+        type: string
+      voice_run_id:
+        required: false
+        type: string
+      voice_artifact:
+        required: false
+        type: string
+permissions:
+  contents: read
+  actions: read
+  packages: read
+concurrency:
+  group: rig-three-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}
+  cancel-in-progress: false
+jobs:
+  render:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Recuperar camadas e imagem original da mesma cena
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.source_run_id }}
+          name: ${{ inputs.source_artifact }}
+          path: ./input/layers
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Recuperar rig com sprites independentes e rig.json
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.rig_run_id }}
+          name: ${{ inputs.rig_artifact }}
+          path: ./input/rig
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Recuperar narracao opcional
+        if: inputs.voice_run_id != '' && inputs.voice_artifact != ''
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.voice_run_id }}
+          name: ${{ inputs.voice_artifact }}
+          path: ./input/voice
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validar sprites reais, hashes, pivôs e malha sem inferencia
+        shell: bash
+        env:
+          CHANNEL: ${{ inputs.channel }}
+          VIDEO_ID: ${{ inputs.video_id }}
+          SCENE: ${{ inputs.scene }}
+          FRAMES: ${{ inputs.frames }}
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          python -m unittest tests.test_rig_three_contract -v
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/rig-three-math.test.cjs tests/blink-motion-sync.test.cjs
+          cd ..
+          voice=()
+          if [[ -f "input/voice/audio/$SCENE.wav" ]]; then
+            voice=(--voice "input/voice/audio/$SCENE.wav")
+          fi
+          python -m videoforge.rig_three_preview prepare \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE" \
+            --frames "$FRAMES" --source-dir ./input/layers --rig-dir ./input/rig \
+            ${voice[@]}
+      - name: Renderizar vertices por ThreeCanvas SWANGLE sem GPU
+        shell: bash
+        env:
+          CHANNEL: ${{ inputs.channel }}
+          VIDEO_ID: ${{ inputs.video_id }}
+          SCENE: ${{ inputs.scene }}
+        run: |
+          set -euo pipefail
+          output="../output/$CHANNEL/videos/$VIDEO_ID/rig-three/$SCENE"
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/rig-three-index.ts VideoForgeMeshRigScene \
+            "$output/mesh-preview.mp4" --props="$output/props.json" \
+            --codec=h264 --gl=swangle --concurrency=1 --log=error
+          cd ..
+          python -m videoforge.rig_three_preview verify \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --scene "$SCENE"
+      - name: Guardar MP4 de revisao sem publicar no YouTube
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-three-rig-review-${{ inputs.channel }}-${{ inputs.video_id }}-${{ inputs.scene }}-${{ github.run_id }}
+          path: output/${{ inputs.channel }}/videos/${{ inputs.video_id }}/rig-three/${{ inputs.scene }}/
+          retention-days: 14
+          if-no-files-found: error
