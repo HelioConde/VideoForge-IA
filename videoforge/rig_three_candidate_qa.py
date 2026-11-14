@@ -180,8 +180,8 @@ def compose(input_source:Path,input_head:Path,input_body:Path,
             if out_a>0:
                 composed[k+3]=out_a
                 for ch in range(3):
-                    composed[k+ch]=(head[k+ch]*ah+
-                        body[k+ch]*ab*(255-ah)//255)//max(1,out_a)
+                    composed[k+ch]=max(0,min(255,(head[k+ch]*ah+
+                        body[k+ch]*ab*(255-ah)//255)//max(1,out_a)))
             if orig[k+3]>20:
                 difference[k+3]=255
                 for ch in range(3):
