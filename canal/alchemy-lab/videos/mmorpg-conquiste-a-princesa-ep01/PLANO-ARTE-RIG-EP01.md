@@ -95,3 +95,34 @@ A execução [43599262296](https://github.com/HelioConde/VideoForge-IA/actions/r
 O [inventário da cena 1](rig-inventario-c01.json) e [seu relatório SHA](rig-inventario-c01.qa.json) foram validados pelo [GitHub Actions 43599647856](https://github.com/HelioConde/VideoForge-IA/actions/runs/43599647856): **19 PNGs conferidos**, **16 partes candidatas/rascunho**, **1 peça rejeitada no inventário**, qualidade de rig e publicação **bloqueadas**. O enquadramento 1024×1536 para saída 1080×1920 usa fator 1,25 e corta 100px de cada lateral, sem distorção.
 
 O arquivo [SEM-GERACAO-NOVAS-IMAGENS.lock](SEM-GERACAO-NOVAS-IMAGENS.lock) registra a instrução expressa de NÃO gerar imagens novas. Seis workflows de geração/edição do episódio já consultam esse lock e interrompem antes de chamar IA. Ele se aplica só a este vídeo, não afeta os outros canais. Só poderá ser retirado após novo pedido explícito.
+
+
+## 10. Refinamento da arte original sem chamadas de IA — 56 PNGs
+
+Em 14/11/2026, a árvore GitHub foi conferida: **56 arquivos .png** dentro de `canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets`. Nenhuma chamada de geração de imagens foi executada nesta etapa. O ZIP adicional com oito imagens feitas anteriormente no chat **ainda não foi importado ao GitHub**. Ele já foi validado localmente quanto a nomes e SHA, mas exige upload binário pela pasta `uploads/`.
+
+A seleção mais recente está em [rig-selecao-artes-c01.json](rig-selecao-artes-c01.json), com SHA de cada candidato e a lista de arquivos antigos que **não podem** ser usados como base do rig.
+
+| Subetapa | GitHub Actions | Resultado verificável | Estado artístico |
+|---|---|---|---|
+| Contornos dos dois guardas | [43601017320](https://github.com/HelioConde/VideoForge-IA/actions/runs/43601017320) | 4 PNGs: duas silhuetas com RGB copiado da mãe, duas versões sem lança que preservam os buracos | Pendente |
+| Corrigir origem/escala de Kael | [43601362186](https://github.com/HelioConde/VideoForge-IA/actions/runs/43601362186) | Kael reposicionado ao mesmo canvas da mãe; IoU com candidato anterior ~0,278 | Pendente |
+| Reaplicar máscaras anatômicas em Kael alinhado | [43601692577](https://github.com/HelioConde/VideoForge-IA/actions/runs/43601692577) | 12 partições, 11 com conteúdo, recomposição de pixels visíveis exata | Pendente |
+| Isolar Aldric com contorno conservador | [43602241129](https://github.com/HelioConde/VideoForge-IA/actions/runs/43602241129) | PNG com RGB da mãe, aproximadamente 57.371 pixels de máscara; sem reconstrução de partes ocultas | Pendente |
+
+### 10.1. Problema de escala do Kael antigo
+
+O primeiro Kael RGBA gerado por edição foi ampliado/recomposto em escala diferente da cena original. Reutilizar suas 12 partes diretamente causaria deslocamento e duplicação. O Kael preferencial agora é `assets/cena-01/rig-drafts/kael-alinhado-original/kael-alinhado-mesma-cena-mae-CANDIDATO.png`. Suas novas peças estão em `rig-drafts/kael-alinhado-partes/`. As máscaras foram convertidas por uma transformação afim aproximada; **não são ainda separações anatômicas certificadas**.
+
+### 10.2. Braços dos guardas, lanças e Rei Aldric
+
+Os guardas preferenciais são `guardas-refinados/guarda-esquerdo-origem-rgb-candidato.png` e `guarda-direito-origem-rgb-candidato.png`. Os pixels RGB foram copiados da mãe, e a antiga imagem de grupo foi utilizada **somente como guia de máscara**. Cada variante `-sem-lanca-BURACOS.png` exclui trechos encobertos pela respectiva lança, identificando aproximadamente 3,6–3,7 mil pixels a recuperar com underlays antes de qualquer articulação.
+
+Aldric agora tem `aldric-origem/aldric-RGB-da-mae-CANDIDATO.png`. O método GrabCut local tenta excluir o encosto, os braços ornamentais e os leões do trono; **o contorno ainda pode conter fragmentos do trono ou cortar tecido**. Requer inspeção humana e correção antes de montar boca/cabeça/manto.
+
+### 10.3. Gate de produção
+
+- Nunca substituir a pintura por uma reinterpretação do mesmo personagem, pois o recorte deve manter a mesma origem.
+- O rig precisa de pivôs realmente medidos e áreas ocultas preenchidas; os candidatos atuais **não** têm esses dados.
+- A comparação de reconstrução de pixels visíveis não valida movimentos articulados. Guardas e rei não podem se deslocar enquanto as mãos/ombreiras estiverem incompletas.
+- Render oficial e upload YouTube continuam `false` até QA completo. O arquivo de lock continua obrigatoriamente ativo.
