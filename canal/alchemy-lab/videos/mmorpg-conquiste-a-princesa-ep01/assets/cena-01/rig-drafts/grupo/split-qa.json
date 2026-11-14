@@ -1,0 +1,120 @@
+{
+  "schema": "videoforge/existing-pixel-split-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/candidatos/character-group-REJECTED.png",
+  "source_sha256": "e9d0f6a1e69a4a49e30e8744be6b3ae3b4c8caf46bf1ebcf69fee3572889bcb9",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "pieces": [
+    {
+      "id": "guarda-esquerdo-alinhado",
+      "file": "guarda-esquerdo-alinhado.png",
+      "sha256": "33621f89af2f6f04735442a20b1e33c96ac351602a8593ecb64eaedea585c246",
+      "bbox_global": [
+        5,
+        405,
+        416,
+        1224
+      ],
+      "pivot_xy_provisional": [
+        170,
+        529
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_guard_halo_cleaning_required"
+    },
+    {
+      "id": "guarda-direito-alinhado",
+      "file": "guarda-direito-alinhado.png",
+      "sha256": "623d01cf8d4a747936449107140c89853a3cd5d6f7c9c6b55ec2d52be2ebb74b",
+      "bbox_global": [
+        611,
+        401,
+        1021,
+        1220
+      ],
+      "pivot_xy_provisional": [
+        833,
+        535
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "draft_guard_halo_cleaning_required"
+    },
+    {
+      "id": "kael-grupo-alinhado-REJECTED",
+      "file": "kael-grupo-alinhado-REJECTED.png",
+      "sha256": "2c490063d589b9b02e950605561da8bdd0996779f3a540a6e6dc70b6ed312e4d",
+      "bbox_global": [
+        305,
+        746,
+        658,
+        1408
+      ],
+      "pivot_xy_provisional": [
+        491,
+        985
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "rejected_duplicate_kael_better_independent_source_available"
+    },
+    {
+      "id": "aldric-com-trono-REJECTED",
+      "file": "aldric-com-trono-REJECTED.png",
+      "sha256": "c2e356211b6e020b74e16ee9c5550815421beea956d63b76cfb432fb2b39d9db",
+      "bbox_global": [
+        320,
+        259,
+        709,
+        640
+      ],
+      "pivot_xy_provisional": [
+        520,
+        425
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "rejected_trono_pixels_inside_character"
+    },
+    {
+      "id": "trono-halo-residual-REJECTED",
+      "file": "trono-halo-residual-REJECTED.png",
+      "sha256": "0fc6ddb7ba217782e946c2fb7a65539ae8d5b2acd4c4d7535b0952caaf64d782",
+      "bbox_global": [
+        0,
+        73,
+        1024,
+        1536
+      ],
+      "pivot_xy_provisional": null,
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "rejected_background_and_residual_contamination"
+    }
+  ],
+  "piece_count": 5,
+  "neutral_roundtrip_pixel_exact": true,
+  "source_pixels_created_or_painted": 0,
+  "source_pixels_discarded": 0,
+  "alpha_alignment": "unverified_for_actual_joint_deformation",
+  "hidden_anatomy_underlays": "missing",
+  "halo_and_background_contamination": "requires_human_review",
+  "pivots": "provisional",
+  "head_closed_same_image": "not_available_no_eyes_visible",
+  "actual_rig": "pending",
+  "human_visual_approval": false,
+  "video_official": false,
+  "youtube_uploaded": false,
+  "explicit_restriction": "Não usar estes recortes diretamente como rig aprovado."
+}
