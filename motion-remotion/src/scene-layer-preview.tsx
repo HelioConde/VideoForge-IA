@@ -13,7 +13,7 @@ import {AbsoluteFill,Audio,Img,staticFile,useCurrentFrame,useVideoConfig} from '
 import {characterPoseAtFrame,CharacterPreset} from './character-idle';
 import {motionAtFrame} from './cinematic-motion';
 import {videoForgeMotionAtFrame} from './videoforge-motion';
-import {RiggedCharacter,RigManifest} from './mesh-rig';
+import {RiggedCharacter,RigManifest,blinkClosureAtFrame} from './mesh-rig';
 
 export type LayerSceneProps={
   id:string;
@@ -23,6 +23,12 @@ export type LayerSceneProps={
   background:string;
   character:string;
   foreground?:string|null;
+  /** Somente sprite RGBA de PALPEBRAS FECHADAS vindo da mesma cena-mae. */
+  eyesClosed?:string|null;
+  /** Centros de piscada em quadros, sem tocar na opacidade do rosto. */
+  blinkFrames?:number[];
+  /** Somente objetos extraidos e com remocao da base comprovada. */
+  animatedObjects?:Array<{src:string;approvedNoDuplicate:boolean;attachedToCharacter?:boolean}>;
   silence:string;
   layerSourceHash:string;
   /** Ativado somente com sprites RGBA verificados, sem partes duplicadas. */
@@ -37,11 +43,16 @@ const imgStyle:React.CSSProperties={
 };
 
 export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
-  id,scene,durationFrames,preset,background,character,foreground,silence,rig,draftPreview,
+  id,scene,durationFrames,preset,background,character,foreground,
+  eyesClosed,blinkFrames,animatedObjects,silence,rig,draftPreview,
 })=>{
   const frame=useCurrentFrame();
   const {fps}=useVideoConfig();
   const camera=motionAtFrame(frame,0,durationFrames,'establish',id,'cinematica');
+  // Camara acompanha o movimento, mas NAO substitui camadas animaveis.
+  const cameraTransform='translate('+(camera.panX*.30).toFixed(3)+'px,'+
+    (camera.panY*.25).toFixed(3)+'px) scale('+
+    (1+(camera.zoom-1)*.30).toFixed(5)+')';
   const characterPose=characterPoseAtFrame({
     role:'front_character',id:id,coverage:0.3815,
     contactRisk:.12,heroRisk:0,heightFraction:.72,
@@ -49,18 +60,19 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
   });
   // A engine anterior aplica cues deterministas por frame a cada PNG.
   const roofMotion=videoForgeMotionAtFrame(
-    [{id:'foreground-roof',motion:'idle',start:0.04,end:.96,distance:16}],
+    [{id:'foreground-real',motion:'idle',start:0.04,end:.96,distance:1.5}],
     frame,0,durationFrames
   );
   // Camera condividida para composicao, movimento proprio para personagem
   // e primeiro plano. Nada de Math.random ou sprites substitutos.
-  const cameraTransform='translate('+
-    camera.panX.toFixed(3)+'px,'+camera.panY.toFixed(3)+
-    'px) scale('+camera.zoom.toFixed(5)+')';
   const characterTransform='translate('+
     characterPose.translateX.toFixed(3)+'px,'+
     characterPose.translateY.toFixed(3)+'px) rotate('+
     characterPose.rotateDeg.toFixed(4)+'deg)';
+  // Nada de opacidade no rosto. A camada de olhos FECHADOS e sobreposta
+  // apenas por 3-5 frames, nunca usada em crossfade com a face-base.
+  const centers=blinkFrames??[Math.round(fps*2.8),Math.round(fps*6.0)];
+  const blink=eyesClosed ? blinkClosureAtFrame(frame,centers) : 0;
   const cameraGlow=Math.max(0,Math.min(.045,camera.fill));
   return <AbsoluteFill style={{overflow:'hidden',backgroundColor:'#100e1c'}}>
     {/* A imagem 2:3 permanece completa, com extensão desfocada apenas
@@ -82,6 +94,17 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
         ...imgStyle,zIndex:20,transform:characterTransform,
         transformOrigin:'50% 85%',
       }}/>}
+      {eyesClosed && !rig && blink>0 && <Img src={staticFile(eyesClosed)} style={{
+        ...imgStyle,zIndex:25,
+        transform:characterTransform,transformOrigin:'50% 85%',
+        opacity:blink,
+      }}/>} 
+      {(animatedObjects??[]).filter(x=>x.approvedNoDuplicate).map((obj,i)=><Img
+        key={i} src={staticFile(obj.src)} style={{
+          ...imgStyle,zIndex:40+i,
+          transform:obj.attachedToCharacter?characterTransform:roofMotion.transform,
+          transformOrigin:obj.attachedToCharacter?'50% 85%':'50% 90%',
+        }}/>) }
       {foreground && <Img src={staticFile(foreground)} style={{
         ...imgStyle,zIndex:50,
         transform:roofMotion.transform,
