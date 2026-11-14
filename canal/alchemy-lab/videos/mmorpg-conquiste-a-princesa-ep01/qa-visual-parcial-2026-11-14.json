@@ -77,7 +77,8 @@
     "Recompor todos sprites em pose neutra e comparar diff.png com imagem-mãe antes de qualquer rig",
     "Não liberar produção MP4 oficial enquanto rig independente e QA não forem concluídos",
     "Partes RGBA individuais em produção; candidato Kael gerado por edição da mesma mãe, mas rig por malha e QA de overdraw ainda faltam",
-    "Preferir assets alinhados diretamente à mãe, conforme rig-selecao-artes-c01.json; proibir uso dos candidatos antigos em escala divergente."
+    "Preferir assets alinhados diretamente à mãe, conforme rig-selecao-artes-c01.json; proibir uso dos candidatos antigos em escala divergente.",
+    "No plano C01-P04, a arte mãe já possui lanças cruzadas; iniciar com lanças descruzadas exigiria áreas ocultas ausentes. Manter animação bloqueada até recuperar uma pose de origem válida sem novas imagens."
   ],
   "status": {
     "assetsDrawnPartially": true,
@@ -95,13 +96,16 @@
     "visual_qa": "pending_12_other_scenes_and_rejected_02_03",
     "production_approval": false
   },
-  "latestQaRevision": "2026-11-14-existing-asset-alignment-v2",
+  "latestQaRevision": "2026-11-14-existing-pixel-partitions-v3",
   "repositoryArchive": {
-    "pngCount": 56,
+    "pngCount": 71,
     "externalChatZipPngCount": 8,
     "externalChatZipUploaded": false,
     "allLocatedIn": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets",
-    "imageGenerationCallsDuringRefinement": 0
+    "imageGenerationCallsDuringRefinement": 0,
+    "oldPNGCount": 57,
+    "guardArmPieces": 8,
+    "kingParts": 6
   },
   "preferredRigInventory": "rig-selecao-artes-c01.json",
   "alignmentCorrections": [
@@ -156,6 +160,46 @@
     "fullVideoMp4Completed": false,
     "qaHumanApproved": false,
     "rigThreeArticulated": false,
-    "youtubeUploaded": false
+    "youtubeUploaded": false,
+    "underlaysReady": false
+  },
+  "latestSegmentation": {
+    "guardArms": {
+      "workflow_run": 43613024544,
+      "source": "assets/cena-01/rig-drafts/guardas-refinados/",
+      "folder": "assets/cena-01/rig-drafts/guard-arm-parts/",
+      "pngCount": 8,
+      "roundtripExact": true,
+      "handSpearOverlapPixels": {
+        "left": 458,
+        "right": 369
+      },
+      "rightForearmSpearOverlapPixels": 108,
+      "underlayReady": false,
+      "rigApproved": false
+    },
+    "guardRigQA": {
+      "workflow_run": 43613403255,
+      "path": "qa-guardas-articulacoes-c01.json",
+      "shaFilesChecked": 10,
+      "kinematicGraph": "rig-guardas-articulacoes-c01.json",
+      "motionLocked": true,
+      "spearsAlreadyCrossedInMother": true
+    },
+    "aldric": {
+      "workflow_run": 43613662737,
+      "folder": "assets/cena-01/rig-drafts/aldric-partes/",
+      "pngCount": 6,
+      "roundtripExact": true,
+      "headAndCrownTogether": true,
+      "mouthVisemes": false,
+      "hiddenGeometryReady": false,
+      "rigApproved": false
+    },
+    "costSafety": {
+      "imageGenerationCalls": 0,
+      "renderMvpNoiseReducedForAlchemyAssets": true,
+      "noPaidNewModels": true
+    }
   }
 }
