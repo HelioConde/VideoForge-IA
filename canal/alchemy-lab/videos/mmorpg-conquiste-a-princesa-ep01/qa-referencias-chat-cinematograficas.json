@@ -1,0 +1,55 @@
+{
+  "schema": "videoforge/chat-approved-cinematic-source-readiness/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "feedback": "O estilo visual mostrado no chat recebeu aprovação estética; não significa aprovação de rigs.",
+  "status": "BOTH_SOURCE_FILES_PENDING_UPLOAD",
+  "preferred_style_confirmed": true,
+  "original_source_files_sha_verified": 0,
+  "original_source_files_total": 2,
+  "source_has_final_9_16_aspect_not_old_2_3": true,
+  "new_image_generation_calls": 0,
+  "generated_or_modified_pixels": 0,
+  "official_character_bible_updated": false,
+  "official_37_shots_approved": false,
+  "shot_independent_mothers_approved": false,
+  "render_official_allowed": false,
+  "youtube_uploaded": false,
+  "samples": [
+    {
+      "id": "ref-kael-close-c12",
+      "expected_repo_path": "assets/referencias/chat-aprovadas/kael-close-salao.png",
+      "expected_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+      "expected_bytes": 2491063,
+      "expected_dimensions_px": [
+        941,
+        1672
+      ],
+      "status": "UPLOAD_PENDING",
+      "issues": [
+        "SOURCE_FILE_NOT_UPLOADED"
+      ],
+      "source_original_verified": false,
+      "approved_for_shot_mother": false,
+      "approved_as_rig": false
+    },
+    {
+      "id": "ref-elara-close-c12",
+      "expected_repo_path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "expected_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "expected_bytes": 2642634,
+      "expected_dimensions_px": [
+        941,
+        1672
+      ],
+      "status": "UPLOAD_PENDING",
+      "issues": [
+        "SOURCE_FILE_NOT_UPLOADED"
+      ],
+      "source_original_verified": false,
+      "approved_for_shot_mother": false,
+      "approved_as_rig": false
+    }
+  ],
+  "next_action": "Importar PNGs idênticos; conciliar nova aparência com bíblia antiga, inspecionar continuidade e nunca aprovar rig por SHA de referência."
+}
