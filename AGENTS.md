@@ -34,6 +34,10 @@ Ler [docs/RIG-MALHA-2D.md](docs/RIG-MALHA-2D.md) antes de preparar sprites ou al
 
 Consultar [docs/PREPARAR-RIG-CANDIDATO.md](docs/PREPARAR-RIG-CANDIDATO.md) e `canal/<id>/videos/<video-id>/rig-plan.json` antes de alterar máscaras. `videoforge/rig_candidate.py` **nao** executa SAM2/LaMa nem reconstrói anatomia escondida; apenas gera recortes e previews de risco. Na cena piloto o desenho inclui **segundo olho parcialmente visível** e capa frontal/traseira; separar as partes evita duplicações. Sempre manter `human_review=false` no rascunho; não renomear seu artifact para `rig-...` nem alimentar o workflow de MP4 final sem correção de arte, checagem de oclusão e aprovação humana. O workflow `rig-candidate.yml` não chama API de IA nem publica vídeos.
 
+## Regra permanente — não limitar cenas por número
+
+Nunca acrescentar `MAX_SCENES`, faixas como `3 <= len(scenes) <= 24`, ou checagens exigindo exatamente 10 cenas nos geradores de vídeo. O número de cenas é consequência do **roteiro e dos cortes visuais necessários**, não um teto arbitrário. Validar que a lista é não vazia, caminhos e conteúdo de cada cena, direitos, tempo final do formato, QA e uso de recursos; jamais truncar ou descartar cenas automaticamente para caber em número máximo. Dividir trabalhos em lotes técnicos quando necessário preservando a ordem e o conteúdo, sem limitar o número total de cenas. Orçamento de geração de imagens, quotas de APIs, timeout e limites de duração do Shorts permanecem controles separados e não podem ser burlados.
+
 ## Objetivo inicial
 
 Entregar e comprovar um vídeo MP4 vertical do Otaku Multicena com
