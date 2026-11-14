@@ -138,7 +138,7 @@ def verify_alpha_sweep(head_alpha:Image.Image,
     })
     return report
 
-def _load_rgba(episode:Path,definition:dict)->Image.Image:
+def _load_rgba(episode:Path,definition:dict,canvas:tuple[int,int]=CANVAS)->Image.Image:
     """Load actual approved crop from one shot after SHA and IHDR validation."""
     from .cinematic_shot_assets import _file_from_rel, _png_valid
     if not isinstance(definition,dict):
@@ -152,14 +152,14 @@ def _load_rgba(episode:Path,definition:dict)->Image.Image:
     if (not isinstance(bbox,list) or len(bbox)!=4
             or any(type(v) is not int for v in bbox)
             or bbox[0]<0 or bbox[1]<0 or bbox[2]<=0 or bbox[3]<=0
-            or bbox[0]+bbox[2]>CANVAS[0] or bbox[1]+bbox[3]>CANVAS[1]):
+            or bbox[0]+bbox[2]>canvas[0] or bbox[1]+bbox[3]>canvas[1]):
         raise VideoForgeError("CINEMATIC_EYE_BBOX_INVALID")
     path=_file_from_rel(episode,rel)
     if not _png_valid(path,sha,True,(bbox[2],bbox[3])):
         raise VideoForgeError("CINEMATIC_EYE_PNG_SHA_OR_RGBA_MISMATCH")
     with Image.open(path) as im:
         crop=im.getchannel("A").copy()
-    full=Image.new("L",CANVAS,0)
+    full=Image.new("L",canvas,0)
     full.paste(crop,(bbox[0],bbox[1]))
     return full
 
@@ -200,6 +200,10 @@ def audit_existing_eye_assets(episode:Path,shot_id:str,
     if not isinstance(masks,dict) or set(masks)!=set(EYE_SIDES):
         raise VideoForgeError("CINEMATIC_EYE_AUDIT_TWO_SAFE_MASKS_REQUIRED")
     # Two manually reviewed eye masks must be linked to their own mother.
+    from .cinematic_shot_assets import validate_shot_canvas
+    native_canvas=validate_shot_canvas(rig)
+    if character.get("canvas")!=rig.get("canvas"):
+        raise VideoForgeError("CINEMATIC_EYE_ACTOR_CANVAS_MISMATCH")
     prefix="assets/planos/"+shot_id+"/"
     verified={}
     for side,asset in masks.items():
@@ -207,9 +211,9 @@ def audit_existing_eye_assets(episode:Path,shot_id:str,
             raise VideoForgeError("CINEMATIC_EYE_SAFE_MASK_NOT_FROM_OWN_SHOT")
         if asset.get("mother_sha256")!=rig.get("source_sha256"):
             raise VideoForgeError("CINEMATIC_EYE_SAFE_MASK_WRONG_MOTHER")
-        verified[side]=_load_rgba(episode,asset)
-    head=_load_rgba(episode,matching["head-open"])
-    segments={name:_load_rgba(episode,matching[name])
+        verified[side]=_load_rgba(episode,asset,native_canvas)
+    head=_load_rgba(episode,matching["head-open"],native_canvas)
+    segments={name:_load_rgba(episode,matching[name],native_canvas)
               for name in sorted(REQUIRED_PARTS-{"head-open"})}
     report=verify_alpha_sweep(head,segments,verified)
     report["sourceMotherSha256"]=rig.get("source_sha256")
