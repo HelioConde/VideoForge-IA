@@ -82,3 +82,19 @@ Sem esses requisitos, o exportador falha antes de copiar qualquer arquivo e a co
 Testes: `npm run typecheck`, `npm run test:cinematic`, `python -m unittest tests.test_cinematic_remotion_export`. O [workflow de QA do compositor](https://github.com/HelioConde/VideoForge-IA/actions/workflows/qa-cinematic-remotion-renderer.yml) não gera imagens, não renderiza vídeo e não acessa YouTube.
 
 **Estado atual:** o código do compositor e seu contrato de asset estão implementados e o typecheck passou; **nenhuma das 36 tomadas visuais do EDL possui pacote independente de arte+rig aprovado**, portanto o MP4 não foi produzido. Os 71 PNGs anteriores permanecem intactos em `canal/alchemy-lab`. O bloqueio de geração permanece ativo.
+
+
+## Close ocular de Kael — C12-P01
+
+O plano de reação `C12-P01` dura **120 frames** e é um exemplo obrigatório de atuação real do personagem em close. O Remotion mantém **a cabeça, a respiração do corpo, o cabelo, o manto e a câmera imóveis**. Somente as pupilas e pálpebras têm movimentos:
+
+- Frame local 0–4: pupilas na posição neutra.
+- Frames 4–86: olhar se desloca gradualmente de 0 a +12 pixels.
+- Frames 86–119: olhar permanece no extremo, sem girar a cabeça.
+- Pálpebras seguem o mesmo gesto com deslocamento gradual de 0 a +1 pixel após o frame 7.
+
+O programa exige a extração de **quatro PNGs transparentes e independentes** (`pupil-left`, `pupil-right`, `eyelid-left`, `eyelid-right`), além de arte facial sem pupilas duplicadas, esclerótica reconstruída, limites oculares testados e QA humano. Sem isso, o close continuará recusado pelo renderer e pelo exportador.
+
+[Contrato de arte ainda pendente](rig-olhar-kael-c12-p01.json) · [Testes e bloqueios](qa-olhar-kael-c12-p01.json)
+
+**Importante:** a movimentação do código foi testada, mas ainda **não existe material visual aprovado para executar esse close**. Não gerar imagens sem uma nova autorização. Não declarar esse plano renderizado.
