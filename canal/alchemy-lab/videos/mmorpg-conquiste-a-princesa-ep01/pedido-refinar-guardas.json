@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/guard-refinement-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "only_existing_pixels": true,
+  "image_generation_calls": 0,
+  "human_visual_approval": false,
+  "youtube_upload": false,
+  "source": "assets/cenas-mae/cena-01.png",
+  "source_role": "exact RGB pixels",
+  "mask_guide": "assets/cena-01/candidatos/character-group-REJECTED.png",
+  "mask_guide_role": "alpha segmentation only; never use its RGB",
+  "target": "assets/cena-01/rig-drafts/guardas-refinados",
+  "quality": "candidate only, original spear intersections and hidden hands uncorrected"
+}
