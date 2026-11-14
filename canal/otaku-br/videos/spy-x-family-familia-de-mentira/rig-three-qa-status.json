@@ -7,11 +7,11 @@
   "reference_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
   "latest_workflow": {
     "name": "rig-three-anya-hair-underlay.yml",
-    "run_id": 43597256686,
+    "run_id": 43597972939,
     "conclusion": "success",
-    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43597256686",
-    "artifact_id": 14114747015,
-    "artifact_name": "vf-anya-hair-underlay-candidate-43597256686"
+    "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43597972939",
+    "artifact_id": 14115058750,
+    "artifact_name": "vf-anya-hair-underlay-candidate-43597972939"
   },
   "earlier_artifacts": {
     "isolation_run": 43589190537,
@@ -55,7 +55,7 @@
   "rig_animado_aplicado": false,
   "video_oficial_do_programa": false,
   "youtube_uploaded": false,
-  "status": "neutral_underlay_qa_passed_threecanvas_synthetic_smoke_passed_human_art_review_pending",
+  "status": "cropped_candidate_assets_packaged_synthetic_threecanvas_qa_passed_human_visual_and_real_anya_motion_pending",
   "provisional_neck_pivot_review": {
     "source": "local exploratory OpenCV geometry check; NOT a ThreeCanvas render or official motion QA",
     "pivot_candidate_original_canvas": [
@@ -139,11 +139,41 @@
     "pinned_root_row": 0,
     "deterministic_per_side_sway": true,
     "current_ThreeCanvas_smoke": {
-      "run_id": 43597495991,
+      "run_id": 43597642529,
       "status": "success",
-      "purpose": "synthetic-only renderer code check",
-      "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43597495991"
+      "purpose": "synthetic ThreeCanvas SWANGLE tests, including independent left/right phases with pinned roots",
+      "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43597642529"
     },
     "anya_real_art_ThreeCanvas_rendered": false
+  },
+  "rig_candidate_crop_package": {
+    "source_run_id": 43597972939,
+    "artifact_id": 14115058750,
+    "package_path_inside_artifact": "rig-candidate/",
+    "sprite_count": 6,
+    "sprites": [
+      "body-no-head.png",
+      "head-open.png",
+      "head-closed.png",
+      "hair-front-left.png",
+      "hair-front-right.png",
+      "hand.png"
+    ],
+    "manifest": "rig-candidate/rig.json",
+    "each_rgba_crop_source_bbox_verified": true,
+    "alpha_and_visible_rgb_crop_roundtrip_exact": true,
+    "original_head_closed_open_bboxes_equal": true,
+    "approved_blink_pixel_difference_count": 21365,
+    "mesh_grid": "7x9",
+    "root_pinned_row": 0,
+    "neck_pivot": [
+      515,
+      1429
+    ],
+    "neck_pivot_status": "provisional_not_human_verified",
+    "official_validator_did_reject": "THREE_RIG_HUMAN_REVIEW_REQUIRED",
+    "other_characters_static_background_compositor_pending": true,
+    "human_review_approved": false,
+    "real_character_ThreeCanvas_rendered": false
   }
 }
