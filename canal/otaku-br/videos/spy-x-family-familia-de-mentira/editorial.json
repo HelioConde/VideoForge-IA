@@ -88,7 +88,18 @@
       "Yor Forger"
     ],
     "cenario": "Apartamento dos Forger e Academia Eden em ilustração anime 2D consistente; variações de câmera com continuidade visual",
-    "referencias": [],
+    "referencias": [
+      {
+        "kind": "character_bible",
+        "status": "generated_technical_qa_passed",
+        "source": "gh_actions_videoforge_codex_proxy",
+        "image_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43555226353/artifacts/14097349545",
+        "run_id": 43555226353,
+        "sha256": "6021f2b2360808c20fc77a55c2b9fd37f19ea36787d2ab1c3e9dce696aded8dd",
+        "size": "1024x1536",
+        "human_approval": false
+      }
+    ],
     "consistencia_verificada": false,
     "plano_visual": "roteiro.json > scenes[].visual_direction",
     "regras": [
@@ -98,7 +109,7 @@
       "Casa dos Forger e Academia Eden com composição, paleta e direção de luz consistentes",
       "Movimentos suaves com rig por camadas sem fendas, transparências ou duplicação de sprites"
     ],
-    "estado": "preview_vetorial_provisorio_sem_sprites_rgba_da_franquia",
+    "estado": "referencia_visual_real_gerada_pendente_camadas_rgba",
     "documentacao_animacao": "docs/PADRAO-ANIMACAO-POR-CAMADAS.md"
   },
   "seo": {
@@ -191,7 +202,16 @@
       "cenas": 16,
       "proxy_configuracao_presente": true,
       "nota": "Execucao oficial bloqueada antes de geracao de artes; nenhum novo MP4 oficial, nenhuma publicacao."
-    }
+    },
+    "arte_ref_run_id": 43555226353,
+    "etapas_parciais": [
+      {
+        "etapa": "art_bible",
+        "status": "technical_verified",
+        "run_id": 43555226353,
+        "nota": "Uma imagem real criada pelo proxy, não uma cena inteira nem material aprovado."
+      }
+    ]
   },
   "qa": {
     "aprovado_tecnicamente": true,
@@ -223,6 +243,7 @@
     "Revisão editorial de 13/11/2026: roteiro renovado para 16 cenas com gancho sobre Anya, título, descrição, tags e plano visual. A versão renderizada em 104,782s é anterior à revisão; não descrever esse MP4 como atualizado.",
     "Execucao real #43545398967 gerou MP4 vertical de 131.136s com 16 cenas, movimentos de cabeca, piscada, roupas e cabelo por camadas no Remotion; imagens originais de anime NAO foram geradas. Arte final/narracao natural pendentes. Sem upload YouTube.",
     "Regra nº 1 (14/11/2026): workflow experimental renderizado no GitHub Actions não é vídeo oficial do programa. Reclassificado para preview_tecnico_nao_oficial, status assets_pendentes; o artefato é mantido somente para auditoria.",
-    "14/11/2026: preflight oficial #43553752100 executou 11 testes (OK), bloqueou geracao do MP4 por ausência de pipeline/agents/artes RGBA. Reporta cinco blockers; não substituir por arquivo experimental."
+    "14/11/2026: preflight oficial #43553752100 executou 11 testes (OK), bloqueou geracao do MP4 por ausência de pipeline/agents/artes RGBA. Reporta cinco blockers; não substituir por arquivo experimental.",
+    "14/11/2026: geração REAL da prancha Loid/Anya/Yor via módulo reutilizável production_art.py no GitHub; PNG 1024x1536 SHA validado, inspeção visual interna sem aprovação humana. Não é produção final."
   ]
 }
