@@ -231,3 +231,18 @@ O montador legado `videoforge/production_assemble.py` agora **recusa este episó
 O workflow [VideoForge — auditar timeline cinematográfica](https://github.com/HelioConde/VideoForge-IA/actions/workflows/qa-cinematic-edl.yml) verifica timeline, SHA, disponibilidade e bloqueios, publicando **somente JSON**. Se a timeline já existe, a reexecução aceita apenas conteúdo **idêntico**, sem sobrescrever silenciosamente alterações. A revisão de arte exige um passo próprio.
 
 **Importante:** nenhuma nova imagem com IA, nenhum MP4 oficial de 163 segundos e nenhuma publicação no YouTube ocorreram nesta etapa. O arquivo `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo. Antes de futuras imagens focadas em rostos, as referências oficiais de Kael e Elara precisam ser reconciliadas com a bíblia antiga, para não trocar cabelo, roupa ou rosto entre planos.
+
+
+## 16. Rig independente dos olhos — tomada C12-P01
+
+A direção original da [tomada C12-P01](direcao-rig-remotion.json) exige, durante 120 frames (3990 a 4109, 30 fps), **cabeça e câmera rigorosamente estáticas**, enquanto as pupilas de Kael se deslocam 12 pixels no eixo X e as pálpebras acompanham 1 pixel. O programa não pode fingir esse olhar movendo o PNG inteiro.
+
+Implementação concluída no código:
+- `motion-remotion/src/eye-gaze-timeline.ts` aplica interpolação determinística, por frame local, de **0 até +12px** para as pupilas e **0 até +1px** para as pálpebras, de acordo com os keyframes do roteiro.
+- `motion-remotion/src/rig-three-scene.tsx` suporta camadas transparentes independentes `pupil-left`, `pupil-right`, `eyelid-left` e `eyelid-right`. No modo exclusivo desse plano, congela corpo, cabeça e **todas as malhas do cabelo/manto** enquanto move somente essas camadas.
+- `motion-remotion/src/cinematic-timeline.ts` bloqueia a renderização do plano se faltar qualquer parte ocular, se a cabeça girar, se houver piscadas genéricas, se o rosto ainda contiver as pupilas duplicadas ou se faltarem as regiões ocultas do branco dos olhos.
+- `videoforge/cinematic_eye_motion.py` e `videoforge/cinematic_remotion_export.py` exigem os mesmos keyframes e aprovações no Python **antes de exportar os assets** ao Remotion.
+
+O contrato de arte está em [rig-olhar-kael-c12-p01.json](rig-olhar-kael-c12-p01.json). Ele está explicitamente marcado como **rascunho**, não como imagem existente ou rig pronto. O [QA automatizado](qa-olhar-kael-c12-p01.json) passou em [42 testes Python](https://github.com/HelioConde/VideoForge-IA/actions/runs/43641372475) e [9 testes Node + TypeScript](https://github.com/HelioConde/VideoForge-IA/actions/runs/43641389882).
+
+**Bloqueios que permanecem:** falta a própria imagem-mãe do close, as quatro partes RGBA recortadas da mesma arte, preenchimento comprovado da esclerótica atrás das pupilas, QA da máscara sem vazamento e aprovação visual. Portanto nenhum MP4 oficial foi renderizado e nenhum PNG novo gerado. O lock `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo.
