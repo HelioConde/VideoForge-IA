@@ -1,10 +1,7 @@
-name: "Otaku BR - Spy x Family (teste de video completo, nao publicar)"
+name: "TESTE TECNICO nao oficial - Spy x Family storyboard"
 on:
+  # Somente demonstracao do compositor; nao valida fluxo de producao.
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'canal/otaku-br/videos/spy-x-family-familia-de-mentira/executar-piloto.json'
 permissions:
   contents: read
   packages: read
