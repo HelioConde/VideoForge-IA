@@ -1,0 +1,1264 @@
+{
+  "schema": "videoforge/cinematic-shot-edl/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "source": "direcao-cinematografica-planos.json",
+  "format": {
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "totalFrames": 4890,
+    "durationSeconds": 163.0
+  },
+  "sourceArtworkFormat": {
+    "width": 1024,
+    "height": 1536,
+    "fit": "cover_no_stretch"
+  },
+  "shotCount": 37,
+  "blackShots": 1,
+  "artRequiredShots": 36,
+  "artAndRigApprovedShots": 0,
+  "unapprovedShots": 36,
+  "visualReferenceConflict": true,
+  "noImageGenerationLock": true,
+  "newImageGenerationCalls": 0,
+  "pixelFilesCreated": 0,
+  "renderOfficialAllowed": false,
+  "youtubeUploaded": false,
+  "status": "pipeline_pendente",
+  "time": "all boundaries are absolute frames, end exclusive, deterministic hard cuts",
+  "shots": [
+    {
+      "id": "C01-P01",
+      "scene": "C01",
+      "startFrame": 0,
+      "endFrameExclusive": 60,
+      "durationFrames": 60,
+      "type": "black",
+      "emotion": "silencio",
+      "focus": "nenhum",
+      "characters": [],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": null,
+      "assetEvidence": {},
+      "status": "black_no_art_required",
+      "rigApproved": false,
+      "renderAllowed": true,
+      "blockers": []
+    },
+    {
+      "id": "C01-P02",
+      "scene": "C01",
+      "startFrame": 60,
+      "endFrameExclusive": 150,
+      "durationFrames": 90,
+      "type": "insert",
+      "emotion": "ameaça",
+      "focus": "espada",
+      "characters": [
+        "carrasco"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C01-P02/scene-mother.png",
+        "background": "assets/planos/C01-P02/background-reconstructed.png",
+        "rig": "assets/planos/C01-P02/rig.json",
+        "qa": "assets/planos/C01-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C01-P03",
+      "scene": "C01",
+      "startFrame": 150,
+      "endFrameExclusive": 240,
+      "durationFrames": 90,
+      "type": "low_angle",
+      "emotion": "humilhação",
+      "focus": "kael",
+      "characters": [
+        "kael",
+        "aldric"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C01-P03/scene-mother.png",
+        "background": "assets/planos/C01-P03/background-reconstructed.png",
+        "rig": "assets/planos/C01-P03/rig.json",
+        "qa": "assets/planos/C01-P03/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C01-P04",
+      "scene": "C01",
+      "startFrame": 240,
+      "endFrameExclusive": 360,
+      "durationFrames": 120,
+      "type": "wide",
+      "emotion": "pressão",
+      "focus": "kael",
+      "characters": [
+        "kael",
+        "aldric",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C01-P04/scene-mother.png",
+        "background": "assets/planos/C01-P04/background-reconstructed.png",
+        "rig": "assets/planos/C01-P04/rig.json",
+        "qa": "assets/planos/C01-P04/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C02-P01",
+      "scene": "C02",
+      "startFrame": 360,
+      "endFrameExclusive": 570,
+      "durationFrames": 210,
+      "type": "close_up",
+      "emotion": "autoridade",
+      "focus": "aldric",
+      "characters": [
+        "aldric"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C02-P01/scene-mother.png",
+        "background": "assets/planos/C02-P01/background-reconstructed.png",
+        "rig": "assets/planos/C02-P01/rig.json",
+        "qa": "assets/planos/C02-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C02-P02",
+      "scene": "C02",
+      "startFrame": 570,
+      "endFrameExclusive": 720,
+      "durationFrames": 150,
+      "type": "close_up",
+      "emotion": "medo contido",
+      "focus": "kael",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C02-P02/scene-mother.png",
+        "background": "assets/planos/C02-P02/background-reconstructed.png",
+        "rig": "assets/planos/C02-P02/rig.json",
+        "qa": "assets/planos/C02-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C03-P01",
+      "scene": "C03",
+      "startFrame": 720,
+      "endFrameExclusive": 810,
+      "durationFrames": 90,
+      "type": "extreme_close_up",
+      "emotion": "lembrança",
+      "focus": "kael.olhos",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C03-P01/scene-mother.png",
+        "background": "assets/planos/C03-P01/background-reconstructed.png",
+        "rig": "assets/planos/C03-P01/rig.json",
+        "qa": "assets/planos/C03-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C03-P02",
+      "scene": "C03",
+      "startFrame": 810,
+      "endFrameExclusive": 930,
+      "durationFrames": 120,
+      "type": "match_cut",
+      "emotion": "desorientação",
+      "focus": "kael",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C03-P02/scene-mother.png",
+        "background": "assets/planos/C03-P02/background-reconstructed.png",
+        "rig": "assets/planos/C03-P02/rig.json",
+        "qa": "assets/planos/C03-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C04-P01",
+      "scene": "C04",
+      "startFrame": 930,
+      "endFrameExclusive": 1050,
+      "durationFrames": 120,
+      "type": "over_shoulder",
+      "emotion": "imersão",
+      "focus": "kael",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C04-P01/scene-mother.png",
+        "background": "assets/planos/C04-P01/background-reconstructed.png",
+        "rig": "assets/planos/C04-P01/rig.json",
+        "qa": "assets/planos/C04-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C04-P02",
+      "scene": "C04",
+      "startFrame": 1050,
+      "endFrameExclusive": 1170,
+      "durationFrames": 120,
+      "type": "insert",
+      "emotion": "ruptura",
+      "focus": "monitor",
+      "characters": [],
+      "hudPolicy": "remotion_overlay",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C04-P02/scene-mother.png",
+        "background": "assets/planos/C04-P02/background-reconstructed.png",
+        "rig": "assets/planos/C04-P02/rig.json",
+        "qa": "assets/planos/C04-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C04-P03",
+      "scene": "C04",
+      "startFrame": 1170,
+      "endFrameExclusive": 1320,
+      "durationFrames": 150,
+      "type": "medium",
+      "emotion": "pânico",
+      "focus": "kael",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C04-P03/scene-mother.png",
+        "background": "assets/planos/C04-P03/background-reconstructed.png",
+        "rig": "assets/planos/C04-P03/rig.json",
+        "qa": "assets/planos/C04-P03/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C05-P01",
+      "scene": "C05",
+      "startFrame": 1320,
+      "endFrameExclusive": 1470,
+      "durationFrames": 150,
+      "type": "close_up",
+      "emotion": "despertar",
+      "focus": "kael",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C05-P01/scene-mother.png",
+        "background": "assets/planos/C05-P01/background-reconstructed.png",
+        "rig": "assets/planos/C05-P01/rig.json",
+        "qa": "assets/planos/C05-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C05-P02",
+      "scene": "C05",
+      "startFrame": 1470,
+      "endFrameExclusive": 1590,
+      "durationFrames": 120,
+      "type": "wide",
+      "emotion": "escala do mundo",
+      "focus": "muralhas",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C05-P02/scene-mother.png",
+        "background": "assets/planos/C05-P02/background-reconstructed.png",
+        "rig": "assets/planos/C05-P02/rig.json",
+        "qa": "assets/planos/C05-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C05-P03",
+      "scene": "C05",
+      "startFrame": 1590,
+      "endFrameExclusive": 1740,
+      "durationFrames": 150,
+      "type": "medium",
+      "emotion": "descoberta",
+      "focus": "kael",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "remotion_overlay",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C05-P03/scene-mother.png",
+        "background": "assets/planos/C05-P03/background-reconstructed.png",
+        "rig": "assets/planos/C05-P03/rig.json",
+        "qa": "assets/planos/C05-P03/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C06-P01",
+      "scene": "C06",
+      "startFrame": 1740,
+      "endFrameExclusive": 1920,
+      "durationFrames": 180,
+      "type": "insert",
+      "emotion": "escassez",
+      "focus": "bolsa",
+      "characters": [
+        "kael",
+        "figurantes"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C06-P01/scene-mother.png",
+        "background": "assets/planos/C06-P01/background-reconstructed.png",
+        "rig": "assets/planos/C06-P01/rig.json",
+        "qa": "assets/planos/C06-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C06-P02",
+      "scene": "C06",
+      "startFrame": 1920,
+      "endFrameExclusive": 2070,
+      "durationFrames": 150,
+      "type": "close_up",
+      "emotion": "ironia",
+      "focus": "kael",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "remotion_overlay",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C06-P02/scene-mother.png",
+        "background": "assets/planos/C06-P02/background-reconstructed.png",
+        "rig": "assets/planos/C06-P02/rig.json",
+        "qa": "assets/planos/C06-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C07-P01",
+      "scene": "C07",
+      "startFrame": 2070,
+      "endFrameExclusive": 2190,
+      "durationFrames": 120,
+      "type": "tracking",
+      "emotion": "urgência",
+      "focus": "elara",
+      "characters": [
+        "elara"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C07-P01/scene-mother.png",
+        "background": "assets/planos/C07-P01/background-reconstructed.png",
+        "rig": "assets/planos/C07-P01/rig.json",
+        "qa": "assets/planos/C07-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C07-P02",
+      "scene": "C07",
+      "startFrame": 2190,
+      "endFrameExclusive": 2340,
+      "durationFrames": 150,
+      "type": "low_angle",
+      "emotion": "perigo",
+      "focus": "perseguidores",
+      "characters": [
+        "elara",
+        "mascarado_1",
+        "mascarado_2"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C07-P02/scene-mother.png",
+        "background": "assets/planos/C07-P02/background-reconstructed.png",
+        "rig": "assets/planos/C07-P02/rig.json",
+        "qa": "assets/planos/C07-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C07-P03",
+      "scene": "C07",
+      "startFrame": 2340,
+      "endFrameExclusive": 2460,
+      "durationFrames": 120,
+      "type": "two_shot",
+      "emotion": "pedido de ajuda",
+      "focus": "kael_elara",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C07-P03/scene-mother.png",
+        "background": "assets/planos/C07-P03/background-reconstructed.png",
+        "rig": "assets/planos/C07-P03/rig.json",
+        "qa": "assets/planos/C07-P03/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C08-P01",
+      "scene": "C08",
+      "startFrame": 2460,
+      "endFrameExclusive": 2610,
+      "durationFrames": 150,
+      "type": "over_shoulder",
+      "emotion": "plano improvisado",
+      "focus": "kael",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C08-P01/scene-mother.png",
+        "background": "assets/planos/C08-P01/background-reconstructed.png",
+        "rig": "assets/planos/C08-P01/rig.json",
+        "qa": "assets/planos/C08-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C08-P02",
+      "scene": "C08",
+      "startFrame": 2610,
+      "endFrameExclusive": 2790,
+      "durationFrames": 180,
+      "type": "action",
+      "emotion": "impacto",
+      "focus": "carrinho",
+      "characters": [
+        "kael",
+        "mascarados"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C08-P02/scene-mother.png",
+        "background": "assets/planos/C08-P02/background-reconstructed.png",
+        "rig": "assets/planos/C08-P02/rig.json",
+        "qa": "assets/planos/C08-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C08-P03",
+      "scene": "C08",
+      "startFrame": 2790,
+      "endFrameExclusive": 2940,
+      "durationFrames": 150,
+      "type": "wide",
+      "emotion": "fuga",
+      "focus": "beco",
+      "characters": [
+        "elara",
+        "kael",
+        "mascarados"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C08-P03/scene-mother.png",
+        "background": "assets/planos/C08-P03/background-reconstructed.png",
+        "rig": "assets/planos/C08-P03/rig.json",
+        "qa": "assets/planos/C08-P03/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C09-P01",
+      "scene": "C09",
+      "startFrame": 2940,
+      "endFrameExclusive": 3090,
+      "durationFrames": 150,
+      "type": "close_up",
+      "emotion": "gratidão cautelosa",
+      "focus": "elara",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C09-P01/scene-mother.png",
+        "background": "assets/planos/C09-P01/background-reconstructed.png",
+        "rig": "assets/planos/C09-P01/rig.json",
+        "qa": "assets/planos/C09-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C09-P02",
+      "scene": "C09",
+      "startFrame": 3090,
+      "endFrameExclusive": 3240,
+      "durationFrames": 150,
+      "type": "over_shoulder",
+      "emotion": "mistério",
+      "focus": "kael",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C09-P02/scene-mother.png",
+        "background": "assets/planos/C09-P02/background-reconstructed.png",
+        "rig": "assets/planos/C09-P02/rig.json",
+        "qa": "assets/planos/C09-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C10-P01",
+      "scene": "C10",
+      "startFrame": 3240,
+      "endFrameExclusive": 3390,
+      "durationFrames": 150,
+      "type": "insert",
+      "emotion": "pista",
+      "focus": "broche",
+      "characters": [
+        "elara"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C10-P01/scene-mother.png",
+        "background": "assets/planos/C10-P01/background-reconstructed.png",
+        "rig": "assets/planos/C10-P01/rig.json",
+        "qa": "assets/planos/C10-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C10-P02",
+      "scene": "C10",
+      "startFrame": 3390,
+      "endFrameExclusive": 3600,
+      "durationFrames": 210,
+      "type": "insert",
+      "emotion": "curiosidade",
+      "focus": "kael.maos",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C10-P02/scene-mother.png",
+        "background": "assets/planos/C10-P02/background-reconstructed.png",
+        "rig": "assets/planos/C10-P02/rig.json",
+        "qa": "assets/planos/C10-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C11-P01",
+      "scene": "C11",
+      "startFrame": 3600,
+      "endFrameExclusive": 3720,
+      "durationFrames": 120,
+      "type": "over_shoulder",
+      "emotion": "suspeita",
+      "focus": "guarda_esquerdo",
+      "characters": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C11-P01/scene-mother.png",
+        "background": "assets/planos/C11-P01/background-reconstructed.png",
+        "rig": "assets/planos/C11-P01/rig.json",
+        "qa": "assets/planos/C11-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C11-P02",
+      "scene": "C11",
+      "startFrame": 3720,
+      "endFrameExclusive": 3870,
+      "durationFrames": 150,
+      "type": "close_up",
+      "emotion": "injustiça",
+      "focus": "kael",
+      "characters": [
+        "kael",
+        "guarda_esquerdo"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C11-P02/scene-mother.png",
+        "background": "assets/planos/C11-P02/background-reconstructed.png",
+        "rig": "assets/planos/C11-P02/rig.json",
+        "qa": "assets/planos/C11-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C11-P03",
+      "scene": "C11",
+      "startFrame": 3870,
+      "endFrameExclusive": 3990,
+      "durationFrames": 120,
+      "type": "wide",
+      "emotion": "detenção",
+      "focus": "portao",
+      "characters": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C11-P03/scene-mother.png",
+        "background": "assets/planos/C11-P03/background-reconstructed.png",
+        "rig": "assets/planos/C11-P03/rig.json",
+        "qa": "assets/planos/C11-P03/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C12-P01",
+      "scene": "C12",
+      "startFrame": 3990,
+      "endFrameExclusive": 4110,
+      "durationFrames": 120,
+      "type": "extreme_close_up",
+      "emotion": "reconhecimento",
+      "focus": "kael.olhos",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C12-P01/scene-mother.png",
+        "background": "assets/planos/C12-P01/background-reconstructed.png",
+        "rig": "assets/planos/C12-P01/rig.json",
+        "qa": "assets/planos/C12-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C12-P02",
+      "scene": "C12",
+      "startFrame": 4110,
+      "endFrameExclusive": 4230,
+      "durationFrames": 120,
+      "type": "over_shoulder",
+      "emotion": "revelação",
+      "focus": "kael",
+      "characters": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C12-P02/scene-mother.png",
+        "background": "assets/planos/C12-P02/background-reconstructed.png",
+        "rig": "assets/planos/C12-P02/rig.json",
+        "qa": "assets/planos/C12-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C12-P03",
+      "scene": "C12",
+      "startFrame": 4230,
+      "endFrameExclusive": 4350,
+      "durationFrames": 120,
+      "type": "close_up",
+      "emotion": "surpresa contida",
+      "focus": "elara",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C12-P03/scene-mother.png",
+        "background": "assets/planos/C12-P03/background-reconstructed.png",
+        "rig": "assets/planos/C12-P03/rig.json",
+        "qa": "assets/planos/C12-P03/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C13-P01",
+      "scene": "C13",
+      "startFrame": 4350,
+      "endFrameExclusive": 4500,
+      "durationFrames": 150,
+      "type": "medium",
+      "emotion": "virada da missão",
+      "focus": "kael",
+      "characters": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "hudPolicy": "remotion_overlay",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C13-P01/scene-mother.png",
+        "background": "assets/planos/C13-P01/background-reconstructed.png",
+        "rig": "assets/planos/C13-P01/rig.json",
+        "qa": "assets/planos/C13-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C13-P02",
+      "scene": "C13",
+      "startFrame": 4500,
+      "endFrameExclusive": 4650,
+      "durationFrames": 150,
+      "type": "close_up",
+      "emotion": "medo da morte",
+      "focus": "kael",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "remotion_overlay",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C13-P02/scene-mother.png",
+        "background": "assets/planos/C13-P02/background-reconstructed.png",
+        "rig": "assets/planos/C13-P02/rig.json",
+        "qa": "assets/planos/C13-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C14-P01",
+      "scene": "C14",
+      "startFrame": 4650,
+      "endFrameExclusive": 4740,
+      "durationFrames": 90,
+      "type": "medium",
+      "emotion": "decisão",
+      "focus": "elara",
+      "characters": [
+        "elara",
+        "aldric"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C14-P01/scene-mother.png",
+        "background": "assets/planos/C14-P01/background-reconstructed.png",
+        "rig": "assets/planos/C14-P01/rig.json",
+        "qa": "assets/planos/C14-P01/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C14-P02",
+      "scene": "C14",
+      "startFrame": 4740,
+      "endFrameExclusive": 4830,
+      "durationFrames": 90,
+      "type": "close_up",
+      "emotion": "coragem",
+      "focus": "elara",
+      "characters": [
+        "elara",
+        "aldric"
+      ],
+      "hudPolicy": "none",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C14-P02/scene-mother.png",
+        "background": "assets/planos/C14-P02/background-reconstructed.png",
+        "rig": "assets/planos/C14-P02/rig.json",
+        "qa": "assets/planos/C14-P02/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    },
+    {
+      "id": "C14-P03",
+      "scene": "C14",
+      "startFrame": 4830,
+      "endFrameExclusive": 4890,
+      "durationFrames": 60,
+      "type": "extreme_close_up",
+      "emotion": "cliffhanger",
+      "focus": "kael.olhos",
+      "characters": [
+        "kael"
+      ],
+      "hudPolicy": "remotion_overlay",
+      "transition": "hard_cut",
+      "assetPaths": {
+        "mother": "assets/planos/C14-P03/scene-mother.png",
+        "background": "assets/planos/C14-P03/background-reconstructed.png",
+        "rig": "assets/planos/C14-P03/rig.json",
+        "qa": "assets/planos/C14-P03/qa.json"
+      },
+      "assetEvidence": {},
+      "status": "shot_art_or_rig_pending",
+      "rigApproved": false,
+      "renderAllowed": false,
+      "blockers": [
+        "CANONICAL_VISUAL_REFERENCE_CONFLICT",
+        "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE",
+        "SHOT_BACKGROUND_MISSING",
+        "SHOT_MOTHER_MISSING",
+        "SHOT_RIG_MISSING",
+        "SHOT_VISUAL_QA_MISSING"
+      ]
+    }
+  ]
+}
