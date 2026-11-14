@@ -13,5 +13,7 @@
     "otss": 5,
     "prompts": 36
   },
-  "new_images_permitted": false
+  "new_images_permitted": false,
+  "attempt": 2,
+  "reason": "Corrigida propagacao do erro de quadro preto e integrado --shot-id ao workflow de geracao, executar novamente QA sem imagens"
 }
