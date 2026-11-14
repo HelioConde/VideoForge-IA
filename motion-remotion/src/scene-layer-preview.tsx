@@ -96,12 +96,12 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
     {/* Trilha vinculada ao manifesto: silencio tecnico OU narracao real revisavel. */}
     <Audio src={staticFile(silence)} />
     {draftPreview && <div style={{
-      position:'absolute',zIndex:110,left:25,right:25,bottom:48,
+      position:'absolute',zIndex:110,left:25,right:25,top:46,
       borderRadius:16,textAlign:'center',fontFamily:'sans-serif',
       fontSize:30,fontWeight:800,letterSpacing:1.5,
       color:'#fff',background:'rgba(95,13,13,.83)',padding:'20px 10px',
       textShadow:'0 2px 2px rgba(0,0,0,.8)',
       pointerEvents:'none',
-    }}>RASCUNHO — SEM RECONSTRUCAO/QA VISUAL</div>}
+    }}>RASCUNHO — RIG ARTICULADO PENDENTE</div>}
   </AbsoluteFill>;
 };
