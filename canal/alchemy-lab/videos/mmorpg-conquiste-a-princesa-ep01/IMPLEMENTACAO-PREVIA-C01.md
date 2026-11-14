@@ -29,6 +29,21 @@ tem bindings de diagnóstico. Isso não altera o status de produção dos
 outros planos. C02/C03 continuam rejeitadas. A montagem final de 163 segundos
 continua pendente; `renderOfficialAllowed` e `youtubeUploaded` permanecem falsos.
 
-O workflow arquiva MP4 e QA por run. Resultados, SHA do vídeo e URL do run
-serão registrados após a primeira execução verificada. Nenhum MP4 de produção
-é declarado concluído apenas pela existência deste documento.
+## Execução verificada
+
+O [run 43630118130](https://github.com/HelioConde/VideoForge-IA/actions/runs/43630118130)
+concluiu com sucesso. Entregou MP4 H264/yuv420p de 90 frames, 1080×1920,
+30 fps, sem áudio, com marca d'água. O frame 30 repetido tem hash idêntico;
+14.812 pixels da região de arte mudaram no próprio MP4 entre frames 0 e 30
+com diferença RGB mínima de 8. A suíte geral passou no Linux: 163 testes,
+15 ignorados por condições dos testes existentes.
+
+O [registro de evidência](evidencia-previa-direcao-c01.json) contém hashes,
+commit de origem e merge de teste, artefato, formato e métricas. O artefato
+do Actions tem retenção de 14 dias. Nenhum binário foi incluído neste commit.
+
+A inspeção do assistente nos frames 0 e 89 confirma a execução, mas mostra
+falhas visíveis nos recortes das lanças e nas bordas. A recomposição neutra
+não é exata: 1.075.597 pixels diferem da mãe; erro RGB absoluto médio 11,16/255.
+Parte dessa diferença vem do fundo reconstruído. Não se converteu esse QA
+em aprovação humana ou autorização de vídeo oficial.
