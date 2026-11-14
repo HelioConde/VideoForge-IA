@@ -28,6 +28,8 @@ A nova **[bíblia visual descritiva v2](videos/mmorpg-conquiste-a-princesa-ep01/
 
 **Arquivos originais ainda pendentes no GitHub.** O pacote de dois PNGs pode ser colocado em uploads/alchemy-ep01-refs-estilo.zip para importação automática após conferir hash; isso **não** libera geração, rig nem YouTube. Exibir as referências ao usuário diretamente no chat sempre que estiverem disponíveis.
 
+**Resolução nativa e proteção de closes:** o compositor agora suporta fotos 941×1672 e as mães antigas 1024×1536 sem esticar personagens. Um quadro antigo 2:3 perde 80px de cada lateral ao entrar em 9:16; um close 941×1672 perde apenas 0,25px por lateral. Os olhos, rostos ou objetos focais precisam de `focal_bbox` aprovado, com validação duplicada no Python e Remotion. [Detalhes e testes](videos/mmorpg-conquiste-a-princesa-ep01/PLANO-ARTE-RIG-EP01.md). **Zero arte nova e 36 rigs visuais ainda pendentes.**
+
 ## Nova regra de quadros cinematográficos
 
 **Atuação facial por rig:** o plano `C12-P01` ganhou [controle de pupilas 12px e pálpebras 1px](videos/mmorpg-conquiste-a-princesa-ep01/rig-olhar-kael-c12-p01.json), com cabeça e cabelo estáticos. [QA](videos/mmorpg-conquiste-a-princesa-ep01/qa-olhar-kael-c12-p01.json) aprovado no código; sprites oculares e revisão artística ainda pendentes, sem render.
