@@ -81,18 +81,25 @@ def reconstruct(body, head_open, head_closed, base_open, base_closed,
     repaired=cv2.cvtColor(repaired,cv2.COLOR_BGR2RGB)
     new_base=base_open.copy()
     new_base[:,:,:3][hair_alpha]=repaired[hair_alpha]
-    # The source scene is RGBA with an opaque plateau of alpha=254,
-    # NOT 255. A literal 255 test left the ENTIRE underlay transparent.
-    # Rebuild only the highest-alpha plateau, never translucent edges.
+    # Source artwork peaks at alpha=254 rather than 255. We use every
+    # fully opaque source pixel, PLUS a narrow 7px inward edge band where
+    # source alpha is 253. This fills cracks revealed by independent hair
+    # movement without exposing the hidden art across the entire face.
+    # An external or large inpainted patch is NOT authorized by this mask.
     source_max_alpha=int(head_open[:,:,3].max())
     if source_max_alpha<250:
         raise VideoForgeError("RIG_HAIR_UNDERLAY_SOURCE_OPACITY_UNSAFE")
-    fully_opaque_source=hair_alpha & (head_open[:,:,3]==source_max_alpha)
-    actual_underlay_pixels=int(np.count_nonzero(fully_opaque_source))
-    if actual_underlay_pixels<10000:
-        raise VideoForgeError("RIG_HAIR_UNDERLAY_NO_VISIBLE_RECONSTRUCTION")
+    distance=cv2.distanceTransform(hair_alpha.astype(np.uint8),
+                                    cv2.DIST_L2,3)
+    source_alpha=head_open[:,:,3]
+    opaque_core=hair_alpha & (source_alpha==source_max_alpha)
+    near_edge=hair_alpha & (source_alpha==source_max_alpha-1) & (distance<=7)
+    source_reconstructed=opaque_core|near_edge
+    actual_underlay_pixels=int(np.count_nonzero(source_reconstructed))
+    if actual_underlay_pixels<10000 or int(np.count_nonzero(near_edge))<1000:
+        raise VideoForgeError("RIG_HAIR_UNDERLAY_NO_VISIBLE_EDGE_RECONSTRUCTION")
     new_base[:,:,3][hair_alpha]=np.where(
-        fully_opaque_source[hair_alpha],source_max_alpha,0).astype(np.uint8)
+        source_reconstructed[hair_alpha],source_alpha[hair_alpha],0).astype(np.uint8)
     new_closed=base_closed.copy()
     new_closed[:,:,:3][hair_alpha]=repaired[hair_alpha]
     new_closed[:,:,3][hair_alpha]=new_base[:,:,3][hair_alpha]
@@ -128,6 +135,9 @@ def reconstruct(body, head_open, head_closed, base_open, base_closed,
         "hair_mask_pixels":int(hair_alpha.sum()),
         "underlay_pixels":actual_underlay_pixels,
         "source_max_alpha":source_max_alpha,
+        "edge_band_width_pixels":7,
+        "edge_band_source_alpha":source_max_alpha-1,
+        "edge_band_underlay_pixels":int(np.count_nonzero(near_edge)),
         "original_visible_pixels_changed_outside_repaired_areas":0,
         "approved_blink_preserved":True,
     }
@@ -257,6 +267,8 @@ def produce(original_dir:Path,corrected_dir:Path,hair_dir:Path,dest:Path)->dict:
         "hair_mask_pixel_count":result["hair_mask_pixels"],
         "source_opaque_alpha_plateau":result["source_max_alpha"],
         "actually_opaque_underlay_pixel_count":result["underlay_pixels"],
+        "near_opaque_edge_band_pixels":result["edge_band_underlay_pixels"],
+        "edge_band_width_px":result["edge_band_width_pixels"],
         "stranded_shoulder_hair_pixels_reparented":result["fragment_pixels"],
         "left_fragment_pixels":result["fragment_left"],
         "right_fragment_pixels":result["fragment_right"],
