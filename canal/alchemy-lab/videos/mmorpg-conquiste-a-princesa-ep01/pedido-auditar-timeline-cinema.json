@@ -11,6 +11,6 @@
   "visual_shots": 36,
   "initial_black_shot": 1,
   "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon",
-  "revision": 10,
-  "reason": "Auditar suporte subpixel das pupilas no Remotion e inventariar 14 cenas maes com SHA para 37 tomadas, sem gerar imagens"
+  "revision": 11,
+  "reason": "Reexecutar QA de underlay subpixel e inventario de 14 fontes apos corrigir chave do teste"
 }
