@@ -48,6 +48,19 @@ A troca `character-main.png` ↔ `character-eyes-closed-safe.png` exige **posiç
 
 Cabeça e corpo separados só podem ter movimento **independente** quando existirem sprites RGBA reais, corpo **sem a cabeça**, cabeça aberta/fechada consistente e pivot validado; sem estes assets, o vídeo de teste usa microanimação do corpo/conjunto e `independent_head_motion_active=false`. Nunca mostrar falsamente um rig individual. O movimento deve terminar e começar com neutralidade antes/depois dos cortes. Ver `motion-remotion/src/blink-motion-sync.ts`.
 
+## REGRA DE RIG REAL — movimento interno, NÃO PNG inteiro
+
+Quando o usuário solicitar movimento de cabeça, cabelo, roupa, capa, braços ou objetos (como na pesquisa detalhada de 14/11/2026), a implementação oficial deve usar **Remotion ThreeCanvas + malhas reais e partes independentes**. O protótipo de character idle, pan da câmera, zoom, filtros FFmpeg e o movimento de personagem achatado são apenas prévias legadas, nunca satisfazem o requisito de rig articulado.
+
+1. **Arte canônica:** usar cena-mãe, background limpo, corpo sem cabeça, cabeça aberta/fechada, mechas e tecido/objetos SEPARADOS. Todas as peças RGBA vêm da mesma referência, coordenadas originais e hashes verificáveis.
+2. **Animação:** pivô no pescoço, máximo ±2° no MVP, olhos como duas versões da MESMA cabeça com só os olhos alterados, malha 7x9 ou similar com vértices superiores fixos e deformação suave nas pontas. Movimento calculado exclusivamente com useCurrentFrame(), sem useFrame()/requestAnimationFrame, relógio ou física de estado acumulado.
+3. **Transições:** quadro de troca possui pose/pivô iguais. Easing para neutro e retorno gradual, evitando salto perceptível.
+4. **QA:** render de pose neutra deve recompor a arte original com tolerâncias e inspeção visual; SHA, RGBA, bbox, z-index, ausência de duplicação de rosto/capa/cabelo e revisão humana são obrigatórios. Se faltar qualquer sprite ou QA, rig pendente, vídeo não oficial.
+5. **Runner:** nova imagem pré-compilada GHCR rig-three-remotion4-v1, workflow normal do GitHub Actions com --gl=swangle --concurrency=1 e sem modo private. Preservar runner e workflows legados isolados para não comprometer produções anteriores.
+6. **Não inventar assets:** não aplicar capa/espada de aventureiro em Anya ou outros personagens que não os possuam. O smoke 43580456827 usa figuras sintéticas e **não** é vídeo de canal. O primeiro vídeo real com este motor somente após gerar e validar head/body/hair/props da cena 01.
+
+Ver documentação: docs/RIG-THREE-MALHA.md. O modelo permanece operacional=false até QA real do vídeo por malha.
+
 ## Instruções obrigatórias para cada tarefa
 
 **Ler nesta ordem, antes de pesquisar ou produzir qualquer vídeo:** `README.md`, `AGENTS.md`, `docs/ARQUITETURA.md`, `docs/REGRAS-EDITORIAIS.md`, `canal/README.md`, `canal/<id>/README.md`, **`canal/<id>/ESTRATEGIA.md`**, `canal/<id>/canal.json`, histórico e reservas do canal e, se útil, `docs/referencias/CATALOGO-CURSOS-YOUTUBE.md` e `docs/referencias/GUIA-OFICIAL-YOUTUBE-CREATORS.md` (para pesquisa, Analytics, SEO, Shorts, direitos, classificação infantil e IA) e **`docs/CODEX-PROXY-ACTIONS.md` antes de qualquer trabalho envolvendo ferramentas de IA, Go ou Actions**.
