@@ -1,0 +1,70 @@
+{
+  "schema": "videoforge/rig-three-art-plan/v1",
+  "canonical_manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "reference_artifact_run_id": 43560159589,
+  "reference_artifact_name": "vf-cena-mae-spy-family-cena-01-43560159589",
+  "reference_file": "character-main.png",
+  "reference_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
+  "scene_mother_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "purpose": "Preparar dois sprites candidatos do mesmo personagem, SEM nova arte independente; nao afirmar rig aprovado",
+  "source_image_rules": [
+    "usar SOMENTE a imagem RGBA original como base de edicao",
+    "preservar cor, traco, escala, pose, geometria e pixel visivel",
+    "personagem-alvo Anya grande no terco INFERIOR, nunca Anya pequena do painel superior",
+    "todo o resto e transparente",
+    "PNG RGBA com mesmo canvas e posicao"
+  ],
+  "steps": [
+    {
+      "id": "head-open",
+      "output": "head-open-candidate.png",
+      "roi": [
+        185,
+        893,
+        820,
+        1518
+      ],
+      "prompt": "EDITE EXATAMENTE A IMAGEM RGBA REFERENCIA QUE ENVIEI. EXTRAIA SOMENTE A CABECA COMPLETA DA ANYA GRANDE, situada na parte INFERIOR da imagem (aprox x 200 a 800, y 900 a 1510), inclusive testa, cabelo rosa, franja, orelhas/aderecos, rosto ORIGINAL, pescoco ate a base da cabeca; todas as partes visiveis alinhadas no MESMO canvas 1024x1536. Retire COMPLETAMENTE o corpo/roupa, maos, demais personagens da parte superior e laterais e TODO o ambiente: area removida com alfa TRANSPARENTE REAL. Nao redesenhe, nao mude a expressao ou olhos, nao altere rosto/pelo/cabelo/iluminacao/poses/escala/sombra/linha. Preserve os pixels visiveis da personagem original. NAO mude o formato original de sua franja."
+    },
+    {
+      "id": "body-no-head",
+      "output": "body-no-head-candidate.png",
+      "roi": [
+        250,
+        1280,
+        768,
+        1536
+      ],
+      "prompt": "EDITE SOMENTE A IMAGEM RGBA FORNECIDA e preserve IDENTICAMENTE A MESMA ANYA GRANDE, vista no terco INFERIOR. Extrair APENAS O TRONCO/OMBROS/ROUPA da Anya grande abaixo do pescoco, x aproximado 260 a 760, y 1300 a 1536 no canvas original; REMOVER ABSOLUTAMENTE A CABECA, CABELO, FRANJA, ROSTO, MAOS QUE PERTENCEM AO ROSTO e todos os outros personagens e ambiente. RECONSTRUIR por inpainting apenas o trecho da gola, corpo e ombros que era escondido pela cabeca, sem inventar roupas novas. Entregar RGBA REAL com transparente fora somente do corpo, canvas ORIGINAL 1024x1536, mesmo enquadramento, textura, cor, luz e estilo. Apenas a mesma personagem original com as partes ocultas reconstruidas, NUNCA uma nova ilustracao."
+    }
+  ],
+  "edit_model": "gpt-image-2",
+  "max_new_image_calls": 2,
+  "retry_on_429": false,
+  "workflow_mode": "normal_push_no_private",
+  "required_postprocess": [
+    "original_pixels_roundtrip_QA",
+    "extract_head_closed_from_existing_approved_full_image",
+    "split_real_hair_or_block_mesh_until_available",
+    "verify_neck_underlay",
+    "alpha_real_and_roi_QA",
+    "no_duplicate_parts",
+    "human_review_before_real_render"
+  ],
+  "humanReview": {
+    "partsReconstructed": false,
+    "noDuplicatedPixels": false,
+    "roundTripComposition": false,
+    "hairAndFaceOcclusion": false,
+    "seamsAndPivot": false
+  },
+  "status": "candidate_generation_authorized_not_approved",
+  "youtube_upload": false
+}
