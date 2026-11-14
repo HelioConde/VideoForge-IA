@@ -4,5 +4,19 @@
   "atualizado_em": "2026-11-13",
   "historico_youtube_importado": false,
   "nota": "Indice editorial inicialmente vazio. Nao conclua que o canal nao possui videos publicados.",
-  "videos": []
+  "videos": [
+    {
+      "video_id": "spy-x-family-familia-de-mentira",
+      "titulo": "Spy x Family: FAMÍLIA DE MENTIRA 👀 #Shorts",
+      "obra": "Spy x Family",
+      "assunto": "A família Forger, segredos e vínculos",
+      "status": "renderizado",
+      "tipo": "previa_tecnica_sem_arte_final",
+      "duracao_segundos": 104.782,
+      "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091",
+      "artefato_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43541390091/artifacts/14092490361",
+      "publicado": false,
+      "visual_qa": "pendente"
+    }
+  ]
 }
