@@ -1,0 +1,83 @@
+{
+  "schema": "videoforge/existing-pixel-split-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cenas-mae/cena-01.png",
+  "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "canvas": {
+    "width": 1024,
+    "height": 1536
+  },
+  "pieces": [
+    {
+      "id": "lanca-guarda-esquerdo-CANDIDATE",
+      "file": "lanca-guarda-esquerdo-CANDIDATE.png",
+      "sha256": "57757aa43fb53c47b83ec8f0298485ea229cff3b9f348dfc62465b34e0609413",
+      "bbox_global": [
+        35,
+        321,
+        816,
+        1108
+      ],
+      "pivot_xy_provisional": [
+        381,
+        751
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "candidate_original_pixels_background_and_hand_contamination_pending"
+    },
+    {
+      "id": "lanca-guarda-direito-CANDIDATE",
+      "file": "lanca-guarda-direito-CANDIDATE.png",
+      "sha256": "c944a31f6bc9081172c53051467617f60c7d9dd943bf3b6b9807987026001a8d",
+      "bbox_global": [
+        209,
+        322,
+        991,
+        1106
+      ],
+      "pivot_xy_provisional": [
+        644,
+        749
+      ],
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "candidate_original_pixels_background_and_hand_contamination_pending"
+    },
+    {
+      "id": "restante-cena-mae-REJECTED-AS-LAYER",
+      "file": "restante-cena-mae-REJECTED-AS-LAYER.png",
+      "sha256": "6dd04f808da41723cf1677198b2e3805c675109e0d96a41d5edd0a6b81afafed",
+      "bbox_global": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "pivot_xy_provisional": null,
+      "animation_ready": false,
+      "human_visual_approval": false,
+      "pixels_copied_not_generated": true,
+      "category": "rejected_as_movable_sprite_background_people_and_occluded_area"
+    }
+  ],
+  "piece_count": 3,
+  "source_mode": "RGB_opaque",
+  "neutral_roundtrip_pixel_exact": true,
+  "source_pixels_created_or_painted": 0,
+  "source_pixels_discarded": 0,
+  "alpha_alignment": "unverified_for_actual_joint_deformation",
+  "hidden_anatomy_underlays": "missing",
+  "halo_and_background_contamination": "requires_human_review",
+  "pivots": "provisional",
+  "head_closed_same_image": "not_available_no_eyes_visible",
+  "actual_rig": "pending",
+  "human_visual_approval": false,
+  "video_official": false,
+  "youtube_uploaded": false,
+  "explicit_restriction": "Não usar estes recortes diretamente como rig aprovado."
+}
