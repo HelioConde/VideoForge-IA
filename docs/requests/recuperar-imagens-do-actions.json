@@ -2,13 +2,13 @@
   "schema": "videoforge/restore-existing-action-artifact/v1",
   "channel": "otaku-br",
   "video_id": "spy-x-family-familia-de-mentira",
-  "source_run_id": 43555469650,
-  "artifact_name": "vf-otaku-br-spy-scene-01-43555469650",
+  "source_run_id": 43560159589,
+  "artifact_name": "vf-cena-mae-spy-family-cena-01-43560159589",
   "source_folder": "imagens",
   "generate_new_image": false,
   "render_mp4": false,
   "youtube_upload": false,
-  "intent": "Recuperar outra imagem de cena real do Actions sem nova inferência, preservando a referência anterior.",
-  "revision": 3,
+  "intent": "Arquivar imagens originais de camadas da cena 01 (sprites/background) a partir do Actions, sem IA nem edicao.",
+  "revision": 4,
   "reason": "Retestar download com expressoes interpoladas corretamente e arquivar original sem geracao"
 }
