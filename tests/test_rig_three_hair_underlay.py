@@ -23,6 +23,9 @@ class HairUnderlayTests(unittest.TestCase):
         # A small neutral head silhouette and two real, separate moving locks.
         # Original art's most opaque pixels are alpha=254, never 255.
         head[1120:1390,250:760]=[235,157,142,254]
+        # 253-alpha antialiased-like strip, adjacent to both side lock roots.
+        head[1300:1306,300:400,3]=253
+        head[1300:1306,620:720,3]=253
         closed[:]=head
         closed[1150:1170,490:515,:3]=[185,93,73]
         left[1300:1380,300:400]=head[1300:1380,300:400]
@@ -49,6 +52,9 @@ class HairUnderlayTests(unittest.TestCase):
         self.assertTrue(result["approved_blink_preserved"])
         self.assertEqual(result["source_max_alpha"],254)
         self.assertGreater(result["underlay_pixels"],10000)
+        self.assertGreater(result["edge_band_underlay_pixels"],1000)
+        self.assertEqual(result["edge_band_width_pixels"],7)
+        self.assertEqual(result["head-open"][1301,350,3],253)
         self.assertEqual(result["head-open"][1350,350,3],254)
         self.assertEqual(result["head-closed"][1350,350,3],254)
         self.assertEqual(tuple(result["hair-left"][1468,425]),
@@ -61,6 +67,15 @@ class HairUnderlayTests(unittest.TestCase):
         np.testing.assert_array_equal(
             result["head-open"][1150:1170,490:515],
             head[1150:1170,490:515])
+
+    def test_missing_253_edge_band_rejected(self):
+        body,head,closed,base_open,base_closed,hand,left,right,source=self.scene()
+        head[:,:,3][head[:,:,3]==253]=254
+        closed[:,:,3][closed[:,:,3]==253]=254
+        with self.assertRaisesRegex(VideoForgeError,
+                                    "NO_VISIBLE_EDGE_RECONSTRUCTION"):
+            reconstruct(body,head,closed,base_open,base_closed,
+                        hand,left,right,source,cv2,np)
 
     def test_no_opaque_underlay_is_blocked_not_falsely_approved(self):
         body,head,closed,base_open,base_closed,hand,left,right,source=self.scene()
