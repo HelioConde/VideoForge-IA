@@ -51,6 +51,8 @@ jobs:
             exit 0
           fi
           git commit -m "build(remotion): lock Three.js, R3F e @remotion/three em versoes reproduziveis"
+          # GitHub Actions starts at a fixed SHA; allow intervening doc/code commits.
+          git pull --rebase origin main
           git push origin HEAD:main
       - name: Entregar package.json e package-lock.json para commit auditavel
         uses: actions/upload-artifact@v4
