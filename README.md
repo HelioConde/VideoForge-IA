@@ -4,7 +4,7 @@
 >
 > **Prioridade absoluta:** preservar a estrutura existente **`canal/<id>/`** (singular), `modelos/`, `geradores/`, `videoforge/`, `tests/` e `docs/`. Cada vídeo tem seus dados e histórico dentro de seu próprio canal; não criar `canais/` nem misturar informações entre canais. Cursos de YouTube são **referências para estudo**, não aulas já assistidas. A análise oficial do YouTube Creators está registrada com fontes e ressalvas; políticas devem ser revalidadas antes de publicar.
 >
-> Esta organização **não altera o MVP**: primeiro MP4 verificável e QA, depois agentes e integrações, sem publicação ou uso de IA paga nesta etapa.
+> Esta organização mantém o MVP apenas como **teste técnico**. Vídeo oficial exige o fluxo real e integrado do programa (agentes, arte, animação, voz, edição, QA e proveniência no GitHub); nenhuma prévia substitui essa integração. Sem publicação automática ou IA paga nesta etapa.
 
 ## Regra nº 1 — Vídeos exclusivamente pelo programa VideoForge-IA no GitHub
 
@@ -19,8 +19,7 @@
 
 **Correção histórica:** o teste *Spy x Family* da execução [43545398967](https://github.com/HelioConde/VideoForge-IA/actions/runs/43545398967) foi renderizado pelo GitHub Actions, mas usou `videoforge.spy_family_animated` e desenhos vetoriais de prévia, **não** o fluxo oficial completo de artes/agentes. É um teste técnico, não produção oficial do VideoForge-IA.
 
-Novo projeto: **primeiro entregar um MP4 verificável**, depois conectar
-pesquisa, agentes, modelos de imagem e YouTube Analytics. O repositório
+**Estado atual:** há renderizadores de testes técnicos, mas a produção oficial ainda exige integrar pesquisa, agentes, modelos de imagem, animação, voz e QA ao fluxo principal. Não classificar MP4 experimental como trabalho concluído do gerador. O repositório
 anterior, agora `HelioConde/video-forge-ia2`, permanece intacto e serve
 somente como referência para organização.
 
