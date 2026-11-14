@@ -149,14 +149,14 @@ jobs:
             --reference-report ./input/character-bible.production.json \
             --url "$PROXY_ENDPOINT" --model gpt-image-2
       - name: Commitar PNGs originais permanentemente no canal, com QA separado
-        if: success()
+        if: always()
         shell: bash
         env:
           VF_CH: ${{ needs.preparar.outputs.channel }}
           VF_VID: ${{ needs.preparar.outputs.video_id }}
           VF_PRODUCER: scene-batch-${{ matrix.scene }}
         run: |
-          bash scripts/persistir-imagens-gh.sh "$VF_CH" "$VF_VID" "output/$VF_CH/videos/$VF_VID/imagens" "${{ github.run_id }}" "$VF_PRODUCER"
+          bash scripts/arquivar-pngs-se-existirem.sh "$VF_CH" "$VF_VID" "output/$VF_CH/videos/$VF_VID/imagens" "${{ github.run_id }}" "$VF_PRODUCER" "${{ job.status }}"
       - name: Salvar PNG individual e SHA, mesmo com falha de outras cenas
         if: always()
         uses: actions/upload-artifact@v4
