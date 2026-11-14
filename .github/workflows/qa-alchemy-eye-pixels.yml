@@ -1,0 +1,84 @@
+name: "VideoForge - auditar pixels dos olhos de Kael C12 sem gerar imagens"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-validar-olhos-pixels.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/planos/C12-P01/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-alchemy-c12-p01-pixel-eye-qa
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirmar política e escopo do close
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          b=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
+          d=json.loads((b/"pedido-validar-olhos-pixels.json").read_text(encoding="utf8"))
+          assert d["schema"]=="videoforge/c12-p01-pixel-eye-audit-request/v1"
+          assert d["channel"]=="alchemy-lab"
+          assert d["video_id"]=="mmorpg-conquiste-a-princesa-ep01"
+          assert d["shot"]=="C12-P01"
+          assert d["no_new_images"] is True
+          assert d["no_mp4"] is True
+          assert d["youtube_upload"] is False
+          assert (b/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          PY
+      - name: Instalar apenas biblioteca de leitura de PNGs
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Testar anti-vazamento e underlays com máscaras apenas em memória
+        run: |
+          python -m unittest tests.test_cinematic_eye_pixel_audit tests.test_cinematic_eye_motion -v
+      - name: Auditar disponibilidade de arte original, SHA e regiões dos olhos
+        run: |
+          python -m videoforge.cinematic_eye_pixel_audit --report
+      - name: Confirmar que QA não libera rig ou publica arquivos gráficos
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-pixel-olhos-c12-p01.json")
+          r=json.loads(p.read_text(encoding="utf8"))
+          assert r["schema"]=="videoforge/eye-pixel-readiness-report/v1"
+          assert r["officialRigApproved"] is False
+          assert r["newPNGFiles"]==0
+          assert r["imageGenerationCalls"]==0
+          assert r["mp4Rendered"] is False
+          assert r["youtubeUploaded"] is False
+          print("PUPIL_QA_STATUS",r["status"],"QA_WITHOUT_IMAGES")
+          PY
+      - name: Arquivar exclusivamente o relatório JSON no canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-pixel-olhos-c12-p01.json'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$FILE"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(alchemy): arquivar estado real do pixel audit ocular C12-P01'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
