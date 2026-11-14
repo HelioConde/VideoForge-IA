@@ -7,7 +7,7 @@ on:
       - 'docs/requests/gerar-arte-spy-family.json'
 
 permissions:
-  contents: read
+  contents: write
   packages: read
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -95,6 +95,11 @@ jobs:
             --asset character-bible \
             --model gpt-image-2 \
             --url "$PROXY_ENDPOINT"
+      - name: Commitar PNG, hash e proveniencia no canal de forma permanente
+        if: success()
+        shell: bash
+        run: |
+          bash scripts/persistir-imagens-gh.sh "otaku-br" "spy-x-family-familia-de-mentira" "output/otaku-br/videos/spy-x-family-familia-de-mentira/imagens" "${{ github.run_id }}" "production-art"
       - name: Arquivar PNG real, hash e QA na pasta do episodio
         uses: actions/upload-artifact@v4
         with:
