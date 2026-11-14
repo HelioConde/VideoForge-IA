@@ -175,3 +175,31 @@ Esta etapa foi executada com **zero chamadas a modelos de imagem** e usando excl
 - O workflow MVP foi ajustado para **não rerenderizar MP4 de teste a cada commit de PNGs, relatórios QA ou solicitações deste episódio**. Mudanças no código `videoforge/**` e testes `tests/**` continuam disparando o smoke para preservar segurança.
 - Persistem: `SEM-GERACAO-NOVAS-IMAGENS.lock`, aprovação humana pendente, underlays ausentes e `video_oficial_do_programa=false`.
 - **Próxima ação técnica**: revisar a silhueta de cada parte com o trono e braços; levantar máscara para oclusão correta de dedos/lanças; avaliar pose neutra e envelope máximo de movimento antes de liberar qualquer transformação do rig.
+
+## 13. QA de movimento real do C01-P04 e trava de geração no código
+
+Foi executada a [auditoria geométrica das articulações](qa-guardas-envelope-movimento-c01.json) no [GitHub Actions 43614298159](https://github.com/HelioConde/VideoForge-IA/actions/runs/43614298159). Ela **não gera arte**: carrega os PNGs existentes por SHA, gira somente máscaras dos antebraços+mãos em memória nos ângulos ±2°, ±8°, ±18° e mede a silhueta que fica descoberta.
+
+| Alvo do roteiro | Guarda esquerdo (+18°) | Guarda direito (-18°) |
+|---|---:|---:|
+| Buracos na pose original (0°) | 0 | 0 |
+| Silhueta antiga descoberta aos 2° | 286 px | 294 px |
+| Silhueta antiga descoberta aos 8° | 1.094 px | 1.120 px |
+| Silhueta antiga descoberta aos 18° | 2.410 px | 2.462 px |
+
+Conclusão: os pixels reais disponíveis não bastam para rotacionar os membros sem revelar buracos. É um teste de silhueta e **não** comprova que os detalhes ocultos no uniforme, nas luvas ou no cenário estejam corretos. As lanças continuam cruzadas na arte-mãe original e não foram fingidamente descruzadas. A hierarquia em [rig-guardas-articulacoes-c01.json](rig-guardas-articulacoes-c01.json) conserva limites de rotação em 0° e `animation_or_render_allowed=false`.
+
+### Proteção adicional contra gerar novas imagens
+
+A proibição expressa agora existe também no Python, em `videoforge/image_generation_policy.py`, e é validada **antes da primeira chamada ao proxy** por cinco geradores: `production_art.create_image`, `production_scenes.generate_scene`, `production_scene_layers.generate`, `production_layer_recovery.recover` e `production_rgba_parts.make_part`. O bloqueio foi acrescentado também aos caminhos diretos `proxy_images.generate` e `scene_layers.generate_layer`. A proteção é específica deste episódio; outros canais mantêm seu comportamento.
+
+Regressões em `tests/test_alchemy_no_image_generation.py` verificam que a geração para esse par canal/vídeo é negada **antes de consultar arquivos ou usar rede**. O lock do episódio segue ativo, com proteção em duas camadas (workflow e Python). Não há autorização para gerar imagens novas nem para publicar vídeos.
+
+### Próximo trabalho antes do rig
+
+1. Inspecionar visualmente cada junção de antebraço/luva e os pixels ocultos sob as duas hastes; os números dos testes são referência de quantos pixels ficam sem cobertura, não imagens reconstruídas.
+2. Obter, a partir de materiais **já existentes e válidos**, underlays adequados. Se não houver informação visual real para recompor a anatomia oculta, manter o movimento bloqueado em vez de pintar artificialmente.
+3. Resolver a diferença entre a pose inicial solicitada (lanças abertas) e a arte-mãe (lanças já cruzadas). Uma imagem nova só poderá ser gerada após autorização explícita.
+4. Só com essas validações medir pivôs definitivos, verificar o plano de frente/atrás das lanças e executar os keyframes no ThreeCanvas/Remotion.
+
+**Estado mantido:** 71 PNGs já arquivados no episódio; 8 artes externas do ZIP ainda não importadas; rig do cruzamento bloqueado; MP4 oficial de 163 segundos não renderizado.
