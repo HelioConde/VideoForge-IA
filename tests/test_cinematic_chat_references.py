@@ -69,7 +69,7 @@ class CinematicChatReferencesTests(unittest.TestCase):
         self.assertIn("ombreira",p["character_bible"]["kael"])
         self.assertIn("loiro-dourados",p["character_bible"]["elara"])
         self.assertIn("violeta",p["character_bible"]["elara"])
-        self.assertIn("amestistas",p["character_bible"]["elara"].replace("ametistas","amestistas"))
+        self.assertIn("ametistas",p["character_bible"]["elara"])
         self.assertTrue(p["cinematic_direction"]["canonical_identity_migration_pending"])
         self.assertFalse(p["cinematic_direction"]["new_image_generation_allowed"])
         base=ROOT/"canal"/CHANNEL/"videos"/VIDEO
