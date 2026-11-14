@@ -101,6 +101,22 @@ class CharacterContinuityTests(unittest.TestCase):
         with self.assertRaisesRegex(VideoForgeError,"SPOILER_OR_REVEAL_WRONG"):
             validate_actor_wardrobe(shot,rig,qa,True)
 
+    def test_early_palace_princess_must_not_be_identifiable_even_in_background(self):
+        shot=self.shots["C01-P02"]
+        plan_cast={"id":shot["shot_id"],"scene":shot["scene"],
+                   "characters":shot["planned_cast"]}
+        rig={"actors":[]}
+        qa={}
+        with self.assertRaisesRegex(VideoForgeError,"PRINCESS_SPOILER_VISUAL_QA"):
+            verify_shot_continuity(plan_cast,rig,qa)
+        qa={"visual_spoiler_review":{
+            "approved":True,"elara_identifiable":False,"royal_elara_visible":False
+        }}
+        self.assertIsNone(verify_shot_continuity(plan_cast,rig,qa))
+        qa["visual_spoiler_review"]["royal_elara_visible"]=True
+        with self.assertRaisesRegex(VideoForgeError,"PRINCESS_SPOILER_VISUAL_QA"):
+            verify_shot_continuity(plan_cast,rig,qa)
+
     def test_real_current_episode_cannot_claim_continuity_is_approved(self):
         shot=self.shots["C12-P02"]
         plan_cast={
