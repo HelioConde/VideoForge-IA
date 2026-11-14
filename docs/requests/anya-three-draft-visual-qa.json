@@ -6,7 +6,7 @@
   "scene": "cena-01",
   "source_original_run": 43560159589,
   "static_other_characters_corrected_run": 43591918632,
-  "source_draft_underlay_alpha254_run": 43598536256,
+  "source_draft_underlay_alpha254_run": 43599799485,
   "purpose": "Renderizar quadros reais de Anya com malhas esquerda/direita em ThreeCanvas para diagnosticar costuras, mantendo Loid/Yor estáticos e nenhuma aprovação humana simulada",
   "frames": [
     0,
@@ -23,5 +23,9 @@
   "human_visual_approval": false,
   "youtube_uploaded": false,
   "allow_private_workflows": false,
-  "new_image_calls": 0
+  "new_image_calls": 0,
+  "revision": "underlay-7px-edge-alpha253-source-run-43599799485",
+  "source_real_art_run": 43599799485,
+  "underlay_7px_alpha253_edge_enabled": true,
+  "refinement_reason": "Review exact source art after 7px alpha-253 near-edge underlay, preserving approved eye pixels; keep candidate nonofficial"
 }
