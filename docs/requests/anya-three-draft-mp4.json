@@ -4,7 +4,7 @@
   "video_id": "spy-x-family-familia-de-mentira",
   "scene": "cena-01",
   "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
-  "source_real_art_run": 43598536256,
+  "source_real_art_run": 43599799485,
   "stills_visual_review_run": 43598866124,
   "goal": "Criar MP4 curto h264 1080x1920 em ThreeCanvas para revisar continuidade de cabelo, cabeça e piscada com Loid/Yor estáticos",
   "duration_frames": 180,
@@ -15,5 +15,10 @@
   "new_image_calls": 0,
   "human_visual_approval": false,
   "rig_operational": false,
-  "youtube_upload": false
+  "youtube_upload": false,
+  "revision": "underlay-7px-edge-alpha253-source-run-43599799485",
+  "source_draft_underlay_alpha254_run": 43599799485,
+  "underlay_7px_alpha253_edge_enabled": true,
+  "refinement_reason": "Review exact source art after 7px alpha-253 near-edge underlay, preserving approved eye pixels; keep candidate nonofficial",
+  "youtube_uploaded": false
 }
