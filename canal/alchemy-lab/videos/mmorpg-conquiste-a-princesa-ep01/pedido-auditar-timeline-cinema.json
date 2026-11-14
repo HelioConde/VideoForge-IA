@@ -11,6 +11,6 @@
   "visual_shots": 36,
   "initial_black_shot": 1,
   "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon",
-  "revision": 6,
-  "reason": "Revalidar timeline sem sobrescrita com igualdade semantica JSON, alem do export rig multipersonagem"
+  "revision": 7,
+  "reason": "Testar filtro Python C12-P01, olho independente, underlays, frames e export de performance"
 }
