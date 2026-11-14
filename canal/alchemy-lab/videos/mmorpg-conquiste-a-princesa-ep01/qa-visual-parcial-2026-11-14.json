@@ -1,0 +1,77 @@
+{
+  "schema": "videoforge/art-inspection/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "review_date": "2026-11-14",
+  "review_scope": "inspeção visual de imagens geradas; não é aprovação final",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "samples": [
+    {
+      "asset": "character-bible",
+      "source_run": 43590930215,
+      "technical_png": "passed",
+      "visual_observation": "Identidades de Kael, Elara e Aldric coerentes com o casting, manhwa 2D; prancha serve de referência, sem aprovação humana final.",
+      "human_approval": false
+    },
+    {
+      "asset": "scene-01-mother",
+      "source_run": 43591342058,
+      "technical_png": "passed",
+      "visual_observation": "Kael ajoelhado diante do trono e rei, guardas e lanças cruzadas visíveis, princesa ausente; composição-base adequada; poses, oclusão e personagem não são ainda malhas rigadas.",
+      "human_approval": false
+    },
+    {
+      "asset": "scene-01-background",
+      "source_run": 43591620396,
+      "technical_png": "passed",
+      "source_sha256": "5c3a553a5b9a76a1cf8506f9cca67ee097cde9ff8701aa140701669e43c9d620",
+      "visual_observation": "Salão, trono, escadaria, vitrais e piso reconstruídos sem personagens; QA de alinhamento e diff pixel-a-pixel contra original continua pendente.",
+      "human_approval": false
+    },
+    {
+      "asset": "scene-01-character-group",
+      "source_run": 43592098806,
+      "technical_rgba": "passed",
+      "source_sha256": "e9d0f6a1e69a4a49e30e8744be6b3ae3b4c8caf46bf1ebcf69fee3572889bcb9",
+      "visual_quality": "REJECTED",
+      "failure": "Sprite RGBA mantém partes do trono atrás do rei, sombreados não transparentes e mistura elenco com cenário, além de não ter personagens, lanças, cabeças e mãos separados; base sobreposta duplicaria o trono.",
+      "allowed_as_official_rig": false,
+      "human_approval": false
+    },
+    {
+      "asset": "scene-02-mother",
+      "source_run": 43591745279,
+      "technical_png": "passed",
+      "visual_quality": "REJECTED",
+      "failure": "Elara aparece em quadro precocemente, Kael surge EM PÉ e o rei também está em pé; o plano exigia rei acusando, Kael ajoelhado e esconder Elara até a cena 12.",
+      "human_approval": false
+    },
+    {
+      "asset": "scene-03-mother",
+      "source_run": 43591745279,
+      "technical_png": "passed",
+      "visual_quality": "REJECTED",
+      "failure": "Imagem repete elenco inteiro da prancha, incluindo princesa antes da revelação e Kael em pé; o plano de memória exigia close extremo no olho de Kael, não group pose.",
+      "human_approval": false
+    }
+  ],
+  "do_not_use_for_animation": [
+    "scene-01-character-group",
+    "scene-02-mother",
+    "scene-03-mother"
+  ],
+  "corrective_actions": [
+    "Refatorado scene_prompt para filtrar reference_cast e proibir personagens ausentes no quadro",
+    "Recriar cenas 2 e 3 com foco de plano e usar arte-mãe aprovada como guia adicional",
+    "Separar individualmente Kael/Aldric/guardas e lanças da C01 por edição da mesma imagem original, removendo trono do alfa",
+    "Recompor todos sprites em pose neutra e comparar diff.png com imagem-mãe antes de qualquer rig",
+    "Não liberar produção MP4 oficial enquanto rig independente e QA não forem concluídos"
+  ],
+  "status": {
+    "assetsDrawnPartially": true,
+    "rigApplied": false,
+    "mp4Rendered": false,
+    "humanQAApproved": false,
+    "youtubeUploaded": false
+  }
+}
