@@ -14,6 +14,7 @@ import sys
 
 from . import proxy_images, scene_layers
 from .errors import VideoForgeError
+from .animation_manual import enforce_animation_manual
 
 SCHEMA="videoforge/rig-three-art-plan/v1"
 ROOT=Path(__file__).resolve().parents[1]
@@ -26,6 +27,7 @@ def _sha(path:Path)->str:
 
 
 def load_plan(channel:str,video_id:str)->dict:
+    enforce_animation_manual()
     if not MANUAL.is_file() or not MANUAL.read_text(encoding="utf-8").startswith(
             "# MANUAL PRINCIPAL DE ANIMAÇÃO 2D"):
         raise VideoForgeError("RIG_ART_CANONICAL_MANUAL_REQUIRED")
