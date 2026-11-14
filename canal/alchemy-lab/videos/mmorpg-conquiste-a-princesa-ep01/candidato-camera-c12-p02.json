@@ -24,5 +24,11 @@
     "Mostrar ao usuário para revisão em vez de registrar aprovação implícita.",
     "Não colar a cabeça de Kael do close sobre este ângulo: precisa de partes RGBA da mesma mãe.",
     "Caso aprovado, preservar SHA do PNG original, respeitar 9:16 e QA de rig próprio."
-  ]
+  ],
+  "expected_repo_path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+  "bundle_filename": "confronto-trono-c12-p02.png",
+  "bundle_upload_path": "uploads/alchemy-ep01-cinema-3-originais.zip",
+  "archive_status": "ORIGINAL_VERIFIED_LOCALLY_NOT_YET_IN_GITHUB",
+  "source_bytes_already_verified_without_editing": true,
+  "shot_art_approved": false
 }
