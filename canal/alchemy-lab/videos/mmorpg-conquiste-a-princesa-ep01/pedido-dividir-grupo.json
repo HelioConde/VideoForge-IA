@@ -1,0 +1,14 @@
+{
+  "schema": "videoforge/split-existing-asset-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "source_only": true,
+  "image_generation_calls": 0,
+  "human_visual_approval": false,
+  "youtube_upload": false,
+  "plan": "rig-group-partition.json",
+  "input": "assets/cena-01/candidatos/character-group-REJECTED.png",
+  "output": "assets/cena-01/rig-drafts/grupo/",
+  "parts_expected": 5,
+  "notes": "Separar guardas e rei somente por pixels da cena-mãe antiga; Aldric/trono e halo continuam REJECTED. Não usar como rig."
+}
