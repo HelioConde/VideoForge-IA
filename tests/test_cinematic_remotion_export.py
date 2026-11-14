@@ -41,6 +41,16 @@ class CinematicRemotionExportTests(unittest.TestCase):
                 with self.assertRaisesRegex(VideoForgeError,"BBOX_INVALID"):
                     _check_bbox(box)
 
+    def test_native_portrait_bboxes_use_their_own_canvas(self):
+        self.assertEqual(_check_bbox([920,1500,21,172],(941,1672)),(21,172))
+        self.assertEqual(_check_bbox([980,1400,44,136],(1024,1536)),(44,136))
+        with self.assertRaisesRegex(VideoForgeError,"BBOX_INVALID"):
+            _check_bbox([920,1500,22,172],(941,1672))
+        with self.assertRaisesRegex(VideoForgeError,"BBOX_INVALID"):
+            _check_bbox([920,1500,21,173],(941,1672))
+        with self.assertRaisesRegex(VideoForgeError,"BBOX_INVALID"):
+            _check_bbox([980,1400,44,136],(941,1672))
+
     def test_binary_verifier_does_not_accept_arbitrary_png_without_sha(self):
         with tempfile.TemporaryDirectory() as td:
             bad=Path(td)/"not-real.png"
