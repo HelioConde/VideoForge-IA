@@ -1,0 +1,220 @@
+{
+  "schema": "videoforge/chat-zip-preflight-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "zip": "alchemy-lab-imagens-geradas-anteriormente.zip",
+  "zipSHA256": "2083cdd1425fef1b579cfb663016485a7c6b6c7279db0720db9830bd16e9b4a3",
+  "zipBytes": 8857833,
+  "source": "ZIP supplied in chat; received and verified locally, not yet in GitHub repository",
+  "imageGenerationCalls": 0,
+  "gitHubArchived": false,
+  "all8ImagesPassSourceSHA256": true,
+  "artisticReviewApproved": false,
+  "canvasMismatch": {
+    "external": [
+      1086,
+      1448
+    ],
+    "sceneMother": [
+      1024,
+      1536
+    ],
+    "alignment": "unverified; do not simply scale or stretch"
+  },
+  "images": [
+    {
+      "name": "rei-aldric-v1.png",
+      "sha256": "2ad1555c4caf75db21a488c0cd4dc4ab136b733b407d3f9d29d0e9b6ba2cd4b1",
+      "bytes": 2003849,
+      "size": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "alphaPartialPixelCount": 948226,
+      "alphaFullyOpaquePixelCount": 531,
+      "alphaTransparentPixelCount": 623771,
+      "alphaMedianOfNonzero": 253,
+      "bboxXYXY": [
+        0,
+        0,
+        1086,
+        1434
+      ],
+      "sourceSHAValid": true,
+      "originAligned": false,
+      "rigApproved": false
+    },
+    {
+      "name": "guarda-esquerdo-v1.png",
+      "sha256": "69b9c41582a89470d60e5bc0b8ea38ca7c27b0a676187aea71bd425dac4eb245",
+      "bytes": 1209943,
+      "size": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "alphaPartialPixelCount": 538271,
+      "alphaFullyOpaquePixelCount": 635,
+      "alphaTransparentPixelCount": 1033622,
+      "alphaMedianOfNonzero": 253,
+      "bboxXYXY": [
+        19,
+        0,
+        1064,
+        1433
+      ],
+      "sourceSHAValid": true,
+      "originAligned": false,
+      "rigApproved": false
+    },
+    {
+      "name": "guarda-direito-v1.png",
+      "sha256": "884943f955bb23a54bdc5cd6bde73de3fbc617808a2394084ffcdc64c37d7cce",
+      "bytes": 1291350,
+      "size": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "alphaPartialPixelCount": 546590,
+      "alphaFullyOpaquePixelCount": 826,
+      "alphaTransparentPixelCount": 1025112,
+      "alphaMedianOfNonzero": 253,
+      "bboxXYXY": [
+        0,
+        0,
+        1072,
+        1435
+      ],
+      "sourceSHAValid": true,
+      "originAligned": false,
+      "rigApproved": false
+    },
+    {
+      "name": "lanca-esquerda-v1.png",
+      "sha256": "7d7bb1c145d2fc1de2ed915a2bfb3d56005b7ea4a08cb1cd17682bb196641db2",
+      "bytes": 264698,
+      "size": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "alphaPartialPixelCount": 62892,
+      "alphaFullyOpaquePixelCount": 601,
+      "alphaTransparentPixelCount": 1509035,
+      "alphaMedianOfNonzero": 252,
+      "bboxXYXY": [
+        15,
+        15,
+        1069,
+        1431
+      ],
+      "sourceSHAValid": true,
+      "originAligned": false,
+      "rigApproved": false
+    },
+    {
+      "name": "lanca-direita-v1.png",
+      "sha256": "2062bad746bf3eed6e1b1ba016a70ab84cfd9fc6626b924a9ee9b463281f57a5",
+      "bytes": 264158,
+      "size": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "alphaPartialPixelCount": 62649,
+      "alphaFullyOpaquePixelCount": 604,
+      "alphaTransparentPixelCount": 1509275,
+      "alphaMedianOfNonzero": 252,
+      "bboxXYXY": [
+        18,
+        16,
+        1049,
+        1448
+      ],
+      "sourceSHAValid": true,
+      "originAligned": false,
+      "rigApproved": false
+    },
+    {
+      "name": "guarda-esquerdo-v2.png",
+      "sha256": "5ea9490e0af44b5e3d90bb427f93d8bac13b805f1a72856fdfa71d01669faec9",
+      "bytes": 1104506,
+      "size": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "alphaPartialPixelCount": 500507,
+      "alphaFullyOpaquePixelCount": 762,
+      "alphaTransparentPixelCount": 1071259,
+      "alphaMedianOfNonzero": 253,
+      "bboxXYXY": [
+        41,
+        14,
+        1035,
+        1426
+      ],
+      "sourceSHAValid": true,
+      "originAligned": false,
+      "rigApproved": false
+    },
+    {
+      "name": "guarda-direito-v2.png",
+      "sha256": "4b12648d039610b4ef0d0fdb8f513c3497f4d5cd80064d1a13127acab7de64a1",
+      "bytes": 1178252,
+      "size": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "alphaPartialPixelCount": 521458,
+      "alphaFullyOpaquePixelCount": 533,
+      "alphaTransparentPixelCount": 1050537,
+      "alphaMedianOfNonzero": 253,
+      "bboxXYXY": [
+        0,
+        0,
+        1072,
+        1418
+      ],
+      "sourceSHAValid": true,
+      "originAligned": false,
+      "rigApproved": false
+    },
+    {
+      "name": "trono-ornamental-v1.png",
+      "sha256": "c8b35844b079a69cab5b2a34fb474e73a94dfd8d5d6d404ae00b92f7cb1747c4",
+      "bytes": 1887413,
+      "size": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "alphaPartialPixelCount": 888027,
+      "alphaFullyOpaquePixelCount": 64,
+      "alphaTransparentPixelCount": 684437,
+      "alphaMedianOfNonzero": 253,
+      "bboxXYXY": [
+        0,
+        0,
+        1072,
+        1428
+      ],
+      "sourceSHAValid": true,
+      "originAligned": false,
+      "rigApproved": false
+    }
+  ],
+  "findings": [
+    "All eight existing PNGs are intact; no need to regenerate them.",
+    "Most nontransparent alpha values are 252–253 rather than 255; inspect for soft halos and alpha matte before composition.",
+    "Source assets 1086x1448 do not match the 1024x1536 scene-mother coordinate system.",
+    "The zip was provided in this conversation, but connector actions here cannot directly transfer its mounted binary bytes to GitHub. The import workflow activates after GitHub receives the ZIP.",
+    "Retain rejected/reference status until scene-specific visual QA; these images were not extracted from the same mother scene."
+  ],
+  "importVia": "uploads/alchemy-lab-imagens-geradas-anteriormente.zip",
+  "importWorkflow": ".github/workflows/import-alchemy-existing-chat-assets.yml",
+  "newImagesCreated": false
+}
