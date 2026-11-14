@@ -93,6 +93,7 @@ def prepare(channel:str,video_id:str,number:int,layer_dir:Path,voice_dir:Path)->
         "preset":"equilibrado",
         "background":"vf-scene/background.png",
         "character":"vf-scene/character-main.png",
+        "foreground":None,  # sobrescreve defaultProps legado do Remotion
         "silence":"vf-scene/narracao-feminina.wav",
         "layerSourceHash":sha(source),
         "draftPreview":True
