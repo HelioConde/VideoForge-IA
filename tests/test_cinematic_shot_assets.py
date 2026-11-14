@@ -15,6 +15,7 @@ from unittest.mock import patch
 from videoforge.cinematic_shot_assets import (
     build_edl, validate_edl, expected_shot_paths, validate_shot_art,
     _png_valid, _file_from_rel, CANVAS, QA_SCHEMA, RIG_SCHEMA,
+    validate_shot_canvas, NATIVE_CINEMATIC_CANVASES,
 )
 from videoforge.errors import VideoForgeError
 
@@ -87,6 +88,24 @@ class CinematicShotAssetTests(unittest.TestCase):
             ):
                 prepare(CHANNEL,VIDEO,Path(temp)/"missing-images",
                         Path(temp)/"missing-audio",Path(temp)/"missing-report")
+
+    def test_native_canvas_941_by_1672_is_supported_without_resampling(self):
+        self.assertEqual(validate_shot_canvas({
+            "canvas":{"width":941,"height":1672}
+        }),(941,1672))
+        self.assertEqual(validate_shot_canvas({
+            "canvas":{"width":1024,"height":1536}
+        }),(1024,1536))
+        self.assertEqual(len(NATIVE_CINEMATIC_CANVASES),2)
+        for invalid in (
+            {},{"canvas":{"width":1024,"height":1672}},
+            {"canvas":{"width":1080,"height":1920}},
+            {"canvas":{"width":941.0,"height":1672}},
+            {"canvas":{"width":True,"height":1672}},
+        ):
+            with self.subTest(invalid=invalid):
+                with self.assertRaisesRegex(VideoForgeError,"CINEMATIC_SHOT_CANVAS_"):
+                    validate_shot_canvas(invalid)
 
     def test_unsafe_paths_blocked(self):
         with tempfile.TemporaryDirectory() as tmp:
