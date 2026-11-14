@@ -17,6 +17,17 @@ Identificador: `alchemy-lab` · idioma: `pt-BR`.
 **Estado:** Canal catalogado; sem integração de geração nem YouTube. Nenhuma produção nem aprovação editorial está implícita nestes arquivos.
 
 
+## Estilo aprovado no chat — Kael e Elara (v2)
+
+A nova **[bíblia visual descritiva v2](videos/mmorpg-conquiste-a-princesa-ep01/biblia-visual.md)** segue os closes que o usuário elogiou: Kael com cabelo escuro volumoso, tecido vinho rasgado e ombreira metálica; Elara loira, olhos violeta e vestido branco-violeta com ornamentos dourados. A **[v1 original foi arquivada](videos/mmorpg-conquiste-a-princesa-ep01/biblia-visual-v1-arquivada.md)** sem apagar os 71 PNGs ou as 14 imagens-mãe antigas.
+
+- [Manifesto SHA das duas imagens aprovadas como estética](videos/mmorpg-conquiste-a-princesa-ep01/referencias-cinematograficas-aprovadas-no-chat.json)
+- [Estado do armazenamento dos PNGs originais](videos/mmorpg-conquiste-a-princesa-ep01/qa-referencias-chat-cinematograficas.json)
+- [Workflow para verificar/importar originais do ZIP](../../.github/workflows/qa-alchemy-chat-cinematic-references.yml)
+- [Candidato existente de câmera por cima do ombro C12-P02](videos/mmorpg-conquiste-a-princesa-ep01/candidato-camera-c12-p02.json) — ainda não aprovado para o plano
+
+**Arquivos originais ainda pendentes no GitHub.** O pacote de dois PNGs pode ser colocado em uploads/alchemy-ep01-refs-estilo.zip para importação automática após conferir hash; isso **não** libera geração, rig nem YouTube. Exibir as referências ao usuário diretamente no chat sempre que estiverem disponíveis.
+
 ## Nova regra de quadros cinematográficos
 
 **Atuação facial por rig:** o plano `C12-P01` ganhou [controle de pupilas 12px e pálpebras 1px](videos/mmorpg-conquiste-a-princesa-ep01/rig-olhar-kael-c12-p01.json), com cabeça e cabelo estáticos. [QA](videos/mmorpg-conquiste-a-princesa-ep01/qa-olhar-kael-c12-p01.json) aprovado no código; sprites oculares e revisão artística ainda pendentes, sem render.
