@@ -13,8 +13,8 @@
   "all_16_scenes_require_future_layers": true,
   "youtube_upload": false,
   "notes": "Teste verdadeiro de composicao por camadas; nao substituir pelo pan da imagem completa.",
-  "revision": "r4_blink_behind_original_hair",
-  "fix": "Restringir alfa dos olhos fechados a duas elipses oculares, remover mascara sobre cabelo, restaurar franja original acima; conservar movimento corporal reduzido, voz feminina, legendas.",
+  "revision": "r5_exact_same_character_closed_eye_variant",
+  "fix": "Editar exatamente a imagem inteira do personagem original, fechar apenas os olhos da Anya grande. Recuperar pixels e alpha original fora dos olhos, trocar PNGs completos durante piscada no Remotion; nao utilizar overlay de palpebras ou hair-foreground.",
   "previous_failed_run_id": 43560470819,
   "retry_image_generation": false,
   "artifacts_reused": true,
@@ -28,5 +28,10 @@
   "require_hair_foreground": true,
   "source_eye_run_id": 43569915048,
   "source_bg_run_id": 43560159589,
-  "previous_preview_run_id": 43570324901
+  "previous_preview_run_id": 43570324901,
+  "source_ai_full_character_run_id": 43574833995,
+  "source_ai_full_character_artifact_id": 14105882490,
+  "new_blink_mode": "swap_entire_character_frame_same_image_reference",
+  "old_overlay_method_rejected": true,
+  "no_new_image_calls_in_render": true
 }
