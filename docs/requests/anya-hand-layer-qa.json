@@ -1,0 +1,18 @@
+{
+  "schema": "videoforge/rig-three-hand-layer-request/v1",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "source_original_run": 43560159589,
+  "isolated_run": 43589190537,
+  "refined_head_run": 43589485833,
+  "ai_head_same_source_run": 43586783907,
+  "goal": "separar mao visivel em primeiro plano sem alterar pixels originais e reconstruir apenas o que era escondido, preservar olhos abertos/fechados",
+  "new_image_calls": 0,
+  "method": "connected_original_hand_skin_component+small_sleeve_mask",
+  "human_visual_approval": false,
+  "video_official": false,
+  "youtube_upload": false,
+  "workflow_mode": "normal_no_private"
+}
