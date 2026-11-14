@@ -1,0 +1,60 @@
+name: "VideoForge - recortar rei Aldric sem novas imagens"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-isolar-aldric.json'
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-alchemy-aldric-original-source
+  cancel-in-progress: false
+
+jobs:
+  recortar-rei:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Conferir pedido de pixels existentes, sem geração nem publicação
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          d=json.loads((base/'pedido-isolar-aldric.json').read_text(encoding='utf8'))
+          assert d.get('schema')=='videoforge/aldric-existing-mother-cut-request/v1'
+          assert d.get('image_generation_calls')==0
+          assert d.get('source_only') is True
+          assert d.get('human_visual_approval') is False
+          assert d.get('youtube_upload') is False
+          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          print('RGB source-only; no model, no upload')
+          PY
+      - name: Dependências locais de máscara, sem modelos IA
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Separar o rei dos pixels originais com máscara GrabCut
+        run: python -m videoforge.refine_existing_aldric
+      - name: Commitar somente candidato Aldric e QA na pasta do canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEST='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/aldric-origem'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$DEST"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'assets(alchemy): recorte preliminar de Aldric de pixels da mãe sem IA'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: QA permanece bloqueado
+        run: echo 'Rei candidato: contornos do trono e underlays requerem revisão humana, sem rig oficial.'
