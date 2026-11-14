@@ -11,6 +11,6 @@
   "visual_shots": 36,
   "initial_black_shot": 1,
   "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon",
-  "revision": 4,
-  "reason": "QA final com 37 planos, tests de preflight e protecao contra montagem legada: sem novas imagens"
+  "revision": 5,
+  "reason": "Validar rigs multiator, cronograma, referencias canônicas e bloqueio da exportacao Remotion sem assets aprovados"
 }
