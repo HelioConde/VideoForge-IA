@@ -1,0 +1,93 @@
+name: "VideoForge - referencias cinematograficas de Kael e Elara (somente originais)"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-validar-referencias-chat.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/referencias/chat-aprovadas/**'
+      - 'uploads/alchemy-ep01-refs-estilo.zip'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+concurrency:
+  group: vf-cinema-chat-reference-originals
+  cancel-in-progress: false
+
+jobs:
+  verify-or-import-originals:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirmar imagem gerativa proibida e arquivo original exigido
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          p=json.loads((base/'pedido-validar-referencias-chat.json').read_text(encoding='utf8'))
+          assert p['schema']=='videoforge/chat-style-reference-qa-request/v1'
+          assert p['source_images_expected']==2
+          assert p['no_generate_images'] is True
+          assert p['no_edit_pixels'] is True
+          assert p['render_mp4'] is False
+          assert p['youtube_upload'] is False
+          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          print('EXISTING_SOURCE_SHA_ONLY; image generation permanently denied for episode')
+          PY
+      - name: Validar pure-Python e arquivos de referencia (sem Pillow)
+        run: python -m unittest tests.test_cinematic_chat_references -v
+      - name: Importar somente se o ZIP original estiver no GitHub
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -f uploads/alchemy-ep01-refs-estilo.zip ]]; then
+            python -m videoforge.import_cinematic_chat_references
+          else
+            echo 'ZIP ainda não enviado. Não importar arquivos simulados.'
+          fi
+      - name: Auditar RGB PNG exatos, SHA e dimensoes
+        run: python -m videoforge.cinematic_chat_references --report
+      - name: Verificar que referencia estetica nao libera MP4 nem rigs
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          r=json.loads((base/'qa-referencias-chat-cinematograficas.json').read_text(encoding='utf8'))
+          assert r['source_has_final_9_16_aspect_not_old_2_3'] is True
+          assert r['original_source_files_total']==2
+          assert r['generated_or_modified_pixels']==0
+          assert r['new_image_generation_calls']==0
+          assert r['render_official_allowed'] is False
+          assert r['official_character_bible_updated'] is False
+          print('SOURCE_STATUS',r['status'],'ORIGINALS_VERIFIED',r['original_source_files_sha_verified'])
+          PY
+      - name: Arquivar exclusivamente os PNGs originais verificados e o QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-referencias-chat-cinematograficas.json'
+          DIR='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/referencias/chat-aprovadas'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$FILE"
+          if [[ -d "$DIR" ]]; then
+            git add -f -- "$DIR"
+          fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(alchemy): arquivar originais de estilo SHA-verificados sem gerar imagens'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
