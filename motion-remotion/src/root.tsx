@@ -34,7 +34,7 @@ export const VideoForgeRoot:React.FC=()=>(
     height={1920}
     defaultProps={defaultProps}
     calculateMetadata={({props})=>({
-      durationInFrames:Math.max(120,Math.min(360,props.durationFrames||240)),
+      durationInFrames:Math.max(1,props.durationFrames||240),
     })}
   />
   <Composition
