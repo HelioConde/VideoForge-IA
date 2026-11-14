@@ -39,9 +39,26 @@
     "body_rotation_max_deg": 0.25,
     "background_camera_pan_scale": 0.25,
     "secondary_objects_distance_px_max": 1.5,
-    "piscar_olhos": "somente_com_sprite_RGBA_eyes_closed_validado_da_mesma_cena_mae",
+    "piscar_olhos": "editar_mesma_imagem_inteira_de_personagem_fechar_so_olhos_swap_sem_overlay",
     "face_opaque": true,
     "object_layers": "nunca_animar_objeto_duplicado_na_base",
-    "normal_workflow_only": true
+    "normal_workflow_only": true,
+    "full_character_swap_original_pixel_qa": true,
+    "blink_reset_to_neutral": {
+      "hold_frames": 3,
+      "ease_frames": 12,
+      "sync": [
+        "body",
+        "camera",
+        "separate_head_when_verified",
+        "attached_objects"
+      ],
+      "no_abrupt_phase_restart": true
+    },
+    "head_motion": {
+      "module": "motion-remotion/src/blink-motion-sync.ts",
+      "enabled_only_if_verified_rgba_head_and_body_no_head": true
+    },
+    "last_verified_test_run": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439"
   }
 }
