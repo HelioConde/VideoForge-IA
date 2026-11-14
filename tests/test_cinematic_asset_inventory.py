@@ -28,7 +28,7 @@ class CinematicReferenceInventoryTests(unittest.TestCase):
 
     def test_every_visible_shot_maps_to_archived_reference_only(self):
         d=self.data
-        visuals=[s for s in d["shots"] if s["type"]!="black"]
+        visuals=[s for s in d["shots"] if s.get("type")!="black"]
         self.assertEqual(len(visuals),36)
         self.assertEqual(len(set(s["id"] for s in visuals)),36)
         for s in visuals:
