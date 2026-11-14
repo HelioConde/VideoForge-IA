@@ -9,7 +9,7 @@
       "modelo_ia": null
     },
     "imagem": {
-      "modo": "cena-mae-e-camadas",
+      "modo": "cena-mae-e-camadas-obrigatorio",
       "provedor": null,
       "modelo_ia": null
     },
@@ -19,7 +19,10 @@
       "modelo_ia": null,
       "preview_implementada": true,
       "motor_preview": "remotion",
-      "motor_legacy_fallback": "ffmpeg"
+      "motor_legacy_fallback": "ffmpeg",
+      "camadas_basicas_reais_testadas": true,
+      "rig_individual_partes_implementado_para_spy_family": false,
+      "ultimo_teste_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246"
     },
     "voz": {
       "provedor": null,
@@ -28,5 +31,6 @@
     "montagem": {
       "motor": "ffmpeg"
     }
-  }
+  },
+  "padrao_obrigatorio": "cena-mae + background independente reconstruido + personagens e objetos animaveis RGBA derivados da mesma imagem + partes/pivos sem duplicar + rig Remotion + QA"
 }
