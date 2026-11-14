@@ -1,0 +1,107 @@
+{
+  "schema": "videoforge/independent-pupil-motion-plan/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "C12",
+  "shot": "C12-P01",
+  "status": "DRAFT_ASSETS_AND_ANATOMY_MISSING",
+  "frames": {
+    "fps": 30,
+    "global_start": 3990,
+    "global_end_exclusive": 4110,
+    "local_start": 0,
+    "local_end": 119
+  },
+  "purpose": "Kael reconhece Elara somente com os olhos. Cabeca, corpo, manto, cabelo e camera devem permanecer rigorosamente imoveis.",
+  "actor": "kael",
+  "performance": {
+    "mode": "pupils_only_locked_head",
+    "actorId": "kael",
+    "pupilKeyframes": [
+      {
+        "frame": 0,
+        "value": 0
+      },
+      {
+        "frame": 4,
+        "value": 0
+      },
+      {
+        "frame": 86,
+        "value": 12
+      },
+      {
+        "frame": 119,
+        "value": 12
+      }
+    ],
+    "eyelidKeyframes": [
+      {
+        "frame": 0,
+        "value": 0
+      },
+      {
+        "frame": 7,
+        "value": 0
+      },
+      {
+        "frame": 86,
+        "value": 1
+      },
+      {
+        "frame": 119,
+        "value": 1
+      }
+    ],
+    "headRotationDeg": 0,
+    "bodyMotionEnabled": false,
+    "cameraLocked": true,
+    "humanMotionApproved": false
+  },
+  "expected_layers": [
+    "body-no-head",
+    "head-open",
+    "head-closed",
+    "hair-front",
+    "pupil-left",
+    "pupil-right",
+    "eyelid-left",
+    "eyelid-right"
+  ],
+  "geometry_rules": [
+    "Eye pair and eyelids from the same dedicated mother art of shot C12-P01",
+    "Base face/head-open image must not contain already drawn pupils duplicating moving ones",
+    "Reconstruct sclera under pupils and verify closed eye bounds at X+12 source pixels",
+    "Measured eye pivots must be consistent with face mask and fixed head",
+    "No global portrait pan/zoom substitution for true pupil movement",
+    "No independent fabricated eye stickers on a different illustration",
+    "Keep hair and cloth meshes frozen at source pose while gaze animates",
+    "Use local shot frames 0..119 not global 3990..4109 in Remotion Sequence"
+  ],
+  "qa_required": {
+    "human_visual_approved": false,
+    "pupil_motion_approved": false,
+    "eyelid_motion_approved": false,
+    "head_stability_approved": false,
+    "eye_mask_no_bleed_verified": false,
+    "eye_sclera_underlays_verified": false,
+    "no_duplicate_pupils_in_head_verified": false,
+    "neutral_frame_pixel_roundtrip": false,
+    "source_sha_checked": false,
+    "qa_frames_global": [
+      3990,
+      3994,
+      4076,
+      4109
+    ]
+  },
+  "production_gates": {
+    "image_generation_calls": 0,
+    "new_art_authorized": false,
+    "shot_mother_available": false,
+    "rgba_eye_parts_available": false,
+    "rig_ready": false,
+    "official_render_allowed": false,
+    "youtube_uploaded": false
+  }
+}
