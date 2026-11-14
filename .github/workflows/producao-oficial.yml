@@ -1,0 +1,94 @@
+name: "VideoForge - producao oficial: verificar geracao de MP4"
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "Canal"
+        type: choice
+        options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
+        default: otaku-br
+        required: true
+      video_id:
+        description: "ID do video"
+        type: string
+        default: spy-x-family-familia-de-mentira
+        required: true
+  push:
+    branches: [main]
+    paths:
+      - 'canal/*/videos/*/pedido-producao-oficial.json'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  validar-producao:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    container:
+      image: ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-espeak-v3
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Testar contrato de producao oficial sem placeholders
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_official_production tests.test_production_origin -v
+      - name: Conferir assets, agentes, gerador, modelo e proxy
+        id: gate
+        continue-on-error: true
+        shell: bash
+        env:
+          INPUT_CHANNEL: ${{ inputs.channel }}
+          INPUT_VIDEO_ID: ${{ inputs.video_id }}
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            ch="$INPUT_CHANNEL"
+            vid="$INPUT_VIDEO_ID"
+          else
+            ch="otaku-br"
+            vid="spy-x-family-familia-de-mentira"
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('canal/otaku-br/videos/spy-x-family-familia-de-mentira/pedido-producao-oficial.json')
+          r=json.loads(p.read_text(encoding='utf8'))
+          assert r.get('schema')=='videoforge/official-production-request/v1'
+          assert r.get('channel')=='otaku-br'
+          assert r.get('video_id')=='spy-x-family-familia-de-mentira'
+          assert r.get('youtube_upload') is False
+          PY
+          fi
+          python -m videoforge.official_production --channel "$ch" --video-id "$vid"
+      - name: Publicar diagnostico verificavel do proprio programa
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: videoforge-diagnostico-producao-oficial-${{ github.run_id }}
+          path: output/*/videos/*/official-preflight.json
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Impedir falso MP4 ou arte substituta
+        if: steps.gate.outcome != 'success'
+        shell: bash
+        run: |
+          echo "::error::Producao oficial bloqueada. Consulte official-preflight.json. Nao criar MP4 de preview como substituto."
+          exit 1
+      - name: Exigir executor integrado antes de anunciar video
+        if: steps.gate.outcome == 'success'
+        shell: bash
+        run: |
+          echo "::error::Nao existe ainda executor oficial completo integrado neste repositorio. Nao substituir por piloto."
+          exit 1
