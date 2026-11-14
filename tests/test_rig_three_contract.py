@@ -97,6 +97,28 @@ class ThreeRigContractTests(unittest.TestCase):
             with self.assertRaisesRegex(ThreeRigError,"ASSET_MISSING"):
                 self.check(folder)
 
+    def test_two_independent_hair_meshes_accepted_but_review_gate_retained(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder=Path(temp)
+            doc=make_fixture(folder)
+            doc["layers"][-1]["id"]="hair-front-left"
+            raw=test_png(124)
+            (folder/"hair-front-right.png").write_bytes(raw)
+            doc["layers"].append({
+                "id":"hair-front-right","file":"hair-front-right.png",
+                "sha256":hashlib.sha256(raw).hexdigest(),
+                "bbox":[0,0,64,64],"z":5,
+                "mesh":{"columns":7,"rows":9,"pinnedRows":[0],"amplitudePx":4}
+            })
+            (folder/"rig.json").write_text(json.dumps(doc),encoding="utf-8")
+            result=self.check(folder)
+            self.assertEqual({x["id"] for x in result["layers"] if x.get("mesh")},
+                             {"hair-front-left","hair-front-right"})
+            doc["humanReview"]["hairAndFaceOcclusion"]=False
+            (folder/"rig.json").write_text(json.dumps(doc),encoding="utf-8")
+            with self.assertRaisesRegex(ThreeRigError,"HUMAN_REVIEW_REQUIRED"):
+                self.check(folder)
+
     def test_mesh_pinned_and_source_hash_required(self):
         with tempfile.TemporaryDirectory() as temp:
             folder=Path(temp)
