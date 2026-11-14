@@ -1,0 +1,166 @@
+{
+  "schema": "videoforge/alchemy-episode-scene1-preferred-assets/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "C01",
+  "status": "all_draft_no_official_rig",
+  "sourceOfTruth": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "sourceMother": {
+    "path": "assets/cenas-mae/cena-01.png",
+    "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+    "doNotAnimateFlat": true
+  },
+  "noImageGenerationLock": "SEM-GERACAO-NOVAS-IMAGENS.lock",
+  "preferredAssets": {
+    "background": {
+      "path": "assets/cena-01/candidatos/background-reconstructed.png",
+      "status": "draft_reconstruction_requires_composite_QA"
+    },
+    "kael": {
+      "path": "assets/cena-01/rig-drafts/kael-alinhado-original/kael-alinhado-mesma-cena-mae-CANDIDATO.png",
+      "sha256": "5fab509b5eb72114a780b2a7ae63197e6665ed91e25471187158adf794baf3c0",
+      "sourceRGB": "scene_mother",
+      "bboxGlobal": [
+        306,
+        750,
+        647,
+        1397
+      ],
+      "partsSource": "assets/cena-01/rig-drafts/kael-alinhado-partes/",
+      "partsTotal": 12,
+      "partsNonEmpty": 11,
+      "maskGeometryQA": "AFFINE_DRAFT",
+      "underlaysReady": false,
+      "approval": false
+    },
+    "aldric": {
+      "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+      "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "bboxGlobal": [
+        336,
+        299,
+        644,
+        622
+      ],
+      "maskMethod": "OpenCV GrabCut with foreground and throne-exclusion seeds",
+      "sourceRGB": "scene_mother",
+      "lionArmrestExclusion": "uncertain_needs_visual_QA",
+      "underlaysReady": false,
+      "approval": false
+    },
+    "guards": [
+      {
+        "id": "guarda-esquerdo",
+        "path": "assets/cena-01/rig-drafts/guardas-refinados/guarda-esquerdo-origem-rgb-candidato.png",
+        "sha256": "5a5fff118860911c4d978fc985ec173e8a8cad311964045c6f2f475278d3f9b4",
+        "maskGuide": "old_group_alpha_only",
+        "colors": "pixel_from_mother_RGB",
+        "status": "draft_aligned",
+        "spearOverlapPixels": 3598,
+        "withoutSpearVariant": "assets/cena-01/rig-drafts/guardas-refinados/guarda-esquerdo-sem-lanca-BURACOS.png",
+        "withoutSpearSHA256": "61dab081f424489c6af62fef2c2d79a58a2be80cbc06d6f64272312e57097e62",
+        "withoutSpearStatus": "DRAFT_MISSING_HAND_UNDERLAY",
+        "geometryBbox": [
+          10,
+          409,
+          405,
+          1202
+        ],
+        "rigReady": false
+      },
+      {
+        "id": "guarda-direito",
+        "path": "assets/cena-01/rig-drafts/guardas-refinados/guarda-direito-origem-rgb-candidato.png",
+        "sha256": "896067295f1ff526a33d7a910470ed548717002d5f9e799241a33f9a2ef75720",
+        "maskGuide": "old_group_alpha_only",
+        "colors": "pixel_from_mother_RGB",
+        "status": "draft_aligned",
+        "spearOverlapPixels": 3702,
+        "withoutSpearVariant": "assets/cena-01/rig-drafts/guardas-refinados/guarda-direito-sem-lanca-BURACOS.png",
+        "withoutSpearSHA256": "f4ade09f01aa454913d5c883e18945260eaa5a7a43f891b1032463a8c6b87cbd",
+        "withoutSpearStatus": "DRAFT_MISSING_HAND_UNDERLAY",
+        "geometryBbox": [
+          618,
+          408,
+          1014,
+          1202
+        ],
+        "rigReady": false
+      }
+    ],
+    "spears": [
+      {
+        "id": "lanca-guarda-esquerdo-CANDIDATE",
+        "path": "assets/cena-01/rig-drafts/lancas/lanca-guarda-esquerdo-CANDIDATE.png",
+        "sha256": "57757aa43fb53c47b83ec8f0298485ea229cff3b9f348dfc62465b34e0609413",
+        "origin": "source_mother_original",
+        "role": "rig_held_weapon",
+        "status": "draft_background_pixels_in_stroke",
+        "pivotGlobalXY": [
+          381,
+          751
+        ],
+        "handConstraint": "guard_left.hand_right",
+        "underlaysReady": false
+      },
+      {
+        "id": "lanca-guarda-direito-CANDIDATE",
+        "path": "assets/cena-01/rig-drafts/lancas/lanca-guarda-direito-CANDIDATE.png",
+        "sha256": "c944a31f6bc9081172c53051467617f60c7d9dd943bf3b6b9807987026001a8d",
+        "origin": "source_mother_original",
+        "role": "rig_held_weapon",
+        "status": "draft_background_pixels_in_stroke",
+        "pivotGlobalXY": [
+          644,
+          749
+        ],
+        "handConstraint": "guard_right.hand_left",
+        "underlaysReady": false
+      }
+    ]
+  },
+  "deprecated": [
+    {
+      "path": "assets/cena-01/candidatos/kael-rgba-candidate.png",
+      "why": "Kael redesenhado e dimensionado diferente da cena-mãe (IoU de máscara ~0.278); não usar em rig oficial"
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/kael/",
+      "why": "Partições do Kael em escala antiga, substituídas por kael-alinhado-partes"
+    },
+    {
+      "path": "assets/cena-01/candidatos/character-group-REJECTED.png",
+      "why": "grupo de personagens contém trono e não é camada utilizável"
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/grupo/aldric-com-trono-REJECTED.png",
+      "why": "trono duplicado"
+    },
+    {
+      "path": "assets/cena-01/rig-drafts/lancas/restante-cena-mae-REJECTED-AS-LAYER.png",
+      "why": "contém fundo e figuras, somente para auditoria"
+    }
+  ],
+  "productionGates": {
+    "motherAndSHAverified": true,
+    "originalRgbaCandidatesProduced": true,
+    "recoveredBackgroundTechnicalQA": true,
+    "allSpritesSameSceneRGBForPreferred": true,
+    "visualQA": false,
+    "alphaEdgeQA": false,
+    "rigPivotsMeasured": false,
+    "hiddenAnatomyReconstructed": false,
+    "noDuplicateCharactersInBackground": false,
+    "armatureAndMeshReady": false,
+    "renderOfficialAllowed": false,
+    "youtubeUploaded": false
+  },
+  "nextTasks": [
+    "validar pose neutra com todas as camadas e fundo reconstruído contra cena-mãe original",
+    "corrigir halos e incompatibilidades na linha de contorno do rei/trono",
+    "completar áreas ocultas de mãos e lança sem desenhar nova imagem enquanto lock ativo",
+    "validar articulações com pivôs medidos por pixel, separação de cabeça e membros",
+    "montar rig pelo ThreeCanvas com QA e somente depois Remotion"
+  ],
+  "newImageGenerationCallsThisStage": 0
+}
