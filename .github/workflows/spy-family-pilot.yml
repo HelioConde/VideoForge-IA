@@ -1,0 +1,74 @@
+name: "Otaku BR - Spy x Family (teste de video completo, nao publicar)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/otaku-br/videos/spy-x-family-familia-de-mentira/executar-piloto.json'
+permissions:
+  contents: read
+  packages: read
+concurrency:
+  group: spy-family-piloto-otaku-br
+  cancel-in-progress: false
+jobs:
+  produzir-animatico:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    container:
+      image: ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-espeak-v3
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verificar FFmpeg e voz pt-BR precompilados
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v ffmpeg
+          command -v ffprobe
+          command -v espeak-ng
+          espeak-ng --voices=pt | grep -i portuguese
+      - name: Verificar roteiro e isolamento editorial
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_spy_family_pilot -v
+      - name: Gerar 10 cenas com voz sintetica offline e MP4 vertical 90-180s
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.spy_family_pilot
+      - name: Conferir video e relatorios do canal certo
+        shell: bash
+        run: |
+          set -euo pipefail
+          d=output/otaku-br/videos/spy-x-family-familia-de-mentira
+          test -s "$d/video.mp4"
+          test -s "$d/video.qa.json"
+          test -s "$d/pilot.qa.json"
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          p=Path('output/otaku-br/videos/spy-x-family-familia-de-mentira/pilot.qa.json')
+          q=json.loads(p.read_text())
+          assert q['technical_mp4_verified'] is True
+          assert 90 <= q['duration_seconds'] <= 180
+          assert q['publishable'] is False and q['youtube_uploaded'] is False
+          assert q['actual_art'] is False and q['actual_character_animation'] is False
+          print('MP4 completo gerado, mas apenas PREVIA TECNICA sem arte final.')
+          PY
+      - name: Compartilhar MP4 e QA para revisao, sem YouTube
+        uses: actions/upload-artifact@v4
+        with:
+          name: otaku-br-spy-x-family-piloto-${{ github.run_id }}
+          path: |
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/video.mp4
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/video.qa.json
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/pilot.qa.json
+          retention-days: 14
+          if-no-files-found: error
