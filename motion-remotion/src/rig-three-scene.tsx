@@ -76,7 +76,7 @@ const Layer:React.FC<{layer:LayerSpec;canvas:Canvas;motion:Motion}>=({
 })=>{
   if(layer.mesh){
     return <DeformableSprite layer={layer} canvas={canvas}
-      kind={layer.id as MeshType} motion={motion}/>;
+      kind={layer.mesh.kind??(layer.id as MeshType)} motion={motion}/>;
   }
   return <RigidSprite layer={layer} canvas={canvas}/>;
 };
