@@ -159,7 +159,7 @@
         "latest_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43576834439/artifacts/14106521460",
         "technical_test_status": "passed_17_node_tests"
       },
-      "rig_three_status": "draft_sprite_qa_rejected_foreign_characters",
+      "rig_three_status": "mask_isolated_head_and_hair_draft_validated_no_full_articulated_rig",
       "rig_three_human_approval": false
     },
     {
@@ -423,10 +423,10 @@
       "background": "available",
       "original_character_rgba": "available",
       "full_character_open_closed": "available",
-      "body_no_head_rgba": "draft_generated_not_human_approved",
-      "head_open_rgba": "draft_generated_not_human_approved",
-      "head_closed_rgba": "derived_from_previous_approved_full_closed_png_draft",
-      "hair_front_rgba": "not_generated_independent_hair_mesh_pending",
+      "body_no_head_rgba": "candidate_neck_and_collar_visual_qa_pending",
+      "head_open_rgba": "technical_draft_isolated_anya_only_no_human_approval",
+      "head_closed_rgba": "technical_draft_same_eye_variant_no_human_approval",
+      "hair_front_rgba": "segmentation_mask_candidate_not_deformable_without_reconstructed_underlay",
       "hair_back_rgba": "optional_pending",
       "cape": "not_present_do_not_generate",
       "arm_and_objects": "review_which_exist_before_generating",
@@ -434,7 +434,8 @@
       "roundtrip_visual_qa": "diagnostic_generated_rejected_foreign_people_in_head_mask",
       "real_rig_json": "pending",
       "human_visual_approval": false,
-      "rig_json_status": "blocked_until_proper_head_isolation_and_hair"
+      "rig_json_status": "blocked_until_proper_head_isolation_and_hair",
+      "hand_foreground": "not_generated_separately_from_head_yet"
     },
     "all_16_scenes_complete": false,
     "previous_bob_preview_not_acceptable_as_rig": true,
@@ -443,7 +444,52 @@
     "notes": "O usuario pediu movimento interno de cabeça/corpo/cabelo por malha, não PNG inteiro subindo e descendo. Preservar visual aprovado da Anya e editar original para reconstruir peças sem duplicacao.",
     "art_candidate_run_id": 43586783907,
     "roundtrip_qa_run_id": 43587264889,
-    "roundtrip_qa_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43587264889/artifacts/14110902679"
+    "roundtrip_qa_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43587264889/artifacts/14110902679",
+    "scene01_isolation": {
+      "status": "candidate_refined_from_original_source_qa_passed_human_pending",
+      "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+      "source_original_sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
+      "isolation_run_id": 43589190537,
+      "isolation_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43589190537/artifacts/14111966286",
+      "roundtrip_run_id": 43589485833,
+      "roundtrip_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43589485833/artifacts/14111832023",
+      "original_visible_anya_pixels": 216199,
+      "bbox_original_canvas": [
+        208,
+        907,
+        792,
+        1536
+      ],
+      "original_partition_alpha_differences": 0,
+      "source_pixels_repainted": 0,
+      "real_hair_mask_candidate_pixels": 143593,
+      "refined_head_open_bbox": [
+        208,
+        907,
+        584,
+        609
+      ],
+      "refined_head_closed_bbox": [
+        208,
+        907,
+        584,
+        609
+      ],
+      "head_visible_pixels": 207690,
+      "head_outside_anya_isolation_pixels": 0,
+      "neutral_roundtrip_mean_abs_rgb_error": 4.541,
+      "eye_blink": "same_original_closed_png_preserved",
+      "blocking_findings": [
+        "head sprite ainda inclui mao/indicador sobre o queixo e parte da gola",
+        "neck underlay de personagem não aprovado; partes encobertas reconstruidas precisam de QA visual",
+        "hair mesh candidate tem 143593 pixels mas pode duplicar cabelo do head sprite, falta base sem cabelo e underlay",
+        "precisa comparar alpha halos e costuras antes de render com pivô"
+      ],
+      "human_visual_approval": false,
+      "rig_animado_aplicado": false,
+      "video_oficial_do_programa": false,
+      "youtube_uploaded": false
+    }
   },
   "manual_principal": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md"
 }
