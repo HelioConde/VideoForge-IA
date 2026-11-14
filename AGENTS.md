@@ -1,5 +1,15 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## REGRA PRINCIPAL — ARQUIVAR TODAS AS IMAGENS NO GITHUB POR CANAL
+
+**Nenhum gerador VideoForge pode depender somente de artifacts temporários do GitHub Actions.** Sempre que um workflow gerar PNGs (imagem-mãe, referência, camadas RGBA, sprites, olhos, cenários), arquivar os bytes originais em canal/CHANNEL/videos/VIDEO_ID/assets/geracoes/PRODUCER/GITHUB_RUN_ID/ antes de declarar a geração concluída, mesmo que ela ainda não esteja aprovada artisticamente. O histórico de versões fica imutável: nunca sobrescrever arquivos anteriores.
+
+Utilizar os programas videoforge/persist_generated_assets.py e scripts/persistir-imagens-gh.sh. Eles validam PNG e SHA-256, origem de canal/vídeo, limites de tamanho e metadados sem segredos, e criam commit no GitHub. O workflow precisa de permissions: contents: write e checkout com persist-credentials: true. Se o arquivamento ou o push falhar, **marcar a execução como falha**, nunca como produção concluída. Artifacts temporários são apenas cópia de segurança.
+
+**Imagens produzidas fora do runner (ex.: imagem criada no chat do ChatGPT)** requerem uma importação real dos bytes. JSON com SHA, arquivo ZIP apenas preparado ou a exibição de uma imagem no chat não são prova de que o PNG chegou ao GitHub. Verificar a existência e os hashes no repositório antes de informar conclusão. O episódio Alchemy Lab EP01 mantém o bloqueio de NOVA geração: arquivar antigos originais é permitido; produzir novas imagens continua proibido sem autorização explícita.
+
+**Durante revisões visuais, mostrar ao usuário as imagens também no chat**, rotulando referência, rascunho, aprovada ou rejeitada. Arquivamento no GitHub e exibição no chat são obrigações separadas.
+
 ## PRIORIDADE MÁXIMA DAS ANIMAÇÕES — MANUAL PRINCIPAL OBRIGATÓRIO
 
 **Antes de produzir, editar, gerar imagens, animar, revisar ou renderizar QUALQUER vídeo, ler integralmente [docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md](docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md).** Esse manual foi definido pelo usuário a partir da pesquisa aprofundada de rig 2D/Three.js/Remotion e **TEM PRECEDÊNCIA SOBRE INSTRUÇÕES CONFLITANTES DE ANIMAÇÃO** em AGENTS.md, README, modelos, prompts, agentes e workflows.
