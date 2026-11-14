@@ -122,11 +122,13 @@ def draw_card(number: int, total: int, scene: dict, output: Path) -> None:
         str(output.relative_to(FOLDER)), timeout=40)
 
 
-def synthesize_ptbr(number: int, narration: str, output: Path, *, min_duration: float) -> None:
+def synthesize_ptbr(number: int, narration: str, output: Path, *, min_duration: float, speed: int = 142) -> None:
     if not shutil.which("espeak-ng"):
         raise VideoForgeError("SPY_PILOT_ESPEAK_NOT_PREBUILT")
+    if not 120 <= speed <= 200:
+        raise VideoForgeError("SPY_PILOT_TTS_SPEED_INVALID")
     raw = output.with_name(f"raw-voz-{number:02d}.wav")
-    run("espeak-ng", "-v", "pt-br", "-s", "142", "-a", "170",
+    run("espeak-ng", "-v", "pt-br", "-s", str(speed), "-a", "170",
         "-p", "47", "-w", str(raw.relative_to(FOLDER)), narration)
     # Pequena pausa de leitura: audio curto não gera cena sub-90 segundos.
     run("ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
