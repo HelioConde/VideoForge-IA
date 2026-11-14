@@ -6,6 +6,7 @@ on:
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-validar-referencias-chat.json'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/referencias/chat-aprovadas/**'
       - 'uploads/alchemy-ep01-refs-estilo.zip'
+      - 'uploads/alchemy-ep01-cinema-3-originais.zip'
   workflow_dispatch:
 
 permissions:
@@ -49,7 +50,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ -f uploads/alchemy-ep01-refs-estilo.zip ]]; then
+          if [[ -f uploads/alchemy-ep01-cinema-3-originais.zip || -f uploads/alchemy-ep01-refs-estilo.zip ]]; then
             python -m videoforge.import_cinematic_chat_references
           else
             echo 'ZIP ainda não enviado. Não importar arquivos simulados.'
@@ -70,6 +71,12 @@ jobs:
           assert r['new_image_generation_calls']==0
           assert r['render_official_allowed'] is False
           assert r['official_character_bible_updated'] is False
+          candidate=r['camera_candidate_C12_P02']
+          assert candidate['shot_id']=='C12-P02'
+          assert candidate['human_shot_approval'] is False
+          assert candidate['rig_approved'] is False
+          assert candidate['status'] in ('UPLOAD_PENDING','EXACT_SOURCE_ARCHIVED')
+          print('CAMERA_C12_STATUS',candidate['status'])
           print('SOURCE_STATUS',r['status'],'ORIGINALS_VERIFIED',r['original_source_files_sha_verified'])
           PY
       - name: Arquivar exclusivamente os PNGs originais verificados e o QA
