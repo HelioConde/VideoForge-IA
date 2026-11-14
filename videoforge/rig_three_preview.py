@@ -52,10 +52,6 @@ def prepare(channel:str,video_id:str,scene:str,source_dir:Path,
         raise VideoForgeError("RIG_THREE_CHARACTER_ORIGINAL_SHA_INVALID")
     rig=validate_rig_folder(
         rig_dir,channel=channel,video_id=video_id,scene=scene,
-        scene_mother_sha256=source_sha,width=info["width"],
-        height=info["height"],duration_frames=frames,
-    ) if False else validate_rig_folder(
-        rig_dir,channel=channel,video_id=video_id,scene=scene,
         scene_mother_sha256=source_sha,frames=frames,
     )
     if rig["canvas"]!={"width":info["width"],"height":info["height"]}:
