@@ -1,0 +1,14 @@
+{
+  "schema": "videoforge/aldric-existing-pixel-partition-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "only_existing_pixels": true,
+  "image_generation_calls": 0,
+  "human_visual_approval": false,
+  "youtube_upload": false,
+  "source": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+  "maskPlan": "rig-aldric-pixel-partition.json",
+  "output": "assets/cena-01/rig-drafts/aldric-partes/",
+  "partCount": 6,
+  "quality": "pixel roundtrip only, original may include throne pixels; animation locked"
+}
