@@ -50,6 +50,12 @@ A solicitação explícita do usuário é **pegar a imagem original da personage
 
 No Remotion, a piscada deve alternar o **PNG inteiro original** e o **PNG inteiro fechado** por poucos frames, com o mesmo transform do corpo. Não adicionar pálpebras separadas, máscara sobre franja, `hair-foreground.png` artificial nem qualquer outra camada por cima. O sistema verifica o número de pixels alterados só nos dois olhos, proíbe mudanças não oculares, exige hash de ambos os PNG e mantém a revisão humana pendente. Se a IA não fechar corretamente os olhos, o resultado é **reprovado**, não substituído por uma piscada simulada.
 
+## Continuidade dos movimentos na troca de imagem (sem saltos)
+
+O problema da descontinuidade acontece quando a imagem aberta e a fechada recebem poses ou fases diferentes no instante da piscada. O sistema em `motion-remotion/src/blink-motion-sync.ts` define um **envelope determinístico de pose neutra** comum ao corpo, à cabeça (quando houver sprite separado) e à câmera: 12 quadros para se aproximar da posição inicial, 3 quadros ao redor da troca com posição X/Y/rotação = 0, depois 12 quadros de retorno gradual à respiração. Usa interpolação `smoothstep` com derivada zero nas bordas. As duas imagens completas permanecem com **o mesmo pivô e transform**; o tempo do seno continua global, sem reset súbito de fase. Objetos ligados à personagem herdam o transform sincronizado.
+
+Cabeça independente **somente** com `body-no-head`, `head-open`, `head-closed` e pivô de pescoço extraídos da cena-mãe, com alinhamento e underlay aprovados. O Remotion aceita o rig como opt-in, mas a primeira cena de Spy × Family ainda contém o sprite RGBA agrupado, portanto não permite afirmar que a cabeça está animada separadamente. Não abrir buracos ou sobrepor cabeças ao personagem achatado para fingir movimento. O QA de regressão exige neutralidade exata nos quadros de troca e variação limitada entre quadros.
+
 ## Referências de código
 
 - `motion-remotion/src/mesh-rig.tsx`: piscada, cabeça sólida, malha de tecido, vento e proteção de costura.
