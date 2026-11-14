@@ -62,6 +62,23 @@ class CinematicChatReferencesTests(unittest.TestCase):
         self.assertFalse(data["quality_gates"]["mp4_official_rendered"])
         self.assertTrue(all(x["human_style_preference_confirmed"] for x in sample.values()))
 
+    def test_new_bible_text_matches_user_liked_closes_without_unlocking_legacy_art(self):
+        from videoforge.production_art import read_plan
+        p,story=read_plan(CHANNEL,VIDEO)
+        self.assertIn("capa/cachecol vinho-vermelho",p["character_bible"]["kael"])
+        self.assertIn("ombreira",p["character_bible"]["kael"])
+        self.assertIn("loiro-dourados",p["character_bible"]["elara"])
+        self.assertIn("violeta",p["character_bible"]["elara"])
+        self.assertIn("amestistas",p["character_bible"]["elara"].replace("ametistas","amestistas"))
+        self.assertTrue(p["cinematic_direction"]["canonical_identity_migration_pending"])
+        self.assertFalse(p["cinematic_direction"]["new_image_generation_allowed"])
+        base=ROOT/"canal"/CHANNEL/"videos"/VIDEO
+        self.assertTrue((base/"biblia-visual-v1-arquivada.md").is_file())
+        current=(base/"biblia-visual.md").read_text(encoding="utf8")
+        self.assertIn("Bíblia visual v2",current)
+        self.assertIn("A identidade antiga continua",current)
+        self.assertTrue((base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file())
+
     def test_missing_zip_does_not_create_new_art_or_directories(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
