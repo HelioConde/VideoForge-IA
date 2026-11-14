@@ -35,6 +35,18 @@ def fixture():
     return head,parts,eye_masks
 
 class EyePixelGeometryTests(unittest.TestCase):
+    def test_current_episode_eye_readiness_is_not_false_approval(self):
+        from pathlib import Path
+        from videoforge.cinematic_eye_pixel_audit import readiness_report
+        episode=(Path(__file__).resolve().parents[1]/
+                 "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
+        data=readiness_report(episode)
+        self.assertEqual(data["imageGenerationCalls"],0)
+        self.assertEqual(data["newPNGFiles"],0)
+        self.assertFalse(data["officialRigApproved"])
+        self.assertFalse(data["mp4Rendered"])
+        self.assertNotEqual(data["status"],"ready_for_official_render")
+
     def test_alpha_sweep_30_translations_inside_sclera_with_underlay(self):
         head,parts,safe=fixture()
         qa=verify_alpha_sweep(head,parts,safe)
