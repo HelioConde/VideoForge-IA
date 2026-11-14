@@ -1,0 +1,136 @@
+name: "VideoForge - MP4 movimento voz feminina e legendas (revisao)"
+on:
+  workflow_run:
+    workflows:
+      - "VideoForge - Narracao feminina e legendas pt-BR"
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      voice_run_id:
+        description: "GitHub run do VideoForge que gerou a voz e as legendas femininas"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+concurrency:
+  group: vf-otaku-br-spy-family-female-animation-render
+  cancel-in-progress: false
+
+jobs:
+  renderizar-compositor-principal:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-espeak-v3
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Baixar prancha de referencia visual produzida no VideoForge
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43555226353
+          name: vf-otaku-br-spy-family-arte-real-43555226353
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/reference
+      - name: Baixar primeira cena
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43555469650
+          name: vf-otaku-br-spy-scene-01-43555469650
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/scenes
+      - name: Baixar as cenas restantes originais com seus hashes
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43555715519
+          pattern: vf-otaku-br-spy-scene-*
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/scenes
+      - name: Baixar audio FEMININO e legendas SRT deste programa
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id || inputs.voice_run_id }}
+          name: vf-otaku-br-spy-family-female-voice-${{ github.event.workflow_run.id || inputs.voice_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/voice
+      - name: Testar integridade dos assets e filtros de movimento e legenda
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_female_voice tests.test_mvp tests.test_production_assemble -v
+          ffmpeg -hide_banner -filters | grep -E 'subtitles +V'
+          test -s ./input/voice/audio-stage.qa.json
+          test -s ./input/reference/character-bible.production.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("input/voice/audio-stage.qa.json")
+          data=json.loads(p.read_text(encoding="utf-8"))
+          assert data["schema"]=="videoforge/female-voice-stage/v1"
+          assert data["voice"]=="pt-br+f3"
+          assert len(data["audio"])==16
+          for i in range(1,17):
+              assert (Path("input/voice/subtitles")/f"cena-{i:02d}.srt").is_file()
+          print("VOICE_AND_SUBTITLES_VERIFIED")
+          PY
+      - name: Compor 16 imagens reais com camera animada, voz feminina e legendas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.production_assemble \
+            --channel otaku-br --video-id spy-x-family-familia-de-mentira \
+            --images ./input/scenes \
+            --voice ./input/voice \
+            --reference-report ./input/reference/character-bible.production.json
+      - name: Verificar MP4 e demonstrar que os quadros se movem
+        shell: bash
+        run: |
+          set -euo pipefail
+          target=output/otaku-br/videos/spy-x-family-familia-de-mentira
+          test -s "$target/video.mp4"
+          test -s "$target/video.qa.json"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          folder=Path("output/otaku-br/videos/spy-x-family-familia-de-mentira")
+          report=json.loads((folder/"real-art.review.qa.json").read_text(encoding="utf-8"))
+          assert report["female_voice"] is True
+          assert report["subtitle_scene_count"]==16
+          assert report["camera_motion_scenes"]==16
+          assert report["rig_animation_applied"] is False
+          assert report["official_video_created"] is False
+          assert report["youtube_uploaded"] is False
+          assert 90 <= report["mp4_duration_seconds"] <= 180
+          print("REVIEW_QA_OK",report["mp4_duration_seconds"],"s")
+          PY
+          ffmpeg -nostdin -hide_banner -loglevel error -y -ss 1 -i "$target/video.mp4" -frames:v 1 "$target/frame-1.png"
+          ffmpeg -nostdin -hide_banner -loglevel error -y -ss 3 -i "$target/video.mp4" -frames:v 1 "$target/frame-3.png"
+          python - <<'PY'
+          from hashlib import sha256
+          from pathlib import Path
+          p=Path("output/otaku-br/videos/spy-x-family-familia-de-mentira")
+          assert sha256((p/"frame-1.png").read_bytes()).digest()!=sha256((p/"frame-3.png").read_bytes()).digest(), "Sem movimento visivel"
+          print("MOTION_FRAMES_DIFFER")
+          PY
+      - name: Publicar MP4, QA e frames de revisao; NAO PUBLICAR YOUTUBE
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-otaku-br-spy-family-female-motion-subtitles-${{ github.run_id }}
+          path: |
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/video.mp4
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/video.qa.json
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/real-art.review.qa.json
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/frame-*.png
+            canal/otaku-br/videos/spy-x-family-familia-de-mentira/legendas/*.srt
+          retention-days: 14
+          if-no-files-found: error
