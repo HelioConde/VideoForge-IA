@@ -1,0 +1,75 @@
+name: "VideoForge - QA de recorte Anya e recomposicao (Three)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/avaliar-rig-three-anya.json'
+permissions:
+  contents: read
+  actions: read
+  packages: read
+concurrency:
+  group: videoforge-three-art-anya-qa
+  cancel-in-progress: false
+jobs:
+  analyze:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Recuperar cena-mae e PNGs originais via GitHub Actions
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/source
+      - name: Recuperar cabeca candidata gerada da mesma imagem
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43586783907
+          name: vf-spy-family-three-rig-candidate-head-open-43586783907
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/head
+      - name: Recuperar corpo-sem-cabeca candidato
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43586783907
+          name: vf-spy-family-three-rig-candidate-body-no-head-43586783907
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/body
+      - name: Recuperar a piscada da MESMA personagem ja validada
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43576834439
+          name: vf-spy-family-cena01-camadas-remotion-43576834439
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/blink
+      - name: Validar manual, proveniencia, pixels e recomposicao original
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_animation_manual -v
+          python -m videoforge.rig_three_candidate_qa \
+            --channel otaku-br \
+            --video-id spy-x-family-familia-de-mentira \
+            --source ./input/source --head ./input/head \
+            --body ./input/body --closed ./input/blink \
+            --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/rig-qa
+      - name: Publicar candidatos RGBA, composicao e diff para revisão
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-spy-family-three-rig-roundtrip-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/rig-qa/
+          retention-days: 14
+          if-no-files-found: warn
