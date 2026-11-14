@@ -115,6 +115,22 @@ class EyePixelGeometryTests(unittest.TestCase):
         with self.assertRaisesRegex(VideoForgeError,"CINEMATIC_EYE_MASK_INPUT_INVALID"):
             verify_alpha_sweep(head,parts,safe)
 
+    def test_fractional_position_detects_hidden_sclera_hole(self):
+        head,parts,safe=fixture()
+        # Integer translations never touch x29: pupil ends at x28.
+        # At subpixel offsets the texture sampler blends into x29.
+        head.putpixel((29,14),0)
+        with self.assertRaisesRegex(VideoForgeError,
+                                    "fractional_underlay=[1-9]"):
+            verify_alpha_sweep(head,parts,safe)
+
+    def test_fractional_position_detects_hole_in_safe_mask(self):
+        head,parts,safe=fixture()
+        safe["left"].putpixel((29,14),0)
+        with self.assertRaisesRegex(VideoForgeError,
+                                    "fractional_escape=[1-9]"):
+            verify_alpha_sweep(head,parts,safe)
+
     def test_translucent_pupil_fringe_cannot_escape_safe_eye(self):
         head,parts,safe=fixture()
         # 1 alpha-value is still a visible fringe. At +12 it escapes
