@@ -1,50 +1,24 @@
 name: MVP - renderizar MP4 tecnico sem IA
 
 on:
+  # The MVP FFmpeg smoke is unrelated to Alchemy Lab's 37-shot cinema QA.
+  # Avoid rerendering an unrelated MP4 for every JSON, doc, or shader change.
   push:
     branches: [main]
     paths:
-      - 'videoforge/**'
-      - 'tests/**'
-      - 'canal/**'
-      # O canal Alchemy arquiva muitos PNGs e relatorios por workflow.
-      # Esses artefatos nao alteram o motor de renderizacao MVP.
-      # Evita render MP4 smoke a cada PNG/JSON de QA importado.
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/**'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-*.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-*.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/rig-*.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-ARTE-RIG-EP01.md'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/IMAGENS-EXTERNAS-PENDENTES.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/roteiro.md'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/storyboard.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/direcao-rig-remotion.json'
-      - 'modelos/**'
-      - 'docs/ARQUITETURA.md'
-      - 'AGENTS.md'
+      - 'videoforge/mvp.py'
+      - 'videoforge/paths.py'
+      - 'videoforge/errors.py'
+      - 'tests/test_mvp.py'
+      - 'tests/test_paths.py'
       - '.github/workflows/mvp.yml'
   pull_request:
     paths:
-      - 'videoforge/**'
-      - 'tests/**'
-      - 'canal/**'
-      # O canal Alchemy arquiva muitos PNGs e relatorios por workflow.
-      # Esses artefatos nao alteram o motor de renderizacao MVP.
-      # Evita render MP4 smoke a cada PNG/JSON de QA importado.
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/**'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-*.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-*.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/rig-*.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-ARTE-RIG-EP01.md'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/IMAGENS-EXTERNAS-PENDENTES.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/roteiro.md'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/storyboard.json'
-      - '!canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/direcao-rig-remotion.json'
-      - 'modelos/**'
-      - 'docs/ARQUITETURA.md'
-      - 'AGENTS.md'
+      - 'videoforge/mvp.py'
+      - 'videoforge/paths.py'
+      - 'videoforge/errors.py'
+      - 'tests/test_mvp.py'
+      - 'tests/test_paths.py'
       - '.github/workflows/mvp.yml'
   workflow_dispatch:
 
