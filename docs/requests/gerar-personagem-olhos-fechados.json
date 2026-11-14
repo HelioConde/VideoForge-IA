@@ -14,5 +14,9 @@
   "pixel_restore_outside_eyes_required": true,
   "output": "character-eyes-closed-ai.png",
   "visual_approval": false,
-  "youtube_upload": false
+  "youtube_upload": false,
+  "revision": "v2_accept_opaque_ai_edit_restore_original_alpha",
+  "previous_failed_run": 43574602245,
+  "guarantee": "a saida IA pode ser RGB opaca; nao usa transparencia gerada e restaura a original pixel a pixel, sem mudar nada fora dos olhos",
+  "retry_count_after_failed_validation": 1
 }
