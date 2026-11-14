@@ -14,6 +14,7 @@ import sys
 
 from . import scene_layers, production_art, proxy_images
 from .errors import VideoForgeError
+from . import image_generation_policy
 
 ROOT=Path(__file__).resolve().parents[1]
 SCHEMA="videoforge/scene-mother-layer-plan/v1"
@@ -69,6 +70,7 @@ def validate_source(source:Path,report:Path,entry:dict,channel:str,video_id:str)
 
 def generate(channel:str,video_id:str,number:int,source:Path,report:Path,
              proxy_url:str,model:str)->dict:
+    image_generation_policy.assert_image_generation_allowed(channel,video_id)
     plan,story,entry=read_plan(channel,video_id,number)
     source_hash=validate_source(source,report,entry,channel,video_id)
     if model not in proxy_images.IMAGE_MODELS:
