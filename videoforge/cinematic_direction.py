@@ -176,6 +176,18 @@ def canon_cast_for_shot(shot:dict,canonical:dict)->tuple[tuple[str,...],tuple[st
             continue
     return tuple(seen),tuple(k for k in canonical if k not in seen)
 
+def assert_shot_generation_ready(channel:str,video_id:str,root:Path=ROOT)->None:
+    """Bloquear nova imagem se referencias do chat divergem da biblia anterior."""
+    plan=load_plan(channel,video_id,root)
+    if plan is None:
+        return  # Videos sem opt-in continuam com regra do gerador legado
+    review=plan.get("reference_approval",{})
+    if (review.get("canonical_identity_conflict_detected") is True
+            or review.get("chat_generated_reference_files")=="not_uploaded_to_this_repository"):
+        raise VideoForgeError("CINEMATIC_CANONICAL_REFERENCE_NOT_APPROVED")
+    if plan.get("production_gate",{}).get("new_generation_allowed") is not True:
+        raise VideoForgeError("CINEMATIC_NEW_IMAGE_GENERATION_NOT_AUTHORIZED")
+
 def validate_visual_reference_gate(channel:str,video_id:str,root:Path=ROOT)->dict:
     plan=load_plan(channel,video_id,root)
     if plan is None:
