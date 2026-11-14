@@ -24,6 +24,8 @@ export type LayerSceneProps={
   character:string;
   foreground?:string|null;
   /** Somente sprite RGBA de PALPEBRAS FECHADAS vindo da mesma cena-mae. */
+  /** Nova piscada: segunda versao da imagem COMPLETA do mesmo personagem. */
+  characterEyesClosed?:string|null;
   eyesClosed?:string|null;
   /** Franja derivada do personagem ORIGINAL, sobreposta DEPOIS da piscada. */
   hairForeground?:string|null;
@@ -46,7 +48,7 @@ const imgStyle:React.CSSProperties={
 
 export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
   id,scene,durationFrames,preset,background,character,foreground,
-  eyesClosed,hairForeground,blinkFrames,animatedObjects,silence,rig,draftPreview,
+  characterEyesClosed,eyesClosed,hairForeground,blinkFrames,animatedObjects,silence,rig,draftPreview,
 })=>{
   const frame=useCurrentFrame();
   const {fps}=useVideoConfig();
@@ -74,10 +76,17 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
   // Nada de opacidade no rosto. A camada de olhos FECHADOS e sobreposta
   // apenas por 3-5 frames, nunca usada em crossfade com a face-base.
   const centers=blinkFrames??[Math.round(fps*2.8),Math.round(fps*6.0)];
+  if(characterEyesClosed && (eyesClosed || hairForeground || rig)){
+    throw new Error('BLINK_CANNOT_MIX_FULL_CHARACTER_SWAP_WITH_EYELID_OVERLAYS');
+  }
   if(eyesClosed && !rig && !hairForeground){
     throw new Error('BLINK_REQUIRES_HAIR_FOREGROUND_TO_AVOID_BANGS_OVERPAINT');
   }
   const blink=eyesClosed ? blinkClosureAtFrame(frame,centers) : 0;
+  // Faz troca de frame, nao sobrepoe uma faixa de pele nos fios da franja.
+  // O PNG fechado tem exatos mesmos pixels da base fora dos olhos.
+  const showFullClosed=Boolean(characterEyesClosed && !rig &&
+    centers.some(center=>Math.abs(frame-center)<=1));
   const cameraGlow=Math.max(0,Math.min(.045,camera.fill));
   return <AbsoluteFill style={{overflow:'hidden',backgroundColor:'#100e1c'}}>
     {/* A imagem 2:3 permanece completa, com extensão desfocada apenas
@@ -95,7 +104,7 @@ export const VideoForgeLayerScene:React.FC<LayerSceneProps>=({
         ...imgStyle,zIndex:0,
       }}/>
       {rig ? <RiggedCharacter rig={rig} frame={frame} fps={fps}
-        duration={durationFrames}/> : <Img src={staticFile(character)} style={{
+        duration={durationFrames}/> : <Img src={staticFile(showFullClosed ? characterEyesClosed! : character)} style={{
         ...imgStyle,zIndex:20,transform:characterTransform,
         transformOrigin:'50% 85%',
       }}/>}
