@@ -32,4 +32,7 @@ Identificador: `alchemy-lab` · idioma: `pt-BR`.
 
 - [Oito partes dos braços dos guardas](videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/guard-arm-parts/) e [seis partes do Rei Aldric](videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/aldric-partes/): PNGs recortados dos pixels originais, com teste de recomposição. [QA dos contatos das lanças](videos/mmorpg-conquiste-a-princesa-ep01/qa-guardas-articulacoes-c01.json) — faltam underlays, articulação real e aprovação visual.
 
+- [Auditoria de rotação dos guardas](videos/mmorpg-conquiste-a-princesa-ep01/qa-guardas-envelope-movimento-c01.json): em ±18° faltam **2410 pixels** de silhueta no guarda esquerdo e **2462 pixels** no direito. Máscaras analisadas sem gerar imagens; movimento mantém bloqueio até underlay real.
+- O veto de **não gerar imagens novas** foi implementado também nos geradores Python e entradas diretas do proxy/edição, com [testes de regressão](../../tests/test_alchemy_no_image_generation.py) aprovados.
+
 **Ainda não há MP4 oficial, rig articulado aprovado ou publicação no YouTube.** As cenas 02 e 03 continuam visualmente reprovadas e não devem ser tratadas como artes validadas.
