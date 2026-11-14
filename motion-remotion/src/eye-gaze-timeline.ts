@@ -69,22 +69,3 @@ export const validatePupilPerformance=(p:GazePerformance,
   evaluateGaze(lids,0,duration,1);
 };
 
-/** The direction spec is fixed; this is not approval of missing artwork. */
-export const expectedPupilPerformance=():GazePerformance=>({
-  mode:'pupils_only_locked_head',
-  actorId:'kael',
-  pupilKeyframes:[
-    {frame:0,value:0},{frame:4,value:0},
-    {frame:86,value:12},{frame:119,value:12},
-  ],
-  eyelidKeyframes:[
-    {frame:0,value:0},{frame:7,value:0},
-    {frame:86,value:1},{frame:119,value:1},
-  ],
-  headRotationDeg:0,
-  bodyMotionEnabled:false,
-  cameraLocked:true,
-  // Source art and QA have not been provided. This must be supplied
-  // only by the verified export after independent eye rigs are approved.
-  humanMotionApproved:true,
-});
