@@ -11,8 +11,11 @@ memória. Não faz chamadas de geração, não escreve PNG nem MP4.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
+import json
 from pathlib import Path
+import sys
 from typing import Any
 
 from PIL import Image, ImageChops
@@ -146,7 +149,8 @@ def _load_rgba(episode:Path,definition:dict)->Image.Image:
     return full
 
 def audit_existing_eye_assets(episode:Path,shot_id:str,
-                              rig:dict,qa:dict)->dict:
+                              rig:dict,qa:dict,
+                              require_human_approval:bool=True)->dict:
     """Per-shot preflight. Never infers a human approval from a pixel test."""
     if shot_id!="C12-P01":
         raise VideoForgeError("CINEMATIC_EYE_AUDIT_WRONG_SHOT")
@@ -203,10 +207,100 @@ def audit_existing_eye_assets(episode:Path,shot_id:str,
     }
     # A mask alone cannot prove a face has no painted duplicate pupil.
     # Human signoff remains independent and mandatory.
-    if any(qa.get(k) is not True for k in (
+    if require_human_approval and any(qa.get(k) is not True for k in (
         "human_visual_approved","eye_sclera_underlays_verified",
         "eye_mask_no_bleed_verified",
         "no_duplicate_pupils_in_head_verified",
     )):
         raise VideoForgeError("CINEMATIC_EYE_PIXEL_HUMAN_APPROVAL_MISSING")
     return report
+
+
+def readiness_report(episode:Path)->dict:
+    """Reproducible JSON status. Pending assets do not become approved."""
+    from .cinematic_shot_assets import _load_json
+    lock=episode/"SEM-GERACAO-NOVAS-IMAGENS.lock"
+    if not lock.is_file():
+        raise VideoForgeError("CINEMATIC_EYE_IMAGE_GENERATION_LOCK_REQUIRED")
+    shot_folder=episode/"assets/planos/C12-P01"
+    rig_file=shot_folder/"rig.json"
+    qa_file=shot_folder/"qa.json"
+    report={
+        "schema":"videoforge/eye-pixel-readiness-report/v1",
+        "channel":"alchemy-lab",
+        "video_id":"mmorpg-conquiste-a-princesa-ep01",
+        "shot":"C12-P01",
+        "source":"assets/planos/C12-P01/",
+        "method":"recompute alpha envelope of four original RGBA eye parts",
+        "imageGenerationCalls":0,
+        "newPNGFiles":0,
+        "mp4Rendered":False,
+        "youtubeUploaded":False,
+        "automatedAlphaApproved":False,
+        "humanVisualApproved":False,
+        "officialRigApproved":False,
+        "status":"awaiting_own_shot_art",
+        "blockers":[],
+    }
+    if not rig_file.is_file():
+        report["blockers"].append("SHOT_RIG_JSON_MISSING")
+    if not qa_file.is_file():
+        report["blockers"].append("SHOT_QA_JSON_MISSING")
+    if report["blockers"]:
+        return report
+    try:
+        rig=_load_json(rig_file)
+        qa=_load_json(qa_file)
+        from .cinematic_eye_motion import check_eye_performance
+        analysis=audit_existing_eye_assets(
+            episode,"C12-P01",rig,qa,require_human_approval=False
+        )
+        report["automatedAlphaApproved"]=True
+        report["pixelEnvelope"]=analysis
+        report["status"]="alpha_passed_human_review_pending"
+        report["humanVisualApproved"]=qa.get("human_visual_approved") is True
+        try:
+            check_eye_performance("C12-P01",rig,qa)
+        except VideoForgeError as exc:
+            report["blockers"].append(str(exc))
+        else:
+            report["status"]="eye_pixel_and_human_qa_verified_only"
+            # The remaining episode shots and cinematic rig still need QA.
+            report["officialRigApproved"]=False
+    except (VideoForgeError,ValueError,KeyError,OSError) as exc:
+        report["status"]="blocked_by_missing_or_invalid_eye_art"
+        report["blockers"].append(str(exc))
+    return report
+
+def main()->int:
+    parser=argparse.ArgumentParser(
+        description="Readiness JSON for Kael C12-P01; no art or MP4 generated"
+    )
+    parser.add_argument("--report",action="store_true",
+                        help="Version report inside episode folder")
+    args=parser.parse_args()
+    from .cinematic_shot_assets import ROOT
+    episode=ROOT/"canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+    try:
+        doc=readiness_report(episode)
+        encoded=json.dumps(doc,ensure_ascii=False,indent=2)+"\n"
+        if args.report:
+            path=episode/"qa-pixel-olhos-c12-p01.json"
+            if path.is_symlink():
+                raise VideoForgeError("CINEMATIC_EYE_REPORT_SYMLINK_NOT_ALLOWED")
+            if not path.exists() or path.read_text(encoding="utf8")!=encoded:
+                path.write_text(encoded,encoding="utf8")
+        print("CINEMATIC_EYE_READINESS",json.dumps({
+            "status":doc["status"],
+            "alphaQA":doc["automatedAlphaApproved"],
+            "humanQA":doc["humanVisualApproved"],
+            "blockers":doc["blockers"],
+            "imagesGenerated":0,
+        },ensure_ascii=False))
+        return 0
+    except (VideoForgeError,OSError,ValueError) as exc:
+        print("CINEMATIC_EYE_READINESS_BLOCKED",str(exc),file=sys.stderr)
+        return 2
+
+if __name__=="__main__":
+    raise SystemExit(main())
