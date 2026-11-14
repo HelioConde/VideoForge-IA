@@ -49,8 +49,8 @@ jobs:
       - name: Dois enfeites preto e amarelo na arte original
         uses: actions/download-artifact@v4
         with:
-          run-id: 43602371052
-          name: vf-anya-head-ornaments-from-original-43602371052
+          run-id: 43603798250
+          name: vf-anya-head-ornaments-from-original-43603798250
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input/ornaments
       - name: Testar TypeScript e malhas reais antes do render
