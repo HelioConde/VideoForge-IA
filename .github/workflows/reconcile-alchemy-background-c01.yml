@@ -1,0 +1,69 @@
+name: "VideoForge - reconciliar fundo original C01 sem IA"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-reconciliar-fundo.json'
+permissions:
+  contents: write
+
+concurrency:
+  group: vf-alchemy-reconcile-existing-background-c01
+  cancel-in-progress: false
+
+jobs:
+  reconciliar-fundo:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirmar pedido, fontes existentes e bloqueio de geração IA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          base=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
+          req=json.loads((base/"pedido-reconciliar-fundo.json").read_text(encoding="utf8"))
+          assert (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          assert req["schema"]=="videoforge/reconcile-existing-background-request/v1"
+          assert req["channel"]=="alchemy-lab"
+          assert req["video_id"]=="mmorpg-conquiste-a-princesa-ep01"
+          assert req["image_generation_calls"]==0
+          assert req["only_existing_source_pixels"] is True
+          assert req["human_visual_approval"] is False
+          assert req["youtube_upload"] is False
+          print("NO GENERATIVE IMAGE MODELS: mathematical compositing only")
+          PY
+      - name: Preparar processamento determinístico de máscaras e pixels
+        run: |
+          python -m pip install --disable-pip-version-check --quiet \
+            Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Manter pixels originais fora de personagens e armas
+        run: |
+          python -m videoforge.reconcile_existing_background
+      - name: Commitar fundo candidato e métricas no canal Alchemy Lab
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$BASE/assets/cena-01/candidatos/background-reconciliado-CANDIDATO.png"
+          git add -- "$BASE/qa-background-reconciliado-c01.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'assets(alchemy): reconciliar fundo existente com RGB da arte-mae sem IA'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Informar que QA visual do fundo continua pendente
+        run: |
+          echo 'Fundo é um CANDIDATO derivado de pixels existentes, sem aprovação do rig ou MP4.'
