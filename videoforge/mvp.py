@@ -149,7 +149,7 @@ def _drawtext_filter(caption_filename: str, *,
             ":force_style='FontName=DejaVu Sans,FontSize=11,"
             "PrimaryColour=&H00FFFFFF,OutlineColour=&H65000000,"
             "BorderStyle=3,BackColour=&H90000000,"
-            "Alignment=2,MarginV=55',"
+            "Alignment=2,MarginV=12',"
         )
     else:
         chain += (
