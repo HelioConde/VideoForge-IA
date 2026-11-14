@@ -1,0 +1,26 @@
+{
+  "schema": "videoforge/guard-arm-existing-pixel-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "only_existing_source_pixels": true,
+  "image_generation_calls": 0,
+  "human_visual_approval": false,
+  "youtube_upload": false,
+  "sources": [
+    "assets/cena-01/rig-drafts/guardas-refinados/guarda-esquerdo-origem-rgb-candidato.png",
+    "assets/cena-01/rig-drafts/guardas-refinados/guarda-direito-origem-rgb-candidato.png"
+  ],
+  "spearSources": [
+    "assets/cena-01/rig-drafts/lancas/lanca-guarda-esquerdo-CANDIDATE.png",
+    "assets/cena-01/rig-drafts/lancas/lanca-guarda-direito-CANDIDATE.png"
+  ],
+  "output": "assets/cena-01/rig-drafts/guard-arm-parts/",
+  "partTypes": [
+    "body-remainder",
+    "upper-arm",
+    "forearm",
+    "gripping-hand"
+  ],
+  "status": "requested_draft_only",
+  "quality": "neutral roundtrip exact, all shoulder/elbow/wrist underlays missing; no rig movements authorized"
+}
