@@ -72,13 +72,13 @@ def audit()->dict[str,Any]:
         raise QAError("BAD_SELECTION_SCHEMA")
     p=d["preferredAssets"]
     source=read_png(d["sourceMother"],False)
+    archive=json.loads((EPISODE/"assets/manifesto-arquivo.json").read_text(encoding="utf8"))
+    backgrounds=[entry for entry in archive["entries"]
+                 if entry.get("kind")=="reconstructed_background"]
+    if len(backgrounds)!=1 or backgrounds[0]["path"]!=str(EPISODE.relative_to(ROOT)/p["background"]["path"]):
+        raise QAError("BACKGROUND_PROVENANCE_MISMATCH")
     background=read_png({"path":p["background"]["path"],
-                         "sha256":d.get("backgroundSHA256") or
-                         json.loads((EPISODE/"assets/manifesto-arquivo.json").read_text(encoding="utf8"))[
-                          "entries"][next(i for i,x in enumerate(json.loads(
-                           (EPISODE/"assets/manifesto-arquivo.json").read_text(encoding="utf8"))[
-                           "entries"]) if x.get("kind")=="reconstructed_background")]["sha256"]},
-                       False)
+                         "sha256":backgrounds[0]["sha256"]}, False)
     # Ordem de oclusão provisória: fundo, rei, guardas, Kael, lanças.
     layers=[
         ("aldric",p["aldric"]),
