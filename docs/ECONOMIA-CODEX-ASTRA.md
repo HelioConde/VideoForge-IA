@@ -59,6 +59,17 @@ A economia só será considerada real se custo cair **e** os testes/artefatos co
 
 [TokenEconomizer](https://github.com/microsoft/TokenEconomizer), [Lattice](https://github.com/moulwyse/lattice), [RepoSpend](https://github.com/mehmetdemircs/RepoSpend), [codex-monitor](https://github.com/falyx6851-byte/codex-monitor) e [Compressoor](https://github.com/M4cs/compressoor). Precisam ser verificadas quanto a segurança, licenças, versões e qualidade dos resultados antes de qualquer instalação. **Não usar ferramentas que prometam driblar cotas, autenticação ou limites de serviço.**
 
+## Medição opcional no computador do desenvolvedor
+
+O repositório de referência oferece um [resumidor offline de sessões Codex](https://github.com/HelioConde/codex/blob/main/scripts/resumo_codex.py) e [testes de exemplo](https://github.com/HelioConde/codex/blob/main/tests/test_resumo_codex.py). Rodar localmente dentro do repositório codex:
+
+~~~bash
+python scripts/resumo_codex.py --json
+python -m unittest discover -s tests -v
+~~~
+
+Não publicar arquivos JSONL em canal/ nem em artifacts; eles podem conter prompts, histórico e detalhes privados. O resumo traz contadores aproximados por sessão, **não** uma medição da cota monetária.
+
 ## Conclusões de status
 
 - **Aplicado:** configuração inicial do Codex CLI e registro das regras na documentação.
