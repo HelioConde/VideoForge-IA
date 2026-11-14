@@ -1,0 +1,939 @@
+{
+  "schema": "videoforge/character-continuity-v2/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "source": "referencias-cinematograficas-aprovadas-no-chat.json",
+  "source_approved_for_visual_preference_only": true,
+  "canonical_references_imported": false,
+  "generator_locked": true,
+  "image_generation_calls": 0,
+  "total_shots": 37,
+  "black_openings": 1,
+  "shots_with_kael": 28,
+  "shots_with_elara": 13,
+  "elara_street_disguise_shots": 8,
+  "elara_royal_shots": 5,
+  "production_render_allowed": false,
+  "notes": [
+    "Kael: rosto e cabelo v2; figurino do mundo moderno apenas na C04",
+    "Elara: capuz de rua nas cenas C07-C10; vestido branco-violeta apenas na revelacao C12 em diante",
+    "As roupas mudam por narrativa; o rosto e o cabelo devem permanecer reconheciveis",
+    "O registro define requisitos, não comprova que o PNG existente corresponde à descrição",
+    "Nenhum shot tem aprovacao automática de rig ao registrar continuidade"
+  ],
+  "shots": [
+    {
+      "shot_id": "C01-P01",
+      "scene": "C01",
+      "shot_type": "black",
+      "main_character_requirements": {},
+      "is_black_opening": true,
+      "planned_cast": [],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C01-P02",
+      "scene": "C01",
+      "shot_type": "insert",
+      "main_character_requirements": {},
+      "is_black_opening": false,
+      "planned_cast": [
+        "carrasco"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C01-P03",
+      "scene": "C01",
+      "shot_type": "low_angle",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "palace_trial_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "aldric"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C01-P04",
+      "scene": "C01",
+      "shot_type": "wide",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "palace_trial_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "aldric",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C02-P01",
+      "scene": "C02",
+      "shot_type": "close_up",
+      "main_character_requirements": {},
+      "is_black_opening": false,
+      "planned_cast": [
+        "aldric"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C02-P02",
+      "scene": "C02",
+      "shot_type": "close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "palace_trial_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C03-P01",
+      "scene": "C03",
+      "shot_type": "extreme_close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "palace_trial_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C03-P02",
+      "scene": "C03",
+      "shot_type": "match_cut",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "palace_trial_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C04-P01",
+      "scene": "C04",
+      "shot_type": "over_shoulder",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "modern_world",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C04-P02",
+      "scene": "C04",
+      "shot_type": "insert",
+      "main_character_requirements": {},
+      "is_black_opening": false,
+      "planned_cast": [],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C04-P03",
+      "scene": "C04",
+      "shot_type": "medium",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "modern_world",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C05-P01",
+      "scene": "C05",
+      "shot_type": "close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C05-P02",
+      "scene": "C05",
+      "shot_type": "wide",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C05-P03",
+      "scene": "C05",
+      "shot_type": "medium",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C06-P01",
+      "scene": "C06",
+      "shot_type": "insert",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "figurantes"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C06-P02",
+      "scene": "C06",
+      "shot_type": "close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C07-P01",
+      "scene": "C07",
+      "shot_type": "tracking",
+      "main_character_requirements": {
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "street_disguise",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": false
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "elara"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C07-P02",
+      "scene": "C07",
+      "shot_type": "low_angle",
+      "main_character_requirements": {
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "street_disguise",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": false
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "elara",
+        "mascarado_1",
+        "mascarado_2"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C07-P03",
+      "scene": "C07",
+      "shot_type": "two_shot",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        },
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "street_disguise",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": false
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "elara"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C08-P01",
+      "scene": "C08",
+      "shot_type": "over_shoulder",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        },
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "street_disguise",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": false
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "elara"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C08-P02",
+      "scene": "C08",
+      "shot_type": "action",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "mascarados"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C08-P03",
+      "scene": "C08",
+      "shot_type": "wide",
+      "main_character_requirements": {
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "street_disguise",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": false
+        },
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "elara",
+        "kael",
+        "mascarados"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C09-P01",
+      "scene": "C09",
+      "shot_type": "close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        },
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "street_disguise",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": false
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "elara"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C09-P02",
+      "scene": "C09",
+      "shot_type": "over_shoulder",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        },
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "street_disguise",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": false
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "elara"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C10-P01",
+      "scene": "C10",
+      "shot_type": "insert",
+      "main_character_requirements": {
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "street_disguise",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": false
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "elara"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C10-P02",
+      "scene": "C10",
+      "shot_type": "insert",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C11-P01",
+      "scene": "C11",
+      "shot_type": "over_shoulder",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C11-P02",
+      "scene": "C11",
+      "shot_type": "close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "guarda_esquerdo"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C11-P03",
+      "scene": "C11",
+      "shot_type": "wide",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C12-P01",
+      "scene": "C12",
+      "shot_type": "extreme_close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C12-P02",
+      "scene": "C12",
+      "shot_type": "over_shoulder",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        },
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "royal_white_violet",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": true
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C12-P03",
+      "scene": "C12",
+      "shot_type": "close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        },
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "royal_white_violet",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": true
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "elara"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C13-P01",
+      "scene": "C13",
+      "shot_type": "medium",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        },
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "royal_white_violet",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": true
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C13-P02",
+      "scene": "C13",
+      "shot_type": "close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C14-P01",
+      "scene": "C14",
+      "shot_type": "medium",
+      "main_character_requirements": {
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "royal_white_violet",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": true
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "elara",
+        "aldric"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C14-P02",
+      "scene": "C14",
+      "shot_type": "close_up",
+      "main_character_requirements": {
+        "elara": {
+          "character_id": "elara",
+          "style_reference_id": "ref-elara-close-c12",
+          "style_reference_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "royal_white_violet",
+          "hair_identity": "golden_blonde_violet_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": true
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "elara",
+        "aldric"
+      ],
+      "art_and_rig_approved": false
+    },
+    {
+      "shot_id": "C14-P03",
+      "scene": "C14",
+      "shot_type": "extreme_close_up",
+      "main_character_requirements": {
+        "kael": {
+          "character_id": "kael",
+          "style_reference_id": "ref-kael-close-c12",
+          "style_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "identity_version": "v2_preferred_not_source_approved",
+          "wardrobe_version": "arken_red_cloak",
+          "hair_identity": "dark_voluminous_amber_eyes",
+          "must_match_original_approved_style_reference": true,
+          "requires_human_visual_continuity_review": true,
+          "is_princess_identity_revealed": null
+        }
+      },
+      "is_black_opening": false,
+      "planned_cast": [
+        "kael"
+      ],
+      "art_and_rig_approved": false
+    }
+  ]
+}
