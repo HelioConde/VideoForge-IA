@@ -1,0 +1,12 @@
+{
+  "schema": "videoforge/scene-generation-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene_number": 1,
+  "reference_run_id": 43590930215,
+  "reference_artifact": "vf-real-art-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-character-bible-43590930215",
+  "max_calls_per_run": 1,
+  "youtube_upload": false,
+  "purpose": "Primeira cena-mãe REAL de C01-P04: Kael ajoelhado, Rei Aldric no trono, dois guardas atrás com lanças cruzadas. Elara fora do quadro. A espada será arte-mãe separada e depois rig; não criar montagem.",
+  "status": "requested"
+}
