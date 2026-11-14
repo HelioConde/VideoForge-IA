@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/split-existing-spears-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "only_existing_mother_pixels": true,
+  "image_generation_calls": 0,
+  "images_generated": false,
+  "human_visual_approval": false,
+  "youtube_upload": false,
+  "source": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/cenas-mae/cena-01.png",
+  "plan": "rig-lancas-pixel-partition.json",
+  "expect": [
+    "lanca-guarda-esquerdo-CANDIDATE.png",
+    "lanca-guarda-direito-CANDIDATE.png",
+    "restante-cena-mae-REJECTED-AS-LAYER.png",
+    "split-qa.json"
+  ],
+  "pivots": "temporary",
+  "status": "requested"
+}
