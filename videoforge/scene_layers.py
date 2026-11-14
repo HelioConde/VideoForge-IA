@@ -220,7 +220,7 @@ def resume(channel: str, video_id: str, scene: str, incoming: Path) -> Path:
     return folder
 
 
-def generate_layer(folder: Path, name: str, url: str, key: str, model: str) -> Path:
+def generate_layer(folder: Path, name: str, url: str, key: str, model: str, *, instruction: str | None = None) -> Path:
     if name not in COMPONENTS or model not in proxy.IMAGE_MODELS:
         raise LayerError("Modelo ou componente invalido")
     manifest = _read_manifest(folder / "manifest.json")
@@ -233,6 +233,12 @@ def generate_layer(folder: Path, name: str, url: str, key: str, model: str) -> P
         raise LayerError("Imagem de referencia alterada")
     width, height = manifest["source"]["width"], manifest["source"]["height"]
     z, transparent, description = COMPONENTS[name]
+    if instruction is not None:
+        # O plano da cena-mãe fornece a descrição dos personagens REAIS.
+        # Prompts de objetos da cena legada nunca podem vazar para outro canal.
+        if not isinstance(instruction, str) or not 40 <= len(instruction) <= 3000:
+            raise LayerError("PLANO_CAMADA_INSTRUCAO_INVALIDA")
+        description = instruction
     prompt = (
         "EDITE A IMAGEM FORNECIDA, nao crie nova composicao. " + description +
         f" Preserve canvas {width}x{height}, coordenadas, escala, iluminacao e identidade visual. "
