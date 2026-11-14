@@ -12,7 +12,13 @@ import {bodyBreathAtFrame,headRotationDegAtFrame,isClosedAtFrame,meshGridAtFrame
   type LayerSpec,type MeshType,type ThreeRigManifest} from './rig-three-math';
 
 type Canvas={width:number;height:number};
-type Motion={frame:number;fps:number;duration:number;blinkFrames:number[]};
+type Motion={
+  frame:number;fps:number;duration:number;blinkFrames:number[];
+  /** Activated ONLY with an approved eye rig on a pupil-only shot. */
+  freezeHead?:boolean;freezeBody?:boolean;
+  pupilOffsetPx?:number;eyelidOffsetPx?:number;
+  eyePerformanceApproved?:true;
+};
 export type VideoForgeMeshRigProps={
   id:string;scene:string;durationFrames:number;rig:ThreeRigManifest|null;
   background:string;foreground?:string|null;audio?:string|null;draftPreview?:boolean;
@@ -75,7 +81,7 @@ const Layer:React.FC<{layer:LayerSpec;canvas:Canvas;motion:Motion}>=({
   return <RigidSprite layer={layer} canvas={canvas}/>;
 };
 export type CharacterRigParts=Pick<ThreeRigManifest,
-  'canvas'|'layers'|'neckPivot'|'headMaxRotationDeg'|'blinkFrames'>;
+  'canvas'|'layers'|'neckPivot'|'headMaxRotationDeg'|'blinkFrames'|'eyeRig'>;
 export type CharacterMotion=Motion;
 /** Reused by the restricted technical draft renderer; production remains gated. */
 export const CharacterParts:React.FC<{rig:CharacterRigParts;motion:Motion}>=({rig,motion})=>{
@@ -87,16 +93,31 @@ export const CharacterParts:React.FC<{rig:CharacterRigParts;motion:Motion}>=({ri
   const headClosed=find('head-closed');
   if(!body||!headOpen||!headClosed)
     throw new Error('THREE_RIG_INDEPENDENT_BODY_HEAD_REQUIRED');
-  const headAngle=headRotationDegAtFrame(frame,fps,duration,
-    blinkFrames,rig.headMaxRotationDeg);
-  const bodyMotion=bodyBreathAtFrame(frame,fps,duration,blinkFrames);
+  const headAngle=motion.freezeHead?0:
+    headRotationDegAtFrame(frame,fps,duration,
+      blinkFrames,rig.headMaxRotationDeg);
+  const bodyMotion=motion.freezeBody?
+    {scaleX:1,scaleY:1,translateY:0}:
+    bodyBreathAtFrame(frame,fps,duration,blinkFrames);
   const pivot=sourcePoint(rig.neckPivot,canvas);
   const selectedHead=isClosedAtFrame(frame,blinkFrames)?headClosed:headOpen;
+  const eyeIds=['pupil-left','pupil-right','eyelid-left','eyelid-right'];
+  const eyeLayers=rig.layers.filter(l=>eyeIds.includes(l.id));
+  const independentEyes=rig.eyeRig;
+  if(motion.eyePerformanceApproved===true){
+    if(!independentEyes||eyeLayers.length!==4||
+       !motion.freezeHead||!motion.freezeBody||
+       !Number.isFinite(motion.pupilOffsetPx)||
+       !Number.isFinite(motion.eyelidOffsetPx))
+      throw new Error('THREE_RIG_INDEPENDENT_EYES_UNVERIFIED');
+  }
+  if(eyeLayers.length>0 && !independentEyes)
+    throw new Error('THREE_RIG_EYE_LAYERS_WITHOUT_UNDERLAYS');
   const hairBehind=rig.layers.filter(x=>
     x.id==='hair-back'||x.id==='ornament-left'||x.id==='ornament-right');
   const hairFront=rig.layers.filter(x=>
     x.id==='hair-front'||x.id==='hair-front-left'||x.id==='hair-front-right');
-  const moving=rig.layers.filter(x=>x.id!=='body-no-head'&&
+  const moving=rig.layers.filter(x=>!eyeIds.includes(x.id)&&x.id!=='body-no-head'&&
       x.id!=='head-open'&&x.id!=='head-closed'&&
       x.id!=='hair-back'&&x.id!=='ornament-left'&&
       x.id!=='ornament-right'&&x.id!=='hair-front'&&
@@ -112,6 +133,16 @@ export const CharacterParts:React.FC<{rig:CharacterRigParts;motion:Motion}>=({ri
         {hairBehind.map(layer=><Layer key={layer.id} layer={layer}
           canvas={canvas} motion={motion}/>)}
         <RigidSprite layer={selectedHead} canvas={canvas}/>
+        {motion.eyePerformanceApproved===true ? <>
+          <group position={[motion.pupilOffsetPx??0,0,0]}>
+            {eyeLayers.filter(l=>l.id.startsWith('pupil-')).map(layer=>
+              <RigidSprite key={layer.id} layer={layer} canvas={canvas}/>)}
+          </group>
+          <group position={[motion.eyelidOffsetPx??0,0,0]}>
+            {eyeLayers.filter(l=>l.id.startsWith('eyelid-')).map(layer=>
+              <RigidSprite key={layer.id} layer={layer} canvas={canvas}/>)}
+          </group>
+        </> : null}
         {hairFront.map(layer=><Layer key={layer.id} layer={layer}
           canvas={canvas} motion={motion}/>)}
       </group>
