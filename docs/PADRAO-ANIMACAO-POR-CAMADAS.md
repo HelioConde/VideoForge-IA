@@ -29,6 +29,15 @@ Ver `docs/PADRAO-ANIMACAO-POR-CAMADAS.md` e `docs/TESTE-CAMADAS-CENA.md`. O exem
 8. **QA:** renderizar quadros da abertura, piscada e rajada; comparar limites de recorte, olhos, rosto, iluminação, consistência entre cenas, áudio, legenda e H.264/AAC. QA automático não substitui revisão visual humana.
 9. **Publicação:** todo teste começa `publishable=false`, `youtube_uploaded=false` e `visual_review=pending`. Somente aprovar quando artes, direitos, narração e qualidade forem revisados.
 
+## Intensidade de movimento e piscadas (regra de qualidade)
+
+- Movimento de personagem em espera: deslocamento vertical máximo absoluto **2,8 px no quadro 1080×1920**; preset `equilibrado` com amplitude de 1,5 px antes dos redutores de contato. Movimento horizontal máximo 1 px, rotação máxima 0,25°. Não aplicar bob de 8–12 px ou deslocamentos rápidos que criem sensação de flutuação.
+- Câmera: reduzir o pan para 25–30% da intensidade anterior; não usar zoom para fingir que olhos, cabelos ou roupas estão se movendo.
+- Olhos: **somente** com `eyes-closed.png` RGBA, extraído da mesma cena-mãe, SHA e região dos olhos validados; rosto-base continua com opacidade 1 em todos os quadros. A piscada é breve (aprox. 5 quadros), sem esmaecer a cabeça e sem inventar um novo rosto.
+- Objetos independentes: opcional `animatedObjects` no manifesto Remotion somente quando existir sprite real transparente e o objeto tiver sido removido da imagem-base. Objetos agarrados à mão seguem o personagem; objetos do cenário recebem apenas micro movimento de até 1,5 px, quando fizer sentido. Não gerar movimentos em elementos inexistentes.
+- O teste Spy Family cena 01 contém personagem RGBA de grupo e agora uma camada de pálpebras da Anya. **Ainda não** há rig individual de corpo, braços, cabelo e objetos; registrar sempre `rig_animado_aplicado=false` até que todas essas partes sejam produzidas e validadas.
+- Usar workflow normal GitHub Actions por `push` ou `workflow_dispatch`; **não usar modo privado de cota/proxy** que anteriormente bloqueava as execuções. O proxy autenticado utilizado no runner é uma dependência técnica distinta de um "private workflow mode".
+
 ## Referências de código
 
 - `motion-remotion/src/mesh-rig.tsx`: piscada, cabeça sólida, malha de tecido, vento e proteção de costura.
