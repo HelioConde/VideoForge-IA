@@ -1,0 +1,12 @@
+{
+  "schema": "videoforge/restore-existing-action-artifact/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "source_run_id": 43555226353,
+  "artifact_name": "vf-otaku-br-spy-family-arte-real-43555226353",
+  "source_folder": "imagens",
+  "generate_new_image": false,
+  "render_mp4": false,
+  "youtube_upload": false,
+  "intent": "Recuperar 1 PNG de referência que já existe no GitHub Actions, garantindo commit durável e SHA; teste ponta a ponta sem inferência."
+}
