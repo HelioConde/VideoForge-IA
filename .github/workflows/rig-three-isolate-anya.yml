@@ -1,0 +1,75 @@
+name: "VideoForge - Isolar Anya da cena original sem nova IA"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/isolar-anya-cena01.json'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vf-isolate-spy-anyacena01
+  cancel-in-progress: false
+jobs:
+  isolate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: OpenCV SOMENTE no job de preparo da arte (nunca em cada render)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir \
+            "numpy==1.26.4" "opencv-python-headless==4.10.0.84"
+          python - <<'PY'
+          import cv2, numpy
+          assert cv2.__version__=='4.10.0'
+          assert numpy.__version__=='1.26.4'
+          print("ISOLATE_IMAGE_PREP_DEPENDENCIES_PINNED")
+          PY
+      - name: Baixar character-main original, SHA e manifesto
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/original
+      - name: Baixar candidato da cabeca como guia de mascara
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43586783907
+          name: vf-spy-family-three-rig-candidate-head-open-43586783907
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/head
+      - name: Baixar imagem de piscada ja aprovada
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43576834439
+          name: vf-spy-family-cena01-camadas-remotion-43576834439
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/closed
+      - name: Segmentar SOMENTE Anya grande e calcular QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_animation_manual -v
+          python -m videoforge.rig_three_isolate \
+            --source ./input/original --head ./input/head \
+            --closed ./input/closed \
+            --output ./output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/isolated-candidates
+      - name: Entregar sprites reais e QA, sem afirmar rig aprovado
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-spy-anya-isolated-original-no-ai-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/assets/cena-01/isolated-candidates/
+          retention-days: 14
+          if-no-files-found: warn
