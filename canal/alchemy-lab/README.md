@@ -21,10 +21,12 @@ Identificador: `alchemy-lab` · idioma: `pt-BR`.
 
 **Arte em pré-produção, sem geração de novas imagens:** o episódio tem [roteiro de 14 cenas](videos/mmorpg-conquiste-a-princesa-ep01/roteiro.md), [direção de 37 planos para rigs/Remotion](videos/mmorpg-conquiste-a-princesa-ep01/direcao-rig-remotion.json) e [plano de QA](videos/mmorpg-conquiste-a-princesa-ep01/PLANO-ARTE-RIG-EP01.md).
 
-- [55+ arquivos PNG arquivados neste canal](videos/mmorpg-conquiste-a-princesa-ep01/assets/), incluindo 14 imagens-mãe, referência de personagens, fundo reconstruído e rascunhos de recortes. A contagem verificada em 14/11/2026 é de **56 PNGs**.
+- [57 arquivos PNG arquivados neste canal](videos/mmorpg-conquiste-a-princesa-ep01/assets/), incluindo 14 imagens-mãe, referência de personagens, fundo reconstruído e rascunhos de recortes. A contagem verificada em 14/11/2026 é de **57 PNGs**.
 - [Seleção recomendada de sprites C01](videos/mmorpg-conquiste-a-princesa-ep01/rig-selecao-artes-c01.json): Kael **alinhado à cena-mãe**, guardas com textura RGB original, lanças cruzadas originais e candidato de Aldric recortado por máscara. Nenhuma camada é considerada rig aprovada.
 - [Kael alinhado e suas 12 partições](videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/kael-alinhado-partes/) substituem **para fins de pré-produção** os recortes em escala errada anteriores. A recomposição preserva os pixels visíveis, mas não resolve braços e anatomia ocultos.
 - [Guardas refinados](videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/guardas-refinados/) têm versões com e sem lança (esta última possui buracos a reconstruir); [Aldric](videos/mmorpg-conquiste-a-princesa-ep01/assets/cena-01/rig-drafts/aldric-origem/) é apenas candidato devido ao contato com os braços do trono.
+- [Fundo reconciliado e QA](videos/mmorpg-conquiste-a-princesa-ep01/qa-recomposicao-c01-reconciliado.json): erro médio RGB do quadro neutro caiu de 11,095 para 3,446; o candidato ainda não foi aprovado visualmente.
+- [ZIP de oito imagens validado](videos/mmorpg-conquiste-a-princesa-ep01/qa-zip-8-imagens-existentes.json): todos os SHA corretos, transferência binária ao GitHub ainda pendente.
 - **Regra máxima deste episódio:** [NÃO GERAR NOVAS IMAGENS](videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock). Seis workflows que chamariam IA de imagem respeitam esse bloqueio; scripts de máscara usam apenas pixels anteriores.
 - As oito variações geradas no chat permanecem em [catálogo de importação pendente](videos/mmorpg-conquiste-a-princesa-ep01/IMAGENS-EXTERNAS-PENDENTES.json): o ZIP está na conversa, mas a transferência binária para este GitHub ainda precisa ocorrer pela [pasta de importação](videos/mmorpg-conquiste-a-princesa-ep01/uploads/).
 
