@@ -452,6 +452,34 @@
       "rig_animado_aplicado": false,
       "video_oficial_do_programa": false,
       "youtube_uploaded": false
+    },
+    "rig_three_hand_draft": {
+      "schema": "videoforge/rig-three-hand-separation-candidate/v1",
+      "run_id": 43590074890,
+      "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43590074890/artifacts/14111754256",
+      "hand_original_rgba": true,
+      "hand_original_pixels": 12572,
+      "hand_bbox": [
+        380,
+        1351,
+        158,
+        185
+      ],
+      "hidden_underlay_pixels_reconstructed_total_two_frames": 14220,
+      "head_open_original_eyes": true,
+      "head_closed_original_eyes": true,
+      "head_foreground_isolated_from_loid_yor": true,
+      "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+      "human_visual_review": "not_approved_visible_neck_hand_seam",
+      "independent_hair_mesh": false,
+      "needs": [
+        "corrigir a junção do dedo no pescoço e gola para retirar halo/pele extra",
+        "separar cabelo em malhas com base sem cabelo e underlay",
+        "comparar rig em várias inclinações de cabeça antes de aprovar"
+      ],
+      "rig_operational": false,
+      "video_official": false,
+      "youtube_uploaded": false
     }
   },
   "qa": {
@@ -494,6 +522,7 @@
     "14/11/2026: usuario rejeitou overlays; versão substituta IA /images/edits edita exatamente character-main.png com olhos fechados, 43574833995. Pixel QA restaura TODOS pixels originais fora dos olhos e alpha (0 diferenças não oculares, 0 alpha), 14.507 pixels editados nos olhos. Remotion usa troca de imagem inteira; MP4 8.32s em #43575133723; video oficial ainda nao aprovado, visual revisão usuário pendente.",
     "14/11/2026: Remotion #43576834439 renderizou 8.32s com corpo/camera suavizando 12 quadros para pose inicial nos centros de piscada [90,188], neutralizados +/-3 quadros e retomados por 12 quadros; 17 testes JS aprovados, QA pixel outside eyes=0, alfa=0. Suporte para movimento de cabeça independente introduzido, mas NÃO ativo na prévia sem sprites validos. Sem video oficial/publicacao.",
     "14/11/2026: pesquisa por malha Three virou manual principal docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md. Dois PNGs reais candidatos derivados do mesmo character-main (run 43586783907); roundtrip com cabeca aberta/fechada extraida da imagem original (run 43587264889), erro medio RGB 2.62, mas inspeção revelou Loid/Yor inclusos no contorno da cabeca. NAO APROVAR, NAO GERAR MP4 de rig real até corrigir máscara, reconstruct neck/hair e individual hair mesh. Sem upload.",
-    "14/11/2026: Anya isolada do trio por segmentação GrabCut sem IA (GitHub run #43589190537); 216.199 pixels reais, alfa dos layers particionado sem diferenças, zero RGB repintado. Nova head-open/head-closed recortada pelo isolamento, sem pixels externos à Anya (QA #43589485833); piscada original preservada. Observação: mão no queixo, gola e cabelo ainda precisam de camadas independentes/underlay antes do rig Three e MP4 oficial."
+    "14/11/2026: Anya isolada do trio por segmentação GrabCut sem IA (GitHub run #43589190537); 216.199 pixels reais, alfa dos layers particionado sem diferenças, zero RGB repintado. Nova head-open/head-closed recortada pelo isolamento, sem pixels externos à Anya (QA #43589485833); piscada original preservada. Observação: mão no queixo, gola e cabelo ainda precisam de camadas independentes/underlay antes do rig Three e MP4 oficial.",
+    "14/11/2026: workflow #43590074890 gerou mão original separada da cabeça (12.572 pixels) e variantes head-open/head-closed sem mão, reconstruindo 14.220 pixels ocultos somados. Revisão visual encontrou halo/costura no encontro mão-gola; reprovado para rig oficial. Próxima etapa: corrigir seam/underlay e cabelo sem duplicação; sem vídeo final."
   ]
 }
