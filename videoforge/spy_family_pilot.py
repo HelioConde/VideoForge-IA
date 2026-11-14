@@ -21,7 +21,6 @@ FOLDER = ROOT / "canal" / "otaku-br" / "videos" / VIDEO_ID
 STORYBOARD = FOLDER / "roteiro.json"
 MANIFEST = FOLDER / "video.json"
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-MIN_SCENE_SECONDS = 10.0
 
 
 def load_storyboard() -> dict:
@@ -33,9 +32,10 @@ def load_storyboard() -> dict:
             or data.get("mode") != "technical_animatic_previsualization"):
         raise VideoForgeError("SPY_PILOT_WRONG_PROJECT_OR_SCHEMA")
     scenes = data.get("scenes")
-    if not isinstance(scenes, list) or len(scenes) != 10:
+    if not isinstance(scenes, list) or not scenes:
         raise VideoForgeError("SPY_PILOT_SCENE_COUNT")
     if not all(isinstance(scene, dict) and
+               isinstance(scene.get("id"), str) and scene["id"] and
                scene.get("number") == index and
                isinstance(scene.get("narration"), str) and
                30 <= len(scene["narration"]) <= 450 and
@@ -43,6 +43,8 @@ def load_storyboard() -> dict:
                5 <= len(scene["card"]) <= 60
                for index, scene in enumerate(scenes, 1)):
         raise VideoForgeError("SPY_PILOT_STORYBOARD_INVALID")
+    if len(set(scene["id"] for scene in scenes)) != len(scenes):
+        raise VideoForgeError("SPY_PILOT_DUPLICATE_SCENE_IDS")
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     if (manifest.get("schema") != "videoforge/mvp/v1"
             or manifest.get("channel") != "otaku-br"
@@ -75,7 +77,7 @@ def write_once(path: Path, text: str) -> str:
     return path.name
 
 
-def draw_card(number: int, scene: dict, output: Path) -> None:
+def draw_card(number: int, total: int, scene: dict, output: Path) -> None:
     """Tipografia propria: nenhum frame/arte/OST de terceiros."""
     from textwrap import fill
     tmp = FOLDER / "_preview_text"
@@ -83,7 +85,7 @@ def draw_card(number: int, scene: dict, output: Path) -> None:
     card = write_once(tmp / f"titulo-{number:02d}.txt",
                       fill(scene["card"], width=18))
     number_file = write_once(tmp / f"numero-{number:02d}.txt",
-                             f"CENA {number:02d} / 10")
+                             f"CENA {number:02d} / {total}")
     title_file = write_once(tmp / f"serie-{number:02d}.txt", "SPY x FAMILY")
     warning_file = write_once(tmp / f"aviso-{number:02d}.txt",
                               "ANIMATICO TECNICO - NAO PUBLICAR")
@@ -120,7 +122,7 @@ def draw_card(number: int, scene: dict, output: Path) -> None:
         str(output.relative_to(FOLDER)), timeout=40)
 
 
-def synthesize_ptbr(number: int, narration: str, output: Path) -> None:
+def synthesize_ptbr(number: int, narration: str, output: Path, *, min_duration: float) -> None:
     if not shutil.which("espeak-ng"):
         raise VideoForgeError("SPY_PILOT_ESPEAK_NOT_PREBUILT")
     raw = output.with_name(f"raw-voz-{number:02d}.wav")
@@ -129,7 +131,7 @@ def synthesize_ptbr(number: int, narration: str, output: Path) -> None:
     # Pequena pausa de leitura: audio curto não gera cena sub-90 segundos.
     run("ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
         "-i", str(raw.relative_to(FOLDER)), "-af",
-        f"apad=whole_dur={MIN_SCENE_SECONDS:.1f}",
+        f"apad=whole_dur={min_duration:.3f}",
         "-ar", "48000", "-ac", "2", "-c:a", "pcm_s16le",
         str(output.relative_to(FOLDER)), timeout=60)
     raw.unlink()
@@ -142,13 +144,17 @@ def main() -> int:
             raise VideoForgeError("SPY_PILOT_FFMPEG_MISSING")
         (FOLDER / "imagens").mkdir(exist_ok=True)
         (FOLDER / "voz").mkdir(exist_ok=True)
+        count = len(storyboard["scenes"])
+        # Nenhum teto de cenas: distribuir o piso de 90s sem criar um
+        # minimo de 10s por cena que bloquearia roteiros com muitos cortes.
+        minimum_per_scene = mvp.MIN_SECONDS / count
         for i, scene in enumerate(storyboard["scenes"], 1):
             visual = FOLDER / scene["image"]
             voice = FOLDER / scene["audio"]
             if visual.exists() or voice.exists():
                 raise VideoForgeError("SPY_PILOT_ASSET_ALREADY_EXISTS")
-            draw_card(i, scene, visual)
-            synthesize_ptbr(i, scene["narration"], voice)
+            draw_card(i, count, scene, visual)
+            synthesize_ptbr(i, scene["narration"], voice, min_duration=minimum_per_scene)
         report = mvp.render(MANIFEST)
         qa = {
             "schema": "videoforge/spy-family-pilot-qa/v1",
@@ -162,6 +168,7 @@ def main() -> int:
             "editorial_review": "pending",
             "publishable": False, "youtube_uploaded": False,
             "external_ai_calls": 0,
+            "scene_count": len(storyboard["scenes"]),
             "source": storyboard["source"],
         }
         dst = ROOT / "output" / "otaku-br" / "videos" / VIDEO_ID
