@@ -35,6 +35,10 @@ canal/<id>/
 
 A pasta de um vídeo só deve ser criada quando existir pauta ou produção **real e identificável**. O `editorial.json` é um registro **opcional para o código atual, obrigatório para a organização de novas pautas**; seu modelo fica em `docs/modelos/REGISTRO-EDITORIAL-VIDEO.template.json`. Não sobrescrever o formato `videoforge/mvp/v1` de `video.json`. Os dados binários reais ficam fora do Git conforme `AGENTS.md`.
 
+## Regra transversal de cenas sem teto artificial
+
+O gerador, os agentes e os modelos NÃO podem exigir quantidade máxima predefinida de cenas. Cada roteiro escolhe livremente cenas, cortes, enquadramentos e duração por necessidade narrativa; não rejeitar `25+` cenas apenas pela contagem. O limite de duração da plataforma/canal é **independente** da quantidade de cenas, assim como orçamento explícito de IA, integridade dos arquivos, tempo de execução e QA de segurança. Em vez de eliminar cenas, adaptar a montagem para caber no formato ou escolher formato adequado. Cenas sem mídia, duplicadas por erro ou perigosas ainda devem falhar na validação. Esta regra não autoriza novas chamadas pagas, nem publicação.
+
 ## Processo obrigatório por vídeo
 
 1. **Inventário e pesquisa:** revisar `editorial/historico-videos.json`, `reservas.json`, `conteudos/indice.json` e vídeos reais publicados via fonte oficial, quando houver conexão autorizada. Anotar URLs, consultas e datas; dados de YouTube/vidIQ não verificados não entram como fatos.
