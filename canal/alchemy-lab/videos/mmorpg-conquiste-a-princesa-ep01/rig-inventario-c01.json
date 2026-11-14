@@ -1,0 +1,426 @@
+{
+  "schema": "videoforge/rig-assets-inventory/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene_id": "C01",
+  "status": "incomplete_blocked",
+  "sourceMother": {
+    "path": "assets/cenas-mae/cena-01.png",
+    "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf"
+  },
+  "reconstructedBackground": {
+    "path": "assets/cena-01/candidatos/background-reconstructed.png",
+    "sha256": "5c3a553a5b9a76a1cf8506f9cca67ee097cde9ff8701aa140701669e43c9d620",
+    "status": "candidate_not_roundtrip_verified"
+  },
+  "kaelSource": {
+    "path": "assets/cena-01/candidatos/kael-rgba-candidate.png",
+    "sha256": "f910f2df550062267efb17cde99a950c1afa47e1216179372fd963a26b864f41",
+    "status": "candidate_halo_contamination"
+  },
+  "assetCoordinateSystem": {
+    "width": 1024,
+    "height": 1536,
+    "origin": "top_left",
+    "fit": "cover_no_stretch",
+    "toRender": {
+      "width": 1080,
+      "height": 1920,
+      "scaleNumerator": 5,
+      "scaleDenominator": 4,
+      "cropX": 100,
+      "cropY": 0,
+      "formulaX": "renderX = sourceX * 1.25 - 100",
+      "formulaY": "renderY = sourceY * 1.25"
+    },
+    "note": "preservar aspect ratio e pixels de origem; descartar 100px laterais ao preencher 1080x1920"
+  },
+  "shots": [
+    {
+      "id": "C01-P03",
+      "startFrame": 150,
+      "endFrameExclusive": 240,
+      "purpose": "Kael ajoelhado, manter cabeça baixa e rig facial não aplicável a esta vista traseira"
+    },
+    {
+      "id": "C01-P04",
+      "startFrame": 240,
+      "endFrameExclusive": 360,
+      "purpose": "câmera perspective dolly-out, dois guardas movem antebraços antes de cruzar duas lanças"
+    }
+  ],
+  "kaelParts": [
+    {
+      "id": "rosto-orelha",
+      "path": "assets/cena-01/rig-drafts/kael/rosto-orelha.png",
+      "sha256": "a81fbbb5e291782cf1a3f318e20988f8560de596b7c5ea63c65f16572150410e",
+      "bboxGlobal": [
+        568,
+        516,
+        669,
+        589
+      ],
+      "pivotProvisionalXY": [
+        583,
+        547
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "cabelo",
+      "path": "assets/cena-01/rig-drafts/kael/cabelo.png",
+      "sha256": "2210bab86b15f629d854a2ef8fa5df46bfe482a653bdc0dc497ee2f065337af7",
+      "bboxGlobal": [
+        452,
+        389,
+        700,
+        586
+      ],
+      "pivotProvisionalXY": [
+        586,
+        529
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "mao-direita",
+      "path": "assets/cena-01/rig-drafts/kael/mao-direita.png",
+      "sha256": "ec61a1b8606e6458141d1966f10f6f64a129e266f2b1407be47af7def7387f54",
+      "bboxGlobal": [
+        639,
+        837,
+        800,
+        994
+      ],
+      "pivotProvisionalXY": [
+        663,
+        888
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "antebraco-direito",
+      "path": "assets/cena-01/rig-drafts/kael/antebraco-direito.png",
+      "sha256": "b60682e6ba88df5136413b4c0425fe3f39ff5f31125952113ffa211caefdb38a",
+      "bboxGlobal": [
+        544,
+        798,
+        658,
+        931
+      ],
+      "pivotProvisionalXY": [
+        579,
+        822
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "braco-superior-direito",
+      "path": "assets/cena-01/rig-drafts/kael/braco-superior-direito.png",
+      "sha256": "72f539387056996de30a2046d2a3e0d40a6551aeb4e5c0b8cca47455460a43f9",
+      "bboxGlobal": [
+        501,
+        561,
+        673,
+        829
+      ],
+      "pivotProvisionalXY": [
+        548,
+        624
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "braco-esquerdo",
+      "path": "assets/cena-01/rig-drafts/kael/braco-esquerdo.png",
+      "sha256": "dcf26dc3c731fd0458d82beada8ac25856137171275f0f83f8ef773c43aa5cb0",
+      "bboxGlobal": [
+        221,
+        574,
+        322,
+        928
+      ],
+      "pivotProvisionalXY": [
+        268,
+        622
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "bota-direita",
+      "path": "assets/cena-01/rig-drafts/kael/bota-direita.png",
+      "sha256": "048e22a52688a9b52d47a945b20ec74d81803bb9cbf9d84530ce642dfd470066",
+      "bboxGlobal": [
+        548,
+        1229,
+        742,
+        1448
+      ],
+      "pivotProvisionalXY": [
+        610,
+        1246
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "bota-esquerda",
+      "path": "assets/cena-01/rig-drafts/kael/bota-esquerda.png",
+      "sha256": "e2c64aee46b8b1cb100915e834dfe3c0ac7f935a0107ca4757b9eccd5a783a69",
+      "bboxGlobal": [
+        268,
+        1225,
+        426,
+        1523
+      ],
+      "pivotProvisionalXY": [
+        348,
+        1257
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "perna-direita-levantada",
+      "path": "assets/cena-01/rig-drafts/kael/perna-direita-levantada.png",
+      "sha256": "ea9e324d1daa8e4b463fd7f37af387f56ca1ff88801206bcdfaf7ac882f9305c",
+      "bboxGlobal": [
+        531,
+        899,
+        798,
+        1259
+      ],
+      "pivotProvisionalXY": [
+        572,
+        970
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "perna-esquerda-ajoelhada",
+      "path": "assets/cena-01/rig-drafts/kael/perna-esquerda-ajoelhada.png",
+      "sha256": "b8da187765237617ea7454e11cc6c0f2b0534babfbb5c7e33a0a6a3f45d21ebe",
+      "bboxGlobal": [
+        182,
+        909,
+        555,
+        1453
+      ],
+      "pivotProvisionalXY": [
+        303,
+        988
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    },
+    {
+      "id": "tronco-jaqueta",
+      "path": "assets/cena-01/rig-drafts/kael/tronco-jaqueta.png",
+      "sha256": "895a0cb48ff5e55ffb1dc845a5e52a2be4d29ebcb9ac59f627183baf499faf55",
+      "bboxGlobal": [
+        223,
+        494,
+        664,
+        956
+      ],
+      "pivotProvisionalXY": [
+        480,
+        946
+      ],
+      "stage": "draft",
+      "underlayExists": false
+    }
+  ],
+  "otherParts": [
+    {
+      "id": "lanca-guarda-esquerdo-CANDIDATE",
+      "source": "assets/cena-01/rig-drafts/lancas/lanca-guarda-esquerdo-CANDIDATE.png",
+      "sha256": "57757aa43fb53c47b83ec8f0298485ea229cff3b9f348dfc62465b34e0609413",
+      "category": "weapon",
+      "stage": "candidate",
+      "animated": false,
+      "origin": "recovered_or_masked_from_original_scene",
+      "parent": "guard-left.hand-right",
+      "pivotMeasured": false,
+      "pivotProvisionalXY": [
+        381,
+        751
+      ],
+      "bboxGlobal": [
+        35,
+        321,
+        816,
+        1108
+      ],
+      "blockedReasons": [
+        "shaft pixels may include background",
+        "guard hand/grip underlay missing",
+        "no rigid armature"
+      ]
+    },
+    {
+      "id": "lanca-guarda-direito-CANDIDATE",
+      "source": "assets/cena-01/rig-drafts/lancas/lanca-guarda-direito-CANDIDATE.png",
+      "sha256": "c944a31f6bc9081172c53051467617f60c7d9dd943bf3b6b9807987026001a8d",
+      "category": "weapon",
+      "stage": "candidate",
+      "animated": false,
+      "origin": "recovered_or_masked_from_original_scene",
+      "parent": "guard-right.hand-left",
+      "pivotMeasured": false,
+      "pivotProvisionalXY": [
+        644,
+        749
+      ],
+      "bboxGlobal": [
+        209,
+        322,
+        991,
+        1106
+      ],
+      "blockedReasons": [
+        "shaft pixels may include background",
+        "guard hand/grip underlay missing",
+        "no rigid armature"
+      ]
+    },
+    {
+      "id": "guarda-esquerdo-alinhado",
+      "source": "assets/cena-01/rig-drafts/grupo/guarda-esquerdo-alinhado.png",
+      "sha256": "33621f89af2f6f04735442a20b1e33c96ac351602a8593ecb64eaedea585c246",
+      "category": "character",
+      "stage": "candidate",
+      "animated": false,
+      "origin": "recovered_or_masked_from_original_scene",
+      "parent": null,
+      "pivotMeasured": false,
+      "pivotProvisionalXY": [
+        170,
+        529
+      ],
+      "bboxGlobal": [
+        5,
+        405,
+        416,
+        1224
+      ],
+      "blockedReasons": [
+        "halo/background contamination",
+        "head, shoulders and arms not yet articulated"
+      ]
+    },
+    {
+      "id": "guarda-direito-alinhado",
+      "source": "assets/cena-01/rig-drafts/grupo/guarda-direito-alinhado.png",
+      "sha256": "623d01cf8d4a747936449107140c89853a3cd5d6f7c9c6b55ec2d52be2ebb74b",
+      "category": "character",
+      "stage": "candidate",
+      "animated": false,
+      "origin": "recovered_or_masked_from_original_scene",
+      "parent": null,
+      "pivotMeasured": false,
+      "pivotProvisionalXY": [
+        833,
+        535
+      ],
+      "bboxGlobal": [
+        611,
+        401,
+        1021,
+        1220
+      ],
+      "blockedReasons": [
+        "halo/background contamination",
+        "head, shoulders and arms not yet articulated"
+      ]
+    },
+    {
+      "id": "aldric-com-trono-REJECTED",
+      "source": "assets/cena-01/rig-drafts/grupo/aldric-com-trono-REJECTED.png",
+      "sha256": "c2e356211b6e020b74e16ee9c5550815421beea956d63b76cfb432fb2b39d9db",
+      "category": "character",
+      "stage": "rejected",
+      "animated": false,
+      "origin": "recovered_or_masked_from_original_scene",
+      "parent": null,
+      "pivotMeasured": false,
+      "pivotProvisionalXY": [
+        520,
+        425
+      ],
+      "bboxGlobal": [
+        320,
+        259,
+        709,
+        640
+      ],
+      "blockedReasons": [
+        "throne duplicated in cutout",
+        "do not use this as rig sprite"
+      ]
+    }
+  ],
+  "physicalConstraints": [
+    {
+      "type": "hand_grip",
+      "from": "guard-left.hand-right",
+      "to": "lanca-guarda-esquerdo-CANDIDATE",
+      "pivotSource": [
+        381,
+        751
+      ],
+      "state": "provisional"
+    },
+    {
+      "type": "hand_grip",
+      "from": "guard-right.hand-left",
+      "to": "lanca-guarda-direito-CANDIDATE",
+      "pivotSource": [
+        644,
+        749
+      ],
+      "state": "provisional"
+    },
+    {
+      "type": "crossed_at",
+      "coordSource": [
+        510,
+        641
+      ],
+      "state": "visually_estimated_from_mother"
+    },
+    {
+      "type": "recompose",
+      "expected": "mother appearance at neutral pose after approved background and all layer replacements",
+      "state": "missing"
+    }
+  ],
+  "globalGates": {
+    "sourceSHAverifiedFromGitHubQAs": true,
+    "alphaReal": true,
+    "roundtripExistingPartition": true,
+    "roundtripWithMotherAndBackground": false,
+    "underlaysReconstructed": false,
+    "pivotsMeasured": false,
+    "guardArmRigged": false,
+    "kingSpriteApproved": false,
+    "eyesConsistent": false,
+    "hairMeshApproved": false,
+    "humanReview": false,
+    "renderOfficialAllowed": false
+  },
+  "notes": [
+    "User prohibited new image generation. Masks copied source pixels; no prompting of image models.",
+    "The mother image already depicts crossed spears; opening them requires true arm rigs, otherwise a spear-only rotation is forbidden as official animation.",
+    "The group character cutout contains throne pixels and is rejected.",
+    "The eight separate chat-generated PNGs are reference candidates only and are not yet imported to GitHub.",
+    "Do not transform all 1024x1536 source into 1080x1920 by stretching."
+  ]
+}
