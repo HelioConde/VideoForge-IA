@@ -21,3 +21,14 @@ A placa de proteção usa o tecido original como camada *atrás* da capa dinâmi
 Nenhuma aprovação visual ou publicação automática: `human_visual_approval=false`, `publishable=false`. O objetivo da prévia é confirmar que os quadros 37–43 não tornam o rosto translúcido e que o broche/pescoço não ficam com falhas durante as rajadas (frames 55, 95 e 190).
 
 Este patch mantém separados o cabelo integral, a capa traseira/frontal e os olhos editados originalmente, sem geração de arte adicional.
+
+## 13/11/2026 — Segunda correção: fresta ENTRE as duas metades da capa
+
+O patch anterior preservava pixels do corpo sob a gola, mas não preenchia a fronteira entre a malha frontal e a traseira. Quando vento, atraso e intensidades diferentes moviam as metades em posições distintas, os limites complementares do recorte expunham fundo.
+
+- Em `videoforge/rig_candidate.py`, `_cape_split` agora aceita `cape_seam_overlap_px` com margem bilateral calculada por dilatação em dois passes (O(largura × altura)). As duas partes compartilham uma faixa dos MESMOS pixels originais de `cape.png` ao redor da fronteira, em vez de recortes mutuamente exclusivos.
+- O plano de `otaku-br/videos/teste-proxy-20261113/rig-plan.json` ativa uma margem de **36 px**; planos antigos sem a chave permanecem com a divisão antiga.
+- Os testes `test_cape_seam_overlap_*` cobrem continuidade da faixa de tecido, preservação RGBA e rejeição de margens inválidas.
+- O rosto continua sobre uma base opaca fixa e a proteção localizada da gola permanece. **Sem nova chamada de IA, sem aprovação humana, sem publicação.**
+
+**Importante:** alterar o código não atualiza automaticamente o MP4 antigo. É necessário executar novamente `rig-hair-preserve.yml` (workflow_dispatch) e inspecionar especialmente os frames 55, 95 e 190. Mesmo com essa correção, a aparência final de uma capa com partes animadas separadamente exige revisão humana; não afirmar aprovação visual sem examinar o novo render.
