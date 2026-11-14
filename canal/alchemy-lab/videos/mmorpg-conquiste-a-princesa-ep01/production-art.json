@@ -20,7 +20,11 @@
     "Expressão e composição com espaço seguro para legendas verticais.",
     "Cada recorte e reconstrução deriva da MESMA cena-mãe, preservando luz e perspectiva.",
     "A roupa de Elara muda para manto no beco, mas rosto e flor prateada mantêm identidade.",
-    "Fundo sem duplicações dos elementos móveis, rig real por pivôs e malha, nada de só zoom de PNG."
+    "Fundo sem duplicações dos elementos móveis, rig real por pivôs e malha, nada de só zoom de PNG.",
+    "Alternar plano geral, close do rosto, extremo close dos olhos, OTS, reações e inserts segundo o plano cinematográfico.",
+    "Ângulo novo exige imagem-mãe individual quando autorizado; não usar zoom de plano geral para simular expressões faciais.",
+    "Sem personagens extras no fundo desfocado, sem revelar Elara no trono antes do momento previsto.",
+    "O figurino/rosto entre a bíblia antiga e quadros recentes aprovados está em conflito; bloquear geração antes de unificar as referências no canal."
   ],
   "request_limit": {
     "per_run": 1,
@@ -43,5 +47,18 @@
     "youtube_upload": false,
     "qa_visual_pending": true,
     "artifacts_only": true
+  },
+  "cinematic_direction": {
+    "enabled": true,
+    "mode": "individual_shot_mothers",
+    "source": "direcao-cinematografica-planos.json",
+    "engine": "videoforge.cinematic_direction",
+    "shot_count": 37,
+    "portrait_closeup_count": 12,
+    "over_shoulder_count": 5,
+    "prohibited": "single-wide-poster-repeated-as-entire-video",
+    "new_image_generation_allowed": false,
+    "reference_photos_uploaded": false,
+    "canonical_identity_migration_pending": true
   }
 }
