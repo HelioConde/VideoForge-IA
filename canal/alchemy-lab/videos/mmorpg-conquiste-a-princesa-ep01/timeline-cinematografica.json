@@ -8,7 +8,7 @@
     "width": 1080,
     "height": 1920,
     "totalFrames": 4890,
-    "durationSeconds": 163.0
+    "durationSeconds": 163
   },
   "sourceArtworkFormat": {
     "width": 1024,
@@ -21,6 +21,7 @@
   "artAndRigApprovedShots": 0,
   "unapprovedShots": 36,
   "visualReferenceConflict": true,
+  "canonicalReferencesArchived": false,
   "noImageGenerationLock": true,
   "newImageGenerationCalls": 0,
   "pixelFilesCreated": 0,
