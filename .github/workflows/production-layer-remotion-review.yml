@@ -84,12 +84,31 @@ jobs:
               json.dumps(qa,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           print('EYE_OVERLAY_QA_OK',metrics)
           PY
+      - name: Corrigir piscada com alfa restrito e franja ORIGINAL acima dos olhos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_blink_hair_occlusion -v
+          SOURCE_SHA="$(python - <<'PY'
+          from pathlib import Path
+          import json
+          obj=json.loads(Path('input/layers/manifest.json').read_text(encoding='utf-8'))
+          print(obj['source']['sha256'])
+          PY
+          )"
+          python -m videoforge.blink_hair_occlusion \
+            --character ./input/layers/character-main.png \
+            --eyes ./input/blink/eyes-closed.png \
+            --safe-eyes ./input/blink/eyes-closed-safe.png \
+            --hair-foreground ./input/blink/hair-foreground.png \
+            --qa ./input/blink/occlusion.qa.json \
+            --scene-mother-sha256 "$SOURCE_SHA"
       - name: Verificar TSC e integridade dos assets de origem
         shell: bash
         run: |
           set -euo pipefail
           ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
-          python -m unittest tests.test_production_scene_layers tests.test_scene_layers -v
+          python -m unittest tests.test_production_scene_layers tests.test_scene_layers tests.test_blink_hair_occlusion -v
           cd motion-remotion
           ./node_modules/.bin/tsc --noEmit
           node --test tests/mesh-rig.test.cjs tests/idle-motion.test.cjs
@@ -131,6 +150,8 @@ jobs:
           p=Path('output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01')
           report=json.loads((p/'layered-preview.qa.json').read_text(encoding='utf-8'))
           assert report['eyes_blink_rgba_verified'] is True
+          assert report['bangs_over_blink_technical_qa'] is True
+          assert report['hair_foreground_rgba_verified'] is True
           assert report['character_motion_reduced_to_max_px']==2.8
           assert report['rig_head_eyes_hair_clothes'] is False
           assert hashlib.sha256((p/'qa-blink-closed.png').read_bytes()).digest()!=hashlib.sha256((p/'qa-blink-open.png').read_bytes()).digest()
@@ -146,6 +167,9 @@ jobs:
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/layered-preview.mp4
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/layered-preview.qa.json
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/stage.qa.json
+            input/blink/eyes-closed-safe.png
+            input/blink/hair-foreground.png
+            input/blink/occlusion.qa.json
             output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/qa-*.png
           retention-days: 14
           if-no-files-found: error
