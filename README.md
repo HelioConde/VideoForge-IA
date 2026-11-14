@@ -47,6 +47,12 @@ A nova etapa de [preparação dos sprites](docs/PREPARAR-RIG-CANDIDATO.md) usa o
 
 O novo [MVP de rig 2D](docs/RIG-MALHA-2D.md) acrescenta ao Remotion um **warp por triangulos da capa**, **pivo da cabeca no pescoco** e **piscadas em quadros definidos**. O codigo e validadores existem; a ativacao depende de cinco PNGs RGBA sem partes duplicadas, hashes e revisao visual humana. Sem rig, o workflow permanece no modo legado; **nao existe ainda MP4 real aprovado deste modo novo**. Nao habilita publicacao nem o modelo `camadas-animadas` para producao.
 
+## Regra permanente: sem teto de quantidade de cenas
+
+**O gerador não deve impor limite fixo de cenas** (nem 10, 24, 30 ou outro valor arbitrário). Roteiros, manifestos e renderizadores devem aceitar qualquer número **positivo** de cenas válido, determinado pela narrativa. O motor renderiza e valida cena a cena, sem reduzir, mesclar, cortar ou descartar cenas apenas por terem ultrapassado uma contagem pré-definida.
+
+Esta regra não remove o QA, a exigência de assets reais, as verificações de direitos, a segurança contra abuso, o orçamento autorizado de IA, os limites operacionais do GitHub Actions nem a **duração** do formato. Por enquanto o piloto Shorts do Otaku BR permanece com 90–180 segundos; se a narrativa não couber, deve ser adaptada ou planejada para formato mais longo, não ter cenas apagadas automaticamente. Mudanças no número de cenas não significam publicação ou geração de IA automática.
+
 ## O que já funciona
 
 - Compositor FFmpeg de **imagens e narrações fornecidas**, com legendas,
