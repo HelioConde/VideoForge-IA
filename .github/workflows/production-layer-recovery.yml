@@ -1,0 +1,140 @@
+name: "VideoForge - recuperar camada RGBA sem refazer arte-mae"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/*/videos/*/pedido-recuperar-camadas.json'
+permissions:
+  contents: read
+  packages: read
+  actions: read
+
+jobs:
+  recuperar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Autenticar pedido e artifact parcial
+        id: req
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os,pathlib,re,subprocess
+          paths=subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','-r','HEAD'],text=True).splitlines()
+          paths=[p for p in paths if re.fullmatch(r'canal/[a-z0-9-]+/videos/[a-z0-9-]+/pedido-recuperar-camadas\.json',p)]
+          if len(paths)!=1: raise SystemExit('RECOVERY_AMBIGUOUS')
+          path=pathlib.Path(paths[0]); req=json.loads(path.read_text(encoding='utf8'))
+          ch,vid=path.parts[1],path.parts[3]
+          if (req.get('schema')!='videoforge/layer-recovery-request/v1'
+              or req.get('channel')!=ch or req.get('video_id')!=vid
+              or req.get('youtube_upload') is not False
+              or req.get('max_calls_per_run')!=1
+              or req.get('retry_on_429') is not False):
+              raise SystemExit('RECOVERY_REQUEST_INVALID')
+          scene=req.get('scene_number'); run=req.get('scene_source_run_id'); partial=req.get('partial_layers_run_id')
+          if any(type(v) is not int or v<=0 for v in (scene,run,partial)) or scene!=1:
+              raise SystemExit('RECOVERY_RUN_IDS_INVALID')
+          from videoforge.production_scene_layers import read_plan
+          read_plan(ch,vid,scene)
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf8') as f:
+              for name,value in dict(ch=ch,vid=vid,number=scene,source_run_id=run,
+                partial_run_id=partial,source_name=f'vf-real-scene-{ch}-{vid}-{scene}-{run}',
+                partial_name=f'vf-layered-scene-{ch}-{vid}-{scene}-{partial}').items():
+                  f.write(f'{name}={value}\n')
+          print('RECOVERY_VERIFIED',ch,vid,scene,'calls=1; reuse background; no retries')
+          PY
+      - name: Verificar proxy e limites de chamada
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then echo "::error::Proxy key ausente"; exit 1; fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else echo "::error::Proxy nao configurado"; exit 1; fi
+      - name: Iniciar proxy precompilado se necessario
+        if: env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          obj=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+          assert isinstance(obj,dict) and isinstance(obj.get('records'),list)
+          assert obj['records'] and all(isinstance(z,dict) and isinstance(z.get('token'),dict) for z in obj['records'])
+          p=Path(os.environ['RUNNER_TEMP'])/'vf-proxy-state'/'accounts.json'
+          p.write_text(json.dumps(obj),encoding='utf8'); p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-recover-layer --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" \
+            -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy indisponivel"; exit 1
+      - name: Baixar cenas parciais já geradas (mesma proveniencia)
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ steps.req.outputs.partial_run_id }}
+          name: ${{ steps.req.outputs.partial_name }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/partial
+      - name: Baixar a imagem-mae assinada da mesma obra
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ steps.req.outputs.source_run_id }}
+          name: ${{ steps.req.outputs.source_name }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/original
+      - name: Validar SHA e refazer SOMENTE extracao de personagens RGBA
+        shell: bash
+        env:
+          CHANNEL: ${{ steps.req.outputs.ch }}
+          VIDEO_ID: ${{ steps.req.outputs.vid }}
+          NUMBER: ${{ steps.req.outputs.number }}
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_scene_layers tests.test_production_scene_layers -v
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          python -m videoforge.production_layer_recovery \
+            --channel "$CHANNEL" --video-id "$VIDEO_ID" --number "$NUMBER" \
+            --partial ./input/partial --scene-original ./input/original \
+            --url "$PROXY_ENDPOINT" --model gpt-image-2
+      - name: Salvar imagem e diagnostico sem inventar rig
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-recovered-layers-${{ steps.req.outputs.ch }}-${{ steps.req.outputs.vid }}-${{ github.run_id }}
+          path: output/${{ steps.req.outputs.ch }}/videos/${{ steps.req.outputs.vid }}/assets/cena-01/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Limpar credenciais
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-recover-layer >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
