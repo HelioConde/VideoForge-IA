@@ -249,6 +249,26 @@
     "movimento": "pan cinematografico da arte original, sem recorte",
     "pipeline_animacao_obrigatorio": "cena-mae + background reconstruido + personagens/objetos RGBA + rig verificado + revisao",
     "teste_camadas_reais": {
+      "run_id": 43570324901,
+      "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43570324901",
+      "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43570324901/artifacts/14104157803",
+      "scene_number": 1,
+      "scene_id": "gancho-anya",
+      "duration_seconds": 8.32,
+      "sha256": "27afe97c2c66980da5dc49e22f4b94b1327b5e97415d7be3c5f05950b5d650b0",
+      "source_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
+      "blink_overlay_run_id": 43569915048,
+      "background_and_character_rgba_technical_qa": true,
+      "female_voice_and_subtitles": true,
+      "blink_anya_verified_in_sample_frames": true,
+      "body_vertical_max_px": 2.8,
+      "rig_individual_parts": false,
+      "other_objects_separated": false,
+      "visual_approval": false,
+      "official_full_video": false,
+      "workflow_mode": "normal_push_no_private"
+    },
+    "preview_anterior_camadas": {
       "run_id": 43560582246,
       "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246",
       "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43560582246/artifacts/14099899544",
@@ -263,7 +283,9 @@
       "rig_individual_parts": false,
       "visual_approval": false,
       "official_full_video": false
-    }
+    },
+    "piscada_anya_rgba_implementada_teste_cena01": true,
+    "movimento_corpo_reduzido": true
   },
   "qa": {
     "aprovado_tecnicamente": true,
@@ -299,6 +321,7 @@
     "14/11/2026: geração REAL da prancha Loid/Anya/Yor via módulo reutilizável production_art.py no GitHub; PNG 1024x1536 SHA validado, inspeção visual interna sem aprovação humana. Não é produção final.",
     "14/11/2026: MP4 real de revisão do VideoForge-IA validado no run #43556709886; imagens reais #43555226353/#43555469650/#43555715519, áudio de staging, H264/AAC 1080x1920 130.847s; faixas pretas corrigidas sem cortar personagens. NÃO é animação articulada e NÃO foi publicado.",
     "14/11/2026: implementação no programa: voz feminina eSpeak pt-br+f3 #43557582317, legenda por segmento WAV e SRT embutida, pan sem cortar personagens; vídeo final de revisão #43558375270, qa técnico positivo e quadro visível inspecionado. Não é animação individual de personagem e não foi publicado.",
-    "14/11/2026: regra cena-mae + background reconstruido + sprite transparente registrada no AGENTS.md e docs. Remotion de camadas da cena 01 (8.32s, voz feminina/SRT, SHA verificado) run #43560582246, artifact #14099899544. Previas com pan continuam sem rig e video_oficial_do_programa=false. Restantes 15 cenas nao foram renderizadas em camadas."
+    "14/11/2026: regra cena-mae + background reconstruido + sprite transparente registrada no AGENTS.md e docs. Remotion de camadas da cena 01 (8.32s, voz feminina/SRT, SHA verificado) run #43560582246, artifact #14099899544. Previas com pan continuam sem rig e video_oficial_do_programa=false. Restantes 15 cenas nao foram renderizadas em camadas.",
+    "14/11/2026: teste de 8.32s realizado pelo workflow NORMAL #43570324901 (sem modo private). Retina/rosto sempre opacos, Anya piscando com RGBA editado da mesma cena-mãe, bob vertical limitado a 2.8px, voz feminina e SRT. QA técnico passou e exemplos de olhos abertos/fechados foram inspecionados. Ainda sem objetos animáveis isolados nem rig de cabeça/cabelo/roupas e sem produção oficial."
   ]
 }
