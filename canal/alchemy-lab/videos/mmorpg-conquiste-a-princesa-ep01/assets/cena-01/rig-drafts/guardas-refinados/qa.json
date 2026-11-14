@@ -1,0 +1,94 @@
+{
+  "schema": "videoforge/deterministic-guard-extraction/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene": "cena-01",
+  "imageGenerationCalls": 0,
+  "sourcing": "100pct_RGB_from_original_mother; alpha_from_existing_group_mask",
+  "guardCount": 2,
+  "technicalStatus": "candidate_needs_visual_review",
+  "humanVisualApproval": false,
+  "underlays": false,
+  "officialRig": false,
+  "mp4Rendered": false,
+  "youtubeUploaded": false,
+  "limitations": [
+    "Há lanças desenhadas por cima das luvas na própria cena-mãe",
+    "Sprites sem lança contêm buracos que exigem reconstrução fiel de material oculto",
+    "A máscara de grupo foi derivada por IA anteriormente e pode errar cabelos ou dobras",
+    "A separação do corpo em cabeça, mãos, braços e roupa ainda não ocorreu",
+    "NUNCA sobrepor recortes sobre cena-mãe original que já contém personagens"
+  ],
+  "guards": [
+    {
+      "id": "guarda-esquerdo",
+      "sourceMotherSHA256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "maskGuideSHA256": "e9d0f6a1e69a4a49e30e8744be6b3ae3b4c8caf46bf1ebcf69fee3572889bcb9",
+      "candidateRGBFromMother": "guarda-esquerdo-origem-rgb-candidato.png",
+      "candidateSHA256": "5a5fff118860911c4d978fc985ec173e8a8cad311964045c6f2f475278d3f9b4",
+      "candidateNoSpearWithHoles": "guarda-esquerdo-sem-lanca-BURACOS.png",
+      "candidateNoSpearSHA256": "61dab081f424489c6af62fef2c2d79a58a2be80cbc06d6f64272312e57097e62",
+      "qa": {
+        "componentPixelCount": 150433,
+        "maskForegroundPixels": 153611,
+        "bbox": [
+          10,
+          409,
+          405,
+          1202
+        ],
+        "seed": [
+          157,
+          600
+        ],
+        "roi": [
+          0,
+          395,
+          420,
+          1233
+        ],
+        "spearOverlapRemovedPixels": 3598,
+        "spearHolesNeedUnderlay": true,
+        "sourceRGBUnmodified": true,
+        "groupRGBAUsedAsTexture": false,
+        "humanVisualApproved": false,
+        "rigReady": false
+      }
+    },
+    {
+      "id": "guarda-direito",
+      "sourceMotherSHA256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "maskGuideSHA256": "e9d0f6a1e69a4a49e30e8744be6b3ae3b4c8caf46bf1ebcf69fee3572889bcb9",
+      "candidateRGBFromMother": "guarda-direito-origem-rgb-candidato.png",
+      "candidateSHA256": "896067295f1ff526a33d7a910470ed548717002d5f9e799241a33f9a2ef75720",
+      "candidateNoSpearWithHoles": "guarda-direito-sem-lanca-BURACOS.png",
+      "candidateNoSpearSHA256": "f4ade09f01aa454913d5c883e18945260eaa5a7a43f891b1032463a8c6b87cbd",
+      "qa": {
+        "componentPixelCount": 149303,
+        "maskForegroundPixels": 152496,
+        "bbox": [
+          618,
+          408,
+          1014,
+          1202
+        ],
+        "seed": [
+          877,
+          610
+        ],
+        "roi": [
+          607,
+          395,
+          1024,
+          1233
+        ],
+        "spearOverlapRemovedPixels": 3702,
+        "spearHolesNeedUnderlay": true,
+        "sourceRGBUnmodified": true,
+        "groupRGBAUsedAsTexture": false,
+        "humanVisualApproved": false,
+        "rigReady": false
+      }
+    }
+  ]
+}
