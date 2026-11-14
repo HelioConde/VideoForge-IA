@@ -1,0 +1,93 @@
+name: "VideoForge - Testar MP4 de camadas reais com Remotion"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/gerar-mp4-camadas-spy-family.json'
+permissions:
+  contents: read
+  packages: read
+  actions: read
+concurrency:
+  group: vf-spy-scene01-layers-real-mp4
+  cancel-in-progress: false
+jobs:
+  render-review:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Recuperar cena-mae, background e personagens TRANSPARENTES
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/layers
+      - name: Recuperar voz feminina com SRT real por trecho de fala
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43557582317
+          name: vf-otaku-br-spy-family-female-voice-43557582317
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/voice
+      - name: Verificar TSC e integridade dos assets de origem
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          python -m unittest tests.test_production_scene_layers tests.test_scene_layers -v
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/mesh-rig.test.cjs
+      - name: Preparar parametros de Remotion mantendo a cena-mae ORIGINAL
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.production_layer_preview prepare \
+            --channel otaku-br --video-id spy-x-family-familia-de-mentira \
+            --number 1 --layers ./input/layers --voice ./input/voice
+      - name: Remotion renderiza background + sprite RGBA em movimento independente
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/index.ts VideoForgeLayerScene \
+            ../output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/remotion-raw.mp4 \
+            --props=../output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/props.json \
+            --codec=h264 --concurrency=2 --log=error
+      - name: Incorporar legendas sem cobrir o personagem e verificar MP4
+        shell: bash
+        run: |
+          set -euo pipefail
+          p=output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01
+          ffmpeg -nostdin -hide_banner -loglevel error -y \
+            -i "$p/remotion-raw.mp4" \
+            -vf "subtitles=filename=legenda-original.srt:force_style='FontName=DejaVu Sans,FontSize=11,PrimaryColour=&H00FFFFFF,OutlineColour=&H65000000,BorderStyle=3,BackColour=&H90000000,Alignment=2,MarginV=12'" \
+            -c:v libx264 -preset veryfast -crf 23 -pix_fmt yuv420p \
+            -c:a aac -b:a 128k -movflags +faststart "$p/layered-preview.mp4"
+          python -m videoforge.production_layer_preview verify \
+            --channel otaku-br --video-id spy-x-family-familia-de-mentira --number 1
+          ffmpeg -nostdin -hide_banner -loglevel error -y -ss 2.5 -i "$p/layered-preview.mp4" -frames:v 1 "$p/qa-frame.png"
+        env:
+          LC_ALL: C.UTF-8
+      - name: Entregar MP4 da cena 01 com QA (nao e episodio aprovado)
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-spy-family-cena01-camadas-remotion-${{ github.run_id }}
+          path: |
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/layered-preview.mp4
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/layered-preview.qa.json
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/stage.qa.json
+            output/otaku-br/videos/spy-x-family-familia-de-mentira/layers-review/cena-01/qa-frame.png
+          retention-days: 14
+          if-no-files-found: error
