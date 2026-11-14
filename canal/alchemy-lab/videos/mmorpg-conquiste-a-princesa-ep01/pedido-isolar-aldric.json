@@ -9,5 +9,7 @@
   "source": "assets/cenas-mae/cena-01.png",
   "result": "assets/cena-01/rig-drafts/aldric-origem/",
   "status": "requested",
-  "quality": "candidate; may contain throne armrest, no underlays"
+  "quality": "candidate; may contain throne armrest, no underlays",
+  "retry_reason": "workflow YAML corrigido: valor do comando echo com dois-pontos",
+  "request_revision": 2
 }
