@@ -1,0 +1,123 @@
+name: "VideoForge - ThreeCanvas Anya real art DRAFT review (no publish)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/anya-three-draft-visual-qa.json'
+permissions:
+  contents: read
+  actions: read
+  packages: read
+concurrency:
+  group: videoforge-three-anya-real-art-draft-review
+  cancel-in-progress: false
+jobs:
+  draft-visual-qa:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Recuperar cena-mãe original sem alterar a arte
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43560159589
+          name: vf-cena-mae-spy-family-cena-01-43560159589
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/original
+      - name: Recuperar Loid e Yor estáticos sem duplicar Anya
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43591918632
+          name: vf-anya-hand-head-separate-draft-43591918632
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/corrected
+      - name: Recuperar sprites da Anya com underlay alfa 254 corrigido
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43598536256
+          name: vf-anya-hair-underlay-candidate-43598536256
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/draft
+      - name: Validar dependências ThreeCanvas fixas e contrato de rig
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          python -m unittest tests.test_animation_manual tests.test_rig_three_contract -v
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/rig-three-math.test.cjs tests/blink-motion-sync.test.cjs
+      - name: Preparar sprites e Loid/Yor sem desbloquear aprovação humana
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.rig_three_draft_review \
+            --original ./input/original \
+            --corrected ./input/corrected \
+            --candidate ./input/draft \
+            --dest ./output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-qa
+      - name: Renderizar quadros REAIS em ThreeCanvas com malha SWANGLE (somente QA)
+        shell: bash
+        run: |
+          set -euo pipefail
+          target=output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-qa
+          cd motion-remotion
+          for frame in 0 30 74 76 173 175 239; do
+            ./node_modules/.bin/remotion still src/rig-three-review-index.ts VideoForgeAnyaRigDraftQA \
+              "../$target/frame-$frame.png" --frame="$frame" \
+              --props="../$target/props.json" --gl=swangle --log=error
+          done
+          ./node_modules/.bin/remotion still src/rig-three-review-index.ts VideoForgeAnyaRigDraftQA \
+            "../$target/frame-30-repeat.png" --frame=30 \
+            --props="../$target/props.json" --gl=swangle --log=error
+          cd ..
+          cmp "$target/frame-30.png" "$target/frame-30-repeat.png"
+          if cmp -s "$target/frame-0.png" "$target/frame-30.png"; then
+            echo "ERROR: no frame movement in real ThreeCanvas review" >&2; exit 3
+          fi
+          if cmp -s "$target/frame-74.png" "$target/frame-76.png"; then
+            echo "ERROR: blink frames identical in real ThreeCanvas review" >&2; exit 3
+          fi
+          echo "ANYA_DRAFT_THREECANVAS_REAL_ART_FRAMES_VERIFIED"
+      - name: Relatório do QA determinístico sem aprovação automática
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          target=Path('output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-qa')
+          stage=json.loads((target/'stage.qa.json').read_text())
+          names=['frame-0.png','frame-30.png','frame-74.png','frame-76.png',
+                 'frame-173.png','frame-175.png','frame-239.png']
+          sha=lambda f:hashlib.sha256((target/f).read_bytes()).hexdigest()
+          if any((target/f).stat().st_size<30000 for f in names):
+              raise SystemExit('ANYA_DRAFT_INVALID_RENDER_FRAME')
+          qa={**stage,'rendered_actual_threecanvas_frames':names,
+              'frame_sha256':{f:sha(f) for f in names},
+              'frame30_repeat_exact':sha('frame-30.png')==sha('frame-30-repeat.png'),
+              'first_vs_moving_frame_different':sha('frame-0.png')!=sha('frame-30.png'),
+              'approved_blink_sample_changes':sha('frame-74.png')!=sha('frame-76.png'),
+              'human_visual_approval':False,'rig_operational':False,
+              'youtube_uploaded':False,'video_official':False,
+              'status':'preview_tecnico_nao_oficial'}
+          (target/'render.qa.json').write_text(json.dumps(qa,ensure_ascii=False,indent=2)+'\n')
+          print('ANYA_THREECANVAS_DRAFT_REVIEW_QA',json.dumps(qa))
+          PY
+      - name: Salvar quadros da Anya e relatório sem vídeo oficial ou publicação
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-anya-three-real-art-unapproved-review-${{ github.run_id }}
+          path: output/otaku-br/videos/spy-x-family-familia-de-mentira/three-draft-qa/
+          if-no-files-found: warn
+          retention-days: 14
