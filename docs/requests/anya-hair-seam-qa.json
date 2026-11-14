@@ -1,0 +1,16 @@
+{
+  "schema": "videoforge/rig-three-anya-hair-seam-qa-request/v1",
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "cena-01",
+  "source_original_run": 43560159589,
+  "corrected_hand_neutral_run": 43591918632,
+  "isolated_hair_seed_run": 43589190537,
+  "method": "source_pixel_side_lock_partition_and_neck_rotation_stress",
+  "new_image_calls": 0,
+  "render_type": "artistic_preparation_not_ThreeCanvas",
+  "human_visual_approval": false,
+  "rig_operational": false,
+  "youtube_upload": false
+}
