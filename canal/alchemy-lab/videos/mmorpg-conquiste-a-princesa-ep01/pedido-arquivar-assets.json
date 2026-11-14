@@ -13,5 +13,7 @@
     "kael_rgba": 43592844393
   },
   "destination": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets",
-  "quality_policy": "Todos PNGs arquivados com origem e SHA; não implica aceite visual. Nenhum modelo é invocado."
+  "quality_policy": "Todos PNGs arquivados com origem e SHA; não implica aceite visual. Nenhum modelo é invocado.",
+  "retry_reason": "A primeira execução validou 18 PNGs e SHA mas gitignore bloqueou o estágio de git add; corrigido git add -f restrito ao episódio.",
+  "archive_attempt": 2
 }
