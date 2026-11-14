@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/qa-neutral-composite-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "read_only_png_files": true,
+  "background_choice": "reconciled",
+  "image_generation_calls": 0,
+  "youtube_upload": false,
+  "human_visual_approval": false,
+  "source": "already archived original mother and latest background reconcile candidate",
+  "output": "qa-recomposicao-c01-reconciliado.json",
+  "note": "Compare neutral RGB MAE and occlusion with first unaltered QA report. No new image files created."
+}
