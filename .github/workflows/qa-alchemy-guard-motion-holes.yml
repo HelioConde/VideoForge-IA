@@ -1,0 +1,69 @@
+name: "VideoForge - detectar buracos em braços dos guardas (sem IA)"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-qa-buracos-guardas.json'
+
+permissions:
+  contents: write
+concurrency:
+  group: vf-alchemy-motion-holes
+  cancel-in-progress: false
+
+jobs:
+  auditar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar veto de geração e escopo do episódio
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          base=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          r=json.loads((base/'pedido-qa-buracos-guardas.json').read_text(encoding='utf8'))
+          assert r['schema']=='videoforge/guard-motion-hole-audit-request/v1'
+          assert r['channel']=='alchemy-lab'
+          assert r['video_id']=='mmorpg-conquiste-a-princesa-ep01'
+          assert r['only_existing_pngs'] is True
+          assert r['image_generation_calls']==0
+          assert r['no_png_output'] is True
+          assert r['human_visual_approval'] is False
+          assert r['youtube_upload'] is False
+          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          print('QA_ONLY: no image models, no saved images, no render.')
+          PY
+      - name: Instalar Pillow para álgebra de máscaras, sem criação artística
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Medir buracos por ângulo e pivôs provisórios, sem produzir imagens
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.audit_guard_motion_envelope
+      - name: Arquivar somente JSON com medidas, nenhum PNG
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa-guardas-envelope-movimento-c01.json'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$FILE"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(alchemy): medir buracos do movimento de braços sem IA nem PNG'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Registrar veto de animação oficial
+        run: |
+          echo 'Métricas em JSON: não executar movimento oficial sem underlay e QA humano.'
