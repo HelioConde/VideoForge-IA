@@ -16,7 +16,7 @@ from .scene_layers import png_info
 SCHEMA = "videoforge/rig-three/v1"
 SAFE_NAME = re.compile(r"^[a-z][a-z0-9-]{0,55}\.png$")
 REQUIRED = {"body-no-head", "head-open", "head-closed"}
-MESH_TYPES = {"cape", "hair-front", "hair-back", "cloth"}
+MESH_TYPES = {"cape", "hair-front", "hair-front-left", "hair-front-right", "hair-back", "cloth"}
 ALLOWED_TYPES = REQUIRED | MESH_TYPES | {"arm-left", "arm-right", "hand", "prop", "seam-underlay"}
 MAX_LAYERS = 24
 
