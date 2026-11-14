@@ -1,0 +1,359 @@
+{
+  "schema": "videoforge/direction-bindings/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shots": {
+    "C01-P03": {
+      "canvas": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sourceMother": {
+        "file": "assets/cenas-mae/cena-01.png",
+        "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf"
+      },
+      "background": {
+        "file": "assets/cena-01/candidatos/background-reconstructed.png",
+        "sha256": "5c3a553a5b9a76a1cf8506f9cca67ee097cde9ff8701aa140701669e43c9d620"
+      },
+      "nodes": [
+        {
+          "id": "kael.ombros",
+          "parent": null,
+          "pivot": [
+            472,
+            1068
+          ],
+          "role": "group",
+          "z": 0
+        },
+        {
+          "id": "kael.cabeca",
+          "parent": "kael.ombros",
+          "pivot": [
+            530,
+            839
+          ],
+          "role": "group",
+          "z": 0
+        },
+        {
+          "id": "kael.rosto",
+          "parent": "kael.cabeca",
+          "pivot": [
+            530,
+            839
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/rosto-orelha.png",
+          "bbox": [
+            521,
+            821,
+            57,
+            42
+          ],
+          "sha256": "e8ad8d4b98c440905ed3e1153eb1568159bed3912001ab12c89d38f01b8cbb5a",
+          "z": 24
+        },
+        {
+          "id": "kael.cabelo",
+          "parent": "kael.cabeca",
+          "pivot": [
+            531,
+            828
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/cabelo.png",
+          "bbox": [
+            457,
+            751,
+            139,
+            111
+          ],
+          "sha256": "f85d66725347ef361f3ad3b6b090dfe854d36b0d0c6b45d1a739fc9da4e39378",
+          "z": 25,
+          "mesh": {
+            "kind": "hair-back",
+            "columns": 7,
+            "rows": 9,
+            "pinnedRows": [
+              0
+            ],
+            "amplitudePx": 0.8
+          }
+        },
+        {
+          "id": "kael.punhos",
+          "parent": "kael.antebraco",
+          "pivot": [
+            575,
+            1034
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/mao-direita.png",
+          "bbox": [
+            561,
+            1005,
+            87,
+            89
+          ],
+          "sha256": "355ca4f061cf34acf685c189f1e06aae64f95365d9584b05e9c0dbd621371c47",
+          "z": 23
+        },
+        {
+          "id": "kael.antebraco",
+          "parent": "kael.braco-direito",
+          "pivot": [
+            527,
+            997
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/antebraco-direito.png",
+          "bbox": [
+            508,
+            983,
+            68,
+            77
+          ],
+          "sha256": "44717eb405a88b58b71e72149a7fb8f0509ef3437210b77dac71174c164abc37",
+          "z": 22
+        },
+        {
+          "id": "kael.braco-direito",
+          "parent": "kael.ombros",
+          "pivot": [
+            510,
+            883
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/braco-superior-direito.png",
+          "bbox": [
+            484,
+            847,
+            97,
+            153
+          ],
+          "sha256": "6ba3854dd91ef6659f99a0cd46fa9f78488a396a25439be074d077f625e5acd3",
+          "z": 21
+        },
+        {
+          "id": "kael.braco-esquerdo",
+          "parent": "kael.ombros",
+          "pivot": [
+            353,
+            882
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/braco-esquerdo.png",
+          "bbox": [
+            330,
+            851,
+            53,
+            206
+          ],
+          "sha256": "10c9c11da162f92cf3a7fae06c859916ef648b1c3e3d52f6dd8e6fd6cd8e4256",
+          "z": 19
+        },
+        {
+          "id": "kael.bota-direita",
+          "parent": "kael.perna-direita",
+          "pivot": [
+            545,
+            1240
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/bota-direita.png",
+          "bbox": [
+            511,
+            1230,
+            101,
+            122
+          ],
+          "sha256": "a09569761f4e65513aa7d88f00275bb26eaf8ef820d2e692bf02ff19df8fe713",
+          "z": 19
+        },
+        {
+          "id": "kael.bota-esquerda",
+          "parent": "kael.perna-esquerda",
+          "pivot": [
+            398,
+            1246
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/bota-esquerda.png",
+          "bbox": [
+            353,
+            1228,
+            89,
+            170
+          ],
+          "sha256": "3a2352fbd4896a8b4b4db94fc87cc679eb01321962ee8224b8788cdee39e72e3",
+          "z": 19
+        },
+        {
+          "id": "kael.perna-direita",
+          "parent": null,
+          "pivot": [
+            523,
+            1081
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/perna-direita-levantada.png",
+          "bbox": [
+            500,
+            1041,
+            139,
+            205
+          ],
+          "sha256": "a72b2a7a147049b5b099c768066af1d8307d27d00374e83c22790df7cda2ed7d",
+          "z": 19
+        },
+        {
+          "id": "kael.perna-esquerda",
+          "parent": null,
+          "pivot": [
+            372,
+            1092
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/perna-esquerda-ajoelhada.png",
+          "bbox": [
+            305,
+            1047,
+            209,
+            312
+          ],
+          "sha256": "708a467c2566bb244d55293f3d4959c8929357acef291c31dc28e383a26aca72",
+          "z": 19
+        },
+        {
+          "id": "kael.jaqueta",
+          "parent": "kael.ombros",
+          "pivot": [
+            472,
+            1068
+          ],
+          "role": "part",
+          "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/tronco-jaqueta.png",
+          "bbox": [
+            336,
+            809,
+            240,
+            264
+          ],
+          "sha256": "f156de26c9b0fc6c6cc957e85ea0d6b4a23dce55fac5d9a71b556d8ec9940c7e",
+          "z": 20,
+          "mesh": {
+            "kind": "cloth",
+            "columns": 7,
+            "rows": 9,
+            "pinnedRows": [
+              0
+            ],
+            "amplitudePx": 0.8
+          }
+        },
+        {
+          "id": "aldric",
+          "parent": null,
+          "pivot": [
+            336,
+            299
+          ],
+          "role": "static-context",
+          "file": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+          "bbox": [
+            336,
+            299,
+            308,
+            323
+          ],
+          "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+          "z": 10
+        },
+        {
+          "id": "guarda-esquerdo",
+          "parent": null,
+          "pivot": [
+            10,
+            409
+          ],
+          "role": "static-context",
+          "file": "assets/cena-01/rig-drafts/guardas-refinados/guarda-esquerdo-origem-rgb-candidato.png",
+          "bbox": [
+            10,
+            409,
+            395,
+            793
+          ],
+          "sha256": "5a5fff118860911c4d978fc985ec173e8a8cad311964045c6f2f475278d3f9b4",
+          "z": 10
+        },
+        {
+          "id": "guarda-direito",
+          "parent": null,
+          "pivot": [
+            618,
+            408
+          ],
+          "role": "static-context",
+          "file": "assets/cena-01/rig-drafts/guardas-refinados/guarda-direito-origem-rgb-candidato.png",
+          "bbox": [
+            618,
+            408,
+            396,
+            794
+          ],
+          "sha256": "896067295f1ff526a33d7a910470ed548717002d5f9e799241a33f9a2ef75720",
+          "z": 10
+        },
+        {
+          "id": "lanca-contexto-0",
+          "parent": null,
+          "pivot": [
+            381,
+            751
+          ],
+          "role": "static-context",
+          "file": "assets/cena-01/rig-drafts/lancas/lanca-guarda-esquerdo-CANDIDATE.png",
+          "bbox": [
+            35,
+            321,
+            781,
+            787
+          ],
+          "sha256": "57757aa43fb53c47b83ec8f0298485ea229cff3b9f348dfc62465b34e0609413",
+          "z": 11
+        },
+        {
+          "id": "lanca-contexto-1",
+          "parent": null,
+          "pivot": [
+            644,
+            749
+          ],
+          "role": "static-context",
+          "file": "assets/cena-01/rig-drafts/lancas/lanca-guarda-direito-CANDIDATE.png",
+          "bbox": [
+            209,
+            322,
+            782,
+            784
+          ],
+          "sha256": "c944a31f6bc9081172c53051467617f60c7d9dd943bf3b6b9807987026001a8d",
+          "z": 11
+        }
+      ],
+      "warnings": [
+        "Rascunho diagnostico: todas as artes, articulacoes e pivos ainda dependem de revisao humana.",
+        "Underlays/anatomia oculta ausentes: movimento pode expor fendas.",
+        "Cabeca de costas: sem olhos visiveis; nenhuma piscada foi inventada.",
+        "kael.punhos usa somente a mao direita existente; dedos individuais ainda nao foram separados.",
+        "Guardas e Aldric estaticos para contexto; lanças ja cruzadas na arte, nao executam C01-P04.",
+        "Aldric pode conter pixels do trono; composicao e bordas ainda nao aprovadas.",
+        "Particao residual-halo-REJECTED excluida; diferenca de recomposicao deve permanecer documentada.",
+        "Este teste isola C01-P03 e nao representa a montagem ou o audio do episodio."
+      ]
+    }
+  }
+}

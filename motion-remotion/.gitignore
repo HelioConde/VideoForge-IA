@@ -1,4 +1,5 @@
 node_modules/
 public/vf-scene/
+public/vf-directed/
 out/
 *.mp4
