@@ -4,6 +4,10 @@ on:
     workflows:
       - "VideoForge - Produzir cenas restantes da obra com arte real"
     types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - 'docs/requests/reprocessar-mp4-spy-family.json'
   workflow_dispatch:
     inputs:
       batch_run_id:
@@ -22,7 +26,7 @@ concurrency:
 
 jobs:
   montar-preview-revisao:
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'))
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'))
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     container:
@@ -51,7 +55,7 @@ jobs:
       - name: Baixar TODAS as outras cenas geradas neste lote
         uses: actions/download-artifact@v4
         with:
-          run-id: ${{ github.event.workflow_run.id || inputs.batch_run_id }}
+          run-id: ${{ github.event.workflow_run.id || inputs.batch_run_id || '43555715519' }}
           pattern: vf-otaku-br-spy-scene-*
           merge-multiple: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
