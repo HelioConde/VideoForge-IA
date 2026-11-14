@@ -69,3 +69,22 @@ test('no accidental motion on first and last frame, or impossible time',()=>{
   assert.throws(()=>meshVertexAtFrame({original:{x:1,y:1},uv:{x:1,y:1},
     kind:'cape',amplitudePx:99,frame:20,fps,duration,blinkFrames:blinks}));
 });
+
+
+test('left/right Anya hair meshes stay rooted, deterministic and blink-neutral',()=>{
+  const source={bbox:[270,1250,260,275],canvas:{width:1024,height:1536},
+    spec:{columns:7,rows:9,pinnedRows:[0],amplitudePx:4},
+    fps:30,duration:240,blinkFrames:[74,173]};
+  for(const kind of ['hair-front-left','hair-front-right']){
+    const neutral=meshGridAtFrame({...source,kind,frame:0});
+    const moving=meshGridAtFrame({...source,kind,frame:111});
+    const same=meshGridAtFrame({...source,kind,frame:111});
+    const blink=meshGridAtFrame({...source,kind,frame:74});
+    const top=(source.spec.columns+1)*3;
+    assert.deepEqual(moving.positions.slice(0,top),neutral.positions.slice(0,top));
+    assert.deepEqual(moving.positions,same.positions);
+    assert.notDeepEqual(moving.positions.slice(top),neutral.positions.slice(top));
+    assert.deepEqual(blink.positions,neutral.positions);
+    assert.equal(moving.indices.length,7*9*6);
+  }
+});
