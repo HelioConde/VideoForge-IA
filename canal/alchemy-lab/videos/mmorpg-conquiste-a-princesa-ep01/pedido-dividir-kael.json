@@ -1,0 +1,28 @@
+{
+  "schema": "videoforge/split-existing-asset-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "source_only": true,
+  "image_generation_calls": 0,
+  "human_visual_approval": false,
+  "youtube_upload": false,
+  "plan": "rig-pixel-partition.json",
+  "input": "assets/cena-01/candidatos/kael-rgba-candidate.png",
+  "output": "assets/cena-01/rig-drafts/kael/",
+  "parts": [
+    "rosto-orelha",
+    "cabelo",
+    "mao-direita",
+    "antebraco-direito",
+    "braco-superior-direito",
+    "braco-esquerdo",
+    "bota-direita",
+    "bota-esquerda",
+    "perna-direita-levantada",
+    "perna-esquerda-ajoelhada",
+    "tronco-jaqueta",
+    "residual-halo-REJECTED"
+  ],
+  "qa": "roundtrip original visible-pixel exact; no hidden anatomy generated; all parts are draft",
+  "status": "requested"
+}
