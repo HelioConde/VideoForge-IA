@@ -155,13 +155,13 @@ jobs:
           python -m videoforge.production_art --channel "$CHANNEL" --video-id "$VIDEO_ID" \
             --asset "$ASSET" --model gpt-image-2 --url "$PROXY_ENDPOINT"
       - name: Arquivar permanentemente PNG e SHA no GitHub por canal
-        if: success()
+        if: always()
         shell: bash
         env:
           CH: ${{ steps.request.outputs.channel }}
           VID: ${{ steps.request.outputs.video_id }}
         run: |
-          bash scripts/persistir-imagens-gh.sh "$CH" "$VID" "output/$CH/videos/$VID/imagens" "${{ github.run_id }}" "production-art-request"
+          bash scripts/arquivar-pngs-se-existirem.sh "$CH" "$VID" "output/$CH/videos/$VID/imagens" "${{ github.run_id }}" "production-art-request" "${{ job.status }}"
       - name: Guardar imagem, proveniencia e diagnostico
         if: always()
         uses: actions/upload-artifact@v4
