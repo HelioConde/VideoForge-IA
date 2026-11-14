@@ -91,16 +91,24 @@ jobs:
           set -euo pipefail
           folder=output/otaku-br/videos/spy-x-family-familia-de-mentira/ornament-head-qa
           for part in left right; do
-            if [[ "$part" = left ]]; then rect=125:180:260:1220
-            else rect=125:180:660:1215
+            if [[ "$part" = left ]]; then
+              rect=125:180:260:1220
+              stable=24:36:325:1282
+            else
+              rect=125:180:660:1215
+              stable=24:36:718:1288
             fi
             for frame in 0 30; do
               ffmpeg -nostdin -v error -y -i "$folder/frame-$frame.png" \
                 -vf "crop=$rect" -frames:v 1 -pix_fmt rgb24 -f rawvideo \
                 "$folder/ornament-$part-$frame.rgb"
+              ffmpeg -nostdin -v error -y -i "$folder/frame-$frame.png" \
+                -vf "crop=$stable" -frames:v 1 -pix_fmt rgb24 -f rawvideo \
+                "$folder/ornament-$part-stable-$frame.rgb"
             done
-            if cmp -s "$folder/ornament-$part-0.rgb" "$folder/ornament-$part-30.rgb"; then
-              echo "FAIL: $part accessory still static" >&2; exit 2
+            if cmp -s "$folder/ornament-$part-stable-0.rgb" "$folder/ornament-$part-stable-30.rgb"; then
+              echo "FAIL: $part original gold ornament still frozen" >&2
+              exit 2
             fi
           done
           echo "BOTH_HAIR_ORNAMENT_REGIONS_MOVE_IN_THREECANVAS"
