@@ -33,7 +33,14 @@
     "canonical_identity_conflict_detected": true,
     "old_bible": "Kael sem capa e armadura; Elara cabelo preto e vestido azul",
     "new_chat_examples": "Kael com capa vermelha rasgada e armadura; princesa loira com vestido branco/violeta",
-    "policy": "Não misturar figurinos/rostos/cabelos entre imagens. Nova direção visual precisa de referências oficiais dentro do canal e atualização de bíblia antes de geração ou montagem."
+    "policy": "Estilo preferido v2 e descrições de Kael/Elara já integrados a textos e prompts. No entanto, as referências originais ainda não entraram no GitHub; as imagens-mãe e 71 PNGs históricos são da v1. NÃO liberar geração/rig/render até SHA das referências, revisão da continuidade e aprovação da arte da própria tomada.",
+    "preferred_style_version": "v2_textual_from_approved_chat_closes",
+    "old_visual_bible_archived": "biblia-visual-v1-arquivada.md",
+    "current_visual_bible": "biblia-visual.md",
+    "production_art_text_updated": true,
+    "legacy_png_visual_conflict_still_open": true,
+    "approved_chat_sources_sha_manifest": "referencias-cinematograficas-aprovadas-no-chat.json",
+    "approved_chat_sources_import_status": "pending"
   },
   "shot_distribution": {
     "black": 1,
