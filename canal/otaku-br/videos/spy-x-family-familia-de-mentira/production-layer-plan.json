@@ -57,6 +57,23 @@
         "duration_seconds": 8.32,
         "source_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
         "rig_individual_parts": false
+      },
+      "eyes_closed": {
+        "target": "Anya grande na parte inferior da cena-mãe (NÃO os olhos do trio superior)",
+        "roi_original_canvas": [
+          340,
+          1100,
+          690,
+          1310
+        ],
+        "sprite_name": "eyes-closed.png",
+        "status": "pending",
+        "requires_real_alpha": true,
+        "blink_centers_frames": [
+          90,
+          188
+        ],
+        "guidance": "OLHOS DA ANYA GRANDE NO TERÇO INFERIOR: gerar SOMENTE pequenas pálpebras fechadas mais pele ao redor dos dois olhos existentes, sem mexer em cabelo, rosto ou olhos de Loid/Yor, sem outros objetos. Mesma cena-mãe e canvas 1024x1536; todo pixel fora das duas pequenas áreas dos olhos tem que ser transparente."
       }
     },
     {
@@ -285,5 +302,15 @@
       "human_visual_approval": false
     }
   ],
-  "youtube_upload": false
+  "youtube_upload": false,
+  "motion_policy": {
+    "body_vertical_max_px": 2.8,
+    "head_vertical_max_px": 1,
+    "rotation_max_deg": 0.25,
+    "pan_camera_scale": 0.3,
+    "object_movement_max_px": 1.5,
+    "eyes_closed_rgba_optional_unless_verified": true,
+    "face_opacity_during_blink": 1,
+    "individual_parts_requirement_for_official": true
+  }
 }
