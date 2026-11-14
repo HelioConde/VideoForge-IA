@@ -74,7 +74,11 @@ const Layer:React.FC<{layer:LayerSpec;canvas:Canvas;motion:Motion}>=({
   }
   return <RigidSprite layer={layer} canvas={canvas}/>;
 };
-const CharacterParts:React.FC<{rig:ThreeRigManifest;motion:Motion}>=({rig,motion})=>{
+export type CharacterRigParts=Pick<ThreeRigManifest,
+  'canvas'|'layers'|'neckPivot'|'headMaxRotationDeg'|'blinkFrames'>;
+export type CharacterMotion=Motion;
+/** Reused by the restricted technical draft renderer; production remains gated. */
+export const CharacterParts:React.FC<{rig:CharacterRigParts;motion:Motion}>=({rig,motion})=>{
   const {frame,fps,duration,blinkFrames}=motion;
   const canvas=rig.canvas;
   const find=(id:string)=>rig.layers.find(x=>x.id===id);
