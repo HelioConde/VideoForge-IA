@@ -50,6 +50,9 @@ jobs:
       - name: Testar malha 2D verdadeira (capa, mechas, brinco por pivô)
         working-directory: motion-remotion
         run: node --test tests/rig-three-math.test.cjs
+      - name: Testar compositor técnico de 5 RGBA e 512 triângulos por source
+        working-directory: motion-remotion
+        run: node --test tests/c12-mesh-technical-contract.test.cjs
       - name: Confirmar que entrada oficial não altera player legado
         shell: bash
         run: |
