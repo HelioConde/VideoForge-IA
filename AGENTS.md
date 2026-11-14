@@ -1,5 +1,16 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## PRIORIDADE MÁXIMA DAS ANIMAÇÕES — MANUAL PRINCIPAL OBRIGATÓRIO
+
+**Antes de produzir, editar, gerar imagens, animar, revisar ou renderizar QUALQUER vídeo, ler integralmente [docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md](docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md).** Esse manual foi definido pelo usuário a partir da pesquisa aprofundada de rig 2D/Three.js/Remotion e **TEM PRECEDÊNCIA SOBRE INSTRUÇÕES CONFLITANTES DE ANIMAÇÃO** em AGENTS.md, README, modelos, prompts, agentes e workflows.
+
+**Contrato obrigatório:** cena-mãe → background reconstruído → PNGs RGBA independentes de personagem/corpo-sem-cabeça/cabeça aberta-fechada/cabelo/roupa/objetos → reconstrução das regiões ocultas → recomposição (diff/QA) → pivôs e malhas reais no Remotion ThreeCanvas → render SWANGLE frame-driven → QA visual → somente revisão/publicação autorizada.
+
+**Proibido tratar movimento de câmera, bob da imagem inteira, sticker de pálpebras por cima do cabelo, deformação do corpo achatado ou vídeo sintético como animação articulada aprovada.** Em personagens animados, somente sprites internos com rig e malha reais; se faltar arte ou aprovação, declarar `pipeline_pendente`. Para piscar, editar a MESMA imagem/cabeça original mudando somente os olhos; preservar os demais pixels e a transparência. Sem novos custos não autorizados, sem modo workflow `private-quota-live`, sem upload automático.
+
+**Precedência:** regra geral nº 1 (tudo pelo programa GitHub e sem publicação não autorizada) + este manual para toda decisão de animação. Instruções antigas abaixo sobre overlay de olhos ou bob devem ser interpretadas como histórico de prévias **LEGADAS E REPROVADAS**; não autorizam repetir tais técnicas no vídeo oficial.
+
+
 ## REGRA Nº 1 — Vídeos exclusivamente pelo programa VideoForge-IA no GitHub
 
 **Todo vídeo solicitado como produção oficial deve ser criado pelo fluxo de produção do repositório [HelioConde/VideoForge-IA](https://github.com/HelioConde/VideoForge-IA), executado e rastreável no GitHub Actions.** Esta regra tem prioridade sobre qualquer exemplo, demonstração, script temporário, renderer externo ou solução improvisada.
@@ -28,11 +39,11 @@
 
 Ver `docs/PADRAO-ANIMACAO-POR-CAMADAS.md` e `docs/TESTE-CAMADAS-CENA.md`. O exemplo da capa vermelha foi um experimento de rig para outra cena: jamais reutilizar automaticamente seus prompts de aventureiro, cabelo castanho, espada ou capa em outros personagens.
 
-## Regra de microanimação e QA visual
+## [LEGADO — NÃO USAR EM PRODUÇÃO] Regra antiga de microanimação e QA visual
 
 Evitar flutuação: amplitude vertical máxima de **2,8 pixels por personagem** na composição 1080×1920; câmera e objetos mais sutis que a animação principal. Piscar somente com overlay RGBA de pálpebras compatível com a cena-mãe, mantendo cabeça/rosto-base opacos; nunca fingir piscada via transparência do rosto. Cabelo, roupas e objetos exigem sprites próprios e prova de remoção da base; não inventar elementos nem afirmar rig completo quando só há movimento de grupo/câmera. Testar quadros de olhos abertos/fechados e cortes; manter workflow **normal**, nunca o modo `private-quota-live`. Toda prévia sem rig integral é teste técnico não oficial.
 
-## Bloqueio de piscada sobre cabelo (QA obrigatório)
+## [LEGADO — SUBSTITUÍDO PELO MANUAL] Antigo QA de overlay de olhos
 
 Uma piscada **não pode cobrir a franja** nem criar uma mancha de pele sobre cabelo, sobrancelhas ou acessórios. A imagem de olhos fechados gerada por IA é somente material bruto: restringir sua máscara alfa à área exata dos olhos da cena-mãe, excluir todos os pixels classificados como cabelo frontal e colocar a franja REAL extraída do personagem original em **z-index maior** que o sprite de pálpebras. A ordem de composição é `background -> personagem RGBA original -> olhos-fechados-SEGUROS -> franja-original-foreground -> objetos independentes reais -> legendas`. Não habilitar `eyesClosed` sem `hairForeground` validado, SHA de origem correspondente, QA dos pixels e avaliação visual. O cabelo desenhado no personagem-base pode ser usado no foreground somente sem movimento independente até existir underlay e rig próprios; não duplicar cortes móveis.
 
@@ -42,7 +53,7 @@ A partir desta revisão, para vídeos novos, a piscada NÃO deve ser construída
 
 QA fail-closed: verificar SHA-256 da imagem original de referência, modelo/resultado, dimensões; em seguida restaurar EXATAMENTE os pixels e o canal alfa da imagem original em todas as regiões fora dos olhos (inclusive cabelo e franja). Se a IA devolver PNG opaco, usar só sua informação de cor dentro dos olhos e sempre restaurar o alfa original. Exigir diferença visível exclusivamente nos olhos, nenhum pixel não ocular ou alfa alterado, e revisão visual humana. O pipeline antigo de overlay de pálpebras/cabelo-foreground permanece legado e NÃO é usado nesta nova prévia. Usar GitHub Actions normal, nunca `private-quota-live`. Não declarar aprovação de rig completo.
 
-## Regra obrigatória — sincronização da pose durante a piscada
+## [HISTÓRICO — VER MANUAL PRIORITÁRIO] Sincronização antiga de PNG inteiro
 
 A troca `character-main.png` ↔ `character-eyes-closed-safe.png` exige **posição e transformações idênticas** nos dois lados. Nunca reinicializar o seno ou a animação abruptamente no frame da troca. O corpo e todos os elementos anexados devem desacelerar por `12` quadros até a **pose neutra**, mantê-la pelo intervalo de `3` quadros antes/depois do centro da piscada e retomar a respiração de forma suave nos `12` seguintes. Mesmo envelope de neutralização para a câmera: nenhum recorte, zoom, rotação ou deslocamento pode dar um salto nos quadros de transição. Em cada frame de troca: deslocamento X/Y = 0, rotação = 0, zoom = 1, pan = 0 em relação à composição-base. QA testa limites de variação quadro a quadro.
 
