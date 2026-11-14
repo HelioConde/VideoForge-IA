@@ -190,8 +190,12 @@ def validate_shot_art(episode:Path,shot:dict,paths:dict)->tuple[bool,list[str],d
         # Face and pupil glance must use an independently painted sclera
         # underlay, four RGBA eye layers and zero head/body movement.
         from .cinematic_eye_motion import check_eye_performance
+        from .cinematic_eye_pixel_audit import audit_existing_eye_assets
         try:
             check_eye_performance(sid,rig,qa)
+            # JSON approval flags alone cannot certify eye movement:
+            # physically sweep PNG alpha masks over real sclera safe zones.
+            audit_existing_eye_assets(episode,sid,rig,qa)
         except VideoForgeError as exc:
             failures.append(str(exc))
     elif rig.get("performance") is not None:
