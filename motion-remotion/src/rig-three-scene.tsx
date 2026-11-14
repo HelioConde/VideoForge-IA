@@ -92,12 +92,14 @@ export const CharacterParts:React.FC<{rig:CharacterRigParts;motion:Motion}>=({ri
   const bodyMotion=bodyBreathAtFrame(frame,fps,duration,blinkFrames);
   const pivot=sourcePoint(rig.neckPivot,canvas);
   const selectedHead=isClosedAtFrame(frame,blinkFrames)?headClosed:headOpen;
-  const hairBehind=rig.layers.filter(x=>x.id==='hair-back');
+  const hairBehind=rig.layers.filter(x=>
+    x.id==='hair-back'||x.id==='ornament-left'||x.id==='ornament-right');
   const hairFront=rig.layers.filter(x=>
     x.id==='hair-front'||x.id==='hair-front-left'||x.id==='hair-front-right');
   const moving=rig.layers.filter(x=>x.id!=='body-no-head'&&
       x.id!=='head-open'&&x.id!=='head-closed'&&
-      x.id!=='hair-back'&&x.id!=='hair-front'&&
+      x.id!=='hair-back'&&x.id!=='ornament-left'&&
+      x.id!=='ornament-right'&&x.id!=='hair-front'&&
       x.id!=='hair-front-left'&&x.id!=='hair-front-right');
   return <group position={[0,-bodyMotion.translateY,0]}
     scale={[bodyMotion.scaleX,bodyMotion.scaleY,1]}>
