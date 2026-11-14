@@ -47,7 +47,7 @@ const RigidSprite:React.FC<{layer:LayerSpec;canvas:Canvas}>=({layer,canvas})=>{
       depthTest={false} side={DoubleSide} toneMapped={false}/>
   </mesh>;
 };
-const DeformableSprite:React.FC<{layer:LayerSpec;canvas:Canvas;kind:MeshType;motion:Motion}>=({
+export const DeformableSprite:React.FC<{layer:LayerSpec;canvas:Canvas;kind:MeshType;motion:Motion}>=({
   layer,canvas,kind,motion,
 })=>{
   if(!layer.mesh)throw new Error('THREE_RIG_MESH_SPEC_MISSING');
