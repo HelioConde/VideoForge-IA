@@ -7,8 +7,8 @@ import {blinkNeutralWeightAtFrame} from './blink-motion-sync';
 
 export type Rect=[number,number,number,number];
 export type Point={x:number;y:number};
-export type MeshType='cape'|'hair-front'|'hair-front-left'|'hair-front-right'|'hair-back'|'cloth';
-export type MeshSpec={columns:number;rows:number;pinnedRows:[0];amplitudePx:number};
+export type MeshType='cape'|'hair-front'|'hair-front-left'|'hair-front-right'|'hair-back'|'cloth'|'hand';
+export type MeshSpec={columns:number;rows:number;pinnedRows:[number];amplitudePx:number};
 export type LayerSpec={
   id:string;file:string;bbox:Rect;sha256:string;z:number;mesh?:MeshSpec;
 };
@@ -88,6 +88,23 @@ export const meshVertexAtFrame=(args:{
   if(!Number.isFinite(fps)||fps<=0||amplitudePx<0||amplitudePx>12)
     throw new Error('RIG_MESH_PARAMETERS_INVALID');
   const v=clamp(uv.y,0,1),u=clamp(uv.x,0,1);
+  if(kind==='hand'){
+    // This source hand rises from the uniform (wrist at bottom) to the
+    // fingertip touching the chin (top). Anchor wrist and move the top
+    // gradually with the actual head's rotation around its neck pivot.
+    // Real 7x9 deformable mesh; never animate an entire hand PNG as a plate.
+    if(v===1)return {...original};
+    const angle=headRotationDegAtFrame(frame,fps,duration,blinkFrames,2)*
+      Math.PI/180;
+    const fromX=476-515,fromY=1392-1429;
+    const dx=fromX*(Math.cos(angle)-1)-fromY*Math.sin(angle);
+    const dy=fromX*Math.sin(angle)+fromY*(Math.cos(angle)-1);
+    const len=Math.hypot(dx,dy);
+    const safe=len>amplitudePx?amplitudePx/len:1;
+    const flexibility=Math.pow(1-v,2.2);
+    return {x:original.x+dx*safe*flexibility,
+            y:original.y+dy*safe*flexibility};
+  }
   if(v===0)return {...original}; // EXACT fixed seam, for every frame.
   const t=frame/fps;
   // The side locks are peeled from a head sprite: their INSIDE boundary
@@ -125,7 +142,9 @@ export const meshGridAtFrame=(args:{
   duration:number;blinkFrames:readonly number[];
 })=>{
   const {bbox,canvas,spec,kind,frame,fps,duration,blinkFrames}=args;
-  if(spec.columns<2||spec.rows<2||spec.pinnedRows.join(',')!=='0')
+  const requiredPinRow=kind==='hand'?spec.rows:0;
+  if(spec.columns<2||spec.rows<2||
+     spec.pinnedRows.length!==1||spec.pinnedRows[0]!==requiredPinRow)
     throw new Error('RIG_MESH_NOT_SUBDIVIDED_OR_PINNED');
   const [bx,by,bw,bh]=bbox;
   const positions:number[]=[];
