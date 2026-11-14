@@ -54,6 +54,41 @@ def check_png_source(data:bytes,width:int,height:int,expected_sha:str,
         errors.append("PNG_IEND_MISSING")
     return errors
 
+def camera_candidate_status(base:Path)->dict:
+    """Third shot candidate is not a canonical character reference or rig."""
+    spec=base/"candidato-camera-c12-p02.json"
+    if spec.is_symlink() or not spec.is_file():
+        raise VideoForgeError("CINEMATIC_C12_CAMERA_CANDIDATE_MANIFEST_MISSING")
+    d=json.loads(spec.read_text(encoding="utf8"))
+    rel=d.get("expected_repo_path")
+    if (d.get("shot_id")!="C12-P02" or
+            rel!="assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png" or
+            d.get("source_sha256")!="01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535"):
+        raise VideoForgeError("CINEMATIC_C12_CAMERA_MANIFEST_MISMATCH")
+    path=base/rel
+    if any(parent.is_symlink() for parent in (path,*path.parents) if parent!=base.parent):
+        raise VideoForgeError("CINEMATIC_C12_CAMERA_SOURCE_SYMLINK")
+    if path.is_file():
+        data=path.read_bytes()
+        errors=check_png_source(data,d["original_width_px"],
+                                d["original_height_px"],
+                                d["source_sha256"],d["original_bytes"])
+        state="EXACT_SOURCE_ARCHIVED" if not errors else "INVALID_SOURCE_BYTES"
+    else:
+        errors=["SOURCE_FILE_NOT_UPLOADED"]
+        state="UPLOAD_PENDING"
+    return {
+        "shot_id":"C12-P02",
+        "status":state,
+        "expected_repo_path":rel,
+        "expected_sha256":d["source_sha256"],
+        "source_verified":state=="EXACT_SOURCE_ARCHIVED",
+        "human_shot_approval":False,
+        "shot_mother_approval":False,
+        "rig_approved":False,
+        "issues":errors,
+    }
+
 def reference_status(root:Path=ROOT)->dict:
     base=root/"canal"/CHANNEL/"videos"/VIDEO
     manifest_file=base/MANIFEST
@@ -140,6 +175,7 @@ def reference_status(root:Path=ROOT)->dict:
         "render_official_allowed":False,
         "youtube_uploaded":False,
         "samples":rows,
+        "camera_candidate_C12_P02":camera_candidate_status(base),
         "next_action":"Importar PNGs idênticos; conciliar nova aparência com bíblia antiga, inspecionar continuidade e nunca aprovar rig por SHA de referência.",
     }
 
