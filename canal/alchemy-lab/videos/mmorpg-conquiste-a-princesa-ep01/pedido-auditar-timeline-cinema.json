@@ -11,6 +11,6 @@
   "visual_shots": 36,
   "initial_black_shot": 1,
   "rig_gate": "fail-closed: no render until each shot has same-source mother, background, RGBA parts, pivots, underlays, visual QA and reference canon",
-  "revision": 8,
-  "reason": "Auditoria real de mascaras alpha da esclerotica: pupilas 0-12 px, palpebras 0-1 px; proibir buracos e vazamento antes do Remotion sem gerar PNG"
+  "revision": 9,
+  "reason": "Retestar eye alpha audit incluindo franjas alfa 1 a 127 e underlay opaco >=254; 30 deslocamentos sem novos arquivos de imagem."
 }
