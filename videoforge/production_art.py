@@ -14,6 +14,7 @@ from pathlib import Path
 import sys
 
 from .errors import VideoForgeError
+from . import image_generation_policy
 from . import proxy_images
 from .paths import CHANNEL_IDS, IDENTIFIER
 from .scene_layers import png_info
@@ -70,6 +71,7 @@ def asset_prompt(plan:dict,story:dict,asset_id:str)->tuple[str,str]:
 
 def create_image(channel:str,video_id:str,asset_id:str,url:str,
                  model:str="gpt-image-2")->dict:
+    image_generation_policy.assert_image_generation_allowed(channel,video_id)
     plan,story=read_plan(channel,video_id)
     budget=plan.get("request_limit",{})
     if budget.get("per_run")!=1 or budget.get("strict_budget",0)<1:
