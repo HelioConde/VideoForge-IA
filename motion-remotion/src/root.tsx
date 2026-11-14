@@ -1,6 +1,8 @@
 import React from 'react';
 import {Composition} from 'remotion';
 import {VideoForgeLayerScene,LayerSceneProps} from './scene-layer-preview';
+import {SpyFamilyEpisode,SpyEpisodeProps} from './spy-family-episode';
+import {sceneFocus,sceneSetting} from './spy-family-rig';
 
 const defaultProps:LayerSceneProps={
   id:'videoforge-test',
@@ -14,7 +16,15 @@ const defaultProps:LayerSceneProps={
   scene:'cena-01',
 };
 
+const spyDefaultProps:SpyEpisodeProps={
+  channel:'otaku-br',videoId:'spy-x-family-familia-de-mentira',
+  scenes:[{id:'gancho-anya',card:'ANYA SABE O SEGREDO',
+    focus:sceneFocus('gancho-anya'),setting:sceneSetting('gancho-anya'),
+    durationFrames:120,audio:'vf-spy/cena-01.wav'}],
+  totalFrames:120,draftPreview:true,
+};
 export const VideoForgeRoot:React.FC=()=>(
+  <>
   <Composition
     id="VideoForgeLayerScene"
     component={VideoForgeLayerScene}
