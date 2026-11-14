@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/real-art-mp4-rerender/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "source_real_art_batch_run_id": 43555715519,
+  "source_scene01_run_id": 43555469650,
+  "source_character_ref_run_id": 43555226353,
+  "audio_source_run_id": 43545398967,
+  "renderer": "videoforge.mvp.render",
+  "change": "9:16 blurred fill rather than black bars; retain whole original art without cropping hair or clothing",
+  "no_new_image_generation": true,
+  "youtube_upload": false,
+  "official_articulated_rig_complete": false,
+  "requested_on": "2026-11-14"
+}
