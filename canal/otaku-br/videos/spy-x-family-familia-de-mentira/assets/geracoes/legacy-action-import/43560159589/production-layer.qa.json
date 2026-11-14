@@ -1,0 +1,21 @@
+{
+  "schema": "videoforge/scene-mother-layer-qa/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "scene": "gancho-anya",
+  "number": 1,
+  "scene_mother_sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
+  "layers": {
+    "background": "788dc6570ccdecd90c534aca498d568fc2028a027f78d7a01b8557f565cfdd5b",
+    "character-main": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c"
+  },
+  "real_rgba_alpha_technical_qa": true,
+  "background_reconstructed_technical_qa": true,
+  "individual_sprites_generated": false,
+  "objects_separated": false,
+  "rig_animation_applied": false,
+  "visual_approval": "pending",
+  "video_official": false,
+  "youtube_uploaded": false,
+  "notes": "Background and group-character cutout are real; individual heads/eyes/hair/clothes and QA remain pending."
+}

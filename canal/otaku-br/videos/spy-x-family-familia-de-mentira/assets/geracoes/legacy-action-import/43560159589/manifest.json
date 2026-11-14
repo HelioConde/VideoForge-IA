@@ -1,0 +1,50 @@
+{
+  "animation_implemented": false,
+  "channel": "otaku-br",
+  "created_at_utc": "2026-11-14T05:09:53.746091+00:00",
+  "human_visual_approval": false,
+  "layers": {
+    "background": {
+      "alpha_visible_fraction": 1.0,
+      "alpha_zero_fraction": 0.0,
+      "color_type": 2,
+      "file": "background.png",
+      "has_alpha": false,
+      "height": 1536,
+      "human_visual_review": "pending",
+      "model": "gpt-image-2",
+      "requires_alpha": false,
+      "sha256": "788dc6570ccdecd90c534aca498d568fc2028a027f78d7a01b8557f565cfdd5b",
+      "technical_status": "verified",
+      "width": 1024,
+      "z_index": 0
+    },
+    "character-main": {
+      "alpha_visible_fraction": 0.5863,
+      "alpha_zero_fraction": 0.4137,
+      "color_type": 6,
+      "file": "character-main.png",
+      "has_alpha": true,
+      "height": 1536,
+      "human_visual_review": "pending",
+      "model": "gpt-image-2",
+      "requires_alpha": true,
+      "sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
+      "technical_status": "verified",
+      "width": 1024,
+      "z_index": 20
+    }
+  },
+  "pixel_alignment_verified": false,
+  "scene": "cena-01",
+  "schema": "videoforge/scene-layers/v1",
+  "source": {
+    "color_type": 2,
+    "file": "cena-base.png",
+    "has_alpha": false,
+    "height": 1536,
+    "sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
+    "width": 1024
+  },
+  "video_id": "spy-x-family-familia-de-mentira"
+}

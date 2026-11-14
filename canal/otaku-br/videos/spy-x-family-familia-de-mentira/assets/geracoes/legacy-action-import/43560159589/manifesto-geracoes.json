@@ -1,0 +1,38 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "producer": "legacy-action-import",
+  "github_run_id": 43560159589,
+  "source_output_dir": "output/otaku-br/videos/spy-x-family-familia-de-mentira/imagens",
+  "images": [
+    {
+      "file": "background.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "788dc6570ccdecd90c534aca498d568fc2028a027f78d7a01b8557f565cfdd5b",
+      "bytes": 1765552,
+      "human_visual_approval": false
+    },
+    {
+      "file": "cena-base.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "ed190024abb3bd35bd79c40b1c6c5b4925486cbedd2213404afa73faac199dd8",
+      "bytes": 2150618,
+      "human_visual_approval": false
+    },
+    {
+      "file": "character-main.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "c3b21ecd072d3fbf6978f04e6cde5db5d9083e13871b475e6f8c9229a15b0b2c",
+      "bytes": 1989792,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 3
+}
