@@ -1,0 +1,77 @@
+{
+  "schema": "videoforge/cinematic-eye-rig-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot": "C12-P01",
+  "date": "2026-11-14",
+  "implementation_status": "SOFTWARE_TESTED_NO_REAL_EYE_SPRITES",
+  "source_direction": "direcao-rig-remotion.json C12-P01",
+  "source_draft": "rig-olhar-kael-c12-p01.json",
+  "python_validator": "videoforge/cinematic_eye_motion.py",
+  "remotion_interpolator": "motion-remotion/src/eye-gaze-timeline.ts",
+  "renderer": "motion-remotion/src/cinematic-episode.tsx and motion-remotion/src/rig-three-scene.tsx",
+  "constraints": {
+    "global_frames": [
+      3990,
+      4110
+    ],
+    "local_frames": [
+      0,
+      120
+    ],
+    "fps": 30,
+    "pupil_pixels": [
+      0,
+      12
+    ],
+    "eyelid_pixels": [
+      0,
+      1
+    ],
+    "head_rotation_deg": 0,
+    "body_motion_enabled": false,
+    "hair_mesh_motion_enabled": false,
+    "camera_locked": true,
+    "independent_layers_required": [
+      "pupil-left",
+      "pupil-right",
+      "eyelid-left",
+      "eyelid-right"
+    ]
+  },
+  "automated_tests": {
+    "python": {
+      "workflow_run": 43641372475,
+      "conclusion": "success",
+      "test_count": 42
+    },
+    "node_and_typescript": {
+      "workflow_run": 43641389882,
+      "conclusion": "success",
+      "node_test_count": 9,
+      "typecheck": "success"
+    }
+  },
+  "missing_art": {
+    "shot_mother_approved": false,
+    "eye_rgba_parts_available": false,
+    "sclera_underlay_available": false,
+    "no_duplicate_pupil_paint_verified": false,
+    "measured_eye_bounds": false,
+    "human_qa_approved": false
+  },
+  "production": {
+    "image_generation_calls": 0,
+    "new_png_count": 0,
+    "rig_ready": false,
+    "shot_render_approved": false,
+    "mp4_rendered": false,
+    "youtube_uploaded": false
+  },
+  "notes": [
+    "O planejamento já descreve o olhar com movimentos locais por frame, porém não há imagem-mãe específica do close.",
+    "O compositor bloqueia C12-P01 se faltarem camadas independentes ou QA de pixels ocultos.",
+    "Cenários/cores da bíblia antiga e novas imagens aprovadas na conversa ainda precisam de referência canônica registrada.",
+    "Não criar olhos/rostos colados sobre imagens de origem ou usar zoom de pôster como substituto."
+  ]
+}
