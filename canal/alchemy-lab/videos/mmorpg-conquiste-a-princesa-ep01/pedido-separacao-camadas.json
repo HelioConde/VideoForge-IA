@@ -1,0 +1,12 @@
+{
+  "schema": "videoforge/layer-extraction-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "scene_number": 1,
+  "source_run_id": 43591342058,
+  "source_artifact": "vf-real-scene-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-1-43591342058",
+  "max_calls_per_run": 2,
+  "youtube_upload": false,
+  "purpose": "Etapa inicial real: reconstruir cenário do salão do trono sem personagens nem lanças e extrair os personagens presentes em RGBA da mesma cena-mãe. Em seguida, individualizar Kael, Aldric e guardas, armas, cabeças, roupas, olhos, mãos e malhas; sem falso MP4 de PNG chapado.",
+  "quality_gate": "É apenas recorte inicial. Sem aprovação visual do usuário, nenhum rig é declarado concluído."
+}
