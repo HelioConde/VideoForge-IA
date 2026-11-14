@@ -15,6 +15,7 @@ import sys
 from . import scene_layers, mvp
 from .rig_three_contract import validate_rig_folder,ThreeRigError
 from .errors import VideoForgeError
+from .animation_manual import enforce_animation_manual
 
 ROOT=Path(__file__).resolve().parents[1]
 FPS=30
@@ -31,6 +32,7 @@ def target(channel:str,video_id:str,scene:str)->Path:
 
 def prepare(channel:str,video_id:str,scene:str,source_dir:Path,
             rig_dir:Path,frames:int,voice:Path|None=None)->dict:
+    enforce_animation_manual()
     if type(frames) is not int or not 90<=frames<=18000:
         raise VideoForgeError("RIG_THREE_DURATION_FRAMES_INVALID")
     manifest=scene_layers._read_manifest(source_dir/"manifest.json")
