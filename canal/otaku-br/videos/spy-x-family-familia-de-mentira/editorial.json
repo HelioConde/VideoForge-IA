@@ -1,0 +1,119 @@
+{
+  "schema": "videoforge/video-editorial/v1",
+  "canal_id": "otaku-br",
+  "video_id": "spy-x-family-familia-de-mentira",
+  "status": "roteiro",
+  "titulo_provisorio": "Spy x Family: FAMÍLIA DE MENTIRA 👀 #Shorts",
+  "tema": "Família Forger e os segredos de Loid, Yor e Anya",
+  "assuntos_relacionados": [
+    "Spy x Family",
+    "Anya",
+    "Loid Forger",
+    "Yor Forger",
+    "família fictícia"
+  ],
+  "obra_ou_anime": "Spy x Family",
+  "formato": "shorts_vertical_9_16",
+  "idioma": "pt-BR",
+  "publico": "Fãs brasileiros de anime e curiosidades narrativas",
+  "hipotese": "O contraste entre segredos e afeto cria curiosidade sem spoiler forte.",
+  "duracao_prevista_segundos": 100,
+  "data_criacao": "2026-11-13",
+  "pesquisa": {
+    "consultas": [],
+    "fontes": [
+      {
+        "tipo": "repo_legado",
+        "url": "https://github.com/HelioConde/AutoEditorVideo/blob/main/conteudos/otaku-multicena-grade-50-b.json",
+        "id": "5027-spy-x-family"
+      }
+    ],
+    "dados_canal_verificados": false,
+    "data_consulta_analytics": null,
+    "concorrentes": [],
+    "tendencias": []
+  },
+  "antirrepeticao": {
+    "historico_youtube_verificado": false,
+    "data_verificacao": null,
+    "ids_comparados": [],
+    "temas_relacionados": [
+      "Segredos da família Forger"
+    ],
+    "parecer": "pendente",
+    "justificativa": "Proposta explícita de teste do usuário; histórico conectado ainda precisa de validação antes da publicação."
+  },
+  "roteiro": {
+    "arquivo": "roteiro.json",
+    "gancho": "Um espião, uma assassina e uma telepata. Parece uma combinação impossível, mas essa é a família Forger em Spy x Family.",
+    "progressao": "identidade de Loid → segredo de Yor → telepatia de Anya → cotidiano → vínculo real",
+    "cenas_previstas": [
+      "trio-improvavel",
+      "loid",
+      "disfarce",
+      "yor",
+      "anya",
+      "mal-entendidos",
+      "cotidiano",
+      "afeto",
+      "vinculo",
+      "resposta"
+    ]
+  },
+  "arte": {
+    "guia_estilo": "prévia técnica tipográfica; arte de personagens finais pendente",
+    "personagens": [
+      "Loid Forger",
+      "Yor Forger",
+      "Anya Forger"
+    ],
+    "cenario": "residência fictícia e entrevista escolar em estética ilustrativa",
+    "referencias": [],
+    "consistencia_verificada": false
+  },
+  "seo": {
+    "palavras_chave": [
+      "Spy x Family",
+      "Anya Forger",
+      "Loid Forger",
+      "Yor Forger"
+    ],
+    "titulo_final": null,
+    "descricao": null,
+    "tags": [],
+    "thumbnail_plano": "revisão futura com ilustração original coerente"
+  },
+  "producao": {
+    "manifesto_tecnico": "video.json",
+    "workflow_url": null,
+    "artefato_url": null,
+    "sha256": null,
+    "duracao_real_segundos": null
+  },
+  "qa": {
+    "aprovado_tecnicamente": false,
+    "aprovado_editorialmente": false,
+    "relatorio_url": null
+  },
+  "publicacao": {
+    "youtube_video_id": null,
+    "youtube_url": null,
+    "publicado_em": null
+  },
+  "metricas": {
+    "fonte": null,
+    "data_coleta": null,
+    "visualizacoes": null,
+    "impressoes": null,
+    "ctr": null,
+    "retencao_media_percentual": null,
+    "tempo_medio_assistido_segundos": null,
+    "inscritos_ganhos": null,
+    "comentarios": null
+  },
+  "notas": [
+    "Fonte antiga indica roteiro pronto aguardando vídeo, sem arquivo MP4 confirmado.",
+    "Prévia gerada com tipografia e voz sintética offline não equivale a arte final.",
+    "Sem publicação nem autorização de uso de imagens oficiais."
+  ]
+}
