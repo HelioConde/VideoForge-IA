@@ -7,11 +7,13 @@ on:
   pull_request:
     paths:
       - 'videoforge/directed_rig*.py'
+      - 'videoforge/c01_collar_qa.py'
       - 'tests/test_directed_rig*.py'
       - 'motion-remotion/src/directed-rig-*'
       - 'canal/**/direcao-rig-remotion.json'
       - 'canal/**/pedido-render-c01-direcao.json'
       - 'tests/test_c01_articulated_motion_qa.py'
+      - 'tests/test_c01_collar_qa.py'
       - 'motion-remotion/tests/directed-rig*'
       - 'canal/**/direcao-bindings-*.json'
       - '.github/workflows/directed-rig-preview.yml'
@@ -95,7 +97,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_directed_rig tests.test_directed_rig_qa tests.test_c01_articulated_motion_qa tests.test_rig_three_contract -v
+          python -m unittest tests.test_directed_rig tests.test_directed_rig_qa tests.test_c01_articulated_motion_qa tests.test_c01_collar_qa tests.test_rig_three_contract -v
           cd motion-remotion
           ./node_modules/.bin/tsc --noEmit
           node --test tests/directed-rig.test.cjs tests/rig-three-math.test.cjs
