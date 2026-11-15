@@ -20,9 +20,9 @@ def chunk(kind, data):
             struct.pack(">I", zlib.crc32(kind + data) & 0xffffffff))
 
 
-def tiny_png(*, rgba=False):
+def tiny_png(*, rgba=False, seed=55):
     channels = 4 if rgba else 3
-    row = bytes((55, 90, 130, 255)[:channels]) * 2
+    row = bytes((seed, 90, 130, 255)[:channels]) * 2
     raw = (b"\0" + row) * 2
     return (b"\x89PNG\r\n\x1a\n" +
             chunk(b"IHDR", struct.pack(">IIBBBBB", 2, 2, 8, 6 if rgba else 2, 0, 0, 0)) +
@@ -63,6 +63,51 @@ class ExactOriginalZipUploadTest(unittest.TestCase):
         with self.assertRaisesRegex(upload.C12BundleError, "EXPECTED_ARCHIVE_HASHES_INVALID"):
             upload.inspect_zip(self.original, self.rgb_requirements,
                                allow_metadata=False, max_archive_bytes=100_000)
+
+    def test_success_stages_exact_two_archive_bytes_and_is_idempotent(self):
+        rgb = {f"original-{i}.png": tiny_png(seed=55 + i) for i in range(3)}
+        parts = {f"technical-{i}.png": tiny_png(rgba=True, seed=72 + i) for i in range(7)}
+        make_bundle(self.original, rgb)
+        make_bundle(self.technical, parts)
+        expected_rgb = {
+            checksum(data): (name, (2, 2), False) for name, data in rgb.items()
+        }
+        expected_tech = {
+            checksum(data): (None, (2, 2), True) for data in parts.values()
+        }
+        with patch.object(upload, "original_requirements", return_value=expected_rgb):
+            with patch.object(upload, "technical_requirements", return_value=expected_tech):
+                receipt = upload.stage_two_zips(self.original, self.technical, self.root)
+                receipt_twice = upload.stage_two_zips(self.original, self.technical, self.root)
+        self.assertEqual(receipt["total_unique_pngs_verified_in_zips"], 10)
+        self.assertEqual(receipt["new_images_generated"], 0)
+        self.assertFalse(receipt["github_commit_or_import_performed"])
+        self.assertEqual(receipt["archive_files"], receipt_twice["archive_files"])
+        self.assertEqual((self.root / "uploads" / upload.ORIGINAL_NAME).read_bytes(),
+                         self.original.read_bytes())
+        self.assertEqual((self.root / "uploads" / upload.TECHNICAL_NAME).read_bytes(),
+                         self.technical.read_bytes())
+
+    def test_rejects_existing_different_zip_without_overwrite(self):
+        rgb = {f"original-{i}.png": tiny_png(seed=55 + i) for i in range(3)}
+        parts = {f"technical-{i}.png": tiny_png(rgba=True, seed=72 + i) for i in range(7)}
+        make_bundle(self.original, rgb)
+        make_bundle(self.technical, parts)
+        expected_rgb = {
+            checksum(data): (name, (2, 2), False) for name, data in rgb.items()
+        }
+        expected_tech = {
+            checksum(data): (None, (2, 2), True) for data in parts.values()
+        }
+        (self.root / "uploads").mkdir()
+        previous = self.root / "uploads" / upload.ORIGINAL_NAME
+        previous.write_bytes(b"archive already stored (must never be overwritten)")
+        with patch.object(upload, "original_requirements", return_value=expected_rgb):
+            with patch.object(upload, "technical_requirements", return_value=expected_tech):
+                with self.assertRaisesRegex(upload.C12BundleError, "WOULD_OVERWRITE_DIFFERENT_ARCHIVE"):
+                    upload.stage_two_zips(self.original, self.technical, self.root)
+        self.assertEqual(previous.read_bytes(), b"archive already stored (must never be overwritten)")
+        self.assertFalse((self.root / "uploads" / upload.TECHNICAL_NAME).exists())
 
     def test_rejects_unexpected_png_without_writing_outputs(self):
         make_bundle(self.original, {"source.png": self.rgb})
