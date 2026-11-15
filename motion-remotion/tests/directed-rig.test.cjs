@@ -7,7 +7,7 @@ Module._extensions['.ts']=(m,filename)=>m._compile(ts.transpileModule(
   fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,
   target:ts.ScriptTarget.ES2020},fileName:filename}).outputText,filename);
 const {validateDirectedProps,shotAtFrame,trackAtFrame,nodeTransformAtFrame,
-  transformSourcePoint,inverseTransformSourcePoint,directedMeshAtFrame,cameraAtFrame,sourceWorldScale}=
+  transformSourcePoint,inverseTransformSourcePoint,directedMeshAtFrame,cameraAtFrame,sourceWorldScale,upperBackDeltaAtFrame}=
   require('../src/directed-rig-math.ts');
 const node=(id,parent=null,pivot=[100,100])=>({id,parent,pivot,role:'joint',z:1});
 const shot=(id,start,end)=>({id,startFrame:start,endFrameExclusive:end,
@@ -147,6 +147,71 @@ test('C01 P03 V4 breathes subtly while right arm/boot, king and spears stay sour
   assert.equal(allShots.reduce((acc,x)=>acc+x.rigKeyframes.length,0),106);
   validateDirectedProps({...fixture(),...direction.format,id:shot.id,startFrame:shot.startFrame,
     durationFrames:90,shots:[shot]});
+});
+
+test('C01 P03 V5 localized upper-back mesh really breathes, leaving neck, wrists and waist pinned',()=>{
+  const path=require('node:path');
+  const root=path.join(__dirname,'../../canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01');
+  const direction=JSON.parse(fs.readFileSync(path.join(root,'direcao-rig-remotion.json'),'utf8'));
+  const bindings=JSON.parse(fs.readFileSync(path.join(root,'direcao-bindings-c01-draft.json'),'utf8'));
+  const s=direction.scenes.flatMap(x=>x.shots).find(x=>x.id==='C01-P03');
+  const shot={...s,canvas:bindings.shots[s.id].canvas,
+    background:bindings.shots[s.id].background.file,
+    nodes:bindings.shots[s.id].nodes,tracks:s.rigKeyframes};
+  const jacket=shot.nodes.find(n=>n.id==='kael.jaqueta');
+  const back=jacket.mesh.backBreath;
+  assert.deepEqual(back,{kind:'upper-back-source-mesh',sourceTopY:857,
+    sourcePeakY:898,sourceBottomY:947,expansionPx:1.05,liftPx:0.6,
+    driverTarget:'kael.ombros',driverTransform:'translateY',driverPeakAbsPx:1.25});
+  const noBack={...jacket,mesh:{...jacket.mesh}};
+  delete noBack.mesh.backBreath;
+  const idx=(row,col)=>(row*(jacket.mesh.columns+1)+col)*3;
+  const baseline=directedMeshAtFrame(jacket,shot,150,30);
+  const baselineNoBack=directedMeshAtFrame(noBack,shot,150,30);
+  assert.deepEqual(baseline.positions,baselineNoBack.positions);
+  const atPeak=directedMeshAtFrame(jacket,shot,185,30);
+  const withoutBack=directedMeshAtFrame(noBack,shot,185,30);
+  const center=idx(3,3); // upper back near source y897
+  const dx=atPeak.positions[center]-withoutBack.positions[center];
+  const dy=atPeak.positions[center+1]-withoutBack.positions[center+1];
+  assert.ok(Math.abs(dx)>0.1 && Math.abs(dx)<0.6,'back X expansion '+dx);
+  assert.ok(dy>0.25 && dy<0.7,'upper back breathing lift '+dy);
+  assert.deepEqual(atPeak.uvs,withoutBack.uvs);
+  assert.deepEqual(atPeak.indices,withoutBack.indices);
+  for(const row of [0,1,3,5,9]){
+    for(const col of [0,jacket.mesh.columns]){
+      const i=idx(row,col);
+      for(let k=0;k<3;k++)
+        assert.equal(atPeak.positions[i+k],withoutBack.positions[i+k],
+          'side seams must stay source pinned at row '+row+' col '+col);
+    }
+  }
+  for(const row of [0,1,5,6,7,8,9]){
+    for(let col=0;col<=jacket.mesh.columns;col++){
+      const i=idx(row,col);
+      for(let k=0;k<3;k++)
+        assert.equal(atPeak.positions[i+k],withoutBack.positions[i+k],
+          'neck/waist pixels remain anchored row '+row+' col '+col);
+    }
+  }
+  assert.deepEqual(directedMeshAtFrame(jacket,shot,185,30),atPeak,
+    'V5 breathing must be deterministic for repeated Remotion frames');
+  assert.deepEqual(upperBackDeltaAtFrame(jacket,shot,456,898,150),[0,0]);
+  assert.equal(upperBackDeltaAtFrame(jacket,shot,456,898,185)[1],-0.6);
+  for(const f of [150,167,185,199,220,239]){
+    const wrist=[610,1048],boot=[570,1310];
+    assert.deepEqual(transformSourcePoint(shot,'kael.punhos',wrist,f),wrist);
+    assert.deepEqual(transformSourcePoint(shot,'kael.bota-direita',boot,f),boot);
+  }
+  const props={...fixture(),...direction.format,id:shot.id,startFrame:150,
+    durationFrames:90,shots:[shot]};
+  validateDirectedProps(props);
+  const wrong=JSON.parse(JSON.stringify(props));
+  wrong.shots[0].nodes.find(n=>n.id==='kael.jaqueta').mesh.backBreath.sourceBottomY=980;
+  assert.throws(()=>validateDirectedProps(wrong),/UPPER_BACK_BREATH_SOURCE_GEOMETRY_INVALID/);
+  const badDriver=JSON.parse(JSON.stringify(props));
+  badDriver.shots[0].tracks.find(t=>t.target==='kael.ombros').keyframes[2].value=-5;
+  assert.throws(()=>validateDirectedProps(badDriver),/UPPER_BACK_BREATH_DRIVER_TRACK_INVALID/);
 });
 
 test('waist seam stays in source position while shoulders breathe at every frame',()=>{
