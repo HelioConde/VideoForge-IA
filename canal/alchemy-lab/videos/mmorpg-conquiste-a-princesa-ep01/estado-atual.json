@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "verify succeeding CI for image archive QA and remake autonomy",
+  "next_action": "verify and approve V2 character-bible via permanent asset SHA and provider consent, then generate C01-P02 through existing VideoForge workflow; implement layer/rig automation",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -614,7 +614,7 @@
     "next_step": "Integrate active remake-ep01-planos.json with legacy cinematic_direction generator and SHA-verified canonical art without bypassing paid cost and human approval"
   },
   "cinematic_remake_v2_integration": {
-    "status": "code_committed_ci_pending",
+    "status": "validated_ci_success",
     "target_module": "videoforge/cinematic_direction.py",
     "producer": "videoforge/production_scenes.py",
     "active_manifest": "remake-ep01-planos.json",
@@ -628,10 +628,11 @@
     "new_mp4": 0,
     "youtube_uploaded": false,
     "regression_test": "tests/test_remake_cinematic_integration.py",
-    "next_step": "verify GitHub Actions regression; then canonical anchor and workflow integration to create C01-P02 when cost and art approved"
+    "next_step": "verify GitHub Actions regression; then canonical anchor and workflow integration to create C01-P02 when cost and art approved",
+    "success_run_id": 43702500080
   },
   "remake_workflow_anchor_integration": {
-    "status": "code_submitted_ci_pending",
+    "status": "validated_ci_success",
     "workflow": ".github/workflows/production-scene-by-request.yml",
     "reference_staging": "videoforge/remake_reference.py",
     "active_manifest": "remake-ep01-planos.json",
@@ -648,10 +649,11 @@
       "tests/test_remake_cinematic_integration.py",
       "tests/test_remake_reference.py"
     ],
-    "next_step": "verify CI workflow, then begin anchoring/remake art if provider cost permission and human review are available; implement layered rig work orchestration"
+    "next_step": "verify CI workflow, then begin anchoring/remake art if provider cost permission and human review are available; implement layered rig work orchestration",
+    "success_run_id": 43702919849
   },
   "remake_legacy_workflow_qa_fix": {
-    "status": "submitted_ci_pending",
+    "status": "validated_ci_success",
     "failed_qa_run": 43702917744,
     "root_cause": "read_only_qa_asserted_removed_v1_image_generation_lock",
     "action": "mark V1 lock as archived in legacy read-only workflows and assert current V2 policy",
@@ -660,6 +662,33 @@
     "no_youtube_upload": true,
     "generated_images": 0,
     "generated_mp4s": 0,
-    "next_step": "verify succeeding CI for image archive QA and remake autonomy"
+    "next_step": "verify succeeding CI for image archive QA and remake autonomy",
+    "corrected_archive_qa_run_id": 43703372917,
+    "corrected_autonomy_run_id": 43703372899,
+    "previous_failure_resolved": true
+  },
+  "last_verified_integration": {
+    "kind": "remake_v2_workflow_and_reference_sha",
+    "status": "technical_ci_pass_only",
+    "source_commits": [
+      "f372e8c01f1da1974e13346b01e9cfa3e0027039",
+      "510931dd1c13174fdea62c3506ed22b1bf98a28c",
+      "981362486d73f07bc6701b47297d63095fa7ef38"
+    ],
+    "successful_runs": [
+      43702500080,
+      43702919849,
+      43703372917,
+      43703372899
+    ],
+    "resolved_failed_run": 43702917744,
+    "images_created": 0,
+    "rigs_created": 0,
+    "new_remake_mp4s_created": 0,
+    "youtube_uploads": 0,
+    "human_art_approval": false,
+    "paid_provider_calls_approved": false,
+    "current_autopilot_stage": "generate_character_bible",
+    "next_action": "verify and approve V2 character-bible via permanent asset SHA and provider consent, then generate C01-P02 through existing VideoForge workflow; implement layer/rig automation"
   }
 }

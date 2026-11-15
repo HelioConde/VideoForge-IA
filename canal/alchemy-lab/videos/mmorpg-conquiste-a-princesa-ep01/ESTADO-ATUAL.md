@@ -16,6 +16,16 @@
 
 ## Integração do workflow de geração à âncora V2 verificada (15/11/2026)
 
+## Validação final da correção — GitHub Actions (15/11/2026)
+
+**A alteração solicitada foi integrada e testada na `main`.** Implementação V2 em `videoforge/cinematic_direction.py` + `production_scenes.py` validada por [run 43702500080](https://github.com/HelioConde/VideoForge-IA/actions/runs/43702500080) **SUCCESS** (commit `f372e8c01f1da1974e13346b01e9cfa3e0027039`). Referência da cena migrada do artifact V1 para a **âncora V2 aprovada arquivada no GitHub por SHA e proveniência** via `videoforge/remake_reference.py`; [run 43702919849](https://github.com/HelioConde/VideoForge-IA/actions/runs/43702919849) **SUCCESS** (commit `510931dd1c13174fdea62c3506ed22b1bf98a28c`).
+
+O QA de arquivamento [run 43702917744](https://github.com/HelioConde/VideoForge-IA/actions/runs/43702917744) **FAILURE** revelou a exigência obsoleta do lock V1. A correção está no commit `981362486d73f07bc6701b47297d63095fa7ef38` e foi confirmada por [run 43703372917](https://github.com/HelioConde/VideoForge-IA/actions/runs/43703372917) **SUCCESS** (QA de PNGs persistentes) e [run 43703372899](https://github.com/HelioConde/VideoForge-IA/actions/runs/43703372899) **SUCCESS** (autonomia + testes de compatibilidade). **Não é necessário repetir esses testes para diagnosticar a mesma inconsistência.**
+
+**Escopo comprovado:** seleção do manifesto V2, 37 planos/4890 frames, prompts com estilo oficial, referência por SHA e manifesto, salvaguardas contra custos/publicação e compatibilidade com workflows V1 de somente QA. **Ainda não realizado:** geração da nova âncora `character-bible`, qualquer PNG/rig/MP4 oficial do remake, despacho automático integral dos workflows e revisão visual da nova arte. O coordenador atual indica `generate_character_bible` com `provider_cost_permission_required` e `dispatch_allowed=false`.
+
+**Próxima etapa objetiva:** obter referência canônica do remake aprovada e comprovada no GitHub, e confirmar como o provedor autorizado poderá produzir imagem sem despesa adicional não consentida; somente então iniciar `C01-P02` no workflow existente, registrar os arquivos/SHA, produzir camadas RGBA, rig mesh e QA antes de render. Não publicar no YouTube.
+
 ## Correção de regressões nos workflows antigos (15/11/2026)
 
 **Falha real encontrada e corrigida:** o [QA do arquivamento](https://github.com/HelioConde/VideoForge-IA/actions/runs/43702917744) falhou porque exigia a presença do arquivo de bloqueio de novas imagens eliminado pelo remake V2. O teste permanece **sem gerar imagens**, mas passa a conferir o registro histórico do bloqueio, `estado-atual.json` e `autonomy-policy.json` para garantir que não existe autorização automática de custo ou YouTube.

@@ -1,5 +1,14 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — CI comprovado: gerador V2, referência SHA e workflows recuperados
+
+- **Gerador V2:** run `43702500080` SUCCESS confirma plano cinematográfico ativo e testes dos 37 planos; commit `f372e8c01f1da1974e13346b01e9cfa3e0027039`.
+- **Referência aprovada e workflow de cena:** run `43702919849` SUCCESS confirma integração e QA do módulo `remake_reference.py` com origem de PNG/SHA; commit `510931dd1c13174fdea62c3506ed22b1bf98a28c`.
+- **Regressão encontrada:** run `43702917744` FAILURE por QA legado exigir arquivo de lock retirado; **corrigida** em `981362486d73f07bc6701b47297d63095fa7ef38`.
+- **Verificação da correção:** run `43703372917` SUCCESS para QA de arquivamento permanente; run `43703372899` SUCCESS para autonomia, testes de referência, proteção de custos e workflows.
+- **Integridade:** não gerou imagens de produção, malhas/rigs novos, MP4 do remake ou uploads YouTube; a prévia C01 V5 continua histórica.
+- **Próxima ação exata:** obter e aprovar a âncora V2 e a disponibilidade/custo do provedor; dar entrada em `C01-P02` por workflow, arquivando PNG + SHA e iniciando pipeline de camadas/rig real. O sistema ainda não está autonomamente completo.
+
 ## 15/11/2026 — reparar QA/workflows legados que exigiam lock revogado
 
 - **Falha detectada em CI:** run `43702917744` do workflow `qa-permanent-image-archive.yml` falhou no preflight: exigia `SEM-GERACAO-NOVAS-IMAGENS.lock`, retirado quando o usuário autorizou o remake.
