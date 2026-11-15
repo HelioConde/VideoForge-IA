@@ -10,6 +10,10 @@
   "youtube_upload": false,
   "human_visual_approval": false,
   "official_video_approved": false,
-  "reason": "Run the existing SHA-verified C01 scene rig on main after integrating directed animation engine; preserve original source artwork",
-  "revision": 1
+  "reason": "User rejected nearly static C01 P03 MP4; render 6 independent keyframed body joints with original source pixels and stronger decoded-video actor-only motion QA.",
+  "revision": 2,
+  "performance_review_manifest": "atuacao-c01-p03-v2.json",
+  "old_v1_technical_mp4_rejected_for_weak_motion": true,
+  "required_motion": "head, shoulders, upper arm, forearm, wrist, original hair and cloth mesh; still camera",
+  "visual_approval_still_required": true
 }
