@@ -25,7 +25,7 @@ jobs:
           set -euo pipefail
           test -s canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock
           test -s uploads/alchemy-c12-rig-camadas-tecnicas-v2.zip
-          python -m unittest tests.test_alchemy_c12_technical -v
+          python -m unittest tests.test_alchemy_c12_technical tests.test_alchemy_c12_import -v
       - name: Importar somente os SETE PNGs antigos por SHA completo
         shell: bash
         run: |
