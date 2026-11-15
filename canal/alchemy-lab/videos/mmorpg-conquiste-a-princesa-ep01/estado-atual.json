@@ -10,7 +10,7 @@
   "animation_manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
   "episode_seconds_planned": 163,
   "shots_planned": 37,
-  "motion_tracks_planned": 107,
+  "motion_tracks_planned": 110,
   "locks": {
     "no_new_image_generation": true,
     "no_youtube_upload": true,
@@ -18,7 +18,7 @@
     "human_art_approved": false
   },
   "c01": {
-    "state": "technical_mp4_rendered_main_unapproved",
+    "state": "technical_mp4_perceptible_motion_v2_rendered_main_but_visual_qa_rejected",
     "shot": "C01-P03",
     "integrated_pr": 51,
     "integrated_commit": "693212eeb32ede9c0dc8f1c6de94a92638b0dc60",
@@ -40,8 +40,65 @@
       "guard_spear_mask_quality",
       "aldric_throne_contamination",
       "hidden_region_underlays",
-      "neutral_recomposition_human_review"
-    ]
+      "neutral_recomposition_human_review",
+      "neck_collar_background_exposure_when_head_rotates",
+      "head_rotation_8_5_deg_exceeds_manual_default_2_deg_technical_test_only",
+      "human_visual_approval_not_granted"
+    ],
+    "v2": {
+      "integrated_pr": 55,
+      "integrated_commit": "c3a4c6bcee3c2cbe5d180bcf1a5355f625a3398a",
+      "acting_manifest": "atuacao-c01-p03-v2.json",
+      "render_request_revision": 2,
+      "independent_keyframed_tracks_in_shot": 6,
+      "previous_tracks_in_shot": 3,
+      "fixed_camera": true,
+      "source_png_pixels_unchanged": true,
+      "new_image_generation_calls": 0,
+      "main_qa_run_id": 43667678291,
+      "main_qa_conclusion": "success",
+      "main_mp4_artifact_id": 14142756569,
+      "main_mp4_artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43667678291",
+      "main_mp4_sha256": "1667c60c61b7e10a5e3d5353599631678709e91b456072069ec3e39a1c48094d",
+      "mp4": {
+        "duration_seconds": 3,
+        "frames": 90,
+        "width": 1080,
+        "height": 1920,
+        "fps": 30,
+        "codec": "h264",
+        "official": false
+      },
+      "localized_kael_motion_pixels_rgb_delta_at_least_24": {
+        "frames": [
+          0,
+          75
+        ],
+        "original_v1": 11756,
+        "new_v2": 20974,
+        "minimum_technical_threshold": 16000,
+        "main_run_verified": true
+      },
+      "motion_tweaks": {
+        "head_rotation_max_abs_deg": 8.5,
+        "head_vertical_translation_min_px": -1.25,
+        "shoulder_vertical_translation_min_px": -4.5,
+        "wrist_rotation_max_deg": 10,
+        "hair_mesh_amplitude_px": 4.2,
+        "jacket_mesh_amplitude_px": 2.8
+      },
+      "visual_qa_human_approved": false,
+      "visible_defects": [
+        "stair_background_exposed_at_neck_collar_when_head_turns",
+        "guard_and_spear_source_masks_pending",
+        "king_throne_contamination",
+        "hidden_neck_underlay_unverified"
+      ],
+      "global_animation_manual_head_limit_deg": 2,
+      "head_rotation_exceeds_manual": true,
+      "scope": "technical_experiment_only_not_publishable",
+      "next_action": "reconstruct collar/neck underlay exclusively from verified original source pixels; then meet the manual max 2deg rule or resolve rig exceptions only through explicit reviewed policy before official status"
+    }
   },
   "c12": {
     "state": "assets_pending_for_threecanvas_render",
@@ -154,6 +211,6 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Retrieve existing original C12 ZIP bytes into Downloads or upload directly to GitHub uploads/; run scripts/enviar-zips-c12.ps1, check imported 9 PNG source files, technical 8s MP4 and neutral/localized motion QA.",
+  "next_action": "C01-P03 main technical V2 video exists with perceptible independent rig motion but visible exposed background at collar and experimental 8.5deg head rotation beyond manual 2deg: repair original-based underlay and review rig before approval. Independently recover old C12 RGB/RGBA ZIP bytes to unblock C12.",
   "updates_required_on_each_change": true
 }
