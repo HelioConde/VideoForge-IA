@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — programacao iniciada com skills oficiais de referencia e libs existentes
+
+- **Ordem:** programar o EP01 do zero segundo regras novas, e acelerar com bibliotecas/skills existentes no GitHub sem ficar refazendo.
+- **Auditoria:** `motion-remotion/package.json` ja contem `remotion`, `three`, `@react-three/fiber` e `@remotion/three`; nao adicionar engine nova. Referencia oficial `remotion-dev/skills` no commit `7e541aa4d7361dfaca0780a565a47307eb7bdfbb`, usada apenas como guia por skills locais (nao baixado/instalado um pacote externo na Actions).
+- **Implementacao:** `videoforge/remake_starter.py` compila fila de 37 trabalhos com IDs idempotentes e dependencia de assets/QA; `.agents/skills/` ganhou diretor de remake, animador Three e inspetor QA; `motion-remotion/src/remake-sword-motion.ts`/`remake-sword-rig.tsx` adicionam o primeiro rig reutilizavel C01-P02, reaproveitando `RigidSprite` de `rig-three-scene.tsx`.
+- **Teste:** regressao `tests/test_remake_starter.py` e `motion-remotion/tests/remake-sword-motion.test.cjs` conectados aos workflows existentes; fila exportada como artifact. Nao foi emitida nenhuma chamada externa de geracao de imagem, rig final, MP4 ou video YouTube.
+- **Pendencia:** aguarda primeiro CI destes commits e a ancora canônica aprovada + permissao financeira operacional quando aplicavel. So entao produzir de verdade C01-P02 a partir de PNGs verificados; o codigo por si nao e um video concluido.
+
 ## 15/11/2026 — CI comprovado: gerador V2, referência SHA e workflows recuperados
 
 - **Gerador V2:** run `43702500080` SUCCESS confirma plano cinematográfico ativo e testes dos 37 planos; commit `f372e8c01f1da1974e13346b01e9cfa3e0027039`.

@@ -4,6 +4,11 @@ on:
     branches: [main]
     paths:
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-validar-compositor-cinema.json'
+      - 'motion-remotion/src/remake-sword-motion.ts'
+      - 'motion-remotion/src/remake-sword-rig.tsx'
+      - 'motion-remotion/src/rig-three-scene.tsx'
+      - 'motion-remotion/tests/remake-sword-motion.test.cjs'
+      - '.github/workflows/qa-cinematic-remotion-renderer.yml'
 
 permissions:
   contents: read
@@ -47,6 +52,9 @@ jobs:
       - name: Verificar rejeição de planos incompletos, cortes, zoom e HUD
         working-directory: motion-remotion
         run: node --test tests/cinematic-contract.test.cjs
+      - name: Testar rig reutilizavel da espada C01-P02 sem PNG ou proxy
+        working-directory: motion-remotion
+        run: node --test tests/remake-sword-motion.test.cjs
       - name: Testar malha 2D verdadeira (capa, mechas, brinco por pivô)
         working-directory: motion-remotion
         run: node --test tests/rig-three-math.test.cjs

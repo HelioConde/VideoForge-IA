@@ -1,5 +1,11 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## Skills e bibliotecas reutilizaveis — prioridade obrigatoria do VideoForge (15/11/2026)
+
+**ANTES de criar codigo novo, consultar** [catalogo verificado](docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md) e as skills locais `.agents/skills/videoforge-dorama-remake/SKILL.md`, `.agents/skills/videoforge-rig-2d-three/SKILL.md` e `.agents/skills/videoforge-qa-and-checkpoint/SKILL.md`. O projeto ja instala `remotion`, `three`, `@react-three/fiber` e `@remotion/three`; preferir componentes existentes (`CharacterParts`, `RigidSprite`, `DeformableSprite`) e skills oficiais do Remotion **como referencia**, com origem em commit fixo e sem executar instaladores externos em CI. **Nao substituir a engine por Rigby2D/Spine/PixiJS ou criar outro renderer sem justificativa e aprovacao.**
+
+**Nova base concreta para remake:** `videoforge/remake_starter.py` cria fila deterministica dos 37 planos, com `task_fingerprint`, workflow candidato e dependencias; o workflow de autonomia deve arquivar esse relatorio como artifact, sem gerar imagem nem fingir aprovacao. Para o plano C01-P02, `motion-remotion/src/remake-sword-motion.ts` + `remake-sword-rig.tsx` reutilizam Three.js e o `RigidSprite` existente para mover MAO, LAMINA e BAINHA como pecas separadas sobre underlay, com pivo do pulso e parametros medidos dos PNGs reais. **Nenhuma arte faltante pode ser substituida por desenho sintetico, crop ou PNG chapado.** O renderer completo nao esta liberado antes dos SHA e QA.
+
 ## PRECEDÊNCIA DAS REGRAS — DORAMA EP01 REMAKE V2 (vigente em 15/11/2026)
 
 **Workflows V1 somente para QA técnico/legado:** não exigir o arquivo `SEM-GERACAO-NOVAS-IMAGENS.lock` revogado para realizar auditoria/rig/importação de imagens antigas. O arquivo de 14/11 é histórico, não um veto atual. **Qualquer geração nova continua sujeita** a `autonomy-policy.json`, fonte SHA aprovada, limites de provedor, revisão humana e upload bloqueado. Testar `tests/test_remake_workflow_compatibility.py` para impedir regressões de compatibilidade.

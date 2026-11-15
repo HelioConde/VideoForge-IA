@@ -1,5 +1,9 @@
 # REMAKE EP01 — PLANO OFICIAL (15/11/2026)
 
+## Base reutilizavel de bibliotecas e skills (15/11/2026)
+
+**Novo:** catalogo [Bibliotecas e skills](../../../../docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md), 3 skills locais de agente, fila deterministica de 37 planos em `videoforge/remake_starter.py` e primeiro movimento de espada independente em `motion-remotion/src/remake-sword-rig.tsx` + `remake-sword-motion.ts`. Sao componentes do proprio programa e nao uma imagem inventada. Os agentes devem priorizar essas bases e documentar toda etapa no checkpoint; nao substituir engine e nao contornar autorizacoes de arte/custo/YouTube.
+
 > **Integração técnica nova:** a direção do remake V2 passou a ser a fonte selecionada por `videoforge/cinematic_direction.py` e por `videoforge/production_scenes.py`. O código valida a ordem, o elenco, a câmera e a âncora visual por SHA antes de geração. **Não existe PNG, rig ou MP4 novo** desta alteração; o usuário ainda precisa aprovar a âncora e qualquer consumo pago de provedor.
 
 **Estado:** preprodução ativa, autorizada editorialmente pelo pedido de refazer o EP01 e "Continuar". **Nenhum PNG, rig, MP4 ou render novo foi executado nesta atualização.** O bloqueio anterior foi preservado no arquivo histórico, não está mais ativo. Novas gerações são permitidas segundo autorização e condições operacionais; não há limite editorial de imagens, mas continuam proibidos gastos adicionais não aprovados e publicação no YouTube.

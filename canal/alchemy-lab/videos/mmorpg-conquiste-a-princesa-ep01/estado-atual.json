@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "verify and approve V2 character-bible via permanent asset SHA and provider consent, then generate C01-P02 through existing VideoForge workflow; implement layer/rig automation",
+  "next_action": "CI verification for skills/queue/sword rig; then generate canonical V2 anchor with approved provider budget; art C01-P02 and real RGBA+pivots+QA",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -690,5 +690,42 @@
     "paid_provider_calls_approved": false,
     "current_autopilot_stage": "generate_character_bible",
     "next_action": "verify and approve V2 character-bible via permanent asset SHA and provider consent, then generate C01-P02 through existing VideoForge workflow; implement layer/rig automation"
+  },
+  "remake_skill_library_programming_20261115": {
+    "status": "code_submitted_awaiting_ci",
+    "used_installed_libraries": [
+      "remotion@4",
+      "@remotion/three",
+      "three",
+      "@react-three/fiber",
+      "typescript"
+    ],
+    "remote_skill_reference": {
+      "repository": "remotion-dev/skills",
+      "commit": "7e541aa4d7361dfaca0780a565a47307eb7bdfbb",
+      "source_installed": false
+    },
+    "new_local_skills": [
+      ".agents/skills/videoforge-dorama-remake/SKILL.md",
+      ".agents/skills/videoforge-rig-2d-three/SKILL.md",
+      ".agents/skills/videoforge-qa-and-checkpoint/SKILL.md"
+    ],
+    "work_queue_compiler": "videoforge/remake_starter.py",
+    "shot_motion_compiler": "motion-remotion/src/remake-sword-motion.ts",
+    "shot_three_component": "motion-remotion/src/remake-sword-rig.tsx",
+    "first_art_free_programming_step": "C01-P01 black frames 0..59, original SFX pending",
+    "first_rig_target": "C01-P02 sword independently articulated from executioner hand",
+    "first_RIG_assets_required": [
+      "sheath",
+      "blade",
+      "hand",
+      "underlay"
+    ],
+    "images_generated": 0,
+    "new_rendered_mp4": 0,
+    "youtube_uploaded": false,
+    "canonical_anchor_pending": true,
+    "paid_provider_permission_required": true,
+    "next_step": "CI verification for skills/queue/sword rig; then generate canonical V2 anchor with approved provider budget; art C01-P02 and real RGBA+pivots+QA"
   }
 }

@@ -12,6 +12,16 @@
 
 ## REGRAS ATIVAS DO REMAKE — LEITURA OBRIGATÓRIA PARA AGENTES
 
+## Comeco da programacao com bibliotecas e skills prontas (15/11/2026)
+
+**Iniciado o codigo de producao do remake, sem descartar historico tecnico.** A base usa **bibliotecas ja instaladas** (Remotion 4, Three.js, React Three Fiber e `@remotion/three`) e instrucoes originais locais em `.agents/skills/`, com referencia oficial aos [Remotion Agent Skills](https://github.com/remotion-dev/skills/tree/7e541aa4d7361dfaca0780a565a47307eb7bdfbb). Nao instalados novos motores ou pacotes pagos.
+
+**Entregas de software:** `videoforge/remake_starter.py` gera fila GitHub dos **37 planos** e 36 tomadas visuais, calculando `task_fingerprint`, camera, elenco, perfil de rig, camadas a separar e proximo workflow candidato (nao despacha pagamento). `.github/workflows/remake-autonomy.yml` executa teste e exporta `output/remake-shot-queue.json` como artifact. Para a **C01-P02 espada**, componentes novos `motion-remotion/src/remake-sword-motion.ts` + `remake-sword-rig.tsx` reutilizam `RigidSprite` do rig Three.js existente, movimentam lamina e mao separadamente, deixam a bainha fixa, e giram a mao pelo pulso. Tudo deterministicamente por `useCurrentFrame()` e parametros que deverao ser medidos na futura arte. Testes JS/Python e workflow de QA adicionados.
+
+**Estado real:** codigo e skills adicionados; **0 novas imagens**, **0 novos MP4s**, **0 renders oficiais** e **0 uploads** neste trabalho. A C01-P01 continua definida com 60 frames pretos, aguardando SFX original/licenciado; C01-P02 aguarda PNGs separados (blade/sheath/hand/underlay) **da mesma imagem-mae** e SHA+QA. A imagem-ancora `character-bible` ainda nao existe aprovada no repo; `autonomy-policy.json` nao autoriza custo de provedores externos. O programa pode planejar sem chamar a IA paga e sem enganar que o video esta pronto.
+
+**Teste CI:** a nova fila e a matemática da espada estao incluidas nos workflows de autonomia e QA do compositor. **Proximo passo:** confirmar execucoes de CI; preparar referencia canonica e aprovacoes necessarias; depois produzir cada arte por perspectiva, extrair partes, QA neutro, rig verdadeiro, previews e edicao final. Os IDs dos runs precisam ser preenchidos somente quando a execucao for real.
+
 ## Integração real do gerador cinematográfico ao remake V2 (15/11/2026)
 
 ## Integração do workflow de geração à âncora V2 verificada (15/11/2026)

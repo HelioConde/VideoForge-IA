@@ -36,7 +36,7 @@ const useRigTexture=(file:string)=>{
   texture.colorSpace=SRGBColorSpace;
   return texture;
 };
-const RigidSprite:React.FC<{layer:LayerSpec;canvas:Canvas}>=({layer,canvas})=>{
+export const RigidSprite:React.FC<{layer:LayerSpec;canvas:Canvas}>=({layer,canvas})=>{
   const texture=useRigTexture(layer.file);
   const [,,w,h]=layer.bbox;
   const position=sourceCenter(layer.bbox,canvas);
