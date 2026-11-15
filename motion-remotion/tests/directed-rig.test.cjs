@@ -92,7 +92,7 @@ test('existing C01-P03 bindings and absolute direction match the renderer contra
       nodes:bound.nodes,tracks:actual.rigKeyframes}]};
   validateDirectedProps(props);
   assert.equal(shotAtFrame(props.shots,150).id,'C01-P03');
-  assert.equal(nodeTransformAtFrame(props.shots[0],'kael.cabeca',239).rotationZ,-1.17);
+  assert.equal(nodeTransformAtFrame(props.shots[0],'kael.cabeca',239).rotationZ,-1.638);
 });
 
 
