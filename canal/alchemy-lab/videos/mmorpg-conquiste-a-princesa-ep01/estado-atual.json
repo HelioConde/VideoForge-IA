@@ -517,6 +517,9 @@
       "remotion-best-practices",
       "remotion-markup",
       "remotion-render"
-    ]
+    ],
+    "agents_authorized": true,
+    "cinematic_pr_ci_added": true,
+    "audio_integration": "pending: exporter audioFile is None"
   }
 }

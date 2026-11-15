@@ -1,19 +1,42 @@
 name: "VideoForge - auditar timeline cinematografica 37 planos sem IA"
 on:
+  pull_request:
+    paths:
+      - 'videoforge/cinematic_*.py'
+      - 'tests/test_cinematic_*.py'
+      - '.github/workflows/qa-cinematic-edl.yml'
   push:
     branches: [main]
     paths:
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-auditar-timeline-cinema.json'
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: vf-alchemy-cinematic-edl-qa
   cancel-in-progress: false
 
 jobs:
+  contracts:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preparar leitor de imagens para testes locais
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Validar contratos cinematograficos sem render ou geracao
+        run: python -m unittest discover -s tests -p 'test_cinematic_*.py' -v
   edl:
+    if: github.event_name == 'push'
+    permissions:
+      contents: write
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:

@@ -117,3 +117,8 @@ Correcao na branch codex/animation-v5-review, ainda nao integrada: uma nova prep
 ## 15/11/2026 — inventario acompanha progresso parcial do episodio
 
 Branch codex/animation-v5-review, PR #59 ainda nao integrada. Removido bloqueio que exigia exatamente 36 planos visuais pendentes: agora o inventario conta planos aprovados, pendentes e causas de bloqueio usando a EDL validada. Nao concede aprovacao nem gera imagens. Auditoria atual: 37 planos totais, 36 visuais pendentes, 12 closes, 14 referencias antigas e 52 recortes C01. Testes de progresso parcial e aprovacao inconsistente passaram. Skills oficiais remotion-best-practices, remotion-markup e remotion-render instaladas localmente por autorizacao do usuario, origem https://github.com/remotion-dev/skills; nao sao assets nem substituem o rig. Proximo passo: obter originais/pecas das tomadas; usuario consultado sobre conservar bloqueio de novas imagens ou definir orcamento para novas artes. Nenhuma autorizacao de geracao inferida.
+
+
+## 15/11/2026 — agentes de diagnostico e regressao cinematografica em PR
+
+Usuario autorizou criar agentes. Dois agentes somente leitura revisaram prontidao de rigs e audio/montagem: permanecem 36 planos visuais pendentes; exportador cinematic_remotion_export.py ainda define audioFile=None, portanto integracao de narracao/legendas nao esta implementada. Proposta seguinte: validar faixas existentes e sincronismo por frames antes de conectar ao compositor, sem chamadas pagas. Acrescentado job de PR ao workflow qa-cinematic-edl.yml para rodar a suite cinematografica com permissions contents:read, sem render, geracao ou commits; job de arquivamento continua exclusivo de push com permissao propria. Branch codex/animation-v5-review, PR59, ainda nao integrado.
