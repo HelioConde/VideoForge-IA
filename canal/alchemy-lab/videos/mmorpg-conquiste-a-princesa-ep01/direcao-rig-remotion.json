@@ -350,7 +350,7 @@
               "target": "kael.ombros",
               "transform": "translateY",
               "unit": "pixels_source_canvas",
-              "description": "Torso inspira, se ergue e volta ao apoio; rig da jaqueta ancora a cintura [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
+              "description": "Torso inspira, se ergue e volta ao apoio; rig da jaqueta ancora a cintura [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [menor tração da gola durante respiração]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -363,19 +363,19 @@
                 },
                 {
                   "frame": 182,
-                  "value": -1.26
+                  "value": -1.134
                 },
                 {
                   "frame": 204,
-                  "value": -2.52
+                  "value": -2.268
                 },
                 {
                   "frame": 228,
-                  "value": -1.68
+                  "value": -1.512
                 },
                 {
                   "frame": 239,
-                  "value": -1.44
+                  "value": -1.296
                 }
               ],
               "measuredPivotRequired": true
@@ -470,7 +470,7 @@
               "target": "kael.antebraco",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Flexão moderada do antebraço com pulso independente reforçado; evitar compensação que anule movimento perceptível [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
+              "description": "Flexão moderada do antebraço com pulso independente reforçado; evitar compensação que anule movimento perceptível [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [pulso realiza mais gesto, menor contra-rotação de cotovelo]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -483,15 +483,15 @@
                 },
                 {
                   "frame": 198,
-                  "value": -0.9
+                  "value": -0.495
                 },
                 {
                   "frame": 220,
-                  "value": -2.85
+                  "value": -1.568
                 },
                 {
                   "frame": 239,
-                  "value": -2.55
+                  "value": -1.402
                 }
               ],
               "measuredPivotRequired": true
