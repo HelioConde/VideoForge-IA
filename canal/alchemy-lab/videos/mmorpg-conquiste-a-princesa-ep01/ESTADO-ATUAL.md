@@ -6,7 +6,7 @@
 
 Concluir o dorama MMORPG no VideoForge-IA com animação 2D genuína: imagem-mãe → fundo sem personagens → partes originais PNG RGBA → reconstrução de oclusões → pivôs/malhas Three.js → Remotion/ThreeCanvas/SWANGLE → vídeo MP4 → QA visual e audiovisual. Canal: `alchemy-lab`. Vídeo: `mmorpg-conquiste-a-princesa-ep01`.
 
-- Roteiro / direção: 14 cenas de origem, **37 planos cinematográficos**, **107 trilhas de direção** e duração planejada **163 s / 4890 frames em 30 fps**.
+- Roteiro / direção: 14 cenas de origem, **37 planos cinematográficos**, **106 trilhas de direção atuais após V4 (107 no planejamento original; V3 teve 113)** e duração planejada **163 s / 4890 frames em 30 fps**.
 - `SEM-GERACAO-NOVAS-IMAGENS.lock` **continua em vigor**. É permitido importar **imagens originais já existentes**, não produzir novas imagens.
 - `video_oficial_do_programa=false`, `human_visual_approved=false` e `youtube_uploaded=false`. Teste técnico de MP4 **não** significa aprovação de personagem, rig ou episódio.
 - Manter arquivos de cada vídeo em `canal/<id>/videos/<video-id>/`. O código de componentes reaproveitáveis pode estar em `videoforge/`, `motion-remotion/`, `tests/` e `.github/workflows/`.
