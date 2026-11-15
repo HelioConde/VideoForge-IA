@@ -9,7 +9,8 @@ from pathlib import Path
 import subprocess
 
 from .rig_candidate import _image, _write_png
-from .directed_rig import _mask_uncovered, _mask_only_original_covered_pixels
+from .directed_rig import _mask_uncovered, _mask_only_original_covered_pixels, _static_mother_with_kael_cutout
+from .c01_v4_breath_qa import validate_c01_v4_pose, static_region_video_report
 from .c01_collar_qa import collar_background_exposure, collar_gate
 
 
@@ -21,10 +22,21 @@ def neutral_review(bindings_path: Path, shot_id: str, output: Path) -> dict:
     width, height = shot["canvas"]["width"], shot["canvas"]["height"]
     mother = _image(base / shot["sourceMother"]["file"], width, height)
     composite = _image(base / shot["background"]["file"], width, height)
+    # V4 background keeps approved king/guards/spears source RGB, only
+    # exchanging existing Kael sprite alpha for reconstructed backdrop.
+    if shot.get("backgroundMode") == "original-mother-static-context-with-kael-cutout/v1":
+        source_rgba = {n["id"]: _image(base / n["file"], width, height)
+                       for n in shot["nodes"] if "file" in n and n.get("role") == "part"
+                       and n["id"].startswith("kael.")}
+        composite,static_context=_static_mother_with_kael_cutout(
+            mother,composite,shot["canvas"],shot["nodes"],source_rgba,
+            radius=shot["staticContextPolicy"]["dilationRadiusSourcePx"])
+    else:
+        static_context = None
     decoded = {node["id"]: _image(base / node["file"], width, height)
                for node in shot["nodes"] if "file" in node}
     for node in sorted(shot["nodes"], key=lambda item: item["z"]):
-        if "file" not in node:
+        if "file" not in node or (static_context and node["role"] == "static-context"):
             continue
         pixels = decoded[node["id"]]
         if "onlyCoveredBy" in node:
@@ -71,6 +83,7 @@ def neutral_review(bindings_path: Path, shot_id: str, output: Path) -> dict:
         "meanAbsoluteRgbError": error / (width * height * 3),
         "pixelExactRecomposition": changed == 0,
         "comparison": "original mother / candidate neutral assembly / abs diff x3",
+        "staticContextOriginalMother": static_context,
         "humanVisualReview": False, "publishable": False,
         "note": "Metrics do not validate anatomy, masks, pivots or narrative framing.",
     }
@@ -193,71 +206,158 @@ def verify_render(props_path: Path, output: Path) -> dict:
     c01_actor = None
     c01_collar = None
     if props.get("id") == "C01-P03" and props.get("channel") == "alchemy-lab":
-        head_rot = [t for t in props["shots"][0]["tracks"]
-                    if t.get("target") == "kael.cabeca" and t.get("transform") == "rotationZ"]
-        neck_lift = [t for t in props["shots"][0]["tracks"]
-                     if t.get("target") == "kael.cabeca" and t.get("transform") == "translateY"]
-        if (len(head_rot) != 1
-            or not head_rot[0]["keyframes"]
-            or any(abs(k["value"]) > 2 for k in head_rot[0]["keyframes"])
-            or any(k["value"] != 0 for t in neck_lift for k in t["keyframes"])):
-            raise ValueError("C01_ACTING_HEAD_EXCEEDS_MANUAL_2DEG_OR_EXPOSES_NECK")
-        # Unlike the old 50-pixel check, this detects whether the acting
-        # remains imperceptible in the actual encoded video at the second beat.
-        frame_lift = min(75, props["durationFrames"]-1)
-        c01_actor = c01_actor_motion_pixels(
-            video_before, _video_frame(video, frame_lift, width, height),
-            props["shots"][0], width, height, threshold=24)
-        c01_actor["source_frame_performance"] = frame_lift
-        c01_actor["min_changed_pixels"] = 16000
-        c01_actor["technical_perceptible_motion"] = c01_actor["changed_pixels"] >= 16000
-        # Exposure is measured using ONLY the original scene background that
-        # was hash-validated by directed_rig.prepare. Never invent a neck patch.
-        sha_manifest = json.loads((output / "source-hashes.json").read_text(encoding="utf-8"))
-        original_background = props["shots"][0]["background"]
-        if (not original_background.startswith("vf-directed/alchemy-lab/")
-            or ".." in original_background.split("/")
-            or not original_background.endswith("/background.png")):
-            raise ValueError("C01_COLLAR_BACKGROUND_SOURCE_PATH_INVALID")
-        png_path = Path(__file__).resolve().parents[1] / "motion-remotion/public" / original_background
-        if not png_path.is_file():
-            raise ValueError("C01_COLLAR_VERIFIED_SOURCE_BACKGROUND_MISSING")
-        if not sha_manifest["sources"].get("background", {}).get("sha256"):
-            raise ValueError("C01_COLLAR_SOURCE_PROVENANCE_SHA_MISSING")
-        native = props["shots"][0]["canvas"]
-        verified_background = _image(png_path, native["width"], native["height"])
-        collar_scans = []
-        for target_frame in (min(55, props["durationFrames"]-1),
-                             min(75, props["durationFrames"]-1),
-                             props["durationFrames"]-1):
-            scan = collar_background_exposure(
-                video_before, _video_frame(video, target_frame, width, height),
-                verified_background, width=width, height=height,
-                source_width=native["width"], source_height=native["height"])
-            scan["frame"] = target_frame
-            collar_scans.append(scan)
-        c01_collar = collar_gate(collar_scans)
-        (output / "c01-collar-qa.json").write_text(
-            json.dumps(c01_collar, indent=2) + "\n", encoding="utf-8")
-        gates = {
-            "schema": "videoforge/c01-acting-and-collar-qa/v1",
-            "video_sha256": hashlib.sha256(video.read_bytes()).hexdigest(),
-            "acting": c01_actor,
-            "collar": c01_collar,
-            "source_pixels_only": True,
-            "visual_approval": False,
-            "technical_qa_passed": (
-                c01_actor["technical_perceptible_motion"] and
-                c01_collar["status"] == "PASS_TECHNICAL_NO_HUMAN_APPROVAL"),
-        }
-        (output / "c01-gates-qa.json").write_text(
-            json.dumps(gates, indent=2) + "\n", encoding="utf-8")
-        if not gates["technical_qa_passed"]:
-            raise ValueError(
-                "C01_ACTING_OR_COLLAR_FAILED: " +
-                "acting=" + str(c01_actor["changed_pixels"]) + "/16000; " +
-                "new_background=" + str(c01_collar["maximum_newly_exposed_pixels"]) +
-                "/" + str(c01_collar["allowed_pixels_per_checked_frame"]))
+        if props.get("staticContext") is not None:
+            # C01 V4 deliberately breathes: a 16k-pixel movement requirement
+            # incentivised unnatural moving wrists/ankles in V3. Check real
+            # subtle breathing and static protected physical contacts instead.
+            shot=props["shots"][0]
+            constraint_report=validate_c01_v4_pose(shot,props["staticContext"])
+            name=shot["background"]
+            if (not name.startswith("vf-directed/alchemy-lab/")
+                or ".." in name.split("/") or not name.endswith("/background.png")):
+                raise ValueError("C01_V4_DERIVED_BACKGROUND_PATH_INVALID")
+            png_path=Path(__file__).resolve().parents[1] / "motion-remotion/public" / name
+            if (not png_path.is_file()
+                or hashlib.sha256(png_path.read_bytes()).hexdigest()
+                != props["staticContext"]["derivedBackgroundSha256"]):
+                raise ValueError("C01_V4_DERIVED_BACKGROUND_HASH_MISMATCH")
+            sha_manifest=json.loads((output/"source-hashes.json").read_text(encoding="utf-8"))
+            if (sha_manifest["sources"]["sourceMother"]["sha256"]
+                != props["staticContext"]["sourceMotherSha256"]):
+                raise ValueError("C01_V4_MOTHER_ORIGIN_SHA_MISMATCH")
+            first_video=video_before
+            breath_scans=[]
+            static_scans=[]
+            for frame in (min(30,props["durationFrames"]-1),
+                          min(55,props["durationFrames"]-1),
+                          min(75,props["durationFrames"]-1),
+                          props["durationFrames"]-1):
+                next_video=_video_frame(video,frame,width,height)
+                delta=c01_actor_motion_pixels(first_video,next_video,
+                    shot,width,height,threshold=8)
+                delta["frame"]=frame
+                breath_scans.append(delta)
+                static=static_region_video_report(
+                    first_video,next_video,shot,width,height)
+                static["frame"]=frame
+                static_scans.append(static)
+            max_breath=max(x["changed_pixels"] for x in breath_scans)
+            # Wide enough for actual subtle 1px/0.3deg breathing after H.264,
+            # bounded above to discourage exaggerated gestures.
+            min_breath,max_breath_allowed=25,10000
+            c01_actor={
+                "schema":"videoforge/c01-v4-subtle-breath-actual-h264/v1",
+                "frames":breath_scans,
+                "max_changed_pixels_rgb_delta_8":max_breath,
+                "minimum_required":min_breath,
+                "maximum_allowed":max_breath_allowed,
+                "subtle_breathing_pass":min_breath<=max_breath<=max_breath_allowed,
+                "human_visual_review":False,
+            }
+            original_bg=_image(png_path,shot["canvas"]["width"],shot["canvas"]["height"])
+            scans=[]
+            for frame in (min(55,props["durationFrames"]-1),
+                          min(75,props["durationFrames"]-1),
+                          props["durationFrames"]-1):
+                scan=collar_background_exposure(
+                    first_video,_video_frame(video,frame,width,height),original_bg,
+                    width=width,height=height,
+                    source_width=shot["canvas"]["width"],
+                    source_height=shot["canvas"]["height"])
+                scan["frame"]=frame
+                scans.append(scan)
+            c01_collar=collar_gate(scans)
+            (output/"c01-collar-qa.json").write_text(
+                json.dumps(c01_collar,indent=2)+"\n",encoding="utf-8")
+            stable=all(s["static_props_pass"] for s in static_scans)
+            gate={
+                "schema":"videoforge/c01-v4-subtle-breath-and-static-context/v1",
+                "video_sha256":hashlib.sha256(video.read_bytes()).hexdigest(),
+                "pose":constraint_report,
+                "acting":c01_actor,
+                "static_region_frames":static_scans,
+                "original_mother_static":props["staticContext"],
+                "collar":c01_collar,
+                "human_visual_review":False,
+                "technical_qa_passed":bool(
+                    c01_actor["subtle_breathing_pass"] and stable
+                    and c01_collar["status"]=="PASS_TECHNICAL_NO_HUMAN_APPROVAL"),
+            }
+            (output/"c01-gates-qa.json").write_text(
+                json.dumps(gate,indent=2)+"\n",encoding="utf-8")
+            if not gate["technical_qa_passed"]:
+                raise ValueError(
+                    "C01_V4_BREATH_STATIC_OR_COLLAR_FAILED: "
+                    f"breath={max_breath}/{min_breath}-{max_breath_allowed},"
+                    f"static={stable},collar="
+                    f"{c01_collar['maximum_newly_exposed_pixels']}/"
+                    f"{c01_collar['allowed_pixels_per_checked_frame']}")
+        else:
+            head_rot = [t for t in props["shots"][0]["tracks"]
+                        if t.get("target") == "kael.cabeca" and t.get("transform") == "rotationZ"]
+            neck_lift = [t for t in props["shots"][0]["tracks"]
+                         if t.get("target") == "kael.cabeca" and t.get("transform") == "translateY"]
+            if (len(head_rot) != 1
+                or not head_rot[0]["keyframes"]
+                or any(abs(k["value"]) > 2 for k in head_rot[0]["keyframes"])
+                or any(k["value"] != 0 for t in neck_lift for k in t["keyframes"])):
+                raise ValueError("C01_ACTING_HEAD_EXCEEDS_MANUAL_2DEG_OR_EXPOSES_NECK")
+            # Unlike the old 50-pixel check, this detects whether the acting
+            # remains imperceptible in the actual encoded video at the second beat.
+            frame_lift = min(75, props["durationFrames"]-1)
+            c01_actor = c01_actor_motion_pixels(
+                video_before, _video_frame(video, frame_lift, width, height),
+                props["shots"][0], width, height, threshold=24)
+            c01_actor["source_frame_performance"] = frame_lift
+            c01_actor["min_changed_pixels"] = 16000
+            c01_actor["technical_perceptible_motion"] = c01_actor["changed_pixels"] >= 16000
+            # Exposure is measured using ONLY the original scene background that
+            # was hash-validated by directed_rig.prepare. Never invent a neck patch.
+            sha_manifest = json.loads((output / "source-hashes.json").read_text(encoding="utf-8"))
+            original_background = props["shots"][0]["background"]
+            if (not original_background.startswith("vf-directed/alchemy-lab/")
+                or ".." in original_background.split("/")
+                or not original_background.endswith("/background.png")):
+                raise ValueError("C01_COLLAR_BACKGROUND_SOURCE_PATH_INVALID")
+            png_path = Path(__file__).resolve().parents[1] / "motion-remotion/public" / original_background
+            if not png_path.is_file():
+                raise ValueError("C01_COLLAR_VERIFIED_SOURCE_BACKGROUND_MISSING")
+            if not sha_manifest["sources"].get("background", {}).get("sha256"):
+                raise ValueError("C01_COLLAR_SOURCE_PROVENANCE_SHA_MISSING")
+            native = props["shots"][0]["canvas"]
+            verified_background = _image(png_path, native["width"], native["height"])
+            collar_scans = []
+            for target_frame in (min(55, props["durationFrames"]-1),
+                                 min(75, props["durationFrames"]-1),
+                                 props["durationFrames"]-1):
+                scan = collar_background_exposure(
+                    video_before, _video_frame(video, target_frame, width, height),
+                    verified_background, width=width, height=height,
+                    source_width=native["width"], source_height=native["height"])
+                scan["frame"] = target_frame
+                collar_scans.append(scan)
+            c01_collar = collar_gate(collar_scans)
+            (output / "c01-collar-qa.json").write_text(
+                json.dumps(c01_collar, indent=2) + "\n", encoding="utf-8")
+            gates = {
+                "schema": "videoforge/c01-acting-and-collar-qa/v1",
+                "video_sha256": hashlib.sha256(video.read_bytes()).hexdigest(),
+                "acting": c01_actor,
+                "collar": c01_collar,
+                "source_pixels_only": True,
+                "visual_approval": False,
+                "technical_qa_passed": (
+                    c01_actor["technical_perceptible_motion"] and
+                    c01_collar["status"] == "PASS_TECHNICAL_NO_HUMAN_APPROVAL"),
+            }
+            (output / "c01-gates-qa.json").write_text(
+                json.dumps(gates, indent=2) + "\n", encoding="utf-8")
+            if not gates["technical_qa_passed"]:
+                raise ValueError(
+                    "C01_ACTING_OR_COLLAR_FAILED: " +
+                    "acting=" + str(c01_actor["changed_pixels"]) + "/16000; " +
+                    "new_background=" + str(c01_collar["maximum_newly_exposed_pixels"]) +
+                    "/" + str(c01_collar["allowed_pixels_per_checked_frame"]))
     audio = any(s["codec_type"] == "audio" for s in probe["streams"])
     hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
               for p in sorted(output.iterdir()) if p.is_file() and p.suffix in (".png", ".mp4")}
@@ -271,6 +371,7 @@ def verify_render(props_path: Path, output: Path) -> dict:
         "changedMp4ArtPixelsAtFrame": {"frame": frame_mid, "pixels": changed_video, "minRgbDelta": 8},
         "c01ArticulatedActorMotion": c01_actor,
         "c01CollarOriginalBackgroundExposure": c01_collar,
+        "c01V4StaticContext": props.get("staticContext"),
         "sha256": hashes, "warnings": props["warnings"],
         "pixelRecovery": props.get("pixelRecovery", []),
         "imageGenerationCalls": 0, "previewTecnicoNaoOficial": True,
