@@ -92,7 +92,7 @@ test('existing C01-P03 bindings and absolute direction match the renderer contra
       nodes:bound.nodes,tracks:actual.rigKeyframes}]};
   validateDirectedProps(props);
   assert.equal(shotAtFrame(props.shots,150).id,'C01-P03');
-  assert.equal(nodeTransformAtFrame(props.shots[0],'kael.cabeca',239).rotationZ,-1.8);
+  assert.equal(nodeTransformAtFrame(props.shots[0],'kael.cabeca',239).rotationZ,-1.17);
 });
 
 
@@ -116,8 +116,8 @@ test('C01 P03 performance v3 uses manual-safe head and moving arms with fixed ca
   const raisedHead=transformSourcePoint(shot,'kael.cabeca',headPoint,226);
   const initialWrist=transformSourcePoint(shot,'kael.punhos',wristPoint,150);
   const pressedWrist=transformSourcePoint(shot,'kael.punhos',wristPoint,225);
-  assert.ok(distance(initialHead,raisedHead)>=3.5,
-    'Manual-safe head must move via real neck pivot and shoulder');
+  assert.ok(distance(initialHead,raisedHead)>=2.5,
+    'Manual-safe head retains slight real pivot motion, while arms carry performance');
   assert.ok(distance(initialWrist,pressedWrist)>=8,
     'Kael independent wrist/forearm must travel at least 8 original-source pixels');
   // Existing independently extracted legs, guards, throne and crossed spears
@@ -126,9 +126,17 @@ test('C01 P03 performance v3 uses manual-safe head and moving arms with fixed ca
     transformSourcePoint(shot,'kael.perna-direita',[600,1240],239));
   assert.deepEqual(transformSourcePoint(shot,'aldric',[480,360],150),
     transformSourcePoint(shot,'aldric',[480,360],239));
-  assert.equal(shot.nodes.find(n=>n.id==='kael.cabelo').mesh.amplitudePx,4.2);
-  assert.equal(shot.nodes.find(n=>n.id==='kael.jaqueta').mesh.amplitudePx,2.8);
+  assert.equal(shot.nodes.find(n=>n.id==='kael.cabelo').mesh.amplitudePx,3.0);
+  assert.equal(shot.nodes.find(n=>n.id==='kael.jaqueta').mesh.amplitudePx,1.8);
   assert.equal(shot.tracks.filter(t=>t.target==='kael.cabeca').length,2);
+  const holdout=b.nodes.find(n=>n.id==='kael.costura-gola-pixel-original');
+  assert.equal(holdout.parent,'kael.ombros');
+  assert.equal(holdout.role,'existing-pixel-underlay');
+  assert.deepEqual(holdout.onlyCoveredBy,['kael.jaqueta','kael.braco-direito']);
+  assert.equal(holdout.sha256,b.sourceMother.sha256);
+  assert.ok(holdout.z < b.nodes.find(n=>n.id==='kael.jaqueta').z);
+  assert.ok(shot.tracks.find(t=>t.target==='kael.braco-direito').keyframes.every(k=>Math.abs(k.value)<=.2));
+
   const rotations=shot.tracks.find(t=>t.target==='kael.cabeca'&&t.transform==='rotationZ');
   assert.ok(rotations.keyframes.every(k=>Math.abs(k.value)<=2),
     'C01 head pivots must obey the manual max 2 degrees in V3');
