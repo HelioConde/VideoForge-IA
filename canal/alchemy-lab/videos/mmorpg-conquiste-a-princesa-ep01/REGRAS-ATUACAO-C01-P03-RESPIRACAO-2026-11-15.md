@@ -1,6 +1,6 @@
 # Direção corrigida pelo usuário — C01-P03: somente respiração sutil
 
-**Data:** 15/11/2026. **Status:** regras de aceitação e plano de correção registrados; **AINDA NÃO IMPLEMENTADOS NA ANIMAÇÃO V3**. Ler [pesquisa de bibliotecas/skills](../../../../docs/PESQUISA-SKILLS-BIBLIOTECAS-RIGGING-2D-2026-11-15.md), [estado atual](ESTADO-ATUAL.md), [histórico](HISTORICO-DESENVOLVIMENTO.md) e [manual global](../../../../docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md) antes de alterar código.
+**Data:** 15/11/2026. **Status:** regras de aceitação implementadas na **V4**, [PR #57](https://github.com/HelioConde/VideoForge-IA/pull/57) integrado à main e [render técnico 43676630976](https://github.com/HelioConde/VideoForge-IA/actions/runs/43676630976) **SUCCESS**; **aprovação visual humana ainda pendente**. A V3 permanece histórico técnico reprovado visualmente. Ler [pesquisa de bibliotecas/skills](../../../../docs/PESQUISA-SKILLS-BIBLIOTECAS-RIGGING-2D-2026-11-15.md), [estado atual](ESTADO-ATUAL.md), [histórico](HISTORICO-DESENVOLVIMENTO.md) e [manual global](../../../../docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md) antes de alterar código.
 
 ## Observações do usuário após assistir C01 V3
 
@@ -33,7 +33,8 @@
 
 - ✅ Pesquisa e novas regras visuais registradas no repositório.
 - ✅ V3 original preservada para comparação e rollback.
-- ⏳ **Não foram editados keyframes, sprites, máscaras, tests nem workflow de render nesta etapa de arquivamento.**
-- ⏳ Ainda falta preparar V4, aplicar correções, renderizar e obter aprovação visual.
+- ✅ **Implementação posterior ao arquivamento:** C01-P03 V4 integrada na main no commit `4d010a92212ce77e9c7fbcf762537ecf0e732be2`; keyframes reduzidos a 2; mão e bota direitos fixos; rei, guardas e lanças copiados da imagem-mãe original, sem recortes-candidatos sobrepostos.
+- ✅ [MP4 real](https://github.com/HelioConde/VideoForge-IA/actions/runs/43676630976) de 3 segundos gerado com gates técnicos aprovados; [relatório detalhado de qualidade](QA-C01-P03-V4-2026-11-15.md).
+- ⏳ **Ainda falta avaliação visual humana da V4 e eventuais reparos finos de alpha**, e o episódio de 163s não foi concluído.
 
-**Próxima ação exata:** abrir branch de correção C01-P03 V4, congelar braço/pulso/perna/bota/lanças, corrigir máscara do Aldric sem criar pixels, implementar somente respiração sutil e novos testes de pose ancorada/recortes; renderizar MP4 técnico e inspecionar quadro a quadro. Manter C12 separada e bloqueada enquanto faltarem os ZIPs originais.
+**Próxima ação exata:** assistir à prévia V4 já renderizada da `main` para confirmar a respiração, a mão encostada no joelho, a bota inteira, o rei com coroa íntegra e as lanças rígidas. A etapa técnica básica V4 já está concluída; corrigir somente problemas visuais remanescentes e não restaurar os nove gestos da V3. Manter C12 separada e bloqueada enquanto faltarem os ZIPs originais.
