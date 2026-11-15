@@ -1,0 +1,108 @@
+name: "VideoForge - C12 continuar MP4 apos importar PNGs originais"
+on:
+  workflow_run:
+    workflows:
+      - "VideoForge - referencias cinematograficas de Kael e Elara (somente originais)"
+      - "VideoForge - importar ZIP antigo C12 pelo SHA sem gerar imagens"
+    types: [completed]
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/c12-after-import.yml'
+      - 'videoforge/c12_dispatch_gate.py'
+      - 'tests/test_alchemy_c12_dispatch_gate.py'
+  pull_request:
+    paths:
+      - '.github/workflows/c12-after-import.yml'
+      - 'videoforge/c12_dispatch_gate.py'
+      - 'tests/test_alchemy_c12_dispatch_gate.py'
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: vf-alchemy-c12-after-original-import
+  cancel-in-progress: false
+
+jobs:
+  contract-check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Checar gate original por SHA antes de enviar trigger de render
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_alchemy_c12_dispatch_gate -v
+
+  inspect-and-dispatch:
+    if: >-
+      ${{
+        github.event_name != 'pull_request' &&
+        github.ref == 'refs/heads/main' &&
+        (github.event_name != 'workflow_run' ||
+          (github.event.workflow_run.conclusion == 'success' &&
+           github.event.workflow_run.head_branch == 'main'))
+      }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Garantir politica e unit tests sem gerar imagens
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_alchemy_c12_dispatch_gate tests.test_alchemy_c12_technical -v
+      - name: Preflight C12 direto da main (9 PNGs SHA exatos)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/c12-after-import"
+          rc=0
+          python -m videoforge.c12_technical_preview --output "$RUNNER_TEMP/c12-after-import" || rc=$?
+          test "$rc" -eq 0 || test "$rc" -eq 2
+      - name: Classificar origem ausente versus origem adulterada
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.c12_dispatch_gate \
+            --report "$RUNNER_TEMP/c12-after-import/preflight.qa.json" \
+            --github-output "$GITHUB_OUTPUT"
+      - name: Reportar espera pelos PNGs antigos sem criar MP4 ficticio
+        if: steps.gate.outputs.ready == 'false'
+        shell: bash
+        run: |
+          printf '%s\n' 'C12: esperando os ZIPs originais. Nenhum MP4 disparado.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Acionar render existente C12 ThreeCanvas + Remotion na main
+        if: steps.gate.outputs.ready == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh workflow run render-alchemy-c12-three-mesh-technical.yml \
+            -R "$GITHUB_REPOSITORY" --ref main
+          printf '%s\n' 'C12: todos os 9 originais com SHA verificado. Render tecnico despachado.' \
+            >> "$GITHUB_STEP_SUMMARY"
+      - name: Arquivar prova de gate sem tentar salvar PNGs novos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c12-after-import-preflight-${{ github.run_id }}
+          path: ${{ runner.temp }}/c12-after-import/preflight.qa.json
+          retention-days: 14
+          if-no-files-found: warn
