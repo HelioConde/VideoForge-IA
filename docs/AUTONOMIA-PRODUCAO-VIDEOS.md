@@ -38,3 +38,7 @@ Objetivo final: o usuário apenas descreve um vídeo e fornece feedback artísti
 ### Retomada por artifact de arte e rig, C01-P02
 
 O fluxo de espada `.github/workflows/remake-sword-preview.yml` só recebe um artifact consolidado `vf-remake-c01-p02-sword-source-<run-id>` após a fonte canônica V2 ser real e aprovada. Os agents devem usar `videoforge/remake_sword_preview.py` como *gate* sem custo: verifica SHA da imagem-mãe e sprites, alfa, origem e recomposição neutra (FFmpeg para decodificar, Python stdlib para compor), pulso na mão, deslocamento plausível da lâmina. O Remotion renderiza apenas prévia com watermark, audita frames por FFmpeg, e persiste QA em segundo job Git — a mesma arquitetura comprovada pelo C01-P01. Não gerenciar segredos de IA no render. O empacotador automático de imagens do V2 ainda não foi implementado; registrar como pendência, sem inferir que o artifact existe.
+
+### 15/11/2026 — autoempacotamento por archives GitHub do canal
+
+`videoforge/remake_sword_pack.py` varre `assets/geracoes/` da mesma obra por produtor/run e verifica origem do `c01`/`C01-P02`, SHA da mãe e de quatro sprites. `remake-sword-pack.yml` publica pacote se completo; `remake-sword-preview.yml` recebe `workflow_run` e localiza artifact verdadeiro antes de renderizar. Qualquer bloqueio ou falha deve continuar explícito. Ainda não há produtor de underlay C01-P02 nem geração de RGBA por tomada conectada. Nenhum custo de imagens autorizado.

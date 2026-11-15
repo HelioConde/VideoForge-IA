@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "approved V2 character-bible then produce same-shot C01-P02 mother and underlay/sheath/blade/hand RGBA, automate pack artifact and execute source run through sword preview workflow",
+  "next_action": "verify real GitHub CI of packer; then implement missing shot-aware RGBA and underlay producers behind paid cost gate; approve V2 anchor before generating",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -848,5 +848,30 @@
     "real_shot_mother_present": false,
     "real_shot_rgba_bundle_present": false,
     "real_c01_p02_mp4_present": false
+  },
+  "c01_p02_archive_packer_20261115": {
+    "schema": "videoforge/remake-c01-p02-archive-pack-checkpoint/v1",
+    "status": "code_committed_ci_pending",
+    "packer": "videoforge/remake_sword_pack.py",
+    "pack_workflow": ".github/workflows/remake-sword-pack.yml",
+    "render_workflow": ".github/workflows/remake-sword-preview.yml",
+    "auto_render": "workflow_run_only_if_matching_real_bundle_present",
+    "source_mother": "production-scene-request/<run>/cena-01-c01-p02.png + scene=c01 and shot_id=C01-P02",
+    "required_parts": [
+      "underlay",
+      "sheath",
+      "blade",
+      "hand"
+    ],
+    "source_mother_sha_equal_for_all_parts": true,
+    "paid_api_calls": 0,
+    "canonical_anchor_approved": false,
+    "real_source_bundle_exists": false,
+    "real_c01p02_mp4_exists": false,
+    "underlay_producer_available": false,
+    "shot_specific_rgba_producer_available": false,
+    "human_motion_review_required": true,
+    "youtube_uploaded": false,
+    "next_step": "verify real GitHub CI of packer; then implement missing shot-aware RGBA and underlay producers behind paid cost gate; approve V2 anchor before generating"
   }
 }

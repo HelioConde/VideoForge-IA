@@ -1,5 +1,11 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## C01-P02 — empacotamento automático de arte real (15/11/2026)
+
+`videoforge/remake_sword_pack.py` e `.github/workflows/remake-sword-pack.yml` escaneiam **apenas** originais SHA-validos arquivados em `assets/geracoes/` por canal/produtor/run. São obrigatórias uma mãe genuína `cena-01-c01-p02.png` (metadata `scene=c01`, `shot_id=C01-P02`, âncora V2 aprovada), `underlay` opaco e `sheath/blade/hand` RGBA com QA apontando ao mesmo SHA. O `workflow_run` do `remake-sword-preview.yml` verifica o artifact antes de iniciar um render; sem imagens, faz somente relatório de bloqueio. O algoritmo de pivô é **rascunho baseado em máscara**, sujeito à revisão de arte e contato. O script impede render duplicado da mesma mãe se já houver QA final técnico.
+
+**Ainda pendente:** aprovação/arquivo `character-bible` V2, gerador de underlay específico, adaptação do gerador de sprites para tomada C01-P02, MP4 real de 3s. Nenhum gasto de API, aprovação humana ou upload YouTube liberado. Testes de pacote/CI devem ser registrados após executar de verdade.
+
 <!-- REMAKE-C01-P01-START -->
 ### C01-P01 — abertura preta com SFX original (QA técnico)
 - **MP4 técnico real:** artifact \`vf-remake-c01-p01-opening-43709191586\` do GitHub run \`43709191586\`; SHA256 \`75b8be46c7e609a1c9ff8afad0935bcbf8c6faa2126ba3c74cad3af540f3c44e\`; 2 s, 60 quadros pretos 1080×1920/30fps H264/AAC por Remotion.

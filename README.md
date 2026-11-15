@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+> **C01-P02:** empacotamento de arte por SHA e gatilho de render autônomo conectados em `remake-sword-pack.yml` → `remake-sword-preview.yml`. [Pacote e requisitos técnicos](docs/C01-P02-PACOTE-ARTE-E-RIG.md). Fonte V2 e underlay ainda ausentes: sem novos PNGs nem MP4 da tomada.
+
 > **EP01 C01-P02:** prévia articulada agora tem entrada própria no Remotion + validação SHA/PNG/recomposição com FFmpeg (decodificação de PNG para QA) e Python stdlib (composição de pixels): [pacote de arte e rig](docs/C01-P02-PACOTE-ARTE-E-RIG.md). O preflight de GitHub Actions não gera PNG e só libera render com fonte real e referência V2 aprovada.
 
 > **Reutilizacao de bibliotecas e skills:** [catalogo integrado](docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md) · [direcao do remake](.agents/skills/videoforge-dorama-remake/SKILL.md) · [rig Three.js](.agents/skills/videoforge-rig-2d-three/SKILL.md) · [QA e memoria](.agents/skills/videoforge-qa-and-checkpoint/SKILL.md). Novos geradores devem consumir a fila `videoforge/remake_starter.py`, o `remake_autopilot.py` e componentes ThreeCanvas ja instalados. Nenhum novo gasto/MP4 foi habilitado.

@@ -1,0 +1,113 @@
+name: "VideoForge - C01-P02 pacote da arte real por SHA"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/**'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-ep01-planos.json'
+      - 'videoforge/remake_sword_pack.py'
+      - 'videoforge/remake_sword_preview.py'
+      - 'tests/test_remake_sword_pack.py'
+      - 'tests/test_remake_pack_workflow.py'
+      - '.github/workflows/remake-sword-pack.yml'
+
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
+concurrency:
+  group: remake-c01-p02-pack-main
+  cancel-in-progress: false
+
+jobs:
+  scan_real_source_archives:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      ready: ${{ steps.real_source.outputs.ready }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar ancora V2 e cinco PNGs permanentes, sem proxy ou custo
+        id: real_source
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_sword_pack.RemakeSwordPackTests.test_actual_repository_cannot_claim_a_complete_package tests.test_remake_pack_workflow -v
+          python -m videoforge.remake_sword_pack scan --output-dir output/remake-sword-archive-scan
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          state=json.loads(Path("output/remake-sword-archive-scan/pack-scan.json").read_text(encoding="utf-8"))
+          if (state.get("schema")!="videoforge/remake-sword-pack-report/v1"
+              or state.get("new_image_generation_calls")!=0
+              or state.get("official_video_approved") is not False):
+              raise SystemExit("REMAKE_PACK_SCAN_POLICY_INVALID")
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as out:
+              out.write("ready="+("true" if state["ready"] else "false")+"\n")
+          print("REMAKE_PACK_READY" if state["ready"] else "REMAKE_PACK_BLOCKED",state["blocker"])
+          PY
+      - name: Registrar preflight de arte sem gerar imagem paga
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-remake-c01-p02-pack-scan-${{ github.run_id }}
+          path: output/remake-sword-archive-scan/pack-scan.json
+          retention-days: 30
+
+  test-archive-packaging-with-fixtures:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar pacote com arquivos PNG/QA de teste temporarios, sem IA
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v ffmpeg
+          python -m unittest tests.test_remake_sword_pack tests.test_remake_pack_workflow -v
+          echo "REMAKE_PACK_TEST_ONLY_REAL_BYTE_SHA_PROVENANCE_COVERED"
+
+  pack_real_source_only:
+    needs: scan_real_source_archives
+    if: github.ref == 'refs/heads/main' && needs.scan_real_source_archives.outputs.ready == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Testes de material original, nao-duplicacao e corrupcao
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_sword_pack tests.test_remake_sword_preview -v
+      - name: Preparar e auditar pacote C01-P02 somente de imagens reais arquivadas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remake_sword_pack pack \
+            --run-id "$GITHUB_RUN_ID" --output-dir output/remake-c01-p02-source
+          test -s output/remake-c01-p02-source/sword-bundle.json
+          test -s output/remake-c01-p02-source/package.qa.json
+          echo "REMAKE_C01_P02_REAL_ARCHIVED_PNGS_BUNDLE_VERIFIED"
+      - name: Guardar as camadas verificadas para renderer autonomo
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-remake-c01-p02-sword-source-${{ github.run_id }}
+          path: output/remake-c01-p02-source/
+          retention-days: 90
+          if-no-files-found: error

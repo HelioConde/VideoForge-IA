@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — novo produtor de pacotes e encadeamento automático da tomada
+
+- Código de seleção `remake_sword_pack.py`: arquivos permanentes por produtor e run, PNGs SHA válidos, mãe obrigatória `c01`/`C01-P02` e todas as camadas da mesma origem, recusa mistura e repetição de pacote já renderizado. Ajustado contrato do validador para o campo real `scene=c01` no `roteiro.json`.
+- Novo workflow `remake-sword-pack.yml`: scan sem API, artifact apenas com pacote real. Alterado `remake-sword-preview.yml` para evento `workflow_run` com checagem do artifact e render automático; a aprovação visual segue false.
+- Motion estimado da máscara é rascunho, nunca rig final. Produtor de underlay e gerador RGBA por shot ainda precisam de integração. Fonte V2 também não aprovada.
+- Tests novos para pacote válido, origem trocada, SHA inválido, ausência de arquivos e idempotência; validação GitHub Actions a confirmar.
+
 ## 15/11/2026 — integracao C01-P02 validada com WebGL real em teste sintético
 
 - `503418d9ba8949cee2a18bb9a3db1e075cac5ae2`: composição Remotion isolada para a espada, origem auditada, SHA, alfa, pivôs, máscara, staging, workflow QA e relatório de evidência; runs `43710782778`, `43710782832`, `43710782768`, `43710782888` todos SUCCESS.

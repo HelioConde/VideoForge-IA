@@ -178,7 +178,7 @@ def validate_package(package:Path,source_run_id:int,root:Path=ROOT)->dict:
     source=read_json(package/"scene-mother.production.json")
     if (source.get("schema")!="videoforge/production-scene/v1"
         or source.get("channel")!=CH or source.get("video_id")!=VID
-        or source.get("number")!=1 or source.get("scene")!="C01"
+        or source.get("number")!=1 or source.get("scene")!="c01"
         or source.get("shot_id")!=SHOT or source.get("shot_specific") is not True
         or source.get("reference_sha256")!=anchor["sha256"]
         or source.get("sha256")!=hashes["scene-mother"]

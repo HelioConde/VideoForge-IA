@@ -14,3 +14,7 @@ description: Fazer QA verificavel de arte, rig Three.js, Remotion e workflows Gi
 7. Atualizar **sempre** `canal/<id>/videos/<video-id>/ESTADO-ATUAL.md`, `estado-atual.json` e `HISTORICO-DESENVOLVIMENTO.md` com ultima validacao e proxima acao exata; arquivos anteriores nunca desaparecem sem justificativa e proveniencia.
 
 Fonte oficial de boas praticas: [Remotion Agent Skills](https://github.com/remotion-dev/skills/tree/7e541aa4d7361dfaca0780a565a47307eb7bdfbb), apenas consulta e adaptacao compativel. Nao copiar codigos/skills de terceiros sem auditar licenca, versao e seguranca.
+
+## C01-P02 — QA do empacotador automático
+
+Ler `videoforge/remake_sword_pack.py` e `docs/C01-P02-PACOTE-ARTE-E-RIG.md` antes de validar. Arquivos reais só vêm de `assets/geracoes/<produtor>/<run-id>/` com SHA e metadados `scene=c01`, `shot_id=C01-P02`, `scene_mother_sha256` da mesma mãe; falhas bloqueiam o pacote, sem fallback. `workflow_run` do preview só cria vídeo se o artifact esperado existir. `draft_motion_heuristic_only=true` exige revisão de pivô/contato; testes de fixtures sintéticas não são arte aprovada.

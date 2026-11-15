@@ -157,7 +157,7 @@ class SwordPreviewTests(unittest.TestCase):
         hashes["scene-mother"]=hashlib.sha256((package/"scene-mother.png").read_bytes()).hexdigest()
         origin={
           "schema":"videoforge/production-scene/v1","channel":CH,"video_id":VID,
-          "number":1,"scene":"C01","shot_id":SHOT,"shot_specific":True,
+          "number":1,"scene":"c01","shot_id":SHOT,"shot_specific":True,
           "reference_sha256":anchor_sha,"sha256":hashes["scene-mother"],
           "technical_qa":"valid_png_opaque","youtube_uploaded":False,
         }
