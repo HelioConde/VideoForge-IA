@@ -377,6 +377,28 @@
             "kael.perna-esquerda",
             "kael.jaqueta"
           ]
+        },
+        {
+          "id": "kael.costura-gola-pixel-original",
+          "parent": null,
+          "pivot": [
+            525,
+            860
+          ],
+          "role": "existing-pixel-underlay",
+          "file": "assets/cenas-mae/cena-01.png",
+          "bbox": [
+            482,
+            835,
+            105,
+            75
+          ],
+          "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+          "z": 18,
+          "onlyCoveredBy": [
+            "kael.jaqueta",
+            "kael.braco-direito"
+          ]
         }
       ],
       "warnings": [
@@ -390,7 +412,9 @@
         "Este teste isola C01-P03 e nao representa a montagem ou o audio do episodio.",
         "Costura da cintura fixa; pixels visiveis ausentes recuperados apenas da fonte original, sem reconstruir anatomia oculta.",
         "C01 performance v2 é uma prévia não aprovada: amplitude visível no pescoço, antebraço e pulso pode revelar áreas ocultas sem underlay; QA visual obrigatório.",
-        "Rotação de pulso não significa fechamento real dos dedos. Mãos e anatomia fina não foram segmentadas."
+        "Rotação de pulso não significa fechamento real dos dedos. Mãos e anatomia fina não foram segmentadas.",
+        "V3 gola/ombro: novo holdout de tecido usa exclusivamente pixels verificados da imagem-mãe previamente cobertos por jacket e braço RGBA; jamais supor anatomia oculta nova.",
+        "Holdout é técnico, não substitui revisão humana do recorte e dos contornos na gola."
       ]
     }
   }
