@@ -109,9 +109,11 @@ class RemakeSwordPackTests(unittest.TestCase):
                 "technical_status":("candidate_opaque_verified" if part=="underlay"
                                     else "candidate_rgba_verified"),
                 "human_visual_approval":False,"youtube_uploaded":False,
+                "scene_number":1,"scene":"c01","shot_id":"C01-P02",
+                "part_id":part,
+                "source_archive_producer":"production-scene-request",
+                "source_archive_run_id":501,
             }
-            if part=="underlay":prov["shot_id"]="C01-P02"
-            else:prov.update({"scene_number":1,"part_id":part})
             component_archives[part]=archived(
                 ep,UNDERLAY_PRODUCER if part=="underlay" else PART_PRODUCER,
                 502+i,part+".png",raw,part+".qa.json",prov)
@@ -143,6 +145,30 @@ class RemakeSwordPackTests(unittest.TestCase):
             self.assertFalse(bundle["human_visual_approved"])
             with self.assertRaisesRegex(VideoForgeError,"DESTINATION_NOT_EMPTY"):
                 assemble(77777,out,root)
+
+    def test_reject_other_shot_id_even_when_mother_sha_is_identical(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            sources=self.create_test_archive(root)
+            report_path=sources["parts"]["blade"]/"blade.qa.json"
+            report=json.loads(report_path.read_text(encoding="utf-8"))
+            report["shot_id"]="C01-P04"
+            report_path.write_text(json.dumps(report),encoding="utf-8")
+            status=scan(root)
+            self.assertFalse(status["ready"])
+            self.assertIn("blade",status["blocker"])
+
+    def test_reject_other_source_run_even_when_mother_sha_is_identical(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            sources=self.create_test_archive(root)
+            report_path=sources["parts"]["hand"]/"hand.qa.json"
+            report=json.loads(report_path.read_text(encoding="utf-8"))
+            report["source_archive_run_id"]=999
+            report_path.write_text(json.dumps(report),encoding="utf-8")
+            status=scan(root)
+            self.assertFalse(status["ready"])
+            self.assertIn("hand",status["blocker"])
 
     @unittest.skipUnless(FFMPEG_PRESENT,"container FFmpeg required for selected archives")
     def test_refuse_cross_mother_layer_even_with_valid_per_file_sha(self):

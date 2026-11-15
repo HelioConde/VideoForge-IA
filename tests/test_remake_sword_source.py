@@ -7,6 +7,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
@@ -52,8 +53,13 @@ class SwordSourceTests(unittest.TestCase):
         self.assertIn("CARRASCO",PROMPTS["hand"])
         self.assertIn("OPACO",PROMPTS["underlay"])
 
-    def setup_approved_temp_source(self,root:Path)->dict:
+    def setup_approved_temp_source(self,root:Path,*,keep_components:bool=False)->dict:
         sources=pack_fixtures.RemakeSwordPackTests().create_test_archive(root)
+        # For edit tests the mother exists but none of its parts were generated.
+        # Only the duplication test keeps archived, valid components.
+        if not keep_components:
+            for folder in sources["parts"].values():
+                shutil.rmtree(folder)
         ep=root/EPISODE
         policy_path=ep/"autonomy-policy.json"
         policy=json.loads(policy_path.read_text(encoding="utf-8"))
@@ -104,6 +110,20 @@ class SwordSourceTests(unittest.TestCase):
                 with self.assertRaisesRegex(VideoForgeError,"ALREADY_EXISTS"):
                     produce("hand",501,"https://proxy.example",root=root)
                 second.assert_not_called()
+
+    def test_deny_paid_duplicate_from_a_fresh_runner_with_valid_archive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            self.setup_approved_temp_source(root,keep_components=True)
+            checked=preflight("hand",501,root)
+            self.assertFalse(checked["ready"])
+            self.assertIn("REMAKE_SWORD_COMPONENT_ALREADY_ARCHIVED_SAME_MOTHER",
+                          checked["blocked_reason"])
+            with patch("videoforge.remake_sword_source.proxy_images.call_proxy") as call:
+                with self.assertRaisesRegex(VideoForgeError,
+                                           "REMAKE_SWORD_COMPONENT_ALREADY_ARCHIVED_SAME_MOTHER"):
+                    produce("hand",501,"https://proxy.example",root=root)
+                call.assert_not_called()
 
     def test_underlay_opaque_png_producer_metadata_and_shas(self):
         with tempfile.TemporaryDirectory() as tmp:

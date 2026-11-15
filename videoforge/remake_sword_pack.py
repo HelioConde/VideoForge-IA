@@ -91,7 +91,7 @@ def _find_mother(episode:Path,anchor_sha:str)->dict|None:
     return None
 
 
-def _find_part(episode:Path,part:str,mother_sha:str)->dict|None:
+def _find_part(episode:Path,part:str,mother_sha:str,mother_run:int|None=None)->dict|None:
     if part=="underlay":
         producer=UNDERLAY_PRODUCER
         expected_schema="videoforge/remake-underlay-candidate/v1"
@@ -112,14 +112,12 @@ def _find_part(episode:Path,part:str,mother_sha:str)->dict|None:
                (("candidate_opaque_verified",) if part=="underlay"
                  else ("candidate_rgba_verified",))
             or qa.get("human_visual_approval") is not False
-            or qa.get("youtube_uploaded") is not False):
+            or qa.get("youtube_uploaded") is not False
+            or qa.get("scene_number")!=1 or qa.get("scene")!="c01"
+            or qa.get("shot_id")!=SHOT or qa.get("part_id")!=part
+            or qa.get("source_archive_producer")!=MOTHER_PRODUCER
+            or (mother_run is not None and qa.get("source_archive_run_id")!=mother_run)):
             continue
-        if part=="underlay":
-            if qa.get("shot_id")!=SHOT:
-                continue
-        else:
-            if qa.get("scene_number")!=1 or qa.get("part_id")!=part:
-                continue
         return {**entry,"qa_report":qa_path}
     return None
 
@@ -149,7 +147,7 @@ def locate(root:Path=ROOT)->dict:
             return {"ready":False,
                 "blocker":"REMAKE_PACK_SAME_SOURCE_ALREADY_RENDERED_TECHNICALLY",
                 "anchor":anchor,"mother":mother,"parts":{}}
-    parts={k:_find_part(episode,k,mother["sha256"]) for k in PARTS}
+    parts={k:_find_part(episode,k,mother["sha256"],mother["run_id"]) for k in PARTS}
     missing=[k for k,v in parts.items() if v is None]
     return {"ready":not missing,
       "blocker":("REMAKE_PACK_MISSING_SAME_MOTHER_PARTS:"+",".join(missing)) if missing else None,

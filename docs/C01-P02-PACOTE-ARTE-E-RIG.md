@@ -1,5 +1,11 @@
 # C01-P02 — contrato de produção da espada no GitHub
 
+## Proteção de retrabalho por run e origem (15/11/2026)
+
+Antes de consumir provedor, `remake_sword_source.preflight/produce` procura na pasta permanente `assets/geracoes` uma parte técnica válida da **mesma** mãe, no run de origem correspondente. Um runner novo não deve regenerar e cobrar por algo arquivado; erro `REMAKE_SWORD_COMPONENT_ALREADY_ARCHIVED_SAME_MOTHER` é bloqueio positivo de duplicação. Saídas rejeitadas por PNG/alfa não contam como sucesso. A etapa de revisão artística mantém poder de reprovar imagens e requer planejamento explícito do retrabalho.
+
+O packer rejeita `scene`, `shot_id`, `part_id`, produtor e `source_archive_run_id` que não correspondam à mãe `C01-P02`, mesmo que outros hashes sejam válidos. Os testes dessa mudança **não** produzem arte. Política de gasto e upload continua idêntica; CI precisa comprovar a implementação antes de marcá-la validada.
+
 ## Auditoria de geometria de rig por pixels da fonte (15/11/2026)
 
 O módulo `videoforge/remake_rig_geometry.py` **não desenha imagem nem simula movimento**. Ele consome o `sword-bundle.json` já verificado pelo `remake_sword_preview.validate_package`, decodifica os PNGs reais de **bainha/lâmina/mão** com FFmpeg apenas para QA e mede **bbox XYXY, centroide e pixels com alfa maior que 127**. O underlay tem que ser RGB8 integralmente opaco; a recomposição neutra com a imagem-mãe da mesma tomada tem que continuar com MAE ≤ 0,5. O relatório `mask-geometry.qa.json` guarda SHA da mãe e âncora, ID do run, SHA de cada camada, fingerprint das quatro instruções do V2, pivô de punho **candidato**, poses matemáticas nos frames 0/7/72/89 e avisos explícitos `human_anatomy_contact_review_required=true` e `rig_approved_for_official_render=false`.

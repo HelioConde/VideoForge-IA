@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — correção anti-cobrança duplicada e vínculo estrito de componentes
+
+- O editor `remake_sword_source.py` passou a verificar o acervo permanente antes do proxy, eliminando reruns pagos de uma parte já verificada para a mesma mãe.
+- O `remake_sword_pack.py` rejeita partes de outra tomada, outro produtor ou outro run de fonte, mesmo com um SHA de PNG válido; as quatro peças precisam de prova `C01-P02`.
+- Casos adicionados a `tests/test_remake_sword_source.py` e `tests/test_remake_sword_pack.py`. Estado **código enviado para CI (a verificar)**; não inventar resultado antes dos runs.
+- Sem imagens, MP4 ou autorização paga novos. Pendência preservada: referência visual V2 validada por humano e os quatro PNGs reais da espada.
+
 ## 15/11/2026 — verificação definitiva do medidor de máscara C01-P02
 
 - `6e92be296fcb8ddc8d1e3759973c463cba9b258f`: módulo `remake_rig_geometry.py` e relatório `mask-geometry.qa.json` ligados ao packer e ao renderer da espada; testes gerados com PNGs temporários, sem aprovação artística falsa.

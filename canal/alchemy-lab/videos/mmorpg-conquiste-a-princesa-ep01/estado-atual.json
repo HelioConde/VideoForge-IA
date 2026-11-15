@@ -1181,5 +1181,23 @@
     "real_source_blocker": "REMAKE_SWORD_V2_ANCHOR_NOT_APPROVED_OR_VERIFIED",
     "geometry_report_in_real_source_archive": false,
     "human_anatomy_approval": false
+  },
+  "c01_p02_source_integrity_20261115": {
+    "status": "code_committed_ci_not_yet_verified",
+    "scope": "C01-P02 four component source archives: underlay/sheath/blade/hand",
+    "deduplication_gate": "reject verified same-mother same-source-run component before paid proxy call",
+    "package_provenance_gate": [
+      "scene=c01",
+      "shot_id=C01-P02",
+      "part_id exact",
+      "source_archive_producer=production-scene-request",
+      "source_archive_run_id matches archived mother"
+    ],
+    "regression_tests_added": 3,
+    "paid_calls_executed_in_this_change": 0,
+    "new_png_created": false,
+    "c01_p02_mp4_created": false,
+    "youtube_uploaded": false,
+    "next_step": "Verify push workflow tests, then obtain human-approved V2 identity anchor with real SHA and C01-P02 mother/parts under existing cost policy"
   }
 }

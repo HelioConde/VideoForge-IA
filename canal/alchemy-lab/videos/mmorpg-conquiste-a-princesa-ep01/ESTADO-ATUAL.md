@@ -1,5 +1,11 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 15/11/2026 — guarda de proveniência e antirrepetição C01-P02 (código em validação CI)
+
+O gerador dedicado de `underlay`, `sheath`, `blade` e `hand` agora consulta o arquivo **permanente** de produções com PNG+SHA da **mesma imagem-mãe e mesmo run** antes de qualquer chamada ao proxy, inclusive em um runner novo. Camada válida já arquivada impede nova cobrança acidental; a camada rejeitada por QA técnico não é confundida com trabalho concluído. O empacotador passa a exigir para **todas** as quatro peças `scene=c01`, `shot_id=C01-P02`, `part_id`, `source_archive_producer` e `source_archive_run_id` da mãe selecionada. Testes cobrem repetição, troca de tomada e troca de run. Qualquer retrabalho artístico voluntário precisa de revisão explícita, não de rerun cego.
+
+**Estado registrado neste commit:** implementação concluída em código, **aguardando confirmação pelos workflows disparados pelo push**. Nada foi gerado de novo: âncora V2 sem SHA humano aprovado; mãe C01-P02 e as quatro camadas reais ainda ausentes. Política `paid_provider_calls_approved=false`, máximo zero chamadas; nenhum MP4 real da C01-P02, nenhuma publicação. Próximo passo: validar os testes no GitHub; em seguida obter âncora V2 verdadeira aprovada, mãe SHA-verificada e só depois produzir camadas em fluxos autorizados.
+
 ### Validação da auditoria de geometria no GitHub — 15/11/2026
 
 **Pipeline testado até o ponto permitido pela arte disponível:**

@@ -18,7 +18,7 @@ from . import proxy_images, image_generation_policy
 from .errors import VideoForgeError
 from .scene_layers import png_info, LayerError
 from .remake_autopilot import ROOT,EPISODE
-from .remake_sword_pack import _find_mother,PARTS,CH,VID,SHOT,UNDERLAY_PRODUCER,PART_PRODUCER
+from .remake_sword_pack import _find_mother,_find_part,PARTS,CH,VID,SHOT,UNDERLAY_PRODUCER,PART_PRODUCER
 from .remake_sword_preview import canonical_anchor
 
 SCHEMA = "videoforge/remake-sword-component-generation/v1"
@@ -77,12 +77,28 @@ def source_info(root:Path=ROOT,source_run_id:int=0)->dict:
         raise VideoForgeError("REMAKE_SWORD_SOURCE_RUN_ID_NOT_CURRENT")
     return {"mother":mother,"anchor":anchor}
 
+def _reject_existing_component(part:str,mother:dict,root:Path)->None:
+    """Never spend another edit on a SHA-verified, same-mother component.
+
+    Fresh GitHub Actions runners have empty local output directories; only the
+    permanent per-run archive can prevent duplicate paid generations.
+    Rejected or invalid PNGs do not satisfy _find_part and may be retried after
+    review according to the separate retry policy.
+    """
+    existing=_find_part(Path(root)/EPISODE,part,mother["sha256"],mother["run_id"])
+    if existing is not None:
+        raise VideoForgeError(
+            f"REMAKE_SWORD_COMPONENT_ALREADY_ARCHIVED_SAME_MOTHER:{part}:run={existing['run_id']}"
+        )
+
+
 def preflight(part:str,source_run_id:int,root:Path=ROOT)->dict:
     if part not in PARTS:
         raise VideoForgeError("REMAKE_SWORD_UNKNOWN_COMPONENT")
     try:
+        mother=source_info(root,source_run_id)["mother"]
+        _reject_existing_component(part,mother,root)
         image_generation_policy.assert_image_generation_allowed(CH,VID,root)
-        source_info(root,source_run_id)
     except VideoForgeError as exc:
         return {"schema":SCHEMA,"shot_id":SHOT,"part_id":part,
                 "source_run_id":source_run_id,"ready":False,
@@ -97,12 +113,13 @@ def produce(part:str,source_run_id:int,url:str,model:str="gpt-image-2",
             root:Path=ROOT)->dict:
     if part not in PARTS:
         raise VideoForgeError("REMAKE_SWORD_UNKNOWN_COMPONENT")
-    # TWO gates before ANY API call, including proxy health.
+    # Provenance, deduplication and cost gates all run before the proxy/API.
+    info=source_info(root,source_run_id)
+    mother=info["mother"]
+    _reject_existing_component(part,mother,root)
     image_generation_policy.assert_image_generation_allowed(CH,VID,root)
     if model not in proxy_images.IMAGE_MODELS:
         raise VideoForgeError("REMAKE_SWORD_MODEL_INVALID")
-    info=source_info(root,source_run_id)
-    mother=info["mother"]
     original=mother["path"].read_bytes()
     digest=hashlib.sha256(original).hexdigest()
     if digest!=mother["sha256"]:
