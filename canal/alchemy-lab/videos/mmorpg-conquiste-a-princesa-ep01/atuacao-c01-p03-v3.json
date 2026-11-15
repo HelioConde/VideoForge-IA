@@ -185,8 +185,18 @@
     "pr_mp4_sha256": "73993ab7b1f93aead42d1860d16c3db965adcbd3e6bdf2794eb631a9d704100c",
     "qa_status": "technical_ok_not_human_approved",
     "main_render_run": 43673610507,
-    "main_render_conclusion": "in_progress_when_checkpoint_written",
-    "documentation": "QA-C01-P03-V3-2026-11-15.md"
+    "main_render_conclusion": "success",
+    "documentation": "QA-C01-P03-V3-2026-11-15.md",
+    "main_typecheck_run": 43673610480,
+    "main_typecheck_conclusion": "success",
+    "main_mp4_artifact_id": 14145228520,
+    "main_mp4_sha256": "73993ab7b1f93aead42d1860d16c3db965adcbd3e6bdf2794eb631a9d704100c",
+    "main_verified_same_mp4_as_pr": true,
+    "neutral_recomposition_mean_absolute_rgb_error": 11.159474266899956,
+    "neutral_pixel_exact": false,
+    "actor_changed_pixels": 18923,
+    "collar_worst_exposed_pixels": 73,
+    "human_visual_approved": false
   },
-  "next_action": "Verify main run 43673610507 MP4 SHA and QA, visually review collar & boot/arm seams, fix mother neutral recomposition MAE 11.16 and guard/spear/Aldric masks. C12 needs original ZIPs."
+  "next_action": "C01 V3 technical MP4 now reproduced on main (run 43673610507, artifact 14145228520). Inspect visual seams in close/mobile and correct imperfect mother recomposition, guard/spear/Aldric masks without new generated images. C12 still awaits two original ZIPs."
 }
