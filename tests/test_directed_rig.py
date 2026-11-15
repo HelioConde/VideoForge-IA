@@ -108,6 +108,73 @@ class DirectedRigTests(unittest.TestCase):
             'onlyUncoveredBy': ['actor.head'], 'uncoveredAlphaPixelsInBbox': 1,
         }])
 
+    def test_original_mother_pixel_holdout_uses_only_existing_alpha_coverage(self):
+        mother = bytearray([50, 60, 70, 255,
+                            51, 61, 71, 255,
+                            52, 62, 72, 255,
+                            53, 63, 73, 255])
+        ref = bytearray([7, 8, 9, 0, 10, 11, 12, 255,
+                         13, 14, 15, 0, 16, 17, 18, 255])
+        result,kept=rig._mask_only_original_covered_pixels(mother,[ref])
+        self.assertEqual(kept,2)
+        self.assertEqual(result[:4],b"\0\0\0\0")
+        self.assertEqual(result[4:8],mother[4:8])
+        self.assertEqual(result[8:12],b"\0\0\0\0")
+        self.assertEqual(result[12:16],mother[12:16])
+        self.assertEqual(mother[:4],bytearray([50,60,70,255]))
+        with self.assertRaisesRegex(rig.DirectedRigError,"REFERENCE_CANVAS_MISMATCH"):
+            rig._mask_only_original_covered_pixels(mother,[bytes(3)])
+
+    @unittest.skipUnless(shutil.which('ffmpeg'), 'FFmpeg required for real PNG crops')
+    def test_holdout_source_pixels_do_not_overwrite_or_generate_art(self):
+        # Only real source/mother bytes can be used. A technical holdout sits
+        # underneath the original head/jacket as a source-visible seam.
+        original=copy.deepcopy(self.bindings)
+        s=self.bindings['shots']['C01-P01']
+        s['nodes'].append({
+            'id':'actor.existing-cloth-holdout',
+            'parent':None,'pivot':[2,2],
+            'role':'existing-pixel-underlay','z':0,
+            'bbox':[1,1,2,2], **s['sourceMother'],
+            'onlyCoveredBy':['actor.head'],
+        })
+        self.save()
+        (self.root/'out').mkdir()
+        props_path=rig.prepare(self.dp,self.bp,'C01-P01',
+                               self.root/'out',self.root/'public')
+        props=json.loads(props_path.read_text())
+        nodes={n['id']:n for n in props['shots'][0]['nodes']}
+        layer=nodes['actor.existing-cloth-holdout']
+        self.assertNotIn('onlyCoveredBy',layer)
+        self.assertEqual(_image(self.root/'public'/layer['file'],2,2),
+                         bytearray([20,30,40,255]*4))
+        item=props['pixelRecovery'][0]
+        self.assertEqual(item['role'],'existing-pixel-underlay')
+        self.assertEqual(item['sourceMotherPixelsKeptInBbox'],4)
+        self.assertEqual(item['sourceSha256'],s['sourceMother']['sha256'])
+        self.assertEqual(item['inventedPixels'],0)
+        self.bindings=original
+
+    def test_holdout_rejects_forged_original_or_foreground_layer(self):
+        original=copy.deepcopy(self.bindings)
+        for problem in ('wrong_role','wrong_sha','invalid_ref','on_top','no_coverage','nested_patch'):
+            with self.subTest(problem=problem):
+                self.bindings=copy.deepcopy(original)
+                s=self.bindings['shots']['C01-P01']
+                patch={'id':'actor.existing-cloth-holdout','parent':None,
+                       'pivot':[2,2],'role':'existing-pixel-underlay',
+                       'z':0,'bbox':[1,1,2,2],
+                       **s['sourceMother'],'onlyCoveredBy':['actor.head']}
+                if problem=='wrong_role': patch['role']='ordinary-sprite'
+                if problem=='wrong_sha': patch['sha256']='0'*64
+                if problem=='invalid_ref': patch['onlyCoveredBy']=['missing']
+                if problem=='on_top': patch['z']=3
+                if problem=='no_coverage': patch['onlyCoveredBy']=[]
+                if problem=='nested_patch': patch['onlyUncoveredBy']=['actor.head']
+                s['nodes'].append(patch)
+                self.check_rejected()
+        self.bindings=original
+
     def test_uncovered_mask_preserves_only_uncovered_rgba_without_mutation(self):
         source = bytearray([1, 2, 3, 255, 4, 5, 6, 0])
         reference = bytes([7, 8, 9, 255, 10, 11, 12, 0])
