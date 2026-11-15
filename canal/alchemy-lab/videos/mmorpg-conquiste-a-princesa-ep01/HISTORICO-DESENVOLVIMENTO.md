@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — verificação definitiva do medidor de máscara C01-P02
+
+- `6e92be296fcb8ddc8d1e3759973c463cba9b258f`: módulo `remake_rig_geometry.py` e relatório `mask-geometry.qa.json` ligados ao packer e ao renderer da espada; testes gerados com PNGs temporários, sem aprovação artística falsa.
+- Primeiro run `43758376230`: 1/23 testes falhou devido a um JSON adulterado de 13 bytes ser rejeitado corretamente como relatório ausente/inválido antes da etapa de comparação (expectativa do teste incorreta, e não violação do gate).
+- `21a48bdf6c257d9bd8609f7c540585f4362ba6be`: teste de adulteração corrigido para falsificar `official_video_approved=true` em relatório válido. [Run 43758686070](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686070) SUCCESS: **23/23 testes**, SHA/RGBA/centroide/anti-repetição, scanner de fonte real bloqueado pela âncora ausente.
+- [Run 43758686035](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686035) SUCCESS: smoke ThreeCanvas; [43758686062](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686062) SUCCESS: 70 testes da autonomia; [43758686092](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686092) SUCCESS: compositor e 23 testes Python.
+- PNGs sintéticos usados só em `TemporaryDirectory`, sem arte/custos/publicação. Nenhum MP4 C01-P02 real criado. Próximo: âncora visual V2 aprovada, mãe própria e quatro PNGs reais, então pack + medição + preview automático + QA humano.
+
 ## 15/11/2026 — medição de máscaras e auditoria de pivôs no workflow de C01-P02
 
 - Criado `videoforge/remake_rig_geometry.py` como prova técnica SHA/pixels da fonte C01-P02; bbox, centroide, alpha count, pivô candidato, 4 poses derivadas do draw e fingerprint da direção. FFmpeg só decodifica para QA e ThreeCanvas continua motor de animação.

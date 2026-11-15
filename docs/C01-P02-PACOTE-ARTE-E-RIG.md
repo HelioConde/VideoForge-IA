@@ -112,3 +112,7 @@ O código de fonte e preview passou no [run 43711300246](https://github.com/Heli
 ## Testes do produtor real por tomada — 15/11/2026
 
 O [run 43749824057](https://github.com/HelioConde/VideoForge-IA/actions/runs/43749824057) concluiu **8/8 testes** de política de custo, origem, chamada única, geração mockada RGB/RGBA e archive SHA, sem inferência real. O job manual pago foi corretamente ignorado (`skipped`). A política vigente continua com custo não autorizado; a referência V2 e o MP4 real C01-P02 permanecem ausentes. O [run anterior 43749686509](https://github.com/HelioConde/VideoForge-IA/actions/runs/43749686509) também passou. As duas execuções e a separação dos testes estão registradas em `ESTADO-ATUAL.md` e `HISTORICO-DESENVOLVIMENTO.md`.
+
+## Resultados de CI do medidor de RGBA / 15-11-2026
+
+[Pack 43758686070](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686070): 23/23 testes passaram no runner GHCR; `--verify-report` detecta aprovação falsificada. [Preview 43758686035](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686035): preflight e movimento ThreeCanvas em imagens de fixture aprovados, sem fonte real. [Autonomia 43758686062](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686062): 70 testes e fila de 40 shots/160 fases aprovados. O bloqueio de âncora V2 e gasto continua em vigor. Nenhuma arte verdadeira C01-P02, relatório de geometria de produção ou MP4 dessa tomada foi gerado.

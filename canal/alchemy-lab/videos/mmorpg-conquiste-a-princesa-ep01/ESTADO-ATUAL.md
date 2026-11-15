@@ -1,5 +1,17 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+### Validação da auditoria de geometria no GitHub — 15/11/2026
+
+**Pipeline testado até o ponto permitido pela arte disponível:**
+
+- [Run 43758686070](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686070) — **SUCCESS**: 23 testes aprovados no runner GHCR com FFmpeg e PNGs sintéticos temporários. Verificados bbox/centroide de lâmina, bainha, mão; QA de recomposição, SHA e origem, relatório idempotente, rejeição de aprovação falsificada e proibição de underlay RGBA em vez de RGB opaco. O scanner real reportou `REMAKE_SWORD_V2_ANCHOR_NOT_APPROVED_OR_VERIFIED`; job de arte real corretamente **skipped**.
+- [Run 43758686035](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686035) — **SUCCESS**: preflight da espada e smoke ThreeCanvas com 2 frames sintéticos diferentes; render com fonte real pulado.
+- [Run 43758686062](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686062) — **SUCCESS**: 70 testes de autonomia/roteiro/160 instruções aprovados, 40 tomadas/39 visuais; blocker de gastos `provider_cost_permission_required` preservado.
+- [Run 43758686092](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758686092) — **SUCCESS**: 23 testes Python e QA do compositor Remotion sem gerar vídeo.
+- Falha intermediária [43758376230](https://github.com/HelioConde/VideoForge-IA/actions/runs/43758376230): único teste esperava mensagem errada após substituir relatório por JSON muito curto; **não era falha de segurança**. Corrigido em `21a48bdf6c257d9bd8609f7c540585f4362ba6be`, que agora adultera relatório de tamanho válido, falsifica `official_video_approved=true` e comprova bloqueio em `--verify-report`. Run seguinte foi aprovado.
+  
+**Estado fiel:** a análise geométrica está integrada e testada com PNGs reais de bytes **sintéticos só para CI**. Nenhuma imagem oficial V2 C01-P02 existe ou foi medida, não há MP4 real dessa tomada, não houve geração paga nem upload YouTube. O relatório de geometria de produção só aparecerá depois de âncora/arte próprias devidamente aprovadas.
+
 ## C01-P02 — calibração geométrica dos PNGs reais adicionada ao workflow (15/11/2026)
 
 **Etapa técnica em código, sem arte paga:** `videoforge/remake_rig_geometry.py` analisa máscara de mão, lâmina e bainha em pixels reais após `validate_package` SHA/underlay/recomposição. Registra bbox, centroide, área de alfa, pivô candidato, as quatro poses nos frames locais 0/7/72/89 e SHA de origem/direção em `mask-geometry.qa.json`. O nome "geometria medida" é válido somente quando **PNG original foi realmente decodificado**; nunca preencher valores fictícios no arquivo editorial.

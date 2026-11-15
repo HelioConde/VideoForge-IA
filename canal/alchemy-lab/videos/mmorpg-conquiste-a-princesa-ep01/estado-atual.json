@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Check GitHub Actions FFmpeg-positive pixel geometry and safety regressions; when approved V2 reference and real sword bundle exist, auto-measure and verify from the artifact",
+  "next_action": "Approved canonical V2 reference and same-shot mother/4 layer PNGs; then auto-pack and pixel QA, verify source artifact, ThreeCanvas and human visual review",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -1125,7 +1125,7 @@
   },
   "c01_p02_geometry_calibration_20261115": {
     "schema": "videoforge/remake-mask-geometry-milestone/v1",
-    "status": "code_submitted_ci_pending",
+    "status": "main_integration_ci_confirmed_source_art_pending",
     "analyzer": "videoforge/remake_rig_geometry.py",
     "report": "mask-geometry.qa.json",
     "source_workflow": ".github/workflows/remake-sword-pack.yml",
@@ -1150,6 +1150,36 @@
     "paid_image_calls": 0,
     "full_episode_mp4_created": false,
     "youtube_uploaded": false,
-    "next_step": "Check GitHub Actions FFmpeg-positive pixel geometry and safety regressions; when approved V2 reference and real sword bundle exist, auto-measure and verify from the artifact"
+    "next_step": "Approved canonical V2 reference and same-shot mother/4 layer PNGs; then auto-pack and pixel QA, verify source artifact, ThreeCanvas and human visual review",
+    "implementation_commit": "6e92be296fcb8ddc8d1e3759973c463cba9b258f",
+    "regression_fix_commit": "21a48bdf6c257d9bd8609f7c540585f4362ba6be",
+    "qa_runs": [
+      {
+        "run_id": 43758686070,
+        "conclusion": "success",
+        "tests_passed": 23,
+        "job": "real_archive_scan_plus_synthetic_geometry"
+      },
+      {
+        "run_id": 43758686035,
+        "conclusion": "success",
+        "job": "synthetic_threecanvas_smoke"
+      },
+      {
+        "run_id": 43758686062,
+        "conclusion": "success",
+        "tests_passed": 70,
+        "job": "40_shot_autonomy_and_queue"
+      },
+      {
+        "run_id": 43758686092,
+        "conclusion": "success",
+        "tests_passed": 23,
+        "job": "official_remotion_contract_qa"
+      }
+    ],
+    "real_source_blocker": "REMAKE_SWORD_V2_ANCHOR_NOT_APPROVED_OR_VERIFIED",
+    "geometry_report_in_real_source_archive": false,
+    "human_anatomy_approval": false
   }
 }
