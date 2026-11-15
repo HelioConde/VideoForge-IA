@@ -64,17 +64,11 @@ jobs:
             --props="../$EP_OUTPUT/props.json" \
             --frames=0-59 --codec=h264 --audio-codec=aac \
             --pixel-format=yuv420p --gl=swangle --concurrency=1 --log=error
-      - name: QA de video/audio sem escrever checkpoint no container
+      - name: QA FFprobe/FFmpeg completo no container e laudo com hashes no artifact
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          import json,os
-          from pathlib import Path
-          from videoforge.remake_opening import verify_mp4
-          report=verify_mp4(Path(os.environ["EP_OUTPUT"]))
-          print("REMAKE_OPENING_QA_OK",json.dumps(report,ensure_ascii=False))
-          PY
+          python -m videoforge.remake_opening audit --output-dir "$EP_OUTPUT"
       - name: Guardar o MP4 e WAV reais por 90 dias para revisao humana
         if: always()
         uses: actions/upload-artifact@v4
@@ -104,15 +98,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Conferir FFprobe/FFmpeg e executar QA novamente no host
+      - name: Conferir bytes SHA e QA do container no host sem instalar FFmpeg
         shell: bash
         run: |
           set -euo pipefail
           command -v git
-          command -v ffprobe
-          command -v ffmpeg
           python -m unittest tests.test_remake_opening tests.test_remake_opening_workflow -v
-          python -m videoforge.remake_opening verify --output-dir ./input/remake-opening
+          python -m videoforge.remake_opening checkpoint --output-dir ./input/remake-opening
       - name: Persistir QA e checkpoint no GitHub sem versionar MP4/WAV
         shell: bash
         run: |

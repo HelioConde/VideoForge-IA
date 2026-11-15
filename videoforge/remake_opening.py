@@ -185,13 +185,74 @@ def verify_mp4(output:Path)->dict:
       "full_episode_rendered":False,"youtube_uploaded":False}
 
 
+def audit_media(output:Path)->dict:
+    """Run heavy FFprobe and decoded-frame QA ONLY in the Remotion container."""
+    report=verify_mp4(output)
+    binary=(json.dumps(report,ensure_ascii=False,indent=2)+"\n").encode("utf-8")
+    _write_consistent(output/"black-opening.media.qa.json",binary)
+    return report
+
+
+def read_audited_qa(output:Path)->dict:
+    """Host checks bytes and an in-artifact report already produced by FFmpeg QA.
+
+    The GitHub Ubuntu host need not ship ffmpeg, only Git/Python stdlib.
+    The report is created by the controlled render job in the SAME workflow.
+    """
+    report_file=output/"black-opening.media.qa.json"
+    props_file=output/"props.json"
+    audio_file=output/WAVE_NAME
+    video_file=output/VIDEO_NAME
+    audio_report=output/"audio.qa.json"
+    if any(x.is_symlink() or not x.is_file() for x in
+           (report_file,props_file,audio_file,video_file,audio_report)):
+        raise VideoForgeError("REMAKE_OPENING_AUDITED_ARTIFACT_INCOMPLETE")
+    try:
+        report=json.loads(report_file.read_text(encoding="utf-8"))
+        props=json.loads(props_file.read_text(encoding="utf-8"))
+        sound_meta=json.loads(audio_report.read_text(encoding="utf-8"))
+    except (OSError,UnicodeError,ValueError) as exc:
+        raise VideoForgeError("REMAKE_OPENING_AUDITED_ARTIFACT_JSON_INVALID") from exc
+    if (report.get("schema")!="videoforge/remake-opening-technical-qa/v1"
+            or report.get("shot")!="C01-P01" or report.get("renderer")!="remotion@4"
+            or report.get("technical_preview_only") is not True
+            or report.get("black_pixels_verified") is not True
+            or report.get("audio_original_sfx_verified") is not True
+            or report.get("frames")!=FRAMES or report.get("fps")!=30
+            or report.get("width")!=1080 or report.get("height")!=1920
+            or not 1.98<=report.get("duration_seconds",0)<=2.1
+            or report.get("video_codec")!="h264" or report.get("audio_codec")!="aac"
+            or report.get("official_video_approved") is not False
+            or report.get("youtube_uploaded") is not False
+            or report.get("human_visual_approved") is not False
+            or report.get("full_episode_rendered") is not False
+            or props.get("schema")!=SCHEMA or props.get("shotId")!="C01-P01"
+            or props.get("durationFrames")!=FRAMES
+            or props.get("renderOfficialApproved") is not False
+            or props.get("youtubeUploaded") is not False
+            or sound_meta.get("schema")!=SCHEMA
+            or sound_meta.get("audio_original_procedural") is not True
+            or sound_meta.get("sample_rate")!=SAMPLE_RATE):
+        raise VideoForgeError("REMAKE_OPENING_AUDIT_CONTRACT_MISMATCH")
+    raw_audio=audio_file.read_bytes()
+    raw_video=video_file.read_bytes()
+    if (raw_audio!=_wav_bytes()
+            or props.get("audioSha256")!=_sha(raw_audio)
+            or sound_meta.get("sha256")!=_sha(raw_audio)
+            or report.get("audio_sha256")!=_sha(raw_audio)
+            or report.get("mp4_sha256")!=_sha(raw_video)
+            or len(raw_video)<2048):
+        raise VideoForgeError("REMAKE_OPENING_ARTIFACT_BYTES_SHA_INVALID")
+    return report
+
+
 def persist(output:Path,repo_root:Path=ROOT)->dict:
     """Archive hashes/QA in git; keep binary media in GitHub Actions artifact.
 
     The repo explicitly ignores *.mp4, *.wav and canal/.../assets.
     Never bypass that policy with force-add or a fake repo asset path.
     """
-    qa=verify_mp4(output)
+    qa=read_audited_qa(output)
     episode=Path(repo_root)/EPISODE
     plan_file=episode/"remake-ep01-planos.json"
     state_file=episode/"estado-atual.json"
@@ -280,15 +341,17 @@ def persist(output:Path,repo_root:Path=ROOT)->dict:
 
 def main()->int:
     ap=argparse.ArgumentParser()
-    ap.add_argument("action",choices=["prepare","verify"])
+    ap.add_argument("action",choices=["prepare","audit","checkpoint"])
     ap.add_argument("--output-dir",required=True,type=Path)
     ap.add_argument("--public-dir",type=Path)
     args=ap.parse_args()
     if args.action=="prepare":
         if args.public_dir is None: raise VideoForgeError("REMAKE_OPENING_PUBLIC_DIR_REQUIRED")
         print("REMAKE_OPENING_AUDIO",json.dumps(prepare(args.output_dir,args.public_dir),ensure_ascii=False))
+    elif args.action=="audit":
+        print("REMAKE_OPENING_MEDIA_AUDITED",json.dumps(audit_media(args.output_dir),ensure_ascii=False))
     else:
-        print("REMAKE_OPENING_VERIFIED",json.dumps(persist(args.output_dir),ensure_ascii=False))
+        print("REMAKE_OPENING_CHECKPOINT",json.dumps(persist(args.output_dir),ensure_ascii=False))
     return 0
 
 

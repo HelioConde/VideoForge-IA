@@ -8,7 +8,7 @@ import wave
 
 from videoforge.remake_opening import (
     DURATION,SAMPLE_RATE,FRAMES,_wav_bytes,original_sword_pcm,
-    prepare,verify_mp4,
+    prepare,verify_mp4,read_audited_qa,
 )
 from videoforge.errors import VideoForgeError
 
@@ -37,6 +37,13 @@ class OpeningAudioTests(unittest.TestCase):
             self.assertEqual((root/"output/sword-original.wav").read_bytes(),wav)
             self.assertEqual((root/"public/sword-original.wav").read_bytes(),wav)
             self.assertFalse(a["official_video_approved"])
+
+    def test_host_refuses_unproven_media_without_container_qa(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            prepare(root/"output",root/"public")
+            with self.assertRaisesRegex(VideoForgeError,"AUDITED_ARTIFACT_INCOMPLETE"):
+                read_audited_qa(root/"output")
 
     def test_no_mp4_claim_if_remotion_did_not_render(self):
         with tempfile.TemporaryDirectory() as temp:
