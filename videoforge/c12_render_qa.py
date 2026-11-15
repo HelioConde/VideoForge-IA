@@ -221,6 +221,7 @@ def verify_mp4(out: Path) -> dict:
         "format=duration,size:stream=codec_name,codec_type,pix_fmt,width,height,r_frame_rate,nb_frames",
         "-of", "json", str(mp4),
     ]))
+    (out / "ffprobe.json").write_text(json.dumps(details, indent=2) + "\n", encoding="utf8")
     videos = [stream for stream in details.get("streams", []) if stream.get("codec_type") == "video"]
     if len(videos) != 1 or any(stream.get("codec_type") == "audio" for stream in details.get("streams", [])):
         raise C12QAError("MP4_QA_VIDEO_ONLY_REQUIRED")
