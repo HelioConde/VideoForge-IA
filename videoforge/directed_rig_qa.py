@@ -9,7 +9,7 @@ from pathlib import Path
 import subprocess
 
 from .rig_candidate import _image, _write_png
-from .directed_rig import _mask_uncovered
+from .directed_rig import _mask_uncovered, _mask_only_original_covered_pixels
 from .c01_collar_qa import collar_background_exposure, collar_gate
 
 
@@ -27,6 +27,9 @@ def neutral_review(bindings_path: Path, shot_id: str, output: Path) -> dict:
         if "file" not in node:
             continue
         pixels = decoded[node["id"]]
+        if "onlyCoveredBy" in node:
+            pixels, _ = _mask_only_original_covered_pixels(
+                pixels, [decoded[ref] for ref in node["onlyCoveredBy"]])
         if "onlyUncoveredBy" in node:
             pixels, _ = _mask_uncovered(pixels, [decoded[ref] for ref in node["onlyUncoveredBy"]])
         x, y, w, h = node["bbox"]
