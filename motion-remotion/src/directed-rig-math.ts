@@ -194,8 +194,8 @@ export function upperBackDeltaAtFrame(
   const b=node.mesh?.backBreath;
   if(!b||!node.bbox)return [0,0];
   const driver=shot.tracks.find(t=>
-    t.target===b.driverTarget&&t.transform===b.driverTransform);
-  if(!driver)fail('UPPER_BACK_DRIVER_REQUIRED');
+    t.target===b.driverTarget&&t.transform===b.driverTransform) ??
+    fail('UPPER_BACK_DRIVER_REQUIRED');
   const negativeLift=trackAtFrame(driver,frame);
   const breath=clamp01(-negativeLift/b.driverPeakAbsPx);
   if(breath===0||sourceY<=b.sourceTopY||sourceY>=b.sourceBottomY)return [0,0];
