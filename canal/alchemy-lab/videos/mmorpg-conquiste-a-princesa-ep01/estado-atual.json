@@ -71,7 +71,7 @@
     },
     "available_github_mp4": false,
     "pending_pr_for_alternative_import": 50,
-    "next_step": "Get exact old ZIP bytes via user upload or root uploads/ of GitHub; import original image hashes; then run C12 technical neutral/motion QA and review masks.",
+    "next_step": "User attaches existing two ZIPs or uploads them at github.com/HelioConde/VideoForge-IA/tree/main/uploads. Import workflows archive originals, coordinator resumes technical MP4 only after nine SHA valid.",
     "validation_upgrade": {
       "pr_merged": 52,
       "merge_commit": "a69287356a87c3bbd2f67bf987ce1a0f0ae73f5c",
@@ -109,8 +109,33 @@
         "raw_bytes_materialized": false
       }
     ],
-    "library_materialization_error": "This Project file does not have an authorized raw-byte materialization path."
+    "library_materialization_error": "This Project file does not have an authorized raw-byte materialization path.",
+    "auto_resume": {
+      "state": "integrated_main",
+      "pull_request": 53,
+      "merge_commit": "24c49509b53339a45a413c581435dd817d2028db",
+      "coordinator_workflow": ".github/workflows/c12-after-import.yml",
+      "gate_module": "videoforge/c12_dispatch_gate.py",
+      "contract_test_run": 43662265188,
+      "contract_test_conclusion": "success",
+      "main_check_run": 43662307131,
+      "main_check_conclusion": "success",
+      "main_check_outcome": "WAIT_FOR_EXISTING_SOURCE_BYTES_RENDER_NOT_TRIGGERED",
+      "main_check_artifact_id": 14140133496,
+      "triggers": [
+        "workflow_run: qa-alchemy-chat-cinematic-references",
+        "workflow_run: import-alchemy-c12-technical-zip"
+      ],
+      "trigger_render_method": "workflow_dispatch with GitHub Actions token after nine existing PNG SHA verified",
+      "upload_paths": [
+        "uploads/alchemy-ep01-cinema-3-originais.zip",
+        "uploads/alchemy-c12-rig-camadas-tecnicas-v2.zip"
+      ],
+      "source_pngs_imported": 0,
+      "new_images_generated": 0,
+      "official_video_approved": false
+    }
   },
-  "next_action": "Recover original C12 ZIP bytes already indexed in Library but unavailable for raw-byte materialization; import to root uploads/, verify 9 PNGs and run C12 technical ThreeCanvas QA. No new images.",
+  "next_action": "Get bytes of /youtube/alchemy-ep01-cinema-3-originais.zip and /youtube/alchemy_c12_rig_camadas_tecnicas_v2.zip (Library metadata exists, raw-byte access denied); upload both to root uploads/ and validate automatic C12 resume. No new image generation.",
   "updates_required_on_each_change": true
 }
