@@ -62,6 +62,37 @@ jobs:
           python -c "import struct,zlib; print('REMAKE_SWORD_STDLIB_READY')"
           python -m unittest tests.test_remake_sword_preview -v
           echo "TEST_ONLY_SYNTHETIC_FIXTURE_VALIDATED; NO REAL_ART_NO_MP4_NO_PROXY"
+      - name: Testar dois frames reais ThreeCanvas com PNGs sinteticos apenas de CI
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          from tests.test_remake_sword_preview import SwordPreviewTests
+          from videoforge.remake_sword_preview import prepare
+          root=Path("output/remake-sword-smoke/test-repo")
+          source=SwordPreviewTests().fixture(root)
+          result=prepare(source,12345,
+              Path("output/remake-sword-smoke/preview"),
+              Path("motion-remotion/public/vf-remake/c01-p02"),root)
+          assert result["neutral_mae_rgb"]==0
+          assert result["human_visual_approved"] is False
+          print("RIG_SYNTHETIC_REAL_RGBA_STAGED_NO_REAL_ART")
+          PY
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/remake-sword-motion.test.cjs tests/remake-sword-preview.test.cjs
+          ./node_modules/.bin/remotion still             src/remake-sword-preview-index.ts VideoForgeC01P02SwordTechnical             ../output/remake-sword-smoke/frame-07.png             --props=../output/remake-sword-smoke/preview/props.json             --frame=7 --gl=swangle --log=error
+          ./node_modules/.bin/remotion still             src/remake-sword-preview-index.ts VideoForgeC01P02SwordTechnical             ../output/remake-sword-smoke/frame-71.png             --props=../output/remake-sword-smoke/preview/props.json             --frame=71 --gl=swangle --log=error
+          cd ..
+          test -s output/remake-sword-smoke/frame-07.png
+          test -s output/remake-sword-smoke/frame-71.png
+          if cmp -s output/remake-sword-smoke/frame-07.png output/remake-sword-smoke/frame-71.png; then
+            echo "::error::A espada nao se moveu na previa sintética ThreeCanvas"
+            exit 1
+          fi
+          echo "THREECANVAS_C01_P02_ACTUAL_WEBGL_FRAME_CHANGE_SYNTHETIC_QA_PASS"
 
   render-three-draft:
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
