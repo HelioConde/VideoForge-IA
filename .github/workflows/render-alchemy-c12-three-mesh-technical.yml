@@ -1,0 +1,102 @@
+name: "VideoForge - C12 MP4 tecnico ThreeCanvas 5 malhas originais"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/render-alchemy-c12-three-mesh-technical.yml'
+      - 'videoforge/c12_technical_preview.py'
+      - 'tests/test_alchemy_c12_technical.py'
+      - 'motion-remotion/src/c12-mesh-technical*'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-render-c12-tecnico.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/planos/**'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/referencias/chat-aprovadas/**'
+permissions:
+  contents: read
+  packages: read
+concurrency:
+  group: vf-alchemy-c12-threecanvas-draft
+  cancel-in-progress: false
+jobs:
+  render-draft:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Testar cinco malhas e engine ThreeCanvas sem imagens novas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_alchemy_c12_technical -v
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/c12-mesh-technical-contract.test.cjs tests/rig-three-math.test.cjs
+      - name: Preparar pixels originais ou BLOQUEAR no preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.c12_technical_preview
+      - name: Renderizar 8 segundos de malhas Three.js por Remotion SWANGLE
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-mesh-technical"
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/c12-mesh-technical-index.ts \
+            VideoForgeC12MeshDraftQA "../$OUT/c12-three-mesh-8s.mp4" \
+            --props="../$OUT/props.json" --frames=0-239 --codec=h264 \
+            --pixel-format=yuv420p --gl=swangle --concurrency=1 --log=error
+          for frame in 0 73 120 180 239; do
+            ./node_modules/.bin/remotion still src/c12-mesh-technical-index.ts \
+              VideoForgeC12MeshDraftQA "../$OUT/frame-$frame.png" \
+              --props="../$OUT/props.json" --frame="$frame" --gl=swangle --log=error
+          done
+      - name: Registrar QA e hash do MP4, sem publicar
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-mesh-technical"
+          ffprobe -v error -show_entries format=duration,size \
+            -show_entries stream=codec_name,codec_type,pix_fmt,width,height,r_frame_rate \
+            -of json "$OUT/c12-three-mesh-8s.mp4" > "$OUT/ffprobe.json"
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          out=Path("output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-mesh-technical")
+          details=json.loads((out/"ffprobe.json").read_text())
+          mp4=out/"c12-three-mesh-8s.mp4"
+          video=next((s for s in details["streams"] if s["codec_type"]=="video"),None)
+          assert video and video["codec_name"]=="h264" and video["pix_fmt"]=="yuv420p"
+          assert (video["width"],video["height"])==(720,1280)
+          assert video["r_frame_rate"]=="30/1"
+          assert 7.95<=float(details["format"]["duration"])<=8.12
+          assert mp4.stat().st_size>30000
+          for frame in (0,73,120,180,239):
+              assert (out/f"frame-{frame}.png").stat().st_size>1000
+          qa={"schema":"videoforge/c12-threecanvas-technical-mp4-qa/v1",
+              "file":mp4.name,"sha256":hashlib.sha256(mp4.read_bytes()).hexdigest(),
+              "fps":30,"frames":240,"resolution":[720,1280],
+              "mesh_triangles":512,"independent_rgba_parts":5,
+              "source_sha_verified":True,"preview_tecnico_nao_oficial":True,
+              "human_visual_approved":False,"video_oficial_do_programa":False,
+              "youtube_uploaded":False,"image_generation_calls":0}
+          (out/"mp4.qa.json").write_text(json.dumps(qa,indent=2)+"\n")
+          print("C12_THREECANVAS_TECHNICAL_MP4_OK",qa["sha256"])
+          PY
+      - name: Disponibilizar MP4 validado OU relatório de arquivos faltantes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-alchemy-c12-threecanvas-draft-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-mesh-technical/
+          retention-days: 14
+          if-no-files-found: warn
