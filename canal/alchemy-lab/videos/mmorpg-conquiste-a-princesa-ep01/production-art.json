@@ -32,9 +32,10 @@
     "per_run": 1,
     "strict_budget": 1,
     "never_retry_429": true,
-    "scope": "primeira chamada de referência; quantidade de imagens do EPISÓDIO não limitada artificialmente, orçamento de novas chamadas requer autorização separada",
-    "legacy_request_only": true,
-    "not_an_episode_wide_image_cap": true
+    "scope": "EP01 V2: autorização permanente de chamadas de produção pelo responsável em 2026-11-15. Sem pedir por imagem; UMA chamada por execução para evitar repetição/acúmulo; sem teto editorial total. 429 não é repetido automaticamente.",
+    "legacy_request_only": false,
+    "not_an_episode_wide_image_cap": true,
+    "owner_standing_authorization": true
   },
   "assets": [
     {
@@ -84,5 +85,6 @@
     "do_not_fake_human_approval": true,
     "no_new_paid_costs_authorized": true,
     "youtube_upload": false
-  }
+  },
+  "source_shot_count": 40
 }

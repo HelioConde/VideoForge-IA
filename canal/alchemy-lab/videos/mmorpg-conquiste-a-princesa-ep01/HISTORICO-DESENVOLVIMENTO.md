@@ -1,5 +1,14 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — autorização prévia permanente e disparo único por coordenador
+
+- Pedido do responsável: todas as chamadas de geração do EP01 V2 sem autorização individual; documentado nos arquivos principais e policy do canal.
+- Política mudou de `paid_provider_calls_approved=false/auto_dispatch_generation=false` para ambos `true`, mantendo **1 chamada por execução** e `auto_publish_youtube=false`.
+- Adicionada reserva em `remake_autopilot.py` e chamada a `gh workflow run production-art-by-request.yml` depois de o estado ser gravado na main. Teste de idempotência, custeio e não publicação incluído.
+- Registro documental/código **não é evidência de execução paga**. Confirmar run/artifact PNG+SHA depois do CI; novas chamadas só podem ocorrer sem repedir permissão, mas nunca com origem incerta ou retry cego.
+
+
+
 ## 15/11/2026 — CI da proteção de origem/antirrepetição aprovado
 
 - [43762440988](https://github.com/HelioConde/VideoForge-IA/actions/runs/43762440988) **SUCCESS**, editor com 9/9 testes e nenhuma chamada de provedor. Correção da expectativa antiga em [commit 4b57e743](https://github.com/HelioConde/VideoForge-IA/commit/4b57e743af2bfb844a50351b2e2c90634b00ea39), após primeira falha de teste [43762352543](https://github.com/HelioConde/VideoForge-IA/actions/runs/43762352543).

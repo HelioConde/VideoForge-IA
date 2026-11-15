@@ -3,9 +3,9 @@
   "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
   "autonomy_enabled": true,
   "daily_preflight_enabled": true,
-  "auto_dispatch_generation": false,
-  "paid_provider_calls_approved": false,
-  "max_chargeable_calls_per_run": 0,
+  "auto_dispatch_generation": true,
+  "paid_provider_calls_approved": true,
+  "max_chargeable_calls_per_run": 1,
   "total_editorial_image_cap": null,
   "retry_policy": {
     "max_retries_per_same_failed_action": 2,
@@ -16,7 +16,19 @@
   "auto_publish_youtube": false,
   "allowed_producer_workflows": [
     "production-art-by-request.yml",
-    "production-scene-by-request.yml"
+    "production-scene-by-request.yml",
+    "remake-sword-component.yml"
   ],
-  "note": "Autonomy can plan and QA now. External paid image generation remains disabled until separate cost permission; a per-run safety gate is not an episode image limit."
+  "note": "Owner granted standing authorization for EP01 V2 generation on 2026-11-15. One billable call per workflow run, no arbitrary episode-wide image cap, no 429 retries; existing provider limits/charges still apply. Never repeat archived SHA-verified output. No automatic image approval or YouTube publishing. Autonomous coordinator may dispatch initial canonical candidate once and reserve its intent before the external call.",
+  "standing_user_authorization": {
+    "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+    "granted_on": "2026-11-15",
+    "authorization": "All necessary image-generation and AI provider calls for EP01 V2 may be requested by the VideoForge agents without per-call reauthorization",
+    "per_call_reapproval_required": false,
+    "total_editorial_image_cap": null,
+    "financial_limit_promised": false,
+    "no_global_provider_quota_override": true,
+    "workflow_safety_limit_one_chargeable_call_per_run": true,
+    "no_automatic_youtube_publication": true
+  }
 }

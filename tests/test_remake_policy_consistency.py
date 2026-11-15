@@ -18,7 +18,11 @@ class RemakePolicyConsistencyTests(unittest.TestCase):
         self.assertTrue(style["generation_authorization"]["current_episode_new_image_calls_allowed"])
         self.assertFalse(style["production_policy"]["current_episode_generation_locked"])
         self.assertFalse(style["production_policy"]["current_episode_lock_still_active"])
-        self.assertFalse(policy["paid_provider_calls_approved"])
+        self.assertTrue(policy["paid_provider_calls_approved"])
+        self.assertTrue(policy["auto_dispatch_generation"])
+        self.assertEqual(policy["max_chargeable_calls_per_run"],1)
+        self.assertFalse(policy["standing_user_authorization"]["per_call_reapproval_required"])
+        self.assertTrue(state["remake_v2"]["new_paid_costs_approved"])
         self.assertFalse(state["locks"]["official_video_allowed"])
         self.assertFalse(state["locks"]["no_youtube_upload"] is False)
 

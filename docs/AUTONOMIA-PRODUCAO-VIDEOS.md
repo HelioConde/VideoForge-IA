@@ -1,5 +1,13 @@
 # VideoForge IA — Regra permanente de produção autônoma de vídeos (15/11/2026)
 
+## Autorização permanente de chamadas do EP01 V2 — 15/11/2026
+
+O responsável autorizou explicitamente todas as chamadas necessárias de IA/geração para o dorama `alchemy-lab/mmorpg-conquiste-a-princesa-ep01`, sem reaprovação individual. Valem `autonomy-policy.json`, `remake-ep01-planos.json` e `image_generation_policy.py`. A regra não se estende automaticamente aos outros canais. Permanece **uma chamada faturável por execução** de produtor, sem teto total editorial de imagens; manter SHA, QA e não repetir chamadas de mesmo input, sobretudo após HTTP 429.
+
+A automação `remake-autonomy.yml` executa preflight/testes, registra uma intenção única no estado **antes** de chamar `gh workflow run production-art-by-request.yml` para a primeira candidata `character-bible`. Intenção pré-existente bloqueia outra chamada automática; falha ambígua do disparo deve gerar diagnóstico, não repetição. A conclusão do workflow e os bytes reais ainda devem ser confirmados por artefatos permanentes. A qualidade/identidade final é avaliada separadamente, e `auto_publish_youtube=false` continua. A permissão de usar provedor não é aprovação automática da imagem nem do upload.
+
+
+
 **Pedido do responsável:** ensinar o programa do GitHub a executar corretamente o ciclo de vídeos e animações, com o mínimo de orientação humana recorrente. Nossa função deve ser orientar objetivos, direção artística e aprovações finais, não consertar a mesma etapa manualmente toda vez. Metas: consistência de personagens, cinematografia, animação genuína por rig e malha, QA automático forte, persistência do aprendizado e melhoria contínua do próprio sistema.
 
 ## Máquina de estados e responsabilização

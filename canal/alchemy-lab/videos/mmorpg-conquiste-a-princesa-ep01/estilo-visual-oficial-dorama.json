@@ -96,10 +96,10 @@
     "official_video_approved": false,
     "current_remake_editorially_authorized": true,
     "previous_lock_archived_as": "REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md",
-    "new_paid_costs_approved": false
+    "new_paid_costs_approved": true
   },
   "render_status": "remake_v2_preproduction_no_media_yet",
-  "next_step": "Remake V2 editorialmente autorizado: primeiro confirmar referencia canonica e integrar o manifesto V2 ao gerador; gerar novas imagens so com provedor e custo permitido, arquivar SHA, usar rig real; sem publicar.",
+  "next_step": "Autorização permanente de chamadas de imagem do EP01 concedida em 15/11/2026, um pedido por run, QA e SHA obrigatórios; gerar candidata V2 antes de cena-mãe; revisão de identidade permanece independente de nova permissão de chamada.",
   "production_policy": {
     "unlimited_editorial_image_count": true,
     "max_images_per_scene": null,
@@ -116,7 +116,7 @@
     "generation_authorization_not_implied": false,
     "current_episode_lock_still_active": false,
     "remake_generation_allowed_editorially": true,
-    "paid_provider_generation_enabled": false
+    "paid_provider_generation_enabled": true
   },
   "remake_v2": {
     "status": "active_preproduction",
@@ -124,6 +124,6 @@
     "new_images": 0,
     "new_mp4": false,
     "operator": "videoforge/remake_autopilot.py",
-    "no_extra_paid_costs": true
+    "no_extra_paid_costs": false
   }
 }

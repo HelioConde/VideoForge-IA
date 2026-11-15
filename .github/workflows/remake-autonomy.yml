@@ -44,7 +44,7 @@ on:
 
 permissions:
   contents: write
-  actions: read
+  actions: write
 
 concurrency:
   group: alchemy-remake-ep01-checkpoint
@@ -85,6 +85,20 @@ jobs:
         run: |
           set -euo pipefail
           python -m videoforge.remake_starter --output output/remake-shot-queue.json
+      - name: Reservar UMA chamada autorizada de referencia no checkpoint antes de despachar
+        id: reserve
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remake_autopilot --reserve --report output/remake-generation-reservation.json
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads(Path("output/remake-generation-reservation.json").read_text(encoding="utf-8"))
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as out:
+              out.write("ready="+("true" if d["ready"] else "false")+"\n")
+          print("ONE_SHOT_GENERATION_RESERVATION",d["ready"],d.get("reason","reserved"))
+          PY
       - name: Persistir arquivos principais somente quando o estado mudou
         shell: bash
         run: |
@@ -99,6 +113,30 @@ jobs:
           else
             echo "CHECKPOINT_ALREADY_CURRENT"
           fi
+      - name: Despachar somente UMA referencia V2 por workflow_dispatch com reserva persistida
+        if: steps.reserve.outputs.ready == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path("output/remake-generation-reservation.json").read_text(encoding="utf8"))
+          assert data["ready"] is True
+          assert data["workflow"]=="production-art-by-request.yml"
+          assert data["asset"]=="character-bible"
+          assert data["max_calls_per_run"]==1
+          assert data["youtube_upload"] is False
+          print("GENERATION_RESERVATION_VERIFIED",data["request_id"][:16])
+          PY
+          gh workflow run production-art-by-request.yml -R "$GH_REPO" --ref main \
+            -f channel=alchemy-lab \
+            -f video_id=mmorpg-conquiste-a-princesa-ep01 \
+            -f asset=character-bible
+          echo "ONE_AUTHORIZED_REFERENCE_WORKFLOW_DISPATCH_SUBMITTED"
       - name: Salvar prova de diagnostico para os agentes
         if: always()
         uses: actions/upload-artifact@v4
@@ -107,5 +145,6 @@ jobs:
           path: |
             output/remake-autonomy-report.json
             output/remake-shot-queue.json
+            output/remake-generation-reservation.json
           retention-days: 14
           if-no-files-found: warn

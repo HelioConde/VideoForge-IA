@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+> **AUTORIZAÇÃO DE CHAMADAS DO EP01 V2 — 15/11/2026:** o responsável autorizou permanentemente as chamadas de IA/imagem necessárias ao remake, sem pedir confirmação por imagem; `autonomy-policy.json` permite um gasto de geração por execução do produtor e não define teto editorial total. O coordenador reserva e solicita automaticamente a primeira candidata `character-bible` uma vez, com registro durável e sem repetição cega. A existência de autorização **não** comprova que a API respondeu, que houve cobrança, que alguma arte foi aprovada nem que um vídeo foi publicado. YouTube segue bloqueado.
+
 > **Rig da espada: QA de geometria por pixels reais adicionado.** `remake_rig_geometry.py` e os workflows de pacote/preview exigem relatório `mask-geometry.qa.json` revalidável para C01-P02, com máscara, centroide, SHA e quatro poses. O restante dos 39 planos ainda depende de arte própria; não foi criado MP4 oficial nem liberado custo.
 
 > **Abertura original do remake V2:** `videoforge/remake_episode_audio.py` prepara a mesma WAV por síntese procedural + SHA auditado para o futuro vídeo integral; independe da retenção de 90 dias dos artifacts. O render oficial continua bloqueado pelos 39 planos visuais sem QA.

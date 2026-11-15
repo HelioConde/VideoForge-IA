@@ -161,12 +161,18 @@ def choose_next(root: Path = ROOT) -> dict:
                         and policy["max_chargeable_calls_per_run"] >= 1)
     if stage in ("generate_character_bible", "generate_shot_mother") and not provider_enabled:
         blocker = "provider_cost_permission_required"
+    existing_intent = state.get("generation_dispatch_intent")
+    if stage == "generate_character_bible" and isinstance(existing_intent, dict):
+        if existing_intent.get("target") == "character-bible":
+            blocker = "generation_dispatch_already_reserved_wait_for_artifact_or_investigation"
     dispatch_allowed = (
         stage == "generate_character_bible"
+        and not isinstance(existing_intent, dict)
         and provider_enabled
         and policy.get("auto_dispatch_generation") is True
         and policy.get("autonomy_enabled") is True
         and state.get("locks", {}).get("no_new_image_generation") is False
+        and "production-art-by-request.yml" in policy.get("allowed_producer_workflows", [])
     )
     return {
         "schema": "videoforge/remake-autopilot-diagnostic/v1",
@@ -185,6 +191,69 @@ def choose_next(root: Path = ROOT) -> dict:
         "uploaded_youtube": False,
         "approved_human_review": False,
     }
+
+
+def reserve_generation_dispatch(report: dict, root: Path = ROOT) -> dict:
+    """Reserve one authorized candidate BEFORE triggering a paid workflow.
+
+    The reservation is committed to main before GitHub workflow_dispatch.
+    If dispatch fails, do NOT blindly repeat or charge again: investigate
+    reservation/run evidence first. Never auto-approve artwork or publish.
+    """
+    root = Path(root)
+    episode = root / EPISODE
+    state_path = episode / "estado-atual.json"
+    state = _json(state_path)
+    policy = _json(episode / "autonomy-policy.json")
+    current = choose_next(root)
+    existing = state.get("generation_dispatch_intent")
+    if isinstance(existing, dict):
+        return {"schema": "videoforge/remake-dispatch-reservation/v1",
+                "ready": False, "reason": "already_reserved",
+                "request_id": existing.get("request_id")}
+    if (report.get("stage") != current.get("stage")
+        or report.get("target") != current.get("target")
+        or report.get("dispatch_allowed") is not True
+        or current.get("dispatch_allowed") is not True
+        or current.get("next_workflow") != "production-art-by-request.yml"
+        or policy.get("max_chargeable_calls_per_run") != 1
+        or policy.get("standing_user_authorization", {}).get("per_call_reapproval_required") is not False
+        or state.get("locks", {}).get("no_youtube_upload") is not True):
+        return {"schema": "videoforge/remake-dispatch-reservation/v1",
+                "ready": False, "reason": "not_authorized_or_not_pending"}
+    from .image_generation_policy import assert_image_generation_allowed
+    from .production_art import read_plan, asset_prompt
+    assert_image_generation_allowed("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01", root)
+    art, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01", root)
+    if (art.get("request_limit", {}).get("per_run") != 1
+        or art.get("request_limit", {}).get("strict_budget") != 1):
+        raise VideoForgeError("REMAKE_DISPATCH_ART_LIMIT_NOT_ONE")
+    asset_prompt(art, story, "character-bible")
+    target = "character-bible"
+    unique = hashlib.sha256((
+        "alchemy-lab/mmorpg-conquiste-a-princesa-ep01|"
+        "remake-v2-20261115|production-art-by-request.yml|"
+        "character-bible|standing-2026-11-15"
+    ).encode("utf-8")).hexdigest()
+    state["generation_dispatch_intent"] = {
+        "schema": "videoforge/remake-dispatch-intent/v1",
+        "request_id": unique, "target": target,
+        "workflow": "production-art-by-request.yml",
+        "status": "reserved_before_external_dispatch",
+        "reserved_utc": datetime.now(timezone.utc).isoformat(),
+        "max_calls_per_run": 1,
+        "provider_charge_possible": True,
+        "actual_provider_charge_confirmed": False,
+        "youtube_upload": False, "human_visual_approved": False,
+    }
+    state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return {"schema": "videoforge/remake-dispatch-reservation/v1",
+            "ready": True, "request_id": unique,
+            "workflow": "production-art-by-request.yml",
+            "channel": "alchemy-lab",
+            "video_id": "mmorpg-conquiste-a-princesa-ep01",
+            "asset": target, "max_calls_per_run": 1,
+            "youtube_upload": False}
 
 
 def sync_checkpoint(report: dict, root: Path = ROOT) -> bool:
@@ -247,8 +316,19 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Read and checkpoint next verified EP01 work; zero AI calls")
     parser.add_argument("--report", type=Path)
     parser.add_argument("--sync", action="store_true")
+    parser.add_argument("--reserve", action="store_true",
+                        help="Reserve one approved image call; never call proxy here")
     args = parser.parse_args()
     report = choose_next()
+    if args.reserve:
+        if args.sync:
+            parser.error("--reserve and --sync cannot be combined")
+        reservation = reserve_generation_dispatch(report)
+        if args.report:
+            args.report.parent.mkdir(parents=True, exist_ok=True)
+            args.report.write_text(json.dumps(reservation, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print("REMAKE_DISPATCH_RESERVATION", json.dumps(reservation, ensure_ascii=False))
+        return 0
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

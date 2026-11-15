@@ -7,9 +7,11 @@
   "authorization": {
     "new_image_generation_editorially_allowed": true,
     "no_editorial_image_count_limit": true,
-    "paid_provider_spend_preapproved": false,
+    "paid_provider_spend_preapproved": true,
     "unapproved_youtube_upload_forbidden": true,
-    "legacy_lock_archived_as": "REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md"
+    "legacy_lock_archived_as": "REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md",
+    "standing_call_approval_no_per_request_prompt": true,
+    "provider_calls_max_per_workflow_run": 1
   },
   "style_id": "cinematic-semi-realistic-fantasy-anime",
   "source_story": "roteiro.json",

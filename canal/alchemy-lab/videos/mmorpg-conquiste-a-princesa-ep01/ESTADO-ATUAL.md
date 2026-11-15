@@ -1,5 +1,13 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 15/11/2026 — autorização permanente de chamadas para produzir o remake
+
+**Decisão expressa do responsável:** o sistema e seus agentes estão autorizados a fazer todas as chamadas necessárias de IA e geração de imagem **para o EP01 V2** sem solicitar aprovação individual a cada execução. Escopo gravado em `autonomy-policy.json`, manifesto oficial, arquivo de estilo, `AGENTS.md` e skill. A cada run, somente **uma chamada cobrável**; não existe teto editorial para o episódio. Cobrança/cota do provedor podem continuar existindo. `auto_dispatch_generation=true`.
+
+**Execução autônoma implementada neste avanço:** o coordenador de GitHub Actions pode reservar em `estado-atual.json` uma intenção idempotente para a primeira referência `character-bible`, persistir antes de executar `gh workflow run production-art-by-request.yml` e recusar novos disparos para o mesmo alvo sem verificação. A atualização do código/política e o teste do CI precisam confirmar que o workflow iniciou e qual foi o resultado real. **Não declarar PNG, cobrança, arte aprovada ou MP4 sem evidência.** A mãe C01-P02, quatro camadas/rig e YouTube permanecem pendentes até os respectivos controles de QA/proveniência.
+
+
+
 ## 15/11/2026 — guarda de proveniência e antirrepetição C01-P02 (CI aprovado)
 
 O gerador dedicado de `underlay`, `sheath`, `blade` e `hand` agora consulta o arquivo **permanente** de produções com PNG+SHA da **mesma imagem-mãe e mesmo run** antes de qualquer chamada ao proxy, inclusive em um runner novo. Camada válida já arquivada impede nova cobrança acidental; a camada rejeitada por QA técnico não é confundida com trabalho concluído. O empacotador passa a exigir para **todas** as quatro peças `scene=c01`, `shot_id=C01-P02`, `part_id`, `source_archive_producer` e `source_archive_run_id` da mãe selecionada. Testes cobrem repetição, troca de tomada e troca de run. Qualquer retrabalho artístico voluntário precisa de revisão explícita, não de rerun cego.
