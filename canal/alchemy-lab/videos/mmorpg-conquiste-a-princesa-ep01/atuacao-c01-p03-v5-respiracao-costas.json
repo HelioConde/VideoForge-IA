@@ -1,0 +1,79 @@
+{
+  "schema": "videoforge/c01-v5-upper-back-breathing/v1",
+  "recorded_date": "2026-11-15",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P03",
+  "based_on": "atuacao-c01-p03-v4-respiracao.json",
+  "reason": "User requested subtle upper-back movement while retaining existing slight head movement.",
+  "intent": "Kael is kneeling and breathing: chest/upper-back mildly expand under approved jacket; head gently tilts; arms/hands/legs/boot remain anchored; king/guards/spears original and perfectly still.",
+  "fps": 30,
+  "frames_absolute": [
+    150,
+    239
+  ],
+  "duration_seconds": 3,
+  "tracks_unchanged_from_v4": [
+    {
+      "target": "kael.ombros",
+      "transform": "translateY",
+      "min_source_px": -1.25,
+      "max_source_px": 0
+    },
+    {
+      "target": "kael.cabeca",
+      "transform": "rotationZ",
+      "min_deg": -0.32,
+      "max_deg": 0
+    }
+  ],
+  "upper_back_mesh": {
+    "target": "kael.jaqueta",
+    "original_pixels_only": true,
+    "kind": "upper-back-source-mesh",
+    "sourceTopY": 857,
+    "sourcePeakY": 898,
+    "sourceBottomY": 947,
+    "expansionPx": 1.05,
+    "liftPx": 0.6,
+    "driverTarget": "kael.ombros",
+    "driverTransform": "translateY",
+    "driverPeakAbsPx": 1.25,
+    "sourcePinWaistStartY": 950,
+    "pinLeftRightNeckAndWaist": true,
+    "correlatedWithShoulderBreath": true,
+    "no_extra_track": true
+  },
+  "preserved_v4_constraints": {
+    "right_hand_stays_on_knee": true,
+    "right_arm_world_fixed": true,
+    "right_boot_world_fixed": true,
+    "head_still_moves": true,
+    "camera_fixed": true,
+    "king_spears_original_mother_pixels": true,
+    "no_new_image_generation": true,
+    "no_youtube_upload": true
+  },
+  "quality_gates": {
+    "real_h264_back_roi_required": true,
+    "back_source_roi": [
+      405,
+      870,
+      85,
+      65
+    ],
+    "jacket_waist_static_pins_required": true,
+    "static_king_spears_boot_qa_required": true,
+    "collar_source_exposure_qa_required": true,
+    "head_rotation_clamped_to_half_degree": true
+  },
+  "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+  "status": "pr_implementation_pending_render",
+  "human_visual_review": false,
+  "publishable": false,
+  "official_video_approved": false,
+  "youtube_uploaded": false,
+  "render_artifact": null,
+  "main_run_id": null,
+  "next_step": "Check CI and render 3s V5; visually inspect back breathing without jacket, collar, hand, boot or king defects. Update ESTADO-ATUAL, HISTORICO, JSON, README and AGENTS on main."
+}

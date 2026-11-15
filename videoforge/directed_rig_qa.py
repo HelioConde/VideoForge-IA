@@ -10,7 +10,8 @@ import subprocess
 
 from .rig_candidate import _image, _write_png
 from .directed_rig import _mask_uncovered, _mask_only_original_covered_pixels, _static_mother_with_kael_cutout
-from .c01_v4_breath_qa import validate_c01_v4_pose, static_region_video_report
+from .c01_v4_breath_qa import (validate_c01_v4_pose, validate_c01_v5_back_breath,
+                                static_region_video_report, changed_pixels_in_source_region)
 from .c01_collar_qa import collar_background_exposure, collar_gate
 
 
@@ -211,7 +212,13 @@ def verify_render(props_path: Path, output: Path) -> dict:
             # incentivised unnatural moving wrists/ankles in V3. Check real
             # subtle breathing and static protected physical contacts instead.
             shot=props["shots"][0]
-            constraint_report=validate_c01_v4_pose(shot,props["staticContext"])
+            has_back_breath=any(
+                n.get("id")=="kael.jaqueta"
+                and n.get("mesh",{}).get("backBreath")
+                for n in shot["nodes"])
+            constraint_report=(validate_c01_v5_back_breath(shot,props["staticContext"])
+                               if has_back_breath else
+                               validate_c01_v4_pose(shot,props["staticContext"]))
             name=shot["background"]
             if (not name.startswith("vf-directed/alchemy-lab/")
                 or ".." in name.split("/") or not name.endswith("/background.png")):
@@ -259,6 +266,28 @@ def verify_render(props_path: Path, output: Path) -> dict:
                 "subtle_breathing_pass":min_breath<=max_breath<=max_breath_allowed,
                 "human_visual_review":False,
             }
+            back_evidence=None
+            if has_back_breath:
+                roi=constraint_report["back_source_roi"]
+                back_frames=[]
+                for frame in (min(30,props["durationFrames"]-1),
+                              min(55,props["durationFrames"]-1),
+                              min(75,props["durationFrames"]-1),
+                              props["durationFrames"]-1):
+                    pixels=changed_pixels_in_source_region(
+                        first_video,_video_frame(video,frame,width,height),
+                        shot,width,height,tuple(roi),rgb_delta=8)
+                    back_frames.append({"frame":frame,"changed_pixels":pixels})
+                max_back=max(s["changed_pixels"] for s in back_frames)
+                back_evidence={
+                    "schema":"videoforge/c01-v5-upper-back-actual-h264/v1",
+                    "source_roi":roi,"samples":back_frames,
+                    "max_changed_pixels_rgb_delta_8":max_back,
+                    "back_visible_in_mp4":max_back>=25,
+                    "source_only":True,"visual_approved":False,
+                }
+                (output/"c01-back-breath-qa.json").write_text(
+                    json.dumps(back_evidence,indent=2)+"\n",encoding="utf-8")
             original_bg=_image(png_path,shot["canvas"]["width"],shot["canvas"]["height"])
             scans=[]
             for frame in (min(55,props["durationFrames"]-1),
@@ -279,6 +308,7 @@ def verify_render(props_path: Path, output: Path) -> dict:
                 "schema":"videoforge/c01-v4-subtle-breath-and-static-context/v1",
                 "video_sha256":hashlib.sha256(video.read_bytes()).hexdigest(),
                 "pose":constraint_report,
+                "back":back_evidence,
                 "acting":c01_actor,
                 "static_region_frames":static_scans,
                 "original_mother_static":props["staticContext"],
@@ -286,6 +316,7 @@ def verify_render(props_path: Path, output: Path) -> dict:
                 "human_visual_review":False,
                 "technical_qa_passed":bool(
                     c01_actor["subtle_breathing_pass"] and stable
+                    and (not has_back_breath or back_evidence["back_visible_in_mp4"])
                     and c01_collar["status"]=="PASS_TECHNICAL_NO_HUMAN_APPROVAL"),
             }
             (output/"c01-gates-qa.json").write_text(

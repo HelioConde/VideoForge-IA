@@ -254,6 +254,17 @@
             "sourcePin": {
               "startY": 950,
               "endY": 985
+            },
+            "backBreath": {
+              "kind": "upper-back-source-mesh",
+              "sourceTopY": 857,
+              "sourcePeakY": 898,
+              "sourceBottomY": 947,
+              "expansionPx": 1.05,
+              "liftPx": 0.6,
+              "driverTarget": "kael.ombros",
+              "driverTransform": "translateY",
+              "driverPeakAbsPx": 1.25
             }
           }
         },
@@ -420,7 +431,8 @@
         "V4: direção corrigida pelo usuário; mão direita e antebraço desanexados do osso de respiração e continuam apoiados na perna; perna/bota direita imóveis. Sem gesto artificial para alcançar gate de pixels.",
         "V4: static context sourced directly from the SHA-validated RGB mother, king crown/face and crossed spears preserved; rejects duplicate static-context candidate sprites. Kael underlay uses only original candidate background source pixels, masked by original Kael alpha.",
         "V4: manter somente micro respiração do torso e micro inclinação da cabeça. A arte V4 não está aprovada visualmente.",
-        "C01 V4: gola holdout filho dos ombros usa apenas jaqueta (mesmo pai). Braço direito foi fixado na raiz para preservar contato com perna e não pode ser referência de máscara com pai móvel."
+        "C01 V4: gola holdout filho dos ombros usa apenas jaqueta (mesmo pai). Braço direito foi fixado na raiz para preservar contato com perna e não pode ser referência de máscara com pai móvel.",
+        "V5: respiração das COSTAS via deformação real do mesh de kael.jaqueta, concentrada entre Y=857-947 da fonte e zero nas laterais/cintura/gola. A cabeça V4 continua com inclinação leve. Mão/bota/rei/lanças seguem travados; sem IA ou novos PNG."
       ],
       "backgroundMode": "original-mother-static-context-with-kael-cutout/v1",
       "staticContextPolicy": {

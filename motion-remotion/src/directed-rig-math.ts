@@ -8,7 +8,12 @@ export type DirectedTrack={target:string;transform:DirectedTransform;unit:string
 export type DirectedNode={id:string;parent:string|null;pivot:[number,number];
   role:string;file?:string;bbox?:Rect;z:number;mesh?:{
     kind:Exclude<MeshType,'hand'>;columns:number;rows:number;pinnedRows:[0];amplitudePx:number;
-    sourcePin?:{startY:number;endY:number}}};
+    sourcePin?:{startY:number;endY:number};
+    /** Explicit deformation of APPROVED upper-back cloth, not a new sprite. */
+    backBreath?:{kind:'upper-back-source-mesh';
+      sourceTopY:number;sourcePeakY:number;sourceBottomY:number;
+      expansionPx:number;liftPx:number;
+      driverTarget:string;driverTransform:'translateY';driverPeakAbsPx:number}}};
 export type CameraKey={frame:number;z:number;lookAt:[number,number,number];fovDeg:number};
 export type DirectedShot={id:string;startFrame:number;endFrameExclusive:number;
   canvas:{width:number;height:number};background:string|null;nodes:DirectedNode[];
@@ -62,6 +67,22 @@ export function validateDirectedProps(p:DirectedRigProps):void{
       const pin=n.mesh?.sourcePin;
       if(pin&&(!finite(pin.startY)||!finite(pin.endY)||pin.startY<0||
         pin.endY<=pin.startY||pin.endY>s.canvas.height))fail('SOURCE_PIN_INVALID');
+      const back=n.mesh?.backBreath;
+      if(back){
+        if(s.id!=='C01-P03'||n.id!=='kael.jaqueta'||n.mesh?.kind!=='cloth'||
+          n.parent!=='kael.ombros'||!n.bbox||!pin||
+          back.kind!=='upper-back-source-mesh'||
+          back.driverTarget!=='kael.ombros'||back.driverTransform!=='translateY'||
+          ![back.sourceTopY,back.sourcePeakY,back.sourceBottomY,
+            back.expansionPx,back.liftPx,back.driverPeakAbsPx].every(finite)||
+          back.sourceTopY<n.bbox[1]||back.sourceTopY>=back.sourcePeakY||
+          back.sourcePeakY>=back.sourceBottomY||
+          back.sourceBottomY>=pin.startY||
+          back.expansionPx<=0||back.expansionPx>1.5||
+          back.liftPx<=0||back.liftPx>1||
+          back.driverPeakAbsPx<=0||back.driverPeakAbsPx>2)
+            fail('UPPER_BACK_BREATH_SOURCE_GEOMETRY_INVALID');
+      }
       nodes.set(n.id,n);
     }
     for(const n of s.nodes){
@@ -87,6 +108,15 @@ export function validateDirectedProps(p:DirectedRigProps):void{
           (t.transform.startsWith('scale')&&k.value<0))fail('KEYFRAME_INVALID');
         last=k.frame;
       }
+    }
+    for(const n of s.nodes.filter(v=>v.mesh?.backBreath)){
+      const breath=n.mesh!.backBreath!;
+      if(s.tracks.filter(t=>t.target===breath.driverTarget&&
+        t.transform===breath.driverTransform).length!==1 ||
+        s.tracks.find(t=>t.target===breath.driverTarget&&
+        t.transform===breath.driverTransform)!.keyframes.some(k=>
+          k.value>0||k.value< -breath.driverPeakAbsPx))
+          fail('UPPER_BACK_BREATH_DRIVER_TRACK_INVALID');
     }
     for(const n of s.nodes.filter(v=>v.mesh?.sourcePin)){
       let current:DirectedNode|undefined=n;
@@ -152,31 +182,71 @@ export function inverseTransformSourcePoint(shot:DirectedShot,id:string,point:[n
   return [n.pivot[0]+(x*Math.cos(a)+y*Math.sin(a))/t.scaleX,
     n.pivot[1]+(-x*Math.sin(a)+y*Math.cos(a))/t.scaleY];
 }
+/** An independent, localized *mesh vertex* movement across Kael's back.
+ * The jacket remains one source-derived RGBA part; arms/hand/boot NEVER inherit
+ * these offsets. Center-back breath follows shoulder inspiration exactly.
+ * All four boundaries are pinned to avoid tearing the collar, arm and waist.
+ */
+export function upperBackDeltaAtFrame(
+  node:DirectedNode,shot:DirectedShot,sourceX:number,sourceY:number,
+  frame:number
+):[number,number]{
+  const b=node.mesh?.backBreath;
+  if(!b||!node.bbox)return [0,0];
+  const driver=shot.tracks.find(t=>
+    t.target===b.driverTarget&&t.transform===b.driverTransform) ??
+    fail('UPPER_BACK_DRIVER_REQUIRED');
+  const negativeLift=trackAtFrame(driver,frame);
+  const breath=clamp01(-negativeLift/b.driverPeakAbsPx);
+  if(breath===0||sourceY<=b.sourceTopY||sourceY>=b.sourceBottomY)return [0,0];
+  const u=clamp01((sourceX-node.bbox[0])/node.bbox[2]);
+  const v=sourceY<=b.sourcePeakY?
+    clamp01((sourceY-b.sourceTopY)/(b.sourcePeakY-b.sourceTopY)):
+    clamp01((b.sourceBottomY-sourceY)/(b.sourceBottomY-b.sourcePeakY));
+  // Exact zero on outer edges, source neck line and pinned waist. The
+  // horizontal radial expansion is opposite on the two back halves.
+  const cross=4*u*(1-u),vertical=v*v*(3-2*v);
+  const weight=cross*cross*vertical*breath;
+  return [((u-.5)*2)*b.expansionPx*weight,-b.liftPx*weight];
+}
+
 export function directedMeshAtFrame(node:DirectedNode,shot:DirectedShot,frame:number,fps:number){
   if(!node.mesh||!node.bbox)return fail('MESH_REQUIRED');
   const grid=meshGridAtFrame({bbox:node.bbox,canvas:shot.canvas,spec:node.mesh,
     kind:node.mesh.kind,frame:frame-shot.startFrame,fps,
     duration:shot.endFrameExclusive-shot.startFrame,blinkFrames:[]});
   const pin=node.mesh.sourcePin;
-  if(!pin)return grid;
   const [bx,by,bw,bh]=node.bbox;
   const {width,height}=shot.canvas;
-  for(let i=0;i<grid.positions.length;i+=3){
-    const vertex=i/3,row=Math.floor(vertex/(node.mesh.columns+1)),col=vertex%(node.mesh.columns+1);
-    const original:[number,number]=[bx+bw*col/node.mesh.columns,by+bh*row/node.mesh.rows];
-    const t=clamp01((original[1]-pin.startY)/(pin.endY-pin.startY));
-    if(t===0)continue;
-    const weight=t*t*(3-2*t);
-    const posed=transformSourcePoint(shot,node.id,
-      [grid.positions[i]+width/2,height/2-grid.positions[i+1]],frame);
-    const constrained:[number,number]=weight===1?original:
-      [posed[0]+(original[0]-posed[0])*weight,posed[1]+(original[1]-posed[1])*weight];
-    const local=inverseTransformSourcePoint(shot,node.id,constrained,frame);
-    grid.positions[i]=local[0]-width/2;
-    grid.positions[i+1]=height/2-local[1];
+  if(pin){
+    for(let i=0;i<grid.positions.length;i+=3){
+      const vertex=i/3,row=Math.floor(vertex/(node.mesh.columns+1)),col=vertex%(node.mesh.columns+1);
+      const original:[number,number]=[bx+bw*col/node.mesh.columns,by+bh*row/node.mesh.rows];
+      const t=clamp01((original[1]-pin.startY)/(pin.endY-pin.startY));
+      if(t===0)continue;
+      const weight=t*t*(3-2*t);
+      const posed=transformSourcePoint(shot,node.id,
+        [grid.positions[i]+width/2,height/2-grid.positions[i+1]],frame);
+      const constrained:[number,number]=weight===1?original:
+        [posed[0]+(original[0]-posed[0])*weight,posed[1]+(original[1]-posed[1])*weight];
+      const local=inverseTransformSourcePoint(shot,node.id,constrained,frame);
+      grid.positions[i]=local[0]-width/2;
+      grid.positions[i+1]=height/2-local[1];
+    }
+  }
+  if(node.mesh.backBreath){
+    for(let i=0;i<grid.positions.length;i+=3){
+      const vertex=i/3,row=Math.floor(vertex/(node.mesh.columns+1)),col=vertex%(node.mesh.columns+1);
+      const originalX=bx+bw*col/node.mesh.columns;
+      const originalY=by+bh*row/node.mesh.rows;
+      const [dx,dy]=upperBackDeltaAtFrame(node,shot,originalX,originalY,frame);
+      grid.positions[i]+=dx;
+      grid.positions[i+1]-=dy; // renderer has up-positive Y
+    }
   }
   return grid;
 }
+
 /** Fix pixel/world calibration at baseline camera; camera animation then changes framing. */
 export function sourceWorldScale(canvas:{width:number;height:number},width:number,height:number):number{
   const visibleSourceHeight=Math.min(canvas.height,canvas.width/(width/height));

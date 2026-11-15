@@ -69,6 +69,51 @@ def validate_c01_v4_pose(shot: dict, static_context: dict | None) -> dict:
     }
 
 
+def validate_c01_v5_back_breath(shot: dict, static_context: dict | None) -> dict:
+    """V5 adds a real localized upper-back jacket mesh, retaining V4 contacts."""
+    original = validate_c01_v4_pose(shot, static_context)
+    jacket = next((n for n in shot["nodes"] if n["id"]=="kael.jaqueta"), None)
+    mesh = (jacket or {}).get("mesh", {})
+    back = mesh.get("backBreath")
+    if (not isinstance(back,dict)
+        or back.get("kind") != "upper-back-source-mesh"
+        or back.get("driverTarget") != "kael.ombros"
+        or back.get("driverTransform") != "translateY"
+        or jacket.get("parent") != "kael.ombros"
+        or not (back.get("sourceTopY")==857
+                and back.get("sourcePeakY")==898
+                and back.get("sourceBottomY")==947)
+        or not (0 < back.get("expansionPx",0) <= 1.5
+                and 0 < back.get("liftPx",0) <= 1)
+        or back.get("driverPeakAbsPx") != 1.25
+        or not mesh.get("sourcePin")
+        or back["sourceBottomY"] >= mesh["sourcePin"]["startY"]):
+        raise C01BreathQAError("C01_V5_SOURCE_PINNED_BACK_MESH_INVALID")
+    shoulder = next(t for t in shot["tracks"]
+                    if t["target"]=="kael.ombros" and t["transform"]=="translateY")
+    head = next(t for t in shot["tracks"]
+                if t["target"]=="kael.cabeca" and t["transform"]=="rotationZ")
+    if (not any(k["value"]==-back["driverPeakAbsPx"] for k in shoulder["keyframes"])
+        or any(k["value"]>0 or k["value"] < -back["driverPeakAbsPx"]
+               for k in shoulder["keyframes"])
+        or any(abs(k["value"])>.5 for k in head["keyframes"])
+        or not any(abs(k["value"])>=.2 for k in head["keyframes"])):
+        raise C01BreathQAError("C01_V5_BACK_BREATH_DRIVER_OR_HEAD_INVALID")
+    return {
+        "schema":"videoforge/c01-v5-source-back-breath-contract/v1",
+        "v4_pose":original,
+        "back":back,
+        "source_patch":"kael.jaqueta original RGBA; no new image layers",
+        "back_source_roi":[405,870,85,65],
+        "head_still_moves_a_little":True,
+        "jacket_waist_and_outer_seams_pinned":True,
+        "hand_and_boot_remain_fixed":True,
+        "no_new_generated_pixels":True,
+        "human_visual_approved":False
+    }
+
+
+
 def _source_rect_to_video(shot: dict, region: tuple, width: int, height: int):
     """Projection of the locked C01 30° camera and native 1024x1536 canvas."""
     sw, sh = shot["canvas"]["width"], shot["canvas"]["height"]
