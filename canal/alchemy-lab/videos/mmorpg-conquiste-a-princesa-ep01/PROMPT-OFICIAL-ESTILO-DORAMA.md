@@ -8,6 +8,10 @@
 ## 1. Amostra visual indicada pelo responsável
 
 - Arquivo **original fornecido nesta conversa**: `1000402660.png` (apesar da extensão, os bytes são **JPEG/JFIF**, **864 × 1536 px**, RGB, retrato). SHA-256 exato dos bytes apresentados: `2bab99670444001fbccf8a6c861276e93dfb56f04a33ba5f542698ad3419b2e1`.
+![Miniatura fiel da imagem enviada pelo usuário — referência de composição e paleta; NÃO usar como imagem-mãe para geração ou rig](REFERENCIA-VISUAL-DORAMA-PREVIEW-96.jpg)
+
+**Amostra realmente arquivada neste GitHub:** [miniatura JPEG 96 × 171 px](REFERENCIA-VISUAL-DORAMA-PREVIEW-96.jpg), derivada por redução técnica sem IA a partir do arquivo que o usuário enviou. SHA-256 da miniatura: `58f22420d123561623944e369c08c7d6a1808df29dc2e3f5d795129c5d2192b4`. **A imagem original de 864 × 1536 px NÃO foi copiada integralmente** para o GitHub nesta atualização; seu SHA-256 original está registrado acima. **Não confundir thumbnail com referência em resolução plena** para desenho de sprites ou máscaras.
+
 - **O que define a referência:** Kael ajoelhado em primeiro plano lateral/traseiro (armadura gasta, capa vermelha); princesa loira em vestido branco-lilás com bordados dourados no alto da escadaria; rei coroado ao fundo em trono ornamentado; guardas com lanças; catedral/salão gótico, vitrais coloridos, candelabros, degraus vermelhos, mármore reflexivo; raios volumétricos diagonais, contraluz dourada, atmosfera dramática e profundidade de cena.
 - **Linguagem de composição a preservar:** primeiro plano com escala maior para gerar imersão, plano médio expressivo, fundo narrativo legível, linhas de fuga das escadas e dos vitrais, foco emocional entre dois personagens, riqueza de detalhes sem perder hierarquia visual.
 - A imagem serve de **referência de qualidade, acabamento, paleta, profundidade, emoção e consistência de personagens**, não de obrigação de copiar o trono, o palácio ou exatamente esse enquadramento em todos os planos.
@@ -72,6 +76,8 @@ Escolher um novo ângulo que tenha *motivo narrativo* e registrar no JSON de dir
 ```text
 photorealistic live-action, plastic 3D render, cheap game CGI, chibi, flat western cartoon, generic stock fantasy, inconsistent faces, redesigned hair or clothing, inconsistent ages, random modern elements, mismatched time of day, low detail, flat lighting, sterile empty set, random perspective change, bent architecture, duplicated characters, extra limbs or fingers, fused hands, floating objects, doubled spears, cut-off crowns, cropped heads, broken armor joints, warped feet, inconsistent prop direction, misplaced shadows, excessive bloom, overexposed highlights, muddy shadows, oversaturation, low contrast readability, unreadable silhouettes, unwanted text, watermark, logo, unintentional lens distortion
 ```
+
+**Contrato configurável para agentes:** [`estilo-visual-oficial-dorama.json`](estilo-visual-oficial-dorama.json). Este JSON registra o estilo, a alternância de câmeras, a consistência visual e o bloqueio de geração atual. Não substitui o parser de direção nem passa a ser usado pelo renderer automaticamente.
 
 ## 6. Contrato de direção por plano
 
