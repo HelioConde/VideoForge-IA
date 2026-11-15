@@ -1,0 +1,123 @@
+name: "VideoForge - C12 malhas e MP4 tecnico"
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/c12-technical-render.yml'
+      - 'videoforge/c12_technical_pipeline.py'
+      - 'tests/test_c12_technical_pipeline.py'
+      - 'motion-remotion/src/c12-*'
+      - 'motion-remotion/tests/c12-*'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-technical-assets.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/c12-technical-import/**'
+permissions:
+  contents: read
+  packages: read
+concurrency:
+  group: c12-technical-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  C12_OUT: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-technical
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Testar importacao, proveniencia e contrato do compositor
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p test_c12_technical_pipeline.py -v
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/c12-mesh-technical-contract.test.cjs tests/rig-three-math.test.cjs
+      - name: Registrar PNGs presentes e ausentes sem simular render
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.c12_technical_pipeline preflight || result=$?
+          test "${result:-0}" -eq 0 || test "${result:-0}" -eq 2
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          r=json.loads((Path(os.environ['C12_OUT'])/'preflight.json').read_text())
+          assert 'error' not in r, r
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write(f"C12: {r['foundCount']}/{r['requiredCount']} PNGs encontrados. MP4: nao executado nesta validacao.\n")
+              for asset in r['missing']:
+                  f.write(f"- Pendente: {asset['id']}\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c12-preflight-${{ github.run_id }}
+          path: ${{ env.C12_OUT }}/preflight.json
+          retention-days: 14
+          if-no-files-found: error
+  render:
+    needs: validate
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write
+      packages: read
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Preparar apenas bytes originais arquivados e commitados
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          python -m videoforge.c12_technical_pipeline prepare
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+      - name: Renderizar duas tomadas de 4s e quadros de revisao repetidos
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$C12_OUT/review-frames"
+          cd motion-remotion
+          for frame in 0 30 74 76 119 120 150 173 175 239; do
+            for suffix in '' '-repeat'; do
+              ./node_modules/.bin/remotion still src/c12-technical-index.ts C12TechnicalMeshPreview \
+                "../$C12_OUT/review-frames/frame-$frame$suffix.png" \
+                --frame="$frame" --props="../$C12_OUT/props.json" --gl=swangle --log=error
+            done
+          done
+          ./node_modules/.bin/remotion render src/c12-technical-index.ts C12TechnicalMeshPreview \
+            "../$C12_OUT/c12-technical-preview.mp4" --props="../$C12_OUT/props.json" \
+            --frames=0-239 --codec=h264 --pixel-format=yuv420p --gl=swangle --concurrency=1 --log=error
+      - name: Verificar MP4 e determinismo sem aprovar arte
+        shell: bash
+        run: |
+          python -m videoforge.c12_technical_pipeline verify \
+            --video "$C12_OUT/c12-technical-preview.mp4" --output "$C12_OUT/render-qa.json"
+      - name: Preservar PNGs de revisao no historico do canal
+        if: ${{ always() && hashFiles('output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-technical/review-frames/*.png') != '' }}
+        shell: bash
+        run: |
+          bash scripts/persistir-imagens-gh.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
+            "$C12_OUT/review-frames" "$GITHUB_RUN_ID" c12-technical-review
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c12-technical-not-approved-${{ github.run_id }}
+          path: ${{ env.C12_OUT }}/
+          retention-days: 14
+          if-no-files-found: error

@@ -1,0 +1,195 @@
+{
+  "schema": "videoforge/c12-technical-import/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "sourceCanvas": [
+    941,
+    1672
+  ],
+  "bboxDerivation": "integer polygon bounding rectangle, inclusive extrema; mismatch must block staging for alignment review",
+  "sourceProvenance": {
+    "kind": "existing-chat-reference-used-for-technical-mesh-draft",
+    "approvedFor": "visual-style-only",
+    "shotMotherApproved": false,
+    "rigApproved": false,
+    "note": "mother is the draft source role, not approval for the official shot; sourceOriginalsArchived verifies byte storage only"
+  },
+  "assets": [
+    {
+      "id": "C12-P02-mother",
+      "shot": "C12-P02",
+      "role": "mother",
+      "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "id": "C12-P02-background",
+      "shot": "C12-P02",
+      "role": "background",
+      "sha256": "846358dfc4d2e85961b33c78e0fdf73cbc500ff46ea53af6d2444bdbac7c07cd",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "id": "C12-P03-mother",
+      "shot": "C12-P03",
+      "role": "mother",
+      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "id": "C12-P03-background",
+      "shot": "C12-P03",
+      "role": "background",
+      "sha256": "a89125a1b5b6b46891d7f1306c015183e2e5c781605b3886143bf91cf16b2c15",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "id": "kael-cape-loose-fold",
+      "shot": "C12-P02",
+      "role": "sprite",
+      "sha256": "d2db9bb4b9014dac97e8c73b1769b5062e4dd4992c592be43250c13e37e26841",
+      "bbox": [
+        147,
+        735,
+        151,
+        132
+      ],
+      "dimensions": [
+        151,
+        132
+      ],
+      "z": 14,
+      "mesh": {
+        "kind": "cape",
+        "columns": 6,
+        "rows": 8,
+        "pinnedRows": [
+          0
+        ],
+        "amplitudePx": 8.5
+      }
+    },
+    {
+      "id": "elara-left-face-hair-lock",
+      "shot": "C12-P03",
+      "role": "sprite",
+      "sha256": "611638aa33b8fc72c3654bb141ce92ad59fea2adaced39fcf8b5e742e45d450f",
+      "bbox": [
+        302,
+        679,
+        78,
+        307
+      ],
+      "dimensions": [
+        78,
+        307
+      ],
+      "z": 15,
+      "mesh": {
+        "kind": "hair-front-left",
+        "columns": 5,
+        "rows": 10,
+        "pinnedRows": [
+          0
+        ],
+        "amplitudePx": 5.2
+      }
+    },
+    {
+      "id": "elara-back-hair-fall",
+      "shot": "C12-P03",
+      "role": "sprite",
+      "sha256": "a7eb167c147b399840ccae377d498fce417efb88a5c05fe9e74f17f5fe0bb634",
+      "bbox": [
+        776,
+        742,
+        163,
+        899
+      ],
+      "dimensions": [
+        163,
+        899
+      ],
+      "z": 16,
+      "mesh": {
+        "kind": "hair-back",
+        "columns": 6,
+        "rows": 12,
+        "pinnedRows": [
+          0
+        ],
+        "amplitudePx": 9.4
+      }
+    },
+    {
+      "id": "elara-earring-pendant",
+      "shot": "C12-P03",
+      "role": "sprite",
+      "sha256": "d5c73354209eafc11d4042fdef16c6138f5f8b16fe63e62b47c06b73d83e277d",
+      "bbox": [
+        686,
+        538,
+        25,
+        112
+      ],
+      "dimensions": [
+        25,
+        112
+      ],
+      "z": 17,
+      "mesh": {
+        "kind": "earring",
+        "columns": 4,
+        "rows": 9,
+        "pinnedRows": [
+          0
+        ],
+        "amplitudePx": 4.3,
+        "pivotPx": [
+          690,
+          547
+        ],
+        "frequencyHz": 0.67,
+        "phaseRad": 0.7
+      }
+    },
+    {
+      "id": "elara-sleeve-lower-fabric",
+      "shot": "C12-P03",
+      "role": "sprite",
+      "sha256": "722b2a4ab6f7fc0f0b2413fd7ad2ce7d39c7165ca274159d386ad5791d9cdb78",
+      "bbox": [
+        575,
+        1300,
+        126,
+        371
+      ],
+      "dimensions": [
+        126,
+        371
+      ],
+      "z": 18,
+      "mesh": {
+        "kind": "cloth",
+        "columns": 5,
+        "rows": 10,
+        "pinnedRows": [
+          0
+        ],
+        "amplitudePx": 5.9
+      }
+    }
+  ]
+}
