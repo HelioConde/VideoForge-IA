@@ -1,5 +1,11 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## C01-P02 — código de geração do fundo oculto e três RGBA (15/11/2026)
+
+`videoforge/remake_sword_source.py` e `.github/workflows/remake-sword-component.yml` usam o proxy já instalado, uma edição por run manual, origem `cena-01-c01-p02.png` da mesma mãe SHA arquivada e prompts separados por peça. Criam candidatos `underlay` (RGB 1024×1536) e `sheath/blade/hand` (RGBA alpha), com QA, SHA e arquivamento imutável mesmo quando houver reprovação técnica. Testes gratuitos de política de custo, origem e proxy mockado estão no `tests/test_remake_sword_source.py`; CI pendente de verificação neste registro.
+
+**Regra de custo ativa:** `paid_provider_calls_approved=false`; `max_chargeable_calls_per_run=0`. A nova geração não foi disparada. Não há PNG V2/underlay/espada reais nem MP4 de 3s. É proibido concluir a tomada a partir de imagens de teste. A execução de fontes só poderá ocorrer após aprovação de gasto e da referência canônica V2. A composição/empacotamento sem custo permanece pronta.
+
 ## C01-P02 — empacotamento automático de arte real (15/11/2026)
 
 ### Verificação GitHub concluída: scanner, empacotamento sintético, gatilho e bloqueio (15/11/2026)

@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+> **C01-P02:** novo produtor `videoforge/remake_sword_source.py` + `remake-sword-component.yml` prepara underlay RGB e três peças RGBA por tomada verdadeira, com gate de custo e apenas execução manual. A automação de pacote e render já está ligada; ainda **sem âncora V2 aprovada/sem PNGs finais/sem MP4 da tomada**. [Documentação da fonte/rig](docs/C01-P02-PACOTE-ARTE-E-RIG.md).
+
 > **C01-P02:** empacotamento de arte por SHA e gatilho de render autônomo conectados em `remake-sword-pack.yml` → `remake-sword-preview.yml`. [Pacote e requisitos técnicos](docs/C01-P02-PACOTE-ARTE-E-RIG.md). Fonte V2 e underlay ainda ausentes: sem novos PNGs nem MP4 da tomada.
 
 > **EP01 C01-P02:** prévia articulada agora tem entrada própria no Remotion + validação SHA/PNG/recomposição com FFmpeg (decodificação de PNG para QA) e Python stdlib (composição de pixels): [pacote de arte e rig](docs/C01-P02-PACOTE-ARTE-E-RIG.md). O preflight de GitHub Actions não gera PNG e só libera render com fonte real e referência V2 aprovada.

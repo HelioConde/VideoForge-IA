@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "V2 character-bible source with valid archive SHA and approval + per-shot C01-P02 mother and 4 part producer archives (underlay producer and shot-specific RGBA generator missing); rerun archive pack and auto ThreeCanvas preview",
+  "next_action": "CI test mock producer + archive; then after approved V2 art/cost, generate C01-P02 mother and each of four components manually using existing proxy; auto-pack and ThreeCanvas",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -868,8 +868,8 @@
     "canonical_anchor_approved": false,
     "real_source_bundle_exists": false,
     "real_c01p02_mp4_exists": false,
-    "underlay_producer_available": false,
-    "shot_specific_rgba_producer_available": false,
+    "underlay_producer_available": true,
+    "shot_specific_rgba_producer_available": true,
     "human_motion_review_required": true,
     "youtube_uploaded": false,
     "next_step": "V2 character-bible source with valid archive SHA and approval + per-shot C01-P02 mother and 4 part producer archives (underlay producer and shot-specific RGBA generator missing); rerun archive pack and auto ThreeCanvas preview",
@@ -901,6 +901,34 @@
       "id": 43745676658,
       "result": "success",
       "subject": "threecanvas_test_after_dynamic_anchor_preflight_fix"
-    }
+    },
+    "underlay_producer_status": "code_only_no_image_generated",
+    "shot_specific_rgba_producer_status": "code_only_no_image_generated"
+  },
+  "c01_p02_shot_specific_source_20261115": {
+    "schema": "videoforge/remake-sword-component-source/v1",
+    "status": "source_code_submitted_ci_pending",
+    "source_module": "videoforge/remake_sword_source.py",
+    "workflow": ".github/workflows/remake-sword-component.yml",
+    "mode": "manual_workflow_dispatch_paid_only_after_cost_gate",
+    "free_test_mode": "push_mocked_provider",
+    "parts": [
+      "underlay",
+      "sheath",
+      "blade",
+      "hand"
+    ],
+    "source_required": "archived C01-P02 mother/production-scene-request + approved V2 canonical anchor",
+    "per_run_edit_calls": 1,
+    "current_paid_calls_approved": false,
+    "current_chargeable_limit": 0,
+    "no_automatic_image_generation": true,
+    "underlay_producer_code_implemented": true,
+    "shot_specific_rgba_producer_code_implemented": true,
+    "real_png_generated": false,
+    "real_mp4_generated": false,
+    "status_reason": "official V2 reference and source art absent; provider spend not approved",
+    "youtube_uploaded": false,
+    "next_step": "CI test mock producer + archive; then after approved V2 art/cost, generate C01-P02 mother and each of four components manually using existing proxy; auto-pack and ThreeCanvas"
   }
 }

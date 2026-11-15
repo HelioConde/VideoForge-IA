@@ -42,3 +42,7 @@ O fluxo de espada `.github/workflows/remake-sword-preview.yml` só recebe um art
 ### 15/11/2026 — autoempacotamento por archives GitHub do canal
 
 `videoforge/remake_sword_pack.py` varre `assets/geracoes/` da mesma obra por produtor/run e verifica origem do `c01`/`C01-P02`, SHA da mãe e de quatro sprites. `remake-sword-pack.yml` publica pacote se completo; `remake-sword-preview.yml` recebe `workflow_run` e localiza artifact verdadeiro antes de renderizar. Qualquer bloqueio ou falha deve continuar explícito. Ainda não há produtor de underlay C01-P02 nem geração de RGBA por tomada conectada. Nenhum custo de imagens autorizado.
+
+### Gerar camadas independentes do insert C01-P02 — com custo controlado
+
+`videoforge/remake_sword_source.py` cria uma candidata por execução (`underlay` RGB opaco, `sheath/blade/hand` RGBA com alfa real), sem reusar imagem C01-P04. Reaproveita `image_generation_policy`, `proxy_images`, PNG QA e arquivos imutáveis em `assets/geracoes`. O workflow `remake-sword-component.yml` só faz chamadas de geração sob `workflow_dispatch` explícito e autorização de custo válida, nunca automaticamente. O `push` executa testes mockados. A cada produção autorizada, arquivar o PNG original e QA mesmo se a transparência falhar; pack só aceita status técnico candidato verificado e mesma mãe SHA. Manual obrigatório: `docs/C01-P02-PACOTE-ARTE-E-RIG.md`. Estado atual: custo bloqueado.

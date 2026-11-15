@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — gerador de peças da espada por tomada específica, sem novos gastos
+
+- Implementado `videoforge/remake_sword_source.py`: aceita exclusivamente mãe original `C01-P02` do arquivo SHA verificado, âncora V2 aprovada e custo da política permitido; uma chamada `/v1/images/edits` por run. Prompts específicos para o carrasco, lâmina, bainha e fundo oculto. Nunca usa fonte C01-P04.
+- Novo `remake-sword-component.yml` com testes gratuitos em push e execução de produção **manual**, gate de custo ANTES de segredos/cliente proxy, suporte ao proxy precompilado já usado pelo projeto. PNG/QA arquivados pelo script existente, não por biblioteca adicional.
+- Testes unitários com mock de proxy e PNGs temporários verificam alpha, opacidade, provenance, hash, archive, recusas e proteção anti-sobrescrita; **sem provedor real nesta etapa**.
+- Próximo: confirmar resultados do CI; referência V2 aprovada e eventual liberação explícita de custo, gerar as 4 peças reais e verificar via pack/ThreeCanvas sem publicação.
+
 ## 15/11/2026 — reteste após correção do contrato de âncora aprovada
 
 - GitHub Actions `43745676658`: SUCCESS em preflight e smoke Remotion/ThreeCanvas de teste, após remoção da asserção que exigia referência V2 perpetuamente ausente. Futura aprovação da âncora não deve mais derrubar o teste.

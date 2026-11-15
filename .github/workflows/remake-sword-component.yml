@@ -1,0 +1,165 @@
+name: "VideoForge - C01-P02 editar uma peca real por run autorizado"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/remake_sword_source.py'
+      - 'tests/test_remake_sword_source.py'
+      - 'tests/test_remake_source_workflow.py'
+      - '.github/workflows/remake-sword-component.yml'
+  workflow_dispatch:
+    inputs:
+      part_id:
+        description: "Uma unica peca da imagem mae C01-P02"
+        required: true
+        type: choice
+        options: [underlay, sheath, blade, hand]
+      source_run_id:
+        description: "ID do run que arquivou a mae C01-P02 (production-scene-request)"
+        required: true
+        type: number
+
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
+concurrency:
+  group: vf-remake-component-${{ github.event_name }}-${{ inputs.part_id || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate-code-no-cost:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Testar gates de custo/identidade, API mockada e arquivo permanente
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_sword_source tests.test_remake_source_workflow -v
+          echo "REMAKE_C01_P02_SOURCE_CODE_QA_NO_PAID_INFERENCE"
+
+  one-real-image-only-manual:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      actions: read
+      packages: read
+    env:
+      CH: alchemy-lab
+      VID: mmorpg-conquiste-a-princesa-ep01
+      PART: ${{ inputs.part_id }}
+      SOURCE_RUN_ID: ${{ inputs.source_run_id }}
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: BARRAR geracao antes de usar segredos/proxy se custo ou mae nao aprovados
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from videoforge.remake_sword_source import preflight
+          part=os.environ["PART"]
+          run=int(os.environ["SOURCE_RUN_ID"])
+          state=preflight(part,run)
+          if not state["ready"]:
+              raise SystemExit("REMAKE_SWORD_PAID_OR_ORIGIN_BLOCKED: "+str(state["blocked_reason"]))
+          print("REMAKE_SWORD_ONE_IMAGE_EDIT_APPROVED_BY_POLICY",
+                part,"source_run",run,"no_youtube_upload")
+          PY
+      - name: Validar proxy configurado (apenas apos gate de custo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then echo "::error::CODEX_PROXY_API_KEY ausente"; exit 2; fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else
+            echo "::error::Proxy nao configurado"; exit 2
+          fi
+      - name: Reusar proxy precompilado, sem tokens no log
+        if: env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          raw=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+          if (not isinstance(raw,dict) or not isinstance(raw.get('records'),list)
+              or not raw['records'] or any(not isinstance(x.get('token'),dict)
+              for x in raw['records'])):
+              raise SystemExit('REMAKE_PROXY_ACCOUNT_SCHEMA_INVALID')
+          dst=Path(os.environ['RUNNER_TEMP'])/'vf-proxy-state'/'accounts.json'
+          dst.write_text(json.dumps(raw),encoding='utf-8')
+          dst.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-remake-one-component \
+            --user "$(id -u):$(id -g)" --read-only \
+            --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" \
+            -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy temporario indisponivel"; exit 2
+      - name: Gerar UMA imagem candidata somente da MAE C01-P02 mesma identidade
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remake_sword_source produce \
+            --part "$PART" --source-run-id "$SOURCE_RUN_ID" \
+            --url "$PROXY_ENDPOINT" --model gpt-image-2
+      - name: Arquivar PNG original no canal mesmo se QA rejeitar alfa
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          producer=production-rgba-request
+          if [[ "$PART" == underlay ]]; then producer=production-sword-underlay-request; fi
+          source_dir="output/$CH/videos/$VID/sword-components/c01-p02/$PART"
+          bash scripts/arquivar-pngs-se-existirem.sh \
+            "$CH" "$VID" "$source_dir" "$GITHUB_RUN_ID" "$producer" "${{ job.status }}"
+      - name: Salvar PNG/QA temporarios para revisao humana (se produzidos)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-remake-sword-component-${{ inputs.part_id }}-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/sword-components/c01-p02/${{ inputs.part_id }}/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Apagar estado temporario do proxy
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-remake-one-component >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
