@@ -1,5 +1,11 @@
 # Estratégia editorial — Alchemy Lab (dorama experimental)
 
+## Padrão de imagem obrigatório para as histórias de dorama (15/11/2026)
+
+Toda futura produção de imagens **autorizada** para o segmento de dorama deve ler antes [`dorama/README.md`](dorama/README.md), [bíbia visual / prompt oficial](videos/mmorpg-conquiste-a-princesa-ep01/PROMPT-OFICIAL-ESTILO-DORAMA.md) e [contrato JSON](videos/mmorpg-conquiste-a-princesa-ep01/estilo-visual-oficial-dorama.json). Identidade: **Cinematic Semi-Realistic Fantasy Anime**. Quase toda tomada prioriza **tensão ou emoção** por iluminação, gestos e composição, e **alterna deliberadamente o ângulo de câmera entre planos**, com continuidade de figurino, cenário e identidade dos personagens; não utilizar o mesmo trono/palácio em cenas de outras locações. **Somente dorama**, não é diretriz para outros canais.
+
+**ATENÇÃO:** a existência de um prompt **não libera o bloqueio de novas imagens do EP01** (`videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock`) nem autoriza publicação no YouTube. Preparar prompts não é o mesmo que gerar novas artes.
+
 > **Plano editorial, não execução.** Pesquisa de trends, vidIQ, geração de imagens, narração, Analytics e publicação são integrações futuras. Não criar candidatos, reservas, históricos ou métricas fictícios. Ler antes: `README.md`, `AGENTS.md`, `docs/ARQUITETURA.md`, `docs/REGRAS-EDITORIAIS.md`, `docs/ESTRATEGIA_SHORTS.md`, `canal/README.md`, `canal/<id>/README.md` e histórico **do próprio canal**.
 
 ## Posicionamento e meta
