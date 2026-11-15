@@ -129,3 +129,8 @@ Registro cronológico de fatos verificáveis. **Não sobrescrever eventos antigo
 ## Como acrescentar progresso
 
 Acrescentar uma seção datada com: objetivo e cena, arquivos alterados, commit realmente presente na `main`, run/workflow com resultado, mídia/artifact e SHA se houver, problemas abertos e próxima ação. Se ainda for apenas PR/branch, identificar explicitamente como **NÃO INTEGRADO**. Atualizar [ESTADO-ATUAL.md](ESTADO-ATUAL.md) **no mesmo lote de mudanças**; usar `estado-atual.json` para leitura programática. Nenhum agente deve depender do histórico de chats para reconstruir o projeto.
+
+## 2026-11-15T09:36:17Z — diagnóstico automático de retomada
+
+- Etapa: generate_character_bible; alvo: character-bible; bloqueio: provider_cost_permission_required.
+- Apenas verificação de estado/arquivos. Nenhuma mídia criada ou aprovação inventada.

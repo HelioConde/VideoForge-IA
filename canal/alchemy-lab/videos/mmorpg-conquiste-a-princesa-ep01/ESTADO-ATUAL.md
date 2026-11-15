@@ -1,5 +1,15 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+<!-- REMAKE-AUTOPILOT-START -->
+### Diagnóstico autônomo mais recente
+- Etapa: generate_character_bible
+- Alvo: character-bible
+- Bloqueio: provider_cost_permission_required
+- Despacho de geração permitido: False
+- Sem novas imagens, vídeo ou aprovação humana neste diagnóstico.
+<!-- REMAKE-AUTOPILOT-END -->
+
+
 ## REMAKE EP01 V2 — DIREÇÃO ATUAL E AUTONOMIA DO PROGRAMA (15/11/2026)
 
 **ORDEM RECENTE:** refazer EP01 do drama pelas regras de qualidade, sem teto editorial de imagens, e continuar. **O lock antigo de 14/11 foi arquivado em `REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md`, não está mais ativo**. O remake pode gerar novas imagens **editorialmente**; **custos adicionais e publicação ainda não autorizados**.

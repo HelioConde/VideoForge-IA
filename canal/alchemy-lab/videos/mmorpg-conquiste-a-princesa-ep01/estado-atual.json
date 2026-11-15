@@ -594,5 +594,11 @@
     "channel_isolated": true,
     "autonomous_pipeline_target": true,
     "next_step": "run safe GitHub autonomous preflight and prepare verified character-bible anchor; no paid generation or YouTube without authorization"
+  },
+  "autopilot_checkpoint": {
+    "stage": "generate_character_bible",
+    "target": "character-bible",
+    "blocker": "provider_cost_permission_required",
+    "dispatch_allowed": false
   }
 }
