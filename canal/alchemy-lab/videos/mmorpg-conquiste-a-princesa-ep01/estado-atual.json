@@ -1,6 +1,6 @@
 {
   "schema": "videoforge/episode-checkpoint/v1",
-  "updated_local_date": "2026-11-14",
+  "updated_local_date": "2026-11-15",
   "timezone": "America/Sao_Paulo",
   "source_of_truth": "main",
   "channel": "alchemy-lab",
@@ -10,7 +10,7 @@
   "animation_manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
   "episode_seconds_planned": 163,
   "shots_planned": 37,
-  "motion_tracks_planned": 110,
+  "motion_tracks_planned": 113,
   "locks": {
     "no_new_image_generation": true,
     "no_youtube_upload": true,
@@ -18,14 +18,14 @@
     "human_art_approved": false
   },
   "c01": {
-    "state": "technical_mp4_perceptible_motion_v2_rendered_main_but_visual_qa_rejected",
+    "state": "v3_technically_passed_merged_main_visual_and_neutral_recomposition_pending",
     "shot": "C01-P03",
-    "integrated_pr": 51,
-    "integrated_commit": "693212eeb32ede9c0dc8f1c6de94a92638b0dc60",
-    "run_id": 43660106313,
+    "integrated_pr": 56,
+    "integrated_commit": "69e22458703c7c716f05e205987471ce3595b1c5",
+    "run_id": 43673610507,
     "run_conclusion": "success",
-    "artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43660106313",
-    "artifact_id": 14139373365,
+    "artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43673610507",
+    "artifact_id": 14145228520,
     "artifact_temporary": true,
     "mp4": {
       "exists_in_actions_artifact": true,
@@ -34,16 +34,23 @@
       "width": 1080,
       "height": 1920,
       "fps": 30,
-      "official": false
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "audio": false,
+      "bytes": 693447,
+      "sha256": "73993ab7b1f93aead42d1860d16c3db965adcbd3e6bdf2794eb631a9d704100c",
+      "official": false,
+      "main_artifact_id": 14145228520
     },
     "still_pending": [
+      "human_visual_approval_not_granted",
+      "c01_v3_collar_roi_pass_margin_only_2_pixels_so_review_edge",
+      "neutral_recomposition_not_pixel_exact_mean_abs_rgb_error_11_159474",
       "guard_spear_mask_quality",
       "aldric_throne_contamination",
       "hidden_region_underlays",
-      "neutral_recomposition_human_review",
-      "neck_collar_background_exposure_when_head_rotates",
-      "head_rotation_8_5_deg_exceeds_manual_default_2_deg_technical_test_only",
-      "human_visual_approval_not_granted"
+      "wrist_hand_ankle_knee_and_seam_visual_review",
+      "episode_remaining_36_shots_and_audio_not_created"
     ],
     "v2": {
       "integrated_pr": 55,
@@ -98,6 +105,94 @@
       "head_rotation_exceeds_manual": true,
       "scope": "technical_experiment_only_not_publishable",
       "next_action": "reconstruct collar/neck underlay exclusively from verified original source pixels; then meet the manual max 2deg rule or resolve rig exceptions only through explicit reviewed policy before official status"
+    },
+    "v1": {
+      "integrated_pr": 51,
+      "integrated_commit": "693212eeb32ede9c0dc8f1c6de94a92638b0dc60",
+      "run_id": 43660106313,
+      "run_conclusion": "success",
+      "artifact_id": 14139373365,
+      "artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43660106313"
+    },
+    "v3": {
+      "schema": "videoforge/c01-v3-integrated-checkpoint/v1",
+      "status": "merged_main_technical_gates_passed_visual_not_approved",
+      "integrated_pr": 56,
+      "merge_commit": "69e22458703c7c716f05e205987471ce3595b1c5",
+      "pr_head_sha": "cce96b888a06bd700ee8bbc29251a70bc5770f92",
+      "acting_manifest": "atuacao-c01-p03-v3.json",
+      "qa_report": "QA-C01-P03-V3-2026-11-15.md",
+      "render_request_revision": 3,
+      "independent_tracks_in_shot": 9,
+      "total_episode_directed_tracks": 113,
+      "moving_parts": [
+        "kael.cabeca",
+        "kael.ombros",
+        "kael.braco-direito",
+        "kael.antebraco",
+        "kael.punhos",
+        "kael.braco-esquerdo",
+        "kael.bota-direita",
+        "kael.cabelo",
+        "kael.jaqueta"
+      ],
+      "original_source_mother_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "pixel_holdout": "kael.costura-gola-pixel-original",
+      "pixel_holdout_parent_joint": "kael.ombros",
+      "pixel_holdout_original_only": true,
+      "new_ai_generated_images": 0,
+      "max_abs_head_rotation_degrees": 1.82,
+      "head_translation_y_source_px": 0,
+      "manual_head_limit_degrees": 2,
+      "camera_fixed": true,
+      "pr_render_run": 43671982404,
+      "pr_typecheck_run": 43671982444,
+      "pr_artifact_id": 14145220360,
+      "main_render_run": 43673610507,
+      "main_typecheck_run": 43673610480,
+      "main_artifact_id": 14145228520,
+      "both_runs_success": true,
+      "mp4_original_source_sha256": "73993ab7b1f93aead42d1860d16c3db965adcbd3e6bdf2794eb631a9d704100c",
+      "mp4_sha_equal_between_pr_and_main": true,
+      "actor_motion": {
+        "changed_pixels": 18923,
+        "minimum": 16000,
+        "frame_start": 0,
+        "frame_end": 75,
+        "min_rgb_delta": 24,
+        "status": "passed"
+      },
+      "collar_motion": {
+        "roi_native": [
+          495,
+          855,
+          83,
+          28
+        ],
+        "frames": {
+          "55": 67,
+          "75": 66,
+          "89": 73
+        },
+        "worst_exposed_pixels": 73,
+        "maximum_allowed": 75,
+        "status": "passed_narrow_margin",
+        "human_approved": false
+      },
+      "neutral_recomposition": {
+        "pixelExactRecomposition": false,
+        "meanAbsoluteRgbError": 11.159474266899956,
+        "changedPixels": 1075513,
+        "totalPixels": 1572864,
+        "status": "not_visually_approved"
+      },
+      "deterministic_repeat_frame": 30,
+      "deterministic_repeat_verified": true,
+      "human_visual_approved": false,
+      "publishable": false,
+      "official_video_approved": false,
+      "youtube_uploaded": false,
+      "next_step": "Visual QA of real 3s V3 MP4 in mobile and closeup, improve mother RGB recomposition, guard/spear/king masks and original pixel seam patches, no AI image generation"
     }
   },
   "c12": {
@@ -211,6 +306,6 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "C01-P03 main technical V2 video exists with perceptible independent rig motion but visible exposed background at collar and experimental 8.5deg head rotation beyond manual 2deg: repair original-based underlay and review rig before approval. Independently recover old C12 RGB/RGBA ZIP bytes to unblock C12.",
+  "next_action": "C01-P03 V3 main MP4 (run 43673610507 artifact 14145228520, SHA 73993ab...) passed technical acting and collar QA but not human visual, and neutral 11.16 RGB MAE is unresolved. Visually review, correct mother recomposition and guard/spear/Aldric masks with only existing pixels. Independently recover two C12 original ZIPs to import nine missing PNGs.",
   "updates_required_on_each_change": true
 }
