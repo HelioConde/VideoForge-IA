@@ -10,10 +10,12 @@
   "youtube_upload": false,
   "human_visual_approval": false,
   "official_video_approved": false,
-  "reason": "User rejected nearly static C01 P03 MP4; render 6 independent keyframed body joints with original source pixels and stronger decoded-video actor-only motion QA.",
-  "revision": 2,
-  "performance_review_manifest": "atuacao-c01-p03-v2.json",
+  "reason": "The previous C01 V2 acting moved Kael but exposed original background at neck; render a manual-safe V3 head 2 degrees, no independent neck lift, more independent arm and shoulder acting and real background-exposure QA. Do not generate images or approve art.",
+  "revision": 3,
+  "performance_review_manifest": "atuacao-c01-p03-v3.json",
   "old_v1_technical_mp4_rejected_for_weak_motion": true,
-  "required_motion": "head, shoulders, upper arm, forearm, wrist, original hair and cloth mesh; still camera",
-  "visual_approval_still_required": true
+  "required_motion": "visible original-source shoulder, arm, forearm, wrist and hair/cloth meshes, camera fixed",
+  "visual_approval_still_required": true,
+  "old_v2_artifact_main_run_id": 43667678291,
+  "neck_original_background_exposure_gate_required": true
 }
