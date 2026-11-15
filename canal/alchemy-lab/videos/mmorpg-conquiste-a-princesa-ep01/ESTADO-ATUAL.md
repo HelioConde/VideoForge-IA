@@ -68,6 +68,15 @@ A tentativa de ler/copiar os bytes por integração de arquivos **falhou com `Th
 - Criada a pasta visível [`uploads/README.md`](../../../../uploads/README.md). Enviar pelo GitHub, preservando os PNGs internos, exatamente `uploads/alchemy-ep01-cinema-3-originais.zip` e `uploads/alchemy-c12-rig-camadas-tecnicas-v2.zip`. Os dois ZIPs foram encontrados em metadados da Library, mas **não foi possível acessar seus bytes por esta integração**.
 - A prévia C12 de 8 segundos ainda **não existe como novo MP4 de GitHub Actions**; o rig C01 de três segundos permanece disponível na [run 43660106313](https://github.com/HelioConde/VideoForge-IA/actions/runs/43660106313). Nenhuma imagem foi gerada, nenhum vídeo publicado.
 
+## 14/11/2026 — dois ZIPs originais: validação e envio direto para a main
+
+**Nova melhoria integrada:** [PR #54](https://github.com/HelioConde/VideoForge-IA/pull/54), commit `346a3a80c74a96f39390aa12896916bfd2e9a994`. [Workflow de testes 43665498760](https://github.com/HelioConde/VideoForge-IA/actions/runs/43665498760): **SUCCESS** nos testes de contrato, enquanto render da PR permaneceu `skipped`.
+
+- `videoforge/c12_upload_existing_zips.py` valida **10 PNGs existentes** nos dois arquivos ZIP (3 RGB originais e 7 técnicos = 2 fundos + 5 sprites RGBA), exige os SHA e tamanhos nativos cadastrados e recusa arquivos adulterados, descompactação insegura e sobrescritas.
+- `scripts/enviar-zips-c12.ps1` oferece um único comando no Windows para fazer clone temporário da `main`, validar ambos os ZIPs, preservar seus bytes e enviar o commit; instruções em [`uploads/README.md`](../../../../uploads/README.md). Não edita arte, não gera imagens e não publica vídeo.
+- **Situação real:** pasta `uploads/` da `main` permanece somente com `README.md`. Os ZIPs estão listados na Library, mas a API não liberou acesso aos seus bytes. **Nenhum arquivo RGB/RGBA C12 foi importado e nenhum MP4 novo C12 foi gerado nesta etapa.**
+- **Próxima ação exata:** baixar os dois ZIPs antigos da Library para `Downloads` e executar `./scripts/enviar-zips-c12.ps1` em PowerShell dentro do clone do VideoForge-IA; alternativa: anexar os ZIPs à conversa ou enviá-los na pasta `uploads/` do GitHub. Os workflows de importação/coordenação fazem o resto e só renderizam após hashes verificados.
+
 ## Próxima ação concreta, em ordem
 
 1. **Prioridade:** recuperar os **bytes reais dos dois ZIPs já localizados na Library, porém inacessíveis para cópia**, ou enviá-los à raiz `uploads/`; importar os arquivos *já existentes* da C12; verificar exatamente SHA, RGBA, bbox, 941×1672 e presença real no GitHub. Antes de repetir o render, verificar se os ZIPs já apareceram no repositório. Se faltarem, informar `assets_pendentes` e manter o relatório.
