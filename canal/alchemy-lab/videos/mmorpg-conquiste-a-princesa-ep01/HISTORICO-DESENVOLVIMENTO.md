@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — usuário define 40 tomadas mantendo 14 cenas
+
+- Atualizado o roteiro `roteiro.json` e o manifesto ativo `remake-ep01-planos.json` juntos: 40 tomadas, 39 com arte-mãe e C01-P01 preta; duração preservada em 163 segundos/4890 frames.
+- Novos cortes cinematográficos independentes: C01-P05 (mãos/lanças atrás de Kael), C08-P04 (roda articulada e fuga de Elara), C12-P04 (broche prateado de Elara; revelação só C12). Preservada a C01-P02/rig da espada, 60–149, e o restante dos eventos.
+- Adaptados os testes e a fila determinística para 40, contratos do autocoordenador, README, AGENTS.md e plano oficial. Mantida a versão `remake-v2-20261115` para não invalidar mídias e hashes técnicos já auditados.
+- **Status:** atualização editorial do plano, sem gerar imagem paga, sem MP4 novo, sem aprovação artística e sem upload. Confirmar GitHub Actions antes de chamar os testes de sucesso.
+
 ## 15/11/2026 — produtor de underlay e RGBA C01-P02 com QA GitHub validado
 
 - Commit `12f238a6ae2663489fe9b6b38edd19f44ee6dbb5`: gerador específico `remake_sword_source.py` e workflow `remake-sword-component.yml` (manual pago somente após gate). Reuso do Codex Proxy e archiver existente; uma chamada por execução, fonte `cena-01-c01-p02.png` SHA auditada e âncora V2.

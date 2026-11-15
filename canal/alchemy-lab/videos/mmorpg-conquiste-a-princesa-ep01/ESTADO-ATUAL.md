@@ -1,5 +1,13 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## V2 — planejamento ampliado para 40 tomadas (decisão editorial 15/11/2026)
+
+**Pedido do usuário:** manter as **14 cenas narrativas**, mas adotar **40 tomadas cinematográficas**, no lugar das 37 anteriores. A versão ativa continua `remake-v2-20261115`, com 163 segundos, 4.890 frames, 30fps e 1080×1920. São **39 tomadas com imagem-mãe própria + 1 abertura preta com SFX original**. A contagem de imagens não é teto de criação de camadas: cada rig usa quantos recortes originais realmente precisar.
+
+Três novos cortes sem acrescentar tempo: **C01-P05, 310–359** (mãos dos guardas e lanças cruzadas); **C08-P04, 2880–2939** (roda do carrinho e Elara fugindo); **C12-P04, 4290–4349** (flor prateada e gesto de Elara). As tomadas C01-P04/C08-P03/C12-P03 foram apenas encurtadas no fim para acomodar essas inserções; as outras 34 tomadas mantêm seus frames. **C01-P02 continua em 60–149, com quatro componentes reais previstos**. Elara permanece excluída da corte em C01/C02; sua identidade de princesa só aparece em C12; a espada continua pertencendo ao carrasco.
+
+**Fonte obrigatória para os agentes:** `roteiro.json` e `remake-ep01-planos.json` já atualizados para 40/39; testes de roteiro, identidade, continuidade e fila devem acompanhar. Nenhuma arte das três novas tomadas existe nem foi aprovada; política de custos do provedor continua bloqueada e YouTube não foi publicado. Histórico de 37 planos é uma versão editorial **anterior**, não a ordem de produção ativa.
+
 ## C01-P02 — código de geração do fundo oculto e três RGBA (15/11/2026)
 
 ### Resultado comprovado do produtor e bloqueio de gastos — 15/11/2026

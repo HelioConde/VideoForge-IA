@@ -186,7 +186,7 @@ def work_queue(root:Path=ROOT)->dict:
 
 
 def main()->int:
-    p=argparse.ArgumentParser(description="Compile 37 V2 shots into safe reusable GitHub work units")
+    p=argparse.ArgumentParser(description="Compile the current V2 shots into safe reusable GitHub work units")
     p.add_argument("--output",type=Path)
     args=p.parse_args()
     report=work_queue()

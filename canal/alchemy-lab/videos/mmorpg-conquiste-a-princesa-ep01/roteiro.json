@@ -58,9 +58,16 @@
         {
           "shot_id": "C01-P04",
           "start_frame": 240,
-          "end_exclusive": 360,
+          "end_exclusive": 310,
           "framing": "Revelar guardas e lanças cruzadas",
           "spoken": "SFX: metal contra metal ao cruzar lanças"
+        },
+        {
+          "shot_id": "C01-P05",
+          "start_frame": 310,
+          "end_exclusive": 360,
+          "framing": "Punhos e lanças cruzadas",
+          "spoken": "SFX: luvas tensionam lanças, leve ressonância metálica"
         }
       ],
       "image": "imagens/cena-01.png",
@@ -381,9 +388,16 @@
         {
           "shot_id": "C08-P03",
           "start_frame": 2790,
-          "end_exclusive": 2940,
+          "end_exclusive": 2880,
           "framing": "Bloqueia passagem",
           "spoken": "KAEL: Corra!"
+        },
+        {
+          "shot_id": "C08-P04",
+          "start_frame": 2880,
+          "end_exclusive": 2940,
+          "framing": "Roda girando enquanto ela foge",
+          "spoken": "SFX: roda de madeira desacelera e passos se afastam"
         }
       ],
       "image": "imagens/cena-08.png",
@@ -564,9 +578,16 @@
         {
           "shot_id": "C12-P03",
           "start_frame": 4230,
-          "end_exclusive": 4350,
+          "end_exclusive": 4290,
           "framing": "Reconhecimento",
           "spoken": "KAEL (pensamento): Não pode ser... ela é a princesa?!"
+        },
+        {
+          "shot_id": "C12-P04",
+          "start_frame": 4290,
+          "end_exclusive": 4350,
+          "framing": "Flor prateada revela a ligação",
+          "spoken": "SFX: delicado toque do metal e silêncio da descoberta"
         }
       ],
       "image": "imagens/cena-12.png",

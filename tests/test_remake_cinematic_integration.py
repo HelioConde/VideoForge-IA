@@ -24,10 +24,39 @@ class RemakeCinematicIntegrationTests(unittest.TestCase):
     def test_source_of_active_plan_is_remake_v2(self):
         self.assertIsNotNone(self.plan)
         summary=validate_active_remake_plan(CH,VID,self.plan)
-        self.assertEqual(summary["shot_count"],37)
-        self.assertEqual(summary["art_required"],36)
+        self.assertEqual(summary["shot_count"],40)
+        self.assertEqual(summary["art_required"],39)
         self.assertEqual(summary["duration_frames"],4890)
         self.assertTrue(summary["editorial_images_unlimited"])
+
+    def test_exactly_40_shots_keep_14_scenes_and_actor_identity_rules(self):
+        shots=self.plan["shots"]
+        self.assertEqual(len(shots),40)
+        self.assertEqual(self.plan["plan"]["scenes"],14)
+        self.assertEqual(self.plan["plan"]["editorial_target_shots"],40)
+        self.assertEqual(self.plan["plan"]["art_required"],39)
+        self.assertEqual(sum(s["shot_type"]=="black" for s in shots),1)
+        by_id={s["shot_id"]:s for s in shots}
+        expected={
+            "C01-P05":("C01",310,360,["guarda_esquerdo","guarda_direito"]),
+            "C08-P04":("C08",2880,2940,["elara","mascarados"]),
+            "C12-P04":("C12",4290,4350,["elara"]),
+        }
+        for sid,(scene,start,end,cast) in expected.items():
+            with self.subTest(sid=sid):
+                shot=by_id[sid]
+                self.assertEqual((shot["scene_id"],shot["frame_start"],
+                                  shot["frame_end_exclusive"],shot["cast"]),
+                                 (scene,start,end,cast))
+                self.assertFalse(shot["human_visual_approved"])
+                self.assertFalse(shot["publishable"])
+                self.assertIsNone(shot["art_mother_sha256"])
+                self.assertIn("Cinematic Semi-Realistic Fantasy Anime",
+                              scene_prompt(CH,VID,int(scene[1:]),sid)[0])
+        self.assertNotIn("elara",by_id["C01-P05"]["cast"])
+        self.assertEqual((by_id["C01-P02"]["frame_start"],
+                          by_id["C01-P02"]["frame_end_exclusive"]),(60,150))
+        self.assertEqual(shots[-1]["frame_end_exclusive"],4890)
 
     def test_legacy_plan_remains_readable_but_not_selected(self):
         old=load_plan(CH,VID)
@@ -38,7 +67,7 @@ class RemakeCinematicIntegrationTests(unittest.TestCase):
         self.assertEqual(shot["dramatic_direction"],
                          "Espada pertence ao carrasco; mão, bainha e lâmina separadas")
 
-    def test_37_cinematic_prompts_are_distinct_and_new_style(self):
+    def test_40_cinematic_prompts_are_distinct_and_new_style(self):
         prompts=set()
         for original in self.plan["shots"]:
             sid=original["shot_id"]
@@ -54,7 +83,7 @@ class RemakeCinematicIntegrationTests(unittest.TestCase):
                 self.assertIn("foco",prompt.lower())
                 self.assertIn("Sem qualquer texto",prompt)
             prompts.add(prompt)
-        self.assertEqual(len(prompts),36)
+        self.assertEqual(len(prompts),39)
 
     def test_critical_story_and_black_frame_preserved(self):
         with self.assertRaisesRegex(VideoForgeError,"CINEMATIC_BLACK_FRAME_NEVER_GENERATE_IMAGE"):

@@ -1,3 +1,5 @@
+**V2 ativo (15/11/2026):** 14 cenas / **40 tomadas** / 39 com arte própria + C01-P01 preta; 4890 frames. Revisar sempre `roteiro.json`, `remake-ep01-planos.json` e checkpoint antes de reutilizar material. Novos inserts C01-P05, C08-P04 e C12-P04 não possuem PNG aprovado; preservar rig C01-P02. Este bloco prevalece sobre números históricos de 37 tomadas.
+
 ---
 name: videoforge-dorama-remake
 description: Retome e programe episodios do dorama Alchemy Lab no VideoForge IA usando o manifesto V2, o checkpoint mestre, workflows GitHub e bibliotecas existentes. Use em toda demanda de escrever, gerar, corrigir ou animar o EP01.

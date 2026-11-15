@@ -93,7 +93,8 @@ def choose_next(root: Path = ROOT) -> dict:
             or state.get("active_production_version") != "remake-v2-20261115"):
         raise VideoForgeError("REMAKE_AUTOPILOT_SCOPE_OR_SCHEMA_INVALID")
     shots = data.get("shots")
-    if not isinstance(shots, list) or len(shots) < 37:
+    if (not isinstance(shots,list) or
+            len(shots)<data.get("plan",{}).get("shots_minimum",40)):
         raise VideoForgeError("REMAKE_AUTOPILOT_PLAN_INCOMPLETE")
     cursor, ids = 0, set()
     for shot in shots:

@@ -13,7 +13,7 @@
   },
   "style_id": "cinematic-semi-realistic-fantasy-anime",
   "source_story": "roteiro.json",
-  "source_shots": "direcao-cinematografica-planos.json",
+  "source_shots": "roteiro.json",
   "source_visual_guide": "PROMPT-OFICIAL-ESTILO-DORAMA.md",
   "source_checkpoint": "ESTADO-ATUAL.md",
   "format": {
@@ -25,10 +25,11 @@
   },
   "plan": {
     "scenes": 14,
-    "shots_minimum": 37,
-    "art_required": 36,
+    "shots_minimum": 40,
+    "art_required": 39,
     "black_shots": 1,
-    "additional_shots_allowed": true
+    "additional_shots_allowed": true,
+    "editorial_target_shots": 40
   },
   "identity_anchors": [
     {
@@ -197,7 +198,7 @@
       "scene_id": "C01",
       "order": 4,
       "frame_start": 240,
-      "frame_end_exclusive": 360,
+      "frame_end_exclusive": 310,
       "shot_type": "wide",
       "emotion": "pressão",
       "cast": [
@@ -231,9 +232,45 @@
       "next_stage": "pending_style_anchor_then_shot_specific_mother"
     },
     {
+      "shot_id": "C01-P05",
+      "scene_id": "C01",
+      "order": 5,
+      "frame_start": 310,
+      "frame_end_exclusive": 360,
+      "shot_type": "insert",
+      "emotion": "ameaça iminente",
+      "cast": [
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "focus": "lancas",
+      "camera": {
+        "lens_mm": 100,
+        "position_and_intent": "Câmera macro estável no cruzamento das lanças, luvas dos guardas em primeiro plano",
+        "depth_of_field": "foco nas luvas e hastes, trono profundamente desfocado",
+        "description": "Macro das duas mãos enluvadas dos guardas apertando as hastes das lanças já cruzadas atrás de Kael. Os metais vibram, o rei permanece distante e a princesa não aparece.",
+        "dramatic_direction": "O som do atrito e um pequeno ajuste das mãos reforçam a ameaça; duas lanças separadas com pivôs, sem repetir a imagem inteira do trono."
+      },
+      "require_new_mother": true,
+      "require_real_rgba_rig": true,
+      "rig_notes": "duas hastes com pivôs e mãos enluvadas, underlay do salão sem duplicação",
+      "asset_directory": "assets/remake-v2/C01-P05/",
+      "asset_status": "missing",
+      "art_mother_sha256": null,
+      "background_sha256": null,
+      "rig_sha256": null,
+      "original_assets_verified": false,
+      "qa_approved": false,
+      "human_visual_approved": false,
+      "motion_qa_passed": false,
+      "mp4_created": false,
+      "publishable": false,
+      "next_stage": "pending_style_anchor_then_shot_specific_mother"
+    },
+    {
       "shot_id": "C02-P01",
       "scene_id": "C02",
-      "order": 5,
+      "order": 6,
       "frame_start": 360,
       "frame_end_exclusive": 570,
       "shot_type": "close_up",
@@ -268,7 +305,7 @@
     {
       "shot_id": "C02-P02",
       "scene_id": "C02",
-      "order": 6,
+      "order": 7,
       "frame_start": 570,
       "frame_end_exclusive": 720,
       "shot_type": "close_up",
@@ -303,7 +340,7 @@
     {
       "shot_id": "C03-P01",
       "scene_id": "C03",
-      "order": 7,
+      "order": 8,
       "frame_start": 720,
       "frame_end_exclusive": 810,
       "shot_type": "extreme_close_up",
@@ -338,7 +375,7 @@
     {
       "shot_id": "C03-P02",
       "scene_id": "C03",
-      "order": 8,
+      "order": 9,
       "frame_start": 810,
       "frame_end_exclusive": 930,
       "shot_type": "match_cut",
@@ -373,7 +410,7 @@
     {
       "shot_id": "C04-P01",
       "scene_id": "C04",
-      "order": 9,
+      "order": 10,
       "frame_start": 930,
       "frame_end_exclusive": 1050,
       "shot_type": "over_shoulder",
@@ -408,7 +445,7 @@
     {
       "shot_id": "C04-P02",
       "scene_id": "C04",
-      "order": 10,
+      "order": 11,
       "frame_start": 1050,
       "frame_end_exclusive": 1170,
       "shot_type": "insert",
@@ -441,7 +478,7 @@
     {
       "shot_id": "C04-P03",
       "scene_id": "C04",
-      "order": 11,
+      "order": 12,
       "frame_start": 1170,
       "frame_end_exclusive": 1320,
       "shot_type": "medium",
@@ -476,7 +513,7 @@
     {
       "shot_id": "C05-P01",
       "scene_id": "C05",
-      "order": 12,
+      "order": 13,
       "frame_start": 1320,
       "frame_end_exclusive": 1470,
       "shot_type": "close_up",
@@ -511,7 +548,7 @@
     {
       "shot_id": "C05-P02",
       "scene_id": "C05",
-      "order": 13,
+      "order": 14,
       "frame_start": 1470,
       "frame_end_exclusive": 1590,
       "shot_type": "wide",
@@ -546,7 +583,7 @@
     {
       "shot_id": "C05-P03",
       "scene_id": "C05",
-      "order": 14,
+      "order": 15,
       "frame_start": 1590,
       "frame_end_exclusive": 1740,
       "shot_type": "medium",
@@ -581,7 +618,7 @@
     {
       "shot_id": "C06-P01",
       "scene_id": "C06",
-      "order": 15,
+      "order": 16,
       "frame_start": 1740,
       "frame_end_exclusive": 1920,
       "shot_type": "insert",
@@ -617,7 +654,7 @@
     {
       "shot_id": "C06-P02",
       "scene_id": "C06",
-      "order": 16,
+      "order": 17,
       "frame_start": 1920,
       "frame_end_exclusive": 2070,
       "shot_type": "close_up",
@@ -652,7 +689,7 @@
     {
       "shot_id": "C07-P01",
       "scene_id": "C07",
-      "order": 17,
+      "order": 18,
       "frame_start": 2070,
       "frame_end_exclusive": 2190,
       "shot_type": "tracking",
@@ -687,7 +724,7 @@
     {
       "shot_id": "C07-P02",
       "scene_id": "C07",
-      "order": 18,
+      "order": 19,
       "frame_start": 2190,
       "frame_end_exclusive": 2340,
       "shot_type": "low_angle",
@@ -724,7 +761,7 @@
     {
       "shot_id": "C07-P03",
       "scene_id": "C07",
-      "order": 19,
+      "order": 20,
       "frame_start": 2340,
       "frame_end_exclusive": 2460,
       "shot_type": "two_shot",
@@ -760,7 +797,7 @@
     {
       "shot_id": "C08-P01",
       "scene_id": "C08",
-      "order": 20,
+      "order": 21,
       "frame_start": 2460,
       "frame_end_exclusive": 2610,
       "shot_type": "over_shoulder",
@@ -796,7 +833,7 @@
     {
       "shot_id": "C08-P02",
       "scene_id": "C08",
-      "order": 21,
+      "order": 22,
       "frame_start": 2610,
       "frame_end_exclusive": 2790,
       "shot_type": "action",
@@ -832,9 +869,9 @@
     {
       "shot_id": "C08-P03",
       "scene_id": "C08",
-      "order": 22,
+      "order": 23,
       "frame_start": 2790,
-      "frame_end_exclusive": 2940,
+      "frame_end_exclusive": 2880,
       "shot_type": "wide",
       "emotion": "fuga",
       "cast": [
@@ -867,9 +904,45 @@
       "next_stage": "pending_style_anchor_then_shot_specific_mother"
     },
     {
+      "shot_id": "C08-P04",
+      "scene_id": "C08",
+      "order": 24,
+      "frame_start": 2880,
+      "frame_end_exclusive": 2940,
+      "shot_type": "insert",
+      "emotion": "fuga tensa",
+      "cast": [
+        "elara",
+        "mascarados"
+      ],
+      "focus": "carrinho.roda",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "Câmera baixa, rente ao eixo de uma roda; eixo de movimento do beco preservado",
+        "depth_of_field": "roda nítida; passos e corredor lateral em profundidade",
+        "description": "Insert baixo da roda do carrinho girando e desacelerando depois de bloquear a passagem; pés e capa encapuzada de Elara desaparecem pelo corredor lateral, perseguidores permanecem atrás do carrinho.",
+        "dramatic_direction": "A roda e seu eixo têm rotação articulada real, sombra/contato com pedra coerentes e Elara sai de quadro sem revelar identidade real."
+      },
+      "require_new_mother": true,
+      "require_real_rgba_rig": true,
+      "rig_notes": "roda/eixo com pivô, chão/underlay sem duplicar carrinho, pés/capa de Elara separados",
+      "asset_directory": "assets/remake-v2/C08-P04/",
+      "asset_status": "missing",
+      "art_mother_sha256": null,
+      "background_sha256": null,
+      "rig_sha256": null,
+      "original_assets_verified": false,
+      "qa_approved": false,
+      "human_visual_approved": false,
+      "motion_qa_passed": false,
+      "mp4_created": false,
+      "publishable": false,
+      "next_stage": "pending_style_anchor_then_shot_specific_mother"
+    },
+    {
       "shot_id": "C09-P01",
       "scene_id": "C09",
-      "order": 23,
+      "order": 25,
       "frame_start": 2940,
       "frame_end_exclusive": 3090,
       "shot_type": "close_up",
@@ -905,7 +978,7 @@
     {
       "shot_id": "C09-P02",
       "scene_id": "C09",
-      "order": 24,
+      "order": 26,
       "frame_start": 3090,
       "frame_end_exclusive": 3240,
       "shot_type": "over_shoulder",
@@ -941,7 +1014,7 @@
     {
       "shot_id": "C10-P01",
       "scene_id": "C10",
-      "order": 25,
+      "order": 27,
       "frame_start": 3240,
       "frame_end_exclusive": 3390,
       "shot_type": "insert",
@@ -976,7 +1049,7 @@
     {
       "shot_id": "C10-P02",
       "scene_id": "C10",
-      "order": 26,
+      "order": 28,
       "frame_start": 3390,
       "frame_end_exclusive": 3600,
       "shot_type": "insert",
@@ -1011,7 +1084,7 @@
     {
       "shot_id": "C11-P01",
       "scene_id": "C11",
-      "order": 27,
+      "order": 29,
       "frame_start": 3600,
       "frame_end_exclusive": 3720,
       "shot_type": "over_shoulder",
@@ -1048,7 +1121,7 @@
     {
       "shot_id": "C11-P02",
       "scene_id": "C11",
-      "order": 28,
+      "order": 30,
       "frame_start": 3720,
       "frame_end_exclusive": 3870,
       "shot_type": "close_up",
@@ -1084,7 +1157,7 @@
     {
       "shot_id": "C11-P03",
       "scene_id": "C11",
-      "order": 29,
+      "order": 31,
       "frame_start": 3870,
       "frame_end_exclusive": 3990,
       "shot_type": "wide",
@@ -1121,7 +1194,7 @@
     {
       "shot_id": "C12-P01",
       "scene_id": "C12",
-      "order": 30,
+      "order": 32,
       "frame_start": 3990,
       "frame_end_exclusive": 4110,
       "shot_type": "extreme_close_up",
@@ -1156,7 +1229,7 @@
     {
       "shot_id": "C12-P02",
       "scene_id": "C12",
-      "order": 31,
+      "order": 33,
       "frame_start": 4110,
       "frame_end_exclusive": 4230,
       "shot_type": "over_shoulder",
@@ -1193,9 +1266,9 @@
     {
       "shot_id": "C12-P03",
       "scene_id": "C12",
-      "order": 32,
+      "order": 34,
       "frame_start": 4230,
-      "frame_end_exclusive": 4350,
+      "frame_end_exclusive": 4290,
       "shot_type": "close_up",
       "emotion": "surpresa contida",
       "cast": [
@@ -1227,9 +1300,44 @@
       "next_stage": "pending_style_anchor_then_shot_specific_mother"
     },
     {
+      "shot_id": "C12-P04",
+      "scene_id": "C12",
+      "order": 35,
+      "frame_start": 4290,
+      "frame_end_exclusive": 4350,
+      "shot_type": "insert",
+      "emotion": "reconhecimento silencioso",
+      "cast": [
+        "elara"
+      ],
+      "focus": "broche.prateado",
+      "camera": {
+        "lens_mm": 100,
+        "position_and_intent": "Macro frontal da roupa da princesa, preservando eixo e luz do trono",
+        "depth_of_field": "flor prateada e dedos em foco, tapeçaria do trono desfocada",
+        "description": "Detalhe do broche em forma de flor prateada no traje de Elara ao lado do trono; sua mão toca a joia e revela ser o mesmo desenho da pista encontrada por Kael. Nenhum rosto novo.",
+        "dramatic_direction": "Só em C12 a identidade real de Elara é revelada; broche, mão e vestido em camadas independentes, contato e oclusão reais, sem arte do broche trocada."
+      },
+      "require_new_mother": true,
+      "require_real_rgba_rig": true,
+      "rig_notes": "broche, dedos e tecido com máscaras independentes; joia idêntica à encontrada em C10",
+      "asset_directory": "assets/remake-v2/C12-P04/",
+      "asset_status": "missing",
+      "art_mother_sha256": null,
+      "background_sha256": null,
+      "rig_sha256": null,
+      "original_assets_verified": false,
+      "qa_approved": false,
+      "human_visual_approved": false,
+      "motion_qa_passed": false,
+      "mp4_created": false,
+      "publishable": false,
+      "next_stage": "pending_style_anchor_then_shot_specific_mother"
+    },
+    {
       "shot_id": "C13-P01",
       "scene_id": "C13",
-      "order": 33,
+      "order": 36,
       "frame_start": 4350,
       "frame_end_exclusive": 4500,
       "shot_type": "medium",
@@ -1266,7 +1374,7 @@
     {
       "shot_id": "C13-P02",
       "scene_id": "C13",
-      "order": 34,
+      "order": 37,
       "frame_start": 4500,
       "frame_end_exclusive": 4650,
       "shot_type": "close_up",
@@ -1301,7 +1409,7 @@
     {
       "shot_id": "C14-P01",
       "scene_id": "C14",
-      "order": 35,
+      "order": 38,
       "frame_start": 4650,
       "frame_end_exclusive": 4740,
       "shot_type": "medium",
@@ -1337,7 +1445,7 @@
     {
       "shot_id": "C14-P02",
       "scene_id": "C14",
-      "order": 36,
+      "order": 39,
       "frame_start": 4740,
       "frame_end_exclusive": 4830,
       "shot_type": "close_up",
@@ -1373,7 +1481,7 @@
     {
       "shot_id": "C14-P03",
       "scene_id": "C14",
-      "order": 37,
+      "order": 40,
       "frame_start": 4830,
       "frame_end_exclusive": 4890,
       "shot_type": "extreme_close_up",

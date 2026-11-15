@@ -8,8 +8,8 @@ from videoforge.remake_starter import REUSE,work_queue
 class RemakeStarterTests(unittest.TestCase):
     def test_exact_timeline_and_no_fake_asset_approval(self):
         out=work_queue()
-        self.assertEqual(out["shot_count"],37)
-        self.assertEqual(out["visual_shot_count"],36)
+        self.assertEqual(out["shot_count"],40)
+        self.assertEqual(out["visual_shot_count"],39)
         self.assertEqual(out["format"]["total_frames"],4890)
         self.assertEqual(out["production_queue"][0]["start_frame"],0)
         self.assertEqual(out["production_queue"][-1]["end_frame_exclusive"],4890)
@@ -36,7 +36,25 @@ class RemakeStarterTests(unittest.TestCase):
         b=work_queue()
         self.assertEqual(a,b)
         ids={i["task_fingerprint"] for i in a["production_queue"]}
-        self.assertEqual(len(ids),37)
+        self.assertEqual(len(ids),40)
+
+    def test_40_shots_add_drama_without_moving_opening_or_epilogue(self):
+        data=work_queue()
+        ids=[x["shot_id"] for x in data["production_queue"]]
+        self.assertEqual(len(ids),40)
+        self.assertEqual(len(set(ids)),40)
+        self.assertEqual(
+            [x for x in ids if x in {"C01-P05","C08-P04","C12-P04"}],
+            ["C01-P05","C08-P04","C12-P04"])
+        by_id={x["shot_id"]:x for x in data["production_queue"]}
+        self.assertEqual((by_id["C01-P02"]["start_frame"],
+                          by_id["C01-P02"]["end_frame_exclusive"]),(60,150))
+        for sid,span in {"C01-P05":(310,360),"C08-P04":(2880,2940),
+                         "C12-P04":(4290,4350)}.items():
+            self.assertEqual((by_id[sid]["start_frame"],
+                              by_id[sid]["end_frame_exclusive"]),span)
+            self.assertFalse(by_id[sid]["render_approved"])
+        self.assertEqual(data["format"]["total_frames"],4890)
 
     def test_libraries_and_skills_are_explicitly_reused(self):
         out=work_queue()

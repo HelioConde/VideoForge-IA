@@ -61,7 +61,7 @@ jobs:
           set -euo pipefail
           mkdir -p output
           python -m videoforge.remake_autopilot --report output/remake-autonomy-report.json --sync
-      - name: Compilar fila idempotente de 37 tomadas com bibliotecas e skills existentes
+      - name: Compilar fila idempotente de 40 tomadas com bibliotecas e skills existentes
         shell: bash
         run: |
           set -euo pipefail

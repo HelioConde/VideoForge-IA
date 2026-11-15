@@ -9,7 +9,7 @@
   "history": "HISTORICO-DESENVOLVIMENTO.md",
   "animation_manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
   "episode_seconds_planned": 163,
-  "shots_planned": 37,
+  "shots_planned": 40,
   "motion_tracks_planned": 106,
   "locks": {
     "no_new_image_generation": false,
@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Acquire approved real V2 character-bible, produce real C01-P02 mother after explicit paid call permission, then manually dispatch four one-image component jobs, follow automatic pack/Three preview QA",
+  "next_action": "Run CI verifying exact 40-shot coverage, 14 scene continuity and zero fake art; continue approved source art pathway",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -950,5 +950,44 @@
     ],
     "no_paid_calls_executed": true,
     "canonical_anchor_approved": false
+  },
+  "v2_40_shots_editorial_20261115": {
+    "status": "implemented_in_main_pending_ci",
+    "requested_by_user": true,
+    "narrative_scenes": 14,
+    "total_shots": 40,
+    "visual_shots_requiring_new_mothers": 39,
+    "black_audio_shots": 1,
+    "original_shot_count": 37,
+    "added_shot_ids": [
+      "C01-P05",
+      "C08-P04",
+      "C12-P04"
+    ],
+    "split_original_shots": [
+      "C01-P04",
+      "C08-P03",
+      "C12-P03"
+    ],
+    "duration_seconds": 163,
+    "total_frames": 4890,
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "sword_c01p02_frames_unchanged": [
+      60,
+      150
+    ],
+    "extra_provider_calls_approved": false,
+    "newly_generated_images": 0,
+    "new_art_approved": 0,
+    "full_episode_mp4_created": false,
+    "youtube_uploaded": false,
+    "source_of_truth": [
+      "roteiro.json",
+      "remake-ep01-planos.json",
+      "REMAKE-EP01-PLANO-OFICIAL.md"
+    ],
+    "next_step": "Run CI verifying exact 40-shot coverage, 14 scene continuity and zero fake art; continue approved source art pathway"
   }
 }
