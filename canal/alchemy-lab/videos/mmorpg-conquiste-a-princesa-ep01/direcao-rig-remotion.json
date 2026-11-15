@@ -329,19 +329,19 @@
                 },
                 {
                   "frame": 186,
-                  "value": 5.731
+                  "value": 6.018
                 },
                 {
                   "frame": 211,
-                  "value": 17.193
+                  "value": 18.053
                 },
                 {
                   "frame": 228,
-                  "value": 18.625
+                  "value": 19.556
                 },
                 {
                   "frame": 239,
-                  "value": 15.044
+                  "value": 15.796
                 }
               ],
               "measuredPivotRequired": true
@@ -513,15 +513,15 @@
                 },
                 {
                   "frame": 198,
-                  "value": -2.049
+                  "value": -2.151
                 },
                 {
                   "frame": 219,
-                  "value": -4.95
+                  "value": -5.198
                 },
                 {
                   "frame": 239,
-                  "value": -4.096
+                  "value": -4.301
                 }
               ],
               "measuredPivotRequired": true
