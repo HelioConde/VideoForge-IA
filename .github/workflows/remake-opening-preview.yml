@@ -1,0 +1,94 @@
+name: "VideoForge - EP01 C01-P01 Remotion abertura real com SFX original"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/remake_opening.py'
+      - 'tests/test_remake_opening.py'
+      - 'motion-remotion/src/remake-opening*.ts*'
+      - '.github/workflows/remake-opening-preview.yml'
+
+permissions:
+  contents: write
+  packages: read
+
+concurrency:
+  group: alchemy-remake-c01-p01-opening
+  cancel-in-progress: false
+
+jobs:
+  original-sfx-remotion-preview:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      EP_OUTPUT: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2/C01-P01
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Validar audio e 37 planos sem imagens ou novas despesas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_opening tests.test_remake_starter -v
+      - name: Reutilizar Remotion preinstalado e tipar o componente original
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+      - name: Gerar efeito sonoro ORIGINAL de espada por sintese deterministica
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remake_opening prepare \
+            --output-dir "$EP_OUTPUT" \
+            --public-dir motion-remotion/public/vf-remake/c01-p01
+      - name: Renderizar 60 quadros pretos e audio em MP4 por REMOTION
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          ./node_modules/.bin/remotion render \
+            src/remake-opening-index.ts VideoForgeRemakeBlackOpening \
+            "../$EP_OUTPUT/black-opening-technical.mp4" \
+            --props="../$EP_OUTPUT/props.json" \
+            --frames=0-59 --codec=h264 --audio-codec=aac \
+            --pixel-format=yuv420p --gl=swangle --concurrency=1 --log=error
+      - name: QA FFprobe/FFmpeg de frames pretos, audio, duracao, codec e SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remake_opening verify --output-dir "$EP_OUTPUT"
+      - name: Atualizar somente manifestos e checkpoint (nao commitar midia binaria)
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+          git add "$EP/QA-C01-P01-REMAKE-V2.json" \
+            "$EP/ESTADO-ATUAL.md" "$EP/HISTORICO-DESENVOLVIMENTO.md" \
+            "$EP/estado-atual.json" "$EP/remake-ep01-planos.json"
+          if ! git diff --cached --quiet; then
+            git config user.name "videoforge-autopilot[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "feat(dorama): C01-P01 original SFX and Remotion black video QA"
+            git push origin HEAD:main
+          else
+            echo "C01_P01_QA_ALREADY_CHECKPOINTED"
+          fi
+      - name: Guardar o MP4 e WAV reais por 90 dias para revisao humana
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-remake-c01-p01-opening-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2/C01-P01/
+          retention-days: 90
+          if-no-files-found: warn

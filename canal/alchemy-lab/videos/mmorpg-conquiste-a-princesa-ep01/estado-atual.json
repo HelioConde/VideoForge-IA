@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Create approved canonical V2 image anchor with real SHA and authorized provider/cost, then C01-P02 real RGBA layers and Three.js wrist/blade rig QA before preview MP4",
+  "next_action": "verify running GitHub action producing 2-second black MP4 and WAV; then V2 anchor and C01-P02 rig",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -739,5 +739,23 @@
     ],
     "current_sword_profile": "sword-draw-three",
     "queue_artifact": "videoforge-remake-autonomy-diagnostic/remake-shot-queue.json"
+  },
+  "remake_opening_c01p01_programming_20261115": {
+    "status": "source_and_workflow_submitted_render_pending",
+    "shot": "C01-P01",
+    "fps": 30,
+    "duration_frames": 60,
+    "renderer": "remotion@4",
+    "sfx": "original_deterministic_procedural_steel_sound",
+    "producer": "videoforge/remake_opening.py",
+    "workflow": ".github/workflows/remake-opening-preview.yml",
+    "creates_no_images": true,
+    "requires_no_proxy": true,
+    "uploads_youtube": false,
+    "artwork_status": "not_applicable_black_screen",
+    "full_episode_mp4": false,
+    "target_artifact_retention_days": 90,
+    "documentation_note": "No media yet until verified GitHub Actions run passes QA",
+    "next_step": "verify running GitHub action producing 2-second black MP4 and WAV; then V2 anchor and C01-P02 rig"
   }
 }

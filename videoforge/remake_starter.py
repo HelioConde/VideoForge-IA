@@ -77,10 +77,35 @@ def work_queue(root:Path=ROOT)->dict:
             # The specialized Three.js component demands these exact RGBA pieces.
             profile,parts="sword-draw-three",["underlay","sheath","blade","hand"]
         if typ=="black":
-            status="audio_and_sfx_pending"
-            next_work="produce_original_sword_unsheathing_sfx_no_image"
-            deps=["original_licensed_audio","C01-P01_black_at_frames_0_59"]
-            workflow=None
+            # Trust a run-ID-backed QA manifest, not merely asserted flags.
+            # Media is an Actions artifact, not in git (ignores wav/mp4).
+            qa_file=base/"QA-C01-P01-REMAKE-V2.json"
+            archived=False
+            if qa_file.is_file() and not qa_file.is_symlink():
+                try:
+                    proof=json.loads(qa_file.read_text(encoding="utf-8"))
+                    archived=(proof.get("schema")=="videoforge/remake-opening-technical-qa/v1"
+                              and proof.get("shot")=="C01-P01"
+                              and type(proof.get("github_run_id")) is int
+                              and proof["github_run_id"]>0
+                              and proof.get("mp4_sha256")==item.get("technical_preview_sha256")
+                              and proof.get("audio_sha256")==item.get("original_audio_sha256")
+                              and proof.get("black_pixels_verified") is True
+                              and proof.get("audio_original_sfx_verified") is True
+                              and proof.get("official_video_approved") is False
+                              and proof.get("youtube_uploaded") is False)
+                except (OSError,ValueError):
+                    archived=False
+            if archived:
+                status="opening_technical_preview_in_actions_pending_review"
+                next_work="review_and_preserve_original_sfx_action_artifact"
+                deps=["artifact_available_before_retention_expiry","editorial_sfx_review"]
+                workflow=None
+            else:
+                status="audio_and_sfx_pending"
+                next_work="produce_original_sword_unsheathing_sfx_no_image"
+                deps=["original_licensed_audio","C01-P01_black_at_frames_0_59"]
+                workflow="remake-opening-preview.yml"
         else:
             folder="assets/remake-v2/"+sid+"/"
             source_ok=verified_asset(base,folder+"scene-mother.png",item.get("art_mother_sha256"))

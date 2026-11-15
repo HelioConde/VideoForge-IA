@@ -12,6 +12,12 @@
 
 ## REGRAS ATIVAS DO REMAKE — LEITURA OBRIGATÓRIA PARA AGENTES
 
+## C01-P01 — primeira cena produzível sem arte (15/11/2026)
+
+**Implementação nova em teste:** `videoforge/remake_opening.py` sintetiza um SFX original de metal/bainha em WAV mono 48 kHz, sem amostras comerciais, internet ou IA. O novo entrypoint `motion-remotion/src/remake-opening-index.ts` renderiza **somente a abertura de 60 frames pretos**, 1080×1920/30fps, com WAV em `<Audio>`. Workflow `.github/workflows/remake-opening-preview.yml` reutiliza o runner Remotion GHCR pré-instalado, executa testes, renderiza MP4 via Remotion, confere com FFmpeg/FFprobe apenas QA (frames inteiramente pretos, AAC audível, 60 frames, H264, SHA), guarda o MP4 e WAV por 90 dias em artifact e versiona **somente** o relatório/hashes e checkpoint, conforme `.gitignore` que proíbe mídia binária no canal. **Não** publica no YouTube.
+
+**Até a execução do workflow, isso é código, não MP4 confirmado.** O comando `python -m videoforge.remake_opening verify --output-dir ...` só declara sucesso com arquivos reais. Após sucesso atualiza automaticamente este checkpoint, histórico, estado JSON e o plano de C01-P01; o relatório `QA-C01-P01-REMAKE-V2.json` apontará run/artifact e SHA. A arte canônica, C01-P02 e os demais rigs continuam pendentes de PNG real, revisão e custo permitido.
+
 ## Programacao acelerada por skills e bibliotecas — CI validado em GitHub (15/11/2026)
 
 **Commit inicial:** `4c797d525966ac0db208ce51bb0679614b995792`. **Ajuste do pacote da espada:** `da01ba30f026f985ce8427e5f29704339fb906ac` (C01-P02 exige `underlay`, `sheath`, `blade`, `hand` e o perfil `sword-draw-three`; inserts genericos nao herdam uma espada). Essas sao mudancas de **codigo/producao**, nao arte aprovada.

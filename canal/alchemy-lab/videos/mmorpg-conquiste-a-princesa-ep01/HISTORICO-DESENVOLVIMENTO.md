@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — abrir C01-P01 por Remotion com efeito sonoro original (programação)
+
+- Criado código procedural determinístico do efeito de espada, sem áudio externo ou gasto de IA, e composição Remotion isolada de 60 frames pretos; nunca usa PNG de personagem nem simula rig.
+- Adicionado workflow `remake-opening-preview.yml`: testes Python/TypeScript, WAV PCM original, render H264/AAC e QA de vídeo/preto/som com SHA; binários permanecem em artifact de Actions com 90 dias por causa do `.gitignore`.
+- O workflow gravará QA, ID e hashes no checkpoint principal se o render passar; **neste commit nenhum MP4 foi confirmado ainda**. É prévia técnica de apenas 2s, não vídeo oficial.
+- Ajustado `remake_starter.py` para reconhecer prova do artifact arquivado e não reiniciar o plano C01-P01 como se faltasse áudio.
+- Próxima ação: acompanhar run real e corrigir erros; depois C01-P02 usando âncora canônica aprovada e rig independente de espada.
+
 ## 15/11/2026 — validacao concluida das skills e do rig reutilizavel
 
 - `4c797d525966ac0db208ce51bb0679614b995792` integrou 3 skills locais, referencias Remotion oficiais sem instalador remoto, fila de 37 tomadas `remake_starter.py`, codigos reais `remake-sword-motion.ts`/`remake-sword-rig.tsx`.

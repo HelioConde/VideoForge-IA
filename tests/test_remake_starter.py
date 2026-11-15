@@ -22,8 +22,8 @@ class RemakeStarterTests(unittest.TestCase):
     def test_opening_has_no_image_and_sword_uses_real_prop_rig(self):
         first,second=work_queue()["production_queue"][:2]
         self.assertEqual(first["shot_id"],"C01-P01")
-        self.assertEqual(first["status"],"audio_and_sfx_pending")
-        self.assertIsNone(first["candidate_workflow"])
+        self.assertIn(first["status"],("audio_and_sfx_pending","opening_technical_preview_in_actions_pending_review"))
+        self.assertIn(first["candidate_workflow"],(None,"remake-opening-preview.yml"))
         self.assertEqual(second["shot_id"],"C01-P02")
         self.assertEqual(second["profile"],"sword-draw-three")
         self.assertEqual(second["duration_frames"],90)
