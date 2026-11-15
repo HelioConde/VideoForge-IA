@@ -77,11 +77,26 @@ A tentativa de ler/copiar os bytes por integração de arquivos **falhou com `Th
 - **Situação real:** pasta `uploads/` da `main` permanece somente com `README.md`. Os ZIPs estão listados na Library, mas a API não liberou acesso aos seus bytes. **Nenhum arquivo RGB/RGBA C12 foi importado e nenhum MP4 novo C12 foi gerado nesta etapa.**
 - **Próxima ação exata:** baixar os dois ZIPs antigos da Library para `Downloads` e executar `./scripts/enviar-zips-c12.ps1` em PowerShell dentro do clone do VideoForge-IA; alternativa: anexar os ZIPs à conversa ou enviá-los na pasta `uploads/` do GitHub. Os workflows de importação/coordenação fazem o resto e só renderizam após hashes verificados.
 
+## 14/11/2026 — C01-P03: atuação articulada perceptível V2, ainda não aprovada visualmente
+
+**Feedback do usuário:** a primeira prévia MP4 C01 de 3 s não transmitia movimento. Análise dos keyframes antigos na `main`: cabeça `-0.6°`, ombros `-2 px`, punho `+2°`. Diferença visível insuficiente no plano aberto.
+
+**Correção integrada:** [PR #55](https://github.com/HelioConde/VideoForge-IA/pull/55), commit `c3a4c6bcee3c2cbe5d180bcf1a5355f625a3398a`. Em `C01-P03`, a câmera permanece **travada**, e Kael ganha **seis trilhas de atuação com pivôs independentes**: `kael.punhos/rotationZ`, `kael.ombros/translateY`, `kael.cabeca/rotationZ`, `kael.cabeca/translateY`, `kael.braco-direito/rotationZ`, `kael.antebraco/rotationZ`. Cabelo e jaqueta mantêm suas malhas RGBA existentes, agora com amplitudes 4,2 e 2,8 px. O episódio passou de **107 para 110 trilhas** após adicionar as três ausentes. Coreografia por quadros registrada em [`atuacao-c01-p03-v2.json`](atuacao-c01-p03-v2.json), pedido de render em `pedido-render-c01-direcao.json` revisão 2.
+
+- [PR run 43667345840](https://github.com/HelioConde/VideoForge-IA/actions/runs/43667345840) **SUCCESS** em TypeScript e testes. [PR run 43667345857](https://github.com/HelioConde/VideoForge-IA/actions/runs/43667345857) **SUCCESS** na renderização real de MP4 V2, artifact técnico ID `14143046357` nome `directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43667345857` (retido por prazo limitado).
+- MP4 de aprovação técnica V2 (gerado em PR): **3 segundos, 90 frames, 1080×1920, 30fps, H.264, vídeo sem áudio**, SHA256 `1667c60c61b7e10a5e3d5353599631678709e91b456072069ec3e39a1c48094d`.
+- QA real decodificado, câmera estática, área de Kael e sem textos: **20.974 pixels** com mudança RGB ≥24 entre frames 0 e 75, contra **11.756** na prévia antiga medida com o mesmo critério/corte (~78% mais); teste mínimo 16.000 passou. Não confundir a métrica com atuação convincente/aprovação artística.
+- Após primeira renderização da revisão, foi observada a **faixa cor-de-vinho do cenário exposta na junção da gola**, devido à translação vertical de cabeça sem underlay. Foi reduzida de `-7 px` para `-1,25 px`, mantendo a rotação até `-8,5°`; a faixa **ainda aparece parcialmente** com a rotação. **REVISÃO HUMANA NÃO APROVADA.**
+- Permanecem pendentes em C01: reconstrução/overlap da **gola e nuca com pixels originais**, bordas/costuras de mão e ombro, mascaramento do rei/guardas/lanças, QA de recomposição neutra, e movimento convincente para o roteiro completo. Não alegar fechamento de dedos: a mão é um sprite articulado no pulso, sem dedos isolados.
+- [Run da main 43667678291](https://github.com/HelioConde/VideoForge-IA/actions/runs/43667678291) disparada pelo merge/pedido V2; **verificar conclusão e artifact antes de considerá-la concluída**. O MP4 existente na PR é técnico e não publicável. Sem geração de imagens novas nem upload para YouTube.
+
+**Próxima ação C01:** melhorar a região **nuca/gola** usando apenas as fontes anteriores e QA dos recortes, sem inventar preenchimento/anatomia. Regerar o MP4 da `main`, inspecionar o movimento em close de QA e só então avançar os planos de guarda e rei. Este trabalho não substitui a pendência dos originais de C12.
+
 ## Próxima ação concreta, em ordem
 
 1. **Prioridade:** recuperar os **bytes reais dos dois ZIPs já localizados na Library, porém inacessíveis para cópia**, ou enviá-los à raiz `uploads/`; importar os arquivos *já existentes* da C12; verificar exatamente SHA, RGBA, bbox, 941×1672 e presença real no GitHub. Antes de repetir o render, verificar se os ZIPs já apareceram no repositório. Se faltarem, informar `assets_pendentes` e manter o relatório.
 2. Quando estiverem arquivados, **o coordenador aciona automaticamente** o workflow técnico C12 na **main**; verificar MP4, repetibilidade de frames, recomposição, bordas, costuras e oclusões. Não inferir aprovação humana do sucesso do workflow.
-3. Refinar a C01 usando o motor **já integrado**, corrigindo máscaras/underlays dos guardas, lanças e Aldric com os pixels aprovados existentes. Não reimplementar as 107 trilhas de direção.
+3. Refinar a C01 com **nuca/gola antes de liberar o rig V2**, depois corrigir máscaras/underlays dos guardas, lanças e Aldric com os pixels aprovados existentes. Não reimplementar as 107 trilhas de direção.
 4. Depois ampliar para os demais 36 planos visuais com imagem-mãe própria e rig por cena, narração, legendas e QA; **episódio oficial de 163 s permanece pendente** enquanto não houver assets e aprovação.
 
 ## Regra permanente para o próximo agente / próxima conversa
