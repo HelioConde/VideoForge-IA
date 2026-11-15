@@ -100,3 +100,19 @@ test('earring must pivot at its actual point on Elara face',()=>{
   d.shots[1].layers[2].mesh.pivotPx=[0,0];
   assert.throws(()=>validateC12TechnicalProps(d),/EARRING_BONE_PIVOT_REQUIRED/);
 });
+test('Python import manifest agrees with original-source SHA and mesh contract',()=>{
+  const spec=JSON.parse(fs.readFileSync(path.join(__dirname,
+    '../../canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-technical-assets.json'),'utf8'));
+  assert.equal(spec.assets.length,9);
+  const props=valid();
+  for(const shot of props.shots){
+    const records=spec.assets.filter(a=>a.shot===shot.id);
+    shot.sourceOriginalSha256=records.find(a=>a.role==='mother').sha256;
+    shot.backgroundSha256=records.find(a=>a.role==='background').sha256;
+    shot.layers=records.filter(a=>a.role==='sprite').map(a=>({
+      id:a.id,file:dir+shot.id+'/'+a.id+'.png',bbox:a.bbox,z:a.z,sha256:a.sha256,mesh:a.mesh,
+    }));
+    for(const a of records.filter(a=>a.role==='sprite')) assert.deepEqual(a.dimensions,a.bbox.slice(2));
+  }
+  assert.doesNotThrow(()=>validateC12TechnicalProps(props));
+});
