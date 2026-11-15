@@ -25,10 +25,10 @@ class RemakeStarterTests(unittest.TestCase):
         self.assertEqual(first["status"],"audio_and_sfx_pending")
         self.assertIsNone(first["candidate_workflow"])
         self.assertEqual(second["shot_id"],"C01-P02")
-        self.assertEqual(second["profile"],"prop-pivots-three")
+        self.assertEqual(second["profile"],"sword-draw-three")
         self.assertEqual(second["duration_frames"],90)
         self.assertIn("hand",second["required_parts"])
-        self.assertIn("sheathe",second["required_parts"])
+        self.assertEqual(second["required_parts"],["underlay","sheath","blade","hand"])
         self.assertIn("carrasco",second["direction"]["dramatic_direction"].lower())
 
     def test_sha_fingerprints_are_stable_and_restarts_do_not_duplicate(self):

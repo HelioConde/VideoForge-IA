@@ -18,7 +18,7 @@ SCHEMA="videoforge/remake-shot-production-queue/v1"
 SKILL="videoforge-dorama-remake"
 SUPPORTED={
  "black":("black-and-original-sfx",["sound-design"]),
- "insert":("prop-pivots-three",["prop","hand","sheathe","underlay"]),
+ "insert":("prop-pivots-three",["prop","hand","background","underlay"]),
  "low_angle":("character-parts-three",["body-no-head","head-open","head-closed","hair-front","background"]),
  "wide":("multi-actor-three",["background","characters-separate","props-separate"]),
  "close_up":("facial-eye-three",["body-no-head","head-open","head-closed","hair-front","neck-underlay"]),
@@ -72,6 +72,10 @@ def work_queue(root:Path=ROOT)->dict:
         if typ not in SUPPORTED:
             raise VideoForgeError("REMAKE_STARTER_SHOT_TYPE_NOT_SUPPORTED")
         profile,parts=SUPPORTED[typ]
+        if sid=="C01-P02":
+            # This insert is an executioner's sword, not a generic hand prop.
+            # The specialized Three.js component demands these exact RGBA pieces.
+            profile,parts="sword-draw-three",["underlay","sheath","blade","hand"]
         if typ=="black":
             status="audio_and_sfx_pending"
             next_work="produce_original_sword_unsheathing_sfx_no_image"
