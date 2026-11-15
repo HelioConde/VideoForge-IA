@@ -72,7 +72,7 @@
   ],
   "expected_motion": {
     "head_max_rotation_degrees": -8.5,
-    "head_translation_y_source_px": -7,
+    "head_translation_y_source_px": -1.25,
     "shoulder_translation_y_source_px": -4.5,
     "wrist_max_rotation_degrees": 10,
     "forearm_rotation_degrees": -5.3,
@@ -98,5 +98,11 @@
   "create_images": false,
   "upload_youtube": false,
   "human_visual_approved": false,
-  "official_video_approved": false
+  "official_video_approved": false,
+  "visual_revision_notes": [
+    "First acting candidate PR run 43666968689 passed numerical motion gate (23,356 changed Kael ROI pixels >=24) and produced 3s MP4.",
+    "Human-like inspection of existing source pixels showed maroon stair background exposed at collar when head translated -7 px; this is NOT an approved underlay.",
+    "Limit independent head Y translation to -1.25 source px; neck pivot rotation remains -8.5deg and torso/arm performance unchanged.",
+    "Only SHA-verified original PNG parts used; no AI images or invented neck/collar anatomy."
+  ]
 }
