@@ -1,0 +1,52 @@
+name: "VideoForge - importar ZIP antigo C12 pelo SHA sem gerar imagens"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'uploads/alchemy-c12-rig-camadas-tecnicas-v2.zip'
+permissions:
+  contents: write
+concurrency:
+  group: vf-alchemy-c12-archive-original-mesh-pngs
+  cancel-in-progress: false
+jobs:
+  archive-exact-existing-pngs:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Conferir ausencia de geracao e politica do episodio
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock
+          test -s uploads/alchemy-c12-rig-camadas-tecnicas-v2.zip
+          python -m unittest tests.test_alchemy_c12_technical -v
+      - name: Importar somente os SETE PNGs antigos por SHA completo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.import_c12_technical_zip
+      - name: Guardar camadas originais permanentemente no Alchemy Lab
+        shell: bash
+        run: |
+          set -euo pipefail
+          DIR='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          git config user.name 'videoforge-archive[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$DIR/assets/planos" "$DIR/qa-c12-technical-import.json"
+          if git diff --cached --quiet; then
+            echo 'Todos os PNGs exatos ja existem. Nenhum arquivo sobrescrito.'
+            exit 0
+          fi
+          git commit -m 'assets(alchemy): arquivar sete PNGs tecnicos antigos C12 com SHA exato'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+          echo 'A importacao SHA-verificada dispara o workflow de MP4 tecnico, sujeito aos dois RGB originais.'
