@@ -4,6 +4,8 @@
 
 ## Máquina de estados e responsabilização
 
+**Reparação do legado:** workflows de QA e rig que não fazem chamadas de geração não podem falhar porque o lock de imagens V1 foi arquivado. Toda verificação de autorização deve usar o estado atual do remake; o QA de arquivamento nunca consome IA. Conferir os testes de compatibilidade no CI para evitar reincidência do mesmo erro.
+
 1. Ler o checkpoint mestre em `canal/<id>/videos/<video-id>/ESTADO-ATUAL.md`, `estado-atual.json`, histórico e assets reais na `main` **ANTES** de agir. Não duplicar desenhos, código, máscaras ou vídeos com SHA confirmado.
 2. Usar roteirista/diretor para decidir evento, ângulo dramático, elenco e continuidade visual por tomada.
 3. Artista gera imagem-mãe por perspectiva com a mesma identidade aprovada; arquivar original e SHA antes de anunciar conclusão. Número **total** de imagens sem máximo editorial, respeitando custo, segurança e autorização.

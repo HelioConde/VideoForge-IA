@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — reparar QA/workflows legados que exigiam lock revogado
+
+- **Falha detectada em CI:** run `43702917744` do workflow `qa-permanent-image-archive.yml` falhou no preflight: exigia `SEM-GERACAO-NOVAS-IMAGENS.lock`, retirado quando o usuário autorizou o remake.
+- **Correção:** todos os workflows de leitura/QA/rig legados inspecionados deixam de exigir o lock ativo; consultam o arquivo de bloqueio **histórico**. O QA de arquivamento também confirma `remake-v2-20261115`, ausência de custo extra autorizado e nenhuma publicação. Fluxos que efetivamente geram imagens mantêm controles de custo e de lock recolocado.
+- **Timeline:** ao reexecutar QA V1, preservar rótulos `legacy_scope` e `active_remake_manifest`; o QA de tomadas registra que o prompt atual vem do manifesto V2, não das regras antigas.
+- **Regressão:** `tests/test_remake_workflow_compatibility.py`, incluído no workflow de autonomia. Nenhuma mídia gerada, sem serviço externo pago acionado.
+- **Próximo:** rodar CI e obter resultados; geração de âncora somente com provedor/custo permitido e validação humana.
+
 ## 15/11/2026 — workflow de cenas passa a ler âncora V2 SHA-verificada
 
 - **Causa da inconsistência restante:** apesar de `cinematic_direction.py` estar integrado ao manifesto V2, o workflow `production-scene-by-request.yml` continuava baixando a referência legada da Actions run `43590930215`.

@@ -39,7 +39,7 @@ jobs:
           assert r['no_png_output'] is True
           assert r['human_visual_approval'] is False
           assert r['youtube_upload'] is False
-          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          assert (base/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           print('QA_ONLY: no image models, no saved images, no render.')
           PY
       - name: Instalar Pillow para álgebra de máscaras, sem criação artística

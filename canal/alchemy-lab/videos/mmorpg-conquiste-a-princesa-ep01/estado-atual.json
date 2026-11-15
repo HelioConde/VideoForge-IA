@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "verify CI workflow, then begin anchoring/remake art if provider cost permission and human review are available; implement layered rig work orchestration",
+  "next_action": "verify succeeding CI for image archive QA and remake autonomy",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -649,5 +649,17 @@
       "tests/test_remake_reference.py"
     ],
     "next_step": "verify CI workflow, then begin anchoring/remake art if provider cost permission and human review are available; implement layered rig work orchestration"
+  },
+  "remake_legacy_workflow_qa_fix": {
+    "status": "submitted_ci_pending",
+    "failed_qa_run": 43702917744,
+    "root_cause": "read_only_qa_asserted_removed_v1_image_generation_lock",
+    "action": "mark V1 lock as archived in legacy read-only workflows and assert current V2 policy",
+    "tested_by": "tests/test_remake_workflow_compatibility.py",
+    "paid_generation_still_blocked": true,
+    "no_youtube_upload": true,
+    "generated_images": 0,
+    "generated_mp4s": 0,
+    "next_step": "verify succeeding CI for image archive QA and remake autonomy"
   }
 }

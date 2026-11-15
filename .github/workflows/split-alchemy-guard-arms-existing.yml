@@ -39,7 +39,7 @@ jobs:
           assert req.get('only_existing_source_pixels') is True
           assert req.get('human_visual_approval') is False
           assert req.get('youtube_upload') is False
-          assert (root/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          assert (root/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           print('Only existing source pixels; no generative image models')
           PY
       - name: Preparar recorte determinístico com Pillow

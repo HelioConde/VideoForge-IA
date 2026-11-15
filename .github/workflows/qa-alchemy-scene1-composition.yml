@@ -32,7 +32,7 @@ jobs:
           from pathlib import Path
           base=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
           d=json.loads((base/"pedido-qa-composicao-c01.json").read_text(encoding="utf8"))
-          assert (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          assert (base/"REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md").is_file()
           assert d.get("schema")=="videoforge/qa-neutral-composite-request/v1"
           assert d.get("channel")=="alchemy-lab"
           assert d.get("video_id")=="mmorpg-conquiste-a-princesa-ep01"

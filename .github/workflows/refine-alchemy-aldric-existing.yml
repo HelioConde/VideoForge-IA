@@ -34,7 +34,7 @@ jobs:
           assert d.get('source_only') is True
           assert d.get('human_visual_approval') is False
           assert d.get('youtube_upload') is False
-          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          assert (base/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           print('RGB source-only; no model, no upload')
           PY
       - name: Dependências locais de máscara, sem modelos IA

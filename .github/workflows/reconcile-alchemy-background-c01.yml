@@ -31,7 +31,7 @@ jobs:
           import json
           base=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
           req=json.loads((base/"pedido-reconciliar-fundo.json").read_text(encoding="utf8"))
-          assert (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          assert (base/"REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md").is_file()
           assert req["schema"]=="videoforge/reconcile-existing-background-request/v1"
           assert req["channel"]=="alchemy-lab"
           assert req["video_id"]=="mmorpg-conquiste-a-princesa-ep01"

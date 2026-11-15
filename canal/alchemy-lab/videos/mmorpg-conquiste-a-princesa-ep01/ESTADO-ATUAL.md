@@ -16,6 +16,16 @@
 
 ## Integração do workflow de geração à âncora V2 verificada (15/11/2026)
 
+## Correção de regressões nos workflows antigos (15/11/2026)
+
+**Falha real encontrada e corrigida:** o [QA do arquivamento](https://github.com/HelioConde/VideoForge-IA/actions/runs/43702917744) falhou porque exigia a presença do arquivo de bloqueio de novas imagens eliminado pelo remake V2. O teste permanece **sem gerar imagens**, mas passa a conferir o registro histórico do bloqueio, `estado-atual.json` e `autonomy-policy.json` para garantir que não existe autorização automática de custo ou YouTube.
+
+**Varredura:** workflows legados de QA, máscaras, rig V5, reconciliação e importação da C12 não devem depender do lock V1 como condição de execução. Atualizados 20 workflows de leitura/técnica para reconhecer `REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md` como histórico e continuar sem gerar nada. Os workflows de geração ainda respeitam a existência de um lock novo se recolocado, além do bloqueio Python separado para custo real.
+
+**Proteção de manifesto:** o QA da timeline cinematográfica V1 mantém os campos `legacy_scope` e `active_remake_manifest` quando reexecutado, sem confundir `noImageGenerationLock=true` histórico com estado ativo do remake; o QA de planos indica quando os prompts vieram do manifesto V2. Testes `tests/test_remake_workflow_compatibility.py` impedem regressão.
+
+**Status:** correções de código e workflow, sem novas imagens, MP4 ou publicação. CI desta atualização ainda precisa ser confirmado. **Próxima ação:** validar workflows corrigidos e preparar produção C01-P02 somente após âncora e autorização de custo.
+
 **Problema corrigido:** `production-scene-by-request.yml` antes utilizava obrigatoriamente um artifact da prancha V1 (run histórico 43590930215). A direção nova podia montar prompts V2, mas o download ainda puxaria o personagem antigo ou ficaria indisponível. **O workflow agora diferencia V2 de projetos legados:** para o EP01 V2, exige `shot_id` específico e extrai a âncora canônica **aprovada** dos arquivos PNG persistidos em `assets/geracoes/production-art-request/<run-id>/` usando `videoforge/remake_reference.py`. Valida SHA da imagem, manifesto de arquivamento, arquivo de produção, dimensões, canal, vídeo e run antes de passar bytes ao proxy. Outros canais continuam no caminho antigo, sem regressão. C01-P01 continua sem imagem.
 
 **Segurança:** a geração por IA permanece bloqueada enquanto `autonomy-policy.json` não autorizar efetivamente o custo da chamada e enquanto a âncora não estiver aprovada. Não há download de PNG legado V1 para o remake, nem autoaprovação artística ou YouTube. `tests/test_remake_reference.py` inclui referência RGB/PNG sintética somente em teste de memória/temporário, nunca salva como arte de produção.

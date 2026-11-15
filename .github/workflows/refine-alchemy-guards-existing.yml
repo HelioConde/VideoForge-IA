@@ -38,7 +38,7 @@ jobs:
           assert request['only_existing_pixels'] is True
           assert request['human_visual_approval'] is False
           assert request['youtube_upload'] is False
-          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          assert (base/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           print('SOURCE_ONLY: no AI, no render, no publication')
           PY
       - name: Preparar extrator local de pixels (bibliotecas gratuitas)

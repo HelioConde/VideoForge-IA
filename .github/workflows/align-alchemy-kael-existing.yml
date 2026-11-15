@@ -31,7 +31,7 @@ jobs:
           import json
           from pathlib import Path
           base=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
-          assert (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          assert (base/"REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md").is_file()
           obj=json.loads((base/"pedido-alinhar-kael.json").read_text(encoding="utf8"))
           assert obj.get("schema")=="videoforge/align-existing-kael/v1"
           assert obj.get("image_generation_calls")==0

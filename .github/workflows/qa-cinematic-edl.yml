@@ -38,7 +38,7 @@ jobs:
           assert req["no_new_images"] is True
           assert req["render_video"] is False
           assert req["youtube_upload"] is False
-          assert (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          assert (base/"REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md").is_file()
           print("READ_ONLY_EXISTING_IMAGES: no new image generation and no render")
           PY
       - name: Instalar Pillow para QA de máscaras em memória, sem gerar artes
@@ -56,6 +56,17 @@ jobs:
             --channel alchemy-lab \
             --video-id mmorpg-conquiste-a-princesa-ep01 \
             --output canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/timeline-cinematografica.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/timeline-cinematografica.json")
+          data=json.loads(p.read_text(encoding="utf-8"))
+          data["legacy_scope"]="pre_remake_cinematic_edl_immutable_reference"
+          data["active_remake_manifest"]="remake-ep01-planos.json"
+          data["old_lock_field_historical_only"]=True
+          data["generation_authorization_note"]="Historico V1: noImageGenerationLock representa a politica de 14/11; o remake V2 usa outro manifesto e nao pode ter seu estado revertido por este QA."
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          PY
       - name: Revalidar que nenhum plano pendente habilitou render
         shell: bash
         run: |

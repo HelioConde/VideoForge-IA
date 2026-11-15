@@ -41,7 +41,7 @@ jobs:
           assert d["no_new_images"] is True
           assert d["no_mp4"] is True
           assert d["youtube_upload"] is False
-          assert (b/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          assert (b/"REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md").is_file()
           PY
       - name: Instalar apenas biblioteca de leitura de PNGs
         run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0

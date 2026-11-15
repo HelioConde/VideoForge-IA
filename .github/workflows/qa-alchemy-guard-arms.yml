@@ -32,7 +32,7 @@ jobs:
           assert p['only_existing_pixels'] is True
           assert p['human_visual_approval'] is False
           assert p['youtube_upload'] is False
-          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          assert (base/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           PY
       - name: Instalar Pillow para ler PNGs, sem IA
         run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0

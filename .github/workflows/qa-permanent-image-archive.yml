@@ -39,7 +39,12 @@ jobs:
           assert d['render_mp4'] is False
           assert d['youtube_upload'] is False
           assert (Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')/
-                  'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+                  'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
+          state=json.loads(Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/estado-atual.json').read_text())
+          policy=json.loads(Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/autonomy-policy.json').read_text())
+          assert state['active_production_version']=='remake-v2-20261115'
+          assert state['locks']['no_youtube_upload'] is True
+          assert policy['paid_provider_calls_approved'] is False
           print('PERSISTENCE_TESTS_ONLY; NO INFERENCE')
           PY
       - name: Testar arquivo SHA e conexao dos nove workflows com GitHub

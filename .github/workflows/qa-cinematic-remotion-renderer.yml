@@ -35,7 +35,7 @@ jobs:
           assert r["image_generation_calls"]==0
           assert r["render_mp4"] is False
           assert r["youtube_upload"] is False
-          assert (b/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          assert (b/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           print('RENDERER_QA_ONLY; no new images, MP4 or upload')
           PY
       - name: Instalar dependencias locais congeladas do Remotion

@@ -82,7 +82,7 @@ jobs:
           assert r["new_image_generation_calls"]==0
           assert r["youtube_upload"] is False
           assert r["official_video_approved"] is False
-          assert Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          assert Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md").is_file()
           print("C01_PREVIEW_AUTHORIZED_NO_NEW_ART_NO_YOUTUBE")
           PY
       - name: Validar parametros e reutilizar dependencias do runner

@@ -34,7 +34,7 @@ jobs:
           assert doc["image_generation_calls"]==0
           assert doc["youtube_upload"] is False
           assert doc["render_mp4"] is False
-          assert (root/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          assert (root/"REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md").is_file()
           PY
       - name: Testar direção cinematográfica, prompt e regressões dos demais canais
         run: |
@@ -44,13 +44,17 @@ jobs:
           python - <<'PY'
           import hashlib,json
           from pathlib import Path
-          from videoforge.cinematic_direction import load_plan, validate_plan, validate_visual_reference_gate
+          from videoforge.cinematic_direction import load_plan, validate_plan, validate_visual_reference_gate,load_active_remake_plan,validate_active_remake_plan
           from videoforge.production_scenes import scene_prompt
           channel="alchemy-lab"
           video="mmorpg-conquiste-a-princesa-ep01"
           root=Path("canal")/channel/"videos"/video
           data=load_plan(channel,video)
           result=validate_plan(channel,video,data)
+          active=load_active_remake_plan(channel,video)
+          if active:
+              remake_report=validate_active_remake_plan(channel,video,active)
+              assert remake_report["shot_count"]==result["shot_count"]
           hashes={}
           for shot in data["shots"]:
               if shot["shot_type"]=="black":
@@ -67,7 +71,9 @@ jobs:
               "generatedPromptCount":len(hashes),
               "promptSha256":hashes,
               "references":validate_visual_reference_gate(channel,video),
-              "source":"direcao-cinematografica-planos.json",
+              "source":"remake-ep01-planos.json" if active else "direcao-cinematografica-planos.json",
+              "legacy_distribution_source":"direcao-cinematografica-planos.json" if active else None,
+              "active_manifest_validated":bool(active),
               "onlyTextPlansCreated":True,"imageGenerationCalls":0,
               "newImagesSaved":0,"shotMothersApproved":False,
               "humanVisualApproval":False,"realRigApplied":False,

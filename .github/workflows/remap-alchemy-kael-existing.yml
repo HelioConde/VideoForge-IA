@@ -35,7 +35,7 @@ jobs:
           assert q['only_existing_pixels'] is True
           assert q['human_visual_approval'] is False
           assert q['youtube_upload'] is False
-          assert (root/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          assert (root/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           PY
       - name: Preparar Pillow de recorte local (sem IA)
         run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0

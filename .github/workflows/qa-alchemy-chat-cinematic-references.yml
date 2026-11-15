@@ -41,7 +41,7 @@ jobs:
           assert p['no_edit_pixels'] is True
           assert p['render_mp4'] is False
           assert p['youtube_upload'] is False
-          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          assert (base/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           print('EXISTING_SOURCE_SHA_ONLY; image generation permanently denied for episode')
           PY
       - name: Instalar Pillow somente para leitura do fingerprint de referencias

@@ -38,7 +38,7 @@ jobs:
           assert req['new_images'] is False
           assert req['render_video'] is False
           assert req['youtube_upload'] is False
-          assert (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').is_file()
+          assert (base/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           print('CONTINUITY_ONLY_NO_IMAGES')
           PY
       - name: Validar figurinos de Kael/Elara e regras de spoiler
