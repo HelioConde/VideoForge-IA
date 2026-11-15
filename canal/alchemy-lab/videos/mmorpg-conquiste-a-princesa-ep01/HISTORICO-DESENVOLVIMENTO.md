@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — primeiro render real C01-P01, falha isolada no commit e reparo
+
+- Run `43708620559`: Remotion criou **MP4 real de 2 s**, 60 frames pretos 1080×1920/30fps, H264 + AAC com WAV próprio. SHA WAV `22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d`; SHA MP4 `75b8be46c7e609a1c9ff8afad0935bcbf8c6faa2126ba3c74cad3af540f3c44e`; QA da mídia e som passou. Artifact `14159253575`, 90 dias.
+- A etapa de `git add` falhou pois runner GHCR de render não traz git. **Não relatar essa execução como sucesso integral**, só o render e QA; não houve commit de checkpoint. Corrigido o design: job de render sem git + job separado do host com Git e segunda validação; adicionado teste anti-regressão.
+- Isso não substitui frames de arte/rig C01-P02 e não constitui vídeo completo ou publicado.
+- Próximo: confirmar segundo job e persistência de hashes e run no JSON principal.
+
 ## 15/11/2026 — abrir C01-P01 por Remotion com efeito sonoro original (programação)
 
 - Criado código procedural determinístico do efeito de espada, sem áudio externo ou gasto de IA, e composição Remotion isolada de 60 frames pretos; nunca usa PNG de personagem nem simula rig.

@@ -14,6 +14,14 @@
 
 ## C01-P01 — primeira cena produzível sem arte (15/11/2026)
 
+### Correção de CI após o primeiro render real — 15/11/2026
+
+- **Prova material:** GitHub Actions [run 43708620559](https://github.com/HelioConde/VideoForge-IA/actions/runs/43708620559) renderizou de verdade 60 frames pretos H264/AAC por Remotion; FFprobe e FFmpeg conferiram todos os pixels pretos, áudio original audível e duração **2,005 s**. WAV SHA `22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d`, MP4 SHA `75b8be46c7e609a1c9ff8afad0935bcbf8c6faa2126ba3c74cad3af540f3c44e`.
+- **Artifact reproduzível:** `vf-remake-c01-p01-opening-43708620559`, ID `14159253575`, contém WAV, MP4, QA inicial e props, por 90 dias. Essa prévia é **técnica, não o episódio completo** e não houve publicação.
+- **Falha pontual após QA:** o último passo do workflow tentou `git add` dentro da imagem GHCR de Remotion e falhou porque **git não existe nesse contêiner** (`git: command not found`, exit 127). O áudio e vídeo foram preservados; o checkpoint não foi versionado nessa execução.
+- **Correção implementada:** separar os jobs. O contêiner gera e audita mídia; um segundo job no host `ubuntu-24.04` baixa o artifact, verifica os bytes novamente, persiste SHA, QA e checkpoint na branch `main`, sem instalar git na imagem, sem versionar binários e sem chamar IA. Teste preventivo `tests/test_remake_opening_workflow.py`.
+- **Pendente:** confirmar execução do workflow corrigido e registro do novo artifact no checkpoint. Não alterar aprovação humana ou render oficial.
+
 **Implementação nova em teste:** `videoforge/remake_opening.py` sintetiza um SFX original de metal/bainha em WAV mono 48 kHz, sem amostras comerciais, internet ou IA. O novo entrypoint `motion-remotion/src/remake-opening-index.ts` renderiza **somente a abertura de 60 frames pretos**, 1080×1920/30fps, com WAV em `<Audio>`. Workflow `.github/workflows/remake-opening-preview.yml` reutiliza o runner Remotion GHCR pré-instalado, executa testes, renderiza MP4 via Remotion, confere com FFmpeg/FFprobe apenas QA (frames inteiramente pretos, AAC audível, 60 frames, H264, SHA), guarda o MP4 e WAV por 90 dias em artifact e versiona **somente** o relatório/hashes e checkpoint, conforme `.gitignore` que proíbe mídia binária no canal. **Não** publica no YouTube.
 
 **Até a execução do workflow, isso é código, não MP4 confirmado.** O comando `python -m videoforge.remake_opening verify --output-dir ...` só declara sucesso com arquivos reais. Após sucesso atualiza automaticamente este checkpoint, histórico, estado JSON e o plano de C01-P01; o relatório `QA-C01-P01-REMAKE-V2.json` apontará run/artifact e SHA. A arte canônica, C01-P02 e os demais rigs continuam pendentes de PNG real, revisão e custo permitido.

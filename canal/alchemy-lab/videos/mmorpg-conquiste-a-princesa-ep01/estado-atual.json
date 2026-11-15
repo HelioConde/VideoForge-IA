@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "verify running GitHub action producing 2-second black MP4 and WAV; then V2 anchor and C01-P02 rig",
+  "next_action": "execute corrected two-job GitHub workflow, record QA and hashes to main; then C01-P02",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -741,7 +741,7 @@
     "queue_artifact": "videoforge-remake-autonomy-diagnostic/remake-shot-queue.json"
   },
   "remake_opening_c01p01_programming_20261115": {
-    "status": "source_and_workflow_submitted_render_pending",
+    "status": "real_2s_video_in_artifact_fixing_checkpoint_job",
     "shot": "C01-P01",
     "fps": 30,
     "duration_frames": 60,
@@ -756,6 +756,15 @@
     "full_episode_mp4": false,
     "target_artifact_retention_days": 90,
     "documentation_note": "No media yet until verified GitHub Actions run passes QA",
-    "next_step": "verify running GitHub action producing 2-second black MP4 and WAV; then V2 anchor and C01-P02 rig"
+    "next_step": "execute corrected two-job GitHub workflow, record QA and hashes to main; then C01-P02",
+    "first_media_run_id": 43708620559,
+    "first_media_artifact_id": 14159253575,
+    "first_media_render_and_qa_success": true,
+    "first_workflow_complete_success": false,
+    "first_failure": "Git unavailable in GHCR render container, checkpoint commit failed (exit 127)",
+    "workflow_fix": "split rendering and Git checkpoint into GHCR container job and ubuntu host job",
+    "regression_test": "tests/test_remake_opening_workflow.py",
+    "first_mp4_sha256": "75b8be46c7e609a1c9ff8afad0935bcbf8c6faa2126ba3c74cad3af540f3c44e",
+    "first_wav_sha256": "22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d"
   }
 }

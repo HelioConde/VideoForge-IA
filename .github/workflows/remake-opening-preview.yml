@@ -37,7 +37,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_remake_opening tests.test_remake_starter -v
+          python -m unittest tests.test_remake_opening tests.test_remake_opening_workflow tests.test_remake_starter -v
       - name: Reutilizar Remotion preinstalado e tipar o componente original
         shell: bash
         run: |
