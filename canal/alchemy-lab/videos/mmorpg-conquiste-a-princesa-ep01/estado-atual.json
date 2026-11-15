@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "verify GitHub Actions preflight; then acquire canonical V2 character-bible with consented source/cost and build the same-mother C01-P02 4-layer real artifact",
+  "next_action": "verify ffmpeg+stdlib synthetic smoke on GHCR, then get approved real V2 anchor and C01-P02 mother and four independent PNGs",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -787,7 +787,7 @@
   },
   "c01_p02_three_preview_integration_20261115": {
     "schema": "videoforge/remake-c01-p02-three-preview-development/v1",
-    "status": "code_submitted_ci_pending_real_source_blocked",
+    "status": "removing_pillow_dependency_ci_retest_pending",
     "expected_artifact": "vf-remake-c01-p02-sword-source-<run_id>",
     "scene": "C01",
     "shot": "C01-P02",
@@ -823,6 +823,11 @@
       "tests/test_remake_sword_preview.py",
       "motion-remotion/tests/remake-sword-preview.test.cjs"
     ],
-    "next_step": "verify GitHub Actions preflight; then acquire canonical V2 character-bible with consented source/cost and build the same-mother C01-P02 4-layer real artifact"
+    "next_step": "verify ffmpeg+stdlib synthetic smoke on GHCR, then get approved real V2 anchor and C01-P02 mother and four independent PNGs",
+    "first_smoke_run_id": 43710965103,
+    "first_smoke_result": "failed_missing_pillow_in_existing_runner",
+    "source_png_decode": "ffmpeg_for_qa_only",
+    "alpha_roundtrip_implementation": "pure_python_standard_library_struct_zlib_for_test_fixtures_and_bytes_composition",
+    "no_new_pip_dependencies": true
   }
 }

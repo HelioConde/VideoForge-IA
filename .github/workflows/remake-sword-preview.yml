@@ -54,11 +54,12 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: Validar Pillow e teste sintético de alpha/mesma imagem-mãe/QA
+      - name: Validar FFmpeg ja presente e recomposicao sintetica por Python stdlib
         shell: bash
         run: |
           set -euo pipefail
-          python -c "from PIL import Image; print('REMAKE_SWORD_PILLOW_READY')"
+          command -v ffmpeg
+          python -c "import struct,zlib; print('REMAKE_SWORD_STDLIB_READY')"
           python -m unittest tests.test_remake_sword_preview -v
           echo "TEST_ONLY_SYNTHETIC_FIXTURE_VALIDATED; NO REAL_ART_NO_MP4_NO_PROXY"
 

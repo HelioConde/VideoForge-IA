@@ -43,6 +43,56 @@ def read_json(path:Path)->dict:
         raise VideoForgeError("REMAKE_SWORD_MANIFEST_NOT_OBJECT")
     return data
 
+def decode_rgba_for_qa(path:Path)->bytes:
+    """FFmpeg decodes PNG pixels for QA ONLY; Remotion still animates/renders."""
+    try:
+        p=subprocess.run(["ffmpeg","-nostdin","-hide_banner","-loglevel","error",
+            "-i",str(path),"-frames:v","1","-f","rawvideo","-pix_fmt","rgba","pipe:1"],
+            capture_output=True,check=True,timeout=90)
+    except (OSError,subprocess.CalledProcessError,subprocess.TimeoutExpired) as exc:
+        raise VideoForgeError("REMAKE_SWORD_QA_FFMPEG_DECODE_FAILED") from exc
+    if len(p.stdout)!=W*H*4:
+        raise VideoForgeError("REMAKE_SWORD_QA_RGBA_FRAME_DIMENSIONS_INVALID")
+    return p.stdout
+
+
+def compare_source_to_neutral(package:Path)->tuple[float,dict]:
+    """Pixelwise alpha composition, without Pillow/numpy or installed packages."""
+    mother=decode_rgba_for_qa(package/"scene-mother.png")
+    result=bytearray(decode_rgba_for_qa(package/"underlay.png"))
+    boxes={}
+    for part in PARTS[1:]:
+        rgba=decode_rgba_for_qa(package/(part+".png"))
+        alphas=rgba[3::4]
+        minx,miny,maxx,maxy=W,H,-1,-1
+        for index,alpha in enumerate(alphas):
+            if alpha==0:
+                continue
+            y,x=divmod(index,W)
+            if x<minx:minx=x
+            if x>maxx:maxx=x
+            if y<miny:miny=y
+            if y>maxy:maxy=y
+            at=index*4
+            if alpha==255:
+                result[at:at+4]=rgba[at:at+4]
+            else:
+                inv=255-alpha
+                for channel in range(3):
+                    result[at+channel]=(rgba[at+channel]*alpha+
+                                       result[at+channel]*inv+127)//255
+                result[at+3]=255
+        if maxx<0:
+            raise VideoForgeError("REMAKE_SWORD_EMPTY_MASK:"+part)
+        boxes[part]=(minx,miny,maxx+1,maxy+1)
+    diff=0
+    for at in range(0,len(mother),4):
+        diff+=abs(mother[at]-result[at])
+        diff+=abs(mother[at+1]-result[at+1])
+        diff+=abs(mother[at+2]-result[at+2])
+    return round(diff/(W*H*3),5),boxes
+
+
 def canonical_anchor(root:Path=ROOT)->dict:
     plan=load_active_remake_plan(CH,VID,root)
     if plan is None:
@@ -153,43 +203,21 @@ def validate_package(package:Path,source_run_id:int,root:Path=ROOT)->dict:
         or any(type(v) not in (float,int) or not math.isfinite(v) for v in pivot)
         or not 0<=pivot[0]<=W or not 0<=pivot[1]<=H):
         raise VideoForgeError("REMAKE_SWORD_WRIST_PIVOT_INVALID")
-    try:
-        from PIL import Image,ImageChops,ImageStat
-    except ImportError as exc:
-        raise VideoForgeError("REMAKE_SWORD_RECOMPOSITION_REQUIRES_PILLOW") from exc
-    # Distinct rendered layers; source artifacts are never considered human-approved.
-    try:
-        with Image.open(package/"scene-mother.png") as im:
-            mother=im.convert("RGB")
-        with Image.open(package/"underlay.png") as im:
-            neutral=im.convert("RGBA")
-        boxes={}
-        for part in PARTS[1:]:
-            with Image.open(package/(part+".png")) as im:
-                rgba=im.convert("RGBA")
-            bounds=rgba.getchannel("A").getbbox()
-            if bounds is None:
-                raise VideoForgeError("REMAKE_SWORD_EMPTY_MASK:"+part)
-            boxes[part]=bounds
-            neutral.alpha_composite(rgba)
-        diff=ImageChops.difference(mother,neutral.convert("RGB"))
-        stat=ImageStat.Stat(diff)
-        mae=round(sum(stat.mean)/3,5)
-        # Test a crop of hand mask: wrist pivot must touch actual pixel geometry.
-        x0,y0,x1,y1=boxes["hand"]
-        if not (x0-35<=pivot[0]<=x1+35 and y0-35<=pivot[1]<=y1+35):
-            raise VideoForgeError("REMAKE_SWORD_WRIST_OUTSIDE_HAND_GEOMETRY")
-        # Prevent blade going outside mother canvas; otherwise disjoint cut-outs.
-        x0,y0,x1,y1=boxes["blade"]
-        movement=draw["travelPx"]
-        angle=math.radians(draw["axisDeg"])
-        dx,dy=movement*math.cos(angle),movement*math.sin(angle)
-        if min(x0,x0+dx)<-12 or max(x1,x1+dx)>W+12 or min(y0,y0+dy)<-12 or max(y1,y1+dy)>H+12:
-            raise VideoForgeError("REMAKE_SWORD_BLADE_EXITING_FRAME")
-        if mae>.5:
-            raise VideoForgeError("REMAKE_SWORD_NEUTRAL_RECOMPOSITION_FAILED")
-    except (OSError,ValueError) as exc:
-        raise VideoForgeError("REMAKE_SWORD_RASTER_QA_FAILED") from exc
+    # Numeric round-trip QA runs without Pillow or numpy on the existing
+    # Remotion GHCR container. It uses FFmpeg ONLY to decode PNG pixels.
+    mae,boxes=compare_source_to_neutral(package)
+    x0,y0,x1,y1=boxes["hand"]
+    if not (x0-35<=pivot[0]<=x1+35 and y0-35<=pivot[1]<=y1+35):
+        raise VideoForgeError("REMAKE_SWORD_WRIST_OUTSIDE_HAND_GEOMETRY")
+    x0,y0,x1,y1=boxes["blade"]
+    movement=draw["travelPx"]
+    angle=math.radians(draw["axisDeg"])
+    dx,dy=movement*math.cos(angle),movement*math.sin(angle)
+    if (min(x0,x0+dx)<-12 or max(x1,x1+dx)>W+12
+            or min(y0,y0+dy)<-12 or max(y1,y1+dy)>H+12):
+        raise VideoForgeError("REMAKE_SWORD_BLADE_EXITING_FRAME")
+    if mae>.5:
+        raise VideoForgeError("REMAKE_SWORD_NEUTRAL_RECOMPOSITION_FAILED")
     return {"manifest":manifest,"hashes":hashes,
         "neutral_mae_rgb":mae,
         "neutral_mae_max":.5,

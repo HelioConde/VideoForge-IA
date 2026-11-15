@@ -62,7 +62,7 @@ Os zeros e marcadores acima **não são parâmetros executáveis**; o validador 
 
 ## GitHub Actions e revisão
 
-O workflow `.github/workflows/remake-sword-preview.yml` executa gratuitamente, em pushes de código, o `preflight` e testes de bloqueio. Com artifact fonte completo e verdadeiro, o mesmo workflow pode ser despachado com o número do run. O contêiner GHCR é responsável pelo Python/Pillow, Remotion/ThreeCanvas com SWANGLE e FFprobe/FFmpeg de QA; o host Git é responsável por gravar apenas SHA, relatório e histórico.
+O workflow `.github/workflows/remake-sword-preview.yml` executa gratuitamente, em pushes de código, o `preflight` e testes de bloqueio. Com artifact fonte completo e verdadeiro, o mesmo workflow pode ser despachado com o número do run. O contêiner GHCR é responsável pelo Python/FFmpeg para decodificação e Python stdlib para recomposição, Remotion/ThreeCanvas com SWANGLE e FFprobe/FFmpeg de QA; o host Git é responsável por gravar apenas SHA, relatório e histórico.
 
 O render usa entrada `motion-remotion/src/remake-sword-preview-index.ts`, composição `VideoForgeC01P02SwordTechnical`. O MP4 de 3 segundos terá watermark explícita de **prévia técnica não aprovada** e irá para artifact, não para o Git do canal. Se o QA passar, `videoforge/remake_sword_checkpoint.py` registra `QA-C01-P02-REMAKE-V2.json` e os hashes no estado; sem aprovação visual, nunca integrar como vídeo oficial ou publicar no YouTube.
 
