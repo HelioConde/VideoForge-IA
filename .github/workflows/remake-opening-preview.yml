@@ -6,6 +6,7 @@ on:
     paths:
       - 'videoforge/remake_opening.py'
       - 'tests/test_remake_opening.py'
+      - 'tests/test_remake_opening_workflow.py'
       - 'motion-remotion/src/remake-opening*.ts*'
       - '.github/workflows/remake-opening-preview.yml'
 
@@ -63,12 +64,56 @@ jobs:
             --props="../$EP_OUTPUT/props.json" \
             --frames=0-59 --codec=h264 --audio-codec=aac \
             --pixel-format=yuv420p --gl=swangle --concurrency=1 --log=error
-      - name: QA FFprobe/FFmpeg de frames pretos, audio, duracao, codec e SHA
+      - name: QA de video/audio sem escrever checkpoint no container
         shell: bash
         run: |
           set -euo pipefail
-          python -m videoforge.remake_opening verify --output-dir "$EP_OUTPUT"
-      - name: Atualizar somente manifestos e checkpoint (nao commitar midia binaria)
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          from videoforge.remake_opening import verify_mp4
+          report=verify_mp4(Path(os.environ["EP_OUTPUT"]))
+          print("REMAKE_OPENING_QA_OK",json.dumps(report,ensure_ascii=False))
+          PY
+      - name: Guardar o MP4 e WAV reais por 90 dias para revisao humana
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-remake-c01-p01-opening-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2/C01-P01/
+          retention-days: 90
+          if-no-files-found: warn
+
+  checkpoint-in-git-host:
+    name: "Salvar SHA e checkpoint na main sem instalar git no container"
+    needs: original-sfx-remotion-preview
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Recuperar WAV/MP4 auditados do job de renderizacao
+        uses: actions/download-artifact@v4
+        with:
+          name: vf-remake-c01-p01-opening-${{ github.run_id }}
+          path: ./input/remake-opening
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Conferir FFprobe/FFmpeg e executar QA novamente no host
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v git
+          command -v ffprobe
+          command -v ffmpeg
+          python -m unittest tests.test_remake_opening tests.test_remake_opening_workflow -v
+          python -m videoforge.remake_opening verify --output-dir ./input/remake-opening
+      - name: Persistir QA e checkpoint no GitHub sem versionar MP4/WAV
         shell: bash
         run: |
           set -euo pipefail
@@ -79,16 +124,8 @@ jobs:
           if ! git diff --cached --quiet; then
             git config user.name "videoforge-autopilot[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "feat(dorama): C01-P01 original SFX and Remotion black video QA"
+            git commit -m "feat(dorama): C01-P01 SFX original e MP4 Remotion QA verificado"
             git push origin HEAD:main
           else
             echo "C01_P01_QA_ALREADY_CHECKPOINTED"
           fi
-      - name: Guardar o MP4 e WAV reais por 90 dias para revisao humana
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: vf-remake-c01-p01-opening-${{ github.run_id }}
-          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2/C01-P01/
-          retention-days: 90
-          if-no-files-found: warn
