@@ -1,0 +1,38 @@
+{
+  "schema": "videoforge/c12-threecanvas-render-blocker/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "run_id": 43658221156,
+  "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43658221156",
+  "date": "2026-11-14",
+  "status": "ASSETS_PENDING",
+  "workflow": ".github/workflows/render-alchemy-c12-three-mesh-technical.yml",
+  "code_commit": "466852e88b23f7a042a0a76fc7bca78164ca049f",
+  "contract_checks": "PASS (PR #49; run 43658126983)",
+  "render_preview_success": false,
+  "mp4_created": false,
+  "official_video": false,
+  "youtube_uploaded": false,
+  "image_generation_calls": 0,
+  "source_png_sha_verified_count": 0,
+  "missing_files": [
+    "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+    "assets/referencias/chat-aprovadas/elara-close-trono.png",
+    "assets/planos/C12-P02/background-inpaint-technical.png",
+    "assets/planos/C12-P02/kael-cape-loose-fold.png",
+    "assets/planos/C12-P03/background-inpaint-technical.png",
+    "assets/planos/C12-P03/elara-left-face-hair-lock.png",
+    "assets/planos/C12-P03/elara-back-hair-fall.png",
+    "assets/planos/C12-P03/elara-earring-pendant.png",
+    "assets/planos/C12-P03/elara-sleeve-lower-fabric.png"
+  ],
+  "missing_paths_relative_to": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01",
+  "required_archive_zips_in_repo_root_uploads": [
+    "alchemy-ep01-cinema-3-originais.zip",
+    "alchemy-c12-rig-camadas-tecnicas-v2.zip"
+  ],
+  "resolution": "Import the two original ZIP bundles with exact existing RGB and RGBA PNG bytes; validated workflows archive and re-trigger technical preview. Never generate replacement art or mark human QA true.",
+  "artifact_name": "vf-alchemy-c12-threecanvas-draft-43658221156",
+  "artifact_id": 14138579246,
+  "artifact_contains": "preflight.qa.json only (no MP4)"
+}
