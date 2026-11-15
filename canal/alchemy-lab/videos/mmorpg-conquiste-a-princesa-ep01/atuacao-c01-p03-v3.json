@@ -1,0 +1,169 @@
+{
+  "schema": "videoforge/alchemy-c01-performance-review/v3",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P03",
+  "scene_abs_frames": [
+    150,
+    239
+  ],
+  "fps": 30,
+  "duration_frames": 90,
+  "continuity_from": "atuacao-c01-p03-v2.json",
+  "source_art": "EXISTING_SHA_VERIFIED_RGB_RGBA_ONLY",
+  "image_generation_calls": 0,
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "head_max_rotation_abs_deg": 2,
+  "camera": "LOCKED_FOCAL_LENGTH_NO_PAN_NO_ZOOM",
+  "segments": [
+    {
+      "local_frames": [
+        0,
+        17
+      ],
+      "emotion": "Kael se cala de joelhos perante o trono",
+      "rig": "tension_hold",
+      "moving_parts": []
+    },
+    {
+      "local_frames": [
+        18,
+        42
+      ],
+      "emotion": "Kael inspira, a tensão passa pelos ombros",
+      "rig": "breath",
+      "moving_parts": [
+        "kael.ombros.translateY",
+        "kael.ombros.translateX",
+        "kael.jaqueta.mesh",
+        "kael.cabelo.mesh"
+      ]
+    },
+    {
+      "local_frames": [
+        43,
+        72
+      ],
+      "emotion": "Kael aperta o punho contra o joelho e flexiona os braços",
+      "rig": "braced_arms",
+      "moving_parts": [
+        "kael.braco-direito.rotationZ",
+        "kael.antebraco.rotationZ",
+        "kael.punhos.rotationZ",
+        "kael.braco-esquerdo.rotationZ"
+      ]
+    },
+    {
+      "local_frames": [
+        73,
+        89
+      ],
+      "emotion": "Kael levanta o queixo minimamente e sustenta a reação",
+      "rig": "head_pitch_hold",
+      "moving_parts": [
+        "kael.cabeca.rotationZ",
+        "kael.cabelo.mesh"
+      ]
+    }
+  ],
+  "rig_parts": [
+    "kael.ombros",
+    "kael.cabeca",
+    "kael.braco-direito",
+    "kael.antebraco",
+    "kael.punhos",
+    "kael.braco-esquerdo",
+    "kael.cabelo",
+    "kael.jaqueta"
+  ],
+  "keyframe_tracks_in_shot": 8,
+  "changes_from_v2": {
+    "head_rotation_deg_max_abs": 1.3,
+    "head_translation_y_px": 0,
+    "right_upper_arm_rotation_deg_max": 0.104,
+    "right_forearm_rotation_deg_min": -1.568,
+    "wrist_rotation_deg_max": 19.556,
+    "left_upper_arm_rotation_deg_min": -5.198,
+    "shoulder_translation_y_px_min": -2.268,
+    "shoulder_translation_x_px_max": 0.42,
+    "hair_mesh_amplitude_px": 3,
+    "jacket_mesh_amplitude_px": 1.8,
+    "source_holdout": "kael.costura-gola-pixel-original",
+    "source_holdout_parent": "kael.ombros",
+    "source_holdout_reconstruction": "only existing RGB source pixels where jacket and upper arm already opaque",
+    "mesh_assets_not_replaced": true
+  },
+  "technical_qa_required": [
+    "threecanvas_own_independent_sprite_layers",
+    "real_mp4_only_kael_actor_motion",
+    "original_background_newly_exposed_at_nape",
+    "locked_camera_against_fake_motion",
+    "source_sha_preserved",
+    "waist_jacket_source_pin_fixed",
+    "neutral_recomposition_and_human_edge_review"
+  ],
+  "known_pending_visual_problems": [
+    "guard_spear_masks_source_contamination",
+    "aldric_throne_background_contamination",
+    "hidden_neck_skin_not_reconstructed_and_must_not_be_invented",
+    "possible_arm_jacket_seams_need_visual_inspection"
+  ],
+  "human_visual_approved": false,
+  "official_video_approved": false,
+  "youtube_upload": false,
+  "qa_history": [
+    {
+      "run": 43668744883,
+      "collar_exposed_pixels": 236,
+      "passed": false,
+      "note": "before original-pixel holdout"
+    },
+    {
+      "run": 43669353700,
+      "collar_exposed_pixels": 148,
+      "passed": false,
+      "note": "static root holdout"
+    },
+    {
+      "run": 43669644633,
+      "collar_exposed_pixels": 149,
+      "passed": false,
+      "note": "upper arm pivot moved"
+    },
+    {
+      "run": 43670176688,
+      "collar_exposed_pixels": 125,
+      "actor_changed_pixels": 17700,
+      "passed": false,
+      "note": "small upper arm angle but collar still open"
+    },
+    {
+      "run": 43670794052,
+      "collar_exposed_pixels": 109,
+      "actor_changed_pixels": 15633,
+      "passed": false,
+      "note": "actor and original background dual gates"
+    },
+    {
+      "run": 43671035076,
+      "collar_exposed_pixels": 74,
+      "actor_changed_pixels": 15791,
+      "passed": false,
+      "note": "source ROI corrected, acting below 16000"
+    },
+    {
+      "run": 43671239999,
+      "collar_exposed_pixels": 76,
+      "actor_changed_pixels": 15917,
+      "passed": false,
+      "note": "acting and seam narrow failure"
+    },
+    {
+      "run": 43671532481,
+      "collar_exposed_pixels": null,
+      "actor_changed_pixels": null,
+      "passed": false,
+      "note": "latest retest in progress; do not assert before verified"
+    }
+  ]
+}

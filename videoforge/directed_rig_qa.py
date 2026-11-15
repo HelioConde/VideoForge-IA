@@ -9,7 +9,8 @@ from pathlib import Path
 import subprocess
 
 from .rig_candidate import _image, _write_png
-from .directed_rig import _mask_uncovered
+from .directed_rig import _mask_uncovered, _mask_only_original_covered_pixels
+from .c01_collar_qa import collar_background_exposure, collar_gate
 
 
 def neutral_review(bindings_path: Path, shot_id: str, output: Path) -> dict:
@@ -26,6 +27,9 @@ def neutral_review(bindings_path: Path, shot_id: str, output: Path) -> dict:
         if "file" not in node:
             continue
         pixels = decoded[node["id"]]
+        if "onlyCoveredBy" in node:
+            pixels, _ = _mask_only_original_covered_pixels(
+                pixels, [decoded[ref] for ref in node["onlyCoveredBy"]])
         if "onlyUncoveredBy" in node:
             pixels, _ = _mask_uncovered(pixels, [decoded[ref] for ref in node["onlyUncoveredBy"]])
         x, y, w, h = node["bbox"]
@@ -187,7 +191,17 @@ def verify_render(props_path: Path, output: Path) -> dict:
     if changed_video <= 50:
         raise ValueError("DIRECTED_QA_NO_MP4_ART_MOTION")
     c01_actor = None
+    c01_collar = None
     if props.get("id") == "C01-P03" and props.get("channel") == "alchemy-lab":
+        head_rot = [t for t in props["shots"][0]["tracks"]
+                    if t.get("target") == "kael.cabeca" and t.get("transform") == "rotationZ"]
+        neck_lift = [t for t in props["shots"][0]["tracks"]
+                     if t.get("target") == "kael.cabeca" and t.get("transform") == "translateY"]
+        if (len(head_rot) != 1
+            or not head_rot[0]["keyframes"]
+            or any(abs(k["value"]) > 2 for k in head_rot[0]["keyframes"])
+            or any(k["value"] != 0 for t in neck_lift for k in t["keyframes"])):
+            raise ValueError("C01_ACTING_HEAD_EXCEEDS_MANUAL_2DEG_OR_EXPOSES_NECK")
         # Unlike the old 50-pixel check, this detects whether the acting
         # remains imperceptible in the actual encoded video at the second beat.
         frame_lift = min(75, props["durationFrames"]-1)
@@ -197,8 +211,53 @@ def verify_render(props_path: Path, output: Path) -> dict:
         c01_actor["source_frame_performance"] = frame_lift
         c01_actor["min_changed_pixels"] = 16000
         c01_actor["technical_perceptible_motion"] = c01_actor["changed_pixels"] >= 16000
-        if not c01_actor["technical_perceptible_motion"]:
-            raise ValueError("C01_ACTING_STILL_TOO_SUBTLE_IN_REAL_MP4")
+        # Exposure is measured using ONLY the original scene background that
+        # was hash-validated by directed_rig.prepare. Never invent a neck patch.
+        sha_manifest = json.loads((output / "source-hashes.json").read_text(encoding="utf-8"))
+        original_background = props["shots"][0]["background"]
+        if (not original_background.startswith("vf-directed/alchemy-lab/")
+            or ".." in original_background.split("/")
+            or not original_background.endswith("/background.png")):
+            raise ValueError("C01_COLLAR_BACKGROUND_SOURCE_PATH_INVALID")
+        png_path = Path(__file__).resolve().parents[1] / "motion-remotion/public" / original_background
+        if not png_path.is_file():
+            raise ValueError("C01_COLLAR_VERIFIED_SOURCE_BACKGROUND_MISSING")
+        if not sha_manifest["sources"].get("background", {}).get("sha256"):
+            raise ValueError("C01_COLLAR_SOURCE_PROVENANCE_SHA_MISSING")
+        native = props["shots"][0]["canvas"]
+        verified_background = _image(png_path, native["width"], native["height"])
+        collar_scans = []
+        for target_frame in (min(55, props["durationFrames"]-1),
+                             min(75, props["durationFrames"]-1),
+                             props["durationFrames"]-1):
+            scan = collar_background_exposure(
+                video_before, _video_frame(video, target_frame, width, height),
+                verified_background, width=width, height=height,
+                source_width=native["width"], source_height=native["height"])
+            scan["frame"] = target_frame
+            collar_scans.append(scan)
+        c01_collar = collar_gate(collar_scans)
+        (output / "c01-collar-qa.json").write_text(
+            json.dumps(c01_collar, indent=2) + "\n", encoding="utf-8")
+        gates = {
+            "schema": "videoforge/c01-acting-and-collar-qa/v1",
+            "video_sha256": hashlib.sha256(video.read_bytes()).hexdigest(),
+            "acting": c01_actor,
+            "collar": c01_collar,
+            "source_pixels_only": True,
+            "visual_approval": False,
+            "technical_qa_passed": (
+                c01_actor["technical_perceptible_motion"] and
+                c01_collar["status"] == "PASS_TECHNICAL_NO_HUMAN_APPROVAL"),
+        }
+        (output / "c01-gates-qa.json").write_text(
+            json.dumps(gates, indent=2) + "\n", encoding="utf-8")
+        if not gates["technical_qa_passed"]:
+            raise ValueError(
+                "C01_ACTING_OR_COLLAR_FAILED: " +
+                "acting=" + str(c01_actor["changed_pixels"]) + "/16000; " +
+                "new_background=" + str(c01_collar["maximum_newly_exposed_pixels"]) +
+                "/" + str(c01_collar["allowed_pixels_per_checked_frame"]))
     audio = any(s["codec_type"] == "audio" for s in probe["streams"])
     hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
               for p in sorted(output.iterdir()) if p.is_file() and p.suffix in (".png", ".mp4")}
@@ -211,6 +270,7 @@ def verify_render(props_path: Path, output: Path) -> dict:
         "changedArtPixelsAtFrame": {"frame": frame_mid, "pixels": changed},
         "changedMp4ArtPixelsAtFrame": {"frame": frame_mid, "pixels": changed_video, "minRgbDelta": 8},
         "c01ArticulatedActorMotion": c01_actor,
+        "c01CollarOriginalBackgroundExposure": c01_collar,
         "sha256": hashes, "warnings": props["warnings"],
         "pixelRecovery": props.get("pixelRecovery", []),
         "imageGenerationCalls": 0, "previewTecnicoNaoOficial": True,

@@ -79,7 +79,7 @@
             "pinnedRows": [
               0
             ],
-            "amplitudePx": 4.2
+            "amplitudePx": 3
           }
         },
         {
@@ -122,8 +122,8 @@
           "id": "kael.braco-direito",
           "parent": "kael.ombros",
           "pivot": [
-            510,
-            883
+            540,
+            861
           ],
           "role": "part",
           "file": "assets/cena-01/rig-drafts/kael-alinhado-partes/braco-superior-direito.png",
@@ -250,7 +250,7 @@
             "pinnedRows": [
               0
             ],
-            "amplitudePx": 2.8,
+            "amplitudePx": 1.8,
             "sourcePin": {
               "startY": 950,
               "endY": 985
@@ -377,6 +377,28 @@
             "kael.perna-esquerda",
             "kael.jaqueta"
           ]
+        },
+        {
+          "id": "kael.costura-gola-pixel-original",
+          "parent": "kael.ombros",
+          "pivot": [
+            525,
+            860
+          ],
+          "role": "existing-pixel-underlay",
+          "file": "assets/cenas-mae/cena-01.png",
+          "bbox": [
+            482,
+            835,
+            105,
+            75
+          ],
+          "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+          "z": 18,
+          "onlyCoveredBy": [
+            "kael.jaqueta",
+            "kael.braco-direito"
+          ]
         }
       ],
       "warnings": [
@@ -390,7 +412,12 @@
         "Este teste isola C01-P03 e nao representa a montagem ou o audio do episodio.",
         "Costura da cintura fixa; pixels visiveis ausentes recuperados apenas da fonte original, sem reconstruir anatomia oculta.",
         "C01 performance v2 é uma prévia não aprovada: amplitude visível no pescoço, antebraço e pulso pode revelar áreas ocultas sem underlay; QA visual obrigatório.",
-        "Rotação de pulso não significa fechamento real dos dedos. Mãos e anatomia fina não foram segmentadas."
+        "Rotação de pulso não significa fechamento real dos dedos. Mãos e anatomia fina não foram segmentadas.",
+        "V3 gola/ombro: novo holdout de tecido usa exclusivamente pixels verificados da imagem-mãe previamente cobertos por jacket e braço RGBA; jamais supor anatomia oculta nova.",
+        "Holdout é técnico, não substitui revisão humana do recorte e dos contornos na gola.",
+        "V3 candidato de pivot do ombro direito foi alinhado na intersecao visual da gola original em (540,861), antes (510,883); verificar articulação no MP4, humano não aprovou.",
+        "Holdout de gola move sob o mesmo osso kael.ombros que jacket e braço direito, sem interpolação do PNG inteiro. Candidata de produção não aprovada.",
+        "V3 variante gola segura: cabelo 3px, jaqueta 1.8px; máximo 1.3 graus cabeça, sem translação cabeça, braço superior 0.104 graus; atuação transferida ao pulso e braço esquerdo. Revisão humana continua pendente."
       ]
     }
   }
