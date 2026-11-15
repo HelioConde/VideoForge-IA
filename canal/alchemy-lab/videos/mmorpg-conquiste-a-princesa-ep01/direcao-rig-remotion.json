@@ -316,7 +316,7 @@
               "target": "kael.punhos",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Palma contra joelho, pulso movimenta camada independente; sem dedos inventados [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
+              "description": "Palma contra joelho, pulso movimenta camada independente; sem dedos inventados [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [reforço leve de gesto sem alterar rotação do ombro direito]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -329,19 +329,19 @@
                 },
                 {
                   "frame": 186,
-                  "value": 5.2
+                  "value": 5.564
                 },
                 {
                   "frame": 211,
-                  "value": 15.6
+                  "value": 16.692
                 },
                 {
                   "frame": 228,
-                  "value": 16.9
+                  "value": 18.083
                 },
                 {
                   "frame": 239,
-                  "value": 13.65
+                  "value": 14.606
                 }
               ],
               "measuredPivotRequired": true
@@ -500,7 +500,7 @@
               "target": "kael.braco-esquerdo",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Braço oposto acompanha a inspiração sem mover o corpo inteiro [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
+              "description": "Braço oposto acompanha a inspiração sem mover o corpo inteiro [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [reforço leve de gesto sem alterar rotação do ombro direito]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -513,15 +513,15 @@
                 },
                 {
                   "frame": 198,
-                  "value": -1.74
+                  "value": -1.897
                 },
                 {
                   "frame": 219,
-                  "value": -4.205
+                  "value": -4.583
                 },
                 {
                   "frame": 239,
-                  "value": -3.48
+                  "value": -3.793
                 }
               ],
               "measuredPivotRequired": true
