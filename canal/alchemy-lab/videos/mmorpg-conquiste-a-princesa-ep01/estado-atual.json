@@ -498,5 +498,28 @@
     "code_imported": false,
     "artifacts_rendered_from_research": false,
     "license_status": "must_verify_before_code_reuse"
+  },
+  "pending_preflight_fix": {
+    "branch": "codex/animation-v5-review",
+    "integrated": false,
+    "regression_tests_passed": 17,
+    "change": "invalidate stale props before source validation",
+    "new_render": false
+  },
+  "pending_episode_inventory_fix": {
+    "branch": "codex/animation-v5-review",
+    "pr": 59,
+    "integrated": false,
+    "visual_shots_pending": 36,
+    "visual_shots_approved": 0,
+    "new_images_generated": 0,
+    "skills_installed_locally": [
+      "remotion-best-practices",
+      "remotion-markup",
+      "remotion-render"
+    ],
+    "agents_authorized": true,
+    "cinematic_pr_ci_added": true,
+    "audio_integration": "pending: exporter audioFile is None"
   }
 }
