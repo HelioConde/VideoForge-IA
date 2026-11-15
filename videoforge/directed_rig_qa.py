@@ -10,7 +10,8 @@ import subprocess
 
 from .rig_candidate import _image, _write_png
 from .directed_rig import _mask_uncovered, _mask_only_original_covered_pixels, _static_mother_with_kael_cutout
-from .c01_v4_breath_qa import validate_c01_v4_pose, static_region_video_report
+from .c01_v4_breath_qa import (validate_c01_v4_pose, validate_c01_v5_back_breath,
+                                static_region_video_report, changed_pixels_in_source_region)
 from .c01_collar_qa import collar_background_exposure, collar_gate
 
 
