@@ -190,6 +190,15 @@ def verify_render(props_path: Path, output: Path) -> dict:
     c01_actor = None
     c01_collar = None
     if props.get("id") == "C01-P03" and props.get("channel") == "alchemy-lab":
+        head_rot = [t for t in props["shots"][0]["tracks"]
+                    if t.get("target") == "kael.cabeca" and t.get("transform") == "rotationZ"]
+        neck_lift = [t for t in props["shots"][0]["tracks"]
+                     if t.get("target") == "kael.cabeca" and t.get("transform") == "translateY"]
+        if (len(head_rot) != 1
+            or not head_rot[0]["keyframes"]
+            or any(abs(k["value"]) > 2 for k in head_rot[0]["keyframes"])
+            or any(k["value"] != 0 for t in neck_lift for k in t["keyframes"])):
+            raise ValueError("C01_ACTING_HEAD_EXCEEDS_MANUAL_2DEG_OR_EXPOSES_NECK")
         # Unlike the old 50-pixel check, this detects whether the acting
         # remains imperceptible in the actual encoded video at the second beat.
         frame_lift = min(75, props["durationFrames"]-1)
