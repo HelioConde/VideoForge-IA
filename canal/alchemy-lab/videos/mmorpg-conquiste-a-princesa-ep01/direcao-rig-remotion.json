@@ -279,7 +279,7 @@
           "durationFrames": 90,
           "location": "sala-do-trono",
           "framing": "Kael ajoelhado",
-          "visualDescription": "frame 150-239: corte seco ao Kael ajoelhado diante de um trono imenso; manter cabeça baixa; nada de princesa no enquadramento.",
+          "visualDescription": "V4: Kael ajoelhado com mão direita apoiada e bota direita fixa; respira muito sutilmente pelo tronco. Guardas, lanças e Aldric completamente estáticos e íntegros. Câmera parada.",
           "characters": [
             "kael",
             "aldric"
@@ -313,44 +313,10 @@
           },
           "rigKeyframes": [
             {
-              "target": "kael.punhos",
-              "transform": "rotationZ",
-              "unit": "degrees",
-              "description": "Palma contra joelho, pulso movimenta camada independente; sem dedos inventados [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [reforço leve de gesto sem alterar rotação do ombro direito] [ênfase no gesto do punho, sem mover imagem inteira]",
-              "easing": "easeInOutCubic",
-              "keyframes": [
-                {
-                  "frame": 150,
-                  "value": 0
-                },
-                {
-                  "frame": 165,
-                  "value": 0
-                },
-                {
-                  "frame": 186,
-                  "value": 6.018
-                },
-                {
-                  "frame": 211,
-                  "value": 18.053
-                },
-                {
-                  "frame": 228,
-                  "value": 19.556
-                },
-                {
-                  "frame": 239,
-                  "value": 15.796
-                }
-              ],
-              "measuredPivotRequired": true
-            },
-            {
               "target": "kael.ombros",
               "transform": "translateY",
               "unit": "pixels_source_canvas",
-              "description": "Torso inspira, se ergue e volta ao apoio; rig da jaqueta ancora a cintura [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [menor tração da gola durante respiração]",
+              "description": "V4: respiração discreta do tronco; os braços permanecem ancorados à perna, sem gesto. Não usar meta de 16 mil pixels.",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -358,149 +324,33 @@
                   "value": 0
                 },
                 {
-                  "frame": 159,
-                  "value": 0
+                  "frame": 167,
+                  "value": -0.45
                 },
                 {
-                  "frame": 182,
-                  "value": -1.077
+                  "frame": 185,
+                  "value": -1.25
                 },
                 {
-                  "frame": 204,
-                  "value": -2.155
-                },
-                {
-                  "frame": 228,
-                  "value": -1.436
-                },
-                {
-                  "frame": 239,
-                  "value": -1.231
-                }
-              ],
-              "measuredPivotRequired": true
-            },
-            {
-              "target": "kael.cabeca",
-              "transform": "rotationZ",
-              "unit": "degrees",
-              "description": "Cabeça sobre pescoço sem underlay novo; limite do manual ±2 graus [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [cabeça até 1.82°, ainda dentro do manual]",
-              "easing": "easeInOutCubic",
-              "keyframes": [
-                {
-                  "frame": 150,
-                  "value": 0
-                },
-                {
-                  "frame": 169,
-                  "value": 0
-                },
-                {
-                  "frame": 191,
-                  "value": -0.91
-                },
-                {
-                  "frame": 213,
-                  "value": -1.729
-                },
-                {
-                  "frame": 230,
-                  "value": -1.82
-                },
-                {
-                  "frame": 239,
-                  "value": -1.638
-                }
-              ],
-              "measuredPivotRequired": true
-            },
-            {
-              "target": "kael.cabeca",
-              "transform": "translateY",
-              "unit": "pixels_source_canvas",
-              "description": "Pescoço não possui pixels de anatomia oculta: proibir elevação independente",
-              "easing": "easeInOutCubic",
-              "keyframes": [
-                {
-                  "frame": 150,
-                  "value": 0
-                },
-                {
-                  "frame": 239,
-                  "value": 0
-                }
-              ],
-              "measuredPivotRequired": true
-            },
-            {
-              "target": "kael.braco-direito",
-              "transform": "rotationZ",
-              "unit": "degrees",
-              "description": "Rotação superior quase neutra (<=0.87°) para conservar a costura original; atuação evidente fica no antebraço e pulso independentes [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
-              "easing": "easeInOutCubic",
-              "keyframes": [
-                {
-                  "frame": 150,
-                  "value": 0
-                },
-                {
-                  "frame": 169,
-                  "value": 0
-                },
-                {
-                  "frame": 192,
-                  "value": 0.043
-                },
-                {
-                  "frame": 213,
-                  "value": 0.104
-                },
-                {
-                  "frame": 232,
-                  "value": 0.092
-                },
-                {
-                  "frame": 239,
-                  "value": 0.088
-                }
-              ],
-              "measuredPivotRequired": true
-            },
-            {
-              "target": "kael.antebraco",
-              "transform": "rotationZ",
-              "unit": "degrees",
-              "description": "Flexão moderada do antebraço com pulso independente reforçado; evitar compensação que anule movimento perceptível [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [pulso realiza mais gesto, menor contra-rotação de cotovelo] [compensação de cotovelo restaurada porque melhora gesto sem forçar ombro]",
-              "easing": "easeInOutCubic",
-              "keyframes": [
-                {
-                  "frame": 150,
-                  "value": 0
-                },
-                {
-                  "frame": 174,
-                  "value": 0
-                },
-                {
-                  "frame": 198,
-                  "value": -0.9
+                  "frame": 202,
+                  "value": -0.65
                 },
                 {
                   "frame": 220,
-                  "value": -2.851
+                  "value": 0
                 },
                 {
                   "frame": 239,
-                  "value": -2.549
+                  "value": -0.35
                 }
               ],
               "measuredPivotRequired": true
             },
             {
-              "target": "kael.braco-esquerdo",
+              "target": "kael.cabeca",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Braço oposto acompanha a inspiração sem mover o corpo inteiro [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [reforço leve de gesto sem alterar rotação do ombro direito] [reforço moderado do braço oposto sem abrir gola direita]",
+              "description": "V4: micro inclinação de cabeça, <=0.35 grau, sem deslocamento vertical independente ou desconexão da gola.",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -508,84 +358,20 @@
                   "value": 0
                 },
                 {
-                  "frame": 171,
+                  "frame": 180,
+                  "value": -0.16
+                },
+                {
+                  "frame": 199,
+                  "value": -0.32
+                },
+                {
+                  "frame": 221,
                   "value": 0
-                },
-                {
-                  "frame": 198,
-                  "value": -2.151
-                },
-                {
-                  "frame": 219,
-                  "value": -5.198
                 },
                 {
                   "frame": 239,
-                  "value": -4.301
-                }
-              ],
-              "measuredPivotRequired": true
-            },
-            {
-              "target": "kael.ombros",
-              "transform": "translateX",
-              "unit": "pixels_source_canvas",
-              "description": "Translação corporal lateral discreta em malhas individuais, com cintura fixa [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
-              "easing": "easeInOutCubic",
-              "keyframes": [
-                {
-                  "frame": 150,
-                  "value": 0
-                },
-                {
-                  "frame": 170,
-                  "value": 0
-                },
-                {
-                  "frame": 197,
-                  "value": 0.21
-                },
-                {
-                  "frame": 222,
-                  "value": 0.42
-                },
-                {
-                  "frame": 239,
-                  "value": 0.3
-                }
-              ],
-              "measuredPivotRequired": true
-            },
-            {
-              "target": "kael.bota-direita",
-              "transform": "rotationZ",
-              "unit": "degrees",
-              "description": "Pé direito apoiado se flexiona discretamente em sinal de tensão, independente de ombro e cabeça",
-              "easing": "easeInOutCubic",
-              "keyframes": [
-                {
-                  "frame": 150,
-                  "value": 0
-                },
-                {
-                  "frame": 175,
-                  "value": 0
-                },
-                {
-                  "frame": 194,
-                  "value": -1.1
-                },
-                {
-                  "frame": 215,
-                  "value": -4.5
-                },
-                {
-                  "frame": 232,
-                  "value": -4.8
-                },
-                {
-                  "frame": 239,
-                  "value": -3.5
+                  "value": -0.08
                 }
               ],
               "measuredPivotRequired": true
@@ -631,8 +417,13 @@
             "pivotsVerified": false,
             "rigMovementVerified": false,
             "artRecomposed": false,
-            "audioVerified": false
-          }
+            "audioVerified": false,
+            "interactionAnchorsRequired": true,
+            "staticSceneContextRequired": true,
+            "ignoreLargeActorPixelCountAsSuccess": true,
+            "visualApprovalRequired": true
+          },
+          "performancePreset": "c01-p03-subtle-breathing-v4"
         },
         {
           "id": "C01-P04",
