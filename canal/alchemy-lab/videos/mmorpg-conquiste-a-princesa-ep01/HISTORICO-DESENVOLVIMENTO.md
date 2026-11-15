@@ -33,6 +33,13 @@ Registro cronológico de fatos verificáveis. **Não sobrescrever eventos antigo
 - [Run main 43662307131](https://github.com/HelioConde/VideoForge-IA/actions/runs/43662307131) **SUCCESS do coordenador**: a etapa `Reportar espera pelos PNGs antigos` foi executada, a etapa `Acionar render` foi **skipped**, e o artifact `c12-after-import-preflight-43662307131`, ID `14140133496`, contém apenas preflight. Foi criada a pasta `uploads/` para os dois ZIPs de imagens anteriores.
 - **Próximo passo:** importar os bytes originais dos dois ZIPs para `uploads/`, deixar os workflow importadores archivar exatos RGB/RGBA, verificar a retomada automática do MP4 técnico C12 e inspecionar máscaras/mecha/brinco/underlays. Sem novas imagens, sem aprovação humana e sem YouTube.
 
+## 14/11/2026 — upload verificado e idempotente dos ZIPs C12
+
+- [PR #54](https://github.com/HelioConde/VideoForge-IA/pull/54) **MERGED** na `main` (commit `346a3a80c74a96f39390aa12896916bfd2e9a994`). `videoforge/c12_upload_existing_zips.py` valida os dois ZIPs originais por SHA, IHDR nativo, tipo RGB/RGBA, nomes obrigatórios do RGB e segurança das entradas antes de gravar em `uploads/`. Recusa sobrescrever arquivos diferentes.
+- `scripts/enviar-zips-c12.ps1` envia os pacotes preexistentes à `main` pelo `gh`, com teste local, retry de conflito sem `force push`; [manual de uploads](../../../../uploads/README.md).
+- [Run 43665498760](https://github.com/HelioConde/VideoForge-IA/actions/runs/43665498760) — testes do PR **SUCCESS**. `render-draft` **skipped** por ser PR; nenhuma fonte C12 original foi acrescentada. **Sem MP4 C12 novo, sem geração de imagens ou publicação**.
+- **Bloqueio restante:** os dois ZIPs antigos estão indexados na Library mas os bytes não puderam ser copiados; transferir manualmente ao GitHub ou anexar os arquivos verdadeiros. Em seguida, os workflows já presentes arquivam os PNGs e acionam o render do rig C12 de oito segundos.
+
 ## Como acrescentar progresso
 
 Acrescentar uma seção datada com: objetivo e cena, arquivos alterados, commit realmente presente na `main`, run/workflow com resultado, mídia/artifact e SHA se houver, problemas abertos e próxima ação. Se ainda for apenas PR/branch, identificar explicitamente como **NÃO INTEGRADO**. Atualizar [ESTADO-ATUAL.md](ESTADO-ATUAL.md) **no mesmo lote de mudanças**; usar `estado-atual.json` para leitura programática. Nenhum agente deve depender do histórico de chats para reconstruir o projeto.
