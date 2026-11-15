@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "verify GitHub Actions regression; then canonical anchor and workflow integration to create C01-P02 when cost and art approved",
+  "next_action": "verify CI workflow, then begin anchoring/remake art if provider cost permission and human review are available; implement layered rig work orchestration",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -629,5 +629,25 @@
     "youtube_uploaded": false,
     "regression_test": "tests/test_remake_cinematic_integration.py",
     "next_step": "verify GitHub Actions regression; then canonical anchor and workflow integration to create C01-P02 when cost and art approved"
+  },
+  "remake_workflow_anchor_integration": {
+    "status": "code_submitted_ci_pending",
+    "workflow": ".github/workflows/production-scene-by-request.yml",
+    "reference_staging": "videoforge/remake_reference.py",
+    "active_manifest": "remake-ep01-planos.json",
+    "requires_explicit_shot_id": true,
+    "verifies_png_sha_and_archive_provenance": true,
+    "legacy_v1_reference_used_for_remake": false,
+    "independent_cost_authorization_still_required": true,
+    "human_approved_reference_still_missing": true,
+    "new_images_generated": 0,
+    "new_rigs_generated": 0,
+    "new_mp4s_generated": 0,
+    "youtube_uploaded": false,
+    "regression_tests": [
+      "tests/test_remake_cinematic_integration.py",
+      "tests/test_remake_reference.py"
+    ],
+    "next_step": "verify CI workflow, then begin anchoring/remake art if provider cost permission and human review are available; implement layered rig work orchestration"
   }
 }

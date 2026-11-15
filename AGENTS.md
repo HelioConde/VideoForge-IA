@@ -2,6 +2,8 @@
 
 ## PRECEDÊNCIA DAS REGRAS — DORAMA EP01 REMAKE V2 (vigente em 15/11/2026)
 
+**Workflow corrigido:** para produzir uma imagem-mãe do remake, `production-scene-by-request.yml` deve usar `videoforge/remake_reference.py` (âncora V2 já aprovada, arquivada em `assets/geracoes/production-art-request/<run-id>`, SHA+metadados), **não** baixar a prancha V1 de run histórico. `shot_id` obrigatório no EP01 remake. Não burlar autorização de provedor/custos, revisão estética ou upload.
+
 **CORREÇÃO NO CÓDIGO:** `videoforge/cinematic_direction.py` agora seleciona e valida o manifesto ativo `remake-ep01-planos.json` para a produção V2. A V1 continua nos testes/arquivos históricos. `production_scenes.py` confere o SHA de uma âncora real aprovada antes de chamada ao modelo. A geração de imagens ainda depende de autorização de custo e uma referência V2 confirmada, e o encadeamento do rig/MP4 ainda não é automático.
 
 1. **Fonte de retomada:** `canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md` + `estado-atual.json`; as instruções mais recentes de remake prevalecem sobre restrições de 14/11 preservadas como histórico.

@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — workflow de cenas passa a ler âncora V2 SHA-verificada
+
+- **Causa da inconsistência restante:** apesar de `cinematic_direction.py` estar integrado ao manifesto V2, o workflow `production-scene-by-request.yml` continuava baixando a referência legada da Actions run `43590930215`.
+- **Correção:** novo módulo `videoforge/remake_reference.py` prepara a referência canônica aprovada do próprio GitHub, verificando o arquivo PNG, SHA, `manifesto-geracoes.json` e `character-bible.production.json` do mesmo canal, vídeo e run. O workflow usa esse caminho para V2 e preserva download anterior para os demais canais. Cenas V2 requerem `shot_id`; sem referência aprovada, trava antes de qualquer solicitação ao modelo.
+- **Regressão:** `tests/test_remake_reference.py` valida recusa de referência ausente, cópia correta a partir de bytes verdadeiros em fixture, manifesto ausente e SHA divergente. Incluído no workflow de autonomia e geração de cenas.
+- **Mídia nesta atualização:** nenhuma nova imagem, layer, rig ou vídeo; nenhuma chamada de IA. **Próximo trabalho:** rodar CI e encadear workflows de camadas/rig ao controlador, mantendo gates de custo e revisão humana.
+
 ## 15/11/2026 — implementação do seletor cinematográfico V2 e verificação SHA
 
 - **Solicitação:** aplicar a correção técnica que faltava após auditoria das regras principais.

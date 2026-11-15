@@ -86,16 +86,30 @@ jobs:
           if ch not in CHANNEL_IDS or not IDENTIFIER.fullmatch(vid) or type(number) is not int or type(run_id) is not int or run_id<=0:
               raise SystemExit("SCENE_REQUEST_IDENTIFIERS_INVALID")
           from videoforge.image_generation_policy import assert_image_generation_allowed
-          assert_image_generation_allowed(ch,vid)  # barrar antes do proxy e credenciais
+          from videoforge.cinematic_direction import load_active_remake_plan
+          assert_image_generation_allowed(ch,vid)  # barrar custos e lock antes do proxy
+          remake=load_active_remake_plan(ch,vid) is not None
+          if remake and not shot_id:
+              raise SystemExit("REMAKE_V2_REQUIRES_EXPLICIT_SHOT_ID")
           prompt,scene=scene_prompt(ch,vid,number,shot_id)
           if len(prompt)>5000:
               raise SystemExit("SCENE_PROMPT_TOO_LONG")
           name=f"vf-real-art-{ch}-{vid}-character-bible-{run_id}"
           with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as f:
               suffix=("-"+shot_id.lower()) if shot_id else ""
-              f.write(f"channel={ch}\nvideo_id={vid}\nnumber={number}\nshot_id={shot_id or ''}\nshot_suffix={suffix}\nreference_run_id={run_id}\nreference_artifact={name}\n")
+              f.write(f"channel={ch}\nvideo_id={vid}\nnumber={number}\nshot_id={shot_id or ''}\nshot_suffix={suffix}\nreference_run_id={run_id}\nreference_artifact={name}\nis_remake={'true' if remake else 'false'}\n")
           print("SCENE_REQUEST_VALIDATED",ch,vid,number,"shot",shot_id or "primary","reference_run",run_id,"1 edit call")
           PY
+      - name: Preparar referencia V2 canônica diretamente dos PNGs permanentes do GitHub
+        if: steps.request.outputs.is_remake == 'true'
+        shell: bash
+        env:
+          CHANNEL: ${{ steps.request.outputs.channel }}
+          VIDEO_ID: ${{ steps.request.outputs.video_id }}
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_cinematic_integration tests.test_remake_reference -v
+          python -m videoforge.remake_reference --channel "$CHANNEL" --video-id "$VIDEO_ID" --output ./input
       - name: Verificar proxy sem expor credenciais
         shell: bash
         run: |
@@ -142,7 +156,8 @@ jobs:
             sleep 2
           done
           echo "::error::Proxy indisponivel"; exit 1
-      - name: Baixar referencia visual real da mesma obra
+      - name: Baixar referencia visual real da mesma obra (pipeline legado)
+        if: steps.request.outputs.is_remake != 'true'
         uses: actions/download-artifact@v4
         with:
           run-id: ${{ steps.request.outputs.reference_run_id }}
@@ -158,7 +173,7 @@ jobs:
           SHOT_ID: ${{ steps.request.outputs.shot_id }}
         run: |
           set -euo pipefail
-          python -m unittest tests.test_production_art tests.test_production_scenes -v
+          python -m unittest tests.test_production_art tests.test_production_scenes tests.test_remake_cinematic_integration -v
           python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
           CH_SCOPE="${CHANNEL:-${CH:-}}"
           VID_SCOPE="${VIDEO_ID:-${VID:-}}"

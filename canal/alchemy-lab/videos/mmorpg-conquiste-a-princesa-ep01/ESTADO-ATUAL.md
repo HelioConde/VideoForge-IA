@@ -14,6 +14,14 @@
 
 ## Integração real do gerador cinematográfico ao remake V2 (15/11/2026)
 
+## Integração do workflow de geração à âncora V2 verificada (15/11/2026)
+
+**Problema corrigido:** `production-scene-by-request.yml` antes utilizava obrigatoriamente um artifact da prancha V1 (run histórico 43590930215). A direção nova podia montar prompts V2, mas o download ainda puxaria o personagem antigo ou ficaria indisponível. **O workflow agora diferencia V2 de projetos legados:** para o EP01 V2, exige `shot_id` específico e extrai a âncora canônica **aprovada** dos arquivos PNG persistidos em `assets/geracoes/production-art-request/<run-id>/` usando `videoforge/remake_reference.py`. Valida SHA da imagem, manifesto de arquivamento, arquivo de produção, dimensões, canal, vídeo e run antes de passar bytes ao proxy. Outros canais continuam no caminho antigo, sem regressão. C01-P01 continua sem imagem.
+
+**Segurança:** a geração por IA permanece bloqueada enquanto `autonomy-policy.json` não autorizar efetivamente o custo da chamada e enquanto a âncora não estiver aprovada. Não há download de PNG legado V1 para o remake, nem autoaprovação artística ou YouTube. `tests/test_remake_reference.py` inclui referência RGB/PNG sintética somente em teste de memória/temporário, nunca salva como arte de produção.
+
+**Status deste avanço:** integração de código, workflow e testes; aguardando CI desta revisão. **0 imagens, 0 rigs e 0 MP4 gerados**. Próximo passo técnico: validar no GitHub Actions; depois seguir para a preparação e geração de arte canônica do remake com custo devidamente autorizado, e implementar encadeamento autônomo das camadas e malhas.
+
 **Mudança de código:** `videoforge/cinematic_direction.py` agora consulta `estado-atual.json` para detectar `remake-v2-20261115`, valida `remake-ep01-planos.json` (37 planos, 4890 frames, cena/cast, duração, foco, princesa ausente de C01/C02, autorização editorial) e converte cada tomada para o formato usado por `production_scenes.py`. O prompt tem o **estilo Cinematic Semi-Realistic Fantasy Anime** e a direção dramática/ângulo específica do manifesto **ativo**. `load_plan()` continua lendo a V1 como legado somente para QA histórico; não voltar à V1 para criar imagens do remake.
 
 **Integridade da arte:** `assert_shot_generation_ready()` exige PNG de âncora V2 realmente presente e SHA validado, dimensões certas e aprovação humana documentada. Antes do proxy, `production_scenes.generate_scene()` também compara o SHA da referência baixada com o SHA da âncora canônica aprovada. A política `image_generation_policy.py` continua impedindo consumo de provedor sem aprovação explícita de custo. Zero chamadas pagas nesta mudança.

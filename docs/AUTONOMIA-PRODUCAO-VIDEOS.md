@@ -18,6 +18,8 @@
 
 ### Integração do seletor V2 ao programa de geração
 
+**Ponto adicional de integração:** o workflow `production-scene-by-request.yml` agora identifica `remake-v2-20261115`, rejeita chamadas sem `shot_id`, e prepara o PNG de referência aprovado diretamente do manifesto de arquivo permanente com `videoforge/remake_reference.py`. Não busca a prancha da execução V1 para o remake. Exige `character-bible.png`, `character-bible.production.json` e `manifesto-geracoes.json` validados por SHA. Testes: `tests/test_remake_reference.py`. Ainda não há geração automática autorizada por custo nem pipeline end-to-end de rig/MP4.
+
 O `videoforge/cinematic_direction.py` detecta o remake ativo pelo `estado-atual.json`, valida o manifesto de tomadas do remake e envia plano, elenco, emoção, câmera e direção dramática ao `production_scenes.py`. O seletor histórico V1 foi mantido para diagnósticos antigos. `production_scenes.generate_scene` exige identidade com PNG de âncora aprovado por SHA, além das verificações de custo do `image_generation_policy.py`. Regressões: `tests/test_remake_cinematic_integration.py`. **A montagem automática de camadas/rig e render de todas as cenas ainda não foi integrada.**
 
 - Coordenador: `videoforge/remake_autopilot.py` lê o plano e a evidência por SHA; decide próximo estágio sem chamar modelo, com relatório estruturado e sincronização idempotente do checkpoint/histórico.
