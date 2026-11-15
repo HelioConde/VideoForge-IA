@@ -260,7 +260,12 @@ def _bindings(direction, bindings, root):
                          and all(_integer(v) for v in bbox) and bbox[2] > 0 and bbox[3] > 0
                          and bbox[0]+bbox[2] <= canvas["width"]
                          and bbox[1]+bbox[3] <= canvas["height"], "BBOX_INVALID")
-                sources[node["id"]] = _source(root, node, canvas, alpha=True)
+                # Existing-mother holdout can reference the approved RGB
+                # original, which becomes RGBA only after alpha-masking
+                # against already extracted jacket/arm source sprites.
+                # All ordinary independent parts still REQUIRE true RGBA.
+                sources[node["id"]] = _source(
+                    root, node, canvas, alpha="onlyCoveredBy" not in node)
             else:
                 _require(not any(k in node for k in ("sha256", "bbox", "mesh")), "GROUP_HAS_SPRITE_METADATA")
             if "mesh" in node:
