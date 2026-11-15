@@ -59,10 +59,19 @@ A tentativa de ler/copiar os bytes por integração de arquivos **falhou com `Th
 
 **Desbloqueio exato:** anexar os **dois ZIPs originais** à conversa como arquivos reais, ou colocá-los diretamente na **raiz** `uploads/` do repositório com os nomes indicados em [RENDER-C12-TECNICO.md](RENDER-C12-TECNICO.md). Depois conferir SHA, importação para `assets/` do episódio, preflight, recomposição neutra, MP4 de 8s, movimentos locais e QA visual (mecha e brinco ainda precisam correção). C12-P01/olhos e episódio completo continuam pendentes.
 
+## 14/11/2026 — importação dos ZIPs agora reativa o MP4 técnico automaticamente
+
+**Implementado na `main`:** [PR #53](https://github.com/HelioConde/VideoForge-IA/pull/53), commit `24c49509b53339a45a413c581435dd817d2028db`. Os workflows de importação dos **três RGB** e **sete PNGs técnicos** já existiam, mas os commits deles feitos com `GITHUB_TOKEN` não disparam outros workflows por `push`. O novo coordenador [`c12-after-import.yml`](../../../../.github/workflows/c12-after-import.yml) escuta a conclusão de **ambos** os importadores (`workflow_run`), consulta a `main` e somente com **nove fontes SHA-256 verificadas** dispara explicitamente `render-alchemy-c12-three-mesh-technical.yml` via `workflow_dispatch` e token Actions autorizado. Origem ausente = **aguardar sem gerar MP4**; origem adulterada/máscara inválida = **erro**.
+
+- [Testes PR run 43662265188](https://github.com/HelioConde/VideoForge-IA/actions/runs/43662265188) **SUCCESS** para o classificador `videoforge/c12_dispatch_gate.py`.
+- [Run na main 43662307131](https://github.com/HelioConde/VideoForge-IA/actions/runs/43662307131) **SUCCESS**: confirmou `WAIT_FOR_EXISTING_SOURCE_BYTES` e **não despachou** o render enquanto faltam os PNGs; artifact temporário `c12-after-import-preflight-43662307131` ID `14140133496` só contém relatório.
+- Criada a pasta visível [`uploads/README.md`](../../../../uploads/README.md). Enviar pelo GitHub, preservando os PNGs internos, exatamente `uploads/alchemy-ep01-cinema-3-originais.zip` e `uploads/alchemy-c12-rig-camadas-tecnicas-v2.zip`. Os dois ZIPs foram encontrados em metadados da Library, mas **não foi possível acessar seus bytes por esta integração**.
+- A prévia C12 de 8 segundos ainda **não existe como novo MP4 de GitHub Actions**; o rig C01 de três segundos permanece disponível na [run 43660106313](https://github.com/HelioConde/VideoForge-IA/actions/runs/43660106313). Nenhuma imagem foi gerada, nenhum vídeo publicado.
+
 ## Próxima ação concreta, em ordem
 
 1. **Prioridade:** recuperar os **bytes reais dos dois ZIPs já localizados na Library, porém inacessíveis para cópia**, ou enviá-los à raiz `uploads/`; importar os arquivos *já existentes* da C12; verificar exatamente SHA, RGBA, bbox, 941×1672 e presença real no GitHub. Antes de repetir o render, verificar se os ZIPs já apareceram no repositório. Se faltarem, informar `assets_pendentes` e manter o relatório.
-2. Quando estiverem arquivados, executar o workflow técnico C12 na **main**, verificar MP4, repetibilidade de frames, recomposição, bordas, costuras e oclusões. Não inferir aprovação humana do sucesso do workflow.
+2. Quando estiverem arquivados, **o coordenador aciona automaticamente** o workflow técnico C12 na **main**; verificar MP4, repetibilidade de frames, recomposição, bordas, costuras e oclusões. Não inferir aprovação humana do sucesso do workflow.
 3. Refinar a C01 usando o motor **já integrado**, corrigindo máscaras/underlays dos guardas, lanças e Aldric com os pixels aprovados existentes. Não reimplementar as 107 trilhas de direção.
 4. Depois ampliar para os demais 36 planos visuais com imagem-mãe própria e rig por cena, narração, legendas e QA; **episódio oficial de 163 s permanece pendente** enquanto não houver assets e aprovação.
 
