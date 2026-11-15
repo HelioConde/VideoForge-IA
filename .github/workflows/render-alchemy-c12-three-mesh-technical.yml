@@ -5,9 +5,12 @@ on:
     paths:
       - 'videoforge/c12_technical_preview.py'
       - 'videoforge/c12_render_qa.py'
+      - 'videoforge/c12_upload_existing_zips.py'
+      - 'scripts/enviar-zips-c12.ps1'
       - 'videoforge/import_c12_technical_zip.py'
       - 'tests/test_alchemy_c12_technical.py'
       - 'tests/test_alchemy_c12_render_qa.py'
+      - 'tests/test_alchemy_c12_upload_existing_zips.py'
       - 'tests/test_alchemy_c12_import.py'
       - '.github/workflows/render-alchemy-c12-three-mesh-technical.yml'
       - 'motion-remotion/src/c12-mesh-technical*'
@@ -40,7 +43,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Conferir origens hashes imagens e regras de 7 sprites antigos
-        run: python -m unittest tests.test_alchemy_c12_technical tests.test_alchemy_c12_import tests.test_alchemy_c12_render_qa -v
+        run: python -m unittest tests.test_alchemy_c12_technical tests.test_alchemy_c12_import tests.test_alchemy_c12_render_qa tests.test_alchemy_c12_upload_existing_zips -v
   render-draft:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
