@@ -1,5 +1,10 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — reteste após correção do contrato de âncora aprovada
+
+- GitHub Actions `43745676658`: SUCCESS em preflight e smoke Remotion/ThreeCanvas de teste, após remoção da asserção que exigia referência V2 perpetuamente ausente. Futura aprovação da âncora não deve mais derrubar o teste.
+- Fonte/MP4 C01-P02 permanecem pendentes. Nenhum custo ou publicação.
+
 ## 15/11/2026 — automação de pacote e render pós-arquivo com evidências reais
 
 - Commit `e705a5664bb4359fabc653401b1c3d2097baa6a5` conectou scan de arte permanente, empacotador de mesma mãe, gatilho `workflow_run` e documentação/checkpoint.

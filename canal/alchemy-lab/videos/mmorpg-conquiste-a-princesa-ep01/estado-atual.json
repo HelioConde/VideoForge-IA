@@ -851,7 +851,7 @@
   },
   "c01_p02_archive_packer_20261115": {
     "schema": "videoforge/remake-c01-p02-archive-pack-checkpoint/v1",
-    "status": "main_integrated_ci_passed_real_art_missing",
+    "status": "ci_confirmed_real_sources_still_missing",
     "packer": "videoforge/remake_sword_pack.py",
     "pack_workflow": ".github/workflows/remake-sword-pack.yml",
     "render_workflow": ".github/workflows/remake-sword-preview.yml",
@@ -896,6 +896,11 @@
     "image_cost_calls": 0,
     "automatic_trigger_verified": true,
     "automatic_render_blocked_without_artifact": true,
-    "preview_anchor_dynamic_test_fixed": true
+    "preview_anchor_dynamic_test_fixed": true,
+    "future_anchor_regression_run": {
+      "id": 43745676658,
+      "result": "success",
+      "subject": "threecanvas_test_after_dynamic_anchor_preflight_fix"
+    }
   }
 }

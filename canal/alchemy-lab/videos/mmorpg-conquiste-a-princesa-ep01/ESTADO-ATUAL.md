@@ -4,6 +4,10 @@
 
 ### Verificação GitHub concluída: scanner, empacotamento sintético, gatilho e bloqueio (15/11/2026)
 
+### Regressão após tornar o teste compatível com aprovação futura — 15/11/2026
+
+O [run 43745676658](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745676658) terminou em **SUCCESS**, validando preflight e render de frames sintéticos ThreeCanvas após ajuste do teste que supunha ausência eterna da âncora V2. O teste permanece rigoroso quanto a pacotes inexistentes, mas não impedirá o programa de progredir quando uma âncora verdadeira for aprovada. **Nenhuma arte real ou MP4 C01-P02 foi criado.**
+
 - **[Run 43745321463](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745321463) — SUCCESS.** O scanner gratuito detectou que **não há âncora V2 aprovada nem camadas reais** e pulou corretamente o job de montagem; o teste completo no runner GHCR executou **14 testes aprovados em 36,416s** com fixtures temporárias de PNGs, inclusive pacote válido, mães incompatíveis, SHAs adulterados e anti-repetição. Não gerou nenhuma imagem do usuário.
 - **[Run 43745321451](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745321451) — SUCCESS.** Regressão do movimento ThreeCanvas + regra do preflight validada; nenhum vídeo com arte real foi renderizado.
 - **[Run 43745436851](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745436851) — SUCCESS.** O evento automático **workflow_run** disparou de verdade depois do empacotador. O job de verificação registrou `REMAKE_SWORD_REAL_SOURCE_NOT_READY_NO_RENDER` e pulou o renderer porque **não existia artifact de arte real**; preservou o bloqueio correto.
