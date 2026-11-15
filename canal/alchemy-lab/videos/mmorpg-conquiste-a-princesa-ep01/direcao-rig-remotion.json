@@ -316,7 +316,7 @@
               "target": "kael.punhos",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Palma contra joelho, pulso movimenta camada independente; sem dedos inventados",
+              "description": "Palma contra joelho, pulso movimenta camada independente; sem dedos inventados [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -329,19 +329,19 @@
                 },
                 {
                   "frame": 186,
-                  "value": 4
+                  "value": 5.2
                 },
                 {
                   "frame": 211,
-                  "value": 12
+                  "value": 15.6
                 },
                 {
                   "frame": 228,
-                  "value": 13
+                  "value": 16.9
                 },
                 {
                   "frame": 239,
-                  "value": 10.5
+                  "value": 13.65
                 }
               ],
               "measuredPivotRequired": true
@@ -350,7 +350,7 @@
               "target": "kael.ombros",
               "transform": "translateY",
               "unit": "pixels_source_canvas",
-              "description": "Torso inspira, se ergue e volta ao apoio; rig da jaqueta ancora a cintura",
+              "description": "Torso inspira, se ergue e volta ao apoio; rig da jaqueta ancora a cintura [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -363,19 +363,19 @@
                 },
                 {
                   "frame": 182,
-                  "value": -2.1
+                  "value": -1.26
                 },
                 {
                   "frame": 204,
-                  "value": -4.2
+                  "value": -2.52
                 },
                 {
                   "frame": 228,
-                  "value": -2.8
+                  "value": -1.68
                 },
                 {
                   "frame": 239,
-                  "value": -2.4
+                  "value": -1.44
                 }
               ],
               "measuredPivotRequired": true
@@ -384,7 +384,7 @@
               "target": "kael.cabeca",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Cabeça sobre pescoço sem underlay novo; limite do manual ±2 graus",
+              "description": "Cabeça sobre pescoço sem underlay novo; limite do manual ±2 graus [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -397,19 +397,19 @@
                 },
                 {
                   "frame": 191,
-                  "value": -1
+                  "value": -0.65
                 },
                 {
                   "frame": 213,
-                  "value": -1.9
+                  "value": -1.235
                 },
                 {
                   "frame": 230,
-                  "value": -2
+                  "value": -1.3
                 },
                 {
                   "frame": 239,
-                  "value": -1.8
+                  "value": -1.17
                 }
               ],
               "measuredPivotRequired": true
@@ -436,7 +436,7 @@
               "target": "kael.braco-direito",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Rotação superior quase neutra (<=0.87°) para conservar a costura original; atuação evidente fica no antebraço e pulso independentes",
+              "description": "Rotação superior quase neutra (<=0.87°) para conservar a costura original; atuação evidente fica no antebraço e pulso independentes [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -449,19 +449,19 @@
                 },
                 {
                   "frame": 192,
-                  "value": 0.36
+                  "value": 0.043
                 },
                 {
                   "frame": 213,
-                  "value": 0.87
+                  "value": 0.104
                 },
                 {
                   "frame": 232,
-                  "value": 0.765
+                  "value": 0.092
                 },
                 {
                   "frame": 239,
-                  "value": 0.735
+                  "value": 0.088
                 }
               ],
               "measuredPivotRequired": true
@@ -470,7 +470,7 @@
               "target": "kael.antebraco",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Flexão moderada do antebraço com pulso independente reforçado; evitar compensação que anule movimento perceptível",
+              "description": "Flexão moderada do antebraço com pulso independente reforçado; evitar compensação que anule movimento perceptível [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -483,15 +483,15 @@
                 },
                 {
                   "frame": 198,
-                  "value": -1.2
+                  "value": -0.9
                 },
                 {
                   "frame": 220,
-                  "value": -3.8
+                  "value": -2.85
                 },
                 {
                   "frame": 239,
-                  "value": -3.4
+                  "value": -2.55
                 }
               ],
               "measuredPivotRequired": true
@@ -500,7 +500,7 @@
               "target": "kael.braco-esquerdo",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Braço oposto acompanha a inspiração sem mover o corpo inteiro",
+              "description": "Braço oposto acompanha a inspiração sem mover o corpo inteiro [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -513,15 +513,15 @@
                 },
                 {
                   "frame": 198,
-                  "value": -1.2
+                  "value": -1.74
                 },
                 {
                   "frame": 219,
-                  "value": -2.9
+                  "value": -4.205
                 },
                 {
                   "frame": 239,
-                  "value": -2.4
+                  "value": -3.48
                 }
               ],
               "measuredPivotRequired": true
@@ -530,7 +530,7 @@
               "target": "kael.ombros",
               "transform": "translateX",
               "unit": "pixels_source_canvas",
-              "description": "Translação corporal lateral discreta em malhas individuais, com cintura fixa",
+              "description": "Translação corporal lateral discreta em malhas individuais, com cintura fixa [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -543,15 +543,15 @@
                 },
                 {
                   "frame": 197,
-                  "value": 0.7
+                  "value": 0.21
                 },
                 {
                   "frame": 222,
-                  "value": 1.4
+                  "value": 0.42
                 },
                 {
                   "frame": 239,
-                  "value": 1
+                  "value": 0.3
                 }
               ],
               "measuredPivotRequired": true
