@@ -1,0 +1,128 @@
+{
+  "schema": "videoforge/c01-v4-subtle-breath-performance/v1",
+  "recorded_date": "2026-11-15",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P03",
+  "previous_v3": "atuacao-c01-p03-v3.json",
+  "human_feedback_drives_priority": true,
+  "objective": "Kael kneels and breathes subtly. Right hand rests on right knee, right boot never moves. King and crossed spears are pristine original static mother pixels.",
+  "duration_seconds": 3,
+  "fps": 30,
+  "absolute_frames": [
+    150,
+    239
+  ],
+  "allowed_keyframe_tracks": [
+    {
+      "target": "kael.ombros",
+      "transform": "translateY",
+      "range_source_px": [
+        -1.25,
+        0
+      ],
+      "physiology": "slow subtle breathing"
+    },
+    {
+      "target": "kael.cabeca",
+      "transform": "rotationZ",
+      "range_degrees": [
+        -0.32,
+        0
+      ],
+      "physiology": "near-still micro head response"
+    }
+  ],
+  "locked_anchors_in_source_space": [
+    {
+      "id": "kael.braco-direito",
+      "parent": null,
+      "required_world_displacement_max_px": 0
+    },
+    {
+      "id": "kael.antebraco",
+      "parent": "kael.braco-direito",
+      "required_world_displacement_max_px": 0
+    },
+    {
+      "id": "kael.punhos",
+      "parent": "kael.antebraco",
+      "contact": "right knee",
+      "required_world_displacement_max_px": 0
+    },
+    {
+      "id": "kael.braco-esquerdo",
+      "parent": null,
+      "required_world_displacement_max_px": 0
+    },
+    {
+      "id": "kael.perna-direita",
+      "parent": null,
+      "required_world_displacement_max_px": 0
+    },
+    {
+      "id": "kael.bota-direita",
+      "parent": "kael.perna-direita",
+      "required_world_displacement_max_px": 0
+    }
+  ],
+  "meshes": {
+    "hair_front_amplitude_source_px": 0.45,
+    "jacket_amplitude_source_px": 0.55,
+    "waist_source_pin": true
+  },
+  "static_scene": {
+    "original_source": "assets/cenas-mae/cena-01.png",
+    "original_source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+    "strategy": "copy original mother RGB everywhere except exact source-alpha Kael sprites plus 3px contour, fill Kael hole with existing SHA-gated reconstructed background",
+    "suppressed_candidate_overlays": [
+      "aldric",
+      "guarda-esquerdo",
+      "guarda-direito",
+      "lanca-contexto-0",
+      "lanca-contexto-1"
+    ],
+    "king_crown_head_preserved_as_original": true,
+    "spears_preserved_as_original": true,
+    "source_only_no_new_ai_paint": true
+  },
+  "qa_policy": {
+    "movement_metric": "subtle breathing localized to actor at H264 real frames, not 16000px threshold",
+    "actor_motion_min_changed_rgb8_pixels": 25,
+    "actor_motion_max_changed_rgb8_pixels": 20000,
+    "static_video_regions": [
+      "aldric_crown_face",
+      "left_spear_upper",
+      "right_spear_upper",
+      "right_boot"
+    ],
+    "must_pass": "world contact anchors, original static pixels, deterministic render, collar source exposure, human visual edge review",
+    "qa_technical_pass_is_not_visual_approval": true,
+    "max_change_gate_context": "Real C01 V4 1.25px breathing yields 11115 changed 8-bit RGB pixels in actor ROI because source drawing is detailed; physical joint movement/locks and static H264 props are stricter than gross count."
+  },
+  "estimated_episode_direction_tracks_after_change": 106,
+  "source_file_policy": "no-new-image-generation",
+  "youtube_upload": false,
+  "human_visual_approved": false,
+  "official_video_approved": false,
+  "status": "implementation_branch_render_one_visual_inspection_positive_qa_retest_pending",
+  "ci_run": null,
+  "mp4_artifact": null,
+  "next_step": "Render in Actions then visually inspect original king crown, rigid spears, anchored arm and boot, and subtle chest breathing; only merge if technical QA passes. Human approval separate.",
+  "qa_first_render": {
+    "run_id": 43676244073,
+    "status": "failed_only_calibration_upper_bound",
+    "mp4_created": true,
+    "artifact_id": 14146228923,
+    "real_h264_breath_changed_rgb8_pixels": 11115,
+    "pose_constraints_passed": true,
+    "static_king_spears_boot_frames_passed": true,
+    "collar_original_background_exposed_pixels": 24,
+    "neutral_mean_absolute_rgb_error": 0.216449949476454,
+    "neutral_pixel_exact": false,
+    "king_head_crown_inspected_in_frame0": true,
+    "spears_original_src_inspected_in_frame0": true,
+    "human_visual_approved": false,
+    "next_qa": "rerun with physical constraints unchanged and pixel calibration ceiling 20000"
+  }
+}

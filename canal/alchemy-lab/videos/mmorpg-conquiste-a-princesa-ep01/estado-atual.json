@@ -10,7 +10,7 @@
   "animation_manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
   "episode_seconds_planned": 163,
   "shots_planned": 37,
-  "motion_tracks_planned": 113,
+  "motion_tracks_planned": 106,
   "locks": {
     "no_new_image_generation": true,
     "no_youtube_upload": true,
@@ -18,7 +18,7 @@
     "human_art_approved": false
   },
   "c01": {
-    "state": "v3_main_technical_ok_user_feedback_requires_c01_v4_breathing_only_and_masks",
+    "state": "V3_merged_but_visual_rejected__V4_in_pr57_under_test",
     "shot": "C01-P03",
     "integrated_pr": 56,
     "integrated_commit": "69e22458703c7c716f05e205987471ce3595b1c5",
@@ -221,6 +221,55 @@
       "implementation_status": "not_started_this_documentation_turn",
       "new_images_generated": 0,
       "youtube_uploaded": false
+    },
+    "v4": {
+      "schema": "videoforge/c01-v4-implementation-status/v1",
+      "status": "branch_PR_57_render_pending",
+      "pr_number": 57,
+      "branch": "feat/alchemy-c01-subtle-breathing-static-context-v4-20261115",
+      "feedback_origin": "User reviewed C01 V3: right arm moves against knee, cut right boot, broken spears, cropped Aldric head; desired motion only subtle breathing",
+      "shot_tracks": 2,
+      "episode_directed_tracks": 106,
+      "head_max_abs_deg": 0.32,
+      "shoulder_translate_y_max_abs_source_px": 1.25,
+      "hair_mesh_amplitude_source_px": 0.45,
+      "jacket_mesh_amplitude_source_px": 0.55,
+      "right_arm_world_locked": true,
+      "right_wrist_world_locked": true,
+      "right_leg_boot_world_locked": true,
+      "left_arm_world_locked": true,
+      "static_king_guards_spears_source": "SHA-verified original scene mother RGB",
+      "static_source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "static_source_overlay_removed": [
+        "aldric",
+        "guarda-esquerdo",
+        "guarda-direito",
+        "lanca-contexto-0",
+        "lanca-contexto-1"
+      ],
+      "source_pixel_cutout_policy": "Kael existing sprite alpha only, 3px dilation; replacement original existing SHA-gated reconstructed background",
+      "source_pixels_reused_only": true,
+      "generated_ai_images": 0,
+      "external_skills_code_copied": false,
+      "v4_direction_manifest": "atuacao-c01-p03-v4-respiracao.json",
+      "user_rules": "REGRAS-ATUACAO-C01-P03-RESPIRACAO-2026-11-15.md",
+      "research": "docs/PESQUISA-SKILLS-BIBLIOTECAS-RIGGING-2D-2026-11-15.md",
+      "render_request_revision": 4,
+      "qa_policy": "subtle localized H264 breathing and static parent/world contact, not 16000-pixel V3",
+      "first_run_43676126787": {
+        "status": "failed",
+        "reason": "COVERED_HOLDOUT_REFERENCES_NOT_SOURCE_PARTS",
+        "test_preflight_passed": true,
+        "mp4_created": false
+      },
+      "second_pr_render_run": 43676244073,
+      "second_pr_typecheck_run": 43676244089,
+      "second_run_conclusion": "pending_at_checkpoint",
+      "mp4_qa_status": "not_verified_yet",
+      "human_visual_approved": false,
+      "official_video_approved": false,
+      "youtube_uploaded": false,
+      "next_action": "Verify PR57 Actions and full MP4 technical QA; inspect static original king crown and crossed spears, anchored right arm and boot, and subtle breathing; only merge if gates pass"
     }
   },
   "c12": {
@@ -334,7 +383,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Start C01-P03 V4 from existing main V3 with user-approved *breathing-only* direction: world-lock right arm/hand resting on leg, lock boot/leg, preserve spears/guards static and fix king Aldric missing head mask; adjust QA from numerical actor motion pixels to perceptible subtle localized breathing and intact neutral masks. No new images, no YouTube. Keep C12 pending original two ZIPs and nine PNGs.",
+  "next_action": "PR57 code implements C01 V4 breathing-only from existing SHA verified source art. Verify runs 43676244073/43676244089 and MP4 artifact; correct failures, merge only after successful CI, then inspect human visual quality. C12 still missing original two ZIPs.",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",

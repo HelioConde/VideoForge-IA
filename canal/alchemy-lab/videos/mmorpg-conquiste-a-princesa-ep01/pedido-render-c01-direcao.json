@@ -10,12 +10,15 @@
   "youtube_upload": false,
   "human_visual_approval": false,
   "official_video_approved": false,
-  "reason": "The previous C01 V2 acting moved Kael but exposed original background at neck; render a manual-safe V3 head 2 degrees, no independent neck lift, more independent arm and shoulder acting and real background-exposure QA. Do not generate images or approve art.",
-  "revision": 3,
-  "performance_review_manifest": "atuacao-c01-p03-v3.json",
+  "reason": "User reviewed C01 V3 and rejected right-arm gesture, cut right boot, broken crossed spears, and cropped Aldric head. Produce breathing-only V4 from original mother and SHA-gated Kael sprites, no images generated.",
+  "revision": 4,
+  "performance_review_manifest": "atuacao-c01-p03-v4-respiracao.json",
   "old_v1_technical_mp4_rejected_for_weak_motion": true,
-  "required_motion": "visible original-source shoulder, arm, forearm, wrist and hair/cloth meshes, camera fixed",
+  "required_motion": "Only Kael shoulders/chest breathe <=1.25 native px and head tilt <=0.32 degrees. Right arm-hand supported on knee and boot world static; original spears and king source copied unchanged.",
   "visual_approval_still_required": true,
   "old_v2_artifact_main_run_id": 43667678291,
-  "neck_original_background_exposure_gate_required": true
+  "neck_original_background_exposure_gate_required": true,
+  "original_static_king_spears_required": true,
+  "world_contact_locks_required": true,
+  "legacy_16000_pixel_movement_gate_disabled_in_v4": true
 }

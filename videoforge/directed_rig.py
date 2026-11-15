@@ -79,6 +79,109 @@ def _mask_only_original_covered_pixels(
     return result, kept
 
 
+
+def _static_mother_with_kael_cutout(
+    mother: bytes | bytearray,
+    reconstructed: bytes | bytearray,
+    canvas: dict,
+    nodes: list[dict],
+    full_pixels: dict,
+    *,
+    radius: int = 3,
+) -> tuple[bytearray, dict]:
+    """Preserve exact king/guard/spear source mother pixels; open Kael region only.
+
+    The static environment is the approved mother RGB, NOT individual static
+    candidate sprites (which cropped Aldric's crown and duplicated spears).
+    Replace only verified source alpha pixels belonging to Kael, plus small
+    dilation for subpixel breathing, with the already SHA-gated reconstructed
+    background RGB. Never fabricate unseen scene or recolor any source pixel.
+    """
+    width, height = canvas["width"], canvas["height"]
+    if (len(mother) != width*height*4
+        or len(reconstructed) != len(mother)
+        or type(radius) is not int or not 0 <= radius <= 6):
+        raise DirectedRigError("C01_MOTHER_STATIC_INPUT_DIMENSIONS_INVALID")
+    kael_parts = [node for node in nodes
+                  if node.get("role") == "part"
+                  and node["id"].startswith("kael.")
+                  and "file" in node]
+    if len(kael_parts) < 10:
+        raise DirectedRigError("C01_MOTHER_STATIC_KAEL_MASKS_REQUIRED")
+    if any(n["id"] not in full_pixels for n in kael_parts):
+        raise DirectedRigError("C01_MOTHER_STATIC_UNVERIFIED_SPRITE")
+    covered = bytearray(width*height)
+    for node in kael_parts:
+        x, y, w, h = node["bbox"]
+        rgba = full_pixels[node["id"]]
+        for sy in range(y, y+h):
+            row = sy*width
+            for sx in range(x, x+w):
+                j = 4*(row+sx)
+                if rgba[j+3]:
+                    covered[row+sx] = 1
+    if not any(covered):
+        raise DirectedRigError("C01_MOTHER_STATIC_EMPTY_ACTOR_MASK")
+    margin = bytearray(width*height)
+    # Each source mask defines at most the actual actor and a 3px outline.
+    # Only bytes already present in the approved mother or candidate RGB
+    # background are copied. No generative/AI pixels can enter this stage.
+    for sy in range(height):
+        row = sy*width
+        for sx in range(width):
+            if not covered[row+sx]:
+                continue
+            for yy in range(max(0,sy-radius),min(height,sy+radius+1)):
+                a = yy*width+max(0,sx-radius)
+                b = yy*width+min(width,sx+radius+1)
+                margin[a:b] = b"\1" * (b-a)
+    background=bytearray(mother)
+    cleared = 0
+    for pix,belongs_to_kael in enumerate(margin):
+        if belongs_to_kael:
+            k = pix*4
+            background[k:k+4] = reconstructed[k:k+4]
+            cleared += 1
+
+    # Assertions sampled across the real original king face/crown and the
+    # upper visible spear lengths (all outside the Kael actor footprint).
+    safe_regions = {
+        "aldric_crown_face": (458,260,131,140),
+        "left_spear_upper": (220,350,120,215),
+        "right_spear_upper": (680,350,120,215),
+    }
+    region_report={}
+    for name,(rx,ry,rw,rh) in safe_regions.items():
+        if rx+rw>width or ry+rh>height:
+            raise DirectedRigError("C01_MOTHER_STATIC_REGION_OUTSIDE_CANVAS")
+        count_changed=0
+        count_cleared=0
+        for sy in range(ry,ry+rh):
+            for sx in range(rx,rx+rw):
+                i=sy*width+sx
+                count_cleared+=bool(margin[i])
+                if background[i*4:i*4+3] != mother[i*4:i*4+3]:
+                    count_changed+=1
+        # The critical king head and upper spears must be preserved from
+        # approved source pixels, never reconstructed background or cutouts.
+        if count_cleared or count_changed:
+            raise DirectedRigError("C01_MOTHER_STATIC_KING_OR_SPEAR_OVERLAP")
+        region_report[name]={"pixels":rw*rh,"changed_from_original":0,
+                              "actor_cutout_overlap":0,"passed":True}
+    return background, {
+        "schema":"videoforge/c01-static-context-original-mother/v1",
+        "strategy":"original approved RGB mother outside verified Kael alpha only",
+        "source_actor_layers":len(kael_parts),
+        "actor_cutout_radius_px":radius,
+        "actor_mask_and_margin_pixels":cleared,
+        "king_and_spears":region_report,
+        "static_candidates_suppressed":True,
+        "new_pixels_generated":0,
+        "human_visual_review":False,
+    }
+
+
+
 def _require(condition, message):
     if not condition:
         raise DirectedRigError(message)
@@ -242,6 +345,19 @@ def _bindings(direction, bindings, root):
                  and all(isinstance(w, str) for w in spec["warnings"]), "WARNINGS_REQUIRED")
         sources = {"sourceMother": _source(root, spec.get("sourceMother"), canvas),
                    "background": _source(root, spec.get("background"), canvas)}
+        mode = spec.get("backgroundMode")
+        _require(mode in (None, "original-mother-static-context-with-kael-cutout/v1"),
+                 "C01_UNKNOWN_BACKGROUND_MODE")
+        if mode is not None:
+            _require(shot["id"] == "C01-P03"
+                     and bindings["channel"] == "alchemy-lab"
+                     and spec["sourceMother"]["sha256"]
+                         == "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf"
+                     and isinstance(spec.get("staticContextPolicy"), dict)
+                     and spec["staticContextPolicy"].get("preserveKingGuardsSpears") is True
+                     and spec["staticContextPolicy"].get("suppressCandidateStaticOverlays") is True
+                     and spec["staticContextPolicy"].get("dilationRadiusSourcePx") == 3,
+                     "C01_STATIC_MOTHER_SOURCE_OR_POLICY_MISMATCH")
         nodes = spec.get("nodes")
         _require(isinstance(nodes, list), "NODES_REQUIRED")
         by_id = {}
@@ -430,9 +546,28 @@ def prepare(direction_path, bindings_path, shot_id, output_dir, public_dir):
             crops[node["id"]] = bytearray().join(pixels[(y+r)*stride+x*4:(y+r)*stride+(x+w)*4] for r in range(h))
     dest.mkdir(parents=True)
     output.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(sources["background"][0], dest / "background.png")
+    static_context = None
+    if spec.get("backgroundMode") == "original-mother-static-context-with-kael-cutout/v1":
+        bg_pixels,static_context = _static_mother_with_kael_cutout(
+            rig_candidate._image(sources["sourceMother"][0],**spec["canvas"]),
+            rig_candidate._image(sources["background"][0],**spec["canvas"]),
+            spec["canvas"],spec["nodes"],full_pixels,
+            radius=spec["staticContextPolicy"]["dilationRadiusSourcePx"])
+        rig_candidate._write_png(dest / "background.png",bg_pixels,
+                                  spec["canvas"]["width"],spec["canvas"]["height"])
+        static_context["sourceMotherSha256"]=sources["sourceMother"][1]
+        static_context["reconstructedBackgroundSha256"]=sources["background"][1]
+        static_context["derivedBackgroundSha256"]=hashlib.sha256(
+            (dest / "background.png").read_bytes()).hexdigest()
+    else:
+        shutil.copyfile(sources["background"][0], dest / "background.png")
     packaged = []
     for index, node in enumerate(spec["nodes"]):
+        if static_context is not None and node["role"] == "static-context":
+            # The whole original approved static scene is already in the
+            # background. Adding candidate static sprites causes cropped
+            # Aldric and duplicate/warped lance silhouettes.
+            continue
         obj = {k: v for k, v in node.items()
                if k not in ("sha256", "file", "onlyUncoveredBy", "onlyCoveredBy")}
         if "file" in node:
@@ -445,7 +580,7 @@ def prepare(direction_path, bindings_path, shot_id, output_dir, public_dir):
              "channel": bindings["channel"], "videoId": bindings["video_id"], "id": shot_id,
              **{k: direction["format"][k] for k in ("width", "height", "fps")},
              "startFrame": shot["startFrame"], "durationFrames": shot["endFrameExclusive"]-shot["startFrame"],
-             "pixelRecovery": recovered,
+             "pixelRecovery": recovered, "staticContext": static_context,
              "shots": [{"id": shot_id, "startFrame": shot["startFrame"], "endFrameExclusive": shot["endFrameExclusive"],
                         "canvas": spec["canvas"], "background": (relative / "background.png").as_posix(),
                         "nodes": packaged, "tracks": shot["rigKeyframes"], "camera": shot.get("camera", {})}],
