@@ -68,12 +68,43 @@
     "head_rotation_clamped_to_half_degree": true
   },
   "source_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
-  "status": "pr_implementation_pending_render",
+  "status": "merged_main_technical_qa_passed_human_visual_review_pending",
   "human_visual_review": false,
   "publishable": false,
   "official_video_approved": false,
   "youtube_uploaded": false,
   "render_artifact": null,
-  "main_run_id": null,
-  "next_step": "Check CI and render 3s V5; visually inspect back breathing without jacket, collar, hand, boot or king defects. Update ESTADO-ATUAL, HISTORICO, JSON, README and AGENTS on main."
+  "main_run_id": 43680784142,
+  "next_step": "User visual review of actual V5 MP4 on main (artifact 14147374656); correct visual artifacts only if identified, using original SHA-verified pixels. C12 waiting original ZIPs.",
+  "integrated_pr": 58,
+  "merge_commit": "ae7ca09c3f75ed04498704459a2ac547de810d06",
+  "main_tests_run_id": 43680784182,
+  "pr_render_run_id": 43680505866,
+  "mp4_artifact": 14147374656,
+  "mp4_sha256": "d84361f693f4e1c83b4d5ad7bd7ed55c253044e672fbf80af803ace58b865481",
+  "mp4_bytes": 598863,
+  "pr_main_mp4_identical": true,
+  "qa_evidence": {
+    "technical_qa_passed": true,
+    "back_source_roi": [
+      405,
+      870,
+      85,
+      65
+    ],
+    "back_h264_rgb8_pixels": {
+      "frame30": 957,
+      "frame55": 514,
+      "frame75": 8,
+      "frame89": 191
+    },
+    "max_actor_h264_rgb8_pixels": 11698,
+    "king_spears_boot_h264_rgb24_changed_pixels": 0,
+    "collar_exposed_background_pixels": 24,
+    "collar_allowed": 75,
+    "neutral_mae": 0.216449949476454,
+    "neutral_changed_pixels": 13015,
+    "neutral_total_pixels": 1572864,
+    "neutral_pixel_exact": false
+  }
 }
