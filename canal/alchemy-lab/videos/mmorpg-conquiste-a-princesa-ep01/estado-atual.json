@@ -12,10 +12,11 @@
   "shots_planned": 37,
   "motion_tracks_planned": 106,
   "locks": {
-    "no_new_image_generation": true,
+    "no_new_image_generation": false,
     "no_youtube_upload": true,
     "official_video_allowed": false,
-    "human_art_approved": false
+    "human_art_approved": false,
+    "image_execution_budget_pending": true
   },
   "c01": {
     "state": "v5_main_technical_qa_passed_visual_review_pending",
@@ -498,5 +499,14 @@
     "code_imported": false,
     "artifacts_rendered_from_research": false,
     "license_status": "must_verify_before_code_reuse"
+  },
+  "new_art_authorization": {
+    "date": "2026-11-15",
+    "authorized": true,
+    "contract": "autorizacao-visual-2026-11-15.json",
+    "branch": "codex/episode-visual-authorization",
+    "integrated": false,
+    "generated_images": 0,
+    "pending": "first_batch_call_limit_and_workflow_integration"
   }
 }

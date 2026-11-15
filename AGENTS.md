@@ -1,5 +1,19 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## Atualização do usuário — 15/11/2026: novas artes autorizadas com referência fixa
+
+O usuário autorizou novas imagens e peças para os planos faltantes do Alchemy Lab EP01.
+Esta decisão substitui o veto artístico anterior. Usar integralmente
+`PROMPT-VISUAL-CANONICO-2026-11-15.txt` e a imagem vinculada por SHA em
+`autorizacao-visual-2026-11-15.json` no diretório do episódio. A referência é
+de identidade/estética, não aprovação automática de planos ou rigs. Preservar
+C01 V5 como prévia histórica. Novos ângulos devem respeitar o elenco/enquadramento
+da tomada; peças derivam da mesma imagem-mãe, nunca de personagens recriados.
+O limite do primeiro lote foi perguntado ao usuário e ainda está pendente.
+O gate executável antigo permanece fechado até integrar o limite e o workflow
+com referência canônica. Não interpretar esse gate como ausência de autorização
+artística. Nenhuma publicação ou repetição automática foi autorizada.
+
 ## REGRA VISUAL ATUAL DO DORAMA C01-P03 — V5, RESPIRAÇÃO DAS COSTAS E CABEÇA
 
 **VERSÃO ATUAL INTEGRADA À MAIN: C01-P03 V5**, não V4. Ler em ordem [checkpoint do episódio](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md), [QA completo V5](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P03-V5-2026-11-15.md), [manifesto V5](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/atuacao-c01-p03-v5-respiracao-costas.json), [direção e princípios da V4](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REGRAS-ATUACAO-C01-P03-RESPIRACAO-2026-11-15.md), [manual de animação](docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md). **Não voltar à V4 por falta de contexto.**

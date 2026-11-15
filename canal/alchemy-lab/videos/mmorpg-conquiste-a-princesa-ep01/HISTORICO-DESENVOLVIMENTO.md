@@ -107,3 +107,8 @@ Registro cronológico de fatos verificáveis. **Não sobrescrever eventos antigo
 ## Como acrescentar progresso
 
 Acrescentar uma seção datada com: objetivo e cena, arquivos alterados, commit realmente presente na `main`, run/workflow com resultado, mídia/artifact e SHA se houver, problemas abertos e próxima ação. Se ainda for apenas PR/branch, identificar explicitamente como **NÃO INTEGRADO**. Atualizar [ESTADO-ATUAL.md](ESTADO-ATUAL.md) **no mesmo lote de mudanças**; usar `estado-atual.json` para leitura programática. Nenhum agente deve depender do histórico de chats para reconstruir o projeto.
+
+
+## 15/11/2026 — autorizacao de novas artes e referencia canonica do usuario
+
+Nova decisao explicita: gerar novas imagens e pecas dos planos faltantes seguindo integralmente PROMPT-VISUAL-CANONICO-2026-11-15.txt e a referencia anexada. Autorizacao versionada em autorizacao-visual-2026-11-15.json. Original JPEG preservado em assets/referencias/user-20261115/reference-original.jpg; PNG 720x1280 em assets/geracoes/user-visual-reference/20261115/reference.png, SHA ed1b65f04c85542b78f5cc5b06f28be8c3c93594c17b54111ce0205376f601f9, mesma matriz RGB, sem redimensionar. ID20261115 do arquivador e local, nao run Actions. Prompt vinculado por SHA e incluido nos 36 prompts de planos visuais; referencia nativa aceita pelo gerador sem fingir ser character-bible. Estetica autorizada nao aprova arte de plano, rig ou video. Limite de chamadas do primeiro lote perguntado e ainda pendente. Gate antigo permanece fechado ate integrar limite/workflow; novas geracoes executadas: zero. Primeiro lote proposto: uma imagem-mae C01-P02, revisao antes das pecas. Branch codex/episode-visual-authorization, ainda nao integrada.

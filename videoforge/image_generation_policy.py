@@ -1,6 +1,8 @@
 """Política de geração por canal/vídeo, aplicada nos pontos de entrada.
 
-Regra expressa do usuário: NÃO gerar imagens novas para Alchemy Lab EP01.
+Atualização 15/11/2026: o usuário autorizou novas imagens e peças com
+referência e prompt próprios. O gate de execução permanece fechado até
+definir o limite do primeiro lote e integrar o workflow com essa referência.
 O veto vale para uso manual, Python direto ou GitHub Actions, mesmo se o
 workflow não receber CHANNEL/VIDEO_ID como variável de ambiente. Para
 reativar este episódio no futuro será preciso autorização explícita e
@@ -17,6 +19,6 @@ def assert_image_generation_allowed(channel: str, video_id: str) -> None:
     if channel == BLOCKED_CHANNEL and video_id == BLOCKED_VIDEO_ID:
         raise VideoForgeError(
             "IMAGE_GENERATION_DENIED_ALCHEMY_EP01: "
-            "o usuario proibiu novas imagens para este episodio; "
-            "usar somente PNGs existentes no canal/alchemy-lab"
+            "novas imagens autorizadas em autorizacao-visual-2026-11-15.json; "
+            "execucao aguarda limite do lote e workflow com referencia canonica"
         )
