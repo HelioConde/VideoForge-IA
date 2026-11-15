@@ -1,6 +1,6 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
-> **PONTO ÚNICO DE RETOMADA DO EPISÓDIO.** Branch de referência: `main`. Atualizado em 14/11/2026 (horário de Brasília, UTC-3). Antes de alterar qualquer coisa, ler `AGENTS.md`, `docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md`, este documento e `HISTORICO-DESENVOLVIMENTO.md`. **Não começar do zero.**
+> **PONTO ÚNICO DE RETOMADA DO EPISÓDIO.** Branch de referência: `main`. Atualizado em 15/11/2026 (horário de Brasília, UTC-3). Antes de alterar qualquer coisa, ler `AGENTS.md`, `docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md`, este documento e `HISTORICO-DESENVOLVIMENTO.md`. **Não começar do zero.**
 
 ## Objetivo e limites
 
@@ -108,11 +108,32 @@ A tentativa de ler/copiar os bytes por integração de arquivos **falhou com `Th
 
 **Próxima ação C01 (sem refazer o que passou):** revisar visualmente o MP4 V3 no enquadramento final e ampliado, consertar apenas máscaras/underlays existentes sem inventar pixels, melhorar fidelidade neutra à imagem-mãe e separar corretamente rei/guardas/lanças. C01 é **só 3 segundos** dos 163 segundos planejados. Em paralelo, C12 segue `ASSETS_PENDING` (dois ZIPs antigos não importados / nove PNGs originais ausentes). Não retomar o roteiro nem a criação do motor.
 
+## 15/11/2026 — pesquisa GitHub armazenada + direção C01 V4 definida pelo usuário (AINDA NÃO IMPLEMENTADA)
+
+**Estado:** `PESQUISA_ARQUIVADA`, `REGRAS_VISUAIS_C01_ATUALIZADAS`, `V3_REVISADA_PELO_USUARIO_COM_ERROS`, `V4_AINDA_NAO_RENDERIZADA`. A V3 da [run 43673610507](https://github.com/HelioConde/VideoForge-IA/actions/runs/43673610507) permanece **tecnicamente validada** e armazenada como referência, mas **NÃO está aprovada visualmente**. Usuário assistiu e relatou movimentos antinaturais e recortes defeituosos; o sucesso dos dois testes numéricos não revoga esse feedback.
+
+**Documentos permanentes adicionados à `main`:**
+
+- [Pesquisa aprofundada de bibliotecas/skills para rigging 2D](../../../../docs/PESQUISA-SKILLS-BIBLIOTECAS-RIGGING-2D-2026-11-15.md) — comparação de *spine-animation-ai*, *claude-animated-shorts*, Rev2D, Rigby2D, Three.js, OpenCV, scikit-image, IKPy, SAM, PixiJS, Rive, DragonBones, MediaPipe e FFmpeg; casos de uso, licenças a validar, 3 caminhos técnicos, C01/C12, QA e links. Fonte: relatório anexado `Texto colado(1).txt`, SHA-256 `950b66530b071e84e75b82ba5357c31629b8473ae908fc8ec5b1eb49a9256e84`. **Bibliotecas e skills pesquisadas, NÃO instaladas nem integradas.**
+- [Regras C01-P03 de respiração sutil e correção de recortes](REGRAS-ATUACAO-C01-P03-RESPIRACAO-2026-11-15.md) — ordem e critérios de aceitação para a **V4**, sem alterar a V3.
+- Recomendação técnica: **manter Remotion + Three.js já implantados**, aproveitar métodos de alinhamento OpenCV/segmentação e QA, usar `SKILL.md` como referência organizacional; não trocar de motor nem importar código de licenciamento não comercial sem validação.
+
+**Correções obrigatórias para C01-P03 V4 após feedback visual real:**
+
+1. **Somente Kael respirando**: micro movimento de tórax/ombros (`~±1–2 px` da arte nativa como ponto de partida), cabeça até `~0,5°`, tecido e cabelo com malha minimamente responsiva. Câmera imóvel. Não aumentar o gesto artificialmente para satisfazer `16.000 pixels` de movimento.
+2. **Braço/antebraço/punho direitos travados e encostados na perna**; não animar o gesto de punho da V3. Restringir o contato no espaço global, porque apenas travar keyframes locais não impede que ombros móveis arrastem a mão.
+3. **Pé e bota direitos inteiramente imóveis**: a track da bota V3 produziu corte/silhueta ruim. Não usar movimento do pé para somar pixels no gate de animação.
+4. **Lanças e guardas estáticos, lanças rígidas**; corrigir recortes duplicados e contaminação da máscara.
+5. **Rei Aldric com cabeça inteira** na composição neutra original; corrigir máscara/corte antes de aprovar qualquer MP4.
+6. **QA apropriado à cena**: comparar frame 0 com arte-mãe, estabilidade dos elementos fixos, mão na perna sem desencaixe, pé sem corte, rei com cabeça íntegra; medir respiração localizada e suavidade, em vez de exigir globalmente a contagem de pixels alta da V3. Tudo sem novas imagens, sem publicação no YouTube.
+
+**Próxima ação C01 exata:** criar uma branch V4 a partir da `main` e **aplicar as regras acima ao rig atual**, executar testes de composição/contatos/máscaras, gerar MP4 de 3 s para revisão humana. **Não executar trabalho de animação por causa do simples arquivamento desta pesquisa.** C12 mantém pendência independente dos ZIPs e PNGs originais.
+
 ## Próxima ação concreta, em ordem
 
 1. **Prioridade:** recuperar os **bytes reais dos dois ZIPs já localizados na Library, porém inacessíveis para cópia**, ou enviá-los à raiz `uploads/`; importar os arquivos *já existentes* da C12; verificar exatamente SHA, RGBA, bbox, 941×1672 e presença real no GitHub. Antes de repetir o render, verificar se os ZIPs já apareceram no repositório. Se faltarem, informar `assets_pendentes` e manter o relatório.
 2. Quando estiverem arquivados, **o coordenador aciona automaticamente** o workflow técnico C12 na **main**; verificar MP4, repetibilidade de frames, recomposição, bordas, costuras e oclusões. Não inferir aprovação humana do sucesso do workflow.
-3. **C01 V3 já na main:** assistir e revisar no celular/zoom, corrigir recomposição neutra e máscaras/underlays de Kael, guardas, lanças e Aldric a partir de pixels existentes. O rig de 9 trilhas no C01 e 113 no episódio **já está implementado**; não refazer a base. Não equiparar gate técnico com aprovação humana.
+3. **C01 V3 está na main mas não foi aprovada visualmente:** seguir as [regras de respiração e partes travadas para V4](REGRAS-ATUACAO-C01-P03-RESPIRACAO-2026-11-15.md); preservar a V3 como base, não repetir gestos da mão/pé direitos. Corrigir guardas/lanças/rei com pixels originais, rever gate de pixel bruto, renderizar nova prévia técnica e solicitar aprovação visual.
 4. Depois ampliar para os demais 36 planos visuais com imagem-mãe própria e rig por cena, narração, legendas e QA; **episódio oficial de 163 s permanece pendente** enquanto não houver assets e aprovação.
 
 ## Regra permanente para o próximo agente / próxima conversa
