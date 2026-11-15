@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Run CI verifying exact 40-shot coverage, 14 scene continuity and zero fake art; continue approved source art pathway",
+  "next_action": "Use official 40-shot V2 queue, seek approved real V2 anchor and paid call authorization before production art; maintain C01-P02 original 90-frame articulated rig",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -952,7 +952,7 @@
     "canonical_anchor_approved": false
   },
   "v2_40_shots_editorial_20261115": {
-    "status": "implemented_in_main_pending_ci",
+    "status": "in_main_all_ci_tests_passed",
     "requested_by_user": true,
     "narrative_scenes": 14,
     "total_shots": 40,
@@ -988,6 +988,28 @@
       "remake-ep01-planos.json",
       "REMAKE-EP01-PLANO-OFICIAL.md"
     ],
-    "next_step": "Run CI verifying exact 40-shot coverage, 14 scene continuity and zero fake art; continue approved source art pathway"
+    "next_step": "Use official 40-shot V2 queue, seek approved real V2 anchor and paid call authorization before production art; maintain C01-P02 original 90-frame articulated rig",
+    "production_commit": "967fd5211eb619f57944f59e6d48537c3d05cdca",
+    "qa_verified_runs": [
+      {
+        "id": 43751714168,
+        "status": "success",
+        "tests_passed": 45,
+        "artifact_id": 14176058160,
+        "type": "autopilot_shot_queue"
+      },
+      {
+        "id": 43751714070,
+        "status": "success",
+        "tests_passed": 14,
+        "type": "source_archive_pack_qa"
+      }
+    ],
+    "task_queue_confirmed": {
+      "shot_count": 40,
+      "visual_shot_count": 39,
+      "total_frames": 4890
+    },
+    "real_mother_package_skipped_due_to_missing_source": true
   }
 }

@@ -2,6 +2,12 @@
 
 ## V2 — planejamento ampliado para 40 tomadas (decisão editorial 15/11/2026)
 
+### Verificação automatizada dos 40 planos — 15/11/2026
+
+- **[GitHub Actions 43751714168](https://github.com/HelioConde/VideoForge-IA/actions/runs/43751714168): SUCCESS.** 45 testes do roteiro, direção, autonomia, identidade e execução segura passaram. A fila regenerada confirmou **40 tomadas, 39 visuais, 4.890 frames** e registrou `REMAKE_QUEUE_CREATED shots 40 visual 39 blocker provider_cost_permission_required images 0 video False`. O checkpointer não encontrou mudanças adicionais (`CHECKPOINT_ALREADY_CURRENT`). [Fila gerada no artifact](https://github.com/HelioConde/VideoForge-IA/actions/runs/43751714168/artifacts/14176058160).
+- **[GitHub Actions 43751714070](https://github.com/HelioConde/VideoForge-IA/actions/runs/43751714070): SUCCESS.** 14 testes do empacotador/Three.js e QA de PNGs temporários passaram, sem chamadas pagas; scanner de fonte real teve sucesso ao identificar que a âncora V2 ainda falta e **pulou corretamente o pacote de imagens reais**.
+- **Comportamento garantido:** C01-P02 continua com 90 frames de espada do carrasco; novos inserts de C01/C08/C12 não usam imagens falsas nem referências não aprovadas. **Nenhum novo MP4 ou PNG foi produzido nesta alteração editorial.**
+
 **Pedido do usuário:** manter as **14 cenas narrativas**, mas adotar **40 tomadas cinematográficas**, no lugar das 37 anteriores. A versão ativa continua `remake-v2-20261115`, com 163 segundos, 4.890 frames, 30fps e 1080×1920. São **39 tomadas com imagem-mãe própria + 1 abertura preta com SFX original**. A contagem de imagens não é teto de criação de camadas: cada rig usa quantos recortes originais realmente precisar.
 
 Três novos cortes sem acrescentar tempo: **C01-P05, 310–359** (mãos dos guardas e lanças cruzadas); **C08-P04, 2880–2939** (roda do carrinho e Elara fugindo); **C12-P04, 4290–4349** (flor prateada e gesto de Elara). As tomadas C01-P04/C08-P03/C12-P03 foram apenas encurtadas no fim para acomodar essas inserções; as outras 34 tomadas mantêm seus frames. **C01-P02 continua em 60–149, com quatro componentes reais previstos**. Elara permanece excluída da corte em C01/C02; sua identidade de princesa só aparece em C12; a espada continua pertencendo ao carrasco.

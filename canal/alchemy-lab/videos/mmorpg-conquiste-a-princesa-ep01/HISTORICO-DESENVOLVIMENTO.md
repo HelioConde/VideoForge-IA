@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — V2 com 40 tomadas validado integralmente no CI
+
+- Commit `967fd5211eb619f57944f59e6d48537c3d05cdca` atualizou roteiro/manifesto oficial, testes, autonomia e documentação para 40 tomadas em 14 cenas e 163s; criadas C01-P05, C08-P04, C12-P04 como inserts não aprovados.
+- Run `43751714168` SUCCESS: 45 testes passaram, fila real do VideoForge compilou `shots 40 visual 39`, arte gerada=0, vídeo gerado=false; artifact `14176058160`; bloqueio de gasto preservado.
+- Run `43751714070` SUCCESS: 14 testes do empacotador e máscara/QA passaram com somente fixtures temporárias, job de pack de arte real pulado por falta de âncora; sem gasto.
+- A versão V2 permanece `remake-v2-20261115` e C01-P02 permanece 60–149. Os relatórios históricos de 37 planos descrevem a etapa **anterior**, não o plano ativo de 40.
+- Próximo: aprovação/arquivo da âncora visual V2 e autorização separada de custo para continuar geração real, sem upload de YouTube.
+
 ## 15/11/2026 — usuário define 40 tomadas mantendo 14 cenas
 
 - Atualizado o roteiro `roteiro.json` e o manifesto ativo `remake-ep01-planos.json` juntos: 40 tomadas, 39 com arte-mãe e C01-P01 preta; duração preservada em 163 segundos/4890 frames.
