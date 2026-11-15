@@ -86,3 +86,7 @@ O render usa entrada `motion-remotion/src/remake-sword-preview-index.ts`, compos
 ## Verificações automatizadas registradas (15/11/2026)
 
 O código de fonte e preview passou no [run 43711300246](https://github.com/HelioConde/VideoForge-IA/actions/runs/43711300246) com recomposição numérica de PNGs de teste, SHA e rejeição de máscaras adulteradas. O [run 43711476006](https://github.com/HelioConde/VideoForge-IA/actions/runs/43711476006) comprovou que o Remotion/ThreeCanvas realmente renderiza dois frames diferentes (7 e 71) utilizando quatro camadas **sintéticas de CI**. Isso não gera MP4 do dorama, nem aprovação humana. Próximo passo: arte canônica V2 aprovada e pacote real por tomada.
+
+## Evidências do empacotador automático — 15/11/2026
+
+[Run 43745321463](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745321463) aprovou 14 testes de pacote SHA/origem/anti-repetição em runner GHCR, com somente PNGs sintéticos temporários de teste. O scanner **bloqueou corretamente** montagem sem fonte original. [Run 43745436851](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745436851) comprovou que o gatilho `workflow_run` chegou ao renderer, mas verificou artifact de arte ausente e pulou o render. Portanto **o encadeamento de jobs funciona**, mas nenhum MP4 C01-P02 foi gerado. A arte e o underlay continuam pendentes.

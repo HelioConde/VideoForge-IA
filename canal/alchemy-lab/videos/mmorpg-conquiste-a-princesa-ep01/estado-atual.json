@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "verify real GitHub CI of packer; then implement missing shot-aware RGBA and underlay producers behind paid cost gate; approve V2 anchor before generating",
+  "next_action": "V2 character-bible source with valid archive SHA and approval + per-shot C01-P02 mother and 4 part producer archives (underlay producer and shot-specific RGBA generator missing); rerun archive pack and auto ThreeCanvas preview",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -851,7 +851,7 @@
   },
   "c01_p02_archive_packer_20261115": {
     "schema": "videoforge/remake-c01-p02-archive-pack-checkpoint/v1",
-    "status": "code_committed_ci_pending",
+    "status": "main_integrated_ci_passed_real_art_missing",
     "packer": "videoforge/remake_sword_pack.py",
     "pack_workflow": ".github/workflows/remake-sword-pack.yml",
     "render_workflow": ".github/workflows/remake-sword-preview.yml",
@@ -872,6 +872,30 @@
     "shot_specific_rgba_producer_available": false,
     "human_motion_review_required": true,
     "youtube_uploaded": false,
-    "next_step": "verify real GitHub CI of packer; then implement missing shot-aware RGBA and underlay producers behind paid cost gate; approve V2 anchor before generating"
+    "next_step": "V2 character-bible source with valid archive SHA and approval + per-shot C01-P02 mother and 4 part producer archives (underlay producer and shot-specific RGBA generator missing); rerun archive pack and auto ThreeCanvas preview",
+    "production_commit": "e705a5664bb4359fabc653401b1c3d2097baa6a5",
+    "qa_verified_runs": [
+      {
+        "run_id": 43745321463,
+        "status": "success",
+        "test_count": 14,
+        "run_type": "push_scan_and_synthetic_fixture"
+      },
+      {
+        "run_id": 43745321451,
+        "status": "success",
+        "run_type": "push_remotion_qa"
+      },
+      {
+        "run_id": 43745436851,
+        "status": "success",
+        "run_type": "workflow_run_no_artifact_correctly_skipped_render"
+      }
+    ],
+    "archive_scan_blocker": "REMAKE_SWORD_V2_ANCHOR_NOT_APPROVED_OR_VERIFIED",
+    "image_cost_calls": 0,
+    "automatic_trigger_verified": true,
+    "automatic_render_blocked_without_artifact": true,
+    "preview_anchor_dynamic_test_fixed": true
   }
 }

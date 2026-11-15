@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — automação de pacote e render pós-arquivo com evidências reais
+
+- Commit `e705a5664bb4359fabc653401b1c3d2097baa6a5` conectou scan de arte permanente, empacotador de mesma mãe, gatilho `workflow_run` e documentação/checkpoint.
+- [CI 43745321463](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745321463): 14 testes em 36,416s, todos PASS (fixture temporária com PNGs e QA, sem custo). O scan de `main` bloqueou por falta de anchor/art.
+- [CI 43745321451](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745321451): regressão ThreeCanvas PASS. [CI 43745436851](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745436851): workflow_run acionou sozinho, encontrou artifact inexistente e pulou o render com mensagem `REMAKE_SWORD_REAL_SOURCE_NOT_READY_NO_RENDER`, sem declarar vídeo de teste como mídia final.
+- Ajustado teste de preflight para futura aprovação canônica não causar falha de CI; o bloqueio correto depois disso é o pacote real ausente, não uma expectativa eterna de âncora ausente.
+- Pendências reais: gerar/revisar âncora V2 e peças independentes da C01-P02 em produtor autorizado; implementar underlay original opaco e adaptar RGBA ao shot_id; depois render e QA de MP4 de verdade. Nenhuma chamada paga/YouTube.
+
 ## 15/11/2026 — novo produtor de pacotes e encadeamento automático da tomada
 
 - Código de seleção `remake_sword_pack.py`: arquivos permanentes por produtor e run, PNGs SHA válidos, mãe obrigatória `c01`/`C01-P02` e todas as camadas da mesma origem, recusa mistura e repetição de pacote já renderizado. Ajustado contrato do validador para o campo real `scene=c01` no `roteiro.json`.

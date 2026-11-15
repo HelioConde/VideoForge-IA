@@ -62,7 +62,10 @@ class SwordPreviewTests(unittest.TestCase):
         self.assertEqual(result["api_calls"],0)
         self.assertEqual(result["images_generated"],0)
         self.assertFalse(result["youtube_uploaded"])
-        self.assertIn("ANCHOR",result["blocked_reason"])
+        # This must remain valid after the real V2 anchor gets approved.
+        # Only a VERIFIED four-layer package may unblock the renderer.
+        self.assertIsInstance(result["blocked_reason"],str)
+        self.assertTrue(result["blocked_reason"])
 
     def test_missing_package_fails_before_proxy(self):
         with tempfile.TemporaryDirectory() as temp:

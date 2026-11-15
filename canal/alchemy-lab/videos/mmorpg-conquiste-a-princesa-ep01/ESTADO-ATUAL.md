@@ -2,6 +2,15 @@
 
 ## C01-P02 — empacotamento automático de arte real (15/11/2026)
 
+### Verificação GitHub concluída: scanner, empacotamento sintético, gatilho e bloqueio (15/11/2026)
+
+- **[Run 43745321463](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745321463) — SUCCESS.** O scanner gratuito detectou que **não há âncora V2 aprovada nem camadas reais** e pulou corretamente o job de montagem; o teste completo no runner GHCR executou **14 testes aprovados em 36,416s** com fixtures temporárias de PNGs, inclusive pacote válido, mães incompatíveis, SHAs adulterados e anti-repetição. Não gerou nenhuma imagem do usuário.
+- **[Run 43745321451](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745321451) — SUCCESS.** Regressão do movimento ThreeCanvas + regra do preflight validada; nenhum vídeo com arte real foi renderizado.
+- **[Run 43745436851](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745436851) — SUCCESS.** O evento automático **workflow_run** disparou de verdade depois do empacotador. O job de verificação registrou `REMAKE_SWORD_REAL_SOURCE_NOT_READY_NO_RENDER` e pulou o renderer porque **não existia artifact de arte real**; preservou o bloqueio correto.
+- **Correção preventiva adicional:** o teste `tests/test_remake_sword_preview.py` não presume mais que `character-bible` ficará faltando para sempre. Uma âncora futura aprovada não poderá derrubar o CI apenas porque a referência passou a existir.
+
+**Status de produção:** 0 PNGs C01-P02 criados nesta etapa, 0 artifacts reais da espada, 0 MP4 C01-P02 e nenhum gasto de provedor. O MP4 C01-P01 de 2 segundos continua validado, sem publicação. O packer está integrado e testado; restam principalmente: referência canônica V2, produção do underlay e partes RGBA por tomada.
+
 `videoforge/remake_sword_pack.py` e `.github/workflows/remake-sword-pack.yml` escaneiam **apenas** originais SHA-validos arquivados em `assets/geracoes/` por canal/produtor/run. São obrigatórias uma mãe genuína `cena-01-c01-p02.png` (metadata `scene=c01`, `shot_id=C01-P02`, âncora V2 aprovada), `underlay` opaco e `sheath/blade/hand` RGBA com QA apontando ao mesmo SHA. O `workflow_run` do `remake-sword-preview.yml` verifica o artifact antes de iniciar um render; sem imagens, faz somente relatório de bloqueio. O algoritmo de pivô é **rascunho baseado em máscara**, sujeito à revisão de arte e contato. O script impede render duplicado da mesma mãe se já houver QA final técnico.
 
 **Ainda pendente:** aprovação/arquivo `character-bible` V2, gerador de underlay específico, adaptação do gerador de sprites para tomada C01-P02, MP4 real de 3s. Nenhum gasto de API, aprovação humana ou upload YouTube liberado. Testes de pacote/CI devem ser registrados após executar de verdade.
