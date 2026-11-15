@@ -498,5 +498,51 @@
     "code_imported": false,
     "artifacts_rendered_from_research": false,
     "license_status": "must_verify_before_code_reuse"
+  },
+  "visual_style_20261115": {
+    "status": "documented_editorial_rule_not_new_generation",
+    "id": "cinematic-semi-realistic-fantasy-anime",
+    "scope": "only Alchemy Lab dorama series (not other channels)",
+    "guide": "PROMPT-OFICIAL-ESTILO-DORAMA.md",
+    "agent_manifest": "estilo-visual-oficial-dorama.json",
+    "channel_index": "canal/alchemy-lab/dorama/README.md",
+    "user_instruction": "Nearly every scene should be dramatic from a different camera angle; sample image defines visual benchmark.",
+    "original_reference": {
+      "filename": "1000402660.png",
+      "format": "JPEG/JFIF",
+      "dimensions": [
+        864,
+        1536
+      ],
+      "sha256": "2bab99670444001fbccf8a6c861276e93dfb56f04a33ba5f542698ad3419b2e1",
+      "full_resolution_file_in_github": false
+    },
+    "archived_thumbnail": {
+      "path": "REFERENCIA-VISUAL-DORAMA-PREVIEW-96.jpg",
+      "dimensions": [
+        96,
+        171
+      ],
+      "sha256": "58f22420d123561623944e369c08c7d6a1808df29dc2e3f5d795129c5d2192b4",
+      "git_blob_sha": "aae13ef3aad66d220ce575fc26b7b4f994a49df8",
+      "original_user_pixels_downscaled_without_ai": true
+    },
+    "rules": [
+      "strong cinematic emotional storytelling in most shots",
+      "deliberate narrative camera-angle variety between consecutive shots",
+      "consistent named characters and costumes",
+      "consistent spatial geography and lighting",
+      "anime semi-realistic painterly art consistent with sample",
+      "no forced throne/guards in scenes where they do not belong"
+    ],
+    "generation_control": {
+      "lock_file": "SEM-GERACAO-NOVAS-IMAGENS.lock",
+      "episode_generation_allowed": false,
+      "removal_requires_explicit_user_authorization": true,
+      "episode_rig_changed": false,
+      "images_generated_this_update": 0,
+      "youtube_uploaded": false
+    },
+    "next_step": "Use saved style bible for future authorized shots only; current EP01 still no image generation, C01 V5 technical preview awaits visual approval, C12 original ZIPs missing."
   }
 }

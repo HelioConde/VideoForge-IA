@@ -1,0 +1,100 @@
+{
+  "schema": "videoforge/alchemy-dorama-visual-style/v1",
+  "id": "cinematic-semi-realistic-fantasy-anime",
+  "effective_date": "2026-11-15",
+  "scope": {
+    "channel": "alchemy-lab",
+    "category": "dorama",
+    "episode": "mmorpg-conquiste-a-princesa-ep01",
+    "other_channels_affected": false,
+    "require_approved_style_for_future_dorama_episodes": true
+  },
+  "status": "editorial_rule_archived_not_rendered",
+  "documentation": "PROMPT-OFICIAL-ESTILO-DORAMA.md",
+  "user_reference": {
+    "origin": "image supplied by the user in the conversation dated 2026-11-15",
+    "filename_as_uploaded": "1000402660.png",
+    "actual_file_encoding": "image/jpeg",
+    "original_width": 864,
+    "original_height": 1536,
+    "original_sha256": "2bab99670444001fbccf8a6c861276e93dfb56f04a33ba5f542698ad3419b2e1",
+    "full_resolution_bytes_stored_in_github": false,
+    "authentic_downscaled_preview": "REFERENCIA-VISUAL-DORAMA-PREVIEW-96.jpg",
+    "preview_width": 96,
+    "preview_height": 171,
+    "preview_sha256": "58f22420d123561623944e369c08c7d6a1808df29dc2e3f5d795129c5d2192b4",
+    "preview_is_character_sprite_source": false,
+    "reference_not_shot_to_duplicate": true
+  },
+  "positive_prompt": "Cinematic Semi-Realistic Fantasy Anime, premium detailed painted fantasy anime key visual, consistent expressive semi-realistic anime faces, grounded anatomy, richly embroidered medieval garments, worn detailed armor, layered architecture and believable materials, cinematic visual storytelling, dramatic spatial composition, foreground midground and background separation, controlled atmospheric volumetric light, stained-glass color accents when the approved environment calls for them, warm gold highlights with purple crimson and blue tonal contrast, coherent perspective and physical lighting, refined digital painting, emotionally charged pose, unique camera angle with deliberate narrative purpose, preserve character identities, maintain scene geography and costume continuity, portrait 9:16 when approved for Shorts",
+  "scene_fields_required": [
+    "story_beat",
+    "emotion",
+    "location",
+    "character_ids",
+    "character_reference_ids",
+    "costume_continuity",
+    "camera_angle",
+    "camera_height",
+    "shot_size",
+    "foreground",
+    "midground",
+    "background",
+    "lighting_direction",
+    "previous_shot_angle",
+    "angle_change_justification"
+  ],
+  "negative_prompt": "photorealistic live action, plastic 3D CGI, cartoon chibi, flat anime shading incompatible with series, character face drift, alternate armor or hair without story cause, inconsistent scene geography, duplicate people, extra limbs, extra spears, cropped crowns, broken hands or boots, stiff flat lighting, random throne in non-throne scenes, washed highlights, unreadable silhouettes, watermarks, generic stock composition",
+  "camera_policy": {
+    "predominantly_dramatic": true,
+    "vary_angle_between_adjacent_shots": true,
+    "variation_in_at_least_two": [
+      "horizontal_position",
+      "camera_height",
+      "shot_scale",
+      "gaze_direction",
+      "foreground_weight"
+    ],
+    "narrative_exception_allowed": true,
+    "avoid_repetitive_head_on_centered_staging": true,
+    "preserve_180_degree_axis_unless_intentional": true,
+    "angles": [
+      "over_the_shoulder",
+      "low_angle",
+      "high_angle",
+      "three_quarter_closeup",
+      "profile_two_shot",
+      "wide_establishing",
+      "foreground_occlusion",
+      "rear_silhouette",
+      "motivated_dutch_angle",
+      "insert_detail"
+    ]
+  },
+  "continuity_requirements": {
+    "same_face_and_hair": true,
+    "garments_follow_scene": true,
+    "injuries_are_persistent": true,
+    "props_and_architecture_continuity": true,
+    "lighting_direction_persistent_within_location": true,
+    "style_consistent_across_shots": true,
+    "avoid_generated_text": true
+  },
+  "quality_gate": {
+    "human_reference_match_required": true,
+    "human_character_continuity_approval_required": true,
+    "no_cropped_heads_hands_feet_spears": true,
+    "no_repetition_without_motivation": true
+  },
+  "generation_authorization": {
+    "current_episode_lock_file": "SEM-GERACAO-NOVAS-IMAGENS.lock",
+    "current_episode_new_image_calls_allowed": false,
+    "remove_lock_without_explicit_user_authorization": false,
+    "this_style_archive_does_not_authorize_generation": true,
+    "existing_images_preserved": true,
+    "youtube_upload_allowed": false,
+    "official_video_approved": false
+  },
+  "render_status": "documentation_only_no_art_or_video_changed",
+  "next_step": "Future authorized image production should read this style guide before drafting each shot; current EP01 remains locked for new image generation. Preserve V5 rig and approved mother assets."
+}

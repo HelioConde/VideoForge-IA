@@ -1,5 +1,13 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## REGRA VISUAL OFICIAL EXCLUSIVA DO DORAMA — ESTILO E CÂMERA
+
+**Aplicação:** somente ao conjunto de doramas do canal `alchemy-lab`. [Índice oficial da área dorama](canal/alchemy-lab/dorama/README.md), [prompt mestre e bíblia visual](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PROMPT-OFICIAL-ESTILO-DORAMA.md), [JSON para agentes](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/estilo-visual-oficial-dorama.json) e [miniatura autêntica da amostra](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-VISUAL-DORAMA-PREVIEW-96.jpg).
+
+**Estética principal:** `Cinematic Semi-Realistic Fantasy Anime`. Quase toda imagem do dorama deve transmitir **emoção/drama e ter ângulo de câmera narrativamente diferente do plano anterior** (alternar posição espacial, altura, tamanho de plano, perspectiva por ombro, plongée, contraplongée, perfil, detalhe, reação etc.). Manter **rosto, cabelos, figurino, cenário, eixo de cena, luz e paleta coerentes**. A amostra enviada pelo usuário mostra guerreiro ajoelhado com capa vermelha, princesa, rei, guardas e vitrais em salão gótico, com luz volumétrica, profundidade e acabamento de ilustração anime semirrealista. **Não copiar o salão/trono automaticamente para outros lugares.** O enquadramento deve seguir o roteiro, evitando repetição ou cortes de cabeça/coroa/membros.
+
+**ESTADO DE AUTORIZAÇÃO:** esse é um **padrão para geração futura aprovada**, não autorização para chamadas automáticas agora. O lock `canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock` **continua proibindo novas imagens nesse EP01** até instrução explícita para liberá-lo. Não gerar arte só por salvar estes arquivos; não mudar o rig V5 ou upload YouTube nesta alteração. Esta regra visual **não afeta nenhum outro canal**.
+
 ## REGRA VISUAL ATUAL DO DORAMA C01-P03 — V5, RESPIRAÇÃO DAS COSTAS E CABEÇA
 
 **VERSÃO ATUAL INTEGRADA À MAIN: C01-P03 V5**, não V4. Ler em ordem [checkpoint do episódio](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md), [QA completo V5](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P03-V5-2026-11-15.md), [manifesto V5](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/atuacao-c01-p03-v5-respiracao-costas.json), [direção e princípios da V4](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REGRAS-ATUACAO-C01-P03-RESPIRACAO-2026-11-15.md), [manual de animação](docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md). **Não voltar à V4 por falta de contexto.**

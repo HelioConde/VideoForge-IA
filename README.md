@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+> **NOVO PADRÃO VISUAL EXCLUSIVO DO DORAMA / Alchemy Lab:** [área dorama](canal/alchemy-lab/dorama/README.md) · [prompt oficial — Cinematic Semi-Realistic Fantasy Anime](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PROMPT-OFICIAL-ESTILO-DORAMA.md) · [manifesto JSON](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/estilo-visual-oficial-dorama.json) · [amostra em miniatura](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-VISUAL-DORAMA-PREVIEW-96.jpg). Quase toda cena deverá ser dramática e filmada de ângulo diferente, com continuidade de rostos, armaduras, luz e arquitetura. **É somente uma regra editorial para imagens futuras autorizadas**: o EP01 ainda possui o lock `SEM-GERACAO-NOVAS-IMAGENS.lock`; nenhum render, geração ou publicação foi iniciado por este registro.
+
 > **CONTINUIDADE OBRIGATÓRIA NA MAIN — NÃO RECOMEÇAR DO ZERO:** antes de trabalhar, ler [AGENTS.md](AGENTS.md) e o [protocolo de continuidade](docs/CONTINUIDADE-DO-PROJETO.md), depois o `ESTADO-ATUAL.md` e o `HISTORICO-DESENVOLVIMENTO.md` do vídeo. **Cada conclusão/alteração precisa atualizar esses arquivos na mesma integração à `main`**, com run, commit, artifact, SHA, pendências e próximo passo. Branches antigas e chats não substituem esse registro. Episódio ativo: [dorama MMORPG — checkpoint e MP4s técnicos C01/C12](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md).
 
 
