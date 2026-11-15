@@ -105,10 +105,10 @@
   "youtube_upload": false,
   "human_visual_approved": false,
   "official_video_approved": false,
-  "status": "implementation_branch_render_one_visual_inspection_positive_qa_retest_pending",
-  "ci_run": null,
-  "mp4_artifact": null,
-  "next_step": "Render in Actions then visually inspect original king crown, rigid spears, anchored arm and boot, and subtle chest breathing; only merge if technical QA passes. Human approval separate.",
+  "status": "merged_main_technical_qa_passed_human_visual_pending",
+  "ci_run": 43676630976,
+  "mp4_artifact": 14145684036,
+  "next_step": "User visual review of real MP4 C01 V4 main artifact, confirm stable right hand/boot and original king/spears, no new image generation. If defects remain, fix only source alpha/underlay and rerender. C12 blocked by missing source ZIPs.",
   "qa_first_render": {
     "run_id": 43676244073,
     "status": "failed_only_calibration_upper_bound",
@@ -124,5 +124,24 @@
     "spears_original_src_inspected_in_frame0": true,
     "human_visual_approved": false,
     "next_qa": "rerun with physical constraints unchanged and pixel calibration ceiling 20000"
+  },
+  "pr_number": 57,
+  "merge_commit": "4d010a92212ce77e9c7fbcf762537ecf0e732be2",
+  "ci_test_run": 43676630957,
+  "mp4_sha256": "90baea03b4e2b551a21d341c263853a2e9b9d4d5647314fff46a39bf79fbbff7",
+  "qa_evidence": {
+    "main_render_run": 43676630976,
+    "main_tests_run": 43676630957,
+    "pr_render_run": 43676494078,
+    "pr_tests_run": 43676494086,
+    "main_mp4_byte_identical_to_pr": true,
+    "real_h264_actor_changed_rgb8_pixels": 11115,
+    "static_king_spears_right_boot_rgb24_changed_pixels": 0,
+    "collar_exposed_pixels": 24,
+    "collar_max_allowed": 75,
+    "neutral_mean_absolute_rgb_error": 0.216449949476454,
+    "neutral_changed_pixels": 13015,
+    "technical_gates_passed": true,
+    "human_visual_approved": false
   }
 }
