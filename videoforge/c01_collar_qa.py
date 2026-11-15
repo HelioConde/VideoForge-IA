@@ -15,10 +15,12 @@ class C01CollarError(ValueError):
     pass
 
 
-# Source 1024x1536. Constrain to the true jacket-to-shoulder collar seam
-# source x492..580, y847..880. A wider region also included legitimate hair
-# silhouette movement (y833) and counted it as an exposed neck incorrectly.
-C01_NECK_SOURCE_ROI = (492, 847, 88, 33)
+# Source 1024x1536: keep the test on the actual jacket/shoulder
+# join at x495..578,y855..883. The upper band y847..854 contains loose
+# hair/face fringe whose legitimate movement was falsely counted as a seam
+# tear. This tighter geometry still checks the visibly identified maroon
+# jacket-to-arm slit rather than watering down the allowable 75 pixels.
+C01_NECK_SOURCE_ROI = (495, 855, 83, 28)
 
 
 def collar_background_exposure(
