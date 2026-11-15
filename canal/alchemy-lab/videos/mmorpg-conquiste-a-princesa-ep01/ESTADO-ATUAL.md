@@ -12,6 +12,14 @@
 
 ## REGRAS ATIVAS DO REMAKE — LEITURA OBRIGATÓRIA PARA AGENTES
 
+## Integração real do gerador cinematográfico ao remake V2 (15/11/2026)
+
+**Mudança de código:** `videoforge/cinematic_direction.py` agora consulta `estado-atual.json` para detectar `remake-v2-20261115`, valida `remake-ep01-planos.json` (37 planos, 4890 frames, cena/cast, duração, foco, princesa ausente de C01/C02, autorização editorial) e converte cada tomada para o formato usado por `production_scenes.py`. O prompt tem o **estilo Cinematic Semi-Realistic Fantasy Anime** e a direção dramática/ângulo específica do manifesto **ativo**. `load_plan()` continua lendo a V1 como legado somente para QA histórico; não voltar à V1 para criar imagens do remake.
+
+**Integridade da arte:** `assert_shot_generation_ready()` exige PNG de âncora V2 realmente presente e SHA validado, dimensões certas e aprovação humana documentada. Antes do proxy, `production_scenes.generate_scene()` também compara o SHA da referência baixada com o SHA da âncora canônica aprovada. A política `image_generation_policy.py` continua impedindo consumo de provedor sem aprovação explícita de custo. Zero chamadas pagas nesta mudança.
+
+**Status desta integração:** código + testes de regressão preparados; aguardando confirmação do CI neste commit. **Não é** animação completa, aprovação artística, geração de PNG/rig/MP4 ou publicação. **Próximo passo:** testar em Actions; depois, quando a âncora e o custo estiverem autorizados e verificados, iniciar C01-P02 com os workflows existentes e persistir SHA; implementar encadeamento do rig por tomada.
+
 **Ordem vigente (15/11/2026):** remake integral do EP01 autorizado editorialmente; sem limite editorial numérico de imagens; estilo cinematográfico anime semirrealista com identidade constante; rig 2D verdadeiro em ThreeCanvas/Remotion (não pan/zoom de PNG); produção por workflows GitHub, orientação humana focada nas decisões artísticas; qualquer avanço entra neste arquivo mestre e no JSON/histórico, com SHA, run e próximo passo. Preservar materiais e QA legados, sem relançar trabalhos concluídos.
 
 **Distinção obrigatória:** o lock de 14/11 **não está mais ativo**; foi arquivado em `REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md`. Mas **imagem autorizada editorialmente não equivale a chamada paga autorizada**, nem a identidade artística aprovada, nem a vídeo publicável. O coordenador autônomo está operacional para diagnóstico e retomada; **o gerador antigo ainda precisa conectar a referência canônica e o novo manifesto V2** antes de conseguir produzir o remake. Não alterar flags de QA para contornar essas pendências.

@@ -13,6 +13,9 @@ on:
     paths:
       - 'videoforge/remake_autopilot.py'
       - 'videoforge/image_generation_policy.py'
+      - 'videoforge/cinematic_direction.py'
+      - 'videoforge/production_scenes.py'
+      - 'tests/test_remake_cinematic_integration.py'
       - 'tests/test_remake_autopilot.py'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-ep01-planos.json'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/autonomy-policy.json'
@@ -41,7 +44,7 @@ jobs:
       - name: Testar regras e estado do remake sem gastar IA
         run: |
           set -euo pipefail
-          python -m unittest tests.test_remake_autopilot tests.test_remake_policy_consistency tests.test_alchemy_no_image_generation tests.test_cinematic_direction -v
+          python -m unittest tests.test_remake_autopilot tests.test_remake_policy_consistency tests.test_remake_cinematic_integration tests.test_alchemy_no_image_generation tests.test_cinematic_direction -v
       - name: Inspecionar SHA, detectar proxima etapa e atualizar checkpoint
         run: |
           set -euo pipefail

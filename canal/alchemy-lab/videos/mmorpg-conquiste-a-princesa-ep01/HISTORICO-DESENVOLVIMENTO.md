@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — implementação do seletor cinematográfico V2 e verificação SHA
+
+- **Solicitação:** aplicar a correção técnica que faltava após auditoria das regras principais.
+- **Integração:** o gerador atual passa a consumir `remake-ep01-planos.json` quando o checkpoint indica `remake-v2-20261115`, em vez de dirigir a geração pela V1 histórica. A direção V1 permanece somente como fonte de QA e histórico. Planos e emoções do roteiro foram preservados (14 cenas, 37 planos, 163 segundos).
+- **Segurança:** checagem de identidade/cast, frames contínuos, estilo oficial, elenco da C01/C02, preto sem imagem, SHA e aprovação humana da âncora, SHA da referência antes de enviar ao proxy. Custo pago e YouTube continuam bloqueados por políticas separadas.
+- **Regressões:** novos testes em `tests/test_remake_cinematic_integration.py` cobrindo planos, 36 prompts diferentes, fidelidade do roteiro, negação sem referência e outros canais; adicionados ao workflow `remake-autonomy.yml`.
+- **Resultado da etapa:** apenas código e documentação, sem geração ou render. Evidência de CI será conferida separadamente e anexada posteriormente ao checkpoint.
+
 ## 15/11/2026 — auditoria de coerência das regras do remake
 
 - **Verificação solicitada:** nem todas as regras estavam coerentemente identificadas. Apesar dos documentos principais já descreverem remake V2/autonomia, trechos antigos em `AGENTS.md`, `ESTADO-ATUAL.md`, `PLANO-ARTE-RIG-EP01.md` e `estilo-visual-oficial-dorama.json` continuavam tratando a proibição histórica de imagens como ativa.

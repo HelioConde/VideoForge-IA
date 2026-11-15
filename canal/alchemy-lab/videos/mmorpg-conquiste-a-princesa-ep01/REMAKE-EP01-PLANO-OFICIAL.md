@@ -1,5 +1,7 @@
 # REMAKE EP01 — PLANO OFICIAL (15/11/2026)
 
+> **Integração técnica nova:** a direção do remake V2 passou a ser a fonte selecionada por `videoforge/cinematic_direction.py` e por `videoforge/production_scenes.py`. O código valida a ordem, o elenco, a câmera e a âncora visual por SHA antes de geração. **Não existe PNG, rig ou MP4 novo** desta alteração; o usuário ainda precisa aprovar a âncora e qualquer consumo pago de provedor.
+
 **Estado:** preprodução ativa, autorizada editorialmente pelo pedido de refazer o EP01 e "Continuar". **Nenhum PNG, rig, MP4 ou render novo foi executado nesta atualização.** O bloqueio anterior foi preservado no arquivo histórico, não está mais ativo. Novas gerações são permitidas segundo autorização e condições operacionais; não há limite editorial de imagens, mas continuam proibidos gastos adicionais não aprovados e publicação no YouTube.
 
 ## Regra nova: autonomia do VideoForge (15/11/2026)

@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Integrate active remake-ep01-planos.json with legacy cinematic_direction generator and SHA-verified canonical art without bypassing paid cost and human approval",
+  "next_action": "verify GitHub Actions regression; then canonical anchor and workflow integration to create C01-P02 when cost and art approved",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -612,5 +612,22 @@
     "video_rendered_in_this_audit": false,
     "regression_test": "tests/test_remake_policy_consistency.py",
     "next_step": "Integrate active remake-ep01-planos.json with legacy cinematic_direction generator and SHA-verified canonical art without bypassing paid cost and human approval"
+  },
+  "cinematic_remake_v2_integration": {
+    "status": "code_committed_ci_pending",
+    "target_module": "videoforge/cinematic_direction.py",
+    "producer": "videoforge/production_scenes.py",
+    "active_manifest": "remake-ep01-planos.json",
+    "legacy_manifest_preserved": "direcao-cinematografica-planos.json",
+    "shot_count": 37,
+    "frames": 4890,
+    "art_required": 36,
+    "canonical_reference_sha_gate": true,
+    "generation_policy_gate": "paid_provider_approval_still_required",
+    "new_image_calls": 0,
+    "new_mp4": 0,
+    "youtube_uploaded": false,
+    "regression_test": "tests/test_remake_cinematic_integration.py",
+    "next_step": "verify GitHub Actions regression; then canonical anchor and workflow integration to create C01-P02 when cost and art approved"
   }
 }

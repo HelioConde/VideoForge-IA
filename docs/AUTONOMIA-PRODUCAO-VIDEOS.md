@@ -16,6 +16,10 @@
 
 ## Implementação inicial efetiva do EP01
 
+### Integração do seletor V2 ao programa de geração
+
+O `videoforge/cinematic_direction.py` detecta o remake ativo pelo `estado-atual.json`, valida o manifesto de tomadas do remake e envia plano, elenco, emoção, câmera e direção dramática ao `production_scenes.py`. O seletor histórico V1 foi mantido para diagnósticos antigos. `production_scenes.generate_scene` exige identidade com PNG de âncora aprovado por SHA, além das verificações de custo do `image_generation_policy.py`. Regressões: `tests/test_remake_cinematic_integration.py`. **A montagem automática de camadas/rig e render de todas as cenas ainda não foi integrada.**
+
 - Coordenador: `videoforge/remake_autopilot.py` lê o plano e a evidência por SHA; decide próximo estágio sem chamar modelo, com relatório estruturado e sincronização idempotente do checkpoint/histórico.
 - Política de gasto e execução: `canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/autonomy-policy.json`. Atualmente geração automática paga está **desativada** até autorização separada; isso não é limite total editorial de imagens.
 - Workflow: `.github/workflows/remake-autonomy.yml` roda testes, diagnóstico e atualização do checkpoint diariamente ou manualmente, sem IA e sem publicar. Não confundir com executor completo: ainda é necessário implementar despacho seguro/idempotente, encadeamento de workflows de geração/rig e reparos reais.

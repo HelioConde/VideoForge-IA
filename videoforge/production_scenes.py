@@ -130,6 +130,7 @@ def generate_scene(channel:str,video_id:str,number:int,reference:Path,
     if model not in proxy.IMAGE_MODELS:
         raise VideoForgeError("PRODUCTION_SCENE_MODEL_INVALID")
     source,source_sha=reference_bytes(reference,report)
+    cinematic_direction.assert_scene_reference_matches_anchor(channel,video_id,source_sha)
     scene_id=f"cena-{number:02d}" + (f"-{shot_id.lower()}" if shot_id else "")
     target=proxy.destination(channel,video_id,scene_id).with_suffix(".png")
     if target.exists() or target.is_symlink():
