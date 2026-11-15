@@ -9,7 +9,7 @@ from videoforge.directed_rig import (
     DirectedRigError, _static_mother_with_kael_cutout,
 )
 from videoforge.c01_v4_breath_qa import (
-    C01BreathQAError, validate_c01_v4_pose,
+    C01BreathQAError, validate_c01_v4_pose, validate_c01_v5_back_breath,
     changed_pixels_in_source_region,
 )
 
@@ -90,6 +90,42 @@ class C01V4PoseTest(unittest.TestCase):
         with self.assertRaisesRegex(C01BreathQAError,"KING_SPEARS"):
             validate_c01_v4_pose(shot_fixture(),c)
 
+
+class C01V5BackBreathTest(unittest.TestCase):
+    @staticmethod
+    def v5_shot():
+        s=shot_fixture()
+        jacket=next(n for n in s["nodes"] if n["id"]=="kael.jaqueta")
+        jacket["mesh"]["sourcePin"]={"startY":950,"endY":985}
+        jacket["mesh"]["backBreath"]={
+            "kind":"upper-back-source-mesh",
+            "sourceTopY":857,"sourcePeakY":898,"sourceBottomY":947,
+            "expansionPx":1.05,"liftPx":0.6,
+            "driverTarget":"kael.ombros","driverTransform":"translateY",
+            "driverPeakAbsPx":1.25}
+        return s
+
+    def test_v5_real_back_mesh_accepted_and_head_still_moves(self):
+        r=validate_c01_v5_back_breath(self.v5_shot(), static_fixture())
+        self.assertTrue(r["head_still_moves_a_little"])
+        self.assertEqual(r["back"]["liftPx"],0.6)
+        self.assertTrue(r["hand_and_boot_remain_fixed"])
+        self.assertFalse(r["human_visual_approved"])
+
+    def test_v5_missing_back_mesh_rejected(self):
+        with self.assertRaisesRegex(C01BreathQAError,"SOURCE_PINNED_BACK"):
+            validate_c01_v5_back_breath(shot_fixture(),static_fixture())
+
+    def test_v5_waist_and_head_range_rejected(self):
+        s=self.v5_shot()
+        jacket=next(n for n in s["nodes"] if n["id"]=="kael.jaqueta")
+        jacket["mesh"]["backBreath"]["sourceBottomY"]=970
+        with self.assertRaisesRegex(C01BreathQAError,"SOURCE_PINNED_BACK"):
+            validate_c01_v5_back_breath(s,static_fixture())
+        s=self.v5_shot()
+        s["tracks"][1]["keyframes"][1]["value"]=.7
+        with self.assertRaisesRegex(C01BreathQAError,"EXCESS_BREATHING"):
+            validate_c01_v5_back_breath(s,static_fixture())
 
 class C01V4OriginalMotherTest(unittest.TestCase):
     def test_only_actor_region_replaced_and_entire_king_original(self):
