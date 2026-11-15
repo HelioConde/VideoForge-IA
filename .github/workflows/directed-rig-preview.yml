@@ -1,5 +1,9 @@
 name: 'VideoForge - Direcao e rig articulado (rascunho sem IA)'
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-render-c01-direcao.json'
   pull_request:
     paths:
       - 'videoforge/directed_rig*.py'
@@ -51,6 +55,28 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Confirmar pedido tecnico ao executar por push
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-render-c01-direcao.json")
+          r=json.loads(p.read_text(encoding="utf8"))
+          assert r["schema"]=="videoforge/alchemy-c01-directed-mp4-request/v1"
+          assert r["channel"]=="alchemy-lab"
+          assert r["video_id"]=="mmorpg-conquiste-a-princesa-ep01"
+          assert r["shot"]=="C01-P03"
+          assert r["binding_manifest"]=="direcao-bindings-c01-draft.json"
+          assert r["render_mp4"] is True
+          assert r["preview_tecnico_nao_oficial"] is True
+          assert r["new_image_generation_calls"]==0
+          assert r["youtube_upload"] is False
+          assert r["official_video_approved"] is False
+          assert Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          print("C01_PREVIEW_AUTHORIZED_NO_NEW_ART_NO_YOUTUBE")
+          PY
       - name: Validar parametros e reutilizar dependencias do runner
         id: paths
         shell: bash
