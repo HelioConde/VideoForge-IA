@@ -18,7 +18,7 @@
     "human_art_approved": false
   },
   "c01": {
-    "state": "v3_technically_passed_merged_main_visual_and_neutral_recomposition_pending",
+    "state": "v3_main_technical_ok_user_feedback_requires_c01_v4_breathing_only_and_masks",
     "shot": "C01-P03",
     "integrated_pr": 56,
     "integrated_commit": "69e22458703c7c716f05e205987471ce3595b1c5",
@@ -193,6 +193,34 @@
       "official_video_approved": false,
       "youtube_uploaded": false,
       "next_step": "Visual QA of real 3s V3 MP4 in mobile and closeup, improve mother RGB recomposition, guard/spear/king masks and original pixel seam patches, no AI image generation"
+    },
+    "latest_feedback_20261115": {
+      "scope": "C01-P03 V4 direction decision; V3 is technical only and not approved visually",
+      "user_reports": [
+        "right_arm_moves_unnaturally_despite_hand_resting_on_right_leg",
+        "right_boot_ankle_motion_creates_visible_cut",
+        "spears_look_deformed_or_inconsistent",
+        "king_aldric_head_is_visibly_cut"
+      ],
+      "requested_acting": "Kael subtle breathing only; all other scene characters and props static",
+      "fix_right_arm_contact": true,
+      "lock_right_forearm_wrist": true,
+      "lock_right_boot_and_leg": true,
+      "static_guards_spears_king": true,
+      "fix_king_head_mask_first": true,
+      "small_breathing_source_px_target": [
+        1,
+        2
+      ],
+      "head_rotation_abs_deg_target_max": 0.5,
+      "replace_actor_16000px_gate_for_breathing_scene": true,
+      "neutral_recomposition_required": true,
+      "visual_human_approved": false,
+      "version_to_implement": "C01-P03 V4",
+      "rules_document": "REGRAS-ATUACAO-C01-P03-RESPIRACAO-2026-11-15.md",
+      "implementation_status": "not_started_this_documentation_turn",
+      "new_images_generated": 0,
+      "youtube_uploaded": false
     }
   },
   "c12": {
@@ -306,6 +334,24 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "C01-P03 V3 main MP4 (run 43673610507 artifact 14145228520, SHA 73993ab...) passed technical acting and collar QA but not human visual, and neutral 11.16 RGB MAE is unresolved. Visually review, correct mother recomposition and guard/spear/Aldric masks with only existing pixels. Independently recover two C12 original ZIPs to import nine missing PNGs.",
-  "updates_required_on_each_change": true
+  "next_action": "Start C01-P03 V4 from existing main V3 with user-approved *breathing-only* direction: world-lock right arm/hand resting on leg, lock boot/leg, preserve spears/guards static and fix king Aldric missing head mask; adjust QA from numerical actor motion pixels to perceptible subtle localized breathing and intact neutral masks. No new images, no YouTube. Keep C12 pending original two ZIPs and nine PNGs.",
+  "updates_required_on_each_change": true,
+  "research_20261115": {
+    "status": "archived_as_documentation_not_integrated",
+    "source_uploaded_name": "Texto colado(1).txt",
+    "source_sha256": "950b66530b071e84e75b82ba5357c31629b8473ae908fc8ec5b1eb49a9256e84",
+    "catalog": "docs/PESQUISA-SKILLS-BIBLIOTECAS-RIGGING-2D-2026-11-15.md",
+    "scope": "GitHub skill repository review, 14 library categories, three integration paths, C01 and C12, QA and licensing checks",
+    "highlighted_repositories": [
+      "GenielabsOpenSource/spine-animation-ai",
+      "mromidev/claude-animated-shorts",
+      "RevStudio/Rev2D",
+      "jaisurya-dev-art/rigby2d"
+    ],
+    "preferred_strategy": "continue existing Remotion+Three rig, use OpenCV/scikit-image and skill conventions as optional reviewed utilities",
+    "external_new_dependencies_installed": false,
+    "code_imported": false,
+    "artifacts_rendered_from_research": false,
+    "license_status": "must_verify_before_code_reuse"
+  }
 }
