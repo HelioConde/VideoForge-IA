@@ -1,0 +1,78 @@
+{
+  "schema": "videoforge/episode-checkpoint/v1",
+  "updated_local_date": "2026-11-14",
+  "timezone": "America/Sao_Paulo",
+  "source_of_truth": "main",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "checkpoint": "ESTADO-ATUAL.md",
+  "history": "HISTORICO-DESENVOLVIMENTO.md",
+  "animation_manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "episode_seconds_planned": 163,
+  "shots_planned": 37,
+  "motion_tracks_planned": 107,
+  "locks": {
+    "no_new_image_generation": true,
+    "no_youtube_upload": true,
+    "official_video_allowed": false,
+    "human_art_approved": false
+  },
+  "c01": {
+    "state": "technical_mp4_rendered_main_unapproved",
+    "shot": "C01-P03",
+    "integrated_pr": 51,
+    "integrated_commit": "693212eeb32ede9c0dc8f1c6de94a92638b0dc60",
+    "run_id": 43660106313,
+    "run_conclusion": "success",
+    "artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43660106313",
+    "artifact_id": 14139373365,
+    "artifact_temporary": true,
+    "mp4": {
+      "exists_in_actions_artifact": true,
+      "seconds": 3,
+      "frames": 90,
+      "width": 1080,
+      "height": 1920,
+      "fps": 30,
+      "official": false
+    },
+    "still_pending": [
+      "guard_spear_mask_quality",
+      "aldric_throne_contamination",
+      "hidden_region_underlays",
+      "neutral_recomposition_human_review"
+    ]
+  },
+  "c12": {
+    "state": "assets_pending_for_threecanvas_render",
+    "rig_manifest": "qa-c12-rig-malha-v2.json",
+    "planned_shots": [
+      "C12-P01",
+      "C12-P02",
+      "C12-P03"
+    ],
+    "mesh_parts": 5,
+    "mesh_triangles": 512,
+    "validation_runs": [
+      43653702785,
+      43654314863
+    ],
+    "blocked_render_run": 43658221156,
+    "blocked_reason": "9_original_pngs_not_in_repository",
+    "rgb_mothers_missing": 2,
+    "backgrounds_missing": 2,
+    "rgba_sprites_missing": 5,
+    "local_preview_record": {
+      "filename": "alchemy_c12_mesh_rig_v2_aprovacao.mp4",
+      "duration_seconds": 12,
+      "frames": 360,
+      "sha256": "e08f79924e6f09bab195e54d49c32b588c2438d28faf2e1db12d626bba018016",
+      "github_binary_archived": false
+    },
+    "available_github_mp4": false,
+    "pending_pr_for_alternative_import": 50,
+    "next_step": "Import original, preexisting C12 RGB and RGBA bytes by SHA; do not regenerate, resize or falsely approve."
+  },
+  "next_action": "Verify C12 original ZIPs, import exact PNG bytes to main, run technical rig preview, inspect masks/underlays before official approval.",
+  "updates_required_on_each_change": true
+}
