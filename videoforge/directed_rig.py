@@ -304,7 +304,6 @@ def _bindings(direction, bindings, root):
             _require(
                 "file" in node
                 and node.get("role") == "existing-pixel-underlay"
-                and node.get("parent") is None
                 and "mesh" not in node
                 and "onlyUncoveredBy" not in node
                 and node["file"] == spec["sourceMother"]["file"]
@@ -321,6 +320,7 @@ def _bindings(direction, bindings, root):
             for ref in refs:
                 _require(
                     ref in by_id and "file" in by_id[ref]
+                    and by_id[ref].get("parent") == node.get("parent")
                     and by_id[ref]["z"] > node["z"]
                     and "onlyCoveredBy" not in by_id[ref]
                     and "onlyUncoveredBy" not in by_id[ref],
