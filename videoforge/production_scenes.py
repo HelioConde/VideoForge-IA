@@ -98,6 +98,14 @@ def scene_prompt(channel:str,video_id:str,number:int,shot_id:str|None=None)->tup
         "Composicao vertical sem texto ou marca d'agua, area de legenda livre.",
     ])
     prompt=prompt+"\n"+suffix
+    from .authorized_visual_reference import load_reference
+    canonical = load_reference(ROOT, channel, video_id)
+    if canonical is not None:
+        prompt=("PROMPT VISUAL CANONICO DO USUARIO (preservar estilo, identidade, figurino e luz):\n"
+                +canonical['prompt']+"\n"
+                +"A composicao geral descreve o universo visual. Aplicar abaixo o enquadramento e elenco "
+                +"da tomada, sem repetir o plano geral em closes. Pecas de rig devem derivar da mesma imagem-mae.\n"
+                +prompt)
     if len(prompt)>5000:
         raise VideoForgeError("PRODUCTION_SCENE_PROMPT_TOO_LONG")
     return prompt,scene
@@ -112,6 +120,12 @@ def reference_bytes(image:Path,report:Path)->tuple[bytes,str]:
         raise VideoForgeError("PRODUCTION_SCENE_REFERENCE_REPORT_INVALID") from exc
     raw=image.read_bytes()
     digest=hashlib.sha256(raw).hexdigest()
+    if metadata.get('schema') == 'videoforge/user-visual-authorization/v1':
+        from .authorized_visual_reference import load_reference, CHANNEL, VIDEO
+        canonical = load_reference(ROOT, CHANNEL, VIDEO)
+        if metadata != canonical['contract'] or raw != canonical['source']:
+            raise VideoForgeError('PRODUCTION_SCENE_CANONICAL_REFERENCE_MISMATCH')
+        return raw, digest
     if (metadata.get("sha256")!=digest or metadata.get("asset_id")!="character-bible"
         or metadata.get("official_video_created") is not False):
         raise VideoForgeError("PRODUCTION_SCENE_REFERENCE_SHA_MISMATCH")

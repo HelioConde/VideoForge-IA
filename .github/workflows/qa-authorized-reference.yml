@@ -1,0 +1,28 @@
+name: "VideoForge - referencia autorizada e prompts sem gerar imagens"
+on:
+  pull_request:
+    paths:
+      - 'videoforge/authorized_visual_reference.py'
+      - 'videoforge/production_scenes.py'
+      - 'videoforge/image_generation_policy.py'
+      - 'tests/test_authorized_visual_reference.py'
+      - '.github/workflows/qa-authorized-reference.yml'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/autorizacao-visual-2026-11-15.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PROMPT-VISUAL-CANONICO-2026-11-15.txt'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/user-visual-reference/**'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/referencias/user-20261115/**'
+permissions:
+  contents: read
+jobs:
+  reference-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - run: python -m unittest tests.test_authorized_visual_reference tests.test_production_scenes tests.test_alchemy_no_image_generation -v

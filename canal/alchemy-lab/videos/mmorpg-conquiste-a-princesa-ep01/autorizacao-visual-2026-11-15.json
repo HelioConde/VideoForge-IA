@@ -1,0 +1,33 @@
+{
+  "schema": "videoforge/user-visual-authorization/v1",
+  "date": "2026-11-15",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "new_images_and_parts_authorized": true,
+  "scope": "missing_episode_shots_and_source_derived_rig_parts",
+  "reference_file": "assets/geracoes/user-visual-reference/20261115/reference.png",
+  "reference_sha256": "ed1b65f04c85542b78f5cc5b06f28be8c3c93594c17b54111ce0205376f601f9",
+  "reference_size": [
+    720,
+    1280
+  ],
+  "prompt_file": "PROMPT-VISUAL-CANONICO-2026-11-15.txt",
+  "prompt_sha256": "e3537d242712d0aa8e720e157fe4a1de5ab6b6d8217fde3575f74754320b822b",
+  "reference_role": "canonical_visual_style_and_identity",
+  "shot_art_approved": false,
+  "rig_approved": false,
+  "publish_allowed": false,
+  "cost_policy": {
+    "status": "awaiting_first_batch_call_limit",
+    "max_calls": null,
+    "automatic_retries": 0,
+    "recurring_generation": false
+  },
+  "first_batch_proposal": {
+    "shot_id": "C01-P02",
+    "image_calls": 1,
+    "parts_after_mother_review": true
+  },
+  "old_lock_superseded_in_user_intent": true,
+  "execution_gate": "pending_budget_and_scoped_workflow_integration"
+}
