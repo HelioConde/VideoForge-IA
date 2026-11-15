@@ -71,8 +71,46 @@
     },
     "available_github_mp4": false,
     "pending_pr_for_alternative_import": 50,
-    "next_step": "Import original, preexisting C12 RGB and RGBA bytes by SHA; do not regenerate, resize or falsely approve."
+    "next_step": "Get exact old ZIP bytes via user upload or root uploads/ of GitHub; import original image hashes; then run C12 technical neutral/motion QA and review masks.",
+    "validation_upgrade": {
+      "pr_merged": 52,
+      "merge_commit": "a69287356a87c3bbd2f67bf987ce1a0f0ae73f5c",
+      "contract_test_run": 43661690928,
+      "contract_test_conclusion": "success",
+      "main_preflight_run": 43661756457,
+      "main_preflight_conclusion": "failure",
+      "preflight_status": "ASSETS_PENDING",
+      "preflight_artifact_id": 14140665963,
+      "original_pngs_verified": 0,
+      "neutral_recomposition_from_originals_run": false,
+      "localized_motion_real_c12_mp4_verified": false,
+      "checks_added": [
+        "native_neutral_pixel_recomposition",
+        "independent_sprite_roi_motion_in_decoded_mp4",
+        "reject_static_or_full_image_motion",
+        "two_repeat_frame_sha",
+        "h264_720x1280_30fps_240frames"
+      ]
+    },
+    "library_metadata_discovered": [
+      {
+        "path": "/youtube/alchemy_c12_rig_camadas_tecnicas_v2.zip",
+        "size_bytes": 6186154,
+        "raw_bytes_materialized": false
+      },
+      {
+        "path": "/youtube/alchemy-ep01-cinema-3-originais.zip",
+        "size_bytes": 7390768,
+        "raw_bytes_materialized": false
+      },
+      {
+        "path": "/youtube/alchemy_c12_mesh_rig_v2_aprovacao.mp4",
+        "size_bytes": 999889,
+        "raw_bytes_materialized": false
+      }
+    ],
+    "library_materialization_error": "This Project file does not have an authorized raw-byte materialization path."
   },
-  "next_action": "Verify C12 original ZIPs, import exact PNG bytes to main, run technical rig preview, inspect masks/underlays before official approval.",
+  "next_action": "Recover original C12 ZIP bytes already indexed in Library but unavailable for raw-byte materialization; import to root uploads/, verify 9 PNGs and run C12 technical ThreeCanvas QA. No new images.",
   "updates_required_on_each_change": true
 }
