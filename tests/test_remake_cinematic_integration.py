@@ -117,7 +117,7 @@ class RemakeCinematicIntegrationTests(unittest.TestCase):
         self.assertTrue(gate["editorial_generation_authorized"])
         self.assertFalse(gate["source_image_files_verified"])
         self.assertFalse(gate["new_image_generation_allowed"])
-        self.assertFalse(gate["paid_provider_calls_approved"])
+        self.assertTrue(gate["paid_provider_calls_approved"])
         with self.assertRaisesRegex(VideoForgeError,"CINEMATIC_CANONICAL_REFERENCE_NOT_APPROVED"):
             assert_shot_generation_ready(CH,VID)
         with self.assertRaisesRegex(VideoForgeError,"REMAKE_SCENE_REFERENCE_ANCHOR_SHA_MISMATCH"):

@@ -1,14 +1,19 @@
-"""Regressão: nenhum fluxo de IA pode gerar imagem para Alchemy Lab EP01.
+"""Regressão: autorização permanente ativa e bloqueio de provedor revogado.
 
-Os testes não chamam rede, proxy, imagem generativa, nem criam PNG.
+Todos os testes que verificam negativas simulam POLÍTICA NEGADA no processo,
+sem alterar o arquivo real e sem usar rede, proxy ou imagens generativas.
 """
 from __future__ import annotations
 from pathlib import Path
+import json
+import shutil
+import tempfile
 import unittest
 from unittest.mock import patch
 
 from videoforge.errors import VideoForgeError
 from videoforge.image_generation_policy import assert_image_generation_allowed
+from videoforge.remake_autopilot import EPISODE
 from videoforge import (
     production_art,
     production_scenes,
@@ -24,9 +29,23 @@ VIDEO="mmorpg-conquiste-a-princesa-ep01"
 MISSING=Path("/does-not-exist/do-not-open.png")
 
 class ImageGenerationBanTests(unittest.TestCase):
-    def test_direct_policy_blocks_exact_episode(self):
-        with self.assertRaisesRegex(VideoForgeError,"IMAGE_GENERATION_DENIED_ALCHEMY_EP01"):
-            assert_image_generation_allowed(CHANNEL,VIDEO)
+    def test_current_policy_allows_authorized_episode(self):
+        self.assertIsNone(assert_image_generation_allowed(CHANNEL,VIDEO))
+
+    def test_disabled_policy_still_blocks_in_an_isolated_checkout(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            base=root/EPISODE
+            base.mkdir(parents=True)
+            repo=Path(__file__).resolve().parents[1]/EPISODE
+            for filename in ("estado-atual.json","autonomy-policy.json"):
+                shutil.copyfile(repo/filename,base/filename)
+            policy=json.loads((base/"autonomy-policy.json").read_text(encoding="utf-8"))
+            policy["paid_provider_calls_approved"]=False
+            policy["max_chargeable_calls_per_run"]=0
+            (base/"autonomy-policy.json").write_text(json.dumps(policy),encoding="utf-8")
+            with self.assertRaisesRegex(VideoForgeError,"provider cost permission required"):
+                assert_image_generation_allowed(CHANNEL,VIDEO,root)
 
     def test_other_channels_and_videos_are_not_affected(self):
         for channel,video in [
@@ -38,7 +57,9 @@ class ImageGenerationBanTests(unittest.TestCase):
                 self.assertIsNone(assert_image_generation_allowed(channel,video))
 
     def test_direct_proxy_and_layer_generation_are_also_blocked(self):
-        with patch.object(proxy_images,"call_proxy",side_effect=AssertionError("PROXY_MUST_NOT_RUN")) as proxy:
+        blocked=VideoForgeError("IMAGE_GENERATION_DENIED_ALCHEMY_EP01: synthetic denied-policy fixture")
+        with patch("videoforge.image_generation_policy.assert_image_generation_allowed",side_effect=blocked), \
+             patch.object(proxy_images,"call_proxy",side_effect=AssertionError("PROXY_MUST_NOT_RUN")) as proxy:
             with self.assertRaisesRegex(proxy_images.ProxyImageError,"IMAGE_GENERATION_DENIED_ALCHEMY_EP01"):
                 proxy_images.generate(
                     "https://invalid.invalid","no-secret",CHANNEL,VIDEO,
@@ -59,7 +80,9 @@ class ImageGenerationBanTests(unittest.TestCase):
             lambda: production_layer_recovery.recover(CHANNEL,VIDEO,1,MISSING,MISSING,"https://invalid.invalid"),
             lambda: production_rgba_parts.make_part(CHANNEL,VIDEO,1,"kael",MISSING,MISSING,"https://invalid.invalid"),
         ]
-        with patch.object(proxy_images,"generate",side_effect=AssertionError("PROXY_MUST_NOT_RUN")) as g, \
+        blocked=VideoForgeError("IMAGE_GENERATION_DENIED_ALCHEMY_EP01: synthetic denied-policy fixture")
+        with patch("videoforge.image_generation_policy.assert_image_generation_allowed",side_effect=blocked), \
+             patch.object(proxy_images,"generate",side_effect=AssertionError("PROXY_MUST_NOT_RUN")) as g, \
              patch.object(proxy_images,"call_proxy",side_effect=AssertionError("PROXY_MUST_NOT_RUN")) as p:
             for i,action in enumerate(actions):
                 with self.subTest(entrypoint=i):
