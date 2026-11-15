@@ -20,7 +20,7 @@ from videoforge.remake_sword_source import (
 )
 from videoforge.persist_generated_assets import archive
 from videoforge.remake_sword_pack import _find_part
-from tests.test_remake_sword_pack import RemakeSwordPackTests
+from tests import test_remake_sword_pack as pack_fixtures
 
 class SwordSourceTests(unittest.TestCase):
     def test_policy_denies_paid_calls_without_proxy_in_isolated_fixture(self):
@@ -53,7 +53,7 @@ class SwordSourceTests(unittest.TestCase):
         self.assertIn("OPACO",PROMPTS["underlay"])
 
     def setup_approved_temp_source(self,root:Path)->dict:
-        sources=RemakeSwordPackTests().create_test_archive(root)
+        sources=pack_fixtures.RemakeSwordPackTests().create_test_archive(root)
         ep=root/EPISODE
         policy_path=ep/"autonomy-policy.json"
         policy=json.loads(policy_path.read_text(encoding="utf-8"))
