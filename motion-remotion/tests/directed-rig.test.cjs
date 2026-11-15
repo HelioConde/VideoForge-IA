@@ -92,11 +92,11 @@ test('existing C01-P03 bindings and absolute direction match the renderer contra
       nodes:bound.nodes,tracks:actual.rigKeyframes}]};
   validateDirectedProps(props);
   assert.equal(shotAtFrame(props.shots,150).id,'C01-P03');
-  assert.equal(nodeTransformAtFrame(props.shots[0],'kael.cabeca',239).rotationZ,-1.638);
+  assert.equal(nodeTransformAtFrame(props.shots[0],'kael.cabeca',239).rotationZ,-0.08);
 });
 
 
-test('C01 P03 performance v3 uses manual-safe head and moving arms with fixed camera',()=>{
+test('C01 P03 V4 breathes subtly while right arm/boot, king and spears stay source-locked',()=>{
   const path=require('node:path');
   const base=path.join(__dirname,'../../canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01');
   const direction=JSON.parse(fs.readFileSync(path.join(base,'direcao-rig-remotion.json'),'utf8'));
@@ -105,52 +105,49 @@ test('C01 P03 performance v3 uses manual-safe head and moving arms with fixed ca
   const b=bindings.shots[s.id];
   const shot={...s,canvas:b.canvas,background:b.background.file,
     nodes:b.nodes,tracks:s.rigKeyframes};
-  assert.equal(shot.tracks.length,9);
+  assert.equal(shot.tracks.length,2,'No artificial gestures to force high pixel-change QA');
   assert.equal(shot.camera.move,'locked');
   assert.ok(shot.camera.keyframes.every(k=>k.z===14&&k.fovDeg===30));
-  assert.ok(shot.tracks.every(t=>!['aldric','guarda-esquerdo','guarda-direito',
-    'lanca-contexto-0','lanca-contexto-1'].includes(t.target)));
-  const distance=(p,q)=>Math.hypot(p[0]-q[0],p[1]-q[1]);
-  const headPoint=[590,780],wristPoint=[642,1078];
-  const initialHead=transformSourcePoint(shot,'kael.cabeca',headPoint,150);
-  const raisedHead=transformSourcePoint(shot,'kael.cabeca',headPoint,226);
-  const initialWrist=transformSourcePoint(shot,'kael.punhos',wristPoint,150);
-  const pressedWrist=transformSourcePoint(shot,'kael.punhos',wristPoint,225);
-  assert.ok(distance(initialHead,raisedHead)>=2.5,
-    'Manual-safe head retains slight real pivot motion, while arms carry performance');
-  assert.ok(distance(initialWrist,pressedWrist)>=8,
-    'Kael independent wrist/forearm must travel at least 8 original-source pixels');
-  // Existing independently extracted legs, guards, throne and crossed spears
-  // remain untouched: not a whole-image camera pan or sprite bobbing.
-  assert.deepEqual(transformSourcePoint(shot,'kael.perna-direita',[600,1240],150),
-    transformSourcePoint(shot,'kael.perna-direita',[600,1240],239));
-  assert.deepEqual(transformSourcePoint(shot,'aldric',[480,360],150),
-    transformSourcePoint(shot,'aldric',[480,360],239));
-  assert.equal(shot.nodes.find(n=>n.id==='kael.cabelo').mesh.amplitudePx,3.0);
-  assert.equal(shot.nodes.find(n=>n.id==='kael.jaqueta').mesh.amplitudePx,1.8);
-  assert.equal(shot.tracks.filter(t=>t.target==='kael.cabeca').length,2);
-  const holdout=b.nodes.find(n=>n.id==='kael.costura-gola-pixel-original');
-  assert.equal(holdout.parent,'kael.ombros');
-  assert.equal(holdout.role,'existing-pixel-underlay');
-  assert.deepEqual(holdout.onlyCoveredBy,['kael.jaqueta','kael.braco-direito']);
-  assert.equal(holdout.sha256,b.sourceMother.sha256);
-  assert.ok(holdout.z < b.nodes.find(n=>n.id==='kael.jaqueta').z);
-  assert.ok(shot.tracks.find(t=>t.target==='kael.braco-direito').keyframes.every(k=>Math.abs(k.value)<=.2));
-
-  const rotations=shot.tracks.find(t=>t.target==='kael.cabeca'&&t.transform==='rotationZ');
-  assert.ok(rotations.keyframes.every(k=>Math.abs(k.value)<=2),
-    'C01 head pivots must obey the manual max 2 degrees in V3');
-  assert.ok(shot.tracks.some(t=>t.target==='kael.braco-esquerdo'));
-  assert.ok(shot.tracks.some(t=>t.target==='kael.bota-direita'&&t.transform==='rotationZ'));
-  assert.ok(shot.tracks.find(t=>t.target==='kael.bota-direita').keyframes.every(k=>Math.abs(k.value)<=5));
-  assert.ok(shot.tracks.some(t=>t.target==='kael.ombros'&&t.transform==='translateX'));
+  assert.equal(b.backgroundMode,'original-mother-static-context-with-kael-cutout/v1');
+  const forbidden=new Set([
+    'kael.punhos','kael.braco-direito','kael.antebraco','kael.braco-esquerdo',
+    'kael.perna-direita','kael.bota-direita','guarda-esquerdo','guarda-direito',
+    'aldric','lanca-contexto-0','lanca-contexto-1']);
+  assert.ok(shot.tracks.every(t=>!forbidden.has(t.target)));
+  const n=Object.fromEntries(shot.nodes.map(n=>[n.id,n]));
+  assert.equal(n['kael.braco-direito'].parent,null);
+  assert.equal(n['kael.braco-esquerdo'].parent,null);
+  assert.equal(n['kael.antebraco'].parent,'kael.braco-direito');
+  assert.equal(n['kael.punhos'].parent,'kael.antebraco');
+  assert.equal(n['kael.bota-direita'].parent,'kael.perna-direita');
+  assert.equal(n['kael.perna-direita'].parent,null);
+  const distance=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+  const wrist=[610,1048], boot=[570,1310], crown=[530,320];
+  for(const frame of [150,167,180,191,210,220,239]){
+    assert.ok(distance(transformSourcePoint(shot,'kael.punhos',wrist,frame),wrist)<1e-7,
+      'Right hand must keep contact on knee, frame '+frame);
+    assert.ok(distance(transformSourcePoint(shot,'kael.bota-direita',boot,frame),boot)<1e-7,
+      'Right boot cannot split apart, frame '+frame);
+    assert.ok(distance(transformSourcePoint(shot,'kael.braco-direito',[540,880],frame),[540,880])<1e-7);
+    assert.deepEqual(transformSourcePoint(shot,'aldric',crown,frame),crown);
+    assert.deepEqual(transformSourcePoint(shot,'lanca-contexto-0',[381,751],frame),[381,751]);
+  }
+  const head=shot.tracks.find(t=>t.target==='kael.cabeca');
+  assert.ok(head.keyframes.every(k=>Math.abs(k.value)<=0.5));
+  const breathe=shot.tracks.find(t=>t.target==='kael.ombros');
+  assert.ok(breathe.keyframes.some(k=>k.value<-1));
+  assert.ok(breathe.keyframes.every(k=>Math.abs(k.value)<=2));
+  assert.equal(n['kael.cabelo'].mesh.amplitudePx,0.45);
+  assert.equal(n['kael.jaqueta'].mesh.amplitudePx,0.55);
+  assert.equal(n['kael.costura-gola-pixel-original'].parent,'kael.ombros');
+  assert.deepEqual(n['kael.costura-gola-pixel-original'].onlyCoveredBy,
+     ['kael.jaqueta','kael.braco-direito']);
+  assert.equal(n['kael.costura-gola-pixel-original'].sha256,b.sourceMother.sha256);
   const allShots=direction.scenes.flatMap(x=>x.shots);
-  assert.equal(allShots.reduce((n,x)=>n+x.rigKeyframes.length,0),113);
-  const verticalHead=shot.tracks.find(t=>t.target==='kael.cabeca'&&t.transform==='translateY');
-  assert.ok(verticalHead.keyframes.every(k=>k.value===0),
-    'No vertical head separation until source-derived neck underlay is approved');
+  assert.equal(allShots.reduce((acc,x)=>acc+x.rigKeyframes.length,0),106);
+  validateDirectedProps({...fixture(),...direction.format,id:shot.id,startFrame:shot.startFrame,
+    durationFrames:90,shots:[shot]});
 });
-
 
 test('waist seam stays in source position while shoulders breathe at every frame',()=>{
   const s=shot('waist',150,240);
