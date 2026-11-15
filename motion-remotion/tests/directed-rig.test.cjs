@@ -129,6 +129,9 @@ test('C01 P03 performance v2 visibly moves head and wrist without moving global 
   assert.equal(shot.nodes.find(n=>n.id==='kael.cabelo').mesh.amplitudePx,4.2);
   assert.equal(shot.nodes.find(n=>n.id==='kael.jaqueta').mesh.amplitudePx,2.8);
   assert.equal(shot.tracks.filter(t=>t.target==='kael.cabeca').length,2);
+  const verticalHead=shot.tracks.find(t=>t.target==='kael.cabeca'&&t.transform==='translateY');
+  assert.ok(verticalHead.keyframes.every(k=>k.value>=-2),
+    'Do not unseat existing head from collar without an approved neck underlay');
 });
 
 
