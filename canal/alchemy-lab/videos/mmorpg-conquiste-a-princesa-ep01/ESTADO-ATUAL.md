@@ -1,5 +1,11 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## C01-P01 — audio original reproduzível e SHA-verificado para compositor V2 (15/11/2026)
+
+**Nova etapa:** `videoforge/remake_episode_audio.py` recria localmente a WAV original de 2s/48kHz de `remake_opening.py`, confere o SHA dos bytes com a prova permanente `QA-C01-P01-REMAKE-V2.json` e o manifesto `remake-ep01-planos.json`, e só então a armazena como `motion-remotion/public/vf-remake/c01-p01/sword-original.wav` para um render futuro. Aceita reexecução idempotente, mas bloqueia arquivo adulterado, origem indevida, caminho simbólico ou SHA divergente. Sem usar artifact temporário, serviço de áudio pago ou música de terceiros.
+
+**Testes:** `tests/test_remake_episode_audio.py` verifica PCM/SHA, reexecução, QA alterado e proteção de caminhos. O workflow de compositor prepara a WAV real, mas **continua sem renderizar episódio**: faltam 39 imagens com rigs e revisão visual. A aprovação de áudio não substitui aprovação artística. CI pendente de confirmação neste registro.
+
 ## Direção articulada de todas as 40 tomadas — 160 etapas temporizadas (15/11/2026)
 
 **Preparado em código e JSON:** `remake-v2-motion-directions.json` contém quatro momentos detalhados por tomada: estabelecer quadro, antecipar gesto, executar rig e resolver ação. Exige 40 tomadas/14 cenas/4890 frames/30fps e mantém C01-P02 espada nos quadros locais 0,7,72,89, C12-P01 olhos nos 0,4,86,119. Novas tomadas recebem direção própria: C01-P05 luvas/lanças, C08-P04 roda/Elara e C12-P04 broche/dedos/vestido. Cada etapa indica texto de atuação, peças RGBA, lente, eixo, orientação, narração/SFX e QA.

@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Check CI and generated 40-shot task queue contains exact motion stages; obtain canonical V2 real art before measuring anatomical pivots",
+  "next_action": "Verify GitHub Actions original wav staging and 40-shot Remotion validation, retain 39-art approvals as blockers",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -1081,5 +1081,19 @@
       "C12-P04"
     ],
     "next_step": "Check CI and generated 40-shot task queue contains exact motion stages; obtain canonical V2 real art before measuring anatomical pivots"
+  },
+  "c01_p01_full_episode_audio_20261115": {
+    "status": "code_created_ci_pending",
+    "module": "videoforge/remake_episode_audio.py",
+    "source_synthesis": "videoforge/remake_opening.py",
+    "permanent_qa": "QA-C01-P01-REMAKE-V2.json",
+    "planned_public_path": "motion-remotion/public/vf-remake/c01-p01/sword-original.wav",
+    "expected_sha256": "22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d",
+    "will_not_commit_audio_binary": true,
+    "full_episode_audio_staged_in_repository": false,
+    "free_deterministic_generation": true,
+    "official_episode_rendered": false,
+    "youtube_uploaded": false,
+    "next_step": "Verify GitHub Actions original wav staging and 40-shot Remotion validation, retain 39-art approvals as blockers"
   }
 }

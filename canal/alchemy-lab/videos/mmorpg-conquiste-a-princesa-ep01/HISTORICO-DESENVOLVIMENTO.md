@@ -1,5 +1,11 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — eliminar dependência do artifact temporário para WAV C01-P01
+
+- Novo módulo `remake_episode_audio.py` reutiliza síntese procedural original `remake_opening.py`, exige QA permanente da C01-P01 e SHA da WAV antes de disponibilizar `sword-original.wav` para `motion-remotion/public`.
+- Os jobs de autonomia só verificam hash; o QA do compositor prepara WAV idêntica para teste, sem MP4 novo, imagens, publicação ou inferência. Testes contra alterações de evidência e bytes.
+- CI aguardando prova. Permanece bloqueado render oficial sem as 39 imagens reais e aprovação humana.
+
 ## 15/11/2026 — quatro ações independentes para cada tomada, integradas aos agentes
 
 - Criado `remake-v2-motion-directions.json` (40 tomadas × 4 ações = 160 marcos temporais) com direção cinematográfica concreta de espada, malha de cabelo/roupas, pulsação de olhos, rodas, mãos, trono, broche, visemas e som original.

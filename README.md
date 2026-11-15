@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+> **Abertura original do remake V2:** `videoforge/remake_episode_audio.py` prepara a mesma WAV por síntese procedural + SHA auditado para o futuro vídeo integral; independe da retenção de 90 dias dos artifacts. O render oficial continua bloqueado pelos 39 planos visuais sem QA.
+
 > **Direção animada V2 disponível:** [40 tomadas e 160 ações temporizadas](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2-motion-directions.json), com câmera, elenco, rig, fases e QA por plano; validador `videoforge/remake_motion_directions.py` e integração à fila dos agentes. **São instruções**, não PNGs/MP4 gerados. Sem rig/autorização visual/custo não renderiza vídeo oficial.
 
 > **Compositor V2 corrigido para 40 tomadas:** [EDL editorial oficial](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2-cinematic-edl.json) · `videoforge/remake_v2_edl.py` · `motion-remotion/src/cinematic-timeline.ts`. O legado 37-shot permanece intocado. A abertura preta exige o áudio original no render do episódio. Aguardando assets reais e revisão.
