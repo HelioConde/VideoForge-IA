@@ -41,9 +41,27 @@ Concluir o dorama MMORPG no VideoForge-IA com animação 2D genuína: imagem-mã
 
 Pacotes **anteriormente produzidos fora do GitHub** e ainda pendentes de importação: `alchemy-ep01-cinema-3-originais.zip` e `alchemy_c12_rig_camadas_tecnicas_v2.zip` (o fluxo de importação da main usa o nome `uploads/alchemy-c12-rig-camadas-tecnicas-v2.zip`). Confirmar bytes reais e SHA antes de marcar importado, jamais regenerar substitutos. Corrigir as máscaras do brinco e da mecha frontal que ainda contêm pele/fundo; verificar underlays e silhuetas.
 
+## 14/11/2026 — avanço registrado: QA do C12, sem alterar a arte
+
+**Novo marco na `main`:** [PR #52](https://github.com/HelioConde/VideoForge-IA/pull/52) integrado no commit `a69287356a87c3bbd2f67bf987ce1a0f0ae73f5c`. [Run de testes 43661690928](https://github.com/HelioConde/VideoForge-IA/actions/runs/43661690928) **SUCCESS** para o contrato; render foi `skipped` no PR. Novos módulos `videoforge/c12_render_qa.py` e `tests/test_alchemy_c12_render_qa.py`:
+
+- Compara **pose neutra** por recomposição de fundo + sprites RGBA com a imagem-mãe 941×1672, usando originais SHA antes de testar movimento. Os limites automáticos não significam aprovação humana.
+- Decodifica o **H.264 real** para medir movimento localizado da capa em C12-P02 e de cabelo/brinco/manga em C12-P03, rejeitando MP4 parado ou deslocamento de toda a imagem. Reproduz e compara hashes de dois quadros para testar determinismo; valida 240 frames/30fps.
+- [Run de produção técnica 43661756457](https://github.com/HelioConde/VideoForge-IA/actions/runs/43661756457) **FAIL esperado por `ASSETS_PENDING`**, na etapa de preflight dos PNGs. Artifact `vf-alchemy-c12-threecanvas-draft-43661756457` (ID `14140665963`) contém **somente o relatório de pendência, nenhum MP4**. A nova análise neutral/movimento ainda **não foi executada com os originais reais**, e não deve ser declarada aprovada.
+
+**Localização descoberta:** a biblioteca pessoal deste projeto tem metadados dos arquivos **pré-existentes** (não arquivos novos):
+
+- `/youtube/alchemy_c12_rig_camadas_tecnicas_v2.zip` — **6.186.154 bytes**, contém sete PNGs técnicos segundo manifesto anterior;
+- `/youtube/alchemy-ep01-cinema-3-originais.zip` — **7.390.768 bytes**, três PNGs RGB de referência;
+- `/youtube/alchemy_c12_mesh_rig_v2_aprovacao.mp4` — **999.889 bytes**, prévia local histórica de 12 segundos.
+
+A tentativa de ler/copiar os bytes por integração de arquivos **falhou com `This Project file does not have an authorized raw-byte materialization path`**. **Metadados de Library não provam recuperação dos ZIPs.** Por isso os nove PNGs seguem não arquivados no GitHub. Não copiar conteúdos por aproximação ou gerar artes substitutas.
+
+**Desbloqueio exato:** anexar os **dois ZIPs originais** à conversa como arquivos reais, ou colocá-los diretamente na **raiz** `uploads/` do repositório com os nomes indicados em [RENDER-C12-TECNICO.md](RENDER-C12-TECNICO.md). Depois conferir SHA, importação para `assets/` do episódio, preflight, recomposição neutra, MP4 de 8s, movimentos locais e QA visual (mecha e brinco ainda precisam correção). C12-P01/olhos e episódio completo continuam pendentes.
+
 ## Próxima ação concreta, em ordem
 
-1. **Prioridade:** recuperar/importar os arquivos *já existentes* da C12; verificar exatamente SHA, RGBA, bbox, 941×1672 e presença real no GitHub. Antes de repetir o render, verificar se os ZIPs já apareceram no repositório. Se faltarem, informar `assets_pendentes` e manter o relatório.
+1. **Prioridade:** recuperar os **bytes reais dos dois ZIPs já localizados na Library, porém inacessíveis para cópia**, ou enviá-los à raiz `uploads/`; importar os arquivos *já existentes* da C12; verificar exatamente SHA, RGBA, bbox, 941×1672 e presença real no GitHub. Antes de repetir o render, verificar se os ZIPs já apareceram no repositório. Se faltarem, informar `assets_pendentes` e manter o relatório.
 2. Quando estiverem arquivados, executar o workflow técnico C12 na **main**, verificar MP4, repetibilidade de frames, recomposição, bordas, costuras e oclusões. Não inferir aprovação humana do sucesso do workflow.
 3. Refinar a C01 usando o motor **já integrado**, corrigindo máscaras/underlays dos guardas, lanças e Aldric com os pixels aprovados existentes. Não reimplementar as 107 trilhas de direção.
 4. Depois ampliar para os demais 36 planos visuais com imagem-mãe própria e rig por cena, narração, legendas e QA; **episódio oficial de 163 s permanece pendente** enquanto não houver assets e aprovação.
