@@ -598,7 +598,7 @@
   "autopilot_checkpoint": {
     "stage": "generate_character_bible",
     "target": "character-bible",
-    "blocker": "initial_canonical_reference_generation_authorized",
+    "blocker": "no_verified_reference_png",
     "dispatch_allowed": true
   },
   "policy_consistency_audit_20261115": {
@@ -1226,5 +1226,18 @@
     "real_paid_calls_executed_by_this_documentation_change": 0,
     "human_visual_approved": false,
     "auto_publish_youtube": false
+  },
+  "generation_dispatch_intent": {
+    "schema": "videoforge/remake-dispatch-intent/v1",
+    "request_id": "e74840c054fe22d57e9908193cd640c4c0f0b15d5009c7cad4937c8255ea5f67",
+    "target": "character-bible",
+    "workflow": "production-art-by-request.yml",
+    "status": "reserved_before_external_dispatch",
+    "reserved_utc": "2026-11-15T21:57:01.983760+00:00",
+    "max_calls_per_run": 1,
+    "provider_charge_possible": true,
+    "actual_provider_charge_confirmed": false,
+    "youtube_upload": false,
+    "human_visual_approved": false
   }
 }

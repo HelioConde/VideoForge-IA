@@ -131,8 +131,8 @@ O [run 43745676658](https://github.com/HelioConde/VideoForge-IA/actions/runs/437
 ### Diagnóstico autônomo mais recente
 - Etapa: generate_character_bible
 - Alvo: character-bible
-- Bloqueio: provider_cost_permission_required
-- Despacho de geração permitido: False
+- Bloqueio: no_verified_reference_png
+- Despacho de geração permitido: True
 - Sem novas imagens, vídeo ou aprovação humana neste diagnóstico.
 <!-- REMAKE-AUTOPILOT-END -->
 

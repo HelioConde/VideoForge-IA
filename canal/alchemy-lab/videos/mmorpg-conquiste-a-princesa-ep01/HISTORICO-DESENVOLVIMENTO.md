@@ -346,3 +346,8 @@ Acrescentar uma seção datada com: objetivo e cena, arquivos alterados, commit 
 
 - GitHub Actions run \`43709191586\`, artifact \`vf-remake-c01-p01-opening-43709191586\` (90 dias); MP4 SHA \`75b8be46c7e609a1c9ff8afad0935bcbf8c6faa2126ba3c74cad3af540f3c44e\`, áudio SHA \`22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d\`.
 - Render Remotion real de 2 segundos somente; QA salvo no repositório, mídia guardada em artifact, sem aprovação humana ou upload YouTube. Próximo: âncora V2 e C01-P02.
+
+## 2026-11-15T21:57:01Z — diagnóstico automático de retomada
+
+- Etapa: generate_character_bible; alvo: character-bible; bloqueio: no_verified_reference_png.
+- Apenas verificação de estado/arquivos. Nenhuma mídia criada ou aprovação inventada.
