@@ -1,0 +1,18 @@
+{
+  "schema": "videoforge/c12-technical-render-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shots": [
+    "C12-P02",
+    "C12-P03"
+  ],
+  "render_mp4": true,
+  "technical_preview_only": true,
+  "official_video_approved": false,
+  "new_image_generation_calls": 0,
+  "youtube_upload": false,
+  "verify_source_sha256": true,
+  "rig_engine": "remotion-three-swangle",
+  "revision": 1,
+  "status": "AWAITING_SOURCE_RGB_AND_RGBA_BYTES"
+}
