@@ -7,6 +7,9 @@ on:
       - 'motion-remotion/src/cinematic-timeline.ts'
       - 'videoforge/remake_v2_edl.py'
       - 'tests/test_remake_v2_edl.py'
+      - 'videoforge/remake_motion_directions.py'
+      - 'tests/test_remake_motion_directions.py'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2-motion-directions.json'
       - 'motion-remotion/src/cinematic-episode.tsx'
       - 'motion-remotion/tests/cinematic-contract.test.cjs'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2-cinematic-edl.json'
@@ -57,7 +60,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_remake_v2_edl -v
+          python -m unittest tests.test_remake_v2_edl tests.test_remake_motion_directions -v
           python -m videoforge.remake_v2_edl --check
       - name: Instalar dependencias locais congeladas do Remotion
         working-directory: motion-remotion

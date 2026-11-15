@@ -1,5 +1,13 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## Direção articulada de todas as 40 tomadas — 160 etapas temporizadas (15/11/2026)
+
+**Preparado em código e JSON:** `remake-v2-motion-directions.json` contém quatro momentos detalhados por tomada: estabelecer quadro, antecipar gesto, executar rig e resolver ação. Exige 40 tomadas/14 cenas/4890 frames/30fps e mantém C01-P02 espada nos quadros locais 0,7,72,89, C12-P01 olhos nos 0,4,86,119. Novas tomadas recebem direção própria: C01-P05 luvas/lanças, C08-P04 roda/Elara e C12-P04 broche/dedos/vestido. Cada etapa indica texto de atuação, peças RGBA, lente, eixo, orientação, narração/SFX e QA.
+
+**Programa autónomo:** `videoforge/remake_motion_directions.py` valida a direção contra o roteiro e o manifesto 40-shot; `videoforge/remake_starter.py` inclui `motion_phases`, `motion_required_parts`, `motion_qa_requirements` e fingerprint das instruções em cada unidade da fila. Assim um agente que retome a tomada não pode saltar a direção e criar movimentos genéricos de PNG inteiro.
+
+**Importante:** os 160 itens são direção editorial, **não são 160 frames renderizados nem medidas anatômicas prontas**. `pivots_measured_from_real_art=false`, `technically_calibrated=false`, `human_visual_approved=false`. Nenhuma imagem real adicional, nenhum MP4 oficial, nenhuma chamada paga/YouTube. Testes do GitHub Actions pendentes neste registro.
+
 ## C40 V2 — renderizador oficial e EDL sem perder audio original (15/11/2026)
 
 **Problema corrigido em código:** `motion-remotion/src/cinematic-timeline.ts` ainda exigia 37 tomadas, enquanto o roteiro/manifesto agora exigem 40. Contrato atualizado para **40 tomadas, 39 visuais, 4890 frames/163s**. Os inserts C01-P05 (310–359), C08-P04 (2880–2939), C12-P04 (4290–4349) possuem ranges obrigatórios; C01-P02 continua 60–149. Nova `remake-v2-cinematic-edl.json` representa somente o **planejamento V2 sem aprovação** e é compilada por `videoforge/remake_v2_edl.py`, sem alterar `timeline-cinematografica.json` V1 de 37 tomadas.

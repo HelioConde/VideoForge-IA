@@ -16,6 +16,8 @@
 
 ## Direção e cinematografia
 
+**Direção técnica animável (40 tomadas):** `remake-v2-motion-directions.json` contém 160 etapas temporizadas, quatro por tomada, identificando câmera, elenco, peças RGBA e regras de QA. Não são valores inventados de rig em pixels: `source_geometry_calibration_required=true`, todos os pivôs continuam pendentes da imagem-mãe real e `approved_for_final_render=false`. `videoforge/remake_motion_directions.py` valida cada etapa contra `roteiro.json` e `remake-ep01-planos.json`; `remake_starter.work_queue` incorpora essas instruções à tarefa enviada aos agentes. Para a espada C01-P02 usar fases locais `0,7,72,89`, para os olhos de C12-P01 `0,4,86,119`. A fila NÃO autoriza chamada paga nem render oficial.
+
 **Renderizador V2 40 tomadas:** `motion-remotion/src/cinematic-timeline.ts` valida 40 e as janelas dos três inserts. `remake-v2-cinematic-edl.json`, compilada por `videoforge/remake_v2_edl.py`, lista direção, elenco, tempos, falas, HUD, câmera e áudio de 40 tomadas; **39 continuam sem arte aprovada**. A EDL antiga `timeline-cinematografica.json` de 37 é apenas referência histórica. C01-P01 agora possui áudio obrigatório no compositor: antes do render integral, recuperar/recriar o WAV original e conferir SHA da QA técnica C01-P01. O manifesto V2 editorial não libera render oficial.
 
 **Validação do programa:** [run 43751714168](https://github.com/HelioConde/VideoForge-IA/actions/runs/43751714168) SUCCESS (45 testes, fila 40/39); [run 43751714070](https://github.com/HelioConde/VideoForge-IA/actions/runs/43751714070) SUCCESS (14 testes do pacote). Nenhum PNG/MP4 oficial novo e custo bloqueado.

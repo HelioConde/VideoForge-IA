@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — quatro ações independentes para cada tomada, integradas aos agentes
+
+- Criado `remake-v2-motion-directions.json` (40 tomadas × 4 ações = 160 marcos temporais) com direção cinematográfica concreta de espada, malha de cabelo/roupas, pulsação de olhos, rodas, mãos, trono, broche, visemas e som original.
+- `videoforge/remake_motion_directions.py` confronta cada shot, duração, elenco, câmera, falas e cenas com `roteiro.json`/`remake-ep01-planos.json`; rejeita plano adulterado, etapas ausentes, fake de SHA/aprovação e pivôs declarados medidos sem arte real.
+- A fila `remake_starter.py` fornece as quatro instruções, peças e QA por tarefa aos agentes, com fingerprint; workflows de autonomia e compositor validam. A edição e custo externos permanecem bloqueados e nenhum vídeo é declarado pronto.
+- CI de integração pendente de resultado. Próximo: buscar referência real V2 aprovada, calibrar pivôs e malhas a partir das imagens, não de números editoriais.
+
 ## 15/11/2026 — alinhamento do compositor oficial V2 com 40 tomadas e som
 
 - Descoberta de gate 37 fixo no `cinematic-timeline.ts`: teria recusado o episódio 40-shot; corrigido para 40 com exigência dos 3 novos inserts e 4890 frames.

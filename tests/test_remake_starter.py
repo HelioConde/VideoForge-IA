@@ -56,6 +56,16 @@ class RemakeStarterTests(unittest.TestCase):
             self.assertFalse(by_id[sid]["render_approved"])
         self.assertEqual(data["format"]["total_frames"],4890)
 
+    def test_every_queue_task_includes_four_motion_phases(self):
+        queue=work_queue()["production_queue"]
+        self.assertEqual(len(queue),40)
+        self.assertEqual(sum(len(t["motion_phases"]) for t in queue),160)
+        for task in queue:
+            self.assertEqual(task["motion_cues_source"],"remake-v2-motion-directions.json")
+            self.assertEqual(task["motion_phases"][0]["local_frame"],0)
+            self.assertFalse(task["render_approved"])
+            self.assertFalse(task["dispatch_permitted"])
+
     def test_libraries_and_skills_are_explicitly_reused(self):
         out=work_queue()
         self.assertIn("ThreeCanvas",out["reuse"]["animation_engine"])

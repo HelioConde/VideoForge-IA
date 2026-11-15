@@ -13,6 +13,7 @@ from pathlib import Path
 from .cinematic_direction import load_active_remake_plan
 from .remake_autopilot import EPISODE, ROOT, choose_next, verified_asset
 from .errors import VideoForgeError
+from .remake_motion_directions import load_motion_directions
 
 SCHEMA="videoforge/remake-shot-production-queue/v1"
 SKILL="videoforge-dorama-remake"
@@ -55,6 +56,8 @@ def work_queue(root:Path=ROOT)->dict:
     if policy.get("scope")!="alchemy-lab/mmorpg-conquiste-a-princesa-ep01":
         raise VideoForgeError("REMAKE_STARTER_COST_SCOPE_INVALID")
     stage=choose_next(root)
+    motion=load_motion_directions(root)
+    by_motion={cue['shot_id']:cue for cue in motion['shots']}
     anchors=plan["identity_anchors"]
     if not anchors or anchors[0].get("id")!="character-bible":
         raise VideoForgeError("REMAKE_STARTER_FIRST_ANCHOR_INVALID")
@@ -68,6 +71,7 @@ def work_queue(root:Path=ROOT)->dict:
     work=[]
     for item in plan["shots"]:
         sid=item["shot_id"]
+        cue=by_motion[sid]
         typ=item["shot_type"]
         if typ not in SUPPORTED:
             raise VideoForgeError("REMAKE_STARTER_SHOT_TYPE_NOT_SUPPORTED")
@@ -151,7 +155,9 @@ def work_queue(root:Path=ROOT)->dict:
         }
         task_input={"shot_id":sid,"frames":[item["frame_start"],item["frame_end_exclusive"]],
                     "profile":profile,"source_sha":item.get("art_mother_sha256"),"stage":status,
-                    "anchor_sha":anchor.get("sha256") if approved_anchor else None}
+                    "anchor_sha":anchor.get("sha256") if approved_anchor else None,
+                    "motion_cues_sha":hashlib.sha256(json.dumps(cue,sort_keys=True,
+                        ensure_ascii=False,separators=(',',':')).encode('utf-8')).hexdigest()}
         task_sha=hashlib.sha256(json.dumps(task_input,sort_keys=True,
                             ensure_ascii=False,separators=(",",":")).encode("utf-8")).hexdigest()
         work.append({
@@ -161,6 +167,12 @@ def work_queue(root:Path=ROOT)->dict:
             "end_frame_exclusive":item["frame_end_exclusive"],
             "duration_frames":item["frame_end_exclusive"]-item["frame_start"],
             "shot_type":typ,
+            "motion_cues_source":"remake-v2-motion-directions.json",
+            "motion_phases":cue["stages"],
+            "motion_camera":cue["camera"],
+            "motion_required_parts":cue["independent_rgba_parts"],
+            "motion_qa_requirements":cue["qa_requirements"],
+            "motion_calibration_status":cue["rig_configuration_status"],
             "profile":profile,"required_parts":parts,
             "direction":direction,"status":status,"next_action":next_work,
             "candidate_workflow":workflow,"dependencies":deps,

@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+> **Direção animada V2 disponível:** [40 tomadas e 160 ações temporizadas](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2-motion-directions.json), com câmera, elenco, rig, fases e QA por plano; validador `videoforge/remake_motion_directions.py` e integração à fila dos agentes. **São instruções**, não PNGs/MP4 gerados. Sem rig/autorização visual/custo não renderiza vídeo oficial.
+
 > **Compositor V2 corrigido para 40 tomadas:** [EDL editorial oficial](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2-cinematic-edl.json) · `videoforge/remake_v2_edl.py` · `motion-remotion/src/cinematic-timeline.ts`. O legado 37-shot permanece intocado. A abertura preta exige o áudio original no render do episódio. Aguardando assets reais e revisão.
 
 > **Plano V2 agora com 40 tomadas (14 cenas, 163s):** [manifesto ativo](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-ep01-planos.json) · [roteiro atualizado](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/roteiro.json) · [direção oficial](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REMAKE-EP01-PLANO-OFICIAL.md). Três novos inserts: C01-P05, C08-P04, C12-P04. Existem 39 tomadas visuais planejadas, mas não foram geradas imagens adicionais nem liberados custos.
