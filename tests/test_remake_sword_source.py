@@ -107,7 +107,7 @@ class SwordSourceTests(unittest.TestCase):
             self.assertIsNotNone(entry)
             self.assertEqual(entry["run_id"],777)
             with patch("videoforge.remake_sword_source.proxy_images.call_proxy") as second:
-                with self.assertRaisesRegex(VideoForgeError,"ALREADY_EXISTS"):
+                with self.assertRaisesRegex(VideoForgeError,"ALREADY_ARCHIVED_SAME_MOTHER"):
                     produce("hand",501,"https://proxy.example",root=root)
                 second.assert_not_called()
 
