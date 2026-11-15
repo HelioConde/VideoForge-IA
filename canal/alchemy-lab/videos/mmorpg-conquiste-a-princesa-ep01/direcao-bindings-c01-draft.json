@@ -396,8 +396,7 @@
           "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
           "z": 18,
           "onlyCoveredBy": [
-            "kael.jaqueta",
-            "kael.braco-direito"
+            "kael.jaqueta"
           ]
         }
       ],
@@ -420,7 +419,8 @@
         "V3 variante gola segura: cabelo 3px, jaqueta 1.8px; máximo 1.3 graus cabeça, sem translação cabeça, braço superior 0.104 graus; atuação transferida ao pulso e braço esquerdo. Revisão humana continua pendente.",
         "V4: direção corrigida pelo usuário; mão direita e antebraço desanexados do osso de respiração e continuam apoiados na perna; perna/bota direita imóveis. Sem gesto artificial para alcançar gate de pixels.",
         "V4: static context sourced directly from the SHA-validated RGB mother, king crown/face and crossed spears preserved; rejects duplicate static-context candidate sprites. Kael underlay uses only original candidate background source pixels, masked by original Kael alpha.",
-        "V4: manter somente micro respiração do torso e micro inclinação da cabeça. A arte V4 não está aprovada visualmente."
+        "V4: manter somente micro respiração do torso e micro inclinação da cabeça. A arte V4 não está aprovada visualmente.",
+        "C01 V4: gola holdout filho dos ombros usa apenas jaqueta (mesmo pai). Braço direito foi fixado na raiz para preservar contato com perna e não pode ser referência de máscara com pai móvel."
       ],
       "backgroundMode": "original-mother-static-context-with-kael-cutout/v1",
       "staticContextPolicy": {
