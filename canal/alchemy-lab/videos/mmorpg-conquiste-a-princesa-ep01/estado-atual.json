@@ -544,5 +544,37 @@
       "youtube_uploaded": false
     },
     "next_step": "Use saved style bible for future authorized shots only; current EP01 still no image generation, C01 V5 technical preview awaits visual approval, C12 original ZIPs missing."
+  },
+  "production_policy_20261115": {
+    "user_direction": "No arbitrary limit on number of images; favor beauty, detailed consistent art and genuinely animated scenes",
+    "arbitrary_image_cap": null,
+    "unlimited_editorial_images_when_authorized": true,
+    "actual_provider_safety_budget_limits_still_apply": true,
+    "no_redundant_images": true,
+    "current_episode_generation_allowed": false,
+    "no_new_image_lock_kept": true,
+    "one_master_checkpoint": "ESTADO-ATUAL.md",
+    "read_master_before_each_task": true,
+    "update_master_after_every_material_action": true,
+    "update_history_and_state_json_together": true,
+    "record_fields": [
+      "date",
+      "scene_id",
+      "work",
+      "status",
+      "changed_paths",
+      "hashes",
+      "branch_commit",
+      "workflow_run",
+      "artifact_provenance",
+      "qa",
+      "blockers",
+      "exact_next_step"
+    ],
+    "only_main_is_consolidated": true,
+    "no_repeat_existing_verified_work": true,
+    "code_or_art_modified_in_this_change": false,
+    "new_images_in_this_change": 0,
+    "next_step": "review existing V5 preview visually; recover existing C12 original ZIPs; do not generate new images until explicit authorization"
   }
 }

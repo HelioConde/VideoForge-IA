@@ -96,5 +96,20 @@
     "official_video_approved": false
   },
   "render_status": "documentation_only_no_art_or_video_changed",
-  "next_step": "Future authorized image production should read this style guide before drafting each shot; current EP01 remains locked for new image generation. Preserve V5 rig and approved mother assets."
+  "next_step": "Future authorized image production should read this style guide before drafting each shot; current EP01 remains locked for new image generation. Preserve V5 rig and approved mother assets.",
+  "production_policy": {
+    "unlimited_editorial_image_count": true,
+    "max_images_per_scene": null,
+    "priority": "beautiful animated highly detailed consistent dorama",
+    "allow_as_many_authorized_variants_shots_layers_as_quality_requires": true,
+    "preserve_existing_images_and_sha": true,
+    "avoid_unnecessary_duplicates": true,
+    "master_checkpoint": "ESTADO-ATUAL.md",
+    "update_after_each_material_action": true,
+    "sync_history": "HISTORICO-DESENVOLVIMENTO.md",
+    "sync_machine_state": "estado-atual.json",
+    "require_prior_checkpoint_read": true,
+    "current_episode_generation_locked": true,
+    "generation_authorization_not_implied": true
+  }
 }

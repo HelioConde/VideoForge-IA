@@ -5,6 +5,12 @@
 > **ESTILO VISUAL OFICIAL: CINEMATIC SEMI-REALISTIC FANTASY ANIME**  
 > Uma ilustração digital de anime semirrealista, fantasia medieval, narrativa emocional, iluminação cinematográfica e enquadramentos variados. **Não confundir estética da arte com técnica de animação**: o rig articulado/mesh usa Three.js + Remotion e permanece regido pelo [manual principal](../../../../docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md).
 
+## Princípio novo — qualidade sem teto artificial de imagens
+
+A série não tem máximo numérico editorial de imagens. **Quando autorizado**, produzir quantos planos com perspectiva verdadeira, imagens-mãe, camadas detalhadas e revisões forem necessários para consistência visual e rig 2D convincente. A qualidade define a necessidade de material; não inflar quantidade por si só. Isso não remove limites efetivos do serviço ou controles de orçamento e **não cancela o bloqueio de geração atual do EP01**.
+
+Antes de cada ação, ler [ESTADO-ATUAL.md](ESTADO-ATUAL.md). Depois de todo avanço material, registrar ali **o que foi feito, quais arquivos/SHA, testes, falhas e próximo passo**, atualizar [histórico](HISTORICO-DESENVOLVIMENTO.md) e [estado JSON](estado-atual.json). Proibido reiniciar por falta de contexto.
+
 ## 1. Amostra visual indicada pelo responsável
 
 - Arquivo **original fornecido nesta conversa**: `1000402660.png` (apesar da extensão, os bytes são **JPEG/JFIF**, **864 × 1536 px**, RGB, retrato). SHA-256 exato dos bytes apresentados: `2bab99670444001fbccf8a6c861276e93dfb56f04a33ba5f542698ad3419b2e1`.

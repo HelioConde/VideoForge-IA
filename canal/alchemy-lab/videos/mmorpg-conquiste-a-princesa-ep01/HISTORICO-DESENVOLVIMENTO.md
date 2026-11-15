@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — diretriz sem cota de imagens e continuidade centralizada
+
+- **Pedido do responsável:** sem limite editorial numérico de imagens; priorizar beleza, riqueza de detalhes, consistência de identidade/cenário e movimento 2D verdadeiro. Gerar quantas imagens/iterações forem realmente necessárias **somente quando permitidas**.
+- **Registro obrigatório:** cada avanço, falha, bloqueio, pesquisa, teste, geração autorizada ou render deve ser registrado no [arquivo mestre ESTADO-ATUAL.md](ESTADO-ATUAL.md), incluindo evidências e próximo passo; também sincronizar `estado-atual.json` e preservar histórico em `HISTORICO-DESENVOLVIMENTO.md`. Consultar a `main` antes de iniciar trabalhos para não repetir feitos.
+- **Só documentação e JSON nesta mudança:** nenhuma imagem foi gerada, nenhum render/asset/rig alterado, nenhum upload. `SEM-GERACAO-NOVAS-IMAGENS.lock` ativo no EP01; futura liberação exige autorização expressa. C01-P03 V5 segue aguardando avaliação visual, C12 ainda precisa dos originais.
+- **Próximo passo:** revisar vídeo V5 existente, continuar importação dos originais da C12, sem gerar novas artes na condição atual.
+
 Registro cronológico de fatos verificáveis. **Não sobrescrever eventos antigos.** O ponto de retomada, que deve estar sempre atualizado na branch `main`, é [ESTADO-ATUAL.md](ESTADO-ATUAL.md).
 
 ## 14/11/2026 — plano cinematográfico, 37 planos e C12

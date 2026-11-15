@@ -2,6 +2,14 @@
 
 > **PONTO ÚNICO DE RETOMADA DO EPISÓDIO.** Branch de referência: `main`. Atualizado em 15/11/2026 (horário de Brasília, UTC-3). Antes de alterar qualquer coisa, ler `AGENTS.md`, `docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md`, este documento e `HISTORICO-DESENVOLVIMENTO.md`. **Não começar do zero.**
 
+## DIRETRIZ MAIS RECENTE — QUANTIDADE LIVRE, QUALIDADE ALTA E REGISTRO OBRIGATÓRIO (15/11/2026)
+
+**Regra de produção do responsável:** não estabelecer **nenhum máximo editorial de imagens**. Quando a geração de imagens estiver autorizada, criar e refinar tantas imagens-mãe, vistas de câmera verdadeiramente distintas, cenários, recortes, camadas e expressões quanto o roteiro e o QA pedirem. O único objetivo é dorama **visualmente bonito, detalhado, coerente e animado por ossos/malhas reais**; não simplificar apenas para ficar dentro de cota artificial, nem criar duplicações inúteis. Respeitar custos/limites reais de ferramenta e permissões.
+
+**Este é o arquivo principal e obrigatório do EP01.** Antes de qualquer tarefa, ler o checkpoint atual e confirmar o que há na `main`. Ao terminar qualquer avanço material, incluir neste arquivo: data, cena/plano, trabalho realizado, status, arquivos e SHA, branch/commit, workflows/runs, MP4/artifact se comprovados, QA, erro/bloqueio e **a próxima etapa concreta**. Na mesma integração atualizar `estado-atual.json` e adicionar ao `HISTORICO-DESENVOLVIMENTO.md`; não perder o trabalho nem refazer imagens, cenas, rigs ou renders já existentes. Relatar se ficar em PR/branch e não na main.
+
+**Status desta alteração:** apenas regras/documentação; **0 novas imagens, 0 novos renders e 0 uploads**. O arquivo `SEM-GERACAO-NOVAS-IMAGENS.lock` segue ativo e não é revogado por esta regra; desbloqueio exige autorização explícita. **Estado técnico não mudou:** C01-P03 V5 integrada, QA técnico passou mas falta aprovação visual; C12 depende dos originais ZIP/PNG. **Próxima ação:** verificar visualmente V5 e recuperar os arquivos C12 existentes, antes de executar trabalho adicional.
+
 ## Objetivo e limites
 
 Concluir o dorama MMORPG no VideoForge-IA com animação 2D genuína: imagem-mãe → fundo sem personagens → partes originais PNG RGBA → reconstrução de oclusões → pivôs/malhas Three.js → Remotion/ThreeCanvas/SWANGLE → vídeo MP4 → QA visual e audiovisual. Canal: `alchemy-lab`. Vídeo: `mmorpg-conquiste-a-princesa-ep01`.

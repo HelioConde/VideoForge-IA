@@ -1,5 +1,13 @@
 # Dorama — identidade visual oficial do canal Alchemy Lab
 
+## Regra de qualidade sem limite editorial de imagens (15/11/2026)
+
+**Sem número máximo predefinido de imagens.** Em trabalho autorizado, usar tantos planos-mãe, ângulos independentes, fundos, recortes RGBA e refinamentos quantos forem necessários para fazer o dorama **bonito, bem animado e extremamente detalhado**, sem alternar estilos/personagens. Evitar duplicações sem propósito; manter os controles de recursos, segurança e custo.
+
+**Registro obrigatório de cada avanço:** arquivo principal [ESTADO-ATUAL.md](../videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md) (a fonte de retomada). A cada ação material, registrar evidência, arquivos/SHA, resultado, obstáculos e próximo passo; atualizar [histórico](../videos/mmorpg-conquiste-a-princesa-ep01/HISTORICO-DESENVOLVIMENTO.md) e [estado JSON](../videos/mmorpg-conquiste-a-princesa-ep01/estado-atual.json). Ler isso **antes** de gerar ou animar para não refazer o que existe.
+
+**EP01:** `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo; eliminar a cota editorial não é liberar novas imagens.
+
 > **Regra editorial específica da série de doramas.** Não se aplica automaticamente a `kids`, `otaku`, `gamer` ou outros canais. Instituída pelo responsável em 15/11/2026 com a imagem de referência fornecida nesta conversa.
 
 ## Estilo oficial e fonte de verdade

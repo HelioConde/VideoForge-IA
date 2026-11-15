@@ -1,5 +1,13 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## REGRA PRIORITÁRIA — IMAGENS SEM COTA EDITORIAL + MEMÓRIA OPERACIONAL (15/11/2026)
+
+**Prioridade do usuário:** qualidade final do dorama: bonito, animado de verdade, rico em detalhes, consistente entre tomadas. **Não existe limite numérico editorial de imagens/iterações.** Quando a geração estiver autorizada, usar tantas imagens-mãe, enquadramentos realmente diferentes, fundos, camadas RGBA e melhorias quantas forem necessárias para o roteiro e o QA. Não reduzir a qualidade só para caber em 5, 10, 30 ou qualquer máximo artificial; não criar duplicações inúteis. Limites efetivos do provedor, segurança, permissões e custos não autorizados continuam válidos.
+
+**Atenção: não confundir ausência de cota com autorização.** Para o EP01, `SEM-GERACAO-NOVAS-IMAGENS.lock` continua ativo: NÃO gerar nem editar novas imagens por IA até liberação específica e explícita do usuário. Não alterar a V5, nem publicar vídeo sem aprovação.
+
+**Uma fonte mestre obrigatória por vídeo:** `canal/<id>/videos/<video-id>/ESTADO-ATUAL.md`, sempre na `main`. Cada agente deve ler esse arquivo, `AGENTS.md`, manual técnico, `HISTORICO-DESENVOLVIMENTO.md`, `estado-atual.json`, os assets e hashes **antes de começar**. A cada avanço material (arte autorizada, roteiro, pesquisa, rig, QA, render, correção, falha ou bloqueio), atualizar **o arquivo mestre** com data, cena/plano, ação e resultado, status (feito/teste/bloqueado), arquivos/SHA, commit, workflow/run/artifact se existentes, QA, problemas e **próximo passo exato**. Sincronizar JSON e adicionar evento ao histórico na mesma alteração. PR/branch não é `main`; não afirmar integração sem confirmação. Proibido recriar etapas, imagens ou vídeos prontos por perda de contexto. Consultar [checkpoint do EP01](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md) antes de agir.
+
 ## REGRA VISUAL OFICIAL EXCLUSIVA DO DORAMA — ESTILO E CÂMERA
 
 **Aplicação:** somente ao conjunto de doramas do canal `alchemy-lab`. [Índice oficial da área dorama](canal/alchemy-lab/dorama/README.md), [prompt mestre e bíblia visual](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PROMPT-OFICIAL-ESTILO-DORAMA.md), [JSON para agentes](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/estilo-visual-oficial-dorama.json) e [miniatura autêntica da amostra](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-VISUAL-DORAMA-PREVIEW-96.jpg).

@@ -1,5 +1,11 @@
 # Protocolo de continuidade — VideoForge-IA
 
+## Regra permanente — ponto único de retomada e nenhuma cota editorial de imagens
+
+O **arquivo principal** de cada vídeo é `canal/<id>/videos/<video-id>/ESTADO-ATUAL.md` da `main`. Qualquer agente lê esse arquivo antes de trabalhar, valida as evidências e consulta histórico/JSON. Todo passo material, inclusive tentativa falha, correção, geração autorizada, teste e bloqueio, deve atualizar nele **resultado, cena, arquivo e SHA, commit/run, QA, pendências e próximo passo**, sincronizar `estado-atual.json` e acrescentar evento em `HISTORICO-DESENVOLVIMENTO.md`. Se a gravação na `main` falhar, informar que não foi integrada. Não reiniciar trabalho já feito.
+
+Para doramas, **sem cota editorial de imagens**: quantidade e refinamentos dependem da qualidade, ângulos reais, camadas e animação, não de limite numérico. Não permitir imagens/edições onde houver lock, despesas sem autorização ou limites técnicos burlados. O EP01 permanece bloqueado para gerar novas artes.
+
 **Objetivo:** qualquer agente ou conversa deve continuar o último trabalho real, sem reconstruir o projeto do zero.
 
 ## Fonte de verdade
