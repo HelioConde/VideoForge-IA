@@ -43,6 +43,25 @@ jobs:
           python -m videoforge.remake_sword_preview preflight
           echo "C01_P02_REAL_ART_REQUIRED; no image API and no fabricated media"
 
+  smoke-recomposition-test-only:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar Pillow e teste sintético de alpha/mesma imagem-mãe/QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -c "from PIL import Image; print('REMAKE_SWORD_PILLOW_READY')"
+          python -m unittest tests.test_remake_sword_preview -v
+          echo "TEST_ONLY_SYNTHETIC_FIXTURE_VALIDATED; NO REAL_ART_NO_MP4_NO_PROXY"
+
   render-three-draft:
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
