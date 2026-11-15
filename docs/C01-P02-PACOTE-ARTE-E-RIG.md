@@ -1,5 +1,13 @@
 # C01-P02 — contrato de produção da espada no GitHub
 
+## Auditoria de geometria de rig por pixels da fonte (15/11/2026)
+
+O módulo `videoforge/remake_rig_geometry.py` **não desenha imagem nem simula movimento**. Ele consome o `sword-bundle.json` já verificado pelo `remake_sword_preview.validate_package`, decodifica os PNGs reais de **bainha/lâmina/mão** com FFmpeg apenas para QA e mede **bbox XYXY, centroide e pixels com alfa maior que 127**. O underlay tem que ser RGB8 integralmente opaco; a recomposição neutra com a imagem-mãe da mesma tomada tem que continuar com MAE ≤ 0,5. O relatório `mask-geometry.qa.json` guarda SHA da mãe e âncora, ID do run, SHA de cada camada, fingerprint das quatro instruções do V2, pivô de punho **candidato**, poses matemáticas nos frames 0/7/72/89 e avisos explícitos `human_anatomy_contact_review_required=true` e `rig_approved_for_official_render=false`.
+
+O `remake-sword-pack.yml` só publica fonte se a auditoria concluir, e inclui o relatório no artifact de 90 dias. O `remake-sword-preview.yml` baixa o artifact e executa `--verify-report` **antes** do render ThreeCanvas; recalcula tudo a partir dos PNGs para rejeitar relatório falsificado ou origem alterada. Testes positivos usam apenas PNGs sintéticos temporários isolados no runner, nunca salvos no canal. O scanner gratuito não fabrica `mask-geometry.qa.json` quando faltam imagens.
+
+**Limitação real:** as posições de pivô são inferências baseadas em máscara e seguem sem aprovação anatômica. Não há fonte de C01-P02 no repositório, portanto não foi produzida medição ou MP4 dessa tomada. O trabalho de geometria das demais tomadas começa após a respectiva mãe e camadas reais existirem.
+
 ## Gerador da C01-P02 — mão, lâmina, bainha e underlay por tomada (15/11/2026)
 
 **Código novo:** `videoforge/remake_sword_source.py` usa `proxy_images.call_proxy`, `scene_layers.png_info`, `image_generation_policy.assert_image_generation_allowed` e o arquivo permanente `production-scene-request/<run-id>/cena-01-c01-p02.png`. Nunca usar `cena-01.png` genérica (o produtor legado se baseava no quadro amplo C01-P04). A âncora de personagem V2 já precisa estar aprovada por SHA, e a imagem-mãe precisa ter proveniência `shot_id=C01-P02` no arquivo principal. Cada camada recebe **exatamente uma** edição da mesma imagem-mãe, com prompt específico para o carrasco e para a arma, sem ângulos aleatórios.

@@ -66,6 +66,17 @@ class RemakeStarterTests(unittest.TestCase):
             self.assertFalse(task["render_approved"])
             self.assertFalse(task["dispatch_permitted"])
 
+    def test_39_visual_tasks_require_source_mask_geometry(self):
+        queue=work_queue()["production_queue"]
+        self.assertEqual(len(queue),40)
+        self.assertEqual(sum(t["geometry_qa_required"] for t in queue),39)
+        by_id={t["shot_id"]:t for t in queue}
+        self.assertEqual(by_id["C01-P02"]["geometry_qa_candidate"],
+                         "mask-geometry.qa.json")
+        self.assertFalse(by_id["C01-P02"]["geometry_pixels_measured"])
+        self.assertFalse(by_id["C01-P02"]["geometry_human_anatomy_approved"])
+        self.assertFalse(by_id["C01-P01"]["geometry_qa_required"])
+
     def test_libraries_and_skills_are_explicitly_reused(self):
         out=work_queue()
         self.assertIn("ThreeCanvas",out["reuse"]["animation_engine"])

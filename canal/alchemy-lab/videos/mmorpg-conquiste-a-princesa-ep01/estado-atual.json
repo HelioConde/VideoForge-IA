@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Approved V2 canonical real anchor then authorized shot-specific art; calibrate 39 independent RGBA/mesh rigs under 160 action cues and only then validate/render full 163s Remotion video",
+  "next_action": "Check GitHub Actions FFmpeg-positive pixel geometry and safety regressions; when approved V2 reference and real sword bundle exist, auto-measure and verify from the artifact",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -1122,5 +1122,34 @@
     ],
     "wav_sha_verified": true,
     "wav_staged_temporary_ci_runner": true
+  },
+  "c01_p02_geometry_calibration_20261115": {
+    "schema": "videoforge/remake-mask-geometry-milestone/v1",
+    "status": "code_submitted_ci_pending",
+    "analyzer": "videoforge/remake_rig_geometry.py",
+    "report": "mask-geometry.qa.json",
+    "source_workflow": ".github/workflows/remake-sword-pack.yml",
+    "render_workflow": ".github/workflows/remake-sword-preview.yml",
+    "input": "SHA-verified same-mother C01-P02 real RGBA bundle",
+    "measured_when_source_exists": [
+      "sheath",
+      "blade",
+      "hand"
+    ],
+    "special_frames": [
+      0,
+      7,
+      72,
+      89
+    ],
+    "provisional_wrist_pivot_requires_human_review": true,
+    "other_visual_shots_geometry_workflow_remaining": 38,
+    "all_visual_shots_require_geometry": 39,
+    "current_real_source_present": false,
+    "report_published": false,
+    "paid_image_calls": 0,
+    "full_episode_mp4_created": false,
+    "youtube_uploaded": false,
+    "next_step": "Check GitHub Actions FFmpeg-positive pixel geometry and safety regressions; when approved V2 reference and real sword bundle exist, auto-measure and verify from the artifact"
   }
 }

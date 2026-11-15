@@ -32,3 +32,8 @@ Novo entrypoint `motion-remotion/src/remake-sword-preview-index.ts` usa `RemakeS
 
 O workflow `.github/workflows/remake-sword-preview.yml` roda o **preflight gratuito** quando o código muda e aceita um artifact `vf-remake-c01-p02-sword-source-<run_id>` sob `workflow_dispatch` quando houver dados reais. O render real só executa após revisão e validação dos arquivos. Não usar esses testes para aprovar automaticamente estética, integridade de underlay sob deslocamento, ou publicação.
 
+
+
+## C01-P02 — relatório de geometria por máscara real
+
+Quando existir pacote de PNGs SAME-SHOT, rodar `python -m videoforge.remake_rig_geometry --package <source> --source-run-id <run> --write` somente no runner com FFmpeg e QA de fonte. Exigir `mask-geometry.qa.json` e reconferir com `--verify-report` antes do ThreeCanvas. BBox/centroide são medidas em pixels da imagem real; pivô de pulso e contato são **candidatos sujeitos à revisão humana**. Não inventar rig na ausência de PNG. Essas regras valem como preparação inicial da C01-P02 e devem ser generalizadas aos outros 38 visuais quando os produtores existirem.

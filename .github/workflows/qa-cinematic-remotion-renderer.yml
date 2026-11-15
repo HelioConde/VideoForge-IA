@@ -8,6 +8,8 @@ on:
       - 'videoforge/remake_v2_edl.py'
       - 'tests/test_remake_v2_edl.py'
       - 'videoforge/remake_episode_audio.py'
+      - 'videoforge/remake_rig_geometry.py'
+      - 'tests/test_remake_rig_geometry.py'
       - 'tests/test_remake_episode_audio.py'
       - 'videoforge/remake_motion_directions.py'
       - 'tests/test_remake_motion_directions.py'
@@ -62,7 +64,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_remake_v2_edl tests.test_remake_motion_directions tests.test_remake_episode_audio -v
+          python -m unittest tests.test_remake_v2_edl tests.test_remake_motion_directions tests.test_remake_episode_audio tests.test_remake_rig_geometry -v
           python -m videoforge.remake_v2_edl --check
           python -m videoforge.remake_episode_audio --prepare --destination motion-remotion/public/vf-remake/c01-p01
       - name: Instalar dependencias locais congeladas do Remotion

@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths:
       - 'videoforge/remake_sword_preview.py'
+      - 'videoforge/remake_rig_geometry.py'
+      - 'tests/test_remake_rig_geometry.py'
       - 'videoforge/remake_sword_preview_qa.py'
       - 'videoforge/remake_sword_checkpoint.py'
       - 'tests/test_remake_sword_preview.py'
@@ -158,6 +160,8 @@ jobs:
         run: |
           set -euo pipefail
           python -m unittest tests.test_remake_sword_preview -v
+          python -m videoforge.remake_rig_geometry \
+            --package ./input/source --source-run-id "$ART_RUN" --verify-report
           python -m videoforge.remake_sword_preview prepare \
             --package ./input/source --source-run-id "$ART_RUN" \
             --output "$OUTPUT" --public motion-remotion/public/vf-remake/c01-p02

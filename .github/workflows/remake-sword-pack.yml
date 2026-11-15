@@ -7,6 +7,8 @@ on:
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/**'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-ep01-planos.json'
       - 'videoforge/remake_sword_pack.py'
+      - 'videoforge/remake_rig_geometry.py'
+      - 'tests/test_remake_rig_geometry.py'
       - 'videoforge/remake_sword_preview.py'
       - 'tests/test_remake_sword_pack.py'
       - 'tests/test_remake_pack_workflow.py'
@@ -75,7 +77,7 @@ jobs:
         run: |
           set -euo pipefail
           command -v ffmpeg
-          python -m unittest tests.test_remake_sword_pack tests.test_remake_pack_workflow -v
+          python -m unittest tests.test_remake_sword_pack tests.test_remake_pack_workflow tests.test_remake_rig_geometry -v
           echo "REMAKE_PACK_TEST_ONLY_REAL_BYTE_SHA_PROVENANCE_COVERED"
 
   pack_real_source_only:
@@ -104,6 +106,15 @@ jobs:
           test -s output/remake-c01-p02-source/sword-bundle.json
           test -s output/remake-c01-p02-source/package.qa.json
           echo "REMAKE_C01_P02_REAL_ARCHIVED_PNGS_BUNDLE_VERIFIED"
+      - name: Medir mascaras verdadeiras e registrar atestacao de geometria do rig
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remake_rig_geometry \
+            --package output/remake-c01-p02-source \
+            --source-run-id "$GITHUB_RUN_ID" --write
+          test -s output/remake-c01-p02-source/mask-geometry.qa.json
+          echo "REMAKE_C01_P02_GEOMETRY_REAL_PIXELS_MEASURED_NO_VISUAL_APPROVAL"
       - name: Guardar as camadas verificadas para renderer autonomo
         uses: actions/upload-artifact@v4
         with:

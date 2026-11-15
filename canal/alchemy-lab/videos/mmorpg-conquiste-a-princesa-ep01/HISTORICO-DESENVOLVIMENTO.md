@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — medição de máscaras e auditoria de pivôs no workflow de C01-P02
+
+- Criado `videoforge/remake_rig_geometry.py` como prova técnica SHA/pixels da fonte C01-P02; bbox, centroide, alpha count, pivô candidato, 4 poses derivadas do draw e fingerprint da direção. FFmpeg só decodifica para QA e ThreeCanvas continua motor de animação.
+- `remake-sword-pack.yml` agora inclui `mask-geometry.qa.json` no artifact verdadeiro antes de entregar ao renderer. `remake-sword-preview.yml` exige `--verify-report` para rejeitar relatório alterado, SHA incompatível ou ausência de fonte; sem aprovação automática do rig/anatomia.
+- Fila `remake_starter.py` informa dependência explícita de calibração nas 39 tomadas visuais, mantendo `geometry_pixels_measured=false` onde falta arte real. Adicionados testes isolados e workflow QA; resultados CI aguardando.
+- Nenhum MP4 real novo, imagem paga ou envio YouTube; orçamento permanece fechado. Próximo: conferir testes e reutilizar o contrato por tomada após mães próprias aprovadas.
+
 ## 15/11/2026 — seis runs de QA confirmam compositor V2, 160 movimentos e audio
 
 - Commit `c50da2e59ef9241a3b9aa3a8038700252fc9aec1`: compositor Remotion corrigido para 40 tomadas, C01-P01 WAV original obrigatória e nova EDL editorial V2; runs `43755753904`, `43755753902`, `43755753960` SUCCESS (inclusive legado TS).

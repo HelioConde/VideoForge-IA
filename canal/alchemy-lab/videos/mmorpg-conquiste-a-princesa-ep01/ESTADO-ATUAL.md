@@ -1,5 +1,13 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## C01-P02 — calibração geométrica dos PNGs reais adicionada ao workflow (15/11/2026)
+
+**Etapa técnica em código, sem arte paga:** `videoforge/remake_rig_geometry.py` analisa máscara de mão, lâmina e bainha em pixels reais após `validate_package` SHA/underlay/recomposição. Registra bbox, centroide, área de alfa, pivô candidato, as quatro poses nos frames locais 0/7/72/89 e SHA de origem/direção em `mask-geometry.qa.json`. O nome "geometria medida" é válido somente quando **PNG original foi realmente decodificado**; nunca preencher valores fictícios no arquivo editorial.
+
+**Integração automática:** `remake-sword-pack.yml` medirá e anexará relatório ao artifact de fonte C01-P02 se o run possuir mãe/4 camadas genuínas; `remake-sword-preview.yml` exigirá e recalculará o relatório antes de renderizar. O agendador `remake_starter` agora marca as 39 tarefas visuais como dependentes de geometria de máscara e não as marca aprovadas. Testes temporários com fixtures isoladas em runner com FFmpeg cobrem pacote válido, máscara inválida, SHA/origem divergente, idempotência e relatório adulterado.
+
+**Estado:** nenhum PNG real dessa tomada foi criado e nenhum relatório geométrico de produção existe; `human_anatomy_contact_review_required=true`, `official_video_approved=false`, sem gastos adicionais. Os testes GitHub devem ser verificados antes de declarar etapa concluída. Os demais 38 cortes visuais ainda não têm pipeline de medição ligado — este é o início reutilizável.
+
 ## Integração V2 40 tomadas, 160 ações e áudio original — QA GitHub concluído (15/11/2026)
 
 **Resultados verificados em branch `main`:**
