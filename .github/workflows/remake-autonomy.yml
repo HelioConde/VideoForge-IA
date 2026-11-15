@@ -1,0 +1,66 @@
+name: "VideoForge - Remake do Dorama - Autonomia e Checkpoint"
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 9 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/remake_autopilot.py'
+      - 'videoforge/image_generation_policy.py'
+      - 'tests/test_remake_autopilot.py'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-ep01-planos.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/autonomy-policy.json'
+      - '.github/workflows/remake-autonomy.yml'
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: alchemy-remake-ep01-checkpoint
+  cancel-in-progress: false
+
+jobs:
+  diagnosticar-e-retomar:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Testar regras e estado do remake sem gastar IA
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_autopilot tests.test_alchemy_no_image_generation tests.test_cinematic_direction -v
+      - name: Inspecionar SHA, detectar proxima etapa e atualizar checkpoint
+        run: |
+          set -euo pipefail
+          mkdir -p output
+          python -m videoforge.remake_autopilot --report output/remake-autonomy-report.json --sync
+      - name: Persistir arquivos principais somente quando o estado mudou
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+          git add "$EP/ESTADO-ATUAL.md" "$EP/HISTORICO-DESENVOLVIMENTO.md" "$EP/estado-atual.json"
+          if ! git diff --cached --quiet; then
+            git config user.name "videoforge-autopilot[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore(dorama): atualizar checkpoint autonomo verificado"
+            git push origin HEAD:main
+          else
+            echo "CHECKPOINT_ALREADY_CURRENT"
+          fi
+      - name: Salvar prova de diagnostico para os agentes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: videoforge-remake-autonomy-diagnostic
+          path: output/remake-autonomy-report.json
+          retention-days: 14
+          if-no-files-found: warn

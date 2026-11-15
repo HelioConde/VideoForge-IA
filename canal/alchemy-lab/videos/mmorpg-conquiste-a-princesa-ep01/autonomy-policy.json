@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/remake-autonomy-policy/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "autonomy_enabled": true,
+  "daily_preflight_enabled": true,
+  "auto_dispatch_generation": false,
+  "paid_provider_calls_approved": false,
+  "max_chargeable_calls_per_run": 0,
+  "total_editorial_image_cap": null,
+  "retry_policy": {
+    "max_retries_per_same_failed_action": 2,
+    "never_retry_quota_429_without_manual_check": true
+  },
+  "human_visual_review_required_for_canonical_identity": true,
+  "require_real_artifact_sha": true,
+  "auto_publish_youtube": false,
+  "allowed_producer_workflows": [
+    "production-art-by-request.yml",
+    "production-scene-by-request.yml"
+  ],
+  "note": "Autonomy can plan and QA now. External paid image generation remains disabled until separate cost permission; a per-run safety gate is not an episode image limit."
+}

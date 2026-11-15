@@ -5,7 +5,7 @@
   "purpose": "referencia_personagens_para_arte_mae_e_rig_2d_real",
   "source_storyboard": "roteiro.json",
   "source_scene_count": 14,
-  "style": "Manhwa 2D cinematográfico de fantasia romântica; pintura digital refinada e expressiva, vitrais azul-violeta, feixes de luz dourada, contraste vinho/cobre/ouro antigo, cabelos naturais detalhados, foco nos olhos e profundidade de campo em closes; sem realismo fotográfico, sem render 3D ou traço inconsistente.",
+  "style": "Cinematic Semi-Realistic Fantasy Anime — pintura digital anime medieval semirrealista, cinematografia dramática, fundos profundos e paleta ouro, vinho, violeta e azul. Rosto, cabelo, proporções, vestuário, luz e geografia idênticos entre planos. Não misturar render 3D/foto/manhwa plano/cartoons.",
   "character_bible": {
     "kael": "Kael, homem de 23 anos, cabelo castanho quase preto volumoso, mechas longas desalinhadas sobre a testa, olhos âmbar e sobrancelhas marcantes. No tribunal, rosto com poeira/suor e cortes leves, capa/cachecol vinho-vermelho rasgado, ombreira de metal escuro com filigranas douradas e pedra azul; roupas escuras. Identidade da imagem aprovada no chat; ele NÃO empunha a espada do insert. Cabelo, cicatrizes, roupa e rosto consistentes nos cortes.",
     "elara": "Princesa Elara, mulher de 21 anos, rosto delicado e olhos violetas, cabelos loiro-dourados longos ondulados com trança lateral, flores brancas e lilases. No palácio, coroa dourada com ametistas, brincos violetas, vestido branco-pérola e violeta imperial com bordados dourados e broches púrpuras. Usa capuz como disfarce no beco mas permanece a mesma mulher; identidade como princesa só é revelada em C12.",
@@ -32,7 +32,9 @@
     "per_run": 1,
     "strict_budget": 1,
     "never_retry_429": true,
-    "scope": "primeira chamada de referência; quantidade de imagens do EPISÓDIO não limitada artificialmente, orçamento de novas chamadas requer autorização separada"
+    "scope": "primeira chamada de referência; quantidade de imagens do EPISÓDIO não limitada artificialmente, orçamento de novas chamadas requer autorização separada",
+    "legacy_request_only": true,
+    "not_an_episode_wide_image_cap": true
   },
   "assets": [
     {
@@ -40,7 +42,7 @@
       "kind": "reference",
       "size": "1024x1536",
       "background": "opaque",
-      "prompt": "PRANCHA DE IDENTIDADE PARA DORAMA MMORPG ARKEN, VERSÃO VISUAL 2D MANHWA CINEMATOGRÁFICA, PINTURA DIGITAL REFINADA, LUZ DOURADA E VITRAIS VIOLETA, 3 personagens de corpo inteiro separados para conferência. KAEL: jovem adulto, cabelo escuro quase preto volumoso e desfiado, sobrancelhas marcantes, olhos âmbar, marcas leves de poeira e cortes superficiais, capa/cachecol vinho vermelho rasgado, ombreira de metal escuro com detalhes dourados e pedra azul; sem espada própria. ELARA: jovem princesa loira de cabelos longos ondulados e trança lateral, flores claras/lilases, olhos violeta, coroa dourada com ametistas, vestido branco-pérola e violeta com bordados ouro e brincos de cristal violeta. ALDRIC: rei grisalho de barba branca volumosa, coroa dourada, túnica bordô e ouro com gola clara. Reproduzir as proporções e aparência dos arquivos de referência aprovados e verificados no repositório; se ausentes, RECUSAR A GERAÇÃO. Sem texto, marca, HUD ou montagem de múltiplas cenas; fundo palaciano neutro. Esta prancha futura NÃO valida as imagens-mãe v1 arquivadas. Nenhuma arte pode ser gerada enquanto existir o lock do episódio."
+      "prompt": "PRANCHA DE IDENTIDADE PARA DORAMA MMORPG ARKEN, VERSÃO VISUAL 2D MANHWA CINEMATOGRÁFICA, PINTURA DIGITAL REFINADA, LUZ DOURADA E VITRAIS VIOLETA, 3 personagens de corpo inteiro separados para conferência. KAEL: jovem adulto, cabelo escuro quase preto volumoso e desfiado, sobrancelhas marcantes, olhos âmbar, marcas leves de poeira e cortes superficiais, capa/cachecol vinho vermelho rasgado, ombreira de metal escuro com detalhes dourados e pedra azul; sem espada própria. ELARA: jovem princesa loira de cabelos longos ondulados e trança lateral, flores claras/lilases, olhos violeta, coroa dourada com ametistas, vestido branco-pérola e violeta com bordados ouro e brincos de cristal violeta. ALDRIC: rei grisalho de barba branca volumosa, coroa dourada, túnica bordô e ouro com gola clara. Reproduzir as proporções e aparência dos arquivos de referência aprovados e verificados no repositório; se ausentes, RECUSAR A GERAÇÃO. Sem texto, marca, HUD ou montagem de múltiplas cenas; fundo palaciano neutro. Esta prancha futura NÃO valida as imagens-mãe v1 arquivadas. A nova imagem pertence exclusivamente ao remake V2 autorizado; arquivar seus bytes e SHA no GitHub antes de declarar conclusão, sem substituir a arte antiga nem assumir aprovação humana."
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",
@@ -59,13 +61,28 @@
     "portrait_closeup_count": 12,
     "over_shoulder_count": 5,
     "prohibited": "single-wide-poster-repeated-as-entire-video",
-    "new_image_generation_allowed": false,
+    "new_image_generation_allowed": true,
     "reference_photos_uploaded": false,
     "canonical_identity_migration_pending": true,
     "preferred_style_text_migrated_to_bible_v2": true,
     "old_bible_archived": "biblia-visual-v1-arquivada.md",
     "preferred_bible": "biblia-visual.md",
     "pending_exact_original_sources": "referencias-cinematograficas-aprovadas-no-chat.json",
-    "legacy_14_mothers_and_71_pngs_incompatible_without_visual_review": true
+    "legacy_14_mothers_and_71_pngs_incompatible_without_visual_review": true,
+    "current_generation_scope": "remake_v2_only",
+    "legacy_old_bible_conflict_should_not_block_anchor_generation": true
+  },
+  "remake_v2_20261115": {
+    "status": "active_preproduction",
+    "new_image_generation_editorially_authorized": true,
+    "arbitrary_image_count_cap": null,
+    "goal": "highest consistent beautiful detailed visuals and real mesh-rig acting",
+    "source_style": "estilo-visual-oficial-dorama.json",
+    "source_plan": "remake-ep01-planos.json",
+    "original_reference_sha_missing_in_repo": true,
+    "legacy_asset_reuse_requires_art_review": true,
+    "do_not_fake_human_approval": true,
+    "no_new_paid_costs_authorized": true,
+    "youtube_upload": false
   }
 }

@@ -6,7 +6,7 @@
 
 **Registro obrigatório de cada avanço:** arquivo principal [ESTADO-ATUAL.md](../videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md) (a fonte de retomada). A cada ação material, registrar evidência, arquivos/SHA, resultado, obstáculos e próximo passo; atualizar [histórico](../videos/mmorpg-conquiste-a-princesa-ep01/HISTORICO-DESENVOLVIMENTO.md) e [estado JSON](../videos/mmorpg-conquiste-a-princesa-ep01/estado-atual.json). Ler isso **antes** de gerar ou animar para não refazer o que existe.
 
-**EP01:** `SEM-GERACAO-NOVAS-IMAGENS.lock` permanece ativo; eliminar a cota editorial não é liberar novas imagens.
+**EP01 remake:** autorização editorial posterior para refazer as imagens em 15/11/2026 substituiu o antigo bloqueio. O lock foi arquivado; nenhum orçamento novo ou publicação foi autorizado. Ver `REMAKE-EP01-PLANO-OFICIAL.md` no vídeo.
 
 > **Regra editorial específica da série de doramas.** Não se aplica automaticamente a `kids`, `otaku`, `gamer` ou outros canais. Instituída pelo responsável em 15/11/2026 com a imagem de referência fornecida nesta conversa.
 
@@ -32,4 +32,4 @@
 4. Verificar rostos, roupas, armas, anatomia, máscaras, silhuetas e continuidade de iluminação antes de aprovar.
 5. Se o plano for animado, respeitar o [manual de rig/mesh](../../../docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md); **não substituir ossos por movimento do PNG inteiro**.
 
-**Restrição vigente:** o episódio [`mmorpg-conquiste-a-princesa-ep01`](../videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md) tem [bloqueio ativo de novas imagens](../videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock). Registrar o estilo oficial **não autoriza** gerar/editar imagens por IA para este episódio; só muda a especificação editorial para uso quando explicitamente permitido. A C01-P03 V5 permanece a versão técnica atual aguardando aprovação visual. Não publicar no YouTube sem autorização.
+**Regra atual do EP01:** o usuário autorizou refazer o episódio em 15/11/2026; seu bloqueio antigo está arquivado como histórico. A [direção e plano do remake](../videos/mmorpg-conquiste-a-princesa-ep01/REMAKE-EP01-PLANO-OFICIAL.md) prevalece para novas imagens, mas não libera gastos externos ou postagem automática. A C01-P03 V5 antiga permanece disponível para estudos de rig, não foi aprovada como arte final do remake.

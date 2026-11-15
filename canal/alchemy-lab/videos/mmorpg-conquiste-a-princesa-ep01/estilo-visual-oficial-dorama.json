@@ -87,15 +87,18 @@
     "no_repetition_without_motivation": true
   },
   "generation_authorization": {
-    "current_episode_lock_file": "SEM-GERACAO-NOVAS-IMAGENS.lock",
-    "current_episode_new_image_calls_allowed": false,
+    "current_episode_lock_file": null,
+    "current_episode_new_image_calls_allowed": true,
     "remove_lock_without_explicit_user_authorization": false,
     "this_style_archive_does_not_authorize_generation": true,
     "existing_images_preserved": true,
     "youtube_upload_allowed": false,
-    "official_video_approved": false
+    "official_video_approved": false,
+    "current_remake_editorially_authorized": true,
+    "previous_lock_archived_as": "REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md",
+    "new_paid_costs_approved": false
   },
-  "render_status": "documentation_only_no_art_or_video_changed",
+  "render_status": "remake_v2_preproduction_no_media_yet",
   "next_step": "Future authorized image production should read this style guide before drafting each shot; current EP01 remains locked for new image generation. Preserve V5 rig and approved mother assets.",
   "production_policy": {
     "unlimited_editorial_image_count": true,
@@ -110,6 +113,15 @@
     "sync_machine_state": "estado-atual.json",
     "require_prior_checkpoint_read": true,
     "current_episode_generation_locked": true,
-    "generation_authorization_not_implied": true
+    "generation_authorization_not_implied": false,
+    "current_episode_lock_still_active": false
+  },
+  "remake_v2": {
+    "status": "active_preproduction",
+    "manifest": "remake-ep01-planos.json",
+    "new_images": 0,
+    "new_mp4": false,
+    "operator": "videoforge/remake_autopilot.py",
+    "no_extra_paid_costs": true
   }
 }

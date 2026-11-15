@@ -12,7 +12,7 @@
   "shots_planned": 37,
   "motion_tracks_planned": 106,
   "locks": {
-    "no_new_image_generation": true,
+    "no_new_image_generation": false,
     "no_youtube_upload": true,
     "official_video_allowed": false,
     "human_art_approved": false
@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "C01-P03 V5 merged in main with deterministic real upper-back mesh breathing and unchanged subtle head, render 43680784142, artifact 14147374656, MP4 SHA d84361f6..., QA passes; user visual approval pending. Do not redo V4, alter fixed wrist/boot, generate new art or upload. C12 still needs original two ZIPs and nine PNGs.",
+  "next_action": "run safe GitHub autonomous preflight and prepare verified character-bible anchor; no paid generation or YouTube without authorization",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -536,12 +536,13 @@
       "no forced throne/guards in scenes where they do not belong"
     ],
     "generation_control": {
-      "lock_file": "SEM-GERACAO-NOVAS-IMAGENS.lock",
-      "episode_generation_allowed": false,
-      "removal_requires_explicit_user_authorization": true,
+      "lock_file": null,
+      "episode_generation_allowed": true,
+      "removal_requires_explicit_user_authorization": false,
       "episode_rig_changed": false,
       "images_generated_this_update": 0,
-      "youtube_uploaded": false
+      "youtube_uploaded": false,
+      "authorization_source": "user requested EP01 remake 2026-11-15"
     },
     "next_step": "Use saved style bible for future authorized shots only; current EP01 still no image generation, C01 V5 technical preview awaits visual approval, C12 original ZIPs missing."
   },
@@ -551,8 +552,8 @@
     "unlimited_editorial_images_when_authorized": true,
     "actual_provider_safety_budget_limits_still_apply": true,
     "no_redundant_images": true,
-    "current_episode_generation_allowed": false,
-    "no_new_image_lock_kept": true,
+    "current_episode_generation_allowed": true,
+    "no_new_image_lock_kept": false,
     "one_master_checkpoint": "ESTADO-ATUAL.md",
     "read_master_before_each_task": true,
     "update_master_after_every_material_action": true,
@@ -575,6 +576,23 @@
     "no_repeat_existing_verified_work": true,
     "code_or_art_modified_in_this_change": false,
     "new_images_in_this_change": 0,
-    "next_step": "review existing V5 preview visually; recover existing C12 original ZIPs; do not generate new images until explicit authorization"
+    "next_step": "remake v2 authorized; autonomous preflight first, provider and anchor review before generation"
+  },
+  "active_production_version": "remake-v2-20261115",
+  "active_production_manifest": "remake-ep01-planos.json",
+  "remake_v2": {
+    "status": "active_preproduction_no_new_media",
+    "generation_editorially_authorized": true,
+    "new_paid_costs_approved": false,
+    "no_arbitrary_image_count_cap": true,
+    "source_manifest": "remake-ep01-planos.json",
+    "source_plan": "REMAKE-EP01-PLANO-OFICIAL.md",
+    "previous_lock": "REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md",
+    "new_images_generated": 0,
+    "rigs_approved": 0,
+    "mp4_official": false,
+    "channel_isolated": true,
+    "autonomous_pipeline_target": true,
+    "next_step": "run safe GitHub autonomous preflight and prepare verified character-bible anchor; no paid generation or YouTube without authorization"
   }
 }

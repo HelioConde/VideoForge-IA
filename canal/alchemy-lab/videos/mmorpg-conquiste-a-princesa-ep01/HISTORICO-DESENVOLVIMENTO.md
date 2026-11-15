@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — autorização do remake EP01 e regra de autonomia
+
+- **Ordem do responsável:** refazer todo o episódio conforme novas regras, depois "Continuar". Posteriormente acrescentou a regra de **ensinar o VideoForge a produzir e corrigir animações no GitHub, sem orientação manual a cada passo**.
+- **Decisões:** novo EP01 Remake V2 com 14 cenas, 37 planos e 163s como base, sem limite editorial de imagens. Arte nova permitida editorialmente, bloqueio anterior arquivado em `REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md`. Manter antigas C01 V5 e C12 preservadas em histórico; não apagar sprites ou vídeos.
+- **Arquivos desta integração:** `REMAKE-EP01-PLANO-OFICIAL.md`, `remake-ep01-planos.json`, estado mestre/JSON, política de geração e coordenador de preflight. Priorização de QA, escolha do próximo estágio por evidência e procedimentos para delegar à automação existente. **Nenhuma geração de PNG, MP4 ou upload efetuado por esta alteração**; não informar autonomia completa ainda.
+- **Próxima ação:** rodar preflight automatizado, exigir âncora canônica versionada com SHA para C01, usar geradores e workflows existentes quando houver acesso e custo autorizados; registrar os resultados por etapa no mestre.
+
 ## 15/11/2026 — diretriz sem cota de imagens e continuidade centralizada
 
 - **Pedido do responsável:** sem limite editorial numérico de imagens; priorizar beleza, riqueza de detalhes, consistência de identidade/cenário e movimento 2D verdadeiro. Gerar quantas imagens/iterações forem realmente necessárias **somente quando permitidas**.

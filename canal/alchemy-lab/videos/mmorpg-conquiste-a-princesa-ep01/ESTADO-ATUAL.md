@@ -1,5 +1,16 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## REMAKE EP01 V2 — DIREÇÃO ATUAL E AUTONOMIA DO PROGRAMA (15/11/2026)
+
+**ORDEM RECENTE:** refazer EP01 do drama pelas regras de qualidade, sem teto editorial de imagens, e continuar. **O lock antigo de 14/11 foi arquivado em `REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md`, não está mais ativo**. O remake pode gerar novas imagens **editorialmente**; **custos adicionais e publicação ainda não autorizados**.
+
+**Objetivo de autonomia reforçado pelo usuário:** é o **programa GitHub**, não o assistente manual, que deve aprender o ciclo `arte → camadas → rig/malha → render Remotion → QA → reparo seguro → checkpoint → próxima tomada`. Os agentes devem orientar/validar a produção; falhas corrigíveis devem ser diagnosticadas e retomadas automaticamente por workflows quando os requisitos técnicos estiverem implementados. Criado plano oficial [REMAKE-EP01-PLANO-OFICIAL.md](REMAKE-EP01-PLANO-OFICIAL.md) e manifesto [remake-ep01-planos.json](remake-ep01-planos.json). Não afirmar que a automação completa existe: o coordenador atual inicialmente executa preflight/seleção da próxima etapa, bloqueando pagamentos não aprovados e decisões de aprovação artística.
+
+**Escopo:** 14 cenas, 37 planos iniciais, 163 segundos; C01-P01 não pede imagem; espada em P02 é do carrasco; Elara só revelada na C12; manter C01 V5 e C12 como **legado histórico** sem apagar assets/QA. **Estado novo real:** 0 novos PNGs, 0 rigs, 0 MP4s; nada publicado. **Próxima ação exata:** executar preflight/autopilot GitHub e preparar âncora character-bible após confirmar o provedor e permissão de custo, persistir SHA e retomar primeiro plano visual C01-P02.
+
+**ARQUIVO MESTRE OBRIGATÓRIO:** este `ESTADO-ATUAL.md`. Após cada avanço, erro ou bloqueio, registrar resultado, SHA e próximo passo; sincronizar histórico e JSON. Não voltar à V5 nem reexecutar etapas antigas por perda de contexto.
+
+---
 > **PONTO ÚNICO DE RETOMADA DO EPISÓDIO.** Branch de referência: `main`. Atualizado em 15/11/2026 (horário de Brasília, UTC-3). Antes de alterar qualquer coisa, ler `AGENTS.md`, `docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md`, este documento e `HISTORICO-DESENVOLVIMENTO.md`. **Não começar do zero.**
 
 ## DIRETRIZ MAIS RECENTE — QUANTIDADE LIVRE, QUALIDADE ALTA E REGISTRO OBRIGATÓRIO (15/11/2026)
@@ -8,14 +19,14 @@
 
 **Este é o arquivo principal e obrigatório do EP01.** Antes de qualquer tarefa, ler o checkpoint atual e confirmar o que há na `main`. Ao terminar qualquer avanço material, incluir neste arquivo: data, cena/plano, trabalho realizado, status, arquivos e SHA, branch/commit, workflows/runs, MP4/artifact se comprovados, QA, erro/bloqueio e **a próxima etapa concreta**. Na mesma integração atualizar `estado-atual.json` e adicionar ao `HISTORICO-DESENVOLVIMENTO.md`; não perder o trabalho nem refazer imagens, cenas, rigs ou renders já existentes. Relatar se ficar em PR/branch e não na main.
 
-**Status desta alteração:** apenas regras/documentação; **0 novas imagens, 0 novos renders e 0 uploads**. O arquivo `SEM-GERACAO-NOVAS-IMAGENS.lock` segue ativo e não é revogado por esta regra; desbloqueio exige autorização explícita. **Estado técnico não mudou:** C01-P03 V5 integrada, QA técnico passou mas falta aprovação visual; C12 depende dos originais ZIP/PNG. **Próxima ação:** verificar visualmente V5 e recuperar os arquivos C12 existentes, antes de executar trabalho adicional.
+**Registro histórico anterior ao remake:** na atualização anterior o lock seguia ativo; a autorização posterior de refação revogou o bloqueio editorial para o remake V2. Esta integração é documental, sem imagens ou renders novos. **Estado técnico não mudou:** C01-P03 V5 integrada, QA técnico passou mas falta aprovação visual; C12 depende dos originais ZIP/PNG. **Próxima ação:** verificar visualmente V5 e recuperar os arquivos C12 existentes, antes de executar trabalho adicional.
 
 ## Objetivo e limites
 
 Concluir o dorama MMORPG no VideoForge-IA com animação 2D genuína: imagem-mãe → fundo sem personagens → partes originais PNG RGBA → reconstrução de oclusões → pivôs/malhas Three.js → Remotion/ThreeCanvas/SWANGLE → vídeo MP4 → QA visual e audiovisual. Canal: `alchemy-lab`. Vídeo: `mmorpg-conquiste-a-princesa-ep01`.
 
 - Roteiro / direção: 14 cenas de origem, **37 planos cinematográficos**, **106 trilhas de direção atuais após V4 (107 no planejamento original; V3 teve 113)** e duração planejada **163 s / 4890 frames em 30 fps**.
-- `SEM-GERACAO-NOVAS-IMAGENS.lock` **continua em vigor**. É permitido importar **imagens originais já existentes**, não produzir novas imagens.
+- **REMAKE V2 ATUAL:** novas imagens editorialmente autorizadas. Bloqueio de 14/11 arquivado; custo pago extra e upload YouTube não autorizados.
 - `video_oficial_do_programa=false`, `human_visual_approved=false` e `youtube_uploaded=false`. Teste técnico de MP4 **não** significa aprovação de personagem, rig ou episódio.
 - Manter arquivos de cada vídeo em `canal/<id>/videos/<video-id>/`. O código de componentes reaproveitáveis pode estar em `videoforge/`, `motion-remotion/`, `tests/` e `.github/workflows/`.
 

@@ -1,5 +1,7 @@
 # Bíblia visual e prompt oficial — Dorama MMORPG: Conquiste a Princesa
 
+> **ATUALIZAÇÃO 15/11 — REMAKE V2:** nova geração editorialmente autorizada para refazer o episódio, sem limite arbitrário de imagens. Ler [plano oficial](REMAKE-EP01-PLANO-OFICIAL.md) e [estado mestre](ESTADO-ATUAL.md). Menções ao bloqueio de imagens em trechos históricos abaixo referem-se ao período anterior ao remake. Ainda não há imagens ou vídeo novo aprovado, nem autorização automática de despesas/publicação.
+
 **Registro editorial:** 15/11/2026. **Canal/escopo:** `canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01`, com possibilidade de reutilizar como guia em futuros episódios da **série dorama** após aprovação. **Não é uma regra para todos os canais do VideoForge-IA.** Fonte: imagem apresentada pelo usuário e instrução explícita: *“quase toda cena tem que ser dramática de um ângulo diferente; essa imagem é uma boa amostra de como devem ser as imagens só do projeto dorama”*.
 
 > **ESTILO VISUAL OFICIAL: CINEMATIC SEMI-REALISTIC FANTASY ANIME**  
@@ -34,7 +36,7 @@ Antes de cada ação, ler [ESTADO-ATUAL.md](ESTADO-ATUAL.md). Depois de todo ava
 7. **Dramaticidade não significa movimento excessivo**: no plano C01-P03 V5 o rei e as lanças ficam imóveis e Kael respira sutilmente; a força narrativa vem de posição, iluminação, contexto e pequena atuação.
 8. **Sem duplicações:** 1 personagem por identidade no plano, sem braços extras, lanças duplicadas, coroas flutuantes ou personagens repetidos no fundo. Verificar o espaço de profundidade e os limites das máscaras.
 9. **Coerência entre tomadas:** antes de aprovar, comparar a arte nova com o plano anterior e com a amostra de estilo, não somente com a descrição textual.
-10. **Restrição atual do EP01 continua ativa:** [`SEM-GERACAO-NOVAS-IMAGENS.lock`](SEM-GERACAO-NOVAS-IMAGENS.lock) proíbe novas chamadas de geração/edição de imagem **neste episódio**, até nova autorização explícita para liberar o bloqueio. O presente prompt é documentação de direção artística **para cenas futuras autorizadas**; **registrar a regra NÃO dispara geração, não altera imagens-mãe aprovadas, não cria desenhos e não concede autorização de publicar**.
+10. **Autorização atual do remake (15/11/2026):** o pedido posterior de refazer o EP01 com as novas regras substituiu o lock de 14/11 apenas para novas imagens do remake. O lock foi arquivado e retirado do caminho ativo. Imagens só são consideradas produzidas quando os bytes e SHA estiverem persistidos; **nenhum serviço externo pago ou publicação está autorizado automaticamente**.
 
 ## 3. Prompt mestre — estilo constante (inglês)
 
