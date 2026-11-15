@@ -18,17 +18,18 @@
     "human_art_approved": false
   },
   "c01": {
-    "state": "v4_main_technical_qa_passed__user_visual_approval_pending",
+    "state": "v5_main_technical_qa_passed_visual_review_pending",
     "shot": "C01-P03",
-    "integrated_pr": 57,
-    "integrated_commit": "4d010a92212ce77e9c7fbcf762537ecf0e732be2",
-    "run_id": 43676630976,
+    "integrated_pr": 58,
+    "integrated_commit": "ae7ca09c3f75ed04498704459a2ac547de810d06",
+    "run_id": 43680784142,
     "run_conclusion": "success",
-    "artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43676630976",
-    "artifact_id": 14145684036,
+    "artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43680784142",
+    "artifact_id": 14147374656,
     "artifact_temporary": true,
     "mp4": {
       "exists_in_actions_artifact": true,
+      "artifact_is_temporary": true,
       "seconds": 3,
       "frames": 90,
       "width": 1080,
@@ -36,16 +37,17 @@
       "fps": 30,
       "codec": "h264",
       "audio": false,
-      "bytes": 599144,
-      "sha256": "90baea03b4e2b551a21d341c263853a2e9b9d4d5647314fff46a39bf79fbbff7",
+      "bytes": 598863,
+      "sha256": "d84361f693f4e1c83b4d5ad7bd7ed55c253044e672fbf80af803ace58b865481",
       "official": false,
-      "main_artifact_id": 14145684036
+      "main_artifact_id": 14147374656
     },
     "still_pending": [
-      "human_visual_approval_not_granted_v4",
+      "human_visual_approval_not_granted_v5",
       "neutral_recomposition_has_13015_pixel_differences",
       "source_edge_seams_at_kael_hair_knee_boot_to_review",
-      "episode_remaining_36_shots_and_audio_not_created"
+      "episode_remaining_36_shots_and_audio_not_created",
+      "C12_source_ZIPs_missing"
     ],
     "v2": {
       "integrated_pr": 55,
@@ -283,6 +285,87 @@
       "neutral_total_pixels": 1572864,
       "neutral_pixel_exact": false,
       "report": "QA-C01-P03-V4-2026-11-15.md"
+    },
+    "v5": {
+      "state": "merged_main_technical_qa_passed_human_visual_pending",
+      "user_request": "Keep slight V4 head rotation, add gentle upper-back breathing/torso motion without moving right hand, boot, king, guards or crossed spears",
+      "integrated_pr": 58,
+      "merge_commit": "ae7ca09c3f75ed04498704459a2ac547de810d06",
+      "main_render_run": 43680784142,
+      "main_tests_run": 43680784182,
+      "pr_render_run": 43680505866,
+      "pr_tests_run": 43680505879,
+      "pr_failed_typecheck_run": 43680421318,
+      "pr_failed_typecheck_cause": "TS2345 missing nonnull directed track narrow fixed",
+      "artifact_id_main": 14147374656,
+      "artifact_id_pr": 14147369278,
+      "artifact_is_temporary": true,
+      "mp4": {
+        "seconds": 3,
+        "frames": 90,
+        "resolution": [
+          1080,
+          1920
+        ],
+        "fps": 30,
+        "codec": "h264",
+        "bytes": 598863,
+        "sha256": "d84361f693f4e1c83b4d5ad7bd7ed55c253044e672fbf80af803ace58b865481",
+        "main_and_pr_byte_identical": true
+      },
+      "acting": {
+        "tracks": 2,
+        "episode_tracks_total": 106,
+        "head_rotation_abs_deg_max": 0.32,
+        "shoulder_up_px_max": 1.25,
+        "jacket_mesh_back_breath": {
+          "sourceTopY": 857,
+          "sourcePeakY": 898,
+          "sourceBottomY": 947,
+          "expansionPx": 1.05,
+          "liftPx": 0.6,
+          "driver": "kael.ombros/translateY",
+          "sourcePinFromY": 950
+        },
+        "right_hand_world_locked": true,
+        "right_boot_world_locked": true,
+        "head_still_moving": true,
+        "king_spears_guards_static_original_mother_pixels": true,
+        "camera_locked": true
+      },
+      "qa": {
+        "technical_success": true,
+        "back_roi_native": [
+          405,
+          870,
+          85,
+          65
+        ],
+        "back_roi_changed_at_frames_rgb8": {
+          "frame30": 957,
+          "frame55": 514,
+          "frame75": 8,
+          "frame89": 191
+        },
+        "back_visible_in_h264": true,
+        "max_actor_changed_rgb8_pixels": 11698,
+        "static_king_spears_boot_changed_rgb24_pixels": 0,
+        "collar_original_background_exposed_pixels": 24,
+        "collar_max_allowed": 75,
+        "neutral_mean_absolute_rgb_error": 0.216449949476454,
+        "neutral_changed_pixels": 13015,
+        "neutral_total_pixels": 1572864,
+        "pixel_exact_recomposition": false,
+        "human_visual_review": false
+      },
+      "source_original_sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "source_new_images_generated": 0,
+      "youtube_uploaded": false,
+      "publishable": false,
+      "official_episode_approved": false,
+      "manifest": "atuacao-c01-p03-v5-respiracao-costas.json",
+      "report": "QA-C01-P03-V5-2026-11-15.md",
+      "next_action": "Review C01 V5 real main MP4 artifact 14147374656 visually on phone; inspect back breath, head, collar, right hand, boot and original king/spears. No new art, no YouTube. C12 still waiting for original ZIPs/PNGs."
     }
   },
   "c12": {
@@ -396,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "C01-P03 V4 integrated on main, real H264 MP4 in temporary artifact 14145684036 sha90baea..., tests and QA passed; user must visually review breathing and original static king/spears/boot; repair only real remaining source alpha defects without generating new art. C12 missing 2 original ZIPs/9 PNGs.",
+  "next_action": "C01-P03 V5 merged in main with deterministic real upper-back mesh breathing and unchanged subtle head, render 43680784142, artifact 14147374656, MP4 SHA d84361f6..., QA passes; user visual approval pending. Do not redo V4, alter fixed wrist/boot, generate new art or upload. C12 still needs original two ZIPs and nine PNGs.",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
