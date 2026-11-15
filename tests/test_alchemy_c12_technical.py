@@ -1,11 +1,27 @@
 """C12 contract tests which pass without inventing missing PNGs."""
 import unittest
+import json
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+from videoforge import c12_technical_preview as preview
 from videoforge.c12_technical_preview import (
     AssetGateError, EP, PART_SHAS, SHOT_PARTS,
     bbox, plan, policy, required_files,
 )
 
 class C12TechnicalTest(unittest.TestCase):
+    def test_failed_preflight_invalidates_previous_render_props(self):
+        with tempfile.TemporaryDirectory() as folder:
+            out = Path(folder)
+            (out/'props.json').write_text('{"sourceOriginalsArchived":true}')
+            with patch.object(preview, 'policy', side_effect=AssetGateError('MISSING_SOURCE')):
+                self.assertEqual(preview.prepare(out), 2)
+            self.assertFalse((out/'props.json').exists())
+            report = json.loads((out/'preflight.qa.json').read_text(encoding='utf8'))
+            self.assertEqual(report['status'], 'ASSETS_PENDING')
+            self.assertFalse(report['official_video_approved'])
+
     def test_exact_five_meshes_with_512_triangles(self):
         p=plan()
         self.assertEqual({m["id"] for m in p["meshParts"]},set(PART_SHAS))

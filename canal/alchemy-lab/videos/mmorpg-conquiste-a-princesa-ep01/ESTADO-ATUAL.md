@@ -165,3 +165,8 @@ A tentativa de ler/copiar os bytes por integração de arquivos **falhou com `Th
 ## Regra permanente para o próximo agente / próxima conversa
 
 Ao terminar **qualquer avanço no dorama**, atualizar **este arquivo na `main`** com estado e **o próximo passo exato**, e acrescentar um evento em `HISTORICO-DESENVOLVIMENTO.md` com commit, workflow/run, artifact, SHA, QA e pendências. Links de artifact expiram; não tratá-los como arquivamento permanente. Marcar claramente `feito`, `teste_tecnico`, `pendente`, `bloqueado`. Não repetir tarefas concluídas, não mover progresso apenas para branches ou chat, nem sobrescrever histórico anterior. Para regras globais, obedecer `AGENTS.md` e `docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md`.
+
+
+## 15/11/2026 — invalidacao de configuracao antiga de render C12
+
+Correcao na branch codex/animation-v5-review, ainda nao integrada: uma nova preparacao remove props.json anterior antes de validar as fontes. Falha de preflight nao deixa configuracao antiga utilizavel. Teste reproduziu a falha antes da correcao; 17 testes de contrato/importacao/QA passaram depois. C01 V5 preservada; nenhum novo MP4 ou imagem. Proximo passo: revisar e integrar a correcao; C12 continua dependente dos ZIPs originais.

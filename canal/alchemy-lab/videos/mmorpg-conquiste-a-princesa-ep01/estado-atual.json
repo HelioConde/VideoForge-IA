@@ -498,5 +498,12 @@
     "code_imported": false,
     "artifacts_rendered_from_research": false,
     "license_status": "must_verify_before_code_reuse"
+  },
+  "pending_preflight_fix": {
+    "branch": "codex/animation-v5-review",
+    "integrated": false,
+    "regression_tests_passed": 17,
+    "change": "invalidate stale props before source validation",
+    "new_render": false
   }
 }

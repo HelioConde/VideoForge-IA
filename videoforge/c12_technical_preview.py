@@ -108,7 +108,14 @@ def validate_png(path, expected, dims, alpha):
         raise AssetGateError("PNG_DIMENSIONS_OR_RGBA_INVALID:"+str(path.relative_to(ROOT)))
 
 def prepare(out):
+    # Refuse redirected output before invalidating the previous render input.
+    props_path = out / "props.json"
+    for path in (props_path, *props_path.parents):
+        if path.is_symlink() or (hasattr(path, "is_junction") and path.is_junction()):
+            raise AssetGateError("C12_OUTPUT_SYMLINK_OR_JUNCTION")
     out.mkdir(parents=True,exist_ok=True)
+    # A failed revalidation must not leave a previously approved input usable.
+    props_path.unlink(missing_ok=True)
     result = {
         "schema":"videoforge/c12-technical-three-preflight/v1",
         "status":"ASSETS_PENDING", "technical_preview_only":True,
@@ -164,7 +171,7 @@ def prepare(out):
                "status":"TECHNICAL_NO_HUMAN_APPROVAL",
                "sourceOriginalsArchived":True,"officialVideoApproved":False,
                "imageGenerationCalls":0,"shots":shots}
-        (out/"props.json").write_text(json.dumps(props,indent=2)+"\n",encoding="utf8")
+        props_path.write_text(json.dumps(props,indent=2)+"\n",encoding="utf8")
         result.update({"status":"READY_FOR_TECHNICAL_THREECANVAS_RENDER",
                        "mesh_triangles":512,"independent_rgba_parts":5})
     (out/"preflight.qa.json").write_text(

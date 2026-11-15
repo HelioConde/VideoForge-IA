@@ -107,3 +107,8 @@ Registro cronológico de fatos verificáveis. **Não sobrescrever eventos antigo
 ## Como acrescentar progresso
 
 Acrescentar uma seção datada com: objetivo e cena, arquivos alterados, commit realmente presente na `main`, run/workflow com resultado, mídia/artifact e SHA se houver, problemas abertos e próxima ação. Se ainda for apenas PR/branch, identificar explicitamente como **NÃO INTEGRADO**. Atualizar [ESTADO-ATUAL.md](ESTADO-ATUAL.md) **no mesmo lote de mudanças**; usar `estado-atual.json` para leitura programática. Nenhum agente deve depender do histórico de chats para reconstruir o projeto.
+
+
+## 15/11/2026 — invalidacao de configuracao antiga de render C12
+
+Correcao na branch codex/animation-v5-review, ainda nao integrada: uma nova preparacao remove props.json anterior antes de validar as fontes. Falha de preflight nao deixa configuracao antiga utilizavel. Teste reproduziu a falha antes da correcao; 17 testes de contrato/importacao/QA passaram depois. C01 V5 preservada; nenhum novo MP4 ou imagem. Proximo passo: revisar e integrar a correcao; C12 continua dependente dos ZIPs originais.
