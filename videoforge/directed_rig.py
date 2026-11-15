@@ -392,6 +392,40 @@ def _bindings(direction, bindings, root):
                          and _integer(mesh.get("rows"), 2) and mesh["rows"] <= 20
                          and mesh.get("pinnedRows") == [0] and _number(mesh.get("amplitudePx"))
                          and 0 <= mesh["amplitudePx"] <= 12, "MESH_INVALID")
+                back = mesh.get("backBreath")
+                if back is not None:
+                    _require(
+                        isinstance(back, dict) and set(back) == {
+                            "kind", "sourceTopY", "sourcePeakY",
+                            "sourceBottomY", "expansionPx", "liftPx",
+                            "driverTarget", "driverTransform", "driverPeakAbsPx"}
+                        and back["kind"] == "upper-back-source-mesh"
+                        and shot["id"] == "C01-P03"
+                        and node["id"] == "kael.jaqueta"
+                        and node.get("parent") == "kael.ombros"
+                        and mesh["kind"] == "cloth"
+                        and back["driverTarget"] == "kael.ombros"
+                        and back["driverTransform"] == "translateY"
+                        and all(_number(back[k]) for k in (
+                            "sourceTopY", "sourcePeakY", "sourceBottomY",
+                            "expansionPx", "liftPx", "driverPeakAbsPx"))
+                        and node["bbox"][1] <= back["sourceTopY"]
+                        < back["sourcePeakY"] < back["sourceBottomY"]
+                        <= node["bbox"][1]+node["bbox"][3]
+                        and 0 < back["expansionPx"] <= 1.5
+                        and 0 < back["liftPx"] <= 1
+                        and 0 < back["driverPeakAbsPx"] <= 2
+                        and isinstance(mesh.get("sourcePin"), dict)
+                        and back["sourceBottomY"] < mesh["sourcePin"]["startY"],
+                        "C01_V5_BACK_MESH_ENVELOPE_INVALID")
+                    drivers = [t for t in shot["rigKeyframes"]
+                               if t["target"] == back["driverTarget"]
+                               and t["transform"] == back["driverTransform"]]
+                    _require(
+                        len(drivers) == 1 and all(
+                            -back["driverPeakAbsPx"] <= k["value"] <= 0
+                            for k in drivers[0]["keyframes"]),
+                        "C01_V5_BACK_MESH_DRIVER_INVALID")
                 pin = mesh.get("sourcePin")
                 if pin is not None:
                     _require(isinstance(pin, dict) and set(pin) == {"startY", "endY"}
