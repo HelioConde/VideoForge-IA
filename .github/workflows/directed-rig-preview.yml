@@ -1,0 +1,148 @@
+name: 'VideoForge - Direcao e rig articulado (rascunho sem IA)'
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-render-c01-direcao.json'
+  pull_request:
+    paths:
+      - 'videoforge/directed_rig*.py'
+      - 'tests/test_directed_rig*.py'
+      - 'motion-remotion/src/directed-rig-*'
+      - 'motion-remotion/tests/directed-rig*'
+      - 'canal/**/direcao-bindings-*.json'
+      - '.github/workflows/directed-rig-preview.yml'
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Canal isolado
+        default: alchemy-lab
+        required: true
+        type: string
+      video_id:
+        description: Episodio com direcao e bindings existentes
+        default: mmorpg-conquiste-a-princesa-ep01
+        required: true
+        type: string
+      bindings:
+        description: Nome do manifesto de pecas dentro do episodio
+        default: direcao-bindings-c01-draft.json
+        required: true
+        type: string
+      shot:
+        description: Plano a revisar (sem gerar imagens ou audio)
+        default: C01-P03
+        required: true
+        type: string
+permissions:
+  contents: read
+  packages: read
+jobs:
+  directed-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      CHANNEL: ${{ inputs.channel || 'alchemy-lab' }}
+      VIDEO_ID: ${{ inputs.video_id || 'mmorpg-conquiste-a-princesa-ep01' }}
+      BINDINGS: ${{ inputs.bindings || 'direcao-bindings-c01-draft.json' }}
+      SHOT: ${{ inputs.shot || 'C01-P03' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Confirmar pedido tecnico ao executar por push
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-render-c01-direcao.json")
+          r=json.loads(p.read_text(encoding="utf8"))
+          assert r["schema"]=="videoforge/alchemy-c01-directed-mp4-request/v1"
+          assert r["channel"]=="alchemy-lab"
+          assert r["video_id"]=="mmorpg-conquiste-a-princesa-ep01"
+          assert r["shot"]=="C01-P03"
+          assert r["binding_manifest"]=="direcao-bindings-c01-draft.json"
+          assert r["render_mp4"] is True
+          assert r["preview_tecnico_nao_oficial"] is True
+          assert r["new_image_generation_calls"]==0
+          assert r["youtube_upload"] is False
+          assert r["official_video_approved"] is False
+          assert Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()
+          print("C01_PREVIEW_AUTHORIZED_NO_NEW_ART_NO_YOUTUBE")
+          PY
+      - name: Validar parametros e reutilizar dependencias do runner
+        id: paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$CHANNEL" =~ ^[a-z0-9][a-z0-9-]{0,80}$ ]]
+          [[ "$VIDEO_ID" =~ ^[a-z0-9][a-z0-9-]{0,100}$ ]]
+          [[ "$BINDINGS" =~ ^direcao-bindings-[a-z0-9-]+\.json$ ]]
+          [[ "$SHOT" =~ ^[A-Za-z0-9-]+$ ]]
+          echo "target=output/$CHANNEL/videos/$VIDEO_ID/directed/$SHOT" >> "$GITHUB_OUTPUT"
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+      - name: Testar contrato Python, hierarquia, interpolacao e malhas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_directed_rig tests.test_directed_rig_qa tests.test_rig_three_contract -v
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/directed-rig.test.cjs tests/rig-three-math.test.cjs
+      - name: Resolver direcao, verificar SHA e empacotar somente pixels existentes
+        env:
+          TARGET: ${{ steps.paths.outputs.target }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          episode="canal/$CHANNEL/videos/$VIDEO_ID"
+          mkdir -p "$TARGET"
+          python -m videoforge.directed_rig inspect \
+            --direction "$episode/direcao-rig-remotion.json" \
+            --bindings "$episode/$BINDINGS" --output "$TARGET/coverage.json"
+          python -m videoforge.directed_rig prepare \
+            --direction "$episode/direcao-rig-remotion.json" \
+            --bindings "$episode/$BINDINGS" --shot "$SHOT" \
+            --output-dir "$TARGET" --public-dir motion-remotion/public
+          python -m videoforge.directed_rig_qa neutral \
+            --bindings "$episode/$BINDINGS" --shot "$SHOT" --output-dir "$TARGET"
+      - name: Renderizar plano e quadros exatos pelo ThreeCanvas
+        env:
+          TARGET: ${{ steps.paths.outputs.target }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="$GITHUB_WORKSPACE/$TARGET"
+          frames=$(python -c 'import json,sys; n=json.load(open(sys.argv[1]))["durationFrames"]; print(" ".join(map(str,sorted(set([0,min(30,n-1),min(74,n-1),min(76,n-1),n-1])))))' "$target/props.json")
+          repeat=$(python -c 'import json,sys; print(min(30,json.load(open(sys.argv[1]))["durationFrames"]-1))' "$target/props.json")
+          cd motion-remotion
+          for frame in $frames; do
+            ./node_modules/.bin/remotion still src/directed-rig-index.ts VideoForgeDirectedRigScene \
+              "$target/frame-$frame.png" --frame="$frame" --props="$target/props.json" \
+              --gl=swangle --log=error
+          done
+          ./node_modules/.bin/remotion still src/directed-rig-index.ts VideoForgeDirectedRigScene \
+            "$target/frame-repeat.png" --frame="$repeat" --props="$target/props.json" \
+            --gl=swangle --log=error
+          ./node_modules/.bin/remotion render src/directed-rig-index.ts VideoForgeDirectedRigScene \
+            "$target/directed-rig-preview.mp4" --props="$target/props.json" \
+            --codec=h264 --pixel-format=yuv420p --gl=swangle --concurrency=1 --log=error
+      - name: Verificar MP4, movimento fora da UI e determinismo
+        env:
+          TARGET: ${{ steps.paths.outputs.target }}
+        run: python -m videoforge.directed_rig_qa verify --props "$TARGET/props.json" --output-dir "$TARGET"
+      - name: Arquivar previa nao publicavel e evidencias
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: directed-rig-${{ env.CHANNEL }}-${{ env.VIDEO_ID }}-${{ env.SHOT }}-${{ github.run_id }}
+          path: ${{ steps.paths.outputs.target }}/
+          retention-days: 14
+          if-no-files-found: warn

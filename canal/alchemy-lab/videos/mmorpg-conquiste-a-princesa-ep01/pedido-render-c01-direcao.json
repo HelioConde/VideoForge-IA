@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/alchemy-c01-directed-mp4-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot": "C01-P03",
+  "binding_manifest": "direcao-bindings-c01-draft.json",
+  "render_mp4": true,
+  "preview_tecnico_nao_oficial": true,
+  "new_image_generation_calls": 0,
+  "youtube_upload": false,
+  "human_visual_approval": false,
+  "official_video_approved": false,
+  "reason": "Run the existing SHA-verified C01 scene rig on main after integrating directed animation engine; preserve original source artwork",
+  "revision": 1
+}

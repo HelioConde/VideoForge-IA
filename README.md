@@ -175,3 +175,9 @@ entregar um MP4 real primeiro. O modelo de camadas ainda está desativado.
    nunca enviar conteúdo automaticamente.
 
 **QA técnico não é aprovação editorial ou visual.**
+
+## Rig de direção cinematográfica — C01
+
+A [animação por direção](docs/ANIMACAO-POR-DIRECAO.md) usa o motor real ThreeCanvas/Remotion para executar pivôs, hierarquia de peças e keyframes do roteiro com PNGs originais. O [manifesto de C01-P03](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/direcao-bindings-c01-draft.json) e o [workflow](.github/workflows/directed-rig-preview.yml) reproduzem uma prévia técnica de 3 segundos da cena do trono e arquivam MP4 e evidências em GitHub Actions.
+
+**Importante:** a prévia possui arte ainda não aprovada, máscaras e underlays pendentes e marca de rascunho. Não é o episódio completo nem autoriza geração de imagens ou publicação. O C12 tem [pré-voo de fontes separadas](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/RENDER-C12-TECNICO.md) e permanece bloqueado até importar seus originais.
