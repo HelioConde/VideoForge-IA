@@ -105,7 +105,7 @@
       "require_real_rgba_rig": false,
       "rig_notes": "preto e SFX, sem imagem",
       "asset_directory": "assets/remake-v2/C01-P01/",
-      "asset_status": "black_frame_no_art",
+      "asset_status": "black_original_audio_preview_archived_in_actions",
       "art_mother_sha256": null,
       "background_sha256": null,
       "rig_sha256": null,
@@ -113,9 +113,13 @@
       "qa_approved": false,
       "human_visual_approved": false,
       "motion_qa_passed": false,
-      "mp4_created": false,
+      "mp4_created": true,
       "publishable": false,
-      "next_stage": "original_audio_sfx_needed"
+      "next_stage": "review_original_sfx_and_protect_technical_artifact",
+      "original_audio_sha256": "22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d",
+      "technical_preview_sha256": "75b8be46c7e609a1c9ff8afad0935bcbf8c6faa2126ba3c74cad3af540f3c44e",
+      "technical_preview_qa_path": "QA-C01-P01-REMAKE-V2.json",
+      "technical_preview_artifact": "vf-remake-c01-p01-opening-43709191586"
     },
     {
       "shot_id": "C01-P02",

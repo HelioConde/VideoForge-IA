@@ -1,5 +1,14 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+<!-- REMAKE-C01-P01-START -->
+### C01-P01 — abertura preta com SFX original (QA técnico)
+- **MP4 técnico real:** artifact \`vf-remake-c01-p01-opening-43709191586\` do GitHub run \`43709191586\`; SHA256 \`75b8be46c7e609a1c9ff8afad0935bcbf8c6faa2126ba3c74cad3af540f3c44e\`; 2 s, 60 quadros pretos 1080×1920/30fps H264/AAC por Remotion.
+- **Áudio original:** \`sword-original.wav\`, SHA256 \`22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d\`; efeito procedural inédito, QA de áudio e preto passou.
+- **Armazenamento:** MP4/WAV no artifact de GitHub Actions por 90 dias; o repositório ignora *.mp4, *.wav e assets/ para evitar mídia versionada. QA e hashes persistidos em \`QA-C01-P01-REMAKE-V2.json\`.
+- **Limites:** não é o episódio completo, não há rig de personagem, imagem nova, aprovação humana, gasto de API ou YouTube. Próxima tomada: C01-P02 depende da âncora V2 aprovada.
+<!-- REMAKE-C01-P01-END -->
+
+
 <!-- REMAKE-AUTOPILOT-START -->
 ### Diagnóstico autônomo mais recente
 - Etapa: generate_character_bible
