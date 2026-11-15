@@ -1,5 +1,8 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+> **CONTINUIDADE OBRIGATÓRIA NA MAIN — NÃO RECOMEÇAR DO ZERO:** antes de trabalhar, ler [AGENTS.md](AGENTS.md) e o [protocolo de continuidade](docs/CONTINUIDADE-DO-PROJETO.md), depois o `ESTADO-ATUAL.md` e o `HISTORICO-DESENVOLVIMENTO.md` do vídeo. **Cada conclusão/alteração precisa atualizar esses arquivos na mesma integração à `main`**, com run, commit, artifact, SHA, pendências e próximo passo. Branches antigas e chats não substituem esse registro. Episódio ativo: [dorama MMORPG — checkpoint e MP4s técnicos C01/C12](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md).
+
+
 > **ARQUIVAMENTO AUTOMÁTICO DE IMAGENS:** imagens produzidas pelos geradores do GitHub devem ser preservadas permanentemente em canal/ID/videos/ID/assets/geracoes/PRODUCER/RUN_ID/, com SHA-256 e manifesto. Os artifacts do Actions, com prazo de expiração, não são o arquivo definitivo. **[Guia e recuperações verificadas de PNGs antigos](docs/ARQUIVAMENTO-PERMANENTE-IMAGENS.md)**. A implementação reutilizável está em videoforge/persist_generated_assets.py e scripts/persistir-imagens-gh.sh. Os jobs de arte, cenas, lotes, sprites e imagens manuais devem commitar os PNGs antes de reportar sucesso. As imagens criadas fora do runner (ChatGPT) ainda exigem importação dos bytes: referências catalogadas no chat não são PNGs já arquivados. O bloqueio de novas imagens do episódio Alchemy Lab EP01 permanece inalterado.
 
 
