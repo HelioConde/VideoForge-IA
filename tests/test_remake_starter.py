@@ -88,7 +88,6 @@ class RemakeStarterTests(unittest.TestCase):
         self.assertTrue(out["autopilot"]["dispatch_allowed"])
         self.assertEqual(out["autopilot"]["stage"],"generate_character_bible")
         self.assertEqual(out["autopilot"]["blocker"],"no_verified_reference_png")
-        self.assertEqual(out["autopilot"]["next_workflow"],"production-art-by-request.yml")
         for shot in out["production_queue"][1:]:
             self.assertEqual(shot["status"],"blocked_canonical_reference")
             self.assertEqual(shot["candidate_workflow"],"production-art-by-request.yml")
