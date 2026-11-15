@@ -1,5 +1,13 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## REGRA VISUAL ATUAL DO DORAMA C01-P03 — RESPIRAÇÃO, NÃO DANÇA
+
+A revisão humana do C01 V3 (15/11/2026) invalidou movimentos independentes do braço e da bota direitos e revelou rei com cabeça cortada e lanças distorcidas. **A qualidade visual prevalece sobre a métrica antiga de 16 mil pixels.** Ler obrigatoriamente [regras C01 V4](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REGRAS-ATUACAO-C01-P03-RESPIRACAO-2026-11-15.md), [direção V4](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/atuacao-c01-p03-v4-respiracao.json) e [pesquisa de skills](docs/PESQUISA-SKILLS-BIBLIOTECAS-RIGGING-2D-2026-11-15.md).
+
+**Exclusivamente nesse plano:** animar somente respiração de peito/ombros (~1–2px nativos) e micro cabeça (até 0,5°), com cabelo e jaqueta discretos. **Não animar o punho, braço direito, antebraço, joelho/perna e bota direitos**; mão deve permanecer apoiada no joelho em coordenadas globais mesmo quando ombro respira. Guardas, lanças e rei ficam estáticos e visualmente íntegros, preferencialmente como pixels da imagem-mãe original SHA-verificada, sem sobrepor candidatos RGB/RGBA que cortam a coroa ou duplicam as lanças. Mover os sprites independentemente, jamais mover PNG-mãe ou câmera para simular rig. **Sem gerar novas imagens, sem publicar no YouTube; aprovação humana ainda é necessária.**
+
+**Progresso V4:** trabalho iniciado no [PR #57](https://github.com/HelioConde/VideoForge-IA/pull/57); só considerar integrado se merge e teste da `main` forem verificados. Se o PR falhar, manter V3 consolidada tecnicamente, porém rejeitada visualmente. C12 é independente, com originais ausentes.
+
 ## REGRA PERMANENTE — CONTINUIDADE DO DESENVOLVIMENTO NA MAIN (LER PRIMEIRO)
 
 **Nunca reiniciar um projeto, cena, vídeo ou rig do zero sem consultar seu checkpoint.** A branch `main` é a fonte de verdade dos trabalhos integrados. Ler obrigatoriamente [protocolo de continuidade](docs/CONTINUIDADE-DO-PROJETO.md), depois `canal/<id>/videos/<video-id>/ESTADO-ATUAL.md`, `HISTORICO-DESENVOLVIMENTO.md` e `estado-atual.json` (se existirem), além do manual principal de animação e dos arquivos de direção relevantes.
