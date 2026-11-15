@@ -46,6 +46,39 @@ def _mask_uncovered(pixels: bytes | bytearray,
     return result, uncovered
 
 
+
+def _mask_only_original_covered_pixels(
+    mother_pixels: bytes | bytearray,
+    existing_layer_pixels: Sequence[bytes | bytearray],
+) -> tuple[bytearray, int]:
+    """Reuse ONLY existing mother pixels originally covered by independent parts.
+
+    The result is a *holdout behind* a rotating upper arm/jacket seam, not a
+    newly painted neck or hidden piece. The colour bytes are copied verbatim
+    from the SHA-verified mother. References are full-canvas RGBA alpha masks.
+    All samples outside existing sprite alpha are transparent.
+    """
+    if len(mother_pixels) == 0 or len(mother_pixels) % 4:
+        raise DirectedRigError("COVERED_HOLDOUT_RGBA_INVALID")
+    if not existing_layer_pixels or any(len(ref) != len(mother_pixels)
+                                        for ref in existing_layer_pixels):
+        raise DirectedRigError("COVERED_HOLDOUT_REFERENCE_CANVAS_MISMATCH")
+    occupied = bytearray(len(mother_pixels)//4)
+    for reference in existing_layer_pixels:
+        for alpha_offset in range(3, len(reference), 4):
+            if reference[alpha_offset] > 0:
+                occupied[alpha_offset//4] = 1
+    result = bytearray(mother_pixels)
+    kept = 0
+    for pix,is_occupied in enumerate(occupied):
+        i=pix*4
+        if is_occupied and mother_pixels[i+3]>0:
+            kept += 1
+        else:
+            result[i:i+4]=b"\0\0\0\0"
+    return result, kept
+
+
 def _require(condition, message):
     if not condition:
         raise DirectedRigError(message)
@@ -260,6 +293,34 @@ def _bindings(direction, bindings, root):
                                  and any(k["value"] <= 1e-6 for k in t["keyframes"])
                                  for t in shot["rigKeyframes"]), "SOURCE_PIN_SCALE_NOT_INVERTIBLE")
         for node in nodes:
+            if "onlyCoveredBy" not in node:
+                continue
+            refs = node["onlyCoveredBy"]
+            _require(
+                "file" in node
+                and node.get("role") == "existing-pixel-underlay"
+                and node.get("parent") is None
+                and "mesh" not in node
+                and "onlyUncoveredBy" not in node
+                and node["file"] == spec["sourceMother"]["file"]
+                and node["sha256"] == spec["sourceMother"]["sha256"],
+                "COVERED_HOLDOUT_ONLY_SHA_VERIFIED_MOTHER_ALLOWED")
+            _require(
+                isinstance(refs, list) and refs
+                and len(set(refs)) == len(refs)
+                and all(isinstance(ref, str) for ref in refs)
+                and node["id"] not in refs,
+                "COVERED_HOLDOUT_REFERENCES_INVALID")
+            _require(node["bbox"][2]*node["bbox"][3] <= 16000,
+                     "COVERED_HOLDOUT_MUST_BE_SMALL_SEAM_REGION")
+            for ref in refs:
+                _require(
+                    ref in by_id and "file" in by_id[ref]
+                    and by_id[ref]["z"] > node["z"]
+                    and "onlyCoveredBy" not in by_id[ref]
+                    and "onlyUncoveredBy" not in by_id[ref],
+                    "COVERED_HOLDOUT_REFERENCES_NOT_SOURCE_PARTS")
+        for node in nodes:
             if "onlyUncoveredBy" not in node:
                 continue
             _require("file" in node, "UNCOVERED_OWNER_SPRITE_REQUIRED")
@@ -329,6 +390,23 @@ def prepare(direction_path, bindings_path, shot_id, output_dir, public_dir):
         if "file" in node:
             x, y, w, h = node["bbox"]
             pixels = full_pixels[node["id"]]
+            if "onlyCoveredBy" in node:
+                pixels, _ = _mask_only_original_covered_pixels(
+                    pixels, [full_pixels[ref] for ref in node["onlyCoveredBy"]])
+                stride = spec["canvas"]["width"] * 4
+                holdout_count = sum(
+                    pixels[row*stride + col*4 + 3] != 0
+                    for row in range(y,y+h) for col in range(x,x+w))
+                _require(holdout_count>0, "COVERED_HOLDOUT_ZERO_VERIFIED_SOURCE_PIXELS")
+                recovered.append({
+                    "nodeId": node["id"], "role": "existing-pixel-underlay",
+                    "sourceFile": str(Path(sources[node["id"]][0]).relative_to(Path(bindings_path).parent)),
+                    "sourceSha256": sources[node["id"]][1],
+                    "onlyCoveredBy": node["onlyCoveredBy"],
+                    "sourceMotherPixelsKeptInBbox": holdout_count,
+                    "inventedPixels": 0,
+                    "humanVisualReview": False,
+                })
             if "onlyUncoveredBy" in node:
                 pixels, _ = _mask_uncovered(
                     pixels, [full_pixels[ref] for ref in node["onlyUncoveredBy"]])
@@ -351,7 +429,7 @@ def prepare(direction_path, bindings_path, shot_id, output_dir, public_dir):
     packaged = []
     for index, node in enumerate(spec["nodes"]):
         obj = {k: v for k, v in node.items()
-               if k not in ("sha256", "file", "onlyUncoveredBy")}
+               if k not in ("sha256", "file", "onlyUncoveredBy", "onlyCoveredBy")}
         if "file" in node:
             filename = f"node-{index}.png"
             rig_candidate._write_png(dest / filename, crops[node["id"]], node["bbox"][2], node["bbox"][3])
