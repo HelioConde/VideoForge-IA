@@ -593,13 +593,13 @@
     "mp4_official": false,
     "channel_isolated": true,
     "autonomous_pipeline_target": true,
-    "next_step": "Standing paid image-call authorization active for this EP01; automatically dispatch one candidate character-bible via safe coordinator. Do not auto-approve its visual identity or publish on YouTube."
+    "next_step": "Standing authorization remains valid. First autonomous reference workflow 43766496772 reached proxy but failed authenticated health HTTP503 before image creation. Diagnose upstream proxy/account availability; do not blindly re-dispatch. No YouTube upload."
   },
   "autopilot_checkpoint": {
     "stage": "generate_character_bible",
     "target": "character-bible",
-    "blocker": "no_verified_reference_png",
-    "dispatch_allowed": true
+    "blocker": "generation_dispatch_already_reserved_wait_for_artifact_or_investigation",
+    "dispatch_allowed": false
   },
   "policy_consistency_audit_20261115": {
     "current_rules_identified_in_master_files": true,
@@ -1232,12 +1232,20 @@
     "request_id": "e74840c054fe22d57e9908193cd640c4c0f0b15d5009c7cad4937c8255ea5f67",
     "target": "character-bible",
     "workflow": "production-art-by-request.yml",
-    "status": "reserved_before_external_dispatch",
+    "status": "blocked_proxy_authenticated_health_http_503",
     "reserved_utc": "2026-11-15T21:57:01.983760+00:00",
     "max_calls_per_run": 1,
     "provider_charge_possible": true,
     "actual_provider_charge_confirmed": false,
     "youtube_upload": false,
-    "human_visual_approved": false
+    "human_visual_approved": false,
+    "dispatched_workflow_run_id": 43766496772,
+    "workflow_result": "failure",
+    "failure_stage": "python -m videoforge.proxy_images health --url $PROXY_ENDPOINT",
+    "failure_message": "Proxy returned HTTP 503 from authenticated /health; no generation command was reached",
+    "image_generation_started": false,
+    "image_png_created": false,
+    "re_dispatch_without_diagnosis": false,
+    "next_step": "Investigate availability of stored Codex proxy account upstream /health 503, resolve service/account error, then explicitly schedule safe resumption without reapproval of image calls"
   }
 }

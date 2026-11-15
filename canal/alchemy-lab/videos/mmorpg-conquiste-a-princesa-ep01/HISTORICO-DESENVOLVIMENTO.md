@@ -1,5 +1,10 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — primeiro disparo autônomo executado, proxy HTTP 503
+- [Coordenador 43766477030](https://github.com/HelioConde/VideoForge-IA/actions/runs/43766477030) **SUCCESS**: preflight e testes passaram, reserva durável de uma chamada registrada na main antes de `workflow_dispatch`.
+- [Gerador 43766496772](https://github.com/HelioConde/VideoForge-IA/actions/runs/43766496772) **FAILURE**: proxy efêmero iniciou e `/health/live` respondeu; a checagem autenticada `python -m videoforge.proxy_images health` retornou **HTTP 503** antes de executar `production_art`. **Nenhuma imagem PNG foi criada nem arquivada; nenhuma cobrança de geração pode ser afirmada.**
+- Intenção persistida em `estado-atual.json` com `status=blocked_proxy_authenticated_health_http_503`; não emitir segundo pedido sem diagnosticar proxy/conta/cota. **A autorização permanente continua válida**, sem necessidade de solicitar outra aprovação ao responsável depois de resolver falha técnica. YouTube segue proibido.
+
 ## 15/11/2026 — autorização prévia permanente e disparo único por coordenador
 
 - Pedido do responsável: todas as chamadas de geração do EP01 V2 sem autorização individual; documentado nos arquivos principais e policy do canal.
