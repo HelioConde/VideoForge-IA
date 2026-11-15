@@ -1,0 +1,109 @@
+{
+  "schema": "videoforge/alchemy-c01-performance-review/v3",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P03",
+  "scene_abs_frames": [
+    150,
+    239
+  ],
+  "fps": 30,
+  "duration_frames": 90,
+  "continuity_from": "atuacao-c01-p03-v2.json",
+  "source_art": "EXISTING_SHA_VERIFIED_RGB_RGBA_ONLY",
+  "image_generation_calls": 0,
+  "manual": "docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md",
+  "head_max_rotation_abs_deg": 2,
+  "camera": "LOCKED_FOCAL_LENGTH_NO_PAN_NO_ZOOM",
+  "segments": [
+    {
+      "local_frames": [
+        0,
+        17
+      ],
+      "emotion": "Kael se cala de joelhos perante o trono",
+      "rig": "tension_hold",
+      "moving_parts": []
+    },
+    {
+      "local_frames": [
+        18,
+        42
+      ],
+      "emotion": "Kael inspira, a tensão passa pelos ombros",
+      "rig": "breath",
+      "moving_parts": [
+        "kael.ombros.translateY",
+        "kael.ombros.translateX",
+        "kael.jaqueta.mesh",
+        "kael.cabelo.mesh"
+      ]
+    },
+    {
+      "local_frames": [
+        43,
+        72
+      ],
+      "emotion": "Kael aperta o punho contra o joelho e flexiona os braços",
+      "rig": "braced_arms",
+      "moving_parts": [
+        "kael.braco-direito.rotationZ",
+        "kael.antebraco.rotationZ",
+        "kael.punhos.rotationZ",
+        "kael.braco-esquerdo.rotationZ"
+      ]
+    },
+    {
+      "local_frames": [
+        73,
+        89
+      ],
+      "emotion": "Kael levanta o queixo minimamente e sustenta a reação",
+      "rig": "head_pitch_hold",
+      "moving_parts": [
+        "kael.cabeca.rotationZ",
+        "kael.cabelo.mesh"
+      ]
+    }
+  ],
+  "rig_parts": [
+    "kael.ombros",
+    "kael.cabeca",
+    "kael.braco-direito",
+    "kael.antebraco",
+    "kael.punhos",
+    "kael.braco-esquerdo",
+    "kael.cabelo",
+    "kael.jaqueta"
+  ],
+  "keyframe_tracks_in_shot": 8,
+  "changes_from_v2": {
+    "head_rotation_deg_max_abs": 2,
+    "head_translation_y_px": 0,
+    "right_upper_arm_rotation_deg_max": 5.8,
+    "right_forearm_rotation_deg_min": -8.5,
+    "wrist_rotation_deg_max": 13,
+    "left_upper_arm_rotation_deg_min": -2.9,
+    "shoulder_translation_y_px_min": -4.2,
+    "shoulder_translation_x_px_max": 1.4,
+    "mesh_assets_not_replaced": true
+  },
+  "technical_qa_required": [
+    "threecanvas_own_independent_sprite_layers",
+    "real_mp4_only_kael_actor_motion",
+    "original_background_newly_exposed_at_nape",
+    "locked_camera_against_fake_motion",
+    "source_sha_preserved",
+    "waist_jacket_source_pin_fixed",
+    "neutral_recomposition_and_human_edge_review"
+  ],
+  "known_pending_visual_problems": [
+    "guard_spear_masks_source_contamination",
+    "aldric_throne_background_contamination",
+    "hidden_neck_skin_not_reconstructed_and_must_not_be_invented",
+    "possible_arm_jacket_seams_need_visual_inspection"
+  ],
+  "human_visual_approved": false,
+  "official_video_approved": false,
+  "youtube_upload": false
+}
