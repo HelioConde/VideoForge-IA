@@ -316,7 +316,7 @@
               "target": "kael.punhos",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Palma contra joelho, pulso movimenta camada independente; sem dedos inventados [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [reforço leve de gesto sem alterar rotação do ombro direito]",
+              "description": "Palma contra joelho, pulso movimenta camada independente; sem dedos inventados [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [reforço leve de gesto sem alterar rotação do ombro direito] [ênfase no gesto do punho, sem mover imagem inteira]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -329,19 +329,19 @@
                 },
                 {
                   "frame": 186,
-                  "value": 5.564
+                  "value": 5.731
                 },
                 {
                   "frame": 211,
-                  "value": 16.692
+                  "value": 17.193
                 },
                 {
                   "frame": 228,
-                  "value": 18.083
+                  "value": 18.625
                 },
                 {
                   "frame": 239,
-                  "value": 14.606
+                  "value": 15.044
                 }
               ],
               "measuredPivotRequired": true
@@ -500,7 +500,7 @@
               "target": "kael.braco-esquerdo",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Braço oposto acompanha a inspiração sem mover o corpo inteiro [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [reforço leve de gesto sem alterar rotação do ombro direito]",
+              "description": "Braço oposto acompanha a inspiração sem mover o corpo inteiro [V3 seguro: amplitude recalibrada para evitar abertura de gola e preservar atuação] [reforço leve de gesto sem alterar rotação do ombro direito] [reforço moderado do braço oposto sem abrir gola direita]",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -513,15 +513,15 @@
                 },
                 {
                   "frame": 198,
-                  "value": -1.897
+                  "value": -2.049
                 },
                 {
                   "frame": 219,
-                  "value": -4.583
+                  "value": -4.95
                 },
                 {
                   "frame": 239,
-                  "value": -3.793
+                  "value": -4.096
                 }
               ],
               "measuredPivotRequired": true
