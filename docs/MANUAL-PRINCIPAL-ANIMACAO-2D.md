@@ -48,6 +48,9 @@ PNG RGBA8 válido **não prova** que um sprite está corretamente separado. Alé
 ## 5. Testes obrigatórios (fail closed)
 
 - **Frames exatos**: renderizar duas vezes frames `0, 30, 74, 76, 173, 175` e final; comparar pixels/hashes.
+- **Atuação perceptível no enquadramento final (regras C01)**: SHA e movimento técnico de 50 pixels NÃO provam que o espectador verá a ação. Avaliar a amplitude de **pivôs reais** (cabeça, punhos, ombros, cabelo e roupa) e comparar quadros decodificados do **MP4 verdadeiro** na região do personagem, excluindo texto, legenda, zoom/pan de câmera e outras fontes de movimento falso. Conferir também o vídeo no tamanho final de exibição, especialmente no celular. Se o resultado parecer parado, rejeitar a atuação e revisar storyboard/articulação sem balançar o PNG inteiro.
+- **Sem liberar exceção à regra de cabeça**: a rotação de até `2°` continua sendo o limite deste manual para rig aprovado. Um **rascunho técnico experimental** pode ser usado para diagnosticar atuação maior, mas deve ser marcado `humanVisualReview=false`, `publishable=false`, `officialVideoApproved=false` e registrar qualquer divergência; o teste não aprova amplitude acima do limite, nem autoriza preencher anatomia com pixels inventados. Corrigir underlays e obter revisão de rig antes de qualquer vídeo oficial.
+
 - **Cabeça**: `abs(rotationDeg) <= 2`; pivot dentro da cabeça e coincidindo com pescoço/underlay real.
 - **Piscar**: imagens realmente diferentes **somente** nas áreas dos olhos, frame aberto/fechado correto, rosto opaco e franja não alterada.
 - **Malha**: linha superior costurada imóvel; pontas dentro do envelope permitido, sem triângulos degenerados ou fendas visíveis.
