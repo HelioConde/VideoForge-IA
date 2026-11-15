@@ -65,7 +65,9 @@ class RemakeRigGeometryTests(unittest.TestCase):
             self.assertEqual(verify_report(package,12345,root),report)
             self.assertEqual(persist(package,12345,root),report) # idempotent
             path=package/FILE_NAME
-            path.write_text('{"fake":true}',encoding="utf-8")
+            forged=dict(report)
+            forged["official_video_approved"]=True
+            path.write_text(json.dumps(forged),encoding="utf-8")
             with self.assertRaisesRegex(VideoForgeError,"ATTESTATION_CHANGED"):
                 verify_report(package,12345,root)
             with self.assertRaisesRegex(VideoForgeError,"ALREADY_EXISTS_DIFFERENT"):
