@@ -38,6 +38,9 @@ export type CinematicShot = {
   actors?:CinematicActor[];
   staticShotApproved?:boolean;
   audioFile?:string|null;
+  /** Original WAVE hash from the audited C01-P01 technical media run. */
+  audioSha256?:string;
+  audioOriginVerified?:true;
   hud?:CinematicHud|null;
   humanVisualApproved?:true;
   originShaVerified?:true;
@@ -57,6 +60,11 @@ export type CinematicEpisodeProps = {
 
 const SHA=/^[a-f0-9]{64}$/;
 const SHOT=/^C\d{2}-P\d{2}$/;
+const OFFICIAL_SHOTS=40;
+const OFFICIAL_END_FRAME=4890;
+const OPENING_AUDIO_SHA='22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d';
+const OPENING_AUDIO_PATH='vf-remake/c01-p01/sword-original.wav';
+const NEW_SHOT_FRAMES=new Map([['C01-P05',[310,360]],['C08-P04',[2880,2940]],['C12-P04',[4290,4350]]]);
 /** Native shot sources may be legacy 2:3 or the approved portraits at ~9:16. */
 const nativeCanvasAllowed=(size:{width:number;height:number}|undefined):boolean=>
   Boolean(size && Number.isSafeInteger(size.width)&&Number.isSafeInteger(size.height) &&
@@ -78,8 +86,8 @@ export const validateCinematicRender=(input:CinematicEpisodeProps):void=>{
     input.channel!=='alchemy-lab' ||
     input.videoId!=='mmorpg-conquiste-a-princesa-ep01' ||
     input.fps!==30 || input.width!==1080 || input.height!==1920 ||
-    input.totalFrames!==4890 || input.renderApproved!==true ||
-    !Array.isArray(input.shots) || input.shots.length!==37)
+    input.totalFrames!==OFFICIAL_END_FRAME || input.renderApproved!==true ||
+    !Array.isArray(input.shots) || input.shots.length!==OFFICIAL_SHOTS)
     throw new Error('CINEMATIC_RENDER_APPROVED_EDL_REQUIRED');
 
   let cursor=0;
@@ -92,12 +100,18 @@ export const validateCinematicRender=(input:CinematicEpisodeProps):void=>{
       shot.startFrame!==cursor || shot.renderAllowed!==true)
       throw new Error('CINEMATIC_RENDER_FRAME_OR_APPROVAL_INVALID');
     used.add(shot.id);
+    const required=NEW_SHOT_FRAMES.get(shot.id);
+    if(required && (shot.startFrame!==required[0] ||
+      shot.endFrameExclusive!==required[1]))
+      throw new Error('CINEMATIC_V2_NEW_INSERT_FRAMES_INVALID');
     cursor=shot.endFrameExclusive;
     if(shot.type==='black'){
       if(index!==0 || shot.id!=='C01-P01' ||
         shot.startFrame!==0 || shot.endFrameExclusive!==60 ||
         shot.status!=='black_no_art_required' ||
-        shot.backgroundFile || shot.audioFile || shot.hud ||
+        shot.backgroundFile || shot.audioFile!==OPENING_AUDIO_PATH ||
+        shot.audioSha256!==OPENING_AUDIO_SHA ||
+        shot.audioOriginVerified!==true || shot.hud ||
         (shot.actors?.length??0)!==0 || shot.characters.length!==0)
         throw new Error('CINEMATIC_BLACK_OPENING_INVALID');
       continue;
@@ -110,6 +124,9 @@ export const validateCinematicRender=(input:CinematicEpisodeProps):void=>{
       !SHA.test(shot.sourceMotherSha256) ||
       !SHA.test(shot.backgroundSha256??''))
       throw new Error('CINEMATIC_SHOT_VISUAL_QA_OR_ORIGIN_MISSING');
+    if(shot.audioFile && (shot.audioFile.includes('..') ||
+      shot.audioFile.startsWith('/') || !shot.audioFile.endsWith('.wav')))
+      throw new Error('CINEMATIC_AUDIO_NOT_VERIFIED_AS_LOCAL_WAV');
     if(['close_up','extreme_close_up','insert'].includes(shot.type)){
       const c=shot.sourceCanvas!;
       const box=shot.focalBbox;
@@ -187,7 +204,8 @@ export const validateCinematicRender=(input:CinematicEpisodeProps):void=>{
       (actors.length===0 || !shot.backgroundFile.includes('/'+shot.id+'/')))
       throw new Error('CINEMATIC_CLOSEUP_SOURCE_INDEPENDENCE_REQUIRED');
   }
-  if(cursor!==input.totalFrames || used.size!==37)
+  if(cursor!==input.totalFrames || used.size!==OFFICIAL_SHOTS ||
+    [...NEW_SHOT_FRAMES.keys()].some(id=>!used.has(id)))
     throw new Error('CINEMATIC_EPISODE_TIMELINE_INCOMPLETE');
 };
 

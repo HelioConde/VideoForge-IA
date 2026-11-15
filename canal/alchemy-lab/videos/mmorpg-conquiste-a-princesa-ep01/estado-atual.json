@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Use official 40-shot V2 queue, seek approved real V2 anchor and paid call authorization before production art; maintain C01-P02 original 90-frame articulated rig",
+  "next_action": "Verify GitHub Python/Node QA; prepare detailed 40-shot motion plan with SHA-gated asset calibration",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -1011,5 +1011,38 @@
       "total_frames": 4890
     },
     "real_mother_package_skipped_due_to_missing_source": true
+  },
+  "v2_40_shots_renderer_contract_20261115": {
+    "status": "code_submitted_ci_pending",
+    "official_shot_count": 40,
+    "narrative_scenes": 14,
+    "total_frames": 4890,
+    "visual_shots_pending_art": 39,
+    "edl": "remake-v2-cinematic-edl.json",
+    "edl_builder": "videoforge/remake_v2_edl.py",
+    "legacy_edl_untouched": "timeline-cinematografica.json",
+    "render_gate": "motion-remotion/src/cinematic-timeline.ts",
+    "new_insert_windows": {
+      "C01-P05": [
+        310,
+        360
+      ],
+      "C08-P04": [
+        2880,
+        2940
+      ],
+      "C12-P04": [
+        4290,
+        4350
+      ]
+    },
+    "opening_wav": "vf-remake/c01-p01/sword-original.wav",
+    "opening_sha256": "22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d",
+    "opening_audio_bytes_staged_for_official_render": false,
+    "images_generated": 0,
+    "mp4_full_episode": false,
+    "youtube_uploaded": false,
+    "provider_paid_calls_authorized": false,
+    "next_step": "Verify GitHub Python/Node QA; prepare detailed 40-shot motion plan with SHA-gated asset calibration"
   }
 }

@@ -1,0 +1,1330 @@
+{
+  "schema": "videoforge/remake-v2-cinematic-edl/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "activeRemakeVersion": "remake-v2-20261115",
+  "source": "remake-ep01-planos.json",
+  "sourceStory": "roteiro.json",
+  "format": {
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "totalFrames": 4890,
+    "durationSeconds": 163
+  },
+  "scenes": 14,
+  "shotCount": 40,
+  "blackShots": 1,
+  "artRequiredShots": 39,
+  "unapprovedShots": 39,
+  "renderOfficialAllowed": false,
+  "youtubeUploaded": false,
+  "legacy37ShotEdlUntouched": "timeline-cinematografica.json",
+  "audioRequiresShaVerifiedBytesBeforeOfficialRender": true,
+  "status": "editorial_40_shots_art_and_audio_staging_pending",
+  "shots": [
+    {
+      "id": "C01-P01",
+      "scene": "C01",
+      "startFrame": 0,
+      "endFrameExclusive": 60,
+      "durationFrames": 60,
+      "type": "black",
+      "characters": [],
+      "focus": "nenhum",
+      "emotion": "silencio",
+      "camera": {
+        "lens_mm": 0,
+        "position_and_intent": "quadro sem arte visível",
+        "depth_of_field": "sem imagem",
+        "description": "Preto absoluto, só som de aço. Não encomendar imagem.",
+        "dramatic_direction": "Preto absoluto, som do aço; nunca chamar IA de imagem"
+      },
+      "direction": "preto e SFX, sem imagem",
+      "spokenOrSfx": "SFX: fricção de bainha distante",
+      "hudPolicy": "none",
+      "status": "black_no_art_required",
+      "renderAllowed": true,
+      "humanVisualApproved": false,
+      "assetPaths": null,
+      "audioFile": "vf-remake/c01-p01/sword-original.wav",
+      "audioSha256": "22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d",
+      "audioOriginStatus": "original_wav_audited_in_actions_not_yet_materialized_for_official_episode",
+      "technicalPreviewArtifact": "vf-remake-c01-p01-opening-43709191586"
+    },
+    {
+      "id": "C01-P02",
+      "scene": "C01",
+      "startFrame": 60,
+      "endFrameExclusive": 150,
+      "durationFrames": 90,
+      "type": "insert",
+      "characters": [
+        "carrasco"
+      ],
+      "focus": "espada",
+      "emotion": "ameaça",
+      "camera": {
+        "lens_mm": 90,
+        "position_and_intent": "câmera estável focada em objeto/mãos",
+        "depth_of_field": "macro seletivo",
+        "description": "Detalhe da mão enluvada desembainhando espada; lâmina e bainha no quadro, nenhum rosto.",
+        "dramatic_direction": "Espada pertence ao carrasco; mão, bainha e lâmina separadas"
+      },
+      "direction": "objeto e mãos separados, pivôs e contato físico",
+      "spokenOrSfx": "SFX: desembainhar, lâmina separada, sem sangue",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C01-P02/scene-mother.png",
+        "background": "assets/remake-v2/C01-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C01-P02/rig.json",
+        "qa": "assets/remake-v2/C01-P02/qa.json"
+      }
+    },
+    {
+      "id": "C01-P03",
+      "scene": "C01",
+      "startFrame": 150,
+      "endFrameExclusive": 240,
+      "durationFrames": 90,
+      "type": "low_angle",
+      "characters": [
+        "kael",
+        "aldric"
+      ],
+      "focus": "kael",
+      "emotion": "humilhação",
+      "camera": {
+        "lens_mm": 35,
+        "position_and_intent": "câmera abaixo dos personagens, sem distorção",
+        "depth_of_field": "profundidade cinematográfica",
+        "description": "Ângulo baixo atrás de Kael ajoelhado; trono imenso alto e severo, cabeça baixa, princesa fora do quadro.",
+        "dramatic_direction": "Kael ajoelhado, leve respiração das costas e cabeça, mão e bota fixas"
+      },
+      "direction": "personagens independentes, respiração/cabelo/tecido",
+      "spokenOrSfx": "SFX: joelho no piso de pedra",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C01-P03/scene-mother.png",
+        "background": "assets/remake-v2/C01-P03/background-reconstructed.png",
+        "rig": "assets/remake-v2/C01-P03/rig.json",
+        "qa": "assets/remake-v2/C01-P03/qa.json"
+      }
+    },
+    {
+      "id": "C01-P04",
+      "scene": "C01",
+      "startFrame": 240,
+      "endFrameExclusive": 310,
+      "durationFrames": 70,
+      "type": "wide",
+      "characters": [
+        "kael",
+        "aldric",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "focus": "kael",
+      "emotion": "pressão",
+      "camera": {
+        "lens_mm": 28,
+        "position_and_intent": "plano de estabelecimento espacial",
+        "depth_of_field": "profundo com perspectiva",
+        "description": "Grande plano arquitetônico do tribunal, dois guardas em laterais com lanças formando X atrás de Kael; rei no trono; princesa não aparece.",
+        "dramatic_direction": "Lanças cruzadas por dois guardas ATRÁS de Kael, trono ao fundo, Elara AUSENTE"
+      },
+      "direction": "cenário em camadas, atores e adereços independentes",
+      "spokenOrSfx": "SFX: metal contra metal ao cruzar lanças",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C01-P04/scene-mother.png",
+        "background": "assets/remake-v2/C01-P04/background-reconstructed.png",
+        "rig": "assets/remake-v2/C01-P04/rig.json",
+        "qa": "assets/remake-v2/C01-P04/qa.json"
+      }
+    },
+    {
+      "id": "C01-P05",
+      "scene": "C01",
+      "startFrame": 310,
+      "endFrameExclusive": 360,
+      "durationFrames": 50,
+      "type": "insert",
+      "characters": [
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "focus": "lancas",
+      "emotion": "ameaça iminente",
+      "camera": {
+        "lens_mm": 100,
+        "position_and_intent": "Câmera macro estável no cruzamento das lanças, luvas dos guardas em primeiro plano",
+        "depth_of_field": "foco nas luvas e hastes, trono profundamente desfocado",
+        "description": "Macro das duas mãos enluvadas dos guardas apertando as hastes das lanças já cruzadas atrás de Kael. Os metais vibram, o rei permanece distante e a princesa não aparece.",
+        "dramatic_direction": "O som do atrito e um pequeno ajuste das mãos reforçam a ameaça; duas lanças separadas com pivôs, sem repetir a imagem inteira do trono."
+      },
+      "direction": "duas hastes com pivôs e mãos enluvadas, underlay do salão sem duplicação",
+      "spokenOrSfx": "SFX: luvas tensionam lanças, leve ressonância metálica",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C01-P05/scene-mother.png",
+        "background": "assets/remake-v2/C01-P05/background-reconstructed.png",
+        "rig": "assets/remake-v2/C01-P05/rig.json",
+        "qa": "assets/remake-v2/C01-P05/qa.json"
+      }
+    },
+    {
+      "id": "C02-P01",
+      "scene": "C02",
+      "startFrame": 360,
+      "endFrameExclusive": 570,
+      "durationFrames": 210,
+      "type": "close_up",
+      "characters": [
+        "aldric"
+      ],
+      "focus": "aldric",
+      "emotion": "autoridade",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "rosto e expressão dominam o quadro",
+        "depth_of_field": "raso e focado nos olhos",
+        "description": "Close frontal da face do rei Aldric, coroa e barba nítidas, olhos severos; fundo do trono muito desfocado.",
+        "dramatic_direction": "Close frontal da face do rei Aldric, coroa e barba nítidas, olhos severos; fundo do trono muito desfocado."
+      },
+      "direction": "cabeça/olhos/cabelo, boca se há fala, pescoço reconstruído",
+      "spokenOrSfx": "REI: Kael! Você é acusado de sequestrar a princesa deste reino!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C02-P01/scene-mother.png",
+        "background": "assets/remake-v2/C02-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C02-P01/rig.json",
+        "qa": "assets/remake-v2/C02-P01/qa.json"
+      }
+    },
+    {
+      "id": "C02-P02",
+      "scene": "C02",
+      "startFrame": 570,
+      "endFrameExclusive": 720,
+      "durationFrames": 150,
+      "type": "close_up",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael",
+      "emotion": "medo contido",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "rosto e expressão dominam o quadro",
+        "depth_of_field": "raso e focado nos olhos",
+        "description": "Close lateral 3/4 do rosto ferido de Kael, cabeça ainda baixa, sobrancelhas contraídas, olhos mirando chão.",
+        "dramatic_direction": "Close lateral 3/4 do rosto ferido de Kael, cabeça ainda baixa, sobrancelhas contraídas, olhos mirando chão."
+      },
+      "direction": "cabeça/olhos/cabelo, boca se há fala, pescoço reconstruído",
+      "spokenOrSfx": "KAEL (pensamento): Ontem eu era só um jogador. Agora posso ser executado?",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C02-P02/scene-mother.png",
+        "background": "assets/remake-v2/C02-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C02-P02/rig.json",
+        "qa": "assets/remake-v2/C02-P02/qa.json"
+      }
+    },
+    {
+      "id": "C03-P01",
+      "scene": "C03",
+      "startFrame": 720,
+      "endFrameExclusive": 810,
+      "durationFrames": 90,
+      "type": "extreme_close_up",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael.olhos",
+      "emotion": "lembrança",
+      "camera": {
+        "lens_mm": 110,
+        "position_and_intent": "recorte de olhos ou objeto, sem face deformada",
+        "depth_of_field": "extremamente raso",
+        "description": "Macro de olhos e pupila de Kael; reflexo azul dentro da íris, rosto real opaco e franja coerente.",
+        "dramatic_direction": "Macro de olhos e pupila de Kael; reflexo azul dentro da íris, rosto real opaco e franja coerente."
+      },
+      "direction": "pupila/pálpebras originais, olhos em camadas, piscar",
+      "spokenOrSfx": "KAEL (pensamento): Como foi que cheguei até aqui?",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C03-P01/scene-mother.png",
+        "background": "assets/remake-v2/C03-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C03-P01/rig.json",
+        "qa": "assets/remake-v2/C03-P01/qa.json"
+      }
+    },
+    {
+      "id": "C03-P02",
+      "scene": "C03",
+      "startFrame": 810,
+      "endFrameExclusive": 930,
+      "durationFrames": 120,
+      "type": "match_cut",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael",
+      "emotion": "desorientação",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "dois planos conectados por forma/cor, sem morphing do personagem",
+        "depth_of_field": "foco coincidente",
+        "description": "Match cut visual entre o reflexo azul na pupila e a luz do monitor; dois quadros separados, sem morphing do rosto.",
+        "dramatic_direction": "Match cut entre olho e monitor com duas imagens próprias"
+      },
+      "direction": "duas artes-mãe separadas conectadas por corte, sem morph",
+      "spokenOrSfx": "SFX: transição digital abafada",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C03-P02/scene-mother.png",
+        "background": "assets/remake-v2/C03-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C03-P02/rig.json",
+        "qa": "assets/remake-v2/C03-P02/qa.json"
+      }
+    },
+    {
+      "id": "C04-P01",
+      "scene": "C04",
+      "startFrame": 930,
+      "endFrameExclusive": 1050,
+      "durationFrames": 120,
+      "type": "over_shoulder",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael",
+      "emotion": "imersão",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "câmera atrás do ombro de alguém, eixo de 180° preservado",
+        "depth_of_field": "sujeito focal e ombro em profundidade",
+        "description": "Da altura do ombro de Kael no computador; lateral do rosto, mão no mouse e teclado legíveis; luz azul.",
+        "dramatic_direction": "Da altura do ombro de Kael no computador; lateral do rosto, mão no mouse e teclado legíveis; luz azul."
+      },
+      "direction": "foreground e personagem em foco com oclusão real",
+      "spokenOrSfx": "KAEL: Só mais uma missão antes de dormir...",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C04-P01/scene-mother.png",
+        "background": "assets/remake-v2/C04-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C04-P01/rig.json",
+        "qa": "assets/remake-v2/C04-P01/qa.json"
+      }
+    },
+    {
+      "id": "C04-P02",
+      "scene": "C04",
+      "startFrame": 1050,
+      "endFrameExclusive": 1170,
+      "durationFrames": 120,
+      "type": "insert",
+      "characters": [],
+      "focus": "monitor",
+      "emotion": "ruptura",
+      "camera": {
+        "lens_mm": 90,
+        "position_and_intent": "câmera estável focada em objeto/mãos",
+        "depth_of_field": "macro seletivo",
+        "description": "Tela do monitor como detalhe de objeto; a mensagem de erro deve ser interface separada no Remotion, jamais texto pintado.",
+        "dramatic_direction": "Tela do monitor como detalhe de objeto; a mensagem de erro deve ser interface separada no Remotion, jamais texto pintado."
+      },
+      "direction": "objeto e mãos separados, pivôs e contato físico",
+      "spokenOrSfx": "HUD: ERRO DE CONEXÃO — TRANSFERÊNCIA INICIADA",
+      "hudPolicy": "remotion_overlay",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C04-P02/scene-mother.png",
+        "background": "assets/remake-v2/C04-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C04-P02/rig.json",
+        "qa": "assets/remake-v2/C04-P02/qa.json"
+      }
+    },
+    {
+      "id": "C04-P03",
+      "scene": "C04",
+      "startFrame": 1170,
+      "endFrameExclusive": 1320,
+      "durationFrames": 150,
+      "type": "medium",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael",
+      "emotion": "pânico",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "busto até cintura e ambiente funcional",
+        "depth_of_field": "médio",
+        "description": "Câmera lateral vê luz azul nas mãos e no rosto de Kael que tenta proteger os olhos; não mudar anatomia.",
+        "dramatic_direction": "Câmera lateral vê luz azul nas mãos e no rosto de Kael que tenta proteger os olhos; não mudar anatomia."
+      },
+      "direction": "tronco, cabeça, mãos, cabelo/capa com rig",
+      "spokenOrSfx": "KAEL: O quê?!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C04-P03/scene-mother.png",
+        "background": "assets/remake-v2/C04-P03/background-reconstructed.png",
+        "rig": "assets/remake-v2/C04-P03/rig.json",
+        "qa": "assets/remake-v2/C04-P03/qa.json"
+      }
+    },
+    {
+      "id": "C05-P01",
+      "scene": "C05",
+      "startFrame": 1320,
+      "endFrameExclusive": 1470,
+      "durationFrames": 150,
+      "type": "close_up",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael",
+      "emotion": "despertar",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "rosto e expressão dominam o quadro",
+        "depth_of_field": "raso e focado nos olhos",
+        "description": "Close de Kael no chão quando abre os olhos; surpresa, poeira, contraste entre rosto e estrada desfocada.",
+        "dramatic_direction": "Close de Kael no chão quando abre os olhos; surpresa, poeira, contraste entre rosto e estrada desfocada."
+      },
+      "direction": "cabeça/olhos/cabelo, boca se há fala, pescoço reconstruído",
+      "spokenOrSfx": "SFX: grama e vento",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C05-P01/scene-mother.png",
+        "background": "assets/remake-v2/C05-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C05-P01/rig.json",
+        "qa": "assets/remake-v2/C05-P01/qa.json"
+      }
+    },
+    {
+      "id": "C05-P02",
+      "scene": "C05",
+      "startFrame": 1470,
+      "endFrameExclusive": 1590,
+      "durationFrames": 120,
+      "type": "wide",
+      "characters": [
+        "kael"
+      ],
+      "focus": "muralhas",
+      "emotion": "escala do mundo",
+      "camera": {
+        "lens_mm": 28,
+        "position_and_intent": "plano de estabelecimento espacial",
+        "depth_of_field": "profundo com perspectiva",
+        "description": "Plano geral de Arken, muralhas e árvores em profundidade; Kael pequeno na estrada, sem rosto dominante.",
+        "dramatic_direction": "Plano geral de Arken, muralhas e árvores em profundidade; Kael pequeno na estrada, sem rosto dominante."
+      },
+      "direction": "cenário em camadas, atores e adereços independentes",
+      "spokenOrSfx": "KAEL: Espera... eu entrei no jogo?!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C05-P02/scene-mother.png",
+        "background": "assets/remake-v2/C05-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C05-P02/rig.json",
+        "qa": "assets/remake-v2/C05-P02/qa.json"
+      }
+    },
+    {
+      "id": "C05-P03",
+      "scene": "C05",
+      "startFrame": 1590,
+      "endFrameExclusive": 1740,
+      "durationFrames": 150,
+      "type": "medium",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael",
+      "emotion": "descoberta",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "busto até cintura e ambiente funcional",
+        "depth_of_field": "médio",
+        "description": "Plano médio 3/4 com Kael fitando o próprio campo de visão, olhos seguindo HUD composto no Remotion.",
+        "dramatic_direction": "Plano médio 3/4 com Kael fitando o próprio campo de visão, olhos seguindo HUD composto no Remotion."
+      },
+      "direction": "tronco, cabeça, mãos, cabelo/capa com rig",
+      "spokenOrSfx": "HUD: MUNDO ARKEN / CLASSE AVENTUREIRO / NÍVEL 1",
+      "hudPolicy": "remotion_overlay",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C05-P03/scene-mother.png",
+        "background": "assets/remake-v2/C05-P03/background-reconstructed.png",
+        "rig": "assets/remake-v2/C05-P03/rig.json",
+        "qa": "assets/remake-v2/C05-P03/qa.json"
+      }
+    },
+    {
+      "id": "C06-P01",
+      "scene": "C06",
+      "startFrame": 1740,
+      "endFrameExclusive": 1920,
+      "durationFrames": 180,
+      "type": "insert",
+      "characters": [
+        "kael",
+        "figurantes"
+      ],
+      "focus": "bolsa",
+      "emotion": "escassez",
+      "camera": {
+        "lens_mm": 90,
+        "position_and_intent": "câmera estável focada em objeto/mãos",
+        "depth_of_field": "macro seletivo",
+        "description": "Detalhe das duas mãos de Kael abrindo bolsa vazia; bancas desfocadas ao fundo.",
+        "dramatic_direction": "Detalhe das duas mãos de Kael abrindo bolsa vazia; bancas desfocadas ao fundo."
+      },
+      "direction": "objeto e mãos separados, pivôs e contato físico",
+      "spokenOrSfx": "KAEL (pensamento): Nível um, sem dinheiro e sem mapa...",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C06-P01/scene-mother.png",
+        "background": "assets/remake-v2/C06-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C06-P01/rig.json",
+        "qa": "assets/remake-v2/C06-P01/qa.json"
+      }
+    },
+    {
+      "id": "C06-P02",
+      "scene": "C06",
+      "startFrame": 1920,
+      "endFrameExclusive": 2070,
+      "durationFrames": 150,
+      "type": "close_up",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael",
+      "emotion": "ironia",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "rosto e expressão dominam o quadro",
+        "depth_of_field": "raso e focado nos olhos",
+        "description": "Close de reação irônica de Kael à missão secundária; sobrancelha e boca expressivas, HUD separado.",
+        "dramatic_direction": "Close de reação irônica de Kael à missão secundária; sobrancelha e boca expressivas, HUD separado."
+      },
+      "direction": "cabeça/olhos/cabelo, boca se há fala, pescoço reconstruído",
+      "spokenOrSfx": "HUD: MISSÃO SECUNDÁRIA — SOBREVIVA AO PRIMEIRO DIA",
+      "hudPolicy": "remotion_overlay",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C06-P02/scene-mother.png",
+        "background": "assets/remake-v2/C06-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C06-P02/rig.json",
+        "qa": "assets/remake-v2/C06-P02/qa.json"
+      }
+    },
+    {
+      "id": "C07-P01",
+      "scene": "C07",
+      "startFrame": 2070,
+      "endFrameExclusive": 2190,
+      "durationFrames": 120,
+      "type": "tracking",
+      "characters": [
+        "elara"
+      ],
+      "focus": "elara",
+      "emotion": "urgência",
+      "camera": {
+        "lens_mm": 35,
+        "position_and_intent": "travelling guiado, composição de ação",
+        "depth_of_field": "médio",
+        "description": "Elara encapuzada corre pelo beco em três quartos, olha para trás, rosto parcialmente revelado sem revelar o título real.",
+        "dramatic_direction": "Elara encapuzada sem revelar que é princesa"
+      },
+      "direction": "marcha/corrida articulada, pés e roupas em malha",
+      "spokenOrSfx": "SFX: passos apressados",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C07-P01/scene-mother.png",
+        "background": "assets/remake-v2/C07-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C07-P01/rig.json",
+        "qa": "assets/remake-v2/C07-P01/qa.json"
+      }
+    },
+    {
+      "id": "C07-P02",
+      "scene": "C07",
+      "startFrame": 2190,
+      "endFrameExclusive": 2340,
+      "durationFrames": 150,
+      "type": "low_angle",
+      "characters": [
+        "elara",
+        "mascarado_1",
+        "mascarado_2"
+      ],
+      "focus": "perseguidores",
+      "emotion": "perigo",
+      "camera": {
+        "lens_mm": 35,
+        "position_and_intent": "câmera abaixo dos personagens, sem distorção",
+        "depth_of_field": "profundidade cinematográfica",
+        "description": "Perspectiva baixa do beco com os dois mascarados surgindo na curva; Elara recua à distância.",
+        "dramatic_direction": "Perspectiva baixa do beco com os dois mascarados surgindo na curva; Elara recua à distância."
+      },
+      "direction": "personagens independentes, respiração/cabelo/tecido",
+      "spokenOrSfx": "ELARA: Não me entregue a eles!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C07-P02/scene-mother.png",
+        "background": "assets/remake-v2/C07-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C07-P02/rig.json",
+        "qa": "assets/remake-v2/C07-P02/qa.json"
+      }
+    },
+    {
+      "id": "C07-P03",
+      "scene": "C07",
+      "startFrame": 2340,
+      "endFrameExclusive": 2460,
+      "durationFrames": 120,
+      "type": "two_shot",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "focus": "kael_elara",
+      "emotion": "pedido de ajuda",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "duas pessoas em plano de interação",
+        "depth_of_field": "sujeitos equilibrados",
+        "description": "Plano curto a dois: Elara pede ajuda com mão estendida, Kael se vira assustado, olhos se cruzam.",
+        "dramatic_direction": "Plano curto a dois: Elara pede ajuda com mão estendida, Kael se vira assustado, olhos se cruzam."
+      },
+      "direction": "dois rigs separados e contato de mãos",
+      "spokenOrSfx": "KAEL: Fique atrás de mim.",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C07-P03/scene-mother.png",
+        "background": "assets/remake-v2/C07-P03/background-reconstructed.png",
+        "rig": "assets/remake-v2/C07-P03/rig.json",
+        "qa": "assets/remake-v2/C07-P03/qa.json"
+      }
+    },
+    {
+      "id": "C08-P01",
+      "scene": "C08",
+      "startFrame": 2460,
+      "endFrameExclusive": 2610,
+      "durationFrames": 150,
+      "type": "over_shoulder",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "focus": "kael",
+      "emotion": "plano improvisado",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "câmera atrás do ombro de alguém, eixo de 180° preservado",
+        "depth_of_field": "sujeito focal e ombro em profundidade",
+        "description": "Sobre o ombro de Kael, mostrar carrinho de madeira próximo; mão estendida rumo à lateral.",
+        "dramatic_direction": "Sobre o ombro de Kael, mostrar carrinho de madeira próximo; mão estendida rumo à lateral."
+      },
+      "direction": "foreground e personagem em foco com oclusão real",
+      "spokenOrSfx": "KAEL: Não sei lutar... mas sei atrapalhar!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C08-P01/scene-mother.png",
+        "background": "assets/remake-v2/C08-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C08-P01/rig.json",
+        "qa": "assets/remake-v2/C08-P01/qa.json"
+      }
+    },
+    {
+      "id": "C08-P02",
+      "scene": "C08",
+      "startFrame": 2610,
+      "endFrameExclusive": 2790,
+      "durationFrames": 180,
+      "type": "action",
+      "characters": [
+        "kael",
+        "mascarados"
+      ],
+      "focus": "carrinho",
+      "emotion": "impacto",
+      "camera": {
+        "lens_mm": 35,
+        "position_and_intent": "ângulo lateral coerente com direção de movimento",
+        "depth_of_field": "profundidade de ação",
+        "description": "Plano lateral de ação: Kael empurra carrinho, rodas e percurso coerentes, mascarados reagindo.",
+        "dramatic_direction": "Carrinho e rodas articulados, perseguição no beco"
+      },
+      "direction": "rotação de rodas, braços/objetos com pivôs",
+      "spokenOrSfx": "SFX: madeira e pedra",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C08-P02/scene-mother.png",
+        "background": "assets/remake-v2/C08-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C08-P02/rig.json",
+        "qa": "assets/remake-v2/C08-P02/qa.json"
+      }
+    },
+    {
+      "id": "C08-P03",
+      "scene": "C08",
+      "startFrame": 2790,
+      "endFrameExclusive": 2880,
+      "durationFrames": 90,
+      "type": "wide",
+      "characters": [
+        "elara",
+        "kael",
+        "mascarados"
+      ],
+      "focus": "beco",
+      "emotion": "fuga",
+      "camera": {
+        "lens_mm": 28,
+        "position_and_intent": "plano de estabelecimento espacial",
+        "depth_of_field": "profundo com perspectiva",
+        "description": "Plano aberto: carrinho bloqueia caminho, Elara foge por corredor lateral, os mascarados param.",
+        "dramatic_direction": "Plano aberto: carrinho bloqueia caminho, Elara foge por corredor lateral, os mascarados param."
+      },
+      "direction": "cenário em camadas, atores e adereços independentes",
+      "spokenOrSfx": "KAEL: Corra!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C08-P03/scene-mother.png",
+        "background": "assets/remake-v2/C08-P03/background-reconstructed.png",
+        "rig": "assets/remake-v2/C08-P03/rig.json",
+        "qa": "assets/remake-v2/C08-P03/qa.json"
+      }
+    },
+    {
+      "id": "C08-P04",
+      "scene": "C08",
+      "startFrame": 2880,
+      "endFrameExclusive": 2940,
+      "durationFrames": 60,
+      "type": "insert",
+      "characters": [
+        "elara",
+        "mascarados"
+      ],
+      "focus": "carrinho.roda",
+      "emotion": "fuga tensa",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "Câmera baixa, rente ao eixo de uma roda; eixo de movimento do beco preservado",
+        "depth_of_field": "roda nítida; passos e corredor lateral em profundidade",
+        "description": "Insert baixo da roda do carrinho girando e desacelerando depois de bloquear a passagem; pés e capa encapuzada de Elara desaparecem pelo corredor lateral, perseguidores permanecem atrás do carrinho.",
+        "dramatic_direction": "A roda e seu eixo têm rotação articulada real, sombra/contato com pedra coerentes e Elara sai de quadro sem revelar identidade real."
+      },
+      "direction": "roda/eixo com pivô, chão/underlay sem duplicar carrinho, pés/capa de Elara separados",
+      "spokenOrSfx": "SFX: roda de madeira desacelera e passos se afastam",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C08-P04/scene-mother.png",
+        "background": "assets/remake-v2/C08-P04/background-reconstructed.png",
+        "rig": "assets/remake-v2/C08-P04/rig.json",
+        "qa": "assets/remake-v2/C08-P04/qa.json"
+      }
+    },
+    {
+      "id": "C09-P01",
+      "scene": "C09",
+      "startFrame": 2940,
+      "endFrameExclusive": 3090,
+      "durationFrames": 150,
+      "type": "close_up",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "focus": "elara",
+      "emotion": "gratidão cautelosa",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "rosto e expressão dominam o quadro",
+        "depth_of_field": "raso e focado nos olhos",
+        "description": "Close de Elara emocionada e agradecida, uma mão toca a mão de Kael fora de foco.",
+        "dramatic_direction": "Close de Elara emocionada e agradecida, uma mão toca a mão de Kael fora de foco."
+      },
+      "direction": "cabeça/olhos/cabelo, boca se há fala, pescoço reconstruído",
+      "spokenOrSfx": "ELARA: Você me salvou. Não vou esquecer.",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C09-P01/scene-mother.png",
+        "background": "assets/remake-v2/C09-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C09-P01/rig.json",
+        "qa": "assets/remake-v2/C09-P01/qa.json"
+      }
+    },
+    {
+      "id": "C09-P02",
+      "scene": "C09",
+      "startFrame": 3090,
+      "endFrameExclusive": 3240,
+      "durationFrames": 150,
+      "type": "over_shoulder",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "focus": "kael",
+      "emotion": "mistério",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "câmera atrás do ombro de alguém, eixo de 180° preservado",
+        "depth_of_field": "sujeito focal e ombro em profundidade",
+        "description": "Da nuca/ombro de Kael vê Elara encapuzada desaparecer na esquina; ligação espacial do beco preservada.",
+        "dramatic_direction": "Da nuca/ombro de Kael vê Elara encapuzada desaparecer na esquina; ligação espacial do beco preservada."
+      },
+      "direction": "foreground e personagem em foco com oclusão real",
+      "spokenOrSfx": "KAEL: Espere! Qual o seu nome?",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C09-P02/scene-mother.png",
+        "background": "assets/remake-v2/C09-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C09-P02/rig.json",
+        "qa": "assets/remake-v2/C09-P02/qa.json"
+      }
+    },
+    {
+      "id": "C10-P01",
+      "scene": "C10",
+      "startFrame": 3240,
+      "endFrameExclusive": 3390,
+      "durationFrames": 150,
+      "type": "insert",
+      "characters": [
+        "elara"
+      ],
+      "focus": "broche",
+      "emotion": "pista",
+      "camera": {
+        "lens_mm": 90,
+        "position_and_intent": "câmera estável focada em objeto/mãos",
+        "depth_of_field": "macro seletivo",
+        "description": "Macro de flor prateada se soltando da roupa, jóia no ar antes de cair no solo.",
+        "dramatic_direction": "Macro de flor prateada se soltando da roupa, jóia no ar antes de cair no solo."
+      },
+      "direction": "objeto e mãos separados, pivôs e contato físico",
+      "spokenOrSfx": "SFX: pequeno tilintar",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C10-P01/scene-mother.png",
+        "background": "assets/remake-v2/C10-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C10-P01/rig.json",
+        "qa": "assets/remake-v2/C10-P01/qa.json"
+      }
+    },
+    {
+      "id": "C10-P02",
+      "scene": "C10",
+      "startFrame": 3390,
+      "endFrameExclusive": 3600,
+      "durationFrames": 210,
+      "type": "insert",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael.maos",
+      "emotion": "curiosidade",
+      "camera": {
+        "lens_mm": 90,
+        "position_and_intent": "câmera estável focada em objeto/mãos",
+        "depth_of_field": "macro seletivo",
+        "description": "Detalhe dos dedos indicador e polegar de Kael recolhendo o broche com perspectiva consistente.",
+        "dramatic_direction": "Detalhe dos dedos indicador e polegar de Kael recolhendo o broche com perspectiva consistente."
+      },
+      "direction": "objeto e mãos separados, pivôs e contato físico",
+      "spokenOrSfx": "KAEL: Ela deixou isso cair...",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C10-P02/scene-mother.png",
+        "background": "assets/remake-v2/C10-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C10-P02/rig.json",
+        "qa": "assets/remake-v2/C10-P02/qa.json"
+      }
+    },
+    {
+      "id": "C11-P01",
+      "scene": "C11",
+      "startFrame": 3600,
+      "endFrameExclusive": 3720,
+      "durationFrames": 120,
+      "type": "over_shoulder",
+      "characters": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "focus": "guarda_esquerdo",
+      "emotion": "suspeita",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "câmera atrás do ombro de alguém, eixo de 180° preservado",
+        "depth_of_field": "sujeito focal e ombro em profundidade",
+        "description": "Sobre o ombro do guarda, foco na mão de Kael exibindo o broche, rosto de Kael em plano secundário.",
+        "dramatic_direction": "Sobre o ombro do guarda, foco na mão de Kael exibindo o broche, rosto de Kael em plano secundário."
+      },
+      "direction": "foreground e personagem em foco com oclusão real",
+      "spokenOrSfx": "KAEL: Encontrei isto...",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C11-P01/scene-mother.png",
+        "background": "assets/remake-v2/C11-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C11-P01/rig.json",
+        "qa": "assets/remake-v2/C11-P01/qa.json"
+      }
+    },
+    {
+      "id": "C11-P02",
+      "scene": "C11",
+      "startFrame": 3720,
+      "endFrameExclusive": 3870,
+      "durationFrames": 150,
+      "type": "close_up",
+      "characters": [
+        "kael",
+        "guarda_esquerdo"
+      ],
+      "focus": "kael",
+      "emotion": "injustiça",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "rosto e expressão dominam o quadro",
+        "depth_of_field": "raso e focado nos olhos",
+        "description": "Close lateral do rosto de Kael recebendo acusação, olhar surpreso e lança desfocada no primeiro plano.",
+        "dramatic_direction": "Close lateral do rosto de Kael recebendo acusação, olhar surpreso e lança desfocada no primeiro plano."
+      },
+      "direction": "cabeça/olhos/cabelo, boca se há fala, pescoço reconstruído",
+      "spokenOrSfx": "GUARDA: O broche da princesa! Então está envolvido no desaparecimento!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C11-P02/scene-mother.png",
+        "background": "assets/remake-v2/C11-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C11-P02/rig.json",
+        "qa": "assets/remake-v2/C11-P02/qa.json"
+      }
+    },
+    {
+      "id": "C11-P03",
+      "scene": "C11",
+      "startFrame": 3870,
+      "endFrameExclusive": 3990,
+      "durationFrames": 120,
+      "type": "wide",
+      "characters": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "focus": "portao",
+      "emotion": "detenção",
+      "camera": {
+        "lens_mm": 28,
+        "position_and_intent": "plano de estabelecimento espacial",
+        "depth_of_field": "profundo com perspectiva",
+        "description": "Plano geral do portão, guardas limitam passagem de Kael; eixo de 180 graus conservado.",
+        "dramatic_direction": "Plano geral do portão, guardas limitam passagem de Kael; eixo de 180 graus conservado."
+      },
+      "direction": "cenário em camadas, atores e adereços independentes",
+      "spokenOrSfx": "KAEL: Eu só estava devolvendo!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C11-P03/scene-mother.png",
+        "background": "assets/remake-v2/C11-P03/background-reconstructed.png",
+        "rig": "assets/remake-v2/C11-P03/rig.json",
+        "qa": "assets/remake-v2/C11-P03/qa.json"
+      }
+    },
+    {
+      "id": "C12-P01",
+      "scene": "C12",
+      "startFrame": 3990,
+      "endFrameExclusive": 4110,
+      "durationFrames": 120,
+      "type": "extreme_close_up",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael.olhos",
+      "emotion": "reconhecimento",
+      "camera": {
+        "lens_mm": 110,
+        "position_and_intent": "recorte de olhos ou objeto, sem face deformada",
+        "depth_of_field": "extremamente raso",
+        "description": "Close extremo dos olhos: Kael move só as pupilas de rabo de olho, queixo e cabeça completamente estáticos.",
+        "dramatic_direction": "Pupilas de Kael desviam; cabeça imóvel"
+      },
+      "direction": "pupila/pálpebras originais, olhos em camadas, piscar",
+      "spokenOrSfx": "SFX: silêncio tenso",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C12-P01/scene-mother.png",
+        "background": "assets/remake-v2/C12-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C12-P01/rig.json",
+        "qa": "assets/remake-v2/C12-P01/qa.json"
+      }
+    },
+    {
+      "id": "C12-P02",
+      "scene": "C12",
+      "startFrame": 4110,
+      "endFrameExclusive": 4230,
+      "durationFrames": 120,
+      "type": "over_shoulder",
+      "characters": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "focus": "kael",
+      "emotion": "revelação",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "câmera atrás do ombro de alguém, eixo de 180° preservado",
+        "depth_of_field": "sujeito focal e ombro em profundidade",
+        "description": "Por trás do ombro de Kael, a câmera revela Elara ao lado do trono pela oclusão; rei visível ao fundo.",
+        "dramatic_direction": "Revelação da princesa somente agora; OTS sobre Kael"
+      },
+      "direction": "foreground e personagem em foco com oclusão real",
+      "spokenOrSfx": "SFX: nota de reconhecimento",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C12-P02/scene-mother.png",
+        "background": "assets/remake-v2/C12-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C12-P02/rig.json",
+        "qa": "assets/remake-v2/C12-P02/qa.json"
+      }
+    },
+    {
+      "id": "C12-P03",
+      "scene": "C12",
+      "startFrame": 4230,
+      "endFrameExclusive": 4290,
+      "durationFrames": 60,
+      "type": "close_up",
+      "characters": [
+        "kael",
+        "elara"
+      ],
+      "focus": "elara",
+      "emotion": "surpresa contida",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "rosto e expressão dominam o quadro",
+        "depth_of_field": "raso e focado nos olhos",
+        "description": "Close de reação de Elara ao reconhecer Kael; olhos e flor prateada reconhecíveis, trono desfocado.",
+        "dramatic_direction": "Close de reação de Elara ao reconhecer Kael; olhos e flor prateada reconhecíveis, trono desfocado."
+      },
+      "direction": "cabeça/olhos/cabelo, boca se há fala, pescoço reconstruído",
+      "spokenOrSfx": "KAEL (pensamento): Não pode ser... ela é a princesa?!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C12-P03/scene-mother.png",
+        "background": "assets/remake-v2/C12-P03/background-reconstructed.png",
+        "rig": "assets/remake-v2/C12-P03/rig.json",
+        "qa": "assets/remake-v2/C12-P03/qa.json"
+      }
+    },
+    {
+      "id": "C12-P04",
+      "scene": "C12",
+      "startFrame": 4290,
+      "endFrameExclusive": 4350,
+      "durationFrames": 60,
+      "type": "insert",
+      "characters": [
+        "elara"
+      ],
+      "focus": "broche.prateado",
+      "emotion": "reconhecimento silencioso",
+      "camera": {
+        "lens_mm": 100,
+        "position_and_intent": "Macro frontal da roupa da princesa, preservando eixo e luz do trono",
+        "depth_of_field": "flor prateada e dedos em foco, tapeçaria do trono desfocada",
+        "description": "Detalhe do broche em forma de flor prateada no traje de Elara ao lado do trono; sua mão toca a joia e revela ser o mesmo desenho da pista encontrada por Kael. Nenhum rosto novo.",
+        "dramatic_direction": "Só em C12 a identidade real de Elara é revelada; broche, mão e vestido em camadas independentes, contato e oclusão reais, sem arte do broche trocada."
+      },
+      "direction": "broche, dedos e tecido com máscaras independentes; joia idêntica à encontrada em C10",
+      "spokenOrSfx": "SFX: delicado toque do metal e silêncio da descoberta",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C12-P04/scene-mother.png",
+        "background": "assets/remake-v2/C12-P04/background-reconstructed.png",
+        "rig": "assets/remake-v2/C12-P04/rig.json",
+        "qa": "assets/remake-v2/C12-P04/qa.json"
+      }
+    },
+    {
+      "id": "C13-P01",
+      "scene": "C13",
+      "startFrame": 4350,
+      "endFrameExclusive": 4500,
+      "durationFrames": 150,
+      "type": "medium",
+      "characters": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "focus": "kael",
+      "emotion": "virada da missão",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "busto até cintura e ambiente funcional",
+        "depth_of_field": "médio",
+        "description": "Plano médio do rosto de Kael observando o vazio onde HUD surgirá separadamente; Elara ao fundo.",
+        "dramatic_direction": "Plano médio do rosto de Kael observando o vazio onde HUD surgirá separadamente; Elara ao fundo."
+      },
+      "direction": "tronco, cabeça, mãos, cabelo/capa com rig",
+      "spokenOrSfx": "HUD: MISSÃO PRINCIPAL — CONQUISTE O CORAÇÃO DA PRINCESA",
+      "hudPolicy": "remotion_overlay",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C13-P01/scene-mother.png",
+        "background": "assets/remake-v2/C13-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C13-P01/rig.json",
+        "qa": "assets/remake-v2/C13-P01/qa.json"
+      }
+    },
+    {
+      "id": "C13-P02",
+      "scene": "C13",
+      "startFrame": 4500,
+      "endFrameExclusive": 4650,
+      "durationFrames": 150,
+      "type": "close_up",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael",
+      "emotion": "medo da morte",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "rosto e expressão dominam o quadro",
+        "depth_of_field": "raso e focado nos olhos",
+        "description": "Close no rosto de Kael e microexpressão de choque, HUD de risco e recompensa em camada Remotion.",
+        "dramatic_direction": "Close no rosto de Kael e microexpressão de choque, HUD de risco e recompensa em camada Remotion."
+      },
+      "direction": "cabeça/olhos/cabelo, boca se há fala, pescoço reconstruído",
+      "spokenOrSfx": "KAEL (pensamento): CONQUISTAR A PRINCESA?! Eu nem vou sobreviver!",
+      "hudPolicy": "remotion_overlay",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C13-P02/scene-mother.png",
+        "background": "assets/remake-v2/C13-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C13-P02/rig.json",
+        "qa": "assets/remake-v2/C13-P02/qa.json"
+      }
+    },
+    {
+      "id": "C14-P01",
+      "scene": "C14",
+      "startFrame": 4650,
+      "endFrameExclusive": 4740,
+      "durationFrames": 90,
+      "type": "medium",
+      "characters": [
+        "elara",
+        "aldric"
+      ],
+      "focus": "elara",
+      "emotion": "decisão",
+      "camera": {
+        "lens_mm": 50,
+        "position_and_intent": "busto até cintura e ambiente funcional",
+        "depth_of_field": "médio",
+        "description": "Plano médio da princesa descendo um degrau, mão no vestido; rei ao fundo reage.",
+        "dramatic_direction": "Plano médio da princesa descendo um degrau, mão no vestido; rei ao fundo reage."
+      },
+      "direction": "tronco, cabeça, mãos, cabelo/capa com rig",
+      "spokenOrSfx": "ELARA: Pai, não o execute.",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C14-P01/scene-mother.png",
+        "background": "assets/remake-v2/C14-P01/background-reconstructed.png",
+        "rig": "assets/remake-v2/C14-P01/rig.json",
+        "qa": "assets/remake-v2/C14-P01/qa.json"
+      }
+    },
+    {
+      "id": "C14-P02",
+      "scene": "C14",
+      "startFrame": 4740,
+      "endFrameExclusive": 4830,
+      "durationFrames": 90,
+      "type": "close_up",
+      "characters": [
+        "elara",
+        "aldric"
+      ],
+      "focus": "elara",
+      "emotion": "coragem",
+      "camera": {
+        "lens_mm": 85,
+        "position_and_intent": "rosto e expressão dominam o quadro",
+        "depth_of_field": "raso e focado nos olhos",
+        "description": "Close marcante no rosto de Elara declarando falso noivado com olhar decidido; reação do rei no contraplano.",
+        "dramatic_direction": "Elara declara noivado falso, expressão e visemas"
+      },
+      "direction": "cabeça/olhos/cabelo, boca se há fala, pescoço reconstruído",
+      "spokenOrSfx": "ELARA: Esse homem... é meu noivo!",
+      "hudPolicy": "none",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C14-P02/scene-mother.png",
+        "background": "assets/remake-v2/C14-P02/background-reconstructed.png",
+        "rig": "assets/remake-v2/C14-P02/rig.json",
+        "qa": "assets/remake-v2/C14-P02/qa.json"
+      }
+    },
+    {
+      "id": "C14-P03",
+      "scene": "C14",
+      "startFrame": 4830,
+      "endFrameExclusive": 4890,
+      "durationFrames": 60,
+      "type": "extreme_close_up",
+      "characters": [
+        "kael"
+      ],
+      "focus": "kael.olhos",
+      "emotion": "cliffhanger",
+      "camera": {
+        "lens_mm": 110,
+        "position_and_intent": "recorte de olhos ou objeto, sem face deformada",
+        "depth_of_field": "extremamente raso",
+        "description": "Close extremo dos olhos arregalados de Kael antes de corte seco para preto; vínculo HUD em overlay.",
+        "dramatic_direction": "Olhos de Kael e corte seco para preto"
+      },
+      "direction": "pupila/pálpebras originais, olhos em camadas, piscar",
+      "spokenOrSfx": "KAEL (pensamento): SEU O QUÊ?!",
+      "hudPolicy": "remotion_overlay",
+      "status": "shot_art_or_rig_pending",
+      "renderAllowed": false,
+      "humanVisualApproved": false,
+      "assetPaths": {
+        "mother": "assets/remake-v2/C14-P03/scene-mother.png",
+        "background": "assets/remake-v2/C14-P03/background-reconstructed.png",
+        "rig": "assets/remake-v2/C14-P03/rig.json",
+        "qa": "assets/remake-v2/C14-P03/qa.json"
+      }
+    }
+  ]
+}

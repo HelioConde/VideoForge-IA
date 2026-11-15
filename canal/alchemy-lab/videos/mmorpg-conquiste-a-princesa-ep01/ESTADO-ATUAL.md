@@ -1,5 +1,13 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## C40 V2 — renderizador oficial e EDL sem perder audio original (15/11/2026)
+
+**Problema corrigido em código:** `motion-remotion/src/cinematic-timeline.ts` ainda exigia 37 tomadas, enquanto o roteiro/manifesto agora exigem 40. Contrato atualizado para **40 tomadas, 39 visuais, 4890 frames/163s**. Os inserts C01-P05 (310–359), C08-P04 (2880–2939), C12-P04 (4290–4349) possuem ranges obrigatórios; C01-P02 continua 60–149. Nova `remake-v2-cinematic-edl.json` representa somente o **planejamento V2 sem aprovação** e é compilada por `videoforge/remake_v2_edl.py`, sem alterar `timeline-cinematografica.json` V1 de 37 tomadas.
+
+**Audio abertura:** o compositor Remotion agora exige a WAV original `vf-remake/c01-p01/sword-original.wav` e seu SHA auditado `22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d`. O arquivo binário precisa ser materializado com prova de SHA **antes** de render completo; o manifesto editorial não é aprovação de áudio disponível. Não foi criado vídeo oficial, nem imagem, nem upload; custo de provedor continua bloqueado.
+
+**CI:** testes Python de equivalência entre 40 shots do roteiro/manifesto e EDL, mais TypeScript/Remotion para bloqueio de assets e áudio; resultados aguardam execução GitHub Actions.
+
 ## V2 — planejamento ampliado para 40 tomadas (decisão editorial 15/11/2026)
 
 ### Verificação automatizada dos 40 planos — 15/11/2026

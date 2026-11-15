@@ -16,6 +16,8 @@
 
 ## Direção e cinematografia
 
+**Renderizador V2 40 tomadas:** `motion-remotion/src/cinematic-timeline.ts` valida 40 e as janelas dos três inserts. `remake-v2-cinematic-edl.json`, compilada por `videoforge/remake_v2_edl.py`, lista direção, elenco, tempos, falas, HUD, câmera e áudio de 40 tomadas; **39 continuam sem arte aprovada**. A EDL antiga `timeline-cinematografica.json` de 37 é apenas referência histórica. C01-P01 agora possui áudio obrigatório no compositor: antes do render integral, recuperar/recriar o WAV original e conferir SHA da QA técnica C01-P01. O manifesto V2 editorial não libera render oficial.
+
 **Validação do programa:** [run 43751714168](https://github.com/HelioConde/VideoForge-IA/actions/runs/43751714168) SUCCESS (45 testes, fila 40/39); [run 43751714070](https://github.com/HelioConde/VideoForge-IA/actions/runs/43751714070) SUCCESS (14 testes do pacote). Nenhum PNG/MP4 oficial novo e custo bloqueado.
 
 **Decisão editorial de 15/11/2026:** o usuário definiu **40 tomadas cinematográficas, mantendo as 14 cenas**. A mudança aumenta em apenas três imagens-mãe mínimas (39 planos visuais; um plano preto) e **não altera o episódio de 163 s/4.890 frames/30fps**. Foram desdobrados C01-P04 (novo C01-P05: pressão das lanças, frames 310–359), C08-P03 (novo C08-P04: roda e fuga, 2880–2939) e C12-P03 (novo C12-P04: broche, 4290–4349). A tomada especial **C01-P02 continua 60–149**, sem mudar a mecânica do rig da espada. História, eventos, identidades e política de custo permanecem inalterados. **Não houve três novas gerações de imagens, nem mudança automática para aprovação ou publicação.**

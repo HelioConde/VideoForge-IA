@@ -4,6 +4,12 @@ on:
     branches: [main]
     paths:
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-validar-compositor-cinema.json'
+      - 'motion-remotion/src/cinematic-timeline.ts'
+      - 'videoforge/remake_v2_edl.py'
+      - 'tests/test_remake_v2_edl.py'
+      - 'motion-remotion/src/cinematic-episode.tsx'
+      - 'motion-remotion/tests/cinematic-contract.test.cjs'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2-cinematic-edl.json'
       - 'motion-remotion/src/remake-sword-motion.ts'
       - 'motion-remotion/src/remake-sword-rig.tsx'
       - 'motion-remotion/src/remake-sword-preview.tsx'
@@ -47,6 +53,12 @@ jobs:
           assert (b/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
           print('RENDERER_QA_ONLY; no new images, MP4 or upload')
           PY
+      - name: Validar nova EDL editorial de 40 tomadas sem gerar imagem
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_v2_edl -v
+          python -m videoforge.remake_v2_edl --check
       - name: Instalar dependencias locais congeladas do Remotion
         working-directory: motion-remotion
         run: npm ci --ignore-scripts --no-fund --no-audit

@@ -34,7 +34,7 @@ const {evaluateGaze,validatePupilPerformance}=gazeModule.exports;
 const sha='a'.repeat(64);
 const other='b'.repeat(64);
 const edlPath=path.join(__dirname,
-  '../../canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/timeline-cinematografica.json');
+  '../../canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2-cinematic-edl.json');
 const realEdl=JSON.parse(fs.readFileSync(edlPath,'utf8'));
 
 /** All fake media are internal validation fixtures; no PNG files are made. */
@@ -83,7 +83,10 @@ function syntheticApprovedManifest(nativePortrait=false){
       characters:s.characters,hudPolicy:s.hudPolicy,
       renderAllowed:true,
     };
-    if(i===0)return {...base,status:'black_no_art_required'};
+    if(i===0)return {...base,status:'black_no_art_required',
+      audioFile:'vf-remake/c01-p01/sword-original.wav',
+      audioSha256:'22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d',
+      audioOriginVerified:true};
     const p='assets/planos/'+s.id+'/';
     return {
       ...base,status:'ready_for_render',
@@ -121,7 +124,7 @@ function syntheticApprovedManifest(nativePortrait=false){
 }
 const deepCopy=x=>JSON.parse(JSON.stringify(x));
 
-test('37 individually approved shots are continuous 0..4890 and frame-bound',()=>{
+test('40 individually approved shots are continuous 0..4890 and frame-bound',()=>{
   const doc=syntheticApprovedManifest();
   assert.doesNotThrow(()=>validateCinematicRender(doc));
   assert.equal(shotDurationFrames(doc.shots[0]),60);
@@ -131,9 +134,11 @@ test('37 individually approved shots are continuous 0..4890 and frame-bound',()=
   assert.equal(cinematicShotAtFrame(doc.shots,4889).id,'C14-P03');
   assert.throws(()=>cinematicShotAtFrame(doc.shots,4890),/OUT_OF_RANGE/);
 });
-test('current EDL is correctly denied: 36 visual shots are NOT approved',()=>{
+test('current V2 EDL is correctly denied: 39 visual shots are NOT approved',()=>{
   assert.equal(realEdl.renderOfficialAllowed,false);
-  assert.equal(realEdl.unapprovedShots,36);
+  assert.equal(realEdl.unapprovedShots,39);
+  assert.equal(realEdl.shotCount,40);
+  assert.equal(realEdl.activeRemakeVersion,'remake-v2-20261115');
   assert.equal(realEdl.format.totalFrames,4890);
   assert.throws(()=>validateCinematicRender(realEdl),/APPROVED_EDL_REQUIRED/);
 });
@@ -220,7 +225,7 @@ test('C12 gaze cannot be assigned to another shot or change keyframe targets',()
 });
 
 
-test('native 941x1672 portrait sources retain their geometry in all 36 shots',()=>{
+test('native 941x1672 portrait sources retain their geometry in all 39 visual shots',()=>{
   const d=syntheticApprovedManifest(true);
   assert.doesNotThrow(()=>validateCinematicRender(d));
   assert.equal(d.shots[1].sourceCanvas.width,941);
@@ -259,4 +264,45 @@ test('missing or malformed focal region cannot be marked render-ready',()=>{
   const detail=e.shots.find(x=>x.type==='insert');
   detail.focalBbox=[120,350,0,40];
   assert.throws(()=>validateCinematicRender(e),/FOCAL_POINT_CLIPPED_BY_9_16_CROP/);
+});
+
+test('V2 new cuts cannot be omitted, shifted or replaced in renderer',()=>{
+  const complete=syntheticApprovedManifest();
+  assert.equal(complete.shots.length,40);
+  assert.deepEqual(
+    ['C01-P05','C08-P04','C12-P04'].map(id=>{
+      const s=complete.shots.find(x=>x.id===id);
+      return [id,s.startFrame,s.endFrameExclusive];
+    }),
+    [['C01-P05',310,360],['C08-P04',2880,2940],['C12-P04',4290,4350]]);
+  const e=syntheticApprovedManifest();
+  const insert=e.shots.find(x=>x.id==='C08-P04');
+  insert.startFrame++;
+  assert.throws(()=>validateCinematicRender(e),/FRAME_OR_APPROVAL|NEW_INSERT_FRAMES/);
+  const f=syntheticApprovedManifest();
+  f.shots=f.shots.filter(x=>x.id!=='C12-P04');
+  assert.throws(()=>validateCinematicRender(f),/APPROVED_EDL_REQUIRED/);
+});
+test('the full episode requires the real original opening audio, never mute',()=>{
+  const normal=syntheticApprovedManifest();
+  assert.doesNotThrow(()=>validateCinematicRender(normal));
+  const muted=syntheticApprovedManifest();
+  delete muted.shots[0].audioFile;
+  assert.throws(()=>validateCinematicRender(muted),/BLACK_OPENING_INVALID/);
+  const forged=syntheticApprovedManifest();
+  forged.shots[0].audioSha256='f'.repeat(64);
+  assert.throws(()=>validateCinematicRender(forged),/BLACK_OPENING_INVALID/);
+  const noAudit=syntheticApprovedManifest();
+  noAudit.shots[0].audioOriginVerified=false;
+  assert.throws(()=>validateCinematicRender(noAudit),/BLACK_OPENING_INVALID/);
+  const second=syntheticApprovedManifest();
+  second.shots[1].audioFile='../untrusted.wav';
+  assert.throws(()=>validateCinematicRender(second),/AUDIO_NOT_VERIFIED_AS_LOCAL_WAV/);
+});
+test('the renderer uses the original WAV for black frames',()=>{
+  const src=fs.readFileSync(path.join(__dirname,'../src/cinematic-episode.tsx'),'utf8');
+  assert.match(src,/shot\.type==='black'/);
+  assert.match(src,/<Audio src=\{staticFile\(shot\.audioFile!\)\}/);
+  assert.match(src,/validateCinematicRender\(props\)/);
+  assert.doesNotMatch(src,/<Img src=\{staticFile\(shot\.audioFile/);
 });

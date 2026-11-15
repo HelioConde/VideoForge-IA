@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — alinhamento do compositor oficial V2 com 40 tomadas e som
+
+- Descoberta de gate 37 fixo no `cinematic-timeline.ts`: teria recusado o episódio 40-shot; corrigido para 40 com exigência dos 3 novos inserts e 4890 frames.
+- `remake-v2-cinematic-edl.json` + `videoforge/remake_v2_edl.py`: nova lista editorial da V2; `timeline-cinematografica.json` V1 preservada integralmente.
+- Abrir C01-P01 com SFX original em Remotion exige WAV SHA verificada, sem fallback mudo; sem bytes staging a EDL continua não renderizável.
+- Workflows de autonomia e QA do compositor passam a validar os dois contratos, sem IA paga; CI pendente.
+
 ## 15/11/2026 — V2 com 40 tomadas validado integralmente no CI
 
 - Commit `967fd5211eb619f57944f59e6d48537c3d05cdca` atualizou roteiro/manifesto oficial, testes, autonomia e documentação para 40 tomadas em 14 cenas e 163s; criadas C01-P05, C08-P04, C12-P04 como inserts não aprovados.

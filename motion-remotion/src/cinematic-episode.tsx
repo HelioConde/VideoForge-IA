@@ -30,7 +30,11 @@ const ShotFrame:React.FC<{shot:CinematicShot}>=({shot})=>{
   const frame=useCurrentFrame();
   const {fps,width,height}=useVideoConfig();
   if(shot.type==='black'){
-    return <AbsoluteFill style={{backgroundColor:'#000000'}}/>;
+    // The WAV is supplied ONLY after SHA verification against audited QA.
+    // No fake silence or lost sword SFX in the full-episode renderer.
+    return <AbsoluteFill style={{backgroundColor:'#000000'}}>
+      <Audio src={staticFile(shot.audioFile!)}/>
+    </AbsoluteFill>;
   }
   // All mandatory artifacts and approval gates were already validated
   // before the component mounted. Never use a missing-rig fallback.
