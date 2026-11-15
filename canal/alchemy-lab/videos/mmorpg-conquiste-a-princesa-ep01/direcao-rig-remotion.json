@@ -279,7 +279,7 @@
           "durationFrames": 90,
           "location": "sala-do-trono",
           "framing": "Kael ajoelhado",
-          "visualDescription": "V4: Kael ajoelhado com mão direita apoiada e bota direita fixa; respira muito sutilmente pelo tronco. Guardas, lanças e Aldric completamente estáticos e íntegros. Câmera parada.",
+          "visualDescription": "V5: Kael ajoelhado diante do trono, respirando suavemente pelo tórax e COSTAS com malha real da jaqueta, mantendo micro inclinação de cabeça V4. Braço/mão direita apoiados na perna, bota direita imovel; rei, guardas e lanças preservados da arte-mãe original.",
           "characters": [
             "kael",
             "aldric"
@@ -316,7 +316,7 @@
               "target": "kael.ombros",
               "transform": "translateY",
               "unit": "pixels_source_canvas",
-              "description": "V4: respiração discreta do tronco; os braços permanecem ancorados à perna, sem gesto. Não usar meta de 16 mil pixels.",
+              "description": "V5: inspiração suave ombros ±1,25 px impulsiona expansão localizada da malha das costas; braços/joelho/pé continuam completamente estáticos.",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -350,7 +350,7 @@
               "target": "kael.cabeca",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "V4: micro inclinação de cabeça, <=0.35 grau, sem deslocamento vertical independente ou desconexão da gola.",
+              "description": "V5: preservar o leve movimento natural da cabeça V4 (máximo 0,32°), sem levantar pescoço nem abrir gola.",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -421,9 +421,12 @@
             "interactionAnchorsRequired": true,
             "staticSceneContextRequired": true,
             "ignoreLargeActorPixelCountAsSuccess": true,
-            "visualApprovalRequired": true
+            "visualApprovalRequired": true,
+            "upperBackMeshSourceAndSeamsRequired": true,
+            "headMicroMotionPreserved": true,
+            "worldLockedArmAndBootRequired": true
           },
-          "performancePreset": "c01-p03-subtle-breathing-v4"
+          "performancePreset": "c01-p03-upper-back-breathing-v5"
         },
         {
           "id": "C01-P04",
