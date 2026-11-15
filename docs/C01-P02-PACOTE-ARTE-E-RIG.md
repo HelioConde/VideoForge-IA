@@ -67,3 +67,7 @@ O workflow `.github/workflows/remake-sword-preview.yml` executa gratuitamente, e
 O render usa entrada `motion-remotion/src/remake-sword-preview-index.ts`, composição `VideoForgeC01P02SwordTechnical`. O MP4 de 3 segundos terá watermark explícita de **prévia técnica não aprovada** e irá para artifact, não para o Git do canal. Se o QA passar, `videoforge/remake_sword_checkpoint.py` registra `QA-C01-P02-REMAKE-V2.json` e os hashes no estado; sem aprovação visual, nunca integrar como vídeo oficial ou publicar no YouTube.
 
 **Limite real atual:** a âncora visual V2 ainda não está arquivada/aprovada, e as quatro camadas específicas não existem. Portanto o preflight deve informar o bloqueio; nenhum MP4 C01-P02 pode ser afirmado até evidência de workflow e bytes de mídia.
+
+## Verificações automatizadas registradas (15/11/2026)
+
+O código de fonte e preview passou no [run 43711300246](https://github.com/HelioConde/VideoForge-IA/actions/runs/43711300246) com recomposição numérica de PNGs de teste, SHA e rejeição de máscaras adulteradas. O [run 43711476006](https://github.com/HelioConde/VideoForge-IA/actions/runs/43711476006) comprovou que o Remotion/ThreeCanvas realmente renderiza dois frames diferentes (7 e 71) utilizando quatro camadas **sintéticas de CI**. Isso não gera MP4 do dorama, nem aprovação humana. Próximo passo: arte canônica V2 aprovada e pacote real por tomada.

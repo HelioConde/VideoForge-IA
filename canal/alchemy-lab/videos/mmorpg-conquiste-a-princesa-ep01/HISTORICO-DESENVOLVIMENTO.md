@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — integracao C01-P02 validada com WebGL real em teste sintético
+
+- `503418d9ba8949cee2a18bb9a3db1e075cac5ae2`: composição Remotion isolada para a espada, origem auditada, SHA, alfa, pivôs, máscara, staging, workflow QA e relatório de evidência; runs `43710782778`, `43710782832`, `43710782768`, `43710782888` todos SUCCESS.
+- `43710965103` apontou dependência Pillow ausente no runner GHCR; `94cf7c58b90b1865971900ac877526f3c2604f41` substituiu por FFmpeg (só decode QA) e Python stdlib (composição e PNGs de fixture); run `43711300246` SUCCESS com cinco testes reais de bytes alfa/SHA/mãe/pivô.
+- `de60b273ec57c2c1c6ffc01d622dac80b907dfae` adicionou smoke com Remotion/ThreeCanvas `swangle`, criando dois quadros de teste distintos (frames 7 e 71); run `43711476006` SUCCESS, log `THREECANVAS_C01_P02_ACTUAL_WEBGL_FRAME_CHANGE_SYNTHETIC_QA_PASS`.
+- **Separação obrigatória:** frames CI sintéticos não são arte do dorama e não comprovam consistência de personagem; C01-P02 MP4 real ainda não existe. C01-P01 MP4 de 2s permanece disponível no run `43709191586`.
+- **Próxima:** V2 referência aprovada, camada mãe por plano e quatro PNGs próprios com SHA, empacotamento por artifacts e preview técnico de 90 frames. Nenhuma chamada paga ou upload nesta etapa.
+
 ## 15/11/2026 — reduzir dependências do QA C01-P02 após falha real de smoke
 
 - Run `43710965103`: preflight inicial do código em Ubuntu passou, mas smoke no runner GHCR falhou porque não inclui Pillow. Foi falha de ambiente/dependência, **não** da imagem nem do rig (ainda inexistentes).

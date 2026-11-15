@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "verify ffmpeg+stdlib synthetic smoke on GHCR, then get approved real V2 anchor and C01-P02 mother and four independent PNGs",
+  "next_action": "approved V2 character-bible then produce same-shot C01-P02 mother and underlay/sheath/blade/hand RGBA, automate pack artifact and execute source run through sword preview workflow",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -787,7 +787,7 @@
   },
   "c01_p02_three_preview_integration_20261115": {
     "schema": "videoforge/remake-c01-p02-three-preview-development/v1",
-    "status": "removing_pillow_dependency_ci_retest_pending",
+    "status": "code_and_real_threecanvas_synthetic_smoke_success_source_art_pending",
     "expected_artifact": "vf-remake-c01-p02-sword-source-<run_id>",
     "scene": "C01",
     "shot": "C01-P02",
@@ -823,11 +823,30 @@
       "tests/test_remake_sword_preview.py",
       "motion-remotion/tests/remake-sword-preview.test.cjs"
     ],
-    "next_step": "verify ffmpeg+stdlib synthetic smoke on GHCR, then get approved real V2 anchor and C01-P02 mother and four independent PNGs",
+    "next_step": "approved V2 character-bible then produce same-shot C01-P02 mother and underlay/sheath/blade/hand RGBA, automate pack artifact and execute source run through sword preview workflow",
     "first_smoke_run_id": 43710965103,
     "first_smoke_result": "failed_missing_pillow_in_existing_runner",
     "source_png_decode": "ffmpeg_for_qa_only",
     "alpha_roundtrip_implementation": "pure_python_standard_library_struct_zlib_for_test_fixtures_and_bytes_composition",
-    "no_new_pip_dependencies": true
+    "no_new_pip_dependencies": true,
+    "integration_commit": "503418d9ba8949cee2a18bb9a3db1e075cac5ae2",
+    "ffmpeg_stdlib_fix_commit": "94cf7c58b90b1865971900ac877526f3c2604f41",
+    "two_frame_smoke_commit": "de60b273ec57c2c1c6ffc01d622dac80b907dfae",
+    "successful_runs": [
+      43710782778,
+      43710782832,
+      43710782768,
+      43710782888,
+      43711300246,
+      43711476006
+    ],
+    "synthetic_ci_frames_rendered": [
+      7,
+      71
+    ],
+    "synthetic_threecanvas_frames_visibly_changed_by_hash": true,
+    "real_shot_mother_present": false,
+    "real_shot_rgba_bundle_present": false,
+    "real_c01_p02_mp4_present": false
   }
 }

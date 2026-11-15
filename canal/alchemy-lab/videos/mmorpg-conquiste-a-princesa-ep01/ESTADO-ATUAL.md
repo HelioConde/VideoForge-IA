@@ -23,6 +23,22 @@
 
 ## C01-P02 — integração do rig da espada à produção Real Remotion/Three (15/11/2026)
 
+## C01-P02 — validação de integração ThreeCanvas/QA concluída (15/11/2026)
+
+**Resultado confirmado na branch `main`:**
+
+- [Run 43710782778](https://github.com/HelioConde/VideoForge-IA/actions/runs/43710782778): preflight sem imagens reais/sem proxy, PASS.
+- [Run 43710782832](https://github.com/HelioConde/VideoForge-IA/actions/runs/43710782832): TypeScript/contratos Remotion e componente C01-P02, PASS.
+- [Run 43710782768](https://github.com/HelioConde/VideoForge-IA/actions/runs/43710782768): regressão do player legado, PASS.
+- [Run 43711300246](https://github.com/HelioConde/VideoForge-IA/actions/runs/43711300246): QA de cinco testes com PNGs/alpha reais **sintetizados APENAS para teste**; sem Pillow/novas bibliotecas, PASS.
+- [Run 43711476006](https://github.com/HelioConde/VideoForge-IA/actions/runs/43711476006): **primeiro smoke de execução ThreeCanvas da espada**, criou PNG técnico para frames locais **7 e 71** em runner GHCR/Remotion via `swangle` e comprovou hashes/bytes diferentes; PASS. Isso confirma que há movimento independente de sprite, não apenas código compilável.
+
+**Regressão resolvida:** o smoke intermediário [43710965103](https://github.com/HelioConde/VideoForge-IA/actions/runs/43710965103) detectou Pillow ausente. Corrigido sem instalar pacote: FFmpeg existente só decodifica PNG para QA e Python stdlib faz recomposição; ver commits `94cf7c58b90b1865971900ac877526f3c2604f41` e `de60b273ec57c2c1c6ffc01d622dac80b907dfae`.
+
+**Estado honesto:** existe render real de **2s da C01-P01** em [artifact 14159517637](https://github.com/HelioConde/VideoForge-IA/actions/runs/43709191586/artifacts/14159517637), aprovado tecnicamente. Na C01-P02 existe **somente render de frames sintéticos para validar o motor**: 0 imagens finais, 0 MP4 real da tomada, 0 autorização humana de arte, 0 publicação YouTube. O workflow `remake-sword-preview.yml` está pronto para consumir `vf-remake-c01-p02-sword-source-<run_id>` quando o programa reunir uma imagem-mãe V2 e `underlay/sheath/blade/hand` da mesma tomada, com proveniência e QA.
+
+**Próxima ação técnica prioritária para agentes:** obter e arquivar **âncora V2 visual aprovada** mediante provedor/orçamento permitido; gerar imagem-mãe C01-P02 e quatro PNGs independentes (sem repetir fontes V1); implementar empacotamento automático dos artifacts de geração; executar `remake-sword-preview.yml` com a fonte real; revisar alfas, underlay e movimento; só depois ampliar para C01-P03. Não simular etapa pronta.
+
 ### Ajuste de QA da C01-P02 após teste do runner — 15/11/2026
 
 A execução de smoke [43710965103](https://github.com/HelioConde/VideoForge-IA/actions/runs/43710965103) identificou **biblioteca Pillow ausente** no contêiner GHCR, apesar de a validação Python de bloqueio ter passado. **Correção:** `videoforge/remake_sword_preview.py` agora usa o FFmpeg já presente APENAS para decodificação de PNG RGBA, e faz o alpha-compositing e diferença RGB pixel a pixel com **biblioteca padrão Python**. Fixtures de regressão agora também geram PNGs em memória via `struct` e `zlib`, sem Pillow, numpy nem downloads de pacotes. A engine de animação segue exclusivamente Three.js + Remotion. O smoke é **sintético e não cria arte de produção**, nem vídeo C01-P02. Teste da revisão corrigida será verificado em CI.
