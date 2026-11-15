@@ -141,7 +141,7 @@ test('C01 P03 V4 breathes subtly while right arm/boot, king and spears stay sour
   assert.equal(n['kael.jaqueta'].mesh.amplitudePx,0.55);
   assert.equal(n['kael.costura-gola-pixel-original'].parent,'kael.ombros');
   assert.deepEqual(n['kael.costura-gola-pixel-original'].onlyCoveredBy,
-     ['kael.jaqueta','kael.braco-direito']);
+     ['kael.jaqueta']);
   assert.equal(n['kael.costura-gola-pixel-original'].sha256,b.sourceMother.sha256);
   const allShots=direction.scenes.flatMap(x=>x.shots);
   assert.equal(allShots.reduce((acc,x)=>acc+x.rigKeyframes.length,0),106);
