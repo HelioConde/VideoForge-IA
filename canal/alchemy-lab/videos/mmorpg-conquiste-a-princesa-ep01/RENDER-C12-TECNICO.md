@@ -32,3 +32,12 @@ O pacote técnico de sprites feito anteriormente no chat também precisa ser imp
 4. Com todas as fontes verificadas, o Remotion 4 renderiza via ThreeCanvas com --gl=swangle e gera MP4 H.264, cinco quadros de revisão, ffprobe.json e mp4.qa.json no artifact vf-alchemy-c12-threecanvas-draft-RUN_ID.
 
 **QA antes de aprovação:** a máscara do brinco e da mecha frontal contém possível pele/fundo; verificar costuras, oclusão, underlays, textura nas bordas e continuidade. Nem um MP4 técnico pronto dá aprovação humana ou permissão de enviar ao YouTube. Permanecem falsos: human_visual_approved, video_oficial_do_programa e youtube_uploaded.
+
+## Validação adicional do rig — recomposição e movimento no MP4 (14/11/2026)
+
+O workflow técnico passa por dois novos portões de QA, **sem gerar ou editar imagens**:
+
+1. `python -m videoforge.c12_render_qa neutral` reconstrói, em memória, a imagem 941×1672: fundo técnico + recortes RGBA sobrepostos por `bbox` nativo, comparando-a pixel a pixel com a imagem-mãe já arquivada e validada por SHA. Rejeita diferença média RGB acima de 0,15 ou mais de 500 pixels com diferença em qualquer canal maior que 16. Registra `neutral.qa.json` com `human_visual_approved=false`. A regra também serve para detectar fundos não recompostos, cortes ou sobreposições graves; **não aprova a qualidade visual fina nem a anatomia escondida**.
+2. `python -m videoforge.c12_render_qa mp4` lê o arquivo H.264 real usando FFmpeg. Exige 240 frames, 720×1280, 30fps e ausência de áudio; verifica hashes idênticos das duplas de stills renderizadas independentemente nos frames 73 e 180; mede a alteração de pixels **dentro das áreas reais dos sprites** entre os frames 0–73 (capa) e 120–180 (cabelo/brinco/manga). Bloqueia vídeo parado ou mudanças globais fora dos recortes. Relata `mp4.qa.json` e `ffprobe.json` no artifact.
+
+A região analisada inclui margem para antialiasing/codec; o QA é um filtro técnico, não substitui inspeção visual. Com arquivos originais ausentes, o fluxo permanece **ASSETS_PENDING** e não pode declarar o MP4 C12 como pronto.
