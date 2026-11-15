@@ -1,0 +1,108 @@
+{
+  "schema": "videoforge/c01-p03-acting-performance-review/v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot": "C01-P03",
+  "duration_frames": 90,
+  "fps": 30,
+  "start_absolute_frame": 150,
+  "story_beat": "Kael ajoelhado encara o rei; sustenta o peso, inspira, ergue discretamente o rosto e pressiona a mão no joelho.",
+  "performance_shots": [
+    {
+      "relative_frames": [
+        0,
+        14
+      ],
+      "action": "Imobilidade tensa: o torso aguarda, os guardas e as lanças mantêm a pose de origem.",
+      "parts": [
+        "kael.ombros",
+        "kael.cabeca"
+      ],
+      "camera": "locked"
+    },
+    {
+      "relative_frames": [
+        15,
+        36
+      ],
+      "action": "A inspiração começa na parte superior da jaqueta; cabelo e manga permanecem ligados às articulações.",
+      "parts": [
+        "kael.ombros",
+        "kael.jaqueta",
+        "kael.cabelo"
+      ],
+      "camera": "locked"
+    },
+    {
+      "relative_frames": [
+        37,
+        65
+      ],
+      "action": "A cabeça se ergue e gira em torno do pivô do pescoço; braço e antebraço tensionam separadamente; o pulso pressiona o joelho.",
+      "parts": [
+        "kael.cabeca",
+        "kael.braco-direito",
+        "kael.antebraco",
+        "kael.punhos"
+      ],
+      "camera": "locked"
+    },
+    {
+      "relative_frames": [
+        66,
+        89
+      ],
+      "action": "Segura a reação no olhar e no peso do braço; amortecimento do cabelo e da jaqueta; nenhuma imagem-mãe balança.",
+      "parts": [
+        "kael.cabeca",
+        "kael.punhos",
+        "kael.cabelo",
+        "kael.jaqueta"
+      ],
+      "camera": "locked"
+    }
+  ],
+  "authored_track_ids": [
+    "kael.punhos/rotationZ",
+    "kael.ombros/translateY",
+    "kael.cabeca/rotationZ",
+    "kael.cabeca/translateY",
+    "kael.braco-direito/rotationZ",
+    "kael.antebraco/rotationZ"
+  ],
+  "expected_motion": {
+    "head_max_rotation_degrees": -8.5,
+    "head_translation_y_source_px": -1.25,
+    "shoulder_translation_y_source_px": -4.5,
+    "wrist_max_rotation_degrees": 10,
+    "forearm_rotation_degrees": -5.3,
+    "upper_arm_rotation_degrees": 3.7,
+    "existing_hair_mesh_amplitude_px": 4.2,
+    "existing_jacket_mesh_amplitude_px": 2.8
+  },
+  "forbidden_shortcuts": [
+    "animate_mother_rgb_whole_image",
+    "camera_only_motion",
+    "generated_extra_images",
+    "fake_finger_closure"
+  ],
+  "known_visual_risks": [
+    "neck_underlay_incomplete",
+    "upper_arm_overlap_at_jacket",
+    "waist_seam_static_anchored",
+    "guard_spear_masks",
+    "king_throne_contamination"
+  ],
+  "gate": "decoded_mp4_actor_roi_and_measured_joint_displacement",
+  "source_images_sha_unchanged": true,
+  "create_images": false,
+  "upload_youtube": false,
+  "human_visual_approved": false,
+  "official_video_approved": false,
+  "visual_revision_notes": [
+    "First acting candidate PR run 43666968689 passed numerical motion gate (23,356 changed Kael ROI pixels >=24) and produced 3s MP4.",
+    "Human-like inspection of existing source pixels showed maroon stair background exposed at collar when head translated -7 px; this is NOT an approved underlay.",
+    "Limit independent head Y translation to -1.25 source px; neck pivot rotation remains -8.5deg and torso/arm performance unchanged.",
+    "Only SHA-verified original PNG parts used; no AI images or invented neck/collar anatomy."
+  ]
+}

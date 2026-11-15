@@ -92,8 +92,48 @@ test('existing C01-P03 bindings and absolute direction match the renderer contra
       nodes:bound.nodes,tracks:actual.rigKeyframes}]};
   validateDirectedProps(props);
   assert.equal(shotAtFrame(props.shots,150).id,'C01-P03');
-  assert.equal(nodeTransformAtFrame(props.shots[0],'kael.cabeca',239).rotationZ,-.6);
+  assert.equal(nodeTransformAtFrame(props.shots[0],'kael.cabeca',239).rotationZ,-7.6);
 });
+
+
+test('C01 P03 performance v2 visibly moves head and wrist without moving global PNG or camera',()=>{
+  const path=require('node:path');
+  const base=path.join(__dirname,'../../canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01');
+  const direction=JSON.parse(fs.readFileSync(path.join(base,'direcao-rig-remotion.json'),'utf8'));
+  const bindings=JSON.parse(fs.readFileSync(path.join(base,'direcao-bindings-c01-draft.json'),'utf8'));
+  const s=direction.scenes.flatMap(x=>x.shots).find(x=>x.id==='C01-P03');
+  const b=bindings.shots[s.id];
+  const shot={...s,canvas:b.canvas,background:b.background.file,
+    nodes:b.nodes,tracks:s.rigKeyframes};
+  assert.equal(shot.tracks.length,6);
+  assert.equal(shot.camera.move,'locked');
+  assert.ok(shot.camera.keyframes.every(k=>k.z===14&&k.fovDeg===30));
+  assert.ok(shot.tracks.every(t=>!['aldric','guarda-esquerdo','guarda-direito',
+    'lanca-contexto-0','lanca-contexto-1'].includes(t.target)));
+  const distance=(p,q)=>Math.hypot(p[0]-q[0],p[1]-q[1]);
+  const headPoint=[590,780],wristPoint=[642,1078];
+  const initialHead=transformSourcePoint(shot,'kael.cabeca',headPoint,150);
+  const raisedHead=transformSourcePoint(shot,'kael.cabeca',headPoint,226);
+  const initialWrist=transformSourcePoint(shot,'kael.punhos',wristPoint,150);
+  const pressedWrist=transformSourcePoint(shot,'kael.punhos',wristPoint,225);
+  assert.ok(distance(initialHead,raisedHead)>=14,
+    'Kael head tip must travel at least 14 original-source pixels');
+  assert.ok(distance(initialWrist,pressedWrist)>=9,
+    'Kael independent wrist/forearm must travel at least 9 original-source pixels');
+  // Existing independently extracted legs, guards, throne and crossed spears
+  // remain untouched: not a whole-image camera pan or sprite bobbing.
+  assert.deepEqual(transformSourcePoint(shot,'kael.perna-direita',[600,1240],150),
+    transformSourcePoint(shot,'kael.perna-direita',[600,1240],239));
+  assert.deepEqual(transformSourcePoint(shot,'aldric',[480,360],150),
+    transformSourcePoint(shot,'aldric',[480,360],239));
+  assert.equal(shot.nodes.find(n=>n.id==='kael.cabelo').mesh.amplitudePx,4.2);
+  assert.equal(shot.nodes.find(n=>n.id==='kael.jaqueta').mesh.amplitudePx,2.8);
+  assert.equal(shot.tracks.filter(t=>t.target==='kael.cabeca').length,2);
+  const verticalHead=shot.tracks.find(t=>t.target==='kael.cabeca'&&t.transform==='translateY');
+  assert.ok(verticalHead.keyframes.every(k=>k.value>=-2),
+    'Do not unseat existing head from collar without an approved neck underlay');
+});
+
 
 test('waist seam stays in source position while shoulders breathe at every frame',()=>{
   const s=shot('waist',150,240);

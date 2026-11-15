@@ -79,7 +79,7 @@
             "pinnedRows": [
               0
             ],
-            "amplitudePx": 0.8
+            "amplitudePx": 4.2
           }
         },
         {
@@ -250,7 +250,7 @@
             "pinnedRows": [
               0
             ],
-            "amplitudePx": 0.8,
+            "amplitudePx": 2.8,
             "sourcePin": {
               "startY": 950,
               "endY": 985
@@ -388,7 +388,9 @@
         "Aldric pode conter pixels do trono; composicao e bordas ainda nao aprovadas.",
         "Particao residual-halo-REJECTED excluida; diferenca de recomposicao deve permanecer documentada.",
         "Este teste isola C01-P03 e nao representa a montagem ou o audio do episodio.",
-        "Costura da cintura fixa; pixels visiveis ausentes recuperados apenas da fonte original, sem reconstruir anatomia oculta."
+        "Costura da cintura fixa; pixels visiveis ausentes recuperados apenas da fonte original, sem reconstruir anatomia oculta.",
+        "C01 performance v2 é uma prévia não aprovada: amplitude visível no pescoço, antebraço e pulso pode revelar áreas ocultas sem underlay; QA visual obrigatório.",
+        "Rotação de pulso não significa fechamento real dos dedos. Mãos e anatomia fina não foram segmentadas."
       ]
     }
   }

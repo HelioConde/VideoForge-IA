@@ -85,6 +85,64 @@ def _video_frame(video: Path, frame: int, width: int, height: int) -> bytearray:
     return bytearray(raw)
 
 
+def c01_actor_motion_pixels(before: bytes | bytearray, after: bytes | bytearray,
+                            shot: dict, width: int, height: int,
+                            *, threshold: int = 24) -> dict:
+    """Check actual H.264 movement around the articulated actor, not the UI.
+
+    C01-P03 uses a locked z=14 / fov=30 camera. Source-to-video projection
+    matches the calibrated renderer; no camera motion can count as rig motion.
+    This is a technical signal, never visual/art approval.
+    """
+    if (len(before) != width*height*4 or len(after) != len(before)
+            or width <= 0 or height <= 0):
+        raise ValueError("C01_ACTING_RGBA_VIDEO_DIMENSIONS_INVALID")
+    camera = shot.get("camera", {})
+    keys = camera.get("keyframes", [])
+    if (camera.get("move") != "locked"
+        or camera.get("type") != "perspective_3d"
+        or not keys
+        or any(k.get("z") != 14 or k.get("fovDeg") != 30
+               or k.get("lookAt") != [0,0,0] for k in keys)):
+        raise ValueError("C01_ACTING_REQUIRES_LOCKED_CAMERA_AND_REAL_RIG")
+    source = shot["canvas"]
+    source_w, source_h = source["width"], source["height"]
+    # This mapping is valid for the fixed C01 camera (z=14, fov 30,
+    # lookAt origin) and the sourceWorldScale calibration in directed-rig-math.
+    scale = height / min(source_h, source_w / (width/height))
+    offset_x = (width-source_w*scale)/2
+    offset_y = (height-source_h*scale)/2
+    nodes = [n for n in shot["nodes"]
+             if n["id"].startswith("kael.") and "bbox" in n]
+    if len(nodes) < 8:
+        raise ValueError("C01_ACTING_INDEPENDENT_KAEL_SPRITES_REQUIRED")
+    minx = min(n["bbox"][0] for n in nodes)
+    miny = min(n["bbox"][1] for n in nodes)
+    maxx = max(n["bbox"][0]+n["bbox"][2] for n in nodes)
+    maxy = max(n["bbox"][1]+n["bbox"][3] for n in nodes)
+    x0 = max(0, int(minx*scale + offset_x)-18)
+    x1 = min(width, int(maxx*scale + offset_x)+19)
+    y0 = max(height//8, int(miny*scale + offset_y)-18)
+    y1 = min(height - min(240, height//8), int(maxy*scale+offset_y)+19)
+    if x1 <= x0 or y1 <= y0:
+        raise ValueError("C01_ACTING_EMPTY_CHARACTER_ROI")
+    changed = 0
+    for y in range(y0, y1):
+        for x in range(x0, x1):
+            i = (y*width + x)*4
+            if max(abs(before[i+j] - after[i+j]) for j in range(3)) >= threshold:
+                changed += 1
+    return {
+        "source": "decoded_real_h264_frames",
+        "scope": "Kael character source rectangles only, no UI or camera movement",
+        "source_frame_baseline": 0,
+        "roi_output_px": [x0,y0,x1,y1],
+        "changed_pixels_min_rgb_delta": threshold,
+        "changed_pixels": changed,
+        "human_visual_review": False,
+    }
+
+
 def verify_render(props_path: Path, output: Path) -> dict:
     props = json.loads(props_path.read_text(encoding="utf-8"))
     if (props.get("schema") != "videoforge/directed-rig-preview/v1"
@@ -128,6 +186,19 @@ def verify_render(props_path: Path, output: Path) -> dict:
     )
     if changed_video <= 50:
         raise ValueError("DIRECTED_QA_NO_MP4_ART_MOTION")
+    c01_actor = None
+    if props.get("id") == "C01-P03" and props.get("channel") == "alchemy-lab":
+        # Unlike the old 50-pixel check, this detects whether the acting
+        # remains imperceptible in the actual encoded video at the second beat.
+        frame_lift = min(75, props["durationFrames"]-1)
+        c01_actor = c01_actor_motion_pixels(
+            video_before, _video_frame(video, frame_lift, width, height),
+            props["shots"][0], width, height, threshold=24)
+        c01_actor["source_frame_performance"] = frame_lift
+        c01_actor["min_changed_pixels"] = 16000
+        c01_actor["technical_perceptible_motion"] = c01_actor["changed_pixels"] >= 16000
+        if not c01_actor["technical_perceptible_motion"]:
+            raise ValueError("C01_ACTING_STILL_TOO_SUBTLE_IN_REAL_MP4")
     audio = any(s["codec_type"] == "audio" for s in probe["streams"])
     hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
               for p in sorted(output.iterdir()) if p.is_file() and p.suffix in (".png", ".mp4")}
@@ -139,6 +210,7 @@ def verify_render(props_path: Path, output: Path) -> dict:
         "audioPresent": audio, "deterministicRepeatedFrame": frame_mid,
         "changedArtPixelsAtFrame": {"frame": frame_mid, "pixels": changed},
         "changedMp4ArtPixelsAtFrame": {"frame": frame_mid, "pixels": changed_video, "minRgbDelta": 8},
+        "c01ArticulatedActorMotion": c01_actor,
         "sha256": hashes, "warnings": props["warnings"],
         "pixelRecovery": props.get("pixelRecovery", []),
         "imageGenerationCalls": 0, "previewTecnicoNaoOficial": True,
