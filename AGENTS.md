@@ -1,5 +1,19 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## REGRA PERMANENTE — CONTINUIDADE DO DESENVOLVIMENTO NA MAIN (LER PRIMEIRO)
+
+**Nunca reiniciar um projeto, cena, vídeo ou rig do zero sem consultar seu checkpoint.** A branch `main` é a fonte de verdade dos trabalhos integrados. Ler obrigatoriamente [protocolo de continuidade](docs/CONTINUIDADE-DO-PROJETO.md), depois `canal/<id>/videos/<video-id>/ESTADO-ATUAL.md`, `HISTORICO-DESENVOLVIMENTO.md` e `estado-atual.json` (se existirem), além do manual principal de animação e dos arquivos de direção relevantes.
+
+**Ao concluir QUALQUER alteração técnica, asset, QA, render, correção ou etapa de vídeo:**
+1. Confirmar primeiro os fatos reais: branch, commit da **main** (ou PR ainda não integrado), workflow/run, status, artifacts, hashes e a existência dos arquivos, sem considerar um mero log como MP4 arquivado.
+2. Atualizar **na mesma alteração enviada à main** o checkpoint por vídeo, relatando de forma objetiva o que está concluído, o que é apenas teste técnico, pendências, falhas e o **próximo comando/etapa exatos**.
+3. Acrescentar um registro datado ao histórico (sem apagar versões) e sincronizar o JSON. Se o merge/push falhar, **não declarar registro na main**; relatar que está somente numa branch.
+4. Sempre reutilizar o código, as imagens originais e os rigs já implementados. Não duplicar pipelines ou recriar trabalho por não consultar o histórico.
+5. Separar aprovação estética, código testado, MP4 técnico gerado, aprovação humana e MP4 oficial: **são estados diferentes**. Não arquivar segredos ou tokens nesses registros.
+
+**Episódio ativo do dorama:** [checkpoint Alchemy Lab — Conquiste a Princesa EP01](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md). A C01 já possui prévia MP4 articulada de 3 s na main, enquanto C12 já tem contrato de cinco malhas/512 triângulos mas está bloqueada por originais ausentes. **Não voltar à criação do roteiro ou do motor de rig** enquanto esse checkpoint não indicar necessidade.
+
+
 ## REGRA PRINCIPAL — ARQUIVAR TODAS AS IMAGENS NO GITHUB POR CANAL
 
 **Nenhum gerador VideoForge pode depender somente de artifacts temporários do GitHub Actions.** Sempre que um workflow gerar PNGs (imagem-mãe, referência, camadas RGBA, sprites, olhos, cenários), arquivar os bytes originais em canal/CHANNEL/videos/VIDEO_ID/assets/geracoes/PRODUCER/GITHUB_RUN_ID/ antes de declarar a geração concluída, mesmo que ela ainda não esteja aprovada artisticamente. O histórico de versões fica imutável: nunca sobrescrever arquivos anteriores.
