@@ -307,8 +307,8 @@ def _bindings(direction, bindings, root):
                 "COVERED_HOLDOUT_ONLY_SHA_VERIFIED_MOTHER_ALLOWED")
             _require(
                 isinstance(refs, list) and refs
-                and len(set(refs)) == len(refs)
                 and all(isinstance(ref, str) for ref in refs)
+                and len(set(refs)) == len(refs)
                 and node["id"] not in refs,
                 "COVERED_HOLDOUT_REFERENCES_INVALID")
             _require(node["bbox"][2]*node["bbox"][3] <= 16000,
