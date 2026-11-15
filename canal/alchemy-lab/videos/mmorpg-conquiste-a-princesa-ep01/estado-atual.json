@@ -71,7 +71,7 @@
     },
     "available_github_mp4": false,
     "pending_pr_for_alternative_import": 50,
-    "next_step": "User attaches existing two ZIPs or uploads them at github.com/HelioConde/VideoForge-IA/tree/main/uploads. Import workflows archive originals, coordinator resumes technical MP4 only after nine SHA valid.",
+    "next_step": "Obtain the original two ZIPs (Library metadata exists but raw bytes inaccessible). From VideoForge-IA clone run scripts/enviar-zips-c12.ps1, or upload them into root uploads/. Then import SHA, auto-dispatch technical C12 MP4 and visually review.",
     "validation_upgrade": {
       "pr_merged": 52,
       "merge_commit": "a69287356a87c3bbd2f67bf987ce1a0f0ae73f5c",
@@ -134,8 +134,26 @@
       "source_pngs_imported": 0,
       "new_images_generated": 0,
       "official_video_approved": false
+    },
+    "verified_zip_upload": {
+      "pr_merged": 54,
+      "main_commit": "346a3a80c74a96f39390aa12896916bfd2e9a994",
+      "test_workflow_run_id": 43665498760,
+      "test_conclusion": "success",
+      "script": "scripts/enviar-zips-c12.ps1",
+      "validator": "videoforge/c12_upload_existing_zips.py",
+      "required_bundle_paths": [
+        "uploads/alchemy-ep01-cinema-3-originais.zip",
+        "uploads/alchemy-c12-rig-camadas-tecnicas-v2.zip"
+      ],
+      "expected_original_pngs": 3,
+      "expected_technical_pngs": 7,
+      "zip_bytes_imported_to_main": false,
+      "original_sha_verified_in_main": 0,
+      "image_generation_calls": 0,
+      "youtube_uploaded": false
     }
   },
-  "next_action": "Get bytes of /youtube/alchemy-ep01-cinema-3-originais.zip and /youtube/alchemy_c12_rig_camadas_tecnicas_v2.zip (Library metadata exists, raw-byte access denied); upload both to root uploads/ and validate automatic C12 resume. No new image generation.",
+  "next_action": "Retrieve existing original C12 ZIP bytes into Downloads or upload directly to GitHub uploads/; run scripts/enviar-zips-c12.ps1, check imported 9 PNG source files, technical 8s MP4 and neutral/localized motion QA.",
   "updates_required_on_each_change": true
 }
