@@ -74,23 +74,25 @@
     "kael.punhos",
     "kael.braco-esquerdo",
     "kael.cabelo",
-    "kael.jaqueta"
+    "kael.jaqueta",
+    "kael.bota-direita"
   ],
-  "keyframe_tracks_in_shot": 8,
+  "keyframe_tracks_in_shot": 9,
   "changes_from_v2": {
-    "head_rotation_deg_max_abs": 1.3,
+    "head_rotation_deg_max_abs": 1.82,
     "head_translation_y_px": 0,
     "right_upper_arm_rotation_deg_max": 0.104,
-    "right_forearm_rotation_deg_min": -1.568,
+    "right_forearm_rotation_deg_min": -2.851,
     "wrist_rotation_deg_max": 19.556,
     "left_upper_arm_rotation_deg_min": -5.198,
-    "shoulder_translation_y_px_min": -2.268,
+    "right_boot_rotation_deg_min": -4.8,
+    "shoulder_translation_y_px_min": -2.155,
     "shoulder_translation_x_px_max": 0.42,
     "hair_mesh_amplitude_px": 3,
     "jacket_mesh_amplitude_px": 1.8,
     "source_holdout": "kael.costura-gola-pixel-original",
     "source_holdout_parent": "kael.ombros",
-    "source_holdout_reconstruction": "only existing RGB source pixels where jacket and upper arm already opaque",
+    "source_holdout_reconstruction": "only existing RGB original mother pixels where jacket and upper arm already opaque",
     "mesh_assets_not_replaced": true
   },
   "technical_qa_required": [
@@ -160,10 +162,31 @@
     },
     {
       "run": 43671532481,
-      "collar_exposed_pixels": null,
+      "collar_exposed_pixels": 68,
       "actor_changed_pixels": null,
       "passed": false,
-      "note": "latest retest in progress; do not assert before verified"
+      "note": "collar pass but actor motion below threshold"
+    },
+    {
+      "run": 43671982404,
+      "collar_exposed_pixels": 73,
+      "actor_changed_pixels": 18923,
+      "passed": true,
+      "note": "V3 9 tracks incl. right boot, real H264 motion, seam under threshold, no visual approval"
     }
-  ]
+  ],
+  "merge_record": {
+    "pull_request": 56,
+    "merged_commit": "69e22458703c7c716f05e205987471ce3595b1c5",
+    "main": true,
+    "pr_rig_qa_run": 43671982404,
+    "pr_tests_run": 43671982444,
+    "pr_run_head_sha": "cce96b888a06bd700ee8bbc29251a70bc5770f92",
+    "pr_mp4_sha256": "73993ab7b1f93aead42d1860d16c3db965adcbd3e6bdf2794eb631a9d704100c",
+    "qa_status": "technical_ok_not_human_approved",
+    "main_render_run": 43673610507,
+    "main_render_conclusion": "in_progress_when_checkpoint_written",
+    "documentation": "QA-C01-P03-V3-2026-11-15.md"
+  },
+  "next_action": "Verify main run 43673610507 MP4 SHA and QA, visually review collar & boot/arm seams, fix mother neutral recomposition MAE 11.16 and guard/spear/Aldric masks. C12 needs original ZIPs."
 }
