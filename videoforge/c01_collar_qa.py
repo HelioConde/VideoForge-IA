@@ -15,9 +15,10 @@ class C01CollarError(ValueError):
     pass
 
 
-# Source 1024x1536. The checked region straddles Kael's lower hair/neck and
-# jacket's right collar. A narrow region avoids unrelated coat/arm movement.
-C01_NECK_SOURCE_ROI = (517, 833, 96, 75)
+# Source 1024x1536. Constrain to the true jacket-to-shoulder collar seam
+# source x492..580, y847..880. A wider region also included legitimate hair
+# silhouette movement (y833) and counted it as an exposed neck incorrectly.
+C01_NECK_SOURCE_ROI = (492, 847, 88, 33)
 
 
 def collar_background_exposure(
