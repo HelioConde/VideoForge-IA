@@ -12,6 +12,20 @@
 
 ## REGRAS ATIVAS DO REMAKE — LEITURA OBRIGATÓRIA PARA AGENTES
 
+## Programacao acelerada por skills e bibliotecas — CI validado em GitHub (15/11/2026)
+
+**Commit inicial:** `4c797d525966ac0db208ce51bb0679614b995792`. **Ajuste do pacote da espada:** `da01ba30f026f985ce8427e5f29704339fb906ac` (C01-P02 exige `underlay`, `sheath`, `blade`, `hand` e o perfil `sword-draw-three`; inserts genericos nao herdam uma espada). Essas sao mudancas de **codigo/producao**, nao arte aprovada.
+
+**Evidencias GitHub Actions (SUCESSO):**
+- [Run 43706445755](https://github.com/HelioConde/VideoForge-IA/actions/runs/43706445755): testes Python + exportacao de `output/remake-shot-queue.json` com 37 planos/36 visuais, formatos e bloqueios reais; relatorio no artifact do workflow.
+- [Run 43706445766](https://github.com/HelioConde/VideoForge-IA/actions/runs/43706445766): Remotion TS `typecheck`, contrato cinematografico, teste de movimento C01-P02, malha verdadeira e rig C12 existentes.
+- [Run 43706445758](https://github.com/HelioConde/VideoForge-IA/actions/runs/43706445758): regressao do legado Remotion, incluindo tipagem, malhas e preview tecnicos sintéticos de teste.
+- [Run 43706561709](https://github.com/HelioConde/VideoForge-IA/actions/runs/43706561709): reteste da fila corrigida de C01-P02: sucesso.
+
+**Skills disponiveis:** `.agents/skills/videoforge-dorama-remake/SKILL.md`, `.agents/skills/videoforge-rig-2d-three/SKILL.md`, `.agents/skills/videoforge-qa-and-checkpoint/SKILL.md`. O upstream `remotion-dev/skills` foi **consultado como referencia com commit fixo**, nao instalado como dependencia ativa. `docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md` orienta reutilizacao e impedimento de reimplementacao da engine.
+
+**Proximo passo:** produzir/arquivar ancora canônica V2 aprovada (imagem PNG real e SHA) com provedor/custo permitido e revisao humana; entao produzir a imagem-mae C01-P02, separar `underlay/sheath/blade/hand`, medir `wristPivot`, `axisDeg` e `travelPx` na arte, aplicar `RemakeSwordRig`, executar recomposicao e QA, produzir preview MP4 tecnico pelo Remotion. **Mídia real do remake ainda nao existe**: 0 PNG, 0 rigs novos aprovados, 0 MP4s oficiais, 0 uploads, sem autorizacao automática de gastos.
+
 ## Comeco da programacao com bibliotecas e skills prontas (15/11/2026)
 
 **Iniciado o codigo de producao do remake, sem descartar historico tecnico.** A base usa **bibliotecas ja instaladas** (Remotion 4, Three.js, React Three Fiber e `@remotion/three`) e instrucoes originais locais em `.agents/skills/`, com referencia oficial aos [Remotion Agent Skills](https://github.com/remotion-dev/skills/tree/7e541aa4d7361dfaca0780a565a47307eb7bdfbb). Nao instalados novos motores ou pacotes pagos.

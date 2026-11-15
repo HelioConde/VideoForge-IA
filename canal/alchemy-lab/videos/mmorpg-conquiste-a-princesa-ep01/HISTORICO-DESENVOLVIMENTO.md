@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — validacao concluida das skills e do rig reutilizavel
+
+- `4c797d525966ac0db208ce51bb0679614b995792` integrou 3 skills locais, referencias Remotion oficiais sem instalador remoto, fila de 37 tomadas `remake_starter.py`, codigos reais `remake-sword-motion.ts`/`remake-sword-rig.tsx`.
+- `da01ba30f026f985ce8427e5f29704339fb906ac` alinhou a C01-P02 ao perfil `sword-draw-three` com as exatas 4 RGBA previstas em rig.
+- **CI verificado:** runs `43706445755` (fila, 37/36), `43706445766` (TypeScript, Remotion/Three e teste espada), `43706445758` (regressoes Remotion legado) e `43706561709` (fila corrigida), todos SUCCESS.
+- **Sem trabalho novo de IA paga:** apenas planejamento, codigo e testes. Nao gerar imagens ficticias ou relatar MP4 inexistente.
+- **Proxima fase objetiva:** ancora canônica aprovada com SHA + imagem-mae C01-P02 e 4 camadas reais, seguida de rig de pivô e QA, sem alterar V5/C12 antigos nem publicar no YouTube.
+
 ## 15/11/2026 — programacao iniciada com skills oficiais de referencia e libs existentes
 
 - **Ordem:** programar o EP01 do zero segundo regras novas, e acelerar com bibliotecas/skills existentes no GitHub sem ficar refazendo.
