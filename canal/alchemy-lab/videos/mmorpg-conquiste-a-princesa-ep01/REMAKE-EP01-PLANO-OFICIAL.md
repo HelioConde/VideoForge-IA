@@ -16,6 +16,8 @@
 
 ## Direção e cinematografia
 
+**QA integral da programação aprovada tecnicamente:** [autonomia 43756803890](https://github.com/HelioConde/VideoForge-IA/actions/runs/43756803890) passou 60 testes; [compositor 43756803794](https://github.com/HelioConde/VideoForge-IA/actions/runs/43756803794) passou 14 testes e compilação TypeScript, reconstruindo a WAV original da C01-P01 pelo SHA comprovado. Nova `remake-v2-cinematic-edl.json` contém 40 tomadas, `remake-v2-motion-directions.json` 160 ações. **Esses testes de código NÃO significam arte ou MP4 completo produzido.**
+
 **Som de abertura independentemente do artifact temporário:** `python -m videoforge.remake_episode_audio --verify-only` confere SHA/PCM da C01-P01; `--prepare --destination motion-remotion/public/vf-remake/c01-p01` recria a WAV idêntica de forma local, com bloqueio contra arquivo adulterado. O compositor cinematográfico exige esse arquivo em `<Audio>`, sem fallback mudo. Isso prepara a trilha da abertura, **não aprova o episódio**.
 
 **Direção técnica animável (40 tomadas):** `remake-v2-motion-directions.json` contém 160 etapas temporizadas, quatro por tomada, identificando câmera, elenco, peças RGBA e regras de QA. Não são valores inventados de rig em pixels: `source_geometry_calibration_required=true`, todos os pivôs continuam pendentes da imagem-mãe real e `approved_for_final_render=false`. `videoforge/remake_motion_directions.py` valida cada etapa contra `roteiro.json` e `remake-ep01-planos.json`; `remake_starter.work_queue` incorpora essas instruções à tarefa enviada aos agentes. Para a espada C01-P02 usar fases locais `0,7,72,89`, para os olhos de C12-P01 `0,4,86,119`. A fila NÃO autoriza chamada paga nem render oficial.

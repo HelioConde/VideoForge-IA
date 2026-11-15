@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — seis runs de QA confirmam compositor V2, 160 movimentos e audio
+
+- Commit `c50da2e59ef9241a3b9aa3a8038700252fc9aec1`: compositor Remotion corrigido para 40 tomadas, C01-P01 WAV original obrigatória e nova EDL editorial V2; runs `43755753904`, `43755753902`, `43755753960` SUCCESS (inclusive legado TS).
+- Commit `6b7f7df7d1c2fc581a2e401a84599943118b8f17`: JSON de 160 momentos de rig/câmera/sons, validador integrado à fila, fingerprint por tomada; runs `43756504753` (56 testes) e `43756504858` SUCCESS.
+- Commit `a1c2d0816847998c2171f05ed78255acc0a7b003`: síntese determinística original do SFX da espada para o futuro compositor; runs `43756803890` (60 testes) e `43756803794` (14 testes + TypeScript) SUCCESS. WAV gerada no runner QA, hash idêntico à prova original; nada de trilha de terceiros nem novas despesas.
+- O roteiro ficou em 40 tomadas e 14 cenas, 4890 frames/163 s; 39 planos com imagem permanecem pendentes. Zero MP4 oficial novo, zero autorização/consumo de imagens pagas e nenhum YouTube.
+
 ## 15/11/2026 — eliminar dependência do artifact temporário para WAV C01-P01
 
 - Novo módulo `remake_episode_audio.py` reutiliza síntese procedural original `remake_opening.py`, exige QA permanente da C01-P01 e SHA da WAV antes de disponibilizar `sword-original.wav` para `motion-remotion/public`.

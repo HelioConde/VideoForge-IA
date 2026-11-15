@@ -1,5 +1,20 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## Integração V2 40 tomadas, 160 ações e áudio original — QA GitHub concluído (15/11/2026)
+
+**Resultados verificados em branch `main`:**
+
+- [Run 43755753904](https://github.com/HelioConde/VideoForge-IA/actions/runs/43755753904) **SUCCESS**: EDL V2 40 planos, roteiro e checkpoint.
+- [Run 43755753902](https://github.com/HelioConde/VideoForge-IA/actions/runs/43755753902) **SUCCESS**: TypeScript/Remotion de 40 tomadas, validação de abertura com WAV por SHA e bloqueio de render sem fontes.
+- [Run 43756504753](https://github.com/HelioConde/VideoForge-IA/actions/runs/43756504753) **SUCCESS**: 56 testes Python, `REMAKE_MOTION_40_VALIDATED 40 shots 160 keyed stages` e fila `40/39` sem imagens.
+- [Run 43756504858](https://github.com/HelioConde/VideoForge-IA/actions/runs/43756504858) **SUCCESS**: validador do compositor, EDL e 160 etapas, com Node/TypeScript completo.
+- [Run 43756803890](https://github.com/HelioConde/VideoForge-IA/actions/runs/43756803890) **SUCCESS**: 60 testes Python passaram, SHA original C01-P01 verificado, fila de 40 tomadas/39 visuais/160 direções, bloqueio `provider_cost_permission_required` preservado.
+- [Run 43756803794](https://github.com/HelioConde/VideoForge-IA/actions/runs/43756803794) **SUCCESS**: 14 testes Python e compositor Remotion passaram. A WAV original foi reconstruída e gravada localmente no runner do QA; SHA `22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d` conferido, sem usar artifact antigo e sem renderizar o vídeo.
+
+**Checkpoint final desta implementação:** compositor preparado para exatamente 40 tomadas, EDL V2 editorial preservando EDL V1 histórica, 160 direções por frame, fila dos agentes com movimentos e QA, áudio original C01-P01 reproduzível; **39 imagens-mãe/rigs continuam ausentes**. Não há novo MP4 C01-P02 nem MP4 completo do remake. Não houve geração de imagens paga, aprovação humana falsa ou upload YouTube. A única mídia realmente renderizada para esta versão permanece a abertura técnica preta C01-P01 (2 s) em [artifact 14159517637](https://github.com/HelioConde/VideoForge-IA/actions/runs/43709191586/artifacts/14159517637).
+
+**Próximo trabalho autônomo seguro:** adquirir referência canônica V2 real e aprovada e autorização específica de uso de provedor, então gerar mãe por plano e calibrar RGBA/pivôs medidos da própria arte. Manter QA e materiais em arquivos principais, sem refazer o que foi validado.
+
 ## C01-P01 — audio original reproduzível e SHA-verificado para compositor V2 (15/11/2026)
 
 **Nova etapa:** `videoforge/remake_episode_audio.py` recria localmente a WAV original de 2s/48kHz de `remake_opening.py`, confere o SHA dos bytes com a prova permanente `QA-C01-P01-REMAKE-V2.json` e o manifesto `remake-ep01-planos.json`, e só então a armazena como `motion-remotion/public/vf-remake/c01-p01/sword-original.wav` para um render futuro. Aceita reexecução idempotente, mas bloqueia arquivo adulterado, origem indevida, caminho simbólico ou SHA divergente. Sem usar artifact temporário, serviço de áudio pago ou música de terceiros.

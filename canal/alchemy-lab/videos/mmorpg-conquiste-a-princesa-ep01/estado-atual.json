@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "Verify GitHub Actions original wav staging and 40-shot Remotion validation, retain 39-art approvals as blockers",
+  "next_action": "Approved V2 canonical real anchor then authorized shot-specific art; calibrate 39 independent RGBA/mesh rigs under 160 action cues and only then validate/render full 163s Remotion video",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -1013,7 +1013,7 @@
     "real_mother_package_skipped_due_to_missing_source": true
   },
   "v2_40_shots_renderer_contract_20261115": {
-    "status": "code_submitted_ci_pending",
+    "status": "main_ci_all_green_no_full_episode",
     "official_shot_count": 40,
     "narrative_scenes": 14,
     "total_frames": 4890,
@@ -1043,10 +1043,18 @@
     "mp4_full_episode": false,
     "youtube_uploaded": false,
     "provider_paid_calls_authorized": false,
-    "next_step": "Verify GitHub Python/Node QA; prepare detailed 40-shot motion plan with SHA-gated asset calibration"
+    "next_step": "Verify GitHub Python/Node QA; prepare detailed 40-shot motion plan with SHA-gated asset calibration",
+    "commit": "c50da2e59ef9241a3b9aa3a8038700252fc9aec1",
+    "qa_runs": [
+      43755753904,
+      43755753902,
+      43755753960,
+      43756504858,
+      43756803794
+    ]
   },
   "v2_40_shots_motion_directions_20261115": {
-    "status": "implementation_submitted_ci_pending",
+    "status": "main_ci_all_green_160_cues_in_queue",
     "source": "remake-v2-motion-directions.json",
     "validator": "videoforge/remake_motion_directions.py",
     "queue": "videoforge/remake_starter.py",
@@ -1080,10 +1088,22 @@
       "C08-P04",
       "C12-P04"
     ],
-    "next_step": "Check CI and generated 40-shot task queue contains exact motion stages; obtain canonical V2 real art before measuring anatomical pivots"
+    "next_step": "Check CI and generated 40-shot task queue contains exact motion stages; obtain canonical V2 real art before measuring anatomical pivots",
+    "commit": "6b7f7df7d1c2fc581a2e401a84599943118b8f17",
+    "qa_runs": [
+      43756504753,
+      43756504858,
+      43756803890
+    ],
+    "confirmed_queue": {
+      "shots": 40,
+      "visual_shots": 39,
+      "cues": 160,
+      "total_frames": 4890
+    }
   },
   "c01_p01_full_episode_audio_20261115": {
-    "status": "code_created_ci_pending",
+    "status": "original_wav_sha_verified_and_staged_in_qa_runner",
     "module": "videoforge/remake_episode_audio.py",
     "source_synthesis": "videoforge/remake_opening.py",
     "permanent_qa": "QA-C01-P01-REMAKE-V2.json",
@@ -1094,6 +1114,13 @@
     "free_deterministic_generation": true,
     "official_episode_rendered": false,
     "youtube_uploaded": false,
-    "next_step": "Verify GitHub Actions original wav staging and 40-shot Remotion validation, retain 39-art approvals as blockers"
+    "next_step": "Verify GitHub Actions original wav staging and 40-shot Remotion validation, retain 39-art approvals as blockers",
+    "commit": "a1c2d0816847998c2171f05ed78255acc0a7b003",
+    "qa_runs": [
+      43756803890,
+      43756803794
+    ],
+    "wav_sha_verified": true,
+    "wav_staged_temporary_ci_runner": true
   }
 }
