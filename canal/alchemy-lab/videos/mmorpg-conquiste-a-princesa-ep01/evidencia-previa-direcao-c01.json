@@ -1,0 +1,89 @@
+{
+  "schema": "videoforge/directed-preview-evidence/v1",
+  "date": "2026-11-14",
+  "runUrl": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43630118130",
+  "pullRequest": "https://github.com/HelioConde/VideoForge-IA/pull/48",
+  "sourceHeadCommit": "ecb210009b6d325945a1e78095a712d6d8846e9f",
+  "renderedMergeCommit": "fb3fc8e36dfaaa10247335b21dffc9aa1fca8dae",
+  "artifactName": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43630118130",
+  "artifactRetentionDays": 14,
+  "directionSha256": "704c0968022f57731bb6ef5463c0d69ff650b8509c4eca4ff2e0a7150ad8bf95",
+  "bindingsSha256": "03b877509619b96b013fd53ea7762aa56caff934d6c8aaa450857fa9937c64ad",
+  "renderQA": {
+    "schema": "videoforge/directed-rig-render-qa/v1",
+    "channel": "alchemy-lab",
+    "video_id": "mmorpg-conquiste-a-princesa-ep01",
+    "run_id": "43630118130",
+    "commit": "fb3fc8e36dfaaa10247335b21dffc9aa1fca8dae",
+    "format": {
+      "codec_name": "h264",
+      "pix_fmt": "yuv420p",
+      "width": 1080,
+      "height": 1920,
+      "r_frame_rate": "30/1",
+      "nb_frames": "90"
+    },
+    "audioPresent": false,
+    "deterministicRepeatedFrame": 30,
+    "changedArtPixelsAtFrame": {
+      "frame": 30,
+      "pixels": 88853
+    },
+    "changedMp4ArtPixelsAtFrame": {
+      "frame": 30,
+      "pixels": 14812,
+      "minRgbDelta": 8
+    },
+    "sha256": {
+      "directed-rig-preview.mp4": "24ea429651dcfe647a34813f9eb5d85c6308bc100c62bd41ba23ec322ed43f23",
+      "frame-0.png": "5f9b0e4082c2aef394c685c0b4bae43e954e39c2a061332d5d89028ef2037f2e",
+      "frame-30.png": "d5a6b1f218d2a4ae8f91fae585f099bbd9ddf50f27dbaa3a2de61a6a01c4e6e4",
+      "frame-74.png": "7b9cba968880d7078546779b92c1fe425f09158b243b3503843f3ca0b4f047a9",
+      "frame-76.png": "5a2b0a2d6cd6d8ffbd55cc7b213e73aae2f93fbd871ba7e44495fabcc3b8a091",
+      "frame-89.png": "00ff0e040cef32d36701a1740cc38f60dcc5e36918410d05948a4230325d9dde",
+      "frame-repeat.png": "d5a6b1f218d2a4ae8f91fae585f099bbd9ddf50f27dbaa3a2de61a6a01c4e6e4",
+      "neutral-composite.png": "fb7fb516d8fb8a432ae3c539868fd4df3a1cf70470d971c3ad2db7d2e934ba12",
+      "neutral-contact-sheet.png": "eccf251535890498d8f43a9f779bf431d4ea584cb6b9b1aff9d36a08d205d7c0",
+      "neutral-difference-x3.png": "2c3004defbff10384082e9e0543f39d4d815dad61c89b5713c88782c78c8e618"
+    },
+    "warnings": [
+      "TECHNICAL DRAFT: unapproved candidate art; provisional pivots; hidden anatomy and narrative coverage pending.",
+      "Rascunho diagnostico: todas as artes, articulacoes e pivos ainda dependem de revisao humana.",
+      "Underlays/anatomia oculta ausentes: movimento pode expor fendas.",
+      "Cabeca de costas: sem olhos visiveis; nenhuma piscada foi inventada.",
+      "kael.punhos usa somente a mao direita existente; dedos individuais ainda nao foram separados.",
+      "Guardas e Aldric estaticos para contexto; lanças ja cruzadas na arte, nao executam C01-P04.",
+      "Aldric pode conter pixels do trono; composicao e bordas ainda nao aprovadas.",
+      "Particao residual-halo-REJECTED excluida; diferenca de recomposicao deve permanecer documentada.",
+      "Este teste isola C01-P03 e nao representa a montagem ou o audio do episodio."
+    ],
+    "imageGenerationCalls": 0,
+    "previewTecnicoNaoOficial": true,
+    "rigProductionReady": false,
+    "humanVisualReview": false,
+    "publishable": false,
+    "videoOficialDoPrograma": false,
+    "youtubeUploaded": false
+  },
+  "neutralQA": {
+    "schema": "videoforge/directed-rig-neutral-qa/v1",
+    "shot": "C01-P03",
+    "changedPixels": 1075597,
+    "totalPixels": 1572864,
+    "meanAbsoluteRgbError": 11.16079987419976,
+    "pixelExactRecomposition": false,
+    "comparison": "original mother / candidate neutral assembly / abs diff x3",
+    "humanVisualReview": false,
+    "publishable": false,
+    "note": "Metrics do not validate anatomy, masks, pivots or narrative framing."
+  },
+  "assistantVisualInspection": {
+    "frames": [
+      0,
+      89
+    ],
+    "observation": "Kael articulado sutilmente; pernas apoiadas. Recortes das lancas mostram falhas visiveis; bordas e recomposicao nao aprovadas. Inspecao do assistente nao e aprovacao humana."
+  },
+  "humanVisualReview": false,
+  "publishable": false
+}
