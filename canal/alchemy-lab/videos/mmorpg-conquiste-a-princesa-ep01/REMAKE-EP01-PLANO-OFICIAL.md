@@ -1,5 +1,7 @@
 # REMAKE EP01 — PLANO OFICIAL (15/11/2026)
 
+> **C01-P02 com renderizador técnico pronto para fontes reais:** `motion-remotion/src/remake-sword-preview-index.ts` + `videoforge/remake_sword_preview.py`. Contrato de quatro camadas e origem auditável: [docs/C01-P02-PACOTE-ARTE-E-RIG.md](../../../../docs/C01-P02-PACOTE-ARTE-E-RIG.md). Sem referência V2 aprovada o CI deve permanecer bloqueado, não inventar assets ou declarar vídeo completo.
+
 ## Base reutilizavel de bibliotecas e skills (15/11/2026)
 
 **Novo:** catalogo [Bibliotecas e skills](../../../../docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md), 3 skills locais de agente, fila deterministica de 37 planos em `videoforge/remake_starter.py` e primeiro movimento de espada independente em `motion-remotion/src/remake-sword-rig.tsx` + `remake-sword-motion.ts`. Sao componentes do proprio programa e nao uma imagem inventada. Os agentes devem priorizar essas bases e documentar toda etapa no checkpoint; nao substituir engine e nao contornar autorizacoes de arte/custo/YouTube.

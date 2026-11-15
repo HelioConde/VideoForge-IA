@@ -46,7 +46,8 @@ test('real scene uses three independently articulated PNG layers and reuses the 
   assert.match(rig,/RigidSprite/);
   assert.match(rig,/useCurrentFrame/);
   assert.match(rig,/neutralRoundtripQaPassed:true/);
-  assert.match(rig,/humanVisualReview:true/);
+  assert.match(rig,/humanVisualReview:false/);
+  assert.match(rig,/technicalDraftOnly:true/);
   assert.match(rig,/layers\.sheath/);
   assert.match(rig,/layers\.blade/);
   assert.match(rig,/layers\.hand/);

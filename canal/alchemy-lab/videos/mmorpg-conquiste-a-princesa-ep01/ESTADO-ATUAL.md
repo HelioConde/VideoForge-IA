@@ -21,6 +21,16 @@
 
 ## REGRAS ATIVAS DO REMAKE — LEITURA OBRIGATÓRIA PARA AGENTES
 
+## C01-P02 — integração do rig da espada à produção Real Remotion/Three (15/11/2026)
+
+**Código implementado e aguardando verificação do CI:** o movimento prévio `remake-sword-motion.ts` e os sprites do `remake-sword-rig.tsx` agora possuem uma composição isolada `motion-remotion/src/remake-sword-preview-index.ts` com ThreeCanvas, 90 frames, sobreposição fixa **PRÉVIA TÉCNICA • ARTE NÃO APROVADA**. Não movimenta o PNG inteiro, não troca o vídeo oficial e não publica no YouTube.
+
+**Entrada real obrigatória:** pacote com imagem-mãe da **própria C01-P02**, relatório de origem `production-scene/v1`, quatro PNGs de camadas da mesma tela (`underlay`, `sheath`, `blade`, `hand`) e `sword-bundle.json` contendo hashes, run e parâmetros medidos. `videoforge/remake_sword_preview.py` verifica: referência canônica V2 real/aprovada, SHA de cada arquivo, contexto do canal/cena, alfa verdadeira, canvases iguais, decomposição/recomposição por Pillow (MAE ≤ 0,5 RGB), pulso na geometria da mão e deslocamento de lâmina dentro do quadro. Rejeita qualquer pacote inválido, **sem chamadas ao provedor de imagens**.
+
+**GitHub Actions:** `.github/workflows/remake-sword-preview.yml` executa preflight e testes após push, sem gerar arte. Com artifact de fonte `vf-remake-c01-p02-sword-source-<run_id>`, o despacho manual fica disponível para renderizar 3s de movimentação pelo Remotion/ThreeCanvas e validar MP4/movimento com FFmpeg/FFprobe. O job separado do host persiste QA/SHA/ID de run no `QA-C01-P02-REMAKE-V2.json`, `estado-atual.json`, histórico e checkpoint, preservando `.gitignore`. Fonte: [contrato e fluxo](../../../../docs/C01-P02-PACOTE-ARTE-E-RIG.md).
+
+**Status real nesta etapa:** C01-P01 **possui MP4 real** em artifact `vf-remake-c01-p01-opening-43709191586` ([run concluído](https://github.com/HelioConde/VideoForge-IA/actions/runs/43709191586)) e QA em `QA-C01-P01-REMAKE-V2.json`; a C01-P02 **ainda não tem PNGs reais nem MP4**, e o remake 163 s não existe. A âncora V2 `character-bible` está sem arte aprovada, com bloqueio `provider_cost_permission_required`. Não mascarar ausência de referência, gastos ou aprovação. **Próximo passo:** disponibilizar âncora V2 real via provedor autorizado, criar imagem-mãe por plano e os quatro PNGs originais da C01-P02; então o pipeline de prévia pode renderizar sem modificações manuais.
+
 ## C01-P01 — primeira cena produzível sem arte (15/11/2026)
 
 ### Correção de CI após o primeiro render real — 15/11/2026

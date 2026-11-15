@@ -1,0 +1,145 @@
+name: "VideoForge - C01-P02 espada Three.js preflight e preview real"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/remake_sword_preview.py'
+      - 'videoforge/remake_sword_preview_qa.py'
+      - 'videoforge/remake_sword_checkpoint.py'
+      - 'tests/test_remake_sword_preview.py'
+      - 'motion-remotion/src/remake-sword-preview*.ts*'
+      - 'motion-remotion/src/remake-sword-rig.tsx'
+      - '.github/workflows/remake-sword-preview.yml'
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 'GitHub Actions run que gerou o artifact de 5 PNGs C01-P02 e manifesto real'
+        required: true
+        type: number
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
+concurrency:
+  group: vf-remake-sword-preview
+  cancel-in-progress: false
+
+jobs:
+  preflight-source-and-code:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compilar o bloqueio real e testar o pacote independente sem API paga
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_sword_preview tests.test_remake_starter -v
+          python -m videoforge.remake_sword_preview preflight
+          echo "C01_P02_REAL_ART_REQUIRED; no image API and no fabricated media"
+
+  render-three-draft:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      ART_RUN: ${{ inputs.source_run_id }}
+      OUTPUT: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2/C01-P02
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Recuperar imagem-mãe e 4 sprites da mesma tomada aprovada tecnicamente
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.source_run_id }}
+          name: vf-remake-c01-p02-sword-source-${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./input/source
+      - name: Validar manifestos, origem SHA, alfa, pivô, recomposição neutra e limites
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_sword_preview -v
+          python -m videoforge.remake_sword_preview prepare \
+            --package ./input/source --source-run-id "$ART_RUN" \
+            --output "$OUTPUT" --public motion-remotion/public/vf-remake/c01-p02
+      - name: Reutilizar motor preinstalado Remotion + ThreeCanvas
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/remake-sword-motion.test.cjs tests/remake-sword-preview.test.cjs
+      - name: Renderizar 90 frames de mao e lamina independentes com watermark
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          ./node_modules/.bin/remotion render \
+            src/remake-sword-preview-index.ts VideoForgeC01P02SwordTechnical \
+            "../$OUTPUT/c01-p02-three-sword-technical.mp4" \
+            --props="../$OUTPUT/props.json" --frames=0-89 \
+            --codec=h264 --pixel-format=yuv420p --gl=swangle --concurrency=1 --log=error
+      - name: Conferir movimento real em frames decodificados e gerar QA com SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.remake_sword_preview_qa --output "$OUTPUT"
+      - name: Guardar MP4 tecnico e hashes sem YouTube
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-remake-c01-p02-three-preview-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-v2/C01-P02/
+          retention-days: 90
+          if-no-files-found: warn
+
+  checkpoint-in-git-host:
+    if: github.event_name == 'workflow_dispatch'
+    needs: render-three-draft
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: vf-remake-c01-p02-three-preview-${{ github.run_id }}
+          path: ./input/render
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirmar SHA real dos binarios e gravar checkpoint sem FFmpeg no host
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v git
+          python -m videoforge.remake_sword_checkpoint --input ./input/render
+          EP="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+          git add "$EP/QA-C01-P02-REMAKE-V2.json" "$EP/remake-ep01-planos.json" \
+            "$EP/ESTADO-ATUAL.md" "$EP/HISTORICO-DESENVOLVIMENTO.md" \
+            "$EP/estado-atual.json"
+          if ! git diff --cached --quiet; then
+            git config user.name "videoforge-autopilot[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "feat(dorama): QA tecnico real C01-P02 espada e checkpoint"
+            git push origin HEAD:main
+          else
+            echo "C01_P02_ALREADY_RECORDED"
+          fi

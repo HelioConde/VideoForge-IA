@@ -34,3 +34,7 @@ O `videoforge/cinematic_direction.py` detecta o remake ativo pelo `estado-atual.
 **Etapa atual:** coordenador de preflight e retomada. **Próximas etapas de software:** (1) despacho idempotente com ledger por imagem/SHA e controles de orçamento, (2) encadeamento de geração e isolamento de camadas, (3) criação de rig e correção de falhas determinísticas, (4) QA audiovisual e montagem final. Não ativar gastos nem publicações automaticamente ao implementar novas funções.
 
 Objetivo final: o usuário apenas descreve um vídeo e fornece feedback artístico; o VideoForge pesquisa quando apropriado, cria, anima, testa, registra e entrega mídia verificável no GitHub, com supervisão concentrada nas decisões realmente subjetivas.
+
+### Retomada por artifact de arte e rig, C01-P02
+
+O fluxo de espada `.github/workflows/remake-sword-preview.yml` só recebe um artifact consolidado `vf-remake-c01-p02-sword-source-<run-id>` após a fonte canônica V2 ser real e aprovada. Os agents devem usar `videoforge/remake_sword_preview.py` como *gate* sem custo: verifica SHA da imagem-mãe e sprites, alfa, origem e recomposição neutra (Pillow), pulso na mão, deslocamento plausível da lâmina. O Remotion renderiza apenas prévia com watermark, audita frames por FFmpeg, e persiste QA em segundo job Git — a mesma arquitetura comprovada pelo C01-P01. Não gerenciar segredos de IA no render. O empacotador automático de imagens do V2 ainda não foi implementado; registrar como pendência, sem inferir que o artifact existe.

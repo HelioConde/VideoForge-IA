@@ -14,9 +14,12 @@ export type RemakeSwordRigSpec={
   shotId:'C01-P02';
   canvas:{width:number;height:number};
   motherSha256:string;
+  anchorSha256:string;
+  sourceRunId:number;
+  technicalDraftOnly:true;
   technicalAssetsVerified:true;
   neutralRoundtripQaPassed:true;
-  humanVisualReview:true;
+  humanVisualReview:false;
   youtubeUploaded:false;
   wristPivot:[number,number];
   draw:SwordDrawTuning;
@@ -37,9 +40,11 @@ export const RemakeSwordRig:React.FC<{
   if(rig.schema!=='videoforge/remake-sword-rig/v1'||
      rig.shotId!=='C01-P02'||rig.canvas.width!==1024||
      rig.canvas.height!==1536||!sha.test(rig.motherSha256)||
+     !sha.test(rig.anchorSha256)||!Number.isSafeInteger(rig.sourceRunId)||
+     rig.sourceRunId<=0||rig.technicalDraftOnly!==true||
      rig.technicalAssetsVerified!==true||
      rig.neutralRoundtripQaPassed!==true||
-     rig.humanVisualReview!==true||
+     rig.humanVisualReview!==false||
      rig.youtubeUploaded!==false||
      rig.wristPivot.length!==2||
      !rig.wristPivot.every(Number.isFinite)||
@@ -48,9 +53,10 @@ export const RemakeSwordRig:React.FC<{
      shotDurationFrames!==90||
      Object.entries(rig.layers).some(([part,layer])=>
        !layer||layer.id!==part||!sha.test(layer.sha256)||
-       !layer.file.includes('/C01-P02/')||
-       !layer.file.endsWith('.png')||
-       layer.file.includes('..')
+       layer.file!==`vf-remake/c01-p02/${part}.png`||
+       !Array.isArray(layer.bbox)||layer.bbox.length!==4||
+       layer.bbox.some((v,i)=>v!==[0,0,1024,1536][i])||
+       !Number.isInteger(layer.z)
      ))
      throw new Error('REMAKE_SWORD_SOURCE_AND_VISUAL_QA_REQUIRED');
 

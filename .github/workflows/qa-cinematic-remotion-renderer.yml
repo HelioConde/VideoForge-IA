@@ -6,6 +6,10 @@ on:
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/pedido-validar-compositor-cinema.json'
       - 'motion-remotion/src/remake-sword-motion.ts'
       - 'motion-remotion/src/remake-sword-rig.tsx'
+      - 'motion-remotion/src/remake-sword-preview.tsx'
+      - 'motion-remotion/src/remake-sword-preview-root.tsx'
+      - 'motion-remotion/src/remake-sword-preview-index.ts'
+      - 'motion-remotion/tests/remake-sword-preview.test.cjs'
       - 'motion-remotion/src/rig-three-scene.tsx'
       - 'motion-remotion/tests/remake-sword-motion.test.cjs'
       - '.github/workflows/qa-cinematic-remotion-renderer.yml'
@@ -55,6 +59,9 @@ jobs:
       - name: Testar rig reutilizavel da espada C01-P02 sem PNG ou proxy
         working-directory: motion-remotion
         run: node --test tests/remake-sword-motion.test.cjs
+      - name: Testar contrato da composicao tecnica da espada sem alterar render oficial
+        working-directory: motion-remotion
+        run: node --test tests/remake-sword-preview.test.cjs
       - name: Testar malha 2D verdadeira (capa, mechas, brinco por pivô)
         working-directory: motion-remotion
         run: node --test tests/rig-three-math.test.cjs

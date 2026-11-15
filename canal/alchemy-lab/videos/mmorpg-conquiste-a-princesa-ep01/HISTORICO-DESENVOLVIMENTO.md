@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — código de integração direta ThreeCanvas para C01-P02
+
+- **Objetivo:** continuar após C01-P01 real, conectando à C01-P02 para transformar 4 PNGs da mesma imagem-mãe em movimento articular Three.js, com fonte auditada em GitHub.
+- **Criados:** `videoforge/remake_sword_preview.py` (conferência de SHA/origem/alfa/Pillow/pivô/deslocamento), `videoforge/remake_sword_preview_qa.py` (FFprobe/FFmpeg e medição de movimento), `videoforge/remake_sword_checkpoint.py` (checkpoint versionado por SHA após render). Entrada Remotion isolada `motion-remotion/src/remake-sword-preview-index.ts`, componente `remake-sword-preview.tsx`, root próprio, specs do rig técnica corrigidas.
+- **Ações:** workflow `remake-sword-preview.yml` com preflight por push e render técnico condicionado a artifact fonte real; pacote documentado em `docs/C01-P02-PACOTE-ARTE-E-RIG.md`; testes Python de bloqueio/fixture sintética e testes Node de entrada sem fallback.
+- **Autorização:** apenas código/QA; **0 imagens novas, 0 rigs de arte aprovados, 0 MP4 C01-P02**, nenhuma chamada paga e nenhum YouTube. Fica pendente a âncora canônica visual V2, tomada-mãe e camadas reais.
+- **Próximo:** conferir runs do CI, resolver regressões; preparar fonte V2 aprovada e empacotamento automático do artifact de mãe/camadas antes de render técnico.
+
 ## 15/11/2026 — primeiro render real C01-P01, falha isolada no commit e reparo
 
 - Run `43708620559`: Remotion criou **MP4 real de 2 s**, 60 frames pretos 1080×1920/30fps, H264 + AAC com WAV próprio. SHA WAV `22879c38726c284f484c1f57c325fc053e0ba8591565e24eba92d4e9c827fb1d`; SHA MP4 `75b8be46c7e609a1c9ff8afad0935bcbf8c6faa2126ba3c74cad3af540f3c44e`; QA da mídia e som passou. Artifact `14159253575`, 90 dias.

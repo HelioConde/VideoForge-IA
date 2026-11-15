@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+> **EP01 C01-P02:** prévia articulada agora tem entrada própria no Remotion + validação SHA/PNG/recomposição por Pillow: [pacote de arte e rig](docs/C01-P02-PACOTE-ARTE-E-RIG.md). O preflight de GitHub Actions não gera PNG e só libera render com fonte real e referência V2 aprovada.
+
 > **Reutilizacao de bibliotecas e skills:** [catalogo integrado](docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md) · [direcao do remake](.agents/skills/videoforge-dorama-remake/SKILL.md) · [rig Three.js](.agents/skills/videoforge-rig-2d-three/SKILL.md) · [QA e memoria](.agents/skills/videoforge-qa-and-checkpoint/SKILL.md). Novos geradores devem consumir a fila `videoforge/remake_starter.py`, o `remake_autopilot.py` e componentes ThreeCanvas ja instalados. Nenhum novo gasto/MP4 foi habilitado.
 
 > **INTEGRAÇÃO DE CENAS DO REMAKE V2:** o workflow de imagens agora separa o EP01 remake do caminho legado, exige tomada específica e confere o PNG de referência aprovado no próprio GitHub por SHA + manifesto. Essa ligação de software **não cria imagens automaticamente** nem dá autorização para serviços pagos ou YouTube.
