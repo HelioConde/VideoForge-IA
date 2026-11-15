@@ -1183,7 +1183,7 @@
     "human_anatomy_approval": false
   },
   "c01_p02_source_integrity_20261115": {
-    "status": "code_committed_ci_not_yet_verified",
+    "status": "ci_success_verified",
     "scope": "C01-P02 four component source archives: underlay/sheath/blade/hand",
     "deduplication_gate": "reject verified same-mother same-source-run component before paid proxy call",
     "package_provenance_gate": [
@@ -1198,6 +1198,20 @@
     "new_png_created": false,
     "c01_p02_mp4_created": false,
     "youtube_uploaded": false,
-    "next_step": "Verify push workflow tests, then obtain human-approved V2 identity anchor with real SHA and C01-P02 mother/parts under existing cost policy"
+    "next_step": "Verify push workflow tests, then obtain human-approved V2 identity anchor with real SHA and C01-P02 mother/parts under existing cost policy",
+    "source_workflow": {
+      "run_id": 43762440988,
+      "conclusion": "success",
+      "tests_passed": 9,
+      "commit": "4b57e743af2bfb844a50351b2e2c90634b00ea39"
+    },
+    "pack_workflow": {
+      "run_id": 43762352508,
+      "conclusion": "success",
+      "scan_tests_passed": 4,
+      "pack_tests_passed": 25,
+      "real_source_pack_job": "skipped",
+      "reason": "REMAKE_SWORD_V2_ANCHOR_NOT_APPROVED_OR_VERIFIED"
+    }
   }
 }

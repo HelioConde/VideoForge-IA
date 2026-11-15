@@ -4,7 +4,7 @@
 
 Antes de consumir provedor, `remake_sword_source.preflight/produce` procura na pasta permanente `assets/geracoes` uma parte técnica válida da **mesma** mãe, no run de origem correspondente. Um runner novo não deve regenerar e cobrar por algo arquivado; erro `REMAKE_SWORD_COMPONENT_ALREADY_ARCHIVED_SAME_MOTHER` é bloqueio positivo de duplicação. Saídas rejeitadas por PNG/alfa não contam como sucesso. A etapa de revisão artística mantém poder de reprovar imagens e requer planejamento explícito do retrabalho.
 
-O packer rejeita `scene`, `shot_id`, `part_id`, produtor e `source_archive_run_id` que não correspondam à mãe `C01-P02`, mesmo que outros hashes sejam válidos. Os testes dessa mudança **não** produzem arte. Política de gasto e upload continua idêntica; CI precisa comprovar a implementação antes de marcá-la validada.
+O packer rejeita `scene`, `shot_id`, `part_id`, produtor e `source_archive_run_id` que não correspondam à mãe `C01-P02`, mesmo que outros hashes sejam válidos. Os testes dessa mudança **não** produzem arte. Política de gasto e upload continua idêntica. Validação da implementação confirmada: [run produtor 43762440988](https://github.com/HelioConde/VideoForge-IA/actions/runs/43762440988) 9/9; [run pack/rig 43762352508](https://github.com/HelioConde/VideoForge-IA/actions/runs/43762352508) 25/25 e scanner 4/4. Só fixtures sintéticas; a fonte real permanece bloqueada pela âncora V2 ausente.
 
 ## Auditoria de geometria de rig por pixels da fonte (15/11/2026)
 

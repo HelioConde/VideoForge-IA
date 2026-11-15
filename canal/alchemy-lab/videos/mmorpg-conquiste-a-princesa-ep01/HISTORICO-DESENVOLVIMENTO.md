@@ -1,5 +1,11 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — CI da proteção de origem/antirrepetição aprovado
+
+- [43762440988](https://github.com/HelioConde/VideoForge-IA/actions/runs/43762440988) **SUCCESS**, editor com 9/9 testes e nenhuma chamada de provedor. Correção da expectativa antiga em [commit 4b57e743](https://github.com/HelioConde/VideoForge-IA/commit/4b57e743af2bfb844a50351b2e2c90634b00ea39), após primeira falha de teste [43762352543](https://github.com/HelioConde/VideoForge-IA/actions/runs/43762352543).
+- [43762352508](https://github.com/HelioConde/VideoForge-IA/actions/runs/43762352508) **SUCCESS**, scanner com 4/4 e fixture de pacote/rig com 25/25 testes. `pack_real_source_only` **skipped**, bloqueio real `REMAKE_SWORD_V2_ANCHOR_NOT_APPROVED_OR_VERIFIED` confirmado.
+- Código de origem no [commit 8e536070](https://github.com/HelioConde/VideoForge-IA/commit/8e5360709a915b6f0d7d0a8e7a9960ab3d0fa1fe). QA técnico em fixture ≠ imagem/MP4 real. Sem chamada paga e sem publicação.
+
 ## 15/11/2026 — correção anti-cobrança duplicada e vínculo estrito de componentes
 
 - O editor `remake_sword_source.py` passou a verificar o acervo permanente antes do proxy, eliminando reruns pagos de uma parte já verificada para a mesma mãe.
