@@ -105,7 +105,7 @@ test('C01 P03 performance v3 uses manual-safe head and moving arms with fixed ca
   const b=bindings.shots[s.id];
   const shot={...s,canvas:b.canvas,background:b.background.file,
     nodes:b.nodes,tracks:s.rigKeyframes};
-  assert.equal(shot.tracks.length,8);
+  assert.equal(shot.tracks.length,9);
   assert.equal(shot.camera.move,'locked');
   assert.ok(shot.camera.keyframes.every(k=>k.z===14&&k.fovDeg===30));
   assert.ok(shot.tracks.every(t=>!['aldric','guarda-esquerdo','guarda-direito',
@@ -141,9 +141,11 @@ test('C01 P03 performance v3 uses manual-safe head and moving arms with fixed ca
   assert.ok(rotations.keyframes.every(k=>Math.abs(k.value)<=2),
     'C01 head pivots must obey the manual max 2 degrees in V3');
   assert.ok(shot.tracks.some(t=>t.target==='kael.braco-esquerdo'));
+  assert.ok(shot.tracks.some(t=>t.target==='kael.bota-direita'&&t.transform==='rotationZ'));
+  assert.ok(shot.tracks.find(t=>t.target==='kael.bota-direita').keyframes.every(k=>Math.abs(k.value)<=5));
   assert.ok(shot.tracks.some(t=>t.target==='kael.ombros'&&t.transform==='translateX'));
   const allShots=direction.scenes.flatMap(x=>x.shots);
-  assert.equal(allShots.reduce((n,x)=>n+x.rigKeyframes.length,0),112);
+  assert.equal(allShots.reduce((n,x)=>n+x.rigKeyframes.length,0),113);
   const verticalHead=shot.tracks.find(t=>t.target==='kael.cabeca'&&t.transform==='translateY');
   assert.ok(verticalHead.keyframes.every(k=>k.value===0),
     'No vertical head separation until source-derived neck underlay is approved');
