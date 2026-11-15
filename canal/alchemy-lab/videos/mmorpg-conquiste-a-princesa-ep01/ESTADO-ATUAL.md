@@ -2,6 +2,14 @@
 
 ## C01-P02 — código de geração do fundo oculto e três RGBA (15/11/2026)
 
+### Resultado comprovado do produtor e bloqueio de gastos — 15/11/2026
+
+- **[Run 43749686509](https://github.com/HelioConde/VideoForge-IA/actions/runs/43749686509): SUCCESS.** Primeiro push com o novo `remake_sword_source.py` e `remake-sword-component.yml`. Testes gratuitos e mockados validaram bloqueio de custo, origem da mãe, uma edição por run, RGB opaco/RGBA verdadeiro e arquivamento com SHA; o job real de produção paga ficou **skipped**.
+- **[Run 43749824057](https://github.com/HelioConde/VideoForge-IA/actions/runs/43749824057): SUCCESS.** Isolados os testes específicos do produtor das fixtures do empacotador. **8 testes passaram, 0 ignorados**, em 2,945s; confirmação de `REMAKE_C01_P02_SOURCE_CODE_QA_NO_PAID_INFERENCE`. Job pago novamente **skipped**.
+- **Código aplicado:** `12f238a6ae2663489fe9b6b38edd19f44ee6dbb5`, com refinamento de testes `efad5702d74224a8eb88793b753be1ba5ceb30f1`.
+- **Estado real permanece:** política de custo `paid_provider_calls_approved=false`, `max_chargeable_calls_per_run=0`, âncora V2 não aprovada. Portanto **0 chamadas pagas, 0 PNGs da tomada C01-P02, 0 MP4 real da C01-P02 e 0 upload YouTube**.
+- **Pipeline pronto em código:** âncora V2 e imagem-mãe original → uma candidata por run manual protegido → arquivo permanente de PNG/QA por canal/produtor → empacotamento SHA/recomposição → ThreeCanvas e MP4 técnico → checkpoint. Até que as fontes existam, os jobs de arte e render param corretamente.
+
 `videoforge/remake_sword_source.py` e `.github/workflows/remake-sword-component.yml` usam o proxy já instalado, uma edição por run manual, origem `cena-01-c01-p02.png` da mesma mãe SHA arquivada e prompts separados por peça. Criam candidatos `underlay` (RGB 1024×1536) e `sheath/blade/hand` (RGBA alpha), com QA, SHA e arquivamento imutável mesmo quando houver reprovação técnica. Testes gratuitos de política de custo, origem e proxy mockado estão no `tests/test_remake_sword_source.py`; CI pendente de verificação neste registro.
 
 **Regra de custo ativa:** `paid_provider_calls_approved=false`; `max_chargeable_calls_per_run=0`. A nova geração não foi disparada. Não há PNG V2/underlay/espada reais nem MP4 de 3s. É proibido concluir a tomada a partir de imagens de teste. A execução de fontes só poderá ocorrer após aprovação de gasto e da referência canônica V2. A composição/empacotamento sem custo permanece pronta.

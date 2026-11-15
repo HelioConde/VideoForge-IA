@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "CI test mock producer + archive; then after approved V2 art/cost, generate C01-P02 mother and each of four components manually using existing proxy; auto-pack and ThreeCanvas",
+  "next_action": "Acquire approved real V2 character-bible, produce real C01-P02 mother after explicit paid call permission, then manually dispatch four one-image component jobs, follow automatic pack/Three preview QA",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -907,7 +907,7 @@
   },
   "c01_p02_shot_specific_source_20261115": {
     "schema": "videoforge/remake-sword-component-source/v1",
-    "status": "source_code_submitted_ci_pending",
+    "status": "source_code_in_main_ci_passed_manual_generation_cost_blocked",
     "source_module": "videoforge/remake_sword_source.py",
     "workflow": ".github/workflows/remake-sword-component.yml",
     "mode": "manual_workflow_dispatch_paid_only_after_cost_gate",
@@ -929,6 +929,26 @@
     "real_mp4_generated": false,
     "status_reason": "official V2 reference and source art absent; provider spend not approved",
     "youtube_uploaded": false,
-    "next_step": "CI test mock producer + archive; then after approved V2 art/cost, generate C01-P02 mother and each of four components manually using existing proxy; auto-pack and ThreeCanvas"
+    "next_step": "Acquire approved real V2 character-bible, produce real C01-P02 mother after explicit paid call permission, then manually dispatch four one-image component jobs, follow automatic pack/Three preview QA",
+    "implementation_commit": "12f238a6ae2663489fe9b6b38edd19f44ee6dbb5",
+    "test_refinement_commit": "efad5702d74224a8eb88793b753be1ba5ceb30f1",
+    "test_runs": [
+      {
+        "run_id": 43749686509,
+        "conclusion": "success",
+        "paid_job": "skipped",
+        "type": "initial_source_ci"
+      },
+      {
+        "run_id": 43749824057,
+        "conclusion": "success",
+        "paid_job": "skipped",
+        "type": "isolated_source_ci",
+        "tests_passed": 8,
+        "tests_skipped": 0
+      }
+    ],
+    "no_paid_calls_executed": true,
+    "canonical_anchor_approved": false
   }
 }

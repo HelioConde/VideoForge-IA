@@ -100,3 +100,7 @@ O código de fonte e preview passou no [run 43711300246](https://github.com/Heli
 ## Evidências do empacotador automático — 15/11/2026
 
 [Run 43745321463](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745321463) aprovou 14 testes de pacote SHA/origem/anti-repetição em runner GHCR, com somente PNGs sintéticos temporários de teste. O scanner **bloqueou corretamente** montagem sem fonte original. [Run 43745436851](https://github.com/HelioConde/VideoForge-IA/actions/runs/43745436851) comprovou que o gatilho `workflow_run` chegou ao renderer, mas verificou artifact de arte ausente e pulou o render. Portanto **o encadeamento de jobs funciona**, mas nenhum MP4 C01-P02 foi gerado. A arte e o underlay continuam pendentes.
+
+## Testes do produtor real por tomada — 15/11/2026
+
+O [run 43749824057](https://github.com/HelioConde/VideoForge-IA/actions/runs/43749824057) concluiu **8/8 testes** de política de custo, origem, chamada única, geração mockada RGB/RGBA e archive SHA, sem inferência real. O job manual pago foi corretamente ignorado (`skipped`). A política vigente continua com custo não autorizado; a referência V2 e o MP4 real C01-P02 permanecem ausentes. O [run anterior 43749686509](https://github.com/HelioConde/VideoForge-IA/actions/runs/43749686509) também passou. As duas execuções e a separação dos testes estão registradas em `ESTADO-ATUAL.md` e `HISTORICO-DESENVOLVIMENTO.md`.

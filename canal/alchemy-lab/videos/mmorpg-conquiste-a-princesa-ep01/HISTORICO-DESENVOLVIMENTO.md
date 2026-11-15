@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — produtor de underlay e RGBA C01-P02 com QA GitHub validado
+
+- Commit `12f238a6ae2663489fe9b6b38edd19f44ee6dbb5`: gerador específico `remake_sword_source.py` e workflow `remake-sword-component.yml` (manual pago somente após gate). Reuso do Codex Proxy e archiver existente; uma chamada por execução, fonte `cena-01-c01-p02.png` SHA auditada e âncora V2.
+- [Run 43749686509](https://github.com/HelioConde/VideoForge-IA/actions/runs/43749686509): SUCCESS, tests de custo/origem/arquivo e job pago skipped.
+- Commit `efad5702d74224a8eb88793b753be1ba5ceb30f1`: testes do produtor usam fixture do empacotador sem coletar seus testes não relacionados. [Run 43749824057](https://github.com/HelioConde/VideoForge-IA/actions/runs/43749824057): **8 tests, 8 PASS, 0 SKIP**, 2,945s; produção paga skipped.
+- **Não ocorreu qualquer geração real**; nenhum modelo de imagem foi chamado, nenhum PNG V2 foi produzido, não houve aprovação humana nem YouTube. Gatilho de custo permanece fechado, preservando limite financeiro.
+- Próximo: gerar/revisar referência canônica V2 com custo autorizado, mãe C01-P02 real, executar quatro runs de componentes quando explicitamente permitido; packer e rig técnico já têm integração validada.
+
 ## 15/11/2026 — gerador de peças da espada por tomada específica, sem novos gastos
 
 - Implementado `videoforge/remake_sword_source.py`: aceita exclusivamente mãe original `C01-P02` do arquivo SHA verificado, âncora V2 aprovada e custo da política permitido; uma chamada `/v1/images/edits` por run. Prompts específicos para o carrasco, lâmina, bainha e fundo oculto. Nunca usa fonte C01-P04.
