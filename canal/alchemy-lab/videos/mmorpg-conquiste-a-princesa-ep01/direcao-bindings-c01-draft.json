@@ -380,7 +380,7 @@
         },
         {
           "id": "kael.costura-gola-pixel-original",
-          "parent": null,
+          "parent": "kael.ombros",
           "pivot": [
             525,
             860
@@ -415,7 +415,8 @@
         "Rotação de pulso não significa fechamento real dos dedos. Mãos e anatomia fina não foram segmentadas.",
         "V3 gola/ombro: novo holdout de tecido usa exclusivamente pixels verificados da imagem-mãe previamente cobertos por jacket e braço RGBA; jamais supor anatomia oculta nova.",
         "Holdout é técnico, não substitui revisão humana do recorte e dos contornos na gola.",
-        "V3 candidato de pivot do ombro direito foi alinhado na intersecao visual da gola original em (540,861), antes (510,883); verificar articulação no MP4, humano não aprovou."
+        "V3 candidato de pivot do ombro direito foi alinhado na intersecao visual da gola original em (540,861), antes (510,883); verificar articulação no MP4, humano não aprovou.",
+        "Holdout de gola move sob o mesmo osso kael.ombros que jacket e braço direito, sem interpolação do PNG inteiro. Candidata de produção não aprovada."
       ]
     }
   }
