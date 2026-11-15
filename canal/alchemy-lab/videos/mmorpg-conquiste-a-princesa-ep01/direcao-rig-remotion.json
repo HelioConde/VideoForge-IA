@@ -436,7 +436,7 @@
               "target": "kael.braco-direito",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Apoio do ombro sobre o joelho com pequena rotação do braço original",
+              "description": "Rotação superior quase neutra (<=0.87°) para conservar a costura original; atuação evidente fica no antebraço e pulso independentes",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -449,19 +449,19 @@
                 },
                 {
                   "frame": 192,
-                  "value": 2.4
+                  "value": 0.36
                 },
                 {
                   "frame": 213,
-                  "value": 5.8
+                  "value": 0.87
                 },
                 {
                   "frame": 232,
-                  "value": 5.1
+                  "value": 0.765
                 },
                 {
                   "frame": 239,
-                  "value": 4.9
+                  "value": 0.735
                 }
               ],
               "measuredPivotRequired": true
