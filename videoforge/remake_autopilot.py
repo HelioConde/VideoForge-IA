@@ -46,6 +46,42 @@ def verified_asset(episode: Path, relative: object, expected_sha: object) -> boo
     return hashlib.sha256(asset.read_bytes()).hexdigest() == expected_sha
 
 
+def discover_archived_character_bible(episode: Path) -> dict | None:
+    """Find real PNG from an existing VideoForge art-run archive by manifest+SHA."""
+    base = episode / "assets" / "geracoes" / "production-art-request"
+    if not base.is_dir() or base.is_symlink():
+        return None
+    found = []
+    for run in base.iterdir():
+        if not run.is_dir() or run.is_symlink() or not run.name.isdigit():
+            continue
+        manifest_file = run / "manifesto-geracoes.json"
+        if not manifest_file.is_file():
+            continue
+        try:
+            manifest = _json(manifest_file)
+        except VideoForgeError:
+            continue
+        if (manifest.get("schema") != "videoforge/permanent-generated-image-archive/v1"
+                or manifest.get("channel") != "alchemy-lab"
+                or manifest.get("video_id") != "mmorpg-conquiste-a-princesa-ep01"
+                or manifest.get("producer") != "production-art-request"
+                or manifest.get("github_run_id") != int(run.name)):
+            continue
+        for item in manifest.get("images", []):
+            if not isinstance(item, dict) or item.get("file") != "character-bible.png":
+                continue
+            rel = "assets/geracoes/production-art-request/" + run.name + "/character-bible.png"
+            if verified_asset(episode, rel, item.get("sha256")):
+                from .persist_generated_assets import _png_info
+                try:
+                    _png_info((episode / rel).read_bytes())
+                except VideoForgeError:
+                    continue
+                found.append((int(run.name), {"path": rel, "sha256": item["sha256"], "run_id": int(run.name)}))
+    return max(found, key=lambda item: item[0])[1] if found else None
+
+
 def choose_next(root: Path = ROOT) -> dict:
     episode = Path(root) / EPISODE
     data = _json(episode / "remake-ep01-planos.json")
@@ -80,6 +116,7 @@ def choose_next(root: Path = ROOT) -> dict:
             or state.get("remake_v2", {}).get("generation_editorially_authorized") is not True):
         raise VideoForgeError("REMAKE_AUTOPILOT_AUTH_OR_BLACK_FRAME_INVALID")
     stage, target, blocker = None, None, None
+    candidate = None
     if (episode / "SEM-GERACAO-NOVAS-IMAGENS.lock").exists():
         stage, blocker = "stop_old_lock", "historical_lock_still_active"
     else:
@@ -91,7 +128,11 @@ def choose_next(root: Path = ROOT) -> dict:
         if anchor.get("status") == "approved" and not has_art:
             stage, target, blocker = "stop_bad_reference_sha", "character-bible", "anchor_approval_without_real_matching_png"
         elif not has_art:
-            stage, target, blocker = "generate_character_bible", "character-bible", "no_verified_reference_png"
+            candidate = discover_archived_character_bible(episode)
+            if candidate:
+                stage, target, blocker = "review_identity_reference", "character-bible", "archived_png_verified_human_review_pending"
+            else:
+                stage, target, blocker = "generate_character_bible", "character-bible", "no_verified_reference_png"
         elif anchor.get("human_approved") is not True:
             stage, target, blocker = "review_identity_reference", "character-bible", "human_visual_review_pending"
         else:
@@ -131,6 +172,7 @@ def choose_next(root: Path = ROOT) -> dict:
         "episode": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
         "stage": stage,
         "target": target,
+        "discovered_candidate": candidate,
         "blocker": blocker,
         "next_workflow": "production-art-by-request.yml" if dispatch_allowed else None,
         "dispatch_allowed": bool(dispatch_allowed),
@@ -152,8 +194,26 @@ def sync_checkpoint(report: dict, root: Path = ROOT) -> bool:
     history = episode / "HISTORICO-DESENVOLVIMENTO.md"
     state = _json(state_file)
     record = {key: report.get(key) for key in ("stage", "target", "blocker", "dispatch_allowed")}
+    candidate = report.get("discovered_candidate")
+    if isinstance(candidate, dict):
+        record["candidate_sha256"] = candidate.get("sha256")
     if state.get("autopilot_checkpoint") == record:
         return False
+    if candidate:
+        plan_path = episode / "remake-ep01-planos.json"
+        plan = _json(plan_path)
+        anchor = plan["identity_anchors"][0]
+        if not verified_asset(episode, candidate.get("path"), candidate.get("sha256")):
+            raise VideoForgeError("REMAKE_AUTOPILOT_ARCHIVED_REFERENCE_NOT_VERIFIED")
+        if anchor.get("status") in ("missing", "candidate_human_review_pending"):
+            anchor.update({
+                "path": candidate["path"],
+                "sha256": candidate["sha256"],
+                "run_id": candidate["run_id"],
+                "status": "candidate_human_review_pending",
+                "human_approved": False,
+            })
+            plan_path.write_text(json.dumps(plan, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     original = checkpoint.read_text(encoding="utf-8")
     if (BEGIN in original) != (END in original):
         raise VideoForgeError("REMAKE_AUTOPILOT_CHECKPOINT_MARKER_BROKEN")

@@ -1,5 +1,11 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## REGRA NOVA — AUTONOMIA DO VIDEOFORGE (15/11/2026)
+
+**O VideoForge deve fazer os vídeos e animações no GitHub sem depender de repetidas correções manuais feitas pelo assistente.** Nossa função é orientar objetivos, estilo, histórias e aprovações subjetivas. **O próprio programa** deve ler estado e arquivos SHA, organizar a fila, chamar geradores existentes, separar sprites, criar rigs verdadeiros, renderizar Remotion, executar QA, identificar causa dos erros, corrigir defeitos técnicos determinísticos e retomar do próximo passo sem recriar o que está pronto. Cada falha recorrente deve virar regra e teste de regressão. Referência obrigatória: [manual de autonomia e limites reais](docs/AUTONOMIA-PRODUCAO-VIDEOS.md) e [coordenador inicial](videoforge/remake_autopilot.py).
+
+**Implementação realmente alcançada até aqui:** diagnóstico periódico automatizado, detecção da próxima etapa, verificação dos PNGs arquivados por SHA, atualização do checkpoint e bloqueio de geração paga não autorizada. **Ainda não está pronto o despacho idempotente nem o fluxo integral autônomo de arte → rig → vídeo.** Não declarar o episódio pronto ou o sistema independente antes de comprovar os próximos módulos. Nunca aprovar qualidade artística ou publicação sem autorização.
+
 ## REGRA PRIORITÁRIA — IMAGENS SEM COTA EDITORIAL + MEMÓRIA OPERACIONAL (15/11/2026)
 
 **Prioridade do usuário:** qualidade final do dorama: bonito, animado de verdade, rico em detalhes, consistente entre tomadas. **Não existe limite numérico editorial de imagens/iterações.** Quando a geração estiver autorizada, usar tantas imagens-mãe, enquadramentos realmente diferentes, fundos, camadas RGBA e melhorias quantas forem necessárias para o roteiro e o QA. Não reduzir a qualidade só para caber em 5, 10, 30 ou qualquer máximo artificial; não criar duplicações inúteis. Limites efetivos do provedor, segurança, permissões e custos não autorizados continuam válidos.

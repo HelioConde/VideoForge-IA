@@ -33,6 +33,16 @@ class RemakeAutonomyTests(unittest.TestCase):
             with self.assertRaisesRegex(VideoForgeError, "legacy lock"):
                 assert_image_generation_allowed("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01", Path(tmp))
 
+
+    def test_archive_discovery_no_false_positive_without_real_manifest(self):
+        from videoforge.remake_autopilot import discover_archived_character_bible
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp) / EPISODE
+            bogus = base / "assets/geracoes/production-art-request/123"
+            bogus.mkdir(parents=True)
+            (bogus / "character-bible.png").write_bytes(b"not a real png")
+            self.assertIsNone(discover_archived_character_bible(base))
+
     def test_checkpoint_idempotent(self):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp) / EPISODE
