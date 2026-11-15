@@ -470,7 +470,7 @@
               "target": "kael.antebraco",
               "transform": "rotationZ",
               "unit": "degrees",
-              "description": "Antebraço compensa o ombro; ossos e âncoras originais preservados",
+              "description": "Flexão moderada do antebraço com pulso independente reforçado; evitar compensação que anule movimento perceptível",
               "easing": "easeInOutCubic",
               "keyframes": [
                 {
@@ -483,15 +483,15 @@
                 },
                 {
                   "frame": 198,
-                  "value": -3.3
+                  "value": -1.2
                 },
                 {
                   "frame": 220,
-                  "value": -8.5
+                  "value": -3.8
                 },
                 {
                   "frame": 239,
-                  "value": -7.6
+                  "value": -3.4
                 }
               ],
               "measuredPivotRequired": true
