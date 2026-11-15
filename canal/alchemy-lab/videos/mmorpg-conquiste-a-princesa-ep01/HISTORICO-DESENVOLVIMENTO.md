@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — auditoria de coerência das regras do remake
+
+- **Verificação solicitada:** nem todas as regras estavam coerentemente identificadas. Apesar dos documentos principais já descreverem remake V2/autonomia, trechos antigos em `AGENTS.md`, `ESTADO-ATUAL.md`, `PLANO-ARTE-RIG-EP01.md` e `estilo-visual-oficial-dorama.json` continuavam tratando a proibição histórica de imagens como ativa.
+- **Correção editorial e documental:** incluir matriz de precedência atual em `AGENTS.md` e neste checkpoint, rotular plano técnico V1 e EDL/direção V1 como **legado**, corrigir as flags e o próximo passo no manifesto de estilo. Preservar o histórico de 14/11 sem apagar evidências; o remake tem permissão editorial de novas imagens, mas despesas adicionais e publicação permanecem bloqueadas.
+- **Regressão automatizada:** `tests/test_remake_policy_consistency.py` confere coerência das flags e distinção explícita de arquivos antigos; incluído na verificação do workflow de autonomia.
+- **Pendência técnica não resolvida por documentação:** `videoforge/cinematic_direction.py` ainda valida autorização e referências da pré-produção legada; antes de gerar o EP01 V2 o gerador precisa consumir `remake-ep01-planos.json` e referências canônicas verificadas. O coordenador de retomada existe, mas o encadeamento fim a fim ainda não foi implementado.
+- **Resultado desta mudança:** somente documentação/JSON e teste de regressão; sem imagem/rig/render novo e sem upload YouTube. **Próximo passo:** adaptar o gerador antigo ao manifesto ativo e incluir validações de referência por SHA, preservando bloqueios de custo e publicação.
+
 ## 15/11/2026 — autorização do remake EP01 e regra de autonomia
 
 - **Ordem do responsável:** refazer todo o episódio conforme novas regras, depois "Continuar". Posteriormente acrescentou a regra de **ensinar o VideoForge a produzir e corrigir animações no GitHub, sem orientação manual a cada passo**.

@@ -865,5 +865,8 @@
     "visual_human_review": false,
     "official_mp4": false,
     "youtube_uploaded": false
-  }
+  },
+  "legacy_scope": "pre_remake_cinematic_shot_description",
+  "active_remake_manifest": "remake-ep01-planos.json",
+  "generation_authorization_note": "Historical generation gate is false in this v1 manifest and does NOT describe current remake permission. This legacy producer is not integrated with approved remake canonical references. Do not infer paid generation approval."
 }

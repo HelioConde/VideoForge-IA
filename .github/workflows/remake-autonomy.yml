@@ -41,7 +41,7 @@ jobs:
       - name: Testar regras e estado do remake sem gastar IA
         run: |
           set -euo pipefail
-          python -m unittest tests.test_remake_autopilot tests.test_alchemy_no_image_generation tests.test_cinematic_direction -v
+          python -m unittest tests.test_remake_autopilot tests.test_remake_policy_consistency tests.test_alchemy_no_image_generation tests.test_cinematic_direction -v
       - name: Inspecionar SHA, detectar proxima etapa e atualizar checkpoint
         run: |
           set -euo pipefail

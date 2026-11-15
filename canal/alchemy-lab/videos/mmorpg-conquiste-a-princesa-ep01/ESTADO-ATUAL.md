@@ -10,6 +10,14 @@
 <!-- REMAKE-AUTOPILOT-END -->
 
 
+## REGRAS ATIVAS DO REMAKE — LEITURA OBRIGATÓRIA PARA AGENTES
+
+**Ordem vigente (15/11/2026):** remake integral do EP01 autorizado editorialmente; sem limite editorial numérico de imagens; estilo cinematográfico anime semirrealista com identidade constante; rig 2D verdadeiro em ThreeCanvas/Remotion (não pan/zoom de PNG); produção por workflows GitHub, orientação humana focada nas decisões artísticas; qualquer avanço entra neste arquivo mestre e no JSON/histórico, com SHA, run e próximo passo. Preservar materiais e QA legados, sem relançar trabalhos concluídos.
+
+**Distinção obrigatória:** o lock de 14/11 **não está mais ativo**; foi arquivado em `REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md`. Mas **imagem autorizada editorialmente não equivale a chamada paga autorizada**, nem a identidade artística aprovada, nem a vídeo publicável. O coordenador autônomo está operacional para diagnóstico e retomada; **o gerador antigo ainda precisa conectar a referência canônica e o novo manifesto V2** antes de conseguir produzir o remake. Não alterar flags de QA para contornar essas pendências.
+
+**Fontes vigentes:** `AGENTS.md` → `docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md` → `REMAKE-EP01-PLANO-OFICIAL.md` → `remake-ep01-planos.json` → `autonomy-policy.json` → este checkpoint. O histórico e o antigo plano de arte são arquivos de evidências, não políticas novas.
+
 ## REMAKE EP01 V2 — DIREÇÃO ATUAL E AUTONOMIA DO PROGRAMA (15/11/2026)
 
 **ORDEM RECENTE:** refazer EP01 do drama pelas regras de qualidade, sem teto editorial de imagens, e continuar. **O lock antigo de 14/11 foi arquivado em `REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md`, não está mais ativo**. O remake pode gerar novas imagens **editorialmente**; **custos adicionais e publicação ainda não autorizados**.
@@ -189,13 +197,13 @@ A tentativa de ler/copiar os bytes por integração de arquivos **falhou com `Th
 **Pedido do responsável:** usar o estilo da imagem enviada como amostra para o dorama e fazer com que **quase toda cena tenha clima dramático e ângulo de câmera diferente**, sem perder consistência de Kael, princesa, rei, guardas ou cenários. Nome aprovado neste registro: **Cinematic Semi-Realistic Fantasy Anime** (estilo da ilustração); **Cinematic 2D Mesh Animation** continua o método de animação. A regra é **apenas para o dorama**, não para os outros canais.
 
 - **Bíblia oficial e prompt mestre:** [`PROMPT-OFICIAL-ESTILO-DORAMA.md`](PROMPT-OFICIAL-ESTILO-DORAMA.md). Inclui prompt em inglês parametrizado por plano, negative prompt, 10 tipos de ângulo, tabela de continuidade e checklist de arte.
-- **Contratos para agentes:** [`estilo-visual-oficial-dorama.json`](estilo-visual-oficial-dorama.json). O formato marca o escopo do canal, alternância de enquadramentos, qualidade da imagem e autorização **false** para novas imagens do episódio.
+- **Registro histórico original (supersedido pelo remake):** o manifesto de estilo inicialmente marcava autorização **false** para novas imagens. Após o pedido de refazer o EP01, o estado vigente passou a permitir imagens editorialmente, mas mantém aprovação de custos e revisões técnicas independentes; ver `autonomy-policy.json`.
 - **Amostra arquivada no repositório:** [miniatura autêntica da imagem do usuário, 96×171](REFERENCIA-VISUAL-DORAMA-PREVIEW-96.jpg), sem regeneração por IA, SHA-256 `58f22420d123561623944e369c08c7d6a1808df29dc2e3f5d795129c5d2192b4`. A imagem original enviada tem dimensão **864×1536**, bytes JPEG apesar da extensão `.png`, SHA-256 `2bab99670444001fbccf8a6c861276e93dfb56f04a33ba5f542698ad3419b2e1`; **original em resolução plena NÃO foi versionado no GitHub**. Esta miniatura **não serve para recorte ou rig**.
 - **Entrada fixa no canal:** [`canal/alchemy-lab/dorama/README.md`](../../dorama/README.md), [README do canal](../../README.md), [estratégia editorial](../../ESTRATEGIA.md), README e AGENTS globais. Todo agente de imagens **futuras e autorizadas** deverá consultar esse padrão antes de propor novos quadros.
 - **Nenhuma alteração de sprites, imagens-mãe, direção do rig V5, assets do C12, workflow, render ou YouTube foi feita** por este registro editorial.
-- **Bloqueio ativo preservado:** [`SEM-GERACAO-NOVAS-IMAGENS.lock`](SEM-GERACAO-NOVAS-IMAGENS.lock) continua proibir gerar ou editar imagens novas neste EP01. **Padrão para uso futuro NÃO implica autorização agora**. Para gerar novas imagens deste episódio é necessária autorização explícita de remoção/alteração do bloqueio. O MP4 da C01-P03 V5 permanece [prévia técnica](QA-C01-P03-V5-2026-11-15.md) aguardando aprovação visual humana; C12 continua aguardando originais reais.
+- **Histórico da regra de 14/11 — não vigente no remake:** o arquivo `SEM-GERACAO-NOVAS-IMAGENS.lock` impedia imagens novas quando o padrão visual foi registrado. A ordem posterior de refazer o EP01 em 15/11 substituiu essa restrição e o lock foi arquivado em [`REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md`](REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md). A V5 permanece prévia técnica e C12 legado com originais pendentes.
 
-**Próxima ação editorial:** quando uma **nova cena/episódio estiver autorizado**, escrever uma ficha por plano com emoção, ângulo realmente diferente, perspectiva, personagens aprovados, luz, geografia e checks de continuidade; somente então aplicar o prompt mestre. **No EP01 atual, continuar com imagens existentes e rig, sem novas gerações.**
+**Próxima ação editorial vigente no remake:** usar o manifesto V2 para preparar referência canônica, planos individuais e rigs conforme forem autorizados e verificados os recursos reais; o bloqueio editorial antigo não é mais uma restrição, mas os custos adicionais, a aprovação artística, a integração do gerador e o upload continuam pendentes.
 
 ## Próxima ação concreta, em ordem
 

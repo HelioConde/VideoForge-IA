@@ -1,5 +1,14 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+## PRECEDÊNCIA DAS REGRAS — DORAMA EP01 REMAKE V2 (vigente em 15/11/2026)
+
+1. **Fonte de retomada:** `canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md` + `estado-atual.json`; as instruções mais recentes de remake prevalecem sobre restrições de 14/11 preservadas como histórico.
+2. **Arte:** estilo `Cinematic Semi-Realistic Fantasy Anime`; 14 cenas/37 planos/163s são base inicial, **não um teto de imagens**. Identidade de Kael, Elara, Aldric e guardas consistente; novas imagens devem ter ângulo coerente e fonte versionada.
+3. **Animação:** manual principal `docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md` prevalece sobre efeitos de câmera; rig Three.js e malhas reais, PNGs RGBA, underlays, Remotion, QA de movimento no MP4.
+4. **Autonomia:** o software GitHub deverá aprender a delegar, validar, corrigir erros determinísticos, retomar e registrar automaticamente. O coordenador atual cobre diagnóstico, SHA e checkpoint, **ainda não** produção integral.
+5. **Segurança e aprovação:** imagens do remake autorizadas editorialmente; despesas adicionais/provedor pago não autorizado; não presumir revisão visual humana nem publicar no YouTube.
+6. **Prioridade documental:** `REMAKE-EP01-PLANO-OFICIAL.md` e `remake-ep01-planos.json` são o plano vigente. `PLANO-ARTE-RIG-EP01.md` e trechos com lock antigo são **histórico técnico**, não nova proibição. O gerador cinematográfico antigo continua bloqueado pela validação de identidade legada e precisa ser adaptado antes da produção V2.
+
 ## REGRA NOVA — AUTONOMIA DO VIDEOFORGE (15/11/2026)
 
 **O VideoForge deve fazer os vídeos e animações no GitHub sem depender de repetidas correções manuais feitas pelo assistente.** Nossa função é orientar objetivos, estilo, histórias e aprovações subjetivas. **O próprio programa** deve ler estado e arquivos SHA, organizar a fila, chamar geradores existentes, separar sprites, criar rigs verdadeiros, renderizar Remotion, executar QA, identificar causa dos erros, corrigir defeitos técnicos determinísticos e retomar do próximo passo sem recriar o que está pronto. Cada falha recorrente deve virar regra e teste de regressão. Referência obrigatória: [manual de autonomia e limites reais](docs/AUTONOMIA-PRODUCAO-VIDEOS.md) e [coordenador inicial](videoforge/remake_autopilot.py).
@@ -70,13 +79,13 @@ Utilizar os programas videoforge/persist_generated_assets.py e scripts/persistir
 
 O planejamento é `direcao-cinematografica-planos.json` por vídeo e a API reutilizável `videoforge/cinematic_direction.py`. O gerador `videoforge/production_scenes.py` aceita `--shot-id C12-P01` (quando autorizado); é **uma imagem-mãe nova por ângulo necessário**, da mesma referência canônica, com SHA e recortes RGBA específicos. **Não** usar pan, zoom ou recorte de uma arte ampla como substituto de personagem em close de qualidade. UI/HUD e legendas entram no Remotion, não ficam impressos na arte.
 
-**Não quebrar o Manual Principal:** direção de câmera não equivale a rig real; sem underlays/pivôs/QA `pipeline_pendente`. O caso Alchemy Lab EP01 tem bloqueio expresso de nova geração de imagens e conflito de referências entre visual antigo e quadros aprovados no chat; não remover bloqueio nem mesclar figurinos silenciosamente.
+**Não quebrar o Manual Principal:** direção de câmera não equivale a rig real; sem underlays/pivôs/QA `pipeline_pendente`. **Situação atual do Alchemy Lab EP01:** o remake V2 foi autorizado editorialmente em 15/11/2026 e o antigo bloqueio foi arquivado; porém o gerador de tomadas legado ainda depende de referências canônicas aprovadas e integração do manifesto do remake. Não mesclar figurinos, não liberar render sem QA, não executar chamadas pagas sem permissão.
 
 ## ESTILO V2 DO DORAMA ALCHEMY-LAB EP01 — sem alterar imagens existentes
 
 Para o episódio **mmorpg-conquiste-a-princesa-ep01**, antes de preparar qualquer tomada, ler [a bíblia visual v2](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/biblia-visual.md) e o [manifesto SHA das duas referências aprovadas como estética no chat](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/referencias-cinematograficas-aprovadas-no-chat.json). Kael: cabelo castanho quase preto volumoso, arranhões no rosto, capa vinho rasgada, ombreira metálica. Elara: cabelo loiro dourado, olhos violeta, vestido branco e violeta com bordados dourados. Não usar descrições de cabelo preto/vestido azul de Elara e Kael sem capa/armadura da v1, que foi preservada como histórico.
 
-**A aprovação é da preferência visual; os PNGs originais ainda estão pendentes no GitHub** e os 71 PNGs antigos não foram recortados, alterados nem aprovados na v2. Validar os arquivos por SHA e revisar eixos, iluminação, ocultações e continuidade antes de produzir; nunca liberar rig ou MP4 a partir de referência de estilo. Apresentar a arte existente também diretamente no chat para revisão e distinguir claramente imagens de referência, rascunho e aprovada. O lock de **não gerar novas imagens** deste episódio permanece obrigatório.
+**A aprovação é da preferência visual; os PNGs originais ainda estão pendentes no GitHub** e os 71 PNGs antigos não foram recortados, alterados nem aprovados na v2. Validar os arquivos por SHA e revisar eixos, iluminação, ocultações e continuidade antes de produzir; nunca liberar rig ou MP4 a partir de referência de estilo. Apresentar a arte existente também diretamente no chat para revisão e distinguir claramente imagens de referência, rascunho e aprovada. O bloqueio antigo de **não gerar novas imagens** foi substituído pela autorização de remake V2. A aprovação da identidade visual por imagem, a integração técnica do gerador e a autorização de custo continuam pendentes; não confundir estas pendências com o lock histórico.
 
 ## REGRA Nº 1 — Vídeos exclusivamente pelo programa VideoForge-IA no GitHub
 

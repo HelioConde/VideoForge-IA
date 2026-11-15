@@ -1,5 +1,7 @@
 # Alchemy Lab — Plano de produção, separação e rigs — Episódio 01
 
+> **DOCUMENTO HISTÓRICO — PRODUÇÃO ANTERIOR AO REMAKE V2 (14/11/2026).** As expressões "regra ativa" e "lock obrigatório" abaixo descrevem exclusivamente a fase anterior; **não prevalecem sobre a autorização posterior de 15/11/2026**. Para a produção atual ler [ESTADO-ATUAL.md](ESTADO-ATUAL.md), [REMAKE-EP01-PLANO-OFICIAL.md](REMAKE-EP01-PLANO-OFICIAL.md) e [remake-ep01-planos.json](remake-ep01-planos.json). O lock foi arquivado, mas custos adicionais, aprovação visual e publicação ainda dependem de autorização. Não apagar evidências ou atualizar o legado como se fosse o roteiro ativo.
+
 **Status verificado (14/11/2026):** roteiro de 163 segundos e 37 planos registrado. Existem 14 imagens-mãe e camadas candidatas; NÃO existe MP4 oficial nem animação integral aprovada. Esta etapa foi executada sem geração de imagens.
 
 ## Regra ativa deste pedido

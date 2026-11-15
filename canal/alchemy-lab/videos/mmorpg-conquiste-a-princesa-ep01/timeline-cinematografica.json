@@ -1276,5 +1276,9 @@
         "SHOT_VISUAL_QA_MISSING"
       ]
     }
-  ]
+  ],
+  "legacy_scope": "pre_remake_cinematic_edl_immutable_reference",
+  "active_remake_manifest": "remake-ep01-planos.json",
+  "old_lock_field_historical_only": true,
+  "generation_authorization_note": "noImageGenerationLock=true is a historical field retained for v1 regression compatibility. Remake V2 editorial image generation is authorized, but unapproved paid calls, reference identity and rig QA still block official production."
 }

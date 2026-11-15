@@ -479,7 +479,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "run safe GitHub autonomous preflight and prepare verified character-bible anchor; no paid generation or YouTube without authorization",
+  "next_action": "Integrate active remake-ep01-planos.json with legacy cinematic_direction generator and SHA-verified canonical art without bypassing paid cost and human approval",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
@@ -600,5 +600,17 @@
     "target": "character-bible",
     "blocker": "provider_cost_permission_required",
     "dispatch_allowed": false
+  },
+  "policy_consistency_audit_20261115": {
+    "current_rules_identified_in_master_files": true,
+    "historical_conflicts_corrected_in_primary_docs": true,
+    "legacy_plans_marked_historical": true,
+    "explicit_paid_provider_cost_approval": false,
+    "autoprogram_producer_end_to_end_implemented": false,
+    "cinematic_legacy_generator_integrated_with_remake_manifest": false,
+    "image_generation_executed_in_this_audit": false,
+    "video_rendered_in_this_audit": false,
+    "regression_test": "tests/test_remake_policy_consistency.py",
+    "next_step": "Integrate active remake-ep01-planos.json with legacy cinematic_direction generator and SHA-verified canonical art without bypassing paid cost and human approval"
   }
 }
