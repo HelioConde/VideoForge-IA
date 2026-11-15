@@ -127,6 +127,15 @@
   "blackOnlyShots": 1,
   "visualShots": 36,
   "visualShotsPendingApproval": 36,
+  "visualShotsApproved": 0,
+  "blockerCounts": {
+    "CANONICAL_VISUAL_REFERENCE_CONFLICT": 36,
+    "NO_NEW_IMAGE_GENERATION_LOCK_ACTIVE": 36,
+    "SHOT_BACKGROUND_MISSING": 36,
+    "SHOT_MOTHER_MISSING": 36,
+    "SHOT_RIG_MISSING": 36,
+    "SHOT_VISUAL_QA_MISSING": 36
+  },
   "faceCloseups": 12,
   "shotTypes": {
     "action": 1,

@@ -170,3 +170,8 @@ Ao terminar **qualquer avanço no dorama**, atualizar **este arquivo na `main`**
 ## 15/11/2026 — invalidacao de configuracao antiga de render C12
 
 Correcao na branch codex/animation-v5-review, ainda nao integrada: uma nova preparacao remove props.json anterior antes de validar as fontes. Falha de preflight nao deixa configuracao antiga utilizavel. Teste reproduziu a falha antes da correcao; 17 testes de contrato/importacao/QA passaram depois. C01 V5 preservada; nenhum novo MP4 ou imagem. Proximo passo: revisar e integrar a correcao; C12 continua dependente dos ZIPs originais.
+
+
+## 15/11/2026 — inventario acompanha progresso parcial do episodio
+
+Branch codex/animation-v5-review, PR #59 ainda nao integrada. Removido bloqueio que exigia exatamente 36 planos visuais pendentes: agora o inventario conta planos aprovados, pendentes e causas de bloqueio usando a EDL validada. Nao concede aprovacao nem gera imagens. Auditoria atual: 37 planos totais, 36 visuais pendentes, 12 closes, 14 referencias antigas e 52 recortes C01. Testes de progresso parcial e aprovacao inconsistente passaram. Skills oficiais remotion-best-practices, remotion-markup e remotion-render instaladas localmente por autorizacao do usuario, origem https://github.com/remotion-dev/skills; nao sao assets nem substituem o rig. Proximo passo: obter originais/pecas das tomadas; usuario consultado sobre conservar bloqueio de novas imagens ou definir orcamento para novas artes. Nenhuma autorizacao de geracao inferida.

@@ -6,11 +6,33 @@ from __future__ import annotations
 
 import copy
 import unittest
+from unittest.mock import patch
+from videoforge import cinematic_asset_inventory as inventory
+from videoforge.cinematic_shot_assets import build_edl
 
 from videoforge.cinematic_asset_inventory import audit
 from videoforge.errors import VideoForgeError
 
 class CinematicReferenceInventoryTests(unittest.TestCase):
+    def test_partial_progress_is_reported_without_unlocking_episode(self):
+        edl=build_edl(inventory.CHANNEL,inventory.VIDEO)
+        shot=next(s for s in edl['shots'] if s['type']!='black')
+        shot.update(renderAllowed=True,rigApproved=True,blockers=[])
+        with patch.object(inventory,'build_edl',return_value=edl):
+            data=audit()
+        self.assertEqual(data['visualShotsPendingApproval'],35)
+        self.assertEqual(data['visualShotsApproved'],1)
+        self.assertEqual(data['blockerCounts']['SHOT_MOTHER_MISSING'],35)
+        self.assertFalse(data['officialMP4Allowed'])
+        self.assertFalse(data['newImageGenerationAllowed'])
+
+    def test_inconsistent_approval_is_still_rejected(self):
+        edl=build_edl(inventory.CHANNEL,inventory.VIDEO)
+        edl['renderOfficialAllowed']=True
+        with patch.object(inventory,'build_edl',return_value=edl):
+            with self.assertRaises(VideoForgeError):
+                audit()
+
     @classmethod
     def setUpClass(cls):
         cls.data=audit()

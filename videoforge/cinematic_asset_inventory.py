@@ -14,7 +14,7 @@ import re
 import sys
 
 from .cinematic_direction import load_plan,ROOT
-from .cinematic_shot_assets import build_edl,_png_valid
+from .cinematic_shot_assets import build_edl,_png_valid,validate_edl
 from .errors import VideoForgeError
 
 CHANNEL="alchemy-lab"
@@ -28,6 +28,7 @@ def audit(root:Path=ROOT)->dict:
     base=root/"canal"/CHANNEL/"videos"/VIDEO
     plan=load_plan(CHANNEL,VIDEO,root)
     edl=build_edl(CHANNEL,VIDEO,root)
+    validate_edl(edl)
     if plan is None or edl["shotCount"]!=37:
         raise VideoForgeError("CINEMATIC_INVENTORY_PLAN_NOT_VALID")
     reference_status=plan["reference_approval"]
@@ -92,10 +93,8 @@ def audit(root:Path=ROOT)->dict:
         })
     if len(available_legacy_rgba)<20:
         raise VideoForgeError("CINEMATIC_INVENTORY_LEGACY_ART_NOT_INDEXED")
-    if edl["renderOfficialAllowed"] or missing!=36:
-        # New approved arts would require a new inventory policy/workflow
-        # rather than silently passing this initial no-art readiness report.
-        raise VideoForgeError("CINEMATIC_INVENTORY_PHASE_CHANGED_NEEDS_REVIEW")
+    visual_count=sum(types.values())
+    blocker_counts=Counter(b for shot in edl["shots"] for b in shot["blockers"])
     result={
         "schema":"videoforge/scene-reference-triage/v1",
         "channel":CHANNEL,"video_id":VIDEO,
@@ -107,16 +106,18 @@ def audit(root:Path=ROOT)->dict:
         "legacyScene01DraftPNGs":len(available_legacy_rgba),
         "legacyScene01DraftsNotApproved":True,
         "shotsTotal":len(direct),
-        "blackOnlyShots":1,
-        "visualShots":36,
+        "blackOnlyShots":len(direct)-visual_count,
+        "visualShots":visual_count,
         "visualShotsPendingApproval":missing,
+        "visualShotsApproved":visual_count-missing,
+        "blockerCounts":dict(sorted(blocker_counts.items())),
         "faceCloseups":types.get("close_up",0)+types.get("extreme_close_up",0),
         "shotTypes":dict(sorted(types.items())),
         "productionPriorities":dict(sorted(priorities.items())),
         "canonicalReferenceConflict":reference_status["canonical_identity_conflict_detected"],
-        "approvedChatImagesAvailableInRepo":False,
+        "approvedChatImagesAvailableInRepo":edl["canonicalReferencesArchived"],
         "newImageGenerationAllowed":False,
-        "officialMP4Allowed":False,
+        "officialMP4Allowed":edl["renderOfficialAllowed"],
         "rules":[
             "14 mães antigas servem como referência de local e paleta; não há 36 câmeras independentes verificadas",
             "Não fazer crop/zoom de rosto pequeno na mãe geral para fingir o close",
