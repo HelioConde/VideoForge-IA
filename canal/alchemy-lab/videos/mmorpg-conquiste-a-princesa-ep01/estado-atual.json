@@ -18,14 +18,14 @@
     "human_art_approved": false
   },
   "c01": {
-    "state": "V3_merged_but_visual_rejected__V4_in_pr57_under_test",
+    "state": "v4_main_technical_qa_passed__user_visual_approval_pending",
     "shot": "C01-P03",
-    "integrated_pr": 56,
-    "integrated_commit": "69e22458703c7c716f05e205987471ce3595b1c5",
-    "run_id": 43673610507,
+    "integrated_pr": 57,
+    "integrated_commit": "4d010a92212ce77e9c7fbcf762537ecf0e732be2",
+    "run_id": 43676630976,
     "run_conclusion": "success",
-    "artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43673610507",
-    "artifact_id": 14145228520,
+    "artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43676630976",
+    "artifact_id": 14145684036,
     "artifact_temporary": true,
     "mp4": {
       "exists_in_actions_artifact": true,
@@ -35,21 +35,16 @@
       "height": 1920,
       "fps": 30,
       "codec": "h264",
-      "pix_fmt": "yuv420p",
       "audio": false,
-      "bytes": 693447,
-      "sha256": "73993ab7b1f93aead42d1860d16c3db965adcbd3e6bdf2794eb631a9d704100c",
+      "bytes": 599144,
+      "sha256": "90baea03b4e2b551a21d341c263853a2e9b9d4d5647314fff46a39bf79fbbff7",
       "official": false,
-      "main_artifact_id": 14145228520
+      "main_artifact_id": 14145684036
     },
     "still_pending": [
-      "human_visual_approval_not_granted",
-      "c01_v3_collar_roi_pass_margin_only_2_pixels_so_review_edge",
-      "neutral_recomposition_not_pixel_exact_mean_abs_rgb_error_11_159474",
-      "guard_spear_mask_quality",
-      "aldric_throne_contamination",
-      "hidden_region_underlays",
-      "wrist_hand_ankle_knee_and_seam_visual_review",
+      "human_visual_approval_not_granted_v4",
+      "neutral_recomposition_has_13015_pixel_differences",
+      "source_edge_seams_at_kael_hair_knee_boot_to_review",
       "episode_remaining_36_shots_and_audio_not_created"
     ],
     "v2": {
@@ -224,7 +219,7 @@
     },
     "v4": {
       "schema": "videoforge/c01-v4-implementation-status/v1",
-      "status": "branch_PR_57_render_pending",
+      "status": "merged_main_technical_gates_passed_visual_review_pending",
       "pr_number": 57,
       "branch": "feat/alchemy-c01-subtle-breathing-static-context-v4-20261115",
       "feedback_origin": "User reviewed C01 V3: right arm moves against knee, cut right boot, broken spears, cropped Aldric head; desired motion only subtle breathing",
@@ -264,12 +259,30 @@
       },
       "second_pr_render_run": 43676244073,
       "second_pr_typecheck_run": 43676244089,
-      "second_run_conclusion": "pending_at_checkpoint",
-      "mp4_qa_status": "not_verified_yet",
+      "second_run_conclusion": "superseded_by_passing_render",
+      "mp4_qa_status": "technical_success_main",
       "human_visual_approved": false,
       "official_video_approved": false,
       "youtube_uploaded": false,
-      "next_action": "Verify PR57 Actions and full MP4 technical QA; inspect static original king crown and crossed spears, anchored right arm and boot, and subtle breathing; only merge if gates pass"
+      "next_action": "Visually review already produced main 3s MP4. Fix only remaining original-sprite alpha seams if user identifies errors. C12 still awaiting original source ZIPs.",
+      "merge_commit": "4d010a92212ce77e9c7fbcf762537ecf0e732be2",
+      "main_render_run": 43676630976,
+      "main_typecheck_run": 43676630957,
+      "pr_render_success_run": 43676494078,
+      "pr_typecheck_success_run": 43676494086,
+      "main_artifact_id": 14145684036,
+      "main_mp4_sha256": "90baea03b4e2b551a21d341c263853a2e9b9d4d5647314fff46a39bf79fbbff7",
+      "pr_main_mp4_byte_identical": true,
+      "main_mp4_bytes": 599144,
+      "real_h264_breath_changed_rgb8_pixels": 11115,
+      "static_region_changed_rgb24_pixels": 0,
+      "collar_exposed_background_pixels": 24,
+      "collar_limit": 75,
+      "neutral_rgb_mae": 0.216449949476454,
+      "neutral_changed_pixels": 13015,
+      "neutral_total_pixels": 1572864,
+      "neutral_pixel_exact": false,
+      "report": "QA-C01-P03-V4-2026-11-15.md"
     }
   },
   "c12": {
@@ -383,7 +396,7 @@
       "youtube_uploaded": false
     }
   },
-  "next_action": "PR57 code implements C01 V4 breathing-only from existing SHA verified source art. Verify runs 43676244073/43676244089 and MP4 artifact; correct failures, merge only after successful CI, then inspect human visual quality. C12 still missing original two ZIPs.",
+  "next_action": "C01-P03 V4 integrated on main, real H264 MP4 in temporary artifact 14145684036 sha90baea..., tests and QA passed; user must visually review breathing and original static king/spears/boot; repair only real remaining source alpha defects without generating new art. C12 missing 2 original ZIPs/9 PNGs.",
   "updates_required_on_each_change": true,
   "research_20261115": {
     "status": "archived_as_documentation_not_integrated",
