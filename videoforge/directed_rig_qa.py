@@ -211,8 +211,6 @@ def verify_render(props_path: Path, output: Path) -> dict:
         c01_actor["source_frame_performance"] = frame_lift
         c01_actor["min_changed_pixels"] = 16000
         c01_actor["technical_perceptible_motion"] = c01_actor["changed_pixels"] >= 16000
-        if not c01_actor["technical_perceptible_motion"]:
-            raise ValueError("C01_ACTING_STILL_TOO_SUBTLE_IN_REAL_MP4")
         # Exposure is measured using ONLY the original scene background that
         # was hash-validated by directed_rig.prepare. Never invent a neck patch.
         sha_manifest = json.loads((output / "source-hashes.json").read_text(encoding="utf-8"))
@@ -241,8 +239,25 @@ def verify_render(props_path: Path, output: Path) -> dict:
         c01_collar = collar_gate(collar_scans)
         (output / "c01-collar-qa.json").write_text(
             json.dumps(c01_collar, indent=2) + "\n", encoding="utf-8")
-        if c01_collar["status"] != "PASS_TECHNICAL_NO_HUMAN_APPROVAL":
-            raise ValueError("C01_COLLAR_BACKGROUND_EXPOSED_BY_HEAD_OR_JACKET")
+        gates = {
+            "schema": "videoforge/c01-acting-and-collar-qa/v1",
+            "video_sha256": hashlib.sha256(video.read_bytes()).hexdigest(),
+            "acting": c01_actor,
+            "collar": c01_collar,
+            "source_pixels_only": True,
+            "visual_approval": False,
+            "technical_qa_passed": (
+                c01_actor["technical_perceptible_motion"] and
+                c01_collar["status"] == "PASS_TECHNICAL_NO_HUMAN_APPROVAL"),
+        }
+        (output / "c01-gates-qa.json").write_text(
+            json.dumps(gates, indent=2) + "\n", encoding="utf-8")
+        if not gates["technical_qa_passed"]:
+            raise ValueError(
+                "C01_ACTING_OR_COLLAR_FAILED: " +
+                "acting=" + str(c01_actor["changed_pixels"]) + "/16000; " +
+                "new_background=" + str(c01_collar["maximum_newly_exposed_pixels"]) +
+                "/" + str(c01_collar["allowed_pixels_per_checked_frame"]))
     audio = any(s["codec_type"] == "audio" for s in probe["streams"])
     hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
               for p in sorted(output.iterdir()) if p.is_file() and p.suffix in (".png", ".mp4")}
