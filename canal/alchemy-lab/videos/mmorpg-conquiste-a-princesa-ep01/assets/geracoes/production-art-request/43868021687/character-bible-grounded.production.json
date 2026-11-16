@@ -1,0 +1,36 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "character-bible-grounded",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/character-bible-grounded.png",
+  "size": "1024x1536",
+  "sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "model": "gpt-image-2",
+  "actual_width": 1199,
+  "actual_height": 1312,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 2,
+  "source_originals_sha_verified": [
+    {
+      "actor": "kael",
+      "id": "ref-kael-close-c12",
+      "path": "assets/referencias/chat-aprovadas/kael-close-salao.png",
+      "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f"
+    },
+    {
+      "actor": "elara",
+      "id": "ref-elara-close-c12",
+      "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a"
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "youtube_uploaded": false
+}
