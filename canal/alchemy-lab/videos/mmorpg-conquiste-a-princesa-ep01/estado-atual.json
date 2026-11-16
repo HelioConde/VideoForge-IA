@@ -1825,5 +1825,32 @@
     "previous_owner_rejections_active": true,
     "new_paid_images": 0,
     "next_action": "Review native context tiles per-region, document original evidence for semantic masks and pose, then validate without premature canonical approval"
+  },
+  "wardrobe_roi_fragmentation_v3": {
+    "schema": "videoforge/roi-fragmentation-checkpoint/v1",
+    "date": "2026-11-16",
+    "module": "videoforge/wardrobe_roi_fragmentation.py",
+    "workflow_run_id": 43951026350,
+    "workflow_conclusion": "success",
+    "tests_passed": 7,
+    "report": "QA-ROI-FRAGMENTACAO-V3.md",
+    "artifact": "roi-v3-fragmentation",
+    "archived_masks_read": 8,
+    "semantic_approvals": 0,
+    "official_pairs_ready": 0,
+    "largest_priority": {
+      "actor": "aldric",
+      "region": "painel_central",
+      "side": "b",
+      "component_count": 225,
+      "largest_component_percent": 14.63,
+      "small_components_under_5px": 163
+    },
+    "actions_allowed": "Visual review and re-annotation only; no automatic filling or canonical promotion",
+    "r2_blocked": true,
+    "known_owner_rejections_active": true,
+    "provider_calls": 0,
+    "official_mp4": false,
+    "youtube_uploaded": false
   }
 }
