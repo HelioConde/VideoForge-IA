@@ -2,6 +2,8 @@
 
 ## 16/11/2026 — Zoom dos oito recortes candidatos de figurino com fontes SHA
 
+**Atualização após execução [43889939735](https://github.com/HelioConde/VideoForge-IA/actions/runs/43889939735) — SUCCESS:** o programa também registra histogramas cromáticos de cada máscara CANDIDATA (não verificada) no JSON `QA-ROI-RECORTES-CANDIDATOS-V2.json`. Diferenças exploratórias máximas por região: barba de Aldric 19,21 pontos percentuais de pixels muito escuros; tecido externo 13,79 pp; painel central 12,06 pp; corpete de Elara 26,10 pp de pixels muito escuros (diferença do roxo/magenta 10,00 pp). **Estas métricas incluem pele, enfeites e/ou outras partes por falta de máscaras finas e NÃO podem aprovar ou desfazer a reprovação do usuário.** O limite de 40 pp não foi atingido nesses rascunhos; isso não prova consistência. No comparador oficial os 4 pares continuam como evidência insuficiente.
+
 - O [workflow 43889319311](https://github.com/HelioConde/VideoForge-IA/actions/runs/43889319311) executou com sucesso os testes e a produção offline de oito recortes: barba/tecido externo/painel central de Aldric sentado (C01) e em pé (C02), corpete de Elara no close e na câmera C12-P02.
 - A inspeção da primeira prancha detectou que o recorte B da barba atingia a região do peito; as coordenadas de barba B e corpete B foram atualizadas em `ROI-POLIGONOS-CANDIDATOS-V2.json` para nova prévia. Os recortes incluem alguns adornos e exigem refinamento; **nenhum dos 8 é máscara aprovada**.
 - Arquivos de saída: `QA-ROI-RECORTES-CANDIDATOS-V2.jpg` e `QA-ROI-RECORTES-CANDIDATOS-V2.json` pelo workflow `qa-wardrobe-roi-candidates.yml`; todas as fontes originais permanecem intocadas.
