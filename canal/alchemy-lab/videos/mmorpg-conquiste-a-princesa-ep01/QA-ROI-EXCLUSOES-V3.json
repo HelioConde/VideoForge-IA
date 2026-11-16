@@ -52,6 +52,12 @@
         "removed_pixels_verified": 11,
         "semantic_approval": false
       },
+      "context_review_box_xyxy": [
+        471,
+        279,
+        583,
+        382
+      ],
       "semantically_verified": false,
       "official_art_usable": false
     },
@@ -105,6 +111,12 @@
         "removed_pixels_verified": 102,
         "semantic_approval": false
       },
+      "context_review_box_xyxy": [
+        685,
+        235,
+        822,
+        369
+      ],
       "semantically_verified": false,
       "official_art_usable": false
     },
@@ -177,6 +189,12 @@
         "removed_pixels_verified": 487,
         "semantic_approval": false
       },
+      "context_review_box_xyxy": [
+        274,
+        333,
+        550,
+        693
+      ],
       "semantically_verified": false,
       "official_art_usable": false
     },
@@ -211,6 +229,12 @@
         "removed_pixels_verified": 0,
         "semantic_approval": false
       },
+      "context_review_box_xyxy": [
+        553,
+        356,
+        886,
+        844
+      ],
       "semantically_verified": false,
       "official_art_usable": false
     },
@@ -264,6 +288,12 @@
         "removed_pixels_verified": 253,
         "semantic_approval": false
       },
+      "context_review_box_xyxy": [
+        391,
+        323,
+        684,
+        691
+      ],
       "semantically_verified": false,
       "official_art_usable": false
     },
@@ -317,6 +347,12 @@
         "removed_pixels_verified": 241,
         "semantic_approval": false
       },
+      "context_review_box_xyxy": [
+        647,
+        389,
+        991,
+        889
+      ],
       "semantically_verified": false,
       "official_art_usable": false
     },
@@ -370,6 +406,12 @@
         "removed_pixels_verified": 219,
         "semantic_approval": false
       },
+      "context_review_box_xyxy": [
+        99,
+        953,
+        610,
+        1665
+      ],
       "semantically_verified": false,
       "official_art_usable": false
     },
@@ -423,10 +465,19 @@
         "removed_pixels_verified": 3,
         "semantic_approval": false
       },
+      "context_review_box_xyxy": [
+        666,
+        261,
+        823,
+        438
+      ],
       "semantically_verified": false,
       "official_art_usable": false
     }
   ],
+  "context_review_board": "QA-ROI-CONTEXTO-V3.jpg",
+  "context_review_board_sha256": "8515ff9260f8bda46b6adf09ea3b50e8dd645f9cea25c4d751c951789b9d053f",
+  "context_preview_only_not_measurement": true,
   "candidate_count": 8,
   "verified_semantic_masks": 0,
   "official_roi_pairs_ready": 0,

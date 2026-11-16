@@ -3,9 +3,32 @@ import unittest
 import io
 from PIL import Image
 from videoforge.errors import VideoForgeError
-from videoforge.wardrobe_roi_exclusions import run, apply_exclusions, verify_exclusion_pixels
+from videoforge.wardrobe_roi_exclusions import run, apply_exclusions, verify_exclusion_pixels, review_crops
 
 class ROIExclusionTests(unittest.TestCase):
+    def test_context_panels_are_aligned_and_removed_pixels_are_exact(self):
+        source=Image.new("RGB",(100,100),(20,40,80))
+        before=Image.new("L",source.size,0)
+        for x in range(35,55):
+            for y in range(35,55):before.putpixel((x,y),255)
+        after=before.copy()
+        after.putpixel((40,40),0)
+        snapshots=[im.tobytes() for im in (source,before,after)]
+        panels,box=review_crops(source,before,after,(30,30,60,60))
+        self.assertEqual(len(set(p.size for p in panels)),1)
+        self.assertEqual(panels[0].tobytes(),source.crop(box).tobytes())
+        self.assertEqual(sum(bool(x) for x in panels[2].getchannel("A").tobytes()),1)
+        self.assertEqual(panels[2].getpixel((40-box[0],40-box[1])),(20,40,80,255))
+        self.assertEqual(snapshots,[im.tobytes() for im in (source,before,after)])
+
+    def test_context_at_image_edge_does_not_pad_or_shift(self):
+        source=Image.new("RGB",(50,50),(1,2,3))
+        mask=Image.new("L",source.size,255)
+        panels,box=review_crops(source,mask,mask,(0,0,10,10))
+        self.assertEqual(box,(0,0,34,34))
+        self.assertEqual(panels[0].size,(34,34))
+        self.assertIsNone(panels[2].getchannel("A").getbbox())
+
     def test_protected_cloth_rejects_overlapping_exclusion(self):
         mask=Image.new("L",(1024,1536),255)
         polygon=[[280,370],[300,370],[300,380],[280,380]]

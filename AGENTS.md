@@ -1,5 +1,7 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+**REVISAO CONTEXTUAL V3 — 16/11/2026:** conferir QA-ROI-CONTEXTO-V3.jpg (fonte, antes, removidos, depois) antes de ajustar exclusoes. Oito PNGs preservados; JPEG e apenas previa, nao fonte de medicao. Corpete B parcial: nao preencher ou aprovar por cor. Ver checkpoint para CI/publicacao.
+
 **QA ILUMINACAO INTEGRADO — 16/11/2026:** PR #64, main 5285f51, run 43944144582 SUCCESS (23 testes). Dúvida de iluminação impede reprovação cromática automática nova, nunca desfaz reprovação humana existente. Nenhum PNG mudou; R2 bloqueada.
 
 **QA ILUMINACAO — 16/11/2026:** histogramas com iluminacao nao descartada nao provam troca de tecido: wardrobe_roi_color retorna EVIDENCIA_INSUFICIENTE em alertas fortes. Reprovacoes conhecidas permanecem. Nunca marcar lighting_differences_may_be_present=false sem revisao real. Ver QA-ILUMINACAO-ROI-V3.md no episodio e estado de integracao atual.

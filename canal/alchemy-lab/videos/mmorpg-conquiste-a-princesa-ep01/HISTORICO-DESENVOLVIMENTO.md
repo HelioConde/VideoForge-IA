@@ -572,3 +572,9 @@ Regressão reproduzida: fixture sintética com mesma proporção RGB e exposiç�
 Commit [5285f51](https://github.com/HelioConde/VideoForge-IA/commit/5285f5150b73279fd26941373e31508b22f6977a) confirmado na main. Workflow [43944144582](https://github.com/HelioConde/VideoForge-IA/actions/runs/43944144582) SUCCESS: 23 testes ROI e recálculo das oito regiões sem escrever imagens. Fixtures de exposição testam o mecanismo, não aprovam os figurinos reais. Nenhuma máscara modificada nesta rodada; 0/8 aprovações semânticas e R2 bloqueada. Próximo passo: revisar as fontes completas, cobertura e iluminação; não definir flags de aprovação por histograma.
 
 Verificação pós-merge: workflow semântico da main [43944320147](https://github.com/HelioConde/VideoForge-IA/actions/runs/43944320147) também terminou SUCCESS. Mantidos quatro pares reais sem evidência suficiente e nenhuma aprovação automática.
+
+## 16/11/2026 — Revisão contextual das oito máscaras V3
+
+Programa agora exporta QA-ROI-CONTEXTO-V3.jpg com quatro colunas alinhadas: fonte com contexto, máscara anterior, pixels removidos e máscara final. O contexto é recortado da fonte SHA e amplia apenas a prévia; coordenadas e SHA da prancha constam no relatório V3. Medições continuam em pixels nativos, nunca no JPEG. Oito PNGs finais mantêm exatamente os hashes anteriores.
+
+Inspeção: corpete B representa cobertura parcial e oclusões de manga/cabelo/adornos. Não expandir por cor nem preencher partes ocultas automaticamente. Barba B ainda exige separação boca/bigode. 25 testes ROI locais passaram, incluindo alinhamento, pixels removidos exatos e bordas sem padding. CI e publicação desta mudança ainda pendentes nesta entrada. Zero máscaras aprovadas e R2 bloqueada; próxima etapa é revisão semântica no contexto original.
