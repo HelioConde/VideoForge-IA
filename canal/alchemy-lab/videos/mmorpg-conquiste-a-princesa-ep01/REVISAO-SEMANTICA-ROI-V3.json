@@ -94,8 +94,8 @@
       "actor": "aldric",
       "region": "painel_central",
       "side": "b",
-      "observation_visual_context_only": "painel bordô/vermelho na pose em pé; separar centro do manto e cinto",
-      "risk": "cinto_bordado_e_variacao_luz",
+      "observation_visual_context_only": "Inspecao direta do PNG nativo 1x: tecido bordo ocupa area larga da roupa, mas a mascara candidata capta predominantemente linhas verticais estreitas e brocados; cobertura visivelmente insuficiente para comparar o painel central.",
+      "risk": "fragmentacao_225_componentes_cobertura_insuficiente_do_tecido",
       "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
       "candidate_sha256": "249a9f730a1ab276673f2a0b65a17532d025dab54a1ee2ea98ab326706e47e8d",
       "pose_identity_verified": false,
@@ -105,7 +105,10 @@
       "lighting_difference_ruled_out": false,
       "human_reviewer": null,
       "review_evidence": null,
-      "status": "EVIDENCIA_INSUFICIENTE"
+      "status": "EVIDENCIA_INSUFICIENTE",
+      "recommended_next_action": "Reanotar poligonos de tecido marrom/bordo em torso e saia sem incluir manto preto, cinto e bordado; reconstruir candidato isolado e comparar em 1x sem promover flags.",
+      "visual_evidence_candidate": "assets/qa-roi-review-native-v3/aldric-painel_central-b-CONTEXTO-1X.png",
+      "fragmentation_evidence_report": "QA-ROI-FRAGMENTACAO-V3.md"
     },
     {
       "actor": "elara",
