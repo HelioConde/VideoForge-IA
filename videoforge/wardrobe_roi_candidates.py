@@ -107,6 +107,7 @@ def patch(im, vertices):
 
 def run(root: Path = ROOT, sync=False):
     from PIL import Image, ImageDraw, ImageFont
+    from .wardrobe_roi_color import polygon_metric
     ep = Path(root) / EPISODE
     config = ep / MANIFEST
     inventory_file = ep / INVENTORY
@@ -152,17 +153,31 @@ def run(root: Path = ROOT, sync=False):
             canvas.paste(tile, (x + (560 - tile.width)//2, y + 37))
             pen.text((x, y+268), f"{name.upper()} - {source['label'][:43]}", font=small, fill="white")
             pen.text((x, y+292), "SHA " + source["sha256"][:30], font=small, fill=(184, 203, 219))
+            candidate_metric = polygon_metric(ep, {
+                "path": source["path"], "sha256": source["sha256"],
+                "polygon": [list(p) for p in vertices],
+            })
             sources.append({
                 "side": name, "path": source["path"], "sha256": source["sha256"],
                 "dimensions": list(original.size),
                 "candidate_polygon_native_px": [list(p) for p in vertices],
                 "candidate_mask_pixels": pixels,
+                "exploratory_unverified_color_share_percent": candidate_metric["color_share_percent"],
                 "pose_semantically_verified": False,
                 "mask_semantically_verified": False,
                 "approved_for_color_comparison": False,
             })
+        keys = ("red", "very_dark", "purple_or_magenta")
+        candidate_deltas = {
+            k: round(abs(sources[0]["exploratory_unverified_color_share_percent"][k] -
+                         sources[1]["exploratory_unverified_color_share_percent"][k]), 2)
+            for k in keys
+        }
         results.append({"actor": actor, "semantic_region": region,
                         "status": "CANDIDATO_NAO_VERIFICADO", "sources": sources,
+                        "exploratory_unverified_color_deltas_pp": candidate_deltas,
+                        "exploratory_alert_only": max(candidate_deltas.values()) >= 40,
+                        "automatic_rejection": False,
                         "automatic_approved": False})
     pen.text((25, 1392), "QA SEM IA | R2 BLOQUEADA | 0 ROIs VERIFICADAS | REPROVACAO ANTERIOR MANTIDA", font=small, fill=(250, 206, 130))
     out = io.BytesIO()
@@ -172,7 +187,9 @@ def run(root: Path = ROOT, sync=False):
         "status": "EIGHT_CANDIDATE_MASKS_PENDING_SEMANTIC_REVIEW",
         "candidates": results,
         "candidate_count": 8, "validated_pair_count": 0,
-        "automatic_approvals": 0, "r2_blocked": True,
+        "automatic_approvals": 0, "automatic_rejections": 0,
+        "candidate_measurements_are_not_official_qa": True,
+        "official_semantic_filter_executed": False, "r2_blocked": True,
         "original_images_modified": False, "paid_calls": 0,
         "mp4_created": False, "youtube_uploaded": False,
     }
