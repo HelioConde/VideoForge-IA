@@ -598,11 +598,13 @@
   "autopilot_checkpoint": {
     "stage": "review_identity_reference",
     "target": "character-bible",
-    "blocker": "human_visual_review_pending",
+    "blocker": "wardrobe_identity_rejected_reference_missing",
     "dispatch_allowed": false,
     "verified_style_source_count": 2,
     "missing_original_paths": [],
     "aldric_individual_sha_approved_reference_missing": true,
+    "wardrobe_review_decision": "rejected_wardrobe_inconsistency",
+    "r2_wardrobe_sources_verified": 0,
     "grounded_candidate_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
     "grounded_candidate_run_id": 43868021687,
     "grounded_visual_approval": false
@@ -1455,7 +1457,10 @@
     "comparative_review_document": "REVISAR-GROUNDED-V2.md",
     "human_visual_approved": false,
     "canonical_identity_approved": false,
-    "status": "visual_review_pending",
+    "status": "rejected_wardrobe_inconsistency",
+    "can_generate_shot_mothers": false,
+    "owner_review_file": "REVISAO-FIGURINO-V2.json",
+    "wardrobe_approved": false,
     "external_image_provider_calls_in_this_diagnostic": 0,
     "youtube_uploaded": false
   },

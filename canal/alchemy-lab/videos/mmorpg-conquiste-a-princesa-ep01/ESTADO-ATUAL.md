@@ -240,7 +240,7 @@ O [run 43745676658](https://github.com/HelioConde/VideoForge-IA/actions/runs/437
 ### Diagnóstico autônomo mais recente
 - Etapa: review_identity_reference
 - Alvo: character-bible
-- Bloqueio: human_visual_review_pending
+- Bloqueio: wardrobe_identity_rejected_reference_missing
 - Despacho de geração permitido: False
 - Sem novas imagens, vídeo ou aprovação humana neste diagnóstico.
 <!-- REMAKE-AUTOPILOT-END -->
