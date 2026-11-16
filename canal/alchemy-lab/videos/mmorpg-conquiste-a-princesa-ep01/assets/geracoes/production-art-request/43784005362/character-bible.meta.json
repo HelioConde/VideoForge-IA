@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/proxy-image/v1",
+  "canal": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "cena": "character-bible",
+  "modelo": "gpt-image-2",
+  "tamanho_solicitado": "1024x1536",
+  "arquivo": "character-bible.png",
+  "bytes": 3033524,
+  "sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
+  "criado_em_utc": "2026-11-16T01:04:45.923008+00:00",
+  "publicado_youtube": false,
+  "qa_visual": "pendente",
+  "origem": "codex-proxy (modelo e disponibilidade dependem do upstream)"
+}
