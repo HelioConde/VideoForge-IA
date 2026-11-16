@@ -1,5 +1,11 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 15/11/2026 — sessão OAuth recuperada; primeiro PNG V2 real gerado e preservado
+
+- [Health após login 43783956474](https://github.com/HelioConde/VideoForge-IA/actions/runs/43783956474) **SUCCESS**: 1 conta elegível, OAuth válido, geração liberada. A reconexão funcionou de fato.
+- [Gerador 43784005362](https://github.com/HelioConde/VideoForge-IA/actions/runs/43784005362) recebeu imagem real do provedor; etapa de geração falhou exclusivamente por `PRODUCTION_ART_DIMENSIONS_INVALID`: PNG gerado em **1199×1312**, diferente do tamanho pedido **1024×1536**. Mesmo com job marcado FAILURE, o arquivador salvou `assets/geracoes/production-art-request/43784005362/character-bible.png` e `manifesto-geracoes.json`, SHA256 **47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4**. Sem mascarar as dimensoes, esticar imagem, gerar novamente ou afirmar cobranca confirmada.
+- Correção de `production_art.py`: distinguir PNG com dimensões válidas mas fora do pedido; preservar pixels originais e emitir `valid_png_noncanonical_dimensions_visual_review_pending`; `remake_autopilot.py` reforça SHA+CRC e registra dimensoes na referencia candidata. **Aprovação visual NÃO realizada**, sem render oficial e sem upload YouTube. Repetição de geração proibida enquanto houver este PNG valido.
+
 ## 15/11/2026 — corrigido erro PROXY_API_KEY local ausente
 
 - Relato do responsavel: `renovar-sessao-videoforge.ps1 -Container chatgpt-codex-proxy` falhou ao exigir `PROXY_API_KEY` no container preexistente.

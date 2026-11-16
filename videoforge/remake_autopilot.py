@@ -73,12 +73,21 @@ def discover_archived_character_bible(episode: Path) -> dict | None:
                 continue
             rel = "assets/geracoes/production-art-request/" + run.name + "/character-bible.png"
             if verified_asset(episode, rel, item.get("sha256")):
-                from .persist_generated_assets import _png_info
+                from .scene_layers import png_info
                 try:
-                    _png_info((episode / rel).read_bytes())
-                except VideoForgeError:
+                    info=png_info((episode / rel).read_bytes())
+                except (VideoForgeError, ValueError, OSError):
                     continue
-                found.append((int(run.name), {"path": rel, "sha256": item["sha256"], "run_id": int(run.name)}))
+                width,height=info["width"],info["height"]
+                if (width,height)!=(item.get("width"),item.get("height")):
+                    continue
+                found.append((int(run.name), {
+                    "path": rel, "sha256": item["sha256"],
+                    "run_id": int(run.name),
+                    "width": width, "height": height,
+                    "dimensions_match_requested": (width,height)==(1024,1536),
+                    "human_approved": False,
+                }))
     return max(found, key=lambda item: item[0])[1] if found else None
 
 

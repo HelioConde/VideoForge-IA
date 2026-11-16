@@ -69,6 +69,32 @@ def asset_prompt(plan:dict,story:dict,asset_id:str)->tuple[str,str]:
     return full,a["size"]
 
 
+def inspect_generated_dimensions(info: dict, requested_size: str) -> dict:
+    """Keep authentic PNG dimensions. Never rescale or silently discard AI output.
+
+    Portrait reference size is requested, but some Codex proxy image backends
+    return alternate dimensions. A valid but non-canonical PNG is a *candidate*
+    for human art review, never accepted as the approved 1024x1536 anchor.
+    """
+    width, height = info.get("width"), info.get("height")
+    if (type(width) is not int or type(height) is not int
+            or width < 512 or height < 512
+            or width > 4096 or height > 4096):
+        raise VideoForgeError("PRODUCTION_ART_DIMENSIONS_INVALID")
+    requested = requested_size.split("x")
+    if len(requested) != 2 or not all(v.isdigit() for v in requested):
+        raise VideoForgeError("PRODUCTION_ART_REQUESTED_SIZE_INVALID")
+    exact = (width == int(requested[0]) and height == int(requested[1]))
+    return {
+        "actual_width": width, "actual_height": height,
+        "requested_size": requested_size,
+        "dimensions_match_requested": exact,
+        "technical_qa": ("valid_png_dimensions" if exact
+                         else "valid_png_noncanonical_dimensions_visual_review_pending"),
+        "pixel_resampling": False,
+    }
+
+
 def create_image(channel:str,video_id:str,asset_id:str,url:str,
                  model:str="gpt-image-2")->dict:
     image_generation_policy.assert_image_generation_allowed(channel,video_id)
@@ -92,14 +118,13 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
         raise VideoForgeError("PRODUCTION_ART_REQUIRES_PNG")
     blob=output.read_bytes()
     info=png_info(blob)
-    if info["width"]!=1024 or info["height"]!=1536:
-        raise VideoForgeError("PRODUCTION_ART_DIMENSIONS_INVALID")
+    dimension_qa=inspect_generated_dimensions(info,size)
     sha=hashlib.sha256(blob).hexdigest()
     result={"schema":"videoforge/production-art-result/v1",
             "channel":channel,"video_id":video_id,
             "asset_id":asset_id,"file":str(output.relative_to(ROOT)),
             "size":size,"sha256":sha,
-            "model":model,"technical_qa":"valid_png_dimensions",
+            "model":model,**dimension_qa,
             "human_visual_approval":False,"official_video_created":False,
             "youtube_uploaded":False}
     output.with_suffix(".production.json").write_text(

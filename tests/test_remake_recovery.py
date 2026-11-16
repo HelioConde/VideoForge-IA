@@ -22,6 +22,10 @@ class RecoveryTests(unittest.TestCase):
                      "remake-ep01-planos.json","ESTADO-ATUAL.md",
                      "HISTORICO-DESENVOLVIMENTO.md"):
             shutil.copyfile(original/name,episode/name)
+        state_path=episode/"estado-atual.json"
+        state=json.loads(state_path.read_text(encoding="utf-8"))
+        state["generation_dispatch_intent"]["status"]="blocked_oauth_expired_refresh_http_502"
+        state_path.write_text(json.dumps(state),encoding="utf-8")
         return root
 
     def test_one_valid_resume_then_never_duplicate(self):

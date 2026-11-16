@@ -11,12 +11,16 @@ from videoforge.errors import VideoForgeError
 
 
 class RemakeAutonomyTests(unittest.TestCase):
-    def test_next_action_is_anchor_and_no_paid_calls(self):
+    def test_next_action_is_archived_candidate_review_not_new_paid_call(self):
         result = choose_next()
-        self.assertEqual(result["stage"], "generate_character_bible")
-        self.assertEqual(result["blocker"], "no_verified_reference_png")
-        self.assertTrue(result["dispatch_allowed"])
-        self.assertEqual(result["next_workflow"], "production-art-by-request.yml")
+        self.assertEqual(result["stage"], "review_identity_reference")
+        self.assertEqual(result["blocker"], "archived_png_verified_human_review_pending")
+        self.assertFalse(result["dispatch_allowed"])
+        self.assertIsNone(result["next_workflow"])
+        self.assertIsNotNone(result["discovered_candidate"])
+        self.assertEqual(result["discovered_candidate"]["width"],1199)
+        self.assertEqual(result["discovered_candidate"]["height"],1312)
+        self.assertFalse(result["discovered_candidate"]["dimensions_match_requested"])
         self.assertFalse(result["approved_human_review"])
         self.assertFalse(result["created_mp4"])
 
@@ -33,6 +37,10 @@ class RemakeAutonomyTests(unittest.TestCase):
             for name in ("remake-ep01-planos.json","estado-atual.json",
                          "autonomy-policy.json","production-art.json","roteiro.json"):
                 shutil.copyfile(source/name,ep/name)
+            state_path=ep/"estado-atual.json"
+            initial=json.loads(state_path.read_text(encoding="utf-8"))
+            initial.pop("generation_dispatch_intent",None)
+            state_path.write_text(json.dumps(initial),encoding="utf-8")
             first=choose_next(root)
             self.assertTrue(first["dispatch_allowed"])
             reservation=reserve_generation_dispatch(first,root)
@@ -79,13 +87,14 @@ class RemakeAutonomyTests(unittest.TestCase):
             (base / "estado-atual.json").write_text("{}", encoding="utf-8")
             (base / "ESTADO-ATUAL.md").write_text("# Teste\n", encoding="utf-8")
             (base / "HISTORICO-DESENVOLVIMENTO.md").write_text("# Histórico\n", encoding="utf-8")
-            report = choose_next()
+            report = dict(choose_next())
+            report["discovered_candidate"]=None
             self.assertTrue(sync_checkpoint(report, Path(tmp)))
             previous = (base / "HISTORICO-DESENVOLVIMENTO.md").read_text(encoding="utf-8")
             self.assertFalse(sync_checkpoint(report, Path(tmp)))
             self.assertEqual(previous, (base / "HISTORICO-DESENVOLVIMENTO.md").read_text(encoding="utf-8"))
             state = json.loads((base / "estado-atual.json").read_text(encoding="utf-8"))
-            self.assertEqual(state["autopilot_checkpoint"]["stage"], "generate_character_bible")
+            self.assertEqual(state["autopilot_checkpoint"]["stage"], "review_identity_reference")
 
 
 if __name__ == "__main__":
