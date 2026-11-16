@@ -1,0 +1,92 @@
+{
+  "schema": "videoforge/character-wardrobe-checklist/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "character": "elara",
+  "variant": "royal_white_violet_purple_bodice",
+  "current_decision": "REPROVADO",
+  "basis": "explicit_owner_report_2026-11-16",
+  "human_approval": false,
+  "canonical_full_outfit_sha256": null,
+  "identity_original_close_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+  "known_defects": [
+    {
+      "id": "elara_purple_bodice_missing",
+      "critical": true,
+      "reported": true,
+      "source": "user_review",
+      "compared_panels": [
+        {
+          "panel": "blusa/corpete palaciano",
+          "purple_present": true,
+          "source_image_id": "versao_com_roxo_na_blusa"
+        },
+        {
+          "panel": "blusa/corpete palaciano",
+          "purple_present": false,
+          "source_image_id": "versao_sem_roxo_na_blusa"
+        }
+      ],
+      "decision": "REPROVADO",
+      "reason": "Parte roxa muda ou desaparece no traje palaciano, mesmo que diferença pareça pequena"
+    }
+  ],
+  "rules": [
+    {
+      "id": "same_face",
+      "title": "Identidade do rosto",
+      "must": "Mesmos olhos violetas, formato de rosto, pele, idade e expressão base; nenhum redesign.",
+      "level": "blocking"
+    },
+    {
+      "id": "hair",
+      "title": "Cabelo",
+      "must": "Cabelo dourado longo, ondas e trança lateral coerentes, sem mudança de cor ou comprimento entre planos.",
+      "level": "blocking"
+    },
+    {
+      "id": "purple_bodice",
+      "title": "Roxo obrigatório no peitoral",
+      "must": "No traje real, mesmo painel ROXO na mesma posição, forma e proporção da blusa/corpete, visível conforme ângulo permitir; jamais desaparecer ao mudar a pose.",
+      "level": "blocking"
+    },
+    {
+      "id": "dress_palette",
+      "title": "Cores do vestido",
+      "must": "Branco-pérola, violeta e bordados dourados com distribuição de áreas e estampas constante.",
+      "level": "blocking"
+    },
+    {
+      "id": "jewels",
+      "title": "Joias e coroa",
+      "must": "Tiara/coroa de ouro com ametistas, ornamentos, broche de flor prateada e detalhes de gola preservados segundo cada momento narrativo.",
+      "level": "blocking"
+    },
+    {
+      "id": "street_disguise",
+      "title": "Variante narrativa de rua",
+      "must": "C07–C10: disfarce encapuzado; não exigir o corpete real nessa variante; manter apenas identidade facial/hair base.",
+      "level": "blocking"
+    },
+    {
+      "id": "royal_reveal",
+      "title": "Revelação no palácio",
+      "must": "C12–C14: figurino real consistente, sem misturar disfarce de rua; broche sempre o mesmo quando mostrado.",
+      "level": "blocking"
+    },
+    {
+      "id": "rig_art",
+      "title": "Camadas da roupa",
+      "must": "Tronco/peitoral, mangas, vestido, broche, coroa e cabelo separados sem costuras, máscaras ou deformações espúrias.",
+      "level": "blocking"
+    }
+  ],
+  "royal_purple_bodice_required": true,
+  "do_not_look_for_bodice_on_street_disguise": true,
+  "source_candidates": [
+    "QA-ELARA-PEITORAL-ROXO-V2.jpg",
+    "REVISAR-DETALHES-FIGURINOS-V2.md"
+  ],
+  "requires_full_outfit_reference_sha": true,
+  "auto_approve_without_segmented_pixel_evidence": false,
+  "approval_prohibited_until_owner_confirms_correct_source": true
+}

@@ -1,0 +1,48 @@
+name: "VideoForge - filtro obrigatorio figurinos Aldric Elara Kael"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/wardrobe_filter.py'
+      - 'tests/test_wardrobe_filter.py'
+      - '.github/workflows/qa-wardrobe-filter.yml'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CHECKLIST-FIGURINO-*.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-FIGURINOS-V2-40-TOMADAS.json'
+permissions:
+  contents: write
+concurrency:
+  group: vf-wardrobe-filter-report
+  cancel-in-progress: false
+jobs:
+  filter:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Testar reprovações, sem afirmar aprovação visual inexistente
+        run: python -m unittest tests.test_wardrobe_filter tests.test_wardrobe_review tests.test_remake_wardrobe_40 -v
+      - name: Filtrar problemas e gerar relatório de revisão para proprietário
+        run: python -m videoforge.wardrobe_filter --sync
+      - name: Arquivar resultado filtrado no episódio
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'videoforge-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$EP/RELATORIO-FILTRO-FIGURINO-V2.json" "$EP/RELATORIO-APROVACAO-REPROVACAO-FIGURINO.md"
+          if git diff --cached --quiet; then echo 'Relatorio atual.'; exit 0; fi
+          git commit -m 'qa(dorama): guardar filtro de figurinos e reprovacoes por personagem'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi

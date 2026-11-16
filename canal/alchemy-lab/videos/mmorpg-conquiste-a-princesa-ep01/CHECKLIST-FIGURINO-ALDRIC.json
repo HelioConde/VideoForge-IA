@@ -1,0 +1,103 @@
+{
+  "schema": "videoforge/character-wardrobe-checklist/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "character": "aldric",
+  "variant": "royal_burgundy_gold",
+  "current_decision": "REPROVADO",
+  "basis": "explicit_owner_report_2026-11-16",
+  "human_approval": false,
+  "canonical_full_outfit_sha256": null,
+  "canonical_beard_color": null,
+  "identity_source_status": "individual_full_outfit_approved_source_missing",
+  "known_defects": [
+    {
+      "id": "aldric_red_black_inversion",
+      "critical": true,
+      "reported": true,
+      "source": "user_review",
+      "scene_a": {
+        "pose": "sentado",
+        "outer_garment_color": "vermelho",
+        "center_panel_color": "preto",
+        "shot_id": null
+      },
+      "scene_b": {
+        "pose": "em_pe",
+        "outer_garment_color": "preto",
+        "center_panel_color": "vermelho",
+        "shot_id": null
+      },
+      "decision": "REPROVADO",
+      "reason": "Inversão da cor externa/centro sem troca de vestuário autorizada"
+    },
+    {
+      "id": "aldric_beard_color_changed",
+      "critical": true,
+      "reported": true,
+      "source": "user_review",
+      "initial_beard_color": null,
+      "other_beard_color": null,
+      "beard_color_difference_confirmed_by_user": true,
+      "decision": "REPROVADO",
+      "reason": "Cor da barba muda e o rei deixa de parecer o mesmo personagem; tons exatos ainda não foram medidos"
+    }
+  ],
+  "rules": [
+    {
+      "id": "character_identity_face",
+      "title": "Rosto e idade",
+      "must": "Mesmo formato facial, olhos, nariz, maxilar, marcas e idade aparente dentro do mesmo arco.",
+      "level": "blocking"
+    },
+    {
+      "id": "hair_beard_continuity",
+      "title": "Barba e cabelo",
+      "must": "Barba e cabelo com MESMA cor-base, volume, comprimento, silhueta e transição entre pescoço e face; luz pode alterar brilho, não mudar identidade.",
+      "level": "blocking"
+    },
+    {
+      "id": "garment_area_layout",
+      "title": "Distribuição das cores",
+      "must": "Cor da parte externa e cor do painel central NÃO podem inverter quando o rei se levanta ou muda o enquadramento.",
+      "level": "blocking"
+    },
+    {
+      "id": "collar",
+      "title": "Gola",
+      "must": "Gola clara com formato, borda, altura e sobreposição constantes.",
+      "level": "blocking"
+    },
+    {
+      "id": "royal_trim",
+      "title": "Bordados e adereços",
+      "must": "Preservar ornamentos dourados, manto, fivelas, ombros, joias, posição e tamanho relativo.",
+      "level": "blocking"
+    },
+    {
+      "id": "crown",
+      "title": "Coroa",
+      "must": "Mesmo design e proporção da coroa dourada em planos abertos, sentados, em pé e closes.",
+      "level": "blocking"
+    },
+    {
+      "id": "pose_invariance",
+      "title": "Mudança de pose",
+      "must": "Sentar, levantar e gesticular só deforma o tecido fisicamente; não altera cores, bordados, barba ou identidade.",
+      "level": "blocking"
+    },
+    {
+      "id": "rig_layers",
+      "title": "Rig 2D",
+      "must": "Cabeça/barba, tronco, roupa externa, gola, mangas, braços e coroa em camadas consistentes, sem trocar desenho durante rig/Remotion.",
+      "level": "blocking"
+    }
+  ],
+  "source_candidates": [
+    "QA-ALDRIC-ROUPA-DETALE-V2.jpg",
+    "REVISAR-DETALHES-FIGURINOS-V2.md"
+  ],
+  "must_be_same_outfit_when_sitting_and_standing": true,
+  "requires_full_outfit_reference_sha": true,
+  "auto_approve_without_segmented_pixel_evidence": false,
+  "approval_prohibited_until_owner_confirms_correct_source": true
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "videoforge/character-wardrobe-checklist/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "character": "kael",
+  "variant": "palace_trial_red_cloak_or_arken",
+  "current_decision": "REVISAO_PENDENTE",
+  "basis": "no_specific_mismatch_reported_by_owner",
+  "human_approval": false,
+  "canonical_full_outfit_sha256": null,
+  "identity_original_close_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+  "known_defects": [],
+  "rules": [
+    {
+      "id": "facial_identity",
+      "title": "Rosto e idade",
+      "must": "Olhos âmbar, rosto jovem e traços idênticos ao original; sem alterar traço ou proporções.",
+      "level": "blocking"
+    },
+    {
+      "id": "hair",
+      "title": "Cabelo",
+      "must": "Cabelo escuro, volume, costeletas e franja invariantes entre cena e ângulo.",
+      "level": "blocking"
+    },
+    {
+      "id": "cloak",
+      "title": "Capa/cachecol",
+      "must": "Capa vinho rasgada: mesma cor, número/local das bordas e relação com o ombro em todas as poses da mesma variante.",
+      "level": "blocking"
+    },
+    {
+      "id": "shoulder",
+      "title": "Ombreira",
+      "must": "Ombreira escura com filigranas douradas e a MESMA pedra azul, sem sumir nem mudar de lado.",
+      "level": "blocking"
+    },
+    {
+      "id": "outfit_layer",
+      "title": "Peças e acessórios",
+      "must": "Mesmo traje base, luvas, cintos, metal e detalhes na variante do reino; sem redesign.",
+      "level": "blocking"
+    },
+    {
+      "id": "scene_variant",
+      "title": "Cenário e versão",
+      "must": "C04 mundo moderno é figurino diferente permitido; C01–C03 tribunal e reino Arken preservam roupas da versão correspondente.",
+      "level": "blocking"
+    },
+    {
+      "id": "rig",
+      "title": "Deformação 2D",
+      "must": "Sem recortar cabelo involuntariamente, mudar rosto, duplicar ombreira ou deslocar objetos do pivô.",
+      "level": "blocking"
+    }
+  ],
+  "source_candidates": [
+    "assets/referencias/chat-aprovadas/kael-close-salao.png",
+    "QA-KAEL-TRIPLO-V2.jpg"
+  ],
+  "requires_full_outfit_reference_sha": true,
+  "auto_approve_without_segmented_pixel_evidence": false,
+  "approval_prohibited_until_owner_confirms_correct_source": true
+}
