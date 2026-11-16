@@ -197,7 +197,12 @@ def reference_status(root:Path=ROOT)->dict:
         "youtube_uploaded":False,
         "samples":rows,
         "camera_candidate_C12_P02":camera_candidate_status(base),
-        "next_action":"Importar PNGs idênticos; conciliar nova aparência com bíblia antiga, inspecionar continuidade e nunca aprovar rig por SHA de referência.",
+        "next_action":(
+            "Comparar visualmente Kael e Elara com a prancha V2 arquivada; "
+            "verificar Aldric em fonte separada. SHA correto NAO aprova identidade/rig."
+            if verified==2 and camera_candidate_status(base)["source_verified"]
+            else "Importar PNGs originais exatos por SHA; nenhuma aprovacao automatica."
+        ),
     }
 
 def main()->int:

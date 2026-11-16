@@ -92,8 +92,9 @@ class RemakeStarterTests(unittest.TestCase):
             "human_visual_review_pending",
             "original_kael_elara_sha_sources_missing",
         ))
-        self.assertEqual(out["autopilot"]["source_readiness"]["verified_style_source_count"],0)
-        self.assertEqual(len(out["autopilot"]["source_readiness"]["missing_original_paths"]),3)
+        self.assertEqual(out["autopilot"]["source_readiness"]["verified_style_source_count"],2)
+        self.assertEqual(len(out["autopilot"]["source_readiness"]["missing_original_paths"]),0)
+        self.assertTrue(out["autopilot"]["source_readiness"]["c12_camera_source_verified"])
         self.assertFalse(out["autopilot"]["source_readiness"]["automatic_visual_approval"])
         for shot in out["production_queue"][1:]:
             self.assertEqual(shot["status"],"blocked_canonical_reference")

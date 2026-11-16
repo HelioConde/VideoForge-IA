@@ -352,6 +352,24 @@ def sync_checkpoint(report: dict, root: Path = ROOT) -> bool:
             + "; bloqueio: " + str(record["blocker"]) + ".\n"
             + "- Apenas verificação de estado/arquivos. Nenhuma mídia criada ou aprovação inventada.\n")
     state["autopilot_checkpoint"] = record
+    if isinstance(source_readiness, dict):
+        # Independent live snapshot; historical audit records remain immutable.
+        # SHA-verified references are never treated as human identity approval.
+        missing=source_readiness["missing_original_paths"]
+        state["reference_sources_current"] = {
+            "schema":"videoforge/remake-source-readiness/v1",
+            "status":("ready_for_human_identity_comparison" if not missing
+                      else "waiting_for_exact_original_sources"),
+            "kael_elara_verified":source_readiness["verified_style_source_count"],
+            "kael_elara_required":source_readiness["original_style_source_count"],
+            "c12_camera_verified":source_readiness["c12_camera_source_verified"],
+            "missing_original_paths":missing,
+            "aldric_individual_sha_reference_missing":
+                source_readiness["aldric_individual_sha_approved_reference_missing"],
+            "human_visual_approval":False,
+            "provider_calls":0,
+            "youtube_uploaded":False,
+        }
     checkpoint.write_text(updated, encoding="utf-8")
     history.write_text(history.read_text(encoding="utf-8") + note, encoding="utf-8")
     state_file.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

@@ -7,6 +7,7 @@ on:
     workflows:
       - "VideoForge - arte de referencia por pedido do canal"
       - "VideoForge - Gerar cena-mae real por canal e referencia"
+      - "VideoForge - referencias cinematograficas de Kael e Elara (somente originais)"
     types: [completed]
   push:
     branches: [main]

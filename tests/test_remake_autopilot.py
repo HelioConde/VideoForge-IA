@@ -20,8 +20,10 @@ class RemakeAutonomyTests(unittest.TestCase):
             "original_kael_elara_sha_sources_missing",
         ))
         self.assertIsInstance(result["source_readiness"],dict)
-        self.assertEqual(result["source_readiness"]["verified_style_source_count"],0)
-        self.assertEqual(len(result["source_readiness"]["missing_original_paths"]),3)
+        self.assertEqual(result["source_readiness"]["verified_style_source_count"],2)
+        self.assertEqual(len(result["source_readiness"]["missing_original_paths"]),0)
+        self.assertTrue(result["source_readiness"]["c12_camera_source_verified"])
+        self.assertEqual(result["blocker"],"human_visual_review_pending")
         self.assertTrue(result["source_readiness"]["aldric_individual_sha_approved_reference_missing"])
         self.assertFalse(result["source_readiness"]["automatic_visual_approval"])
         self.assertFalse(result["dispatch_allowed"])
