@@ -32,6 +32,12 @@ def inspect_reference(root:Path=ROOT) -> dict:
         }
     plan,story=read_plan(EP_CHANNEL,EP_ID,root)
     _,expected=asset_prompt(plan,story,ASSET_ID)
+    character_bible=plan.get("character_bible")
+    if (not isinstance(character_bible,dict)
+            or not all(isinstance(character_bible.get(c),str)
+                       and character_bible[c].strip()
+                       for c in ("kael","elara","aldric"))):
+        raise VideoForgeError("REFERENCE_QA_CHARACTER_BRIEF_MISSING")
     target_width,target_height=[int(v) for v in expected.split("x")]
     sw,sh=ref["width"],ref["height"]
     scale=min(target_width/sw,target_height/sh)
@@ -65,6 +71,23 @@ def inspect_reference(root:Path=ROOT) -> dict:
                 "rendered":False,"pixels_resampled":False,
                 "use":"layout guide only; do not deform original faces or bodies"
             },
+        },
+        "identity_review_criteria":{
+            "kael":character_bible["kael"],
+            "elara":character_bible["elara"],
+            "aldric":character_bible["aldric"],
+            "no_new_unplanned_characters":True,
+            "no_text_watermarks_hud":True,
+            "preserve_original_facial_features_and_outfits":True,
+            "require_character_identity_comparison":True,
+        },
+        "generation_provenance_limits":{
+            "generation_used_text_prompt_only":True,
+            "approved_originals_attached_to_generation":False,
+            "approved_reference_images_sha_imported_in_repo":
+                not plan.get("remake_v2_20261115",{}).get("original_reference_sha_missing_in_repo",True),
+            "claim_exact_original_identity_match":False,
+            "cannot_approve_until_reference_comparison":True,
         },
         "human_review":{
             "approved":False,"kael_identity_verified":False,

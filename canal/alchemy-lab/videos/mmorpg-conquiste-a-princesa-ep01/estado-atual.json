@@ -1239,14 +1239,14 @@
     "actual_provider_charge_confirmed": false,
     "youtube_upload": false,
     "human_visual_approved": false,
-    "dispatched_workflow_run_id": 43766496772,
+    "dispatched_workflow_run_id": 43784005362,
     "workflow_result": "failure_but_png_archived",
-    "failure_stage": "POST /v1/images/generations after /health succeeded",
-    "failure_message": "PNG 1199x1312 from image provider instead of requested 1024x1536, original archived with SHA. Not an upstream OAuth failure. Candidate requires visual review; no repeat AI generation.",
+    "failure_stage": "technical_qa_dimensions_mismatch_after_provider_png_received",
+    "failure_message": "Provider generated PNG 1199x1312; source archived with SHA; workflow marked failure due to original 1024x1536 exact-size gate. Reuse archived asset; no duplicate paid regeneration.",
     "image_generation_started": true,
     "image_png_created": true,
     "re_dispatch_without_diagnosis": false,
-    "next_step": "Run archive CRC+SHA QA, link candidate as human review pending; preserve original dimensions, do not pay to regenerate for aspect mismatch.",
+    "next_step": "Review archived reference visual appearance against original Kael/Elara/Aldric sources; source-approved image attachments were not included in text-only proxy generation. No new charge just for dimensions.",
     "last_retry_workflow_run_id": 43766496772,
     "last_retry_run_attempt": 2,
     "recovery_dispatch_reserved_utc": "2026-11-16T01:03:42Z",
@@ -1322,6 +1322,12 @@
     "status": "candidate_human_visual_review_pending",
     "human_visual_approved": false,
     "no_additional_image_generation_for_same_source": true,
-    "youtube_uploaded": false
+    "youtube_uploaded": false,
+    "technical_qa_path": "QA-CHARACTER-BIBLE-V2.json",
+    "technical_qa_run_id": 43786791088,
+    "technical_qa_run_result": "success_86_unittests_6_skipped",
+    "approved_originals_attached_to_generation": false,
+    "exact_identity_match_to_approved_originals_proven": false,
+    "next_step": "Human visual review and attach exact approved source references before further shot images; keep original PNG and its SHA."
   }
 }

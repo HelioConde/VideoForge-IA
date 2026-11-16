@@ -1,5 +1,11 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — etapa de referência V2: 86 testes e requisitos reais de identidade
+
+- [Run de QA 43786791088](https://github.com/HelioConde/VideoForge-IA/actions/runs/43786791088) **SUCCESS**: 86 testes executados (6 pulados por requisitos do runner); SHA/PNG da `character-bible.png` conferidos; relatório permanente `QA-CHARACTER-BIBLE-V2.json` gerado na `main` pelo próprio workflow. O coordenador não disparou outra chamada paga.
+- Novo critério de revisão: aparência de Kael, Elara e Aldric derivada das descrições oficiais de `production-art.json`. A imagem real foi produzida **somente por prompt textual**; as imagens antigas aprovadas não estavam anexadas ao request nem possuem SHA original importado neste estado. Não é possível atestar correspondência visual exata sem comparar as fontes originais. Nenhuma aprovação visual/identidade inferida.
+- Proximo passo de cena: revisar a prancha real, importar referencias originais aprovadas com SHA, validar tres identidades e depois trabalhar nas imagens-mae V2 e nas quatro camadas RGBA reais da espada `C01-P02`. Ainda nao existe MP4 oficial completo nem upload no YouTube.
+
 ## Continuidade V2: bloquear geracao paga duplicada e auditar referencia real
 
 - Qualquer `production-art-by-request.yml` (inclusive workflow_dispatch manual) DEVE consultar o diretorio permanente `assets/geracoes/production-art-request/<run_id>/`, conferir manifesto, SHA256, integridade PNG e dimensoes antes de criar a mesma arte. Se ja houver PNG valido, abortar com `PRODUCTION_ART_ALREADY_ARCHIVED_SHA_VERIFIED` antes de chamar o provedor. Se o arquivo ja existir mas estiver incompleto/alterado, bloquear para diagnostico, nunca regenerar cegamente.

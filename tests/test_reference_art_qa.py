@@ -15,6 +15,11 @@ class ArchivedIdentityReferenceQATests(unittest.TestCase):
         self.assertFalse(record["requested_format"]["source_dimensions_match_requested"])
         self.assertFalse(record["human_review"]["approved"])
         self.assertFalse(record["downstream"]["approved_canonical_anchor"])
+        self.assertFalse(record["generation_provenance_limits"]["approved_originals_attached_to_generation"])
+        self.assertFalse(record["generation_provenance_limits"]["claim_exact_original_identity_match"])
+        self.assertIn("cabelo",record["identity_review_criteria"]["kael"])
+        self.assertIn("violeta",record["identity_review_criteria"]["elara"])
+        self.assertIn("barba",record["identity_review_criteria"]["aldric"])
         self.assertFalse(record["downstream"]["can_generate_shot_specific_mothers"])
         self.assertEqual(record["provider_calls"],0)
 
