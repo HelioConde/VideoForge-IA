@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 16/11/2026 — originais de Kael e Elara recuperados e comparações V2 prontas
+
+- [Importação 43850389922](https://github.com/HelioConde/VideoForge-IA/actions/runs/43850389922) **SUCCESS**: 3 fontes originais por SHA (Kael, Elara, câmera C12-P02), 0 bytes de arte original modificados. O relatório `qa-referencias-chat-cinematograficas.json` agora marca `ORIGINAL_EXACT_SHA_VERIFIED` nos dois closes e `EXACT_SOURCE_ARCHIVED` na câmera.
+- [Autonomia 43850993654](https://github.com/HelioConde/VideoForge-IA/actions/runs/43850993654) **SUCCESS**: `reference_sources_current` atualizado para 2/2 closes e câmera C12; pendências de upload zeradas; bloqueio mudou de `original_kael_elara_sha_sources_missing` para `human_visual_review_pending`. Nenhum novo pedido pago de character-bible.
+- [Comparação offline 43851593794](https://github.com/HelioConde/VideoForge-IA/actions/runs/43851593794) **SUCCESS**: duas prévias JPEG e `QA-COMPARACAO-IDENTIDADE-V2.json` gerados a partir dos bytes reais sem IA externa. Visualizar `REVISAR-IDENTIDADE-EP01-V2.md` e comparar rosto, olhos, cabelo, roupa e anatomia de Kael e Elara contra `character-bible.png` V2. A identidade de Aldric ainda precisa de fonte/revisão própria.
+- `character-bible` gerada por texto sem anexar referências, **não aprovada**. As fontes SHA não autorizam automaticamente a nova identidade, C01-P02, rigs, MP4 ou YouTube. Próximo marco é decisão explícita da revisão visual. O V2 permanece em 40 tomadas; documentos e histórico preservados, nenhum refazimento da V1.
+
 ## 16/11/2026 — checkpoint confirmado: referencias originais e C12 aguardam bytes, CI verde
 
 - [Importador de originais 43823567116](https://github.com/HelioConde/VideoForge-IA/actions/runs/43823567116): **SUCCESS**, 13 testes, nenhum PNG novo ou alterado; os dois originais de identidade Kael/Elara e a câmera C12-P02 ainda nao foram enviados/arquivados por SHA (0/3). Busca por caminhos exatos no historico de commits GitHub também nao achou copia anterior. Importar `uploads/alchemy-ep01-cinema-3-originais.zip` usando `scripts/enviar-referencias-cinema.ps1` quando os bytes originais estiverem disponíveis.

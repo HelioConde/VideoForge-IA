@@ -50,7 +50,12 @@ def comparison(root:Path=ROOT,sync:bool=False)->dict:
             raise VideoForgeError("VISUAL_QA_INVALID_CANDIDATE")
         candidate=img.convert("RGB")
     results=[]
-    for actor,sample in zip(("kael","elara"),samples):
+    by_identity={sample["id"]:sample for sample in samples}
+    if set(by_identity)!={"ref-kael-close-c12","ref-elara-close-c12"}:
+        raise VideoForgeError("VISUAL_QA_SOURCE_IDENTITY_MAPPING_INVALID")
+    for actor,identity_id in (("kael","ref-kael-close-c12"),
+                              ("elara","ref-elara-close-c12")):
+        sample=by_identity[identity_id]
         source=base/sample["expected_repo_path"]
         source_bytes=source.read_bytes()
         if sha(source_bytes)!=sample["expected_sha256"]:

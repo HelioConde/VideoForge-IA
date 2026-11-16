@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+**EP01 V2 — revisão visual de identidade (16/11/2026):** os três PNGs originais de Kael, Elara e C12-P02 estão SHA-verificados. [Comparar personagens e prancha V2](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REVISAR-IDENTIDADE-EP01-V2.md) antes de autorizar rig/animação: [Kael](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-KAEL-V2-COMPARACAO.jpg) | [Elara](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-ELARA-V2-COMPARACAO.jpg). As prévias são apenas para QA, não aprovam o novo desenho. O MP4 final e a publicação continuam pendentes.
+
 > **AUTORIZAÇÃO DE CHAMADAS DO EP01 V2 — 15/11/2026:** o responsável autorizou permanentemente as chamadas de IA/imagem necessárias ao remake, sem pedir confirmação por imagem; `autonomy-policy.json` permite um gasto de geração por execução do produtor e não define teto editorial total. O coordenador reserva e solicita automaticamente a primeira candidata `character-bible` uma vez, com registro durável e sem repetição cega. A existência de autorização **não** comprova que a API respondeu, que houve cobrança, que alguma arte foi aprovada nem que um vídeo foi publicado. YouTube segue bloqueado.
 
 > **Rig da espada: QA de geometria por pixels reais adicionado.** `remake_rig_geometry.py` e os workflows de pacote/preview exigem relatório `mask-geometry.qa.json` revalidável para C01-P02, com máscara, centroide, SHA e quatro poses. O restante dos 39 planos ainda depende de arte própria; não foi criado MP4 oficial nem liberado custo.

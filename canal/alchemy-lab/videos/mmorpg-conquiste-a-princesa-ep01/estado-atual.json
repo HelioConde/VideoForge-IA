@@ -1350,7 +1350,9 @@
     "needed_zip": "uploads/alchemy-ep01-cinema-3-originais.zip",
     "windows_import_script": "scripts/enviar-referencias-cinema.ps1",
     "can_auto_approve_identity": false,
-    "youtube_uploaded": false
+    "youtube_uploaded": false,
+    "historical_snapshot_before_zip_import": true,
+    "superseded_current_status_field": "reference_sources_current"
   },
   "c12_preflight_20261116": {
     "status": "waiting_for_existing_source_bytes",
@@ -1379,6 +1381,26 @@
     "aldric_individual_sha_reference_missing": true,
     "human_visual_approval": false,
     "provider_calls": 0,
+    "youtube_uploaded": false
+  },
+  "identity_visual_comparison_20261116": {
+    "schema": "videoforge/identity-comparison-qa/v1",
+    "status": "ready_for_explicit_human_identity_review",
+    "verified_exact_originals": 3,
+    "kael_elara_close_originals_sha_verified": 2,
+    "c12_camera_original_sha_verified": true,
+    "individual_aldric_approved_original_still_missing": true,
+    "review_document": "REVISAR-IDENTIDADE-EP01-V2.md",
+    "qa_report": "QA-COMPARACAO-IDENTIDADE-V2.json",
+    "kael_visual_preview": "QA-KAEL-V2-COMPARACAO.jpg",
+    "elara_visual_preview": "QA-ELARA-V2-COMPARACAO.jpg",
+    "visual_comparison_workflow_run": 43851593794,
+    "visual_comparison_workflow_conclusion": "success_2_tests",
+    "source_original_sha_preserved": true,
+    "provider_calls": 0,
+    "human_visual_approval": false,
+    "character_bible_canonical": false,
+    "official_mp4_created": false,
     "youtube_uploaded": false
   }
 }
