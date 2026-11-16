@@ -31,10 +31,10 @@ def color_candidate(region, rgb):
     hue, sat, val = colorsys.rgb_to_hsv(r/255, g/255, b/255)
     angle = hue * 360
     if region == "barba":
-        # Cinza/prata mais neutro: reduz pele de bochecha/lábio, mas pode
-        # descartar fios em sombra quente; revisão visual permanece obrigatória.
-        return (.17 <= val <= .98 and sat <= .19 and min(r,g,b) >= 39
-                and abs(r-g) <= 18 and abs(g-b) <= 22)
+        # Cinza/prata em polígono da linha do queixo, excluindo olhos pela geometria.
+        # Cores parecidas de pele ainda podem passar; o recorte NÃO é canônico.
+        return (.15 <= val <= .98 and sat <= .30 and min(r,g,b) >= 33
+                and abs(r-g) <= 36 and abs(g-b) <= 36)
     if region == "tecido_externo":
         # Tecido escuro, excluindo a maioria dos bordados brilhantes.
         return .06 <= val < .42 and sat <= .38
