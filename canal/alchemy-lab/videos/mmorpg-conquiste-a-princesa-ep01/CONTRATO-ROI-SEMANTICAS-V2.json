@@ -1,0 +1,105 @@
+{
+  "schema": "videoforge/wardrobe-semantic-roi-pairs/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "source_qa": "QA-ROI-FIGURINOS-V2.json",
+  "preexisting_character_bible_grounded_rejected": true,
+  "disclaimer": "Candidate source B may not show target character or intended pose. Do not mark pose or polygon verified from path names.",
+  "measurement_method": "HSV semantic polygon only after both SHA checks and manual semantic ROI verification",
+  "max_mask_fraction_of_full_image": 0.35,
+  "alert_if_red_dark_or_purple_diff_percentage_points_at_least": 40,
+  "color_change_cannot_establish_complete_identity_approval": true,
+  "pairs": [
+    {
+      "actor": "aldric",
+      "semantic_region": "barba",
+      "expected_variant": "seated_to_standing",
+      "source_a": {
+        "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+        "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+        "pose_verified": true,
+        "polygon": null,
+        "semantic_polygon_verified": false
+      },
+      "source_b": {
+        "path": "assets/cenas-mae/cena-02.png",
+        "sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+        "pose_verified": false,
+        "polygon": null,
+        "semantic_polygon_verified": false
+      },
+      "lighting_differences_may_be_present": true,
+      "auto_detection_enabled_after_verified_masks": true,
+      "auto_approval_for_canonical_use": false,
+      "status": "awaiting_verified_pair_and_regions"
+    },
+    {
+      "actor": "aldric",
+      "semantic_region": "tecido_externo",
+      "expected_variant": "seated_to_standing",
+      "source_a": {
+        "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+        "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+        "pose_verified": true,
+        "polygon": null,
+        "semantic_polygon_verified": false
+      },
+      "source_b": {
+        "path": "assets/cenas-mae/cena-02.png",
+        "sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+        "pose_verified": false,
+        "polygon": null,
+        "semantic_polygon_verified": false
+      },
+      "lighting_differences_may_be_present": true,
+      "auto_detection_enabled_after_verified_masks": true,
+      "auto_approval_for_canonical_use": false,
+      "status": "awaiting_verified_pair_and_regions"
+    },
+    {
+      "actor": "aldric",
+      "semantic_region": "painel_central",
+      "expected_variant": "seated_to_standing",
+      "source_a": {
+        "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+        "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+        "pose_verified": true,
+        "polygon": null,
+        "semantic_polygon_verified": false
+      },
+      "source_b": {
+        "path": "assets/cenas-mae/cena-02.png",
+        "sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+        "pose_verified": false,
+        "polygon": null,
+        "semantic_polygon_verified": false
+      },
+      "lighting_differences_may_be_present": true,
+      "auto_detection_enabled_after_verified_masks": true,
+      "auto_approval_for_canonical_use": false,
+      "status": "awaiting_verified_pair_and_regions"
+    },
+    {
+      "actor": "elara",
+      "semantic_region": "corpete_roxo_palacio",
+      "expected_variant": "royal_to_royal",
+      "source_a": {
+        "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+        "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+        "pose_verified": false,
+        "polygon": null,
+        "semantic_polygon_verified": false
+      },
+      "source_b": {
+        "path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+        "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+        "pose_verified": false,
+        "polygon": null,
+        "semantic_polygon_verified": false
+      },
+      "lighting_differences_may_be_present": true,
+      "auto_detection_enabled_after_verified_masks": true,
+      "auto_approval_for_canonical_use": false,
+      "status": "awaiting_verified_pair_and_regions"
+    }
+  ]
+}
