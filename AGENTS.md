@@ -2,6 +2,8 @@
 
 # AGENTS.md — VideoForge IA (reconstrução)
 
+**VERIFICAÇÃO DO ARQUIVO REMOTO V3 — 16/11/2026:** [workflow 43947082696](https://github.com/HelioConde/VideoForge-IA/actions/runs/43947082696) SUCCESS. Novo `videoforge/wardrobe_roi_archive.py` e `qa-wardrobe-roi-archive.yml` verificam hashes e pixels **dos PNGs V3 arquivados no checkout**, diferentemente dos testes só de buffers em memória. Comparam RGB com fonte SHA, alfa com exclusão reexecutada, contagens de pixels, crop e hash do JPEG contextual, sem alterar arquivos ou realizar chamadas pagas. Todos os 8 arquivos arquivados passaram; **sem aprovação semântica**. Relatório JSON é artifact temporário da Action. Reprovações humanas e bloqueio R2/MP4/YouTube permanecem. Não supor que o relatório de integridade V2 (histórico) substitua essa auditoria V3.
+
 **REVISAO CONTEXTUAL V3 — 16/11/2026:** conferir QA-ROI-CONTEXTO-V3.jpg (fonte, antes, removidos, depois) antes de ajustar exclusoes. Oito PNGs preservados; JPEG e apenas previa, nao fonte de medicao. Corpete B parcial: nao preencher ou aprovar por cor. Ver checkpoint para CI/publicacao.
 
 **QA ILUMINACAO INTEGRADO — 16/11/2026:** PR #64, main 5285f51, run 43944144582 SUCCESS (23 testes). Dúvida de iluminação impede reprovação cromática automática nova, nunca desfaz reprovação humana existente. Nenhum PNG mudou; R2 bloqueada.
