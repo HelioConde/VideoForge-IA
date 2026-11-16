@@ -1,12 +1,14 @@
 #requires -Version 5.1
 <#
 .SYNOPSIS
-  Reconecta a conta do Codex Proxy LOCAL via device login e reimporta secrets do VideoForge.
+  Renova OAuth do Codex em um proxy Docker TEMPORARIO e importa secrets no GitHub.
 .DESCRIPTION
-  A sessao OAuth importada em CODEX_PROXY_ACCOUNTS_JSON venceu e o refresh remoto
-  falhou HTTP 502. Esta rotina exige abrir URL de login OFICIAL no navegador do
-  usuario, nunca imprime access/refresh tokens, nao cria imagens nem publica YouTube.
-  Usa o container Docker local em execucao, com porta 8080 publicada em localhost.
+  Nao depende de PROXY_API_KEY no container local: usa imagem do proxy que ja
+  passou no GitHub Actions, com chave efemera nova e volume Docker temporario.
+  O container informado em -Container nunca e alterado; o parametro permanece
+  por compatibilidade com o comando utilizado anteriormente.
+  O login por dispositivo requer aprovacao pelo navegador do responsavel.
+  Nao imprime nem grava tokens no repositorio, nao gera imagens diretamente.
 .EXAMPLE
   .\scripts\renovar-sessao-videoforge.ps1 -Container chatgpt-codex-proxy
 #>
@@ -17,74 +19,140 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $secretKey = $null
 $headers = $null
+$auth = $null
+$tempContainer = $null
+$tempVolume = $null
+
+function Invoke-DockerSafe([string[]]$Arguments) {
+    & docker @Arguments | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Operacao Docker falhou. Confira Docker Desktop, a conexao ao GHCR e as permissoes.'
+    }
+}
+
 try {
     foreach ($name in @('docker', 'gh')) {
         if (-not (Get-Command $name -ErrorAction SilentlyContinue)) {
-            throw "Comando $name nao encontrado."
+            throw "Comando '$name' nao encontrado no PATH."
         }
     }
-    & docker inspect $Container --format '{{.State.Running}}' 2>$null | Out-Null
-    if ($LASTEXITCODE -ne 0) { throw "Container $Container nao encontrado/inativo." }
-    $rawEnv = & docker inspect $Container --format '{{json .Config.Env}}' 2>$null
-    if ($LASTEXITCODE -ne 0) { throw 'Nao foi possivel inspecionar o container local.' }
-    $vars = @($rawEnv | ConvertFrom-Json)
-    $keyPair = @($vars | Where-Object { $_ -is [string] -and $_.StartsWith('PROXY_API_KEY=') })
-    if ($keyPair.Count -ne 1) { throw 'PROXY_API_KEY nao configurada no container.' }
-    $secretKey = ([string]$keyPair[0]).Substring('PROXY_API_KEY='.Length)
-    if ($secretKey.Length -lt 20) { throw 'PROXY_API_KEY invalida no container.' }
-    $ports = @(& docker port $Container '8080/tcp' 2>$null)
-    if ($LASTEXITCODE -ne 0 -or $ports.Count -lt 1) {
-        throw 'Proxy precisa publicar a porta 8080 no host para autenticar localmente.'
+    & gh auth status 1>$null 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        throw "GitHub CLI precisa estar autenticado. Execute gh auth login."
     }
+    & docker info 1>$null 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Docker Desktop nao esta funcionando. Inicie-o antes de executar.'
+    }
+
+    Write-Host "Container original '$Container' preservado (nenhuma mudanca nele)."
+    Write-Host 'Iniciando proxy descartavel com chave propria, sem depender de PROXY_API_KEY local.'
+    $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+    $secretBytes = New-Object byte[] 48
+    try { $rng.GetBytes($secretBytes) } finally { $rng.Dispose() }
+    try {
+        $secretKey = [Convert]::ToBase64String($secretBytes).TrimEnd('=').Replace('+','-').Replace('/','_')
+    } finally {
+        [Array]::Clear($secretBytes, 0, $secretBytes.Length)
+    }
+
+    $suffix = '{0}-{1}' -f $PID, [Guid]::NewGuid().ToString('N').Substring(0, 12)
+    $tempContainer = "vf-oauth-login-$suffix"
+    $tempVolume = "vf-oauth-login-state-$suffix"
+    $image = 'ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1'
+
+    & docker pull $image | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Nao foi possivel baixar a imagem GHCR. Se estiver privada, use gh auth token | docker login ghcr.io -u HelioConde --password-stdin e execute novamente.'
+    }
+
+    Invoke-DockerSafe @('volume','create',$tempVolume)
+    $argsDocker = @(
+        'run', '--detach', '--name', $tempContainer,
+        '--read-only', '--tmpfs', '/tmp:rw,nosuid,size=32m',
+        '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
+        '-p', '127.0.0.1::8080',
+        '-e', "PROXY_API_KEY=$secretKey", '-e', 'DATA_DIR=/app/data',
+        '-e', 'DEBUG_LOG_PAYLOADS=false',
+        '-v', ($tempVolume + ':/app/data:rw'),
+        $image
+    )
+    Invoke-DockerSafe $argsDocker
+    $argsDocker = $null
+
+    $ports = @(& docker port $tempContainer '8080/tcp' 2>$null)
+    if ($LASTEXITCODE -ne 0) { throw 'Nao foi possivel consultar porta do proxy temporario.' }
     $port = $null
-    foreach ($line in $ports) {
-        if ([string]$line -match ':(\d{2,5})$') { $port = [int]$Matches[1]; break }
+    foreach ($entry in $ports) {
+        if ([string]$entry -match '^127[.]0[.]0[.]1:(\d{2,5})$') {
+            $port = [int]$Matches[1]
+            break
+        }
     }
-    if (-not $port -or $port -gt 65535) { throw 'Porta Docker invalida.' }
+    if (-not $port -or $port -gt 65535) {
+        throw 'Proxy temporario nao publicou uma porta restrita a localhost.'
+    }
     $url = "http://127.0.0.1:$port"
-    $headers = @{Authorization = "Bearer $secretKey"; Accept='application/json'}
-    $live = Invoke-RestMethod -Uri "$url/health/live" -Method Get -TimeoutSec 10
-    if ($live.status -ne 'ok') { throw 'Health do container local nao esta pronto.' }
-    Write-Host 'Iniciando autenticacao oficial em dispositivo, sem exibir tokens.'
-    $login = Invoke-RestMethod -Uri "$url/admin/accounts/device-login/start" `
-        -Method Post -Headers $headers -Body '{}' -ContentType 'application/json' -TimeoutSec 35
-    if (-not $login.login_id -or -not $login.auth_url -or -not $login.user_code) {
-        throw 'Device login nao forneceu as instrucoes esperadas.'
+    $headers = @{ Authorization = "Bearer $secretKey"; Accept = 'application/json' }
+    $ready = $false
+    for ($i=0; $i -lt 25; $i++) {
+        try {
+            $health = Invoke-RestMethod -Uri "$url/health/live" -Method Get -TimeoutSec 3
+            if ($health.status -eq 'ok') { $ready = $true; break }
+        } catch {
+            # Somente aguardar readiness; sem requests de geracao e sem mostrar respostas.
+        }
+        Start-Sleep -Seconds 2
     }
-    $authUrl = [string]$login.auth_url
-    if (-not $authUrl.StartsWith('https://auth.openai.com/')) {
-        throw 'URL de autenticacao inesperada; operacao interrompida.'
+    if (-not $ready) { throw 'O proxy temporario nao iniciou corretamente.' }
+
+    Write-Host 'Solicitando autenticacao oficial em dispositivo (sem revelar tokens).'
+    $auth = Invoke-RestMethod -Uri "$url/admin/accounts/device-login/start" -Method Post -Headers $headers -Body '{}' -ContentType 'application/json' -TimeoutSec 40
+    if (-not $auth.login_id -or -not $auth.auth_url -or -not $auth.user_code) {
+        throw 'Proxy nao retornou informacoes validas para o login por dispositivo.'
     }
-    Write-Host ("Acesse: {0}" -f $authUrl)
-    Write-Host ("Codigo: {0}" -f $login.user_code)
-    Start-Process $authUrl
-    Write-Host 'Autorize no navegador com a conta que usa o Codex. O programa aguarda a conclusao.'
-    $deadline = [DateTime]::UtcNow.AddMinutes(10)
+    $authUrl = [Uri]([string]$auth.auth_url)
+    if ($authUrl.Scheme -ne 'https' -or $authUrl.Host -ne 'auth.openai.com' -or
+        $authUrl.Port -ne 443 -or -not [string]::IsNullOrEmpty($authUrl.UserInfo)) {
+        throw 'URL de autenticacao nao corresponde ao provedor oficial.'
+    }
+    Write-Host ("Pagina oficial: {0}" -f $authUrl.AbsoluteUri)
+    Write-Host ("Codigo do dispositivo: {0}" -f $auth.user_code)
+    Start-Process $authUrl.AbsoluteUri
+    Write-Host 'Autorize a conta pelo navegador; o proxy verificara a conclusao.'
+    $limit = [DateTime]::UtcNow.AddMinutes(10)
     $status = ''
-    while ([DateTime]::UtcNow -lt $deadline) {
+    while ([DateTime]::UtcNow -lt $limit) {
         Start-Sleep -Seconds 5
-        $result = Invoke-RestMethod -Uri "$url/admin/accounts/device-login/$($login.login_id)" `
-            -Method Get -Headers $headers -TimeoutSec 25
-        $status = [string]$result.status
+        $reply = Invoke-RestMethod -Uri "$url/admin/accounts/device-login/$($auth.login_id)" -Method Get -Headers $headers -TimeoutSec 25
+        $status = [string]$reply.status
         if ($status -eq 'ready') { break }
         if ($status -eq 'expired' -or $status -eq 'error') {
-            throw 'Login expirou ou foi recusado; iniciar novamente.'
+            throw 'O login foi recusado ou expirou. Nenhum secret foi atualizado.'
         }
     }
-    if ($status -ne 'ready') { throw 'Login nao foi concluido; nenhum secret alterado.' }
-    Write-Host 'Conta autenticada. Importando novo snapshot privado no VideoForge-IA.'
-    & (Join-Path $PSScriptRoot 'migrar-codex-proxy.ps1') -Container $Container
-    if (-not $?) { throw 'Falha na importacao privada dos secrets.' }
-    Write-Host 'Solicitando verificacao autenticada no GitHub e retomada automatica unica do EP01 V2.'
+    if ($status -ne 'ready') {
+        throw 'O login nao foi concluido. Nenhum secret foi atualizado.'
+    }
+
+    Write-Host 'Login confirmado; importando as novas credenciais sem exibir o conteudo.'
+    & (Join-Path $PSScriptRoot 'migrar-codex-proxy.ps1') -Container $tempContainer
+    if (-not $?) { throw 'Falha ao importar as credenciais ao GitHub.' }
+
+    Write-Host 'Validando no GitHub e preparando retomada unica da referencia V2.'
     & gh workflow run proxy-health-official.yml --repo HelioConde/VideoForge-IA --ref main -f resume_remake=true
     if ($LASTEXITCODE -ne 0) {
-        throw 'A sessao foi importada, mas o disparo da validacao falhou. Conferir Actions do GitHub.'
+        throw 'Credenciais importadas, mas workflow nao disparou; verifique GitHub Actions.'
     }
-    Write-Host 'GitHub Actions validara OAuth e so retomara 1 imagem se o health passar.'
-    Write-Host 'Monitorar https://github.com/HelioConde/VideoForge-IA/actions/workflows/proxy-health-official.yml'
+    Write-Host 'Configuracao concluida. Acompanhe a validacao/retomada no GitHub Actions.'
+    Write-Host 'https://github.com/HelioConde/VideoForge-IA/actions/workflows/proxy-health-official.yml'
 } finally {
+    # Never persist the disposable OAuth account state beyond this login.
+    if ($tempContainer) { & docker rm -f $tempContainer 1>$null 2>$null }
+    if ($tempVolume) { & docker volume rm -f $tempVolume 1>$null 2>$null }
     $secretKey = $null
     $headers = $null
-    $vars = $null
-    $rawEnv = $null
+    $auth = $null
+    $argsDocker = $null
+    $secretBytes = $null
 }
