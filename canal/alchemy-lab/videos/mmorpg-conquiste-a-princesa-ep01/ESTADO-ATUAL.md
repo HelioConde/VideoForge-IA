@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Pranchas de revisão com pixels fonte nativos 1:1
+
+- `videoforge/wardrobe_roi_native_review.py` e testes novos verificam SHA e integridade V3 antes de criar 8 imagens PNG, cada uma com fonte original, alfa antes, pixels removidos e alfa após exclusão **sem redimensionar os pixels da área**.
+- [Run 43949781156](https://github.com/HelioConde/VideoForge-IA/actions/runs/43949781156) **SUCCESS**, 6 testes (novos e de arquivo), publicação dos 8 PNGs na `main`. Conferência em [galeria de pranchas 1:1](REVISAR-ROI-NATIVA-V3.md) e [manifesto SHA](QA-ROI-REVISAO-NATIVA-V3.json).
+- Na imagem de Aldric em pé, barba com boca aberta permanece tecnicamente separada de boa parte do rosto, mas ainda não há prova de máscara perfeita de bigode/lábios. Lança na capa e corpete B parcialmente oculto continuam riscos relevantes.
+- **0/8 máscaras semanticamente aprovadas, 0/4 pares liberados para comparação; reprovações anteriores mantidas; R2/MP4/YouTube bloqueados.** Nenhuma nova imagem paga.
+
 ## 16/11/2026 — Catálogo de revisão semântica V3 com gate explícito
 
 - Visualmente inspecionada [prancha de contexto V3](QA-ROI-CONTEXTO-V3.jpg) para oito recortes. Observações registradas em [`REVISAO-SEMANTICA-ROI-V3.json`](REVISAO-SEMANTICA-ROI-V3.json): barba de Aldric A/B (pose em pé com boca aberta, risco de bigode/lábios), manto A com lança diagonal e B com dobra/sombra, centro A/B com cinto/bordados, Elara A/B roxo mas B parcialmente encoberto e em outra escala.
