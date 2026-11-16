@@ -42,11 +42,11 @@
             ]
           ],
           "seed_polygon_pixels": 929,
-          "color_isolated_pixels": 405,
-          "retained_percent": 43.6,
+          "color_isolated_pixels": 186,
+          "retained_percent": 20.02,
           "mask_viable_for_visual_review": true,
           "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-barba-a-CANDIDATO.png",
-          "candidate_cutout_sha256": "e7ffddf99c6dd0033a355154a9341192eaf7d5ba53469afef04df688c26e9404",
+          "candidate_cutout_sha256": "11da75248bf7ee50db4ff492a7fc74bc03d6d62164116386774eb348301babed",
           "candidate_cutout_box_xyxy": [
             499,
             307,
@@ -95,11 +95,11 @@
             ]
           ],
           "seed_polygon_pixels": 2167,
-          "color_isolated_pixels": 1207,
-          "retained_percent": 55.7,
+          "color_isolated_pixels": 226,
+          "retained_percent": 10.43,
           "mask_viable_for_visual_review": true,
           "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-barba-b-CANDIDATO.png",
-          "candidate_cutout_sha256": "cc459442d5a4ee4e55804ed4013798fff885f41e62645315b3cf2d6383255d5c",
+          "candidate_cutout_sha256": "81d8aeaf322e86940ac9793d22872f0becf28a3ed84b32eb7ee68fd3af75c821",
           "candidate_cutout_box_xyxy": [
             721,
             252,
@@ -154,11 +154,11 @@
             ]
           ],
           "seed_polygon_pixels": 8709,
-          "color_isolated_pixels": 6860,
-          "retained_percent": 78.77,
+          "color_isolated_pixels": 6091,
+          "retained_percent": 69.94,
           "mask_viable_for_visual_review": true,
           "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-tecido_externo-a-CANDIDATO.png",
-          "candidate_cutout_sha256": "e97f68ecd38d7b307be4c74ab542ed73b551a3a0225ace924067fd3b4152c3c1",
+          "candidate_cutout_sha256": "24f6aa73d8779a371b23ad551501116685aee51858d91ae3bb85668ce9554a76",
           "candidate_cutout_box_xyxy": [
             364,
             423,
@@ -203,11 +203,11 @@
             ]
           ],
           "seed_polygon_pixels": 11040,
-          "color_isolated_pixels": 8641,
-          "retained_percent": 78.27,
+          "color_isolated_pixels": 7445,
+          "retained_percent": 67.44,
           "mask_viable_for_visual_review": true,
           "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-tecido_externo-b-CANDIDATO.png",
-          "candidate_cutout_sha256": "9297a500ca0f013372facd0c41361ef6e1757f4a9afd44ed41b9a0c74a56a668",
+          "candidate_cutout_sha256": "70ad2c17ebdbeb33159dd4ae0a9b70c431eb256960d7547c4a012cbe8fb8a406",
           "candidate_cutout_box_xyxy": [
             675,
             478,
@@ -262,11 +262,11 @@
             ]
           ],
           "seed_polygon_pixels": 11620,
-          "color_isolated_pixels": 6668,
-          "retained_percent": 57.38,
+          "color_isolated_pixels": 4257,
+          "retained_percent": 36.64,
           "mask_viable_for_visual_review": true,
           "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-painel_central-a-CANDIDATO.png",
-          "candidate_cutout_sha256": "7a742827b31d1b8daaf74f2500ac7809c372359f3cb4ff4e9168a99ce10d9a9a",
+          "candidate_cutout_sha256": "131eca2676c0cd1274a5943f50dcb97624e5455d4e3c05d5b57591ee82a9f22b",
           "candidate_cutout_box_xyxy": [
             483,
             415,
@@ -311,11 +311,11 @@
             ]
           ],
           "seed_polygon_pixels": 13832,
-          "color_isolated_pixels": 10924,
-          "retained_percent": 78.98,
+          "color_isolated_pixels": 3837,
+          "retained_percent": 27.74,
           "mask_viable_for_visual_review": true,
           "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-painel_central-b-CANDIDATO.png",
-          "candidate_cutout_sha256": "c7861d4e8ee1ff5a09bae96abf6968fef6f345932d30ad0a4ea72d1ee4866c10",
+          "candidate_cutout_sha256": "b1f285f59a2c1f4502c1df5a19af0d8f60e6a7ace7448c791cd025eba384a8bd",
           "candidate_cutout_box_xyxy": [
             772,
             514,
