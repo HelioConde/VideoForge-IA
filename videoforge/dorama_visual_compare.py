@@ -10,6 +10,8 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import re
+from .paths import IDENTIFIER
 from .remake_autopilot import ROOT, EPISODE
 from .dorama_continuity import reference, _file
 from .errors import VideoForgeError
@@ -20,14 +22,18 @@ RUN=43969450680
 ASSET="c01-p05-guardas-lancas-v1"
 
 
-def compare(root:Path=ROOT,sync=False):
+def compare(root:Path=ROOT,sync=False,shot_id="C01-P05",asset_id=ASSET,run_id=RUN):
     from PIL import Image,ImageOps,ImageDraw,ImageFont
+    if not isinstance(run_id,int) or run_id<1 or not isinstance(shot_id,str) or not re.fullmatch(r"C[0-9]{2}-P[0-9]{2}",shot_id) or not isinstance(asset_id,str) or not IDENTIFIER.fullmatch(asset_id):
+        raise VideoForgeError("DORAMA_VISUAL_COMPARE_INPUT_INVALID")
     ep=Path(root)/EPISODE
     anchor,original=reference(root)
-    location=f"assets/geracoes/production-art-request/{RUN}"
+    sheet=f"QA-C01-P04-VS-{shot_id}.jpg"
+    report_file=f"QA-C01-P04-VS-{shot_id}.json"
+    location=f"assets/geracoes/production-art-request/{run_id}"
     folder=ep/location
-    source=_file(ep,f"{location}/{ASSET}.png")
-    meta_path=_file(ep,f"{location}/{ASSET}.production.json")
+    source=_file(ep,f"{location}/{asset_id}.png")
+    meta_path=_file(ep,f"{location}/{asset_id}.production.json")
     manifest_path=_file(ep,f"{location}/manifesto-geracoes.json")
     data=source.read_bytes()
     meta=json.loads(meta_path.read_text(encoding="utf-8"))
@@ -35,8 +41,8 @@ def compare(root:Path=ROOT,sync=False):
     sha=hashlib.sha256(data).hexdigest()
     provenance=meta.get("source_originals_sha_verified")
     if (meta.get("schema")!="videoforge/production-art-result/v1"
-        or meta.get("asset_id")!=ASSET
-        or meta.get("candidate_scene_shot_id")!="C01-P05"
+        or meta.get("asset_id")!=asset_id
+        or meta.get("candidate_scene_shot_id")!=shot_id
         or meta.get("visual_continuity_anchor_sha256")!=anchor["sha256"]
         or meta.get("source_images_attached_to_request")!=1
         or not isinstance(provenance,list) or len(provenance)!=1
@@ -45,7 +51,7 @@ def compare(root:Path=ROOT,sync=False):
         or meta.get("sha256")!=sha
         or meta.get("human_visual_approval") is not False
         or meta.get("youtube_uploaded") is not False
-        or manifest.get("github_run_id")!=RUN
+        or manifest.get("github_run_id")!=run_id
         or manifest.get("channel")!="alchemy-lab"
         or len(manifest.get("images",[]))!=1
         or manifest["images"][0].get("sha256")!=sha):
@@ -64,9 +70,9 @@ def compare(root:Path=ROOT,sync=False):
     draw=ImageDraw.Draw(board)
     font=ImageFont.load_default(size=20)
     small=ImageFont.load_default(size=15)
-    draw.text((24,17),"C01-P04 -> C01-P05 | CONTINUIDADE DO DORAMA",fill="white",font=font)
+    draw.text((24,17),f"C01-P04 -> {shot_id} | CONTINUIDADE DO DORAMA",fill="white",font=font)
     draw.text((24,55),"Mesma referencia PNG original SHA / novo enquadramento; comparar visualmente",fill=(203,213,224),font=small)
-    for i,(im,label) in enumerate(((im_a,"REFERENCIA APROVADA C01-P04"),(im_b,"NOVO QUADRO C01-P05"))):
+    for i,(im,label) in enumerate(((im_a,"REFERENCIA APROVADA C01-P04"),(im_b,f"NOVO QUADRO {shot_id}"))):
         fitted=ImageOps.contain(im,(panel_w,panel_h),Image.Resampling.LANCZOS)
         xx=12+i*(panel_w+18)+(panel_w-fitted.width)//2
         board.paste(fitted,(xx,89+(panel_h-fitted.height)//2))
@@ -80,11 +86,11 @@ def compare(root:Path=ROOT,sync=False):
         "status":"COMPARED_PIXELS_FOR_HUMAN_REVIEW_NOT_APPROVED",
         "anchor_sha256":anchor["sha256"],
         "anchor_shot":"C01-P04",
-        "new_shot":"C01-P05",
+        "new_shot":shot_id,
         "new_sha256":sha,
         "source_attached_to_generation":True,
         "reference_sha_verified":True,
-        "comparison_sheet":SHEET,
+        "comparison_sheet":sheet,
         "comparison_sheet_sha256":hashlib.sha256(jpeg).hexdigest(),
         "anchor_size":list(im_a.size),
         "new_size":list(im_b.size),
@@ -96,7 +102,7 @@ def compare(root:Path=ROOT,sync=False):
         "generation_calls":0
     }
     if sync:
-        for file,contents in ((ep/SHEET,jpeg),(ep/REPORT,(json.dumps(result,ensure_ascii=False,indent=2)+"\n").encode())):
+        for file,contents in ((ep/sheet,jpeg),(ep/report_file,(json.dumps(result,ensure_ascii=False,indent=2)+"\n").encode())):
             if file.is_symlink():raise VideoForgeError("DORAMA_VISUAL_COMPARE_UNSAFE_OUTPUT")
             if not file.exists() or file.read_bytes()!=contents:
                 file.write_bytes(contents)
@@ -106,8 +112,11 @@ def compare(root:Path=ROOT,sync=False):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--sync",action="store_true")
+    p.add_argument("--shot",default="C01-P05")
+    p.add_argument("--asset",default=ASSET)
+    p.add_argument("--run-id",type=int,default=RUN)
     opt=p.parse_args()
-    r=compare(sync=opt.sync)
+    r=compare(sync=opt.sync,shot_id=opt.shot,asset_id=opt.asset,run_id=opt.run_id)
     print("DORAMA_CONTINUITY_COMPARE",json.dumps({
         "anchor_sha":r["anchor_sha256"],
         "next_sha":r["new_sha256"],
