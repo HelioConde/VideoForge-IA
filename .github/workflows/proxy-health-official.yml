@@ -110,6 +110,60 @@ jobs:
                       status="transport-error"
                   print("LOCAL_PROXY_HTTP_STATUS",route,mode,status)
           PY
+      - name: Diagnosticar elegibilidade de contas e catalogo (somente GET)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import collections,datetime,json,os,urllib.error,urllib.request
+          origin=os.environ["PROXY_ENDPOINT"].rstrip("/")
+          key=os.environ["CODEX_PROXY_API_KEY"]
+          opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+          for path in ("/admin/accounts","/v1/models"):
+              req=urllib.request.Request(origin+path,
+                  headers={"Authorization":"Bearer "+key,"Accept":"application/json"})
+              try:
+                  with opener.open(req,timeout=20) as resp:
+                      payload=json.load(resp)
+                      print("SAFE_UPSTREAM_PROBE",path,"http",resp.status)
+                      if path=="/admin/accounts":
+                          accounts=payload.get("accounts",[])
+                          if not isinstance(accounts,list):
+                              raise ValueError("accounts response is not a list")
+                          counts=collections.Counter(str(a.get("status","unknown")) for a in accounts
+                                                     if isinstance(a,dict))
+                          eligible=sum(a.get("eligible_now") is True for a in accounts if isinstance(a,dict))
+                          now=datetime.datetime.now(datetime.timezone.utc)
+                          expired=0
+                          for a in accounts:
+                              if not isinstance(a,dict):continue
+                              try:
+                                  expiry=datetime.datetime.fromisoformat(a["oauth_expires"].replace("Z","+00:00"))
+                                  expired+=expiry<=now
+                              except (ValueError,KeyError,TypeError,AttributeError):pass
+                          print("SAFE_ACCOUNT_COUNTS",json.dumps(
+                              {"total":len(accounts),"by_status":dict(counts),
+                               "eligible":eligible,"oauth_expired_count":expired},sort_keys=True))
+                      elif isinstance(payload,dict):
+                          print("SAFE_MODEL_CATALOG", "models_count",
+                                len(payload.get("data",[])) if isinstance(payload.get("data"),list) else "unknown")
+              except urllib.error.HTTPError as exc:
+                  # Only whitelist a short machine-readable error code; never print
+                  # payload, upstream text, user id, email, tokens or URLs.
+                  code="unavailable"
+                  try:
+                      obj=json.loads(exc.read(4096))
+                      err=obj.get("error",{})
+                      raw=err.get("code","") if isinstance(err,dict) else ""
+                      if raw in {"no_available_accounts","upstream_error",
+                                 "upstream_unauthorized","quota_exhausted",
+                                 "rate_limited","model_not_found",
+                                 "continuation_account_unavailable"}:code=raw
+                  except (ValueError,UnicodeError,TypeError):pass
+                  print("SAFE_UPSTREAM_PROBE",path,"http",exc.code,"code",code)
+              except (OSError,ValueError,TypeError):
+                  print("SAFE_UPSTREAM_PROBE",path,"transport_or_json_invalid")
+          PY
       - name: Testar contas e autenticacao sem imagem nem custos
         shell: bash
         run: |
