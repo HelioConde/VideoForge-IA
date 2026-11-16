@@ -1,5 +1,13 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Catálogo de revisão semântica V3 com gate explícito
+
+- Visualmente inspecionada [prancha de contexto V3](QA-ROI-CONTEXTO-V3.jpg) para oito recortes. Observações registradas em [`REVISAO-SEMANTICA-ROI-V3.json`](REVISAO-SEMANTICA-ROI-V3.json): barba de Aldric A/B (pose em pé com boca aberta, risco de bigode/lábios), manto A com lança diagonal e B com dobra/sombra, centro A/B com cinto/bordados, Elara A/B roxo mas B parcialmente encoberto e em outra escala.
+- Criado validador `videoforge/wardrobe_roi_semantic_review.py` que confere cada SHA da fonte/máscara com relatório V3, bloqueia flags faltantes e qualquer revisão supostamente humana sem revisor/evidência. Testes incluem hash errado, declaração de revisão sem evidência e impossibilidade de liberação canônica implícita.
+- [Workflow 43948755763](https://github.com/HelioConde/VideoForge-IA/actions/runs/43948755763) **SUCCESS**; saída `QA-REVISAO-SEMANTICA-ROI-V3.json` como artifact temporário de QA somente leitura.
+- **Importante:** observações em prévias não equivalem a aprovação de máscara; 0/8 revisões humanas documentadas e 0/4 pares aprovados para comparação oficial; Aldric e Elara permanecem reprovados, R2/MP4 oficial/YouTube bloqueados e nenhuma imagem paga gerada nesta etapa.
+- Próxima etapa: conferir diretamente os originais em resolução integral e registrar confirmação da parte exata ou refinar os polígonos com base em evidência verificável, nunca inventar aprovação para destravar produção.
+
 ## 16/11/2026 — Verificação dos PNGs V3 arquivados no GitHub (read-only)
 
 - Workflow [43947082696](https://github.com/HelioConde/VideoForge-IA/actions/runs/43947082696) **SUCCESS** após commit [46adaf0](https://github.com/HelioConde/VideoForge-IA/commit/46adaf0669633d2fb7ab999d199d62482096935d). Testes de arquivo arquivado, SHA alterado, caminho inseguro, corrupção RGB e integridade das exclusões passaram.
