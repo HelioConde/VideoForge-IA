@@ -241,6 +241,27 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
             raise VideoForgeError("DORAMA_FIRST_FRAME_ALREADY_EXISTS")
         output.parent.mkdir(parents=True,exist_ok=True)
         output.write_bytes(blob)
+    elif any(
+        isinstance(item,dict) and item.get("id")==asset_id
+        and item.get("source_mode")=="dorama-approved-shot-anchor-v1"
+        for item in plan.get("assets",[])
+    ):
+        # Reuse exact bytes from visually approved GitHub shot, never text-only.
+        from .dorama_continuity import edit_payload
+        matching=[item for item in plan["assets"] if item.get("id")==asset_id]
+        if len(matching)!=1:
+            raise VideoForgeError("CONTINUITY_ASSET_AMBIGUOUS")
+        payload,source_provenance=edit_payload(matching[0],prompt,model,size)
+        response=proxy_images.call_proxy(
+            url,"/v1/images/edits",os.getenv("CODEX_PROXY_API_KEY",""),payload)
+        blob,extension=proxy_images.decode_image(response)
+        if extension!=".png":
+            raise VideoForgeError("CONTINUITY_GENERATED_PNG_REQUIRED")
+        output=predicted.with_suffix(".png")
+        if output.exists() or output.is_symlink():
+            raise VideoForgeError("CONTINUITY_OUTPUT_ALREADY_EXISTS")
+        output.parent.mkdir(parents=True,exist_ok=True)
+        output.write_bytes(blob)
     elif (channel,video_id,asset_id)==(
         "alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
         "character-bible-grounded-r2",
@@ -280,7 +301,14 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
             "preserves_prior_text_only_candidate":True if source_provenance else False,
             "requires_separate_aldric_visual_review":True if source_provenance else False,
             "human_visual_approval":False,"official_video_created":False,
-            "candidate_scene_shot_id":("C01-P04" if asset_id=="c01-p04-imagem-inicial-v3" else None),
+            "candidate_scene_shot_id":(
+                next((item.get("shot_id") for item in plan.get("assets",[])
+                      if item.get("id")==asset_id),None)
+                or ("C01-P04" if asset_id=="c01-p04-imagem-inicial-v3" else None)),
+            "visual_continuity_anchor_sha256":(
+                source_provenance[0].get("sha256")
+                if source_provenance and source_provenance[0].get("id")=="approved-visual-reference"
+                else None),
             "no_automatic_scene_or_wardrobe_approval":True,
             "youtube_uploaded":False}
     output.with_suffix(".production.json").write_text(

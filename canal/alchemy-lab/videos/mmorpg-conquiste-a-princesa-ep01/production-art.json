@@ -91,6 +91,27 @@
       "human_visual_approval_required": true,
       "purpose": "primeira imagem de julgamento em grupo a revisar, não character bible nem autorização para imagem oficial",
       "prompt": "GERAR NOVA IMAGEM-MÃE CANDIDATA DO PRIMEIRO JULGAMENTO, tomada C01-P04 do EP01 MMORPG Conquiste a Princesa. Obedecer ao PROMPT-OFICIAL-ESTILO-DORAMA.md do repositório: arte anime medieval de fantasia SEMIRREALISTA CINEMATOGRÁFICA 2D, pintura digital refinada, volumetria e anatomia naturais; NÃO transformar em foto realista de atores, 3D, CGI plástico, manhwa plano nem desenho infantil.\nUsar a imagem ORIGINAL de KAEL efetivamente ANEXADA por SHA à chamada como referência de IDENTIDADE: jovem de 23 anos, rosto e volume do cabelo castanho quase preto idênticos, olhos âmbar, capa/cachecol vinho-vermelho rasgado, ombreira de metal escuro com filigranas douradas e pedra azul. O enquadramento o mostra ajoelhado de costas/três-quartos no primeiro plano, sem espada própria, sem mudar capa e adereços.\nAo fundo, Rei ALDRIC de 55 anos com barba grisalha/BRANCA VOLUMOSA, cabelo grisalho, coroa dourada, túnica VINHO no centro, tecido ESCURO exterior, detalhes DOURADOS e gola clara; sentado no trono de ouro/veludo vermelho. Sua aparência e figurino serão CANDIDATOS e precisarão de revisão posterior: não reivindicar identidade aprovada.\nDOIS guardas distintos nas laterais, armadura prateada ornamentada e elmos fechados, panos vinho escuro; cada guarda segura a própria lança anatomicamente, as duas lanças formam X atrás de Kael na altura intermediária, sem atravessar mãos ou rostos. Nenhum terceiro guarda, ninguém duplicado. ELARA NÃO APARECE nessa cena.\nSalão gótico monumental, degraus vermelhos, vitrais violeta, arquitetura e perspectiva consistentes, luz dourada em contraluz, brilhos contidos no metal, sombras profundas e atmosfera dramática. Câmera 28 mm, plano de estabelecimento baixo/OTS com Kael grande no primeiro plano, trono e dois guardas legíveis. Vertical 9:16, espaço para futuras legendas, cabeça/mãos/lanças não deformadas. Sem texto, letras, logotipos, marca d'água, HUD nem montagem de quadros.\nUMA imagem integral original para análise e futura separação em background, personagens e objetos RGBA, não sprite sheet, não vídeo, não aprovar automaticamente nem publicar. Se o original de Kael não estiver anexado por SHA ao endpoint de edição, recusar a geração."
+    },
+    {
+      "id": "c01-p05-guardas-lancas-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "dorama-approved-shot-anchor-v1",
+      "shot_id": "C01-P05",
+      "source_shot_id": "C01-P04",
+      "source_continuity_registry": "CONTINUIDADE-VISUAL-APROVADA-C01-P04.json",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "reference_sources": [
+        "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+      ],
+      "identity_cast": [
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "human_visual_approval_required": true,
+      "verify_camera_is_distinct_from_source": true,
+      "prompt": "NOVO PLANO CINEMATOGRÁFICO C01-P05 do dorama MMORPG: Conquiste a Princesa. Referência PRINCIPAL obrigatória: PNG ANEXADO C01-P04 APROVADO para identidade visual, figurinos e cenário. Preserve EXATAMENTE o mesmo desenho/traço semi-realista anime fantasia 2D, paleta, materiais, luz, formas de armaduras, luvas e lanças dos dois guardas. NÃO reinventar design nem converter para foto realista, 3D ou desenho diferente.\nENQUADRAMENTO NOVO, imagem-mãe própria: close dramático macro a partir de câmera próxima das MÃOS ENLUVADAS dos dois guardas reais, um de cada lado, apertando com tensão as hastes das DUAS lanças já cruzadas em X atrás de Kael. Luvas, rebites, placas prateadas, tecidos vinho e metal fielmente iguais à cena original. Exatamente duas lanças, fisicamente seguras pelas mãos correspondentes, sem braços soltos, dedos extras ou interseções impossíveis. Vibração e tensão serão ANIMADAS por camadas em outra etapa, não desenhar blur artificial.\nMesmo salão do trono, reflexos quentes da luz lateral, trono ao fundo muito fora de foco, sem revelar princesa, sem acrescentar Kael nem Aldric no primeiro plano. Close deliberado de mãos e hastes; não tentar copiar a composição ampla de C01-P04, apenas conservar identidade de elementos e direção da luz. Formato retrato vertical 9:16 com espaço para legenda futura. Pintura detalhada de dorama fantasia anime semirrealista cinematográfica. UMA imagem, sem texto, montagem, marcas, logotipos, HUD ou legendas.\nEsta imagem não aprova automaticamente rig, roupas ou publicação; conservar SHA da imagem original como fonte EXATA. Caso a fonte SHA-verificada não esteja anexada, RECUSAR sem gerar."
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",

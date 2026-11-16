@@ -1,0 +1,46 @@
+{
+  "schema": "videoforge/approved-visual-continuity-anchor/v1",
+  "episode": "mmorpg-conquiste-a-princesa-ep01",
+  "channel": "alchemy-lab",
+  "approved_on": "2026-11-16",
+  "approval_source": "user_feedback_in_conversation: imagem C01-P04 bonita; próximas imagens devem seguir mesmas características dos personagens",
+  "approved_for_future_image_reference": true,
+  "approved_scope": "visual-identity-and-style-for-characters-and-palace-visible-in_C01-P04",
+  "source_shot_id": "C01-P04",
+  "image_path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+  "source_report_path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.production.json",
+  "source_archive_manifest": "assets/geracoes/production-art-request/43965460068/manifesto-geracoes.json",
+  "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "width": 941,
+  "height": 1672,
+  "source_github_run": 43965460068,
+  "model": "gpt-image-2",
+  "style_id": "cinematic-semi-realistic-fantasy-anime",
+  "style_guide": "PROMPT-OFICIAL-ESTILO-DORAMA.md",
+  "characters_present": [
+    "kael",
+    "aldric",
+    "guarda_esquerdo",
+    "guarda_direito"
+  ],
+  "characters_absent": [
+    "elara"
+  ],
+  "visual_lock": {
+    "kael": "Manter exatamente rosto, volume e corte do cabelo escuro, expressão, capa vinho e ombreira metálica dourada/azul visíveis na C01-P04. Kael não empunha a espada.",
+    "aldric": "Manter rosto, barba grisalha volumosa, coroa, painel vinho e tecido escuro externo conforme a C01-P04, sem inventar nova roupa ou rejuvenescer.",
+    "guarda_esquerdo": "Manter armadura/elmo, pano vinho, luvas e lança com forma/material da C01-P04; mãos anatomicamente articuladas.",
+    "guarda_direito": "Manter a armadura/elmo, pano vinho, luvas e lança com a mesma forma/material da C01-P04; distinguir do guarda esquerdo sem troca de lados.",
+    "throne_room": "Mesmos vitrais, trono, escadas, luz dourada e eixo cinematográfico da C01-P04."
+  },
+  "limitations": {
+    "approved_for_appearance_reference_only": true,
+    "old_rejected_reference_is_not_resurrected": true,
+    "older_wardrobe_masks_not_automatically_validated": true,
+    "not_an_approved_R2_or_MP4": true,
+    "character_style_reference_not_human_validation_for_every_future_shot": true,
+    "generation_must_attach_exact_original_png_bytes": true,
+    "original_dimensions_not_resampled": true,
+    "youtube_upload": false
+  }
+}
