@@ -1,0 +1,1001 @@
+{
+  "schema": "videoforge/remake-wardrobe-continuity-40/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "authoritative_plan": "remake-ep01-planos.json",
+  "historical_only_file": "continuidade-figurinos-37-planos.json",
+  "source_owner_review": "REVISAO-FIGURINO-V2.json",
+  "source_contract": "CONTRATO-FIGURINO-V2.json",
+  "rejected_reference_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "total_shots": 40,
+  "total_frames": 4890,
+  "shots_with_elara_royal": 6,
+  "shots_with_elara_disguise": 9,
+  "shots_with_aldric": 7,
+  "royal_costume_review_required_shots": [
+    "C01-P03",
+    "C01-P04",
+    "C02-P01",
+    "C12-P02",
+    "C12-P03",
+    "C12-P04",
+    "C13-P01",
+    "C14-P01",
+    "C14-P02"
+  ],
+  "verified_owner_approved_full_royal_outfits": 0,
+  "required_owner_approved_full_royal_outfits": 2,
+  "cannot_auto_generate_character_art_before_full_outfit_approval": true,
+  "cannot_render_full_episode_before_identity_review": true,
+  "human_approved": false,
+  "image_provider_calls": 0,
+  "new_art_generated": false,
+  "youtube_uploaded": false,
+  "shots": [
+    {
+      "shot_id": "C01-P01",
+      "scene": "C01",
+      "frame_start": 0,
+      "frame_end_exclusive": 60,
+      "cast": [],
+      "costumes": {},
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C01-P02",
+      "scene": "C01",
+      "frame_start": 60,
+      "frame_end_exclusive": 150,
+      "cast": [
+        "carrasco"
+      ],
+      "costumes": {},
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C01-P03",
+      "scene": "C01",
+      "frame_start": 150,
+      "frame_end_exclusive": 240,
+      "cast": [
+        "kael",
+        "aldric"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "palace_trial_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "aldric": {
+          "variant": "royal_burgundy_gold",
+          "must_preserve": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao.",
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": true,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C01-P04",
+      "scene": "C01",
+      "frame_start": 240,
+      "frame_end_exclusive": 310,
+      "cast": [
+        "kael",
+        "aldric",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "palace_trial_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "aldric": {
+          "variant": "royal_burgundy_gold",
+          "must_preserve": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao.",
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": true,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C01-P05",
+      "scene": "C01",
+      "frame_start": 310,
+      "frame_end_exclusive": 360,
+      "cast": [
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "costumes": {},
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C02-P01",
+      "scene": "C02",
+      "frame_start": 360,
+      "frame_end_exclusive": 570,
+      "cast": [
+        "aldric"
+      ],
+      "costumes": {
+        "aldric": {
+          "variant": "royal_burgundy_gold",
+          "must_preserve": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao.",
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": true,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C02-P02",
+      "scene": "C02",
+      "frame_start": 570,
+      "frame_end_exclusive": 720,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "palace_trial_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C03-P01",
+      "scene": "C03",
+      "frame_start": 720,
+      "frame_end_exclusive": 810,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "palace_trial_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C03-P02",
+      "scene": "C03",
+      "frame_start": 810,
+      "frame_end_exclusive": 930,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "palace_trial_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C04-P01",
+      "scene": "C04",
+      "frame_start": 930,
+      "frame_end_exclusive": 1050,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "modern_world",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C04-P02",
+      "scene": "C04",
+      "frame_start": 1050,
+      "frame_end_exclusive": 1170,
+      "cast": [],
+      "costumes": {},
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C04-P03",
+      "scene": "C04",
+      "frame_start": 1170,
+      "frame_end_exclusive": 1320,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "modern_world",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C05-P01",
+      "scene": "C05",
+      "frame_start": 1320,
+      "frame_end_exclusive": 1470,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C05-P02",
+      "scene": "C05",
+      "frame_start": 1470,
+      "frame_end_exclusive": 1590,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C05-P03",
+      "scene": "C05",
+      "frame_start": 1590,
+      "frame_end_exclusive": 1740,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C06-P01",
+      "scene": "C06",
+      "frame_start": 1740,
+      "frame_end_exclusive": 1920,
+      "cast": [
+        "kael",
+        "figurantes"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C06-P02",
+      "scene": "C06",
+      "frame_start": 1920,
+      "frame_end_exclusive": 2070,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C07-P01",
+      "scene": "C07",
+      "frame_start": 2070,
+      "frame_end_exclusive": 2190,
+      "cast": [
+        "elara"
+      ],
+      "costumes": {
+        "elara": {
+          "variant": "street_disguise",
+          "must_preserve": "same face and golden hair identity under street hood; NO royal outfit shown during disguise",
+          "royal_purple_bodice_required": false,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C07-P02",
+      "scene": "C07",
+      "frame_start": 2190,
+      "frame_end_exclusive": 2340,
+      "cast": [
+        "elara",
+        "mascarado_1",
+        "mascarado_2"
+      ],
+      "costumes": {
+        "elara": {
+          "variant": "street_disguise",
+          "must_preserve": "same face and golden hair identity under street hood; NO royal outfit shown during disguise",
+          "royal_purple_bodice_required": false,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C07-P03",
+      "scene": "C07",
+      "frame_start": 2340,
+      "frame_end_exclusive": 2460,
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "elara": {
+          "variant": "street_disguise",
+          "must_preserve": "same face and golden hair identity under street hood; NO royal outfit shown during disguise",
+          "royal_purple_bodice_required": false,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C08-P01",
+      "scene": "C08",
+      "frame_start": 2460,
+      "frame_end_exclusive": 2610,
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "elara": {
+          "variant": "street_disguise",
+          "must_preserve": "same face and golden hair identity under street hood; NO royal outfit shown during disguise",
+          "royal_purple_bodice_required": false,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C08-P02",
+      "scene": "C08",
+      "frame_start": 2610,
+      "frame_end_exclusive": 2790,
+      "cast": [
+        "kael",
+        "mascarados"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C08-P03",
+      "scene": "C08",
+      "frame_start": 2790,
+      "frame_end_exclusive": 2880,
+      "cast": [
+        "elara",
+        "kael",
+        "mascarados"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "elara": {
+          "variant": "street_disguise",
+          "must_preserve": "same face and golden hair identity under street hood; NO royal outfit shown during disguise",
+          "royal_purple_bodice_required": false,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C08-P04",
+      "scene": "C08",
+      "frame_start": 2880,
+      "frame_end_exclusive": 2940,
+      "cast": [
+        "elara",
+        "mascarados"
+      ],
+      "costumes": {
+        "elara": {
+          "variant": "street_disguise",
+          "must_preserve": "same face and golden hair identity under street hood; NO royal outfit shown during disguise",
+          "royal_purple_bodice_required": false,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C09-P01",
+      "scene": "C09",
+      "frame_start": 2940,
+      "frame_end_exclusive": 3090,
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "elara": {
+          "variant": "street_disguise",
+          "must_preserve": "same face and golden hair identity under street hood; NO royal outfit shown during disguise",
+          "royal_purple_bodice_required": false,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C09-P02",
+      "scene": "C09",
+      "frame_start": 3090,
+      "frame_end_exclusive": 3240,
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "elara": {
+          "variant": "street_disguise",
+          "must_preserve": "same face and golden hair identity under street hood; NO royal outfit shown during disguise",
+          "royal_purple_bodice_required": false,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C10-P01",
+      "scene": "C10",
+      "frame_start": 3240,
+      "frame_end_exclusive": 3390,
+      "cast": [
+        "elara"
+      ],
+      "costumes": {
+        "elara": {
+          "variant": "street_disguise",
+          "must_preserve": "same face and golden hair identity under street hood; NO royal outfit shown during disguise",
+          "royal_purple_bodice_required": false,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C10-P02",
+      "scene": "C10",
+      "frame_start": 3390,
+      "frame_end_exclusive": 3600,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C11-P01",
+      "scene": "C11",
+      "frame_start": 3600,
+      "frame_end_exclusive": 3720,
+      "cast": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C11-P02",
+      "scene": "C11",
+      "frame_start": 3720,
+      "frame_end_exclusive": 3870,
+      "cast": [
+        "kael",
+        "guarda_esquerdo"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C11-P03",
+      "scene": "C11",
+      "frame_start": 3870,
+      "frame_end_exclusive": 3990,
+      "cast": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C12-P01",
+      "scene": "C12",
+      "frame_start": 3990,
+      "frame_end_exclusive": 4110,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C12-P02",
+      "scene": "C12",
+      "frame_start": 4110,
+      "frame_end_exclusive": 4230,
+      "cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "elara": {
+          "variant": "royal_white_violet_purple_bodice",
+          "must_preserve": "Preservar a PARTE ROXA no peitoral/blusa/corpete do traje palaciano em TODOS os planos com a mesma roupa; vestido branco-perola, violeta e detalhes dourados. Disfarce de rua e outra variante narrativa, sem alterar face.",
+          "royal_purple_bodice_required": true,
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        },
+        "aldric": {
+          "variant": "royal_burgundy_gold",
+          "must_preserve": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao.",
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": true,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C12-P03",
+      "scene": "C12",
+      "frame_start": 4230,
+      "frame_end_exclusive": 4290,
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "elara": {
+          "variant": "royal_white_violet_purple_bodice",
+          "must_preserve": "Preservar a PARTE ROXA no peitoral/blusa/corpete do traje palaciano em TODOS os planos com a mesma roupa; vestido branco-perola, violeta e detalhes dourados. Disfarce de rua e outra variante narrativa, sem alterar face.",
+          "royal_purple_bodice_required": true,
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": true,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C12-P04",
+      "scene": "C12",
+      "frame_start": 4290,
+      "frame_end_exclusive": 4350,
+      "cast": [
+        "elara"
+      ],
+      "costumes": {
+        "elara": {
+          "variant": "royal_white_violet_purple_bodice",
+          "must_preserve": "Preservar a PARTE ROXA no peitoral/blusa/corpete do traje palaciano em TODOS os planos com a mesma roupa; vestido branco-perola, violeta e detalhes dourados. Disfarce de rua e outra variante narrativa, sem alterar face.",
+          "royal_purple_bodice_required": true,
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": true,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C13-P01",
+      "scene": "C13",
+      "frame_start": 4350,
+      "frame_end_exclusive": 4500,
+      "cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        },
+        "elara": {
+          "variant": "royal_white_violet_purple_bodice",
+          "must_preserve": "Preservar a PARTE ROXA no peitoral/blusa/corpete do traje palaciano em TODOS os planos com a mesma roupa; vestido branco-perola, violeta e detalhes dourados. Disfarce de rua e outra variante narrativa, sem alterar face.",
+          "royal_purple_bodice_required": true,
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        },
+        "aldric": {
+          "variant": "royal_burgundy_gold",
+          "must_preserve": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao.",
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": true,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C13-P02",
+      "scene": "C13",
+      "frame_start": 4500,
+      "frame_end_exclusive": 4650,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C14-P01",
+      "scene": "C14",
+      "frame_start": 4650,
+      "frame_end_exclusive": 4740,
+      "cast": [
+        "elara",
+        "aldric"
+      ],
+      "costumes": {
+        "elara": {
+          "variant": "royal_white_violet_purple_bodice",
+          "must_preserve": "Preservar a PARTE ROXA no peitoral/blusa/corpete do traje palaciano em TODOS os planos com a mesma roupa; vestido branco-perola, violeta e detalhes dourados. Disfarce de rua e outra variante narrativa, sem alterar face.",
+          "royal_purple_bodice_required": true,
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        },
+        "aldric": {
+          "variant": "royal_burgundy_gold",
+          "must_preserve": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao.",
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": true,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C14-P02",
+      "scene": "C14",
+      "frame_start": 4740,
+      "frame_end_exclusive": 4830,
+      "cast": [
+        "elara",
+        "aldric"
+      ],
+      "costumes": {
+        "elara": {
+          "variant": "royal_white_violet_purple_bodice",
+          "must_preserve": "Preservar a PARTE ROXA no peitoral/blusa/corpete do traje palaciano em TODOS os planos com a mesma roupa; vestido branco-perola, violeta e detalhes dourados. Disfarce de rua e outra variante narrativa, sem alterar face.",
+          "royal_purple_bodice_required": true,
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        },
+        "aldric": {
+          "variant": "royal_burgundy_gold",
+          "must_preserve": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao.",
+          "approved_full_costume_reference_sha": null,
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": true,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    },
+    {
+      "shot_id": "C14-P03",
+      "scene": "C14",
+      "frame_start": 4830,
+      "frame_end_exclusive": 4890,
+      "cast": [
+        "kael"
+      ],
+      "costumes": {
+        "kael": {
+          "variant": "arken_red_cloak",
+          "reference_sha": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "must_preserve": "dark hair, amber eyes, burgundy scarf/cloak, dark and gilded pauldron with blue stone except modern-world costume",
+          "human_full_costume_approved": false
+        }
+      },
+      "requires_verified_royal_costume": false,
+      "source_old_37_shot_registry_is_not_authoritative": true,
+      "rejected_grounded_sha_forbidden": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "characters_or_costumes_auto_approved": false,
+      "official_shot_render_allowed": false
+    }
+  ]
+}
