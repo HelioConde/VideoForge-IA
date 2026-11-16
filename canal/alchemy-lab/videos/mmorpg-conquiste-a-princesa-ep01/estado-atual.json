@@ -1851,6 +1851,16 @@
     "known_owner_rejections_active": true,
     "provider_calls": 0,
     "official_mp4": false,
-    "youtube_uploaded": false
+    "youtube_uploaded": false,
+    "native_visual_followup": {
+      "run_id": 43951539761,
+      "semantic_review_ci": "success",
+      "source": "assets/qa-roi-review-native-v3/aldric-painel_central-b-CONTEXTO-1X.png",
+      "finding": "Original shows broad burgundy cloth while mask mostly contains narrow linework/embroidery; selected mask insufficient to compare central panel's garment color",
+      "candidate_not_fit_for_official_comparison": true,
+      "reannotation_suggested": "separate torso and lower skirt cloth; exclude golden embroidery, belt and black mantle",
+      "semantic_verification": false,
+      "official_approval": false
+    }
   }
 }
