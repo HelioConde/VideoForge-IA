@@ -1,5 +1,7 @@
 # VideoForge IA — Regra permanente de produção autônoma de vídeos (15/11/2026)
 
+**Falha de autenticacao nao pode ser contornada por repeticao:** se `PROXY_OAUTH_SESSION_EXPIRED`, interromper qualquer geracao e orientar reautenticacao interativa local via `scripts/renovar-sessao-videoforge.ps1`. Health `/health/live` e `/health` so comprovam processo e numero de contas, nao OAuth valido; validar `/admin/accounts`, elegibilidade e expiracao. Na execucao 43766496772/2 a imagem falhou HTTP 502 com 0 contas elegiveis, e tentativa de refresh no runner falhou 502. Depois de atualizar secrets validar com `proxy-health-official.yml` antes de retomar. Autorizacao de chamadas continua, sem publicacao automatica.
+
 ## Autorização permanente de chamadas do EP01 V2 — 15/11/2026
 
 O responsável autorizou explicitamente todas as chamadas necessárias de IA/geração para o dorama `alchemy-lab/mmorpg-conquiste-a-princesa-ep01`, sem reaprovação individual. Valem `autonomy-policy.json`, `remake-ep01-planos.json` e `image_generation_policy.py`. A regra não se estende automaticamente aos outros canais. Permanece **uma chamada faturável por execução** de produtor, sem teto total editorial de imagens; manter SHA, QA e não repetir chamadas de mesmo input, sobretudo após HTTP 429.

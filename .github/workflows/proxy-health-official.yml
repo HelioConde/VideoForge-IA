@@ -6,6 +6,10 @@ on:
     paths:
       - 'docs/requests/verificar-proxy-spy-family.json'
       - '.github/workflows/proxy-health-official.yml'
+      - 'videoforge/proxy_images.py'
+      - 'tests/test_proxy_images.py'
+      - 'scripts/renovar-sessao-videoforge.ps1'
+      - 'scripts/migrar-codex-proxy.ps1'
 
 permissions:
   contents: read
@@ -203,6 +207,11 @@ jobs:
           except (OSError,ValueError,TypeError):
               print("SAFE_OAUTH_REFRESH","preflight_failed")
           PY
+      - name: Testes de regressao da verificacao de OAuth sem rede
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_proxy_images -v
       - name: Testar contas e autenticacao sem imagem nem custos
         shell: bash
         run: |

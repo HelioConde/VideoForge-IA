@@ -1,5 +1,11 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 15/11/2026 — incidente OAuth do proxy diagnosticado, recuperacao segura preparada
+
+**Evidencia real de GitHub Actions:** [health 43778717568](https://github.com/HelioConde/VideoForge-IA/actions/runs/43778717568) passou 200/200; [rerun 43766496772, tentativa 2](https://github.com/HelioConde/VideoForge-IA/actions/runs/43766496772) passou health mas `/v1/images/generations` respondeu **HTTP 502**, sem criar PNG; [auditoria 43778920877](https://github.com/HelioConde/VideoForge-IA/actions/runs/43778920877) encontrou **1 conta, 0 elegiveis, OAuth expirado**; [refresh 43779044584](https://github.com/HelioConde/VideoForge-IA/actions/runs/43779044584) tentou renovacao pelo `/admin/accounts/:id/refresh`, que tambem respondeu **HTTP 502**. Nenhuma arte nem aprovacao foi criada. Nao declarar cobranca confirmada ou repetir a requisicao cegamente.
+
+**Correcao de software:** `proxy_images.health` agora confere elegibilidade e validade OAuth via `/admin/accounts` em vez de aceitar somente `accounts>=1`; emite `PROXY_OAUTH_SESSION_EXPIRED` sem expor email/IDs/tokens e bloqueia geracao antes do modelo. O importador PowerShell recusa snapshot expirado. Novo `scripts/renovar-sessao-videoforge.ps1` suporta reautenticacao interativa no proxy Docker do proprio usuario, seguida por reimportacao privada dos GitHub Secrets. Revalidar no CI; **relogin humano e necessario** porque o refresh remoto nao funcionou. Autorizacao editorial para imagens permanece vigente; somente credenciais precisam de renovacao.
+
 ## 15/11/2026 — primeiro disparo autônomo executado, proxy HTTP 503
 - [Coordenador 43766477030](https://github.com/HelioConde/VideoForge-IA/actions/runs/43766477030) **SUCCESS**: preflight e testes passaram, reserva durável de uma chamada registrada na main antes de `workflow_dispatch`.
 - [Gerador 43766496772](https://github.com/HelioConde/VideoForge-IA/actions/runs/43766496772) **FAILURE**: proxy efêmero iniciou e `/health/live` respondeu; a checagem autenticada `python -m videoforge.proxy_images health` retornou **HTTP 503** antes de executar `production_art`. **Nenhuma imagem PNG foi criada nem arquivada; nenhuma cobrança de geração pode ser afirmada.**

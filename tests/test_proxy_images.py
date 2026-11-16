@@ -56,12 +56,38 @@ class ProxyTests(TestCase):
         self.assertIn("429", str(ctx.exception))
         self.assertNotIn("secret", str(ctx.exception))
 
-    def test_health_without_upstream(self):
-        with mock.patch.object(p.urllib.request, "urlopen", return_value=FakeReply({"status": "ok", "accounts": 1})):
-            p.health("https://proxy.example", "a"*32)
-        with mock.patch.object(p.urllib.request, "urlopen", return_value=FakeReply({"status": "ok", "accounts": 0})):
+    def test_health_requires_eligible_unexpired_oauth_not_just_account_count(self):
+        eligible={"accounts":[{"status":"active","eligible_now":True,
+                  "oauth_expires":"2099-01-01T00:00:00Z"}]}
+        with mock.patch.object(p, "call_proxy", side_effect=[
+            {"status":"ok","accounts":1},eligible]) as request:
+            p.health("https://proxy.example","a"*32)
+        self.assertEqual(request.call_count,2)
+        self.assertEqual(request.call_args.args[1],"/admin/accounts")
+        with mock.patch.object(p, "call_proxy", return_value={"status":"ok","accounts":0}):
             with self.assertRaises(p.ProxyImageError):
-                p.health("https://proxy.example", "a"*32)
+                p.health("https://proxy.example","a"*32)
+
+    def test_health_expires_stored_oauth_without_any_paid_or_refresh_call(self):
+        expired={"accounts":[{"status":"active","eligible_now":False,
+                  "oauth_expires":"2020-01-01T00:00:00Z",
+                  "email":"do-not-log@example.test","id":"acct_private"}]}
+        with mock.patch.object(p, "call_proxy", side_effect=[
+            {"status":"ok","accounts":1},expired]) as request:
+            with self.assertRaisesRegex(p.ProxyImageError,"PROXY_OAUTH_SESSION_EXPIRED") as ctx:
+                p.health("https://proxy.example","a"*32)
+        self.assertEqual(request.call_count,2)
+        self.assertNotIn("do-not-log",str(ctx.exception))
+        self.assertNotIn("acct_private",str(ctx.exception))
+        self.assertNotIn("refresh",str(request.call_args.args[1]))
+
+    def test_health_refuses_cooldown_even_with_unexpired_token(self):
+        data={"accounts":[{"status":"active","eligible_now":False,
+               "oauth_expires":"2099-01-01T00:00:00Z"}]}
+        with mock.patch.object(p,"call_proxy",side_effect=[
+            {"status":"ok","accounts":1},data]):
+            with self.assertRaisesRegex(p.ProxyImageError,"PROXY_NO_ELIGIBLE_ACCOUNT"):
+                p.health("https://proxy.example","a"*32)
 
     def test_generate_artifact_scoped_and_no_secret(self):
         with tempfile.TemporaryDirectory() as folder, mock.patch.object(p, "ROOT", Path(folder)):

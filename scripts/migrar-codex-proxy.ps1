@@ -121,6 +121,12 @@ try {
             [string]::IsNullOrWhiteSpace([string]$registro.token.refresh_token)) {
             throw 'Tokens invalidos ou ausentes. Nenhum foi exibido.'
         }
+        $expiraTexto = [string]$registro.token.expires_at
+        $expiraUtc = [DateTime]::MinValue
+        if (-not [DateTime]::TryParse($expiraTexto, [ref]$expiraUtc) -or
+            $expiraUtc.ToUniversalTime() -le [DateTime]::UtcNow.AddMinutes(2)) {
+            throw 'A sessao do proxy local esta expirada. Rode .\scripts\renovar-sessao-videoforge.ps1 antes de importar.'
+        }
     }
 
     $bytes = New-Object byte[] 48

@@ -87,10 +87,47 @@ def call_proxy(base_url: str, route: str, api_key: str, payload: dict | None = N
 
 
 def health(base_url: str, api_key: str) -> None:
+    """Verify that a real account can generate, not just that proxy is alive.
+
+    /health counts expired accounts as registered. The upstream admin endpoint
+    exposes eligibility and OAuth expiry; never print token, ID, email or body.
+    This is read-only: it NEVER attempts token refresh or image generation.
+    """
     result = call_proxy(base_url, "/health", api_key)
     if result.get("status") != "ok" or not isinstance(result.get("accounts"), int) or result["accounts"] < 1:
         raise ProxyImageError("Proxy acessivel, mas sem contas cadastradas; revise o servidor ou secret.")
-    print("Health autenticado: ok; pelo menos uma conta cadastrada (disponibilidade/quotas nao testadas).")
+    try:
+        accounts = call_proxy(base_url, "/admin/accounts", api_key).get("accounts")
+    except ProxyImageError as exc:
+        raise ProxyImageError("Nao foi possivel confirmar elegibilidade OAuth pelo proxy; detalhes ocultos.") from None
+    if not isinstance(accounts, list) or len(accounts) < 1 or any(not isinstance(x, dict) for x in accounts):
+        raise ProxyImageError("Proxy retornou lista de contas invalida ou vazia.")
+    now = datetime.now(timezone.utc)
+    def oauth_expired(record: dict) -> bool:
+        raw = record.get("oauth_expires")
+        if not isinstance(raw, str) or not raw:
+            return False
+        try:
+            return datetime.fromisoformat(raw.replace("Z", "+00:00")) <= now
+        except (ValueError, TypeError):
+            return False
+    available = [
+        item for item in accounts
+        if item.get("eligible_now") is True and not oauth_expired(item)
+    ]
+    if not available:
+        if any(oauth_expired(item) for item in accounts):
+            raise ProxyImageError(
+                "PROXY_OAUTH_SESSION_EXPIRED: conta importada com token OAuth vencido; "
+                "renovacao upstream nao e garantida. Reconectar conta localmente e "
+                "reimportar secrets usando scripts/renovar-sessao-videoforge.ps1."
+            )
+        raise ProxyImageError(
+            "PROXY_NO_ELIGIBLE_ACCOUNT: nenhuma conta elegivel; verificar status, "
+            "cooldown e cotas no ambiente autorizado antes de gerar imagem."
+        )
+    print("Health autenticado e elegibilidade OAuth verificados; "
+          "modelo de imagem ainda nao testado.")
 
 
 def destination(channel: str, video_id: str, scene: str) -> Path:

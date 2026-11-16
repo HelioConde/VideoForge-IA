@@ -593,7 +593,7 @@
     "mp4_official": false,
     "channel_isolated": true,
     "autonomous_pipeline_target": true,
-    "next_step": "Standing authorization remains valid. First autonomous reference workflow 43766496772 reached proxy but failed authenticated health HTTP503 before image creation. Diagnose upstream proxy/account availability; do not blindly re-dispatch. No YouTube upload."
+    "next_step": "Codex proxy healthy but imported OAuth expired; upstream OAuth refresh HTTP502. Reconnect account via scripts/renovar-sessao-videoforge.ps1, import fresh account state, run proxy health and only then generate first V2 reference."
   },
   "autopilot_checkpoint": {
     "stage": "generate_character_bible",
@@ -1232,7 +1232,7 @@
     "request_id": "e74840c054fe22d57e9908193cd640c4c0f0b15d5009c7cad4937c8255ea5f67",
     "target": "character-bible",
     "workflow": "production-art-by-request.yml",
-    "status": "blocked_proxy_authenticated_health_http_503",
+    "status": "blocked_oauth_expired_refresh_http_502",
     "reserved_utc": "2026-11-15T21:57:01.983760+00:00",
     "max_calls_per_run": 1,
     "provider_charge_possible": true,
@@ -1241,11 +1241,30 @@
     "human_visual_approved": false,
     "dispatched_workflow_run_id": 43766496772,
     "workflow_result": "failure",
-    "failure_stage": "python -m videoforge.proxy_images health --url $PROXY_ENDPOINT",
-    "failure_message": "Proxy returned HTTP 503 from authenticated /health; no generation command was reached",
-    "image_generation_started": false,
+    "failure_stage": "POST /v1/images/generations after /health succeeded",
+    "failure_message": "Authenticated health passed; image returned HTTP502. Read-only /admin/accounts confirmed 1 OAuth-expired account and 0 eligible. Explicit admin refresh returned HTTP502. No PNG/archive created.",
+    "image_generation_started": true,
     "image_png_created": false,
     "re_dispatch_without_diagnosis": false,
-    "next_step": "Investigate availability of stored Codex proxy account upstream /health 503, resolve service/account error, then explicitly schedule safe resumption without reapproval of image calls"
+    "next_step": "Reauthorize Codex account with local interactive device login; upload renewed secrets; rerun no-cost authenticated eligibility verification before scheduling one image generation.",
+    "last_retry_workflow_run_id": 43766496772,
+    "last_retry_run_attempt": 2
+  },
+  "proxy_oauth_incident_20261115": {
+    "initial_503_run": 43766496772,
+    "initial_503_attempt": 1,
+    "health_success_run": 43778717568,
+    "image_retry_run": 43766496772,
+    "image_retry_attempt": 2,
+    "image_retry_status": "http_502_no_png",
+    "account_diagnostic_run": 43778920877,
+    "account_count": 1,
+    "eligible_account_count": 0,
+    "expired_oauth_count": 1,
+    "admin_refresh_diagnostic_run": 43779044584,
+    "admin_refresh_status": "http_502",
+    "needs_user_device_reauthorization": true,
+    "automatic_image_retry_blocked": true,
+    "youtube_uploaded": false
   }
 }
