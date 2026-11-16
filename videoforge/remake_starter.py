@@ -196,7 +196,7 @@ def work_queue(root:Path=ROOT)->dict:
       "format":plan["format"],
       "shot_count":len(work),"visual_shot_count":sum(i["shot_type"]!="black" for i in work),
       "reuse":REUSE,
-      "autopilot":{k:stage.get(k) for k in ("stage","target","blocker","dispatch_allowed")},
+      "autopilot":{k:stage.get(k) for k in ("stage","target","blocker","dispatch_allowed","source_readiness")},
       "current_blocker":stage.get("blocker"),
       "production_queue":work,
     }

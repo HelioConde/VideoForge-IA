@@ -17,7 +17,13 @@ class RemakeAutonomyTests(unittest.TestCase):
         self.assertIn(result["blocker"], (
             "archived_png_verified_human_review_pending",
             "human_visual_review_pending",
+            "original_kael_elara_sha_sources_missing",
         ))
+        self.assertIsInstance(result["source_readiness"],dict)
+        self.assertEqual(result["source_readiness"]["verified_style_source_count"],0)
+        self.assertEqual(len(result["source_readiness"]["missing_original_paths"]),3)
+        self.assertTrue(result["source_readiness"]["aldric_individual_sha_approved_reference_missing"])
+        self.assertFalse(result["source_readiness"]["automatic_visual_approval"])
         self.assertFalse(result["dispatch_allowed"])
         self.assertIsNone(result["next_workflow"])
         from videoforge.remake_autopilot import EPISODE, ROOT, discover_archived_character_bible

@@ -165,6 +165,37 @@ def choose_next(root: Path = ROOT) -> dict:
                     break
             if stage is None:
                 stage, blocker = "final_assembly_preflight", "audio_video_qa_and_final_review_pending"
+    source_readiness = None
+    if stage == "review_identity_reference":
+        # An archived PNG is only a candidate. Do not ask for approval of
+        # visual identity while the exact user-approved Kael/Elara originals
+        # are absent. Use live SHA status, not stale historical v1 metadata.
+        from .cinematic_chat_references import reference_status
+        originals = reference_status(root)
+        rows = originals["samples"]
+        missing = [x["expected_repo_path"] for x in rows
+                   if x["source_original_verified"] is not True]
+        camera = originals["camera_candidate_C12_P02"]
+        if camera["source_verified"] is not True:
+            missing.append(camera["expected_repo_path"])
+        source_readiness = {
+            "original_style_source_count": 2,
+            "verified_style_source_count": originals["original_source_files_sha_verified"],
+            "c12_camera_source_verified": camera["source_verified"],
+            "missing_original_paths": missing,
+            "required_upload_zip": "uploads/alchemy-ep01-cinema-3-originais.zip",
+            "import_script": "scripts/enviar-referencias-cinema.ps1",
+            "readonly_import_workflow": "qa-alchemy-chat-cinematic-references.yml",
+            "aldric_individual_sha_approved_reference_missing": True,
+            "automatic_visual_approval": False,
+        }
+        if (originals["status"] == "BLOCKED_INVALID_REFERENCE_BYTES"
+                or camera["status"] == "INVALID_SOURCE_BYTES"):
+            blocker = "invalid_original_reference_sha_stop"
+        elif originals["original_source_files_sha_verified"] < 2:
+            blocker = "original_kael_elara_sha_sources_missing"
+        # Once exact originals are imported, the next gate is HUMAN identity
+        # comparison: never auto-approve merely because SHA matches.
     provider_enabled = (policy.get("paid_provider_calls_approved") is True
                         and type(policy.get("max_chargeable_calls_per_run")) is int
                         and policy["max_chargeable_calls_per_run"] >= 1)
@@ -189,6 +220,7 @@ def choose_next(root: Path = ROOT) -> dict:
         "stage": stage,
         "target": target,
         "discovered_candidate": candidate,
+        "source_readiness": source_readiness,
         "blocker": blocker,
         "next_workflow": "production-art-by-request.yml" if dispatch_allowed else None,
         "dispatch_allowed": bool(dispatch_allowed),
@@ -273,6 +305,11 @@ def sync_checkpoint(report: dict, root: Path = ROOT) -> bool:
     history = episode / "HISTORICO-DESENVOLVIMENTO.md"
     state = _json(state_file)
     record = {key: report.get(key) for key in ("stage", "target", "blocker", "dispatch_allowed")}
+    source_readiness = report.get("source_readiness")
+    if isinstance(source_readiness, dict):
+        record["verified_style_source_count"] = source_readiness["verified_style_source_count"]
+        record["missing_original_paths"] = source_readiness["missing_original_paths"]
+        record["aldric_individual_sha_approved_reference_missing"] = True
     candidate = report.get("discovered_candidate")
     if isinstance(candidate, dict):
         record["candidate_sha256"] = candidate.get("sha256")

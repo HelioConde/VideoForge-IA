@@ -1,5 +1,11 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 16/11/2026 — agente identifica automaticamente as fontes faltantes antes da revisão
+
+- `videoforge.remake_autopilot.choose_next()` agora consulta a integridade exata dos dois closes originais e da candidata de câmera C12, sem IA nem custo: se os closes de Kael/Elara estiverem ausentes, classifica o bloqueio como `original_kael_elara_sha_sources_missing` (em vez de pedir aprovação sem fontes); se existir arquivo errado, utiliza `invalid_original_reference_sha_stop`.
+- Os três caminhos pendentes, o ZIP e o script de importação são incluídos em `source_readiness` e nos relatórios da fila de 40 tomadas. O agente nunca libera uma segunda referência paga ou aprovação visual por este diagnóstico. O original de Aldric permanece sem referência SHA individual aprovada.
+- Quando o ZIP certo for anexado ao repositório, o importador por SHA estará pronto para arquivar automaticamente, e o coordenador deverá avançar para a **comparação visual humana**, sem misturar os PNGs antigos V1 com a identidade do remake V2.
+
 ## 16/11/2026 — conserto da importação das fontes cinematográficas V2
 
 - Descoberta: a importação original de Kael/Elara/C12-P02 estava presa ao arquivo `SEM-GERACAO-NOVAS-IMAGENS.lock`, já arquivado após autorização de geração do remake V2; a verificação falharia mesmo com um ZIP original correto. O verificador agora exige `estado-atual.json` e `autonomy-policy.json` ativos, preserva proibição de publicação e permite apenas **importação de arquivos existentes sem chamar IA**.
