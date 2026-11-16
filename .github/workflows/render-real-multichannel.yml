@@ -11,6 +11,12 @@ on:
         description: "Pasta do video em canal/<channel>/videos/"
         type: string
         required: true
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/mvp.py'
+      - 'tests/test_render_multichannel.py'
+      - '.github/workflows/render-real-multichannel.yml'
 permissions:
   contents: read
   packages: read
@@ -39,6 +45,7 @@ jobs:
           set -euo pipefail
           python -m unittest tests.test_render_multichannel tests.test_paths -v
       - name: Conferir manifesto e todos os assets ANTES de renderizar
+        if: github.event_name == 'workflow_dispatch'
         shell: bash
         run: |
           set -euo pipefail
@@ -62,11 +69,13 @@ jobs:
           print("NOTICE: Valid media does not prove visual/copyright approval")
           PY
       - name: Renderizar MP4 a partir de imagens e audio existentes
+        if: github.event_name == 'workflow_dispatch'
         shell: bash
         run: |
           set -euo pipefail
           python -m videoforge.mvp render --video "canal/$VIDEOFORGE_CHANNEL/videos/$VIDEOFORGE_VIDEO_ID/video.json"
       - name: Exigir MP4 H264 AAC e sha real antes de arquivar
+        if: github.event_name == 'workflow_dispatch'
         shell: bash
         run: |
           set -euo pipefail
@@ -89,6 +98,7 @@ jobs:
           print("TECHNICAL_MP4_SHA",data["sha256"],"DURATION",data["duration_seconds"])
           PY
       - name: Arquivar MP4 tecnico sem chamar YouTube
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: real-mp4-${{ inputs.channel }}-${{ inputs.video_id }}-${{ github.run_id }}
