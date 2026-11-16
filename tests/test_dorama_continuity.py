@@ -50,5 +50,15 @@ class ContinuityTests(unittest.TestCase):
         anchor,_=reference()
         self.assertTrue(anchor["limitations"]["old_rejected_reference_is_not_resurrected"])
         self.assertTrue(anchor["limitations"]["not_an_approved_R2_or_MP4"])
+    def test_king_closeup_uses_same_reference_pixels(self):
+        plan,story=production_art.read_plan("alchemy-lab","mmorpg-conquiste-a-princesa-ep01")
+        asset=next(a for a in plan["assets"] if a.get("id")=="c02-p01-aldric-rosto-v1")
+        prompt,size=production_art.asset_prompt(plan,story,"c02-p01-aldric-rosto-v1")
+        payload,provenance=edit_payload(asset,prompt,"gpt-image-2",size)
+        anchor,raw=reference()
+        self.assertEqual(base64.b64decode(payload["images"][0]["image_url"].split(",",1)[1]),raw)
+        self.assertEqual(provenance[0]["sha256"],anchor["sha256"])
+        self.assertIn("ALDRIC",prompt)
+        self.assertEqual(asset["identity_cast"],["aldric"])
 if __name__=="__main__":
     unittest.main()

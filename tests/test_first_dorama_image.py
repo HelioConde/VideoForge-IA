@@ -23,7 +23,8 @@ class FirstDoramaImageTests(unittest.TestCase):
         self.assertIn("Sem texto",prompt)
     def test_unique_request_preserves_publication_and_human_gates(self):
         request=json.loads((EP/"pedido-geracao-arte.json").read_text(encoding="utf-8"))
-        self.assertIn(request["asset"],(ASSET,"c01-p05-guardas-lancas-v1"))
+        plan, story = production_art.read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        self.assertIn(request["asset"], [item["id"] for item in plan["assets"]])
         self.assertEqual(request["max_calls_per_run"],1)
         self.assertFalse(request["youtube_upload"])
         self.assertTrue(request["human_visual_review_required"])

@@ -112,6 +112,26 @@
       "human_visual_approval_required": true,
       "verify_camera_is_distinct_from_source": true,
       "prompt": "NOVO PLANO CINEMATOGRÁFICO C01-P05 do dorama MMORPG: Conquiste a Princesa. Referência PRINCIPAL obrigatória: PNG ANEXADO C01-P04 APROVADO para identidade visual, figurinos e cenário. Preserve EXATAMENTE o mesmo desenho/traço semi-realista anime fantasia 2D, paleta, materiais, luz, formas de armaduras, luvas e lanças dos dois guardas. NÃO reinventar design nem converter para foto realista, 3D ou desenho diferente.\nENQUADRAMENTO NOVO, imagem-mãe própria: close dramático macro a partir de câmera próxima das MÃOS ENLUVADAS dos dois guardas reais, um de cada lado, apertando com tensão as hastes das DUAS lanças já cruzadas em X atrás de Kael. Luvas, rebites, placas prateadas, tecidos vinho e metal fielmente iguais à cena original. Exatamente duas lanças, fisicamente seguras pelas mãos correspondentes, sem braços soltos, dedos extras ou interseções impossíveis. Vibração e tensão serão ANIMADAS por camadas em outra etapa, não desenhar blur artificial.\nMesmo salão do trono, reflexos quentes da luz lateral, trono ao fundo muito fora de foco, sem revelar princesa, sem acrescentar Kael nem Aldric no primeiro plano. Close deliberado de mãos e hastes; não tentar copiar a composição ampla de C01-P04, apenas conservar identidade de elementos e direção da luz. Formato retrato vertical 9:16 com espaço para legenda futura. Pintura detalhada de dorama fantasia anime semirrealista cinematográfica. UMA imagem, sem texto, montagem, marcas, logotipos, HUD ou legendas.\nEsta imagem não aprova automaticamente rig, roupas ou publicação; conservar SHA da imagem original como fonte EXATA. Caso a fonte SHA-verificada não esteja anexada, RECUSAR sem gerar."
+    },
+    {
+      "id": "c02-p01-aldric-rosto-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "dorama-approved-shot-anchor-v1",
+      "shot_id": "C02-P01",
+      "source_shot_id": "C01-P04",
+      "source_continuity_registry": "CONTINUIDADE-VISUAL-APROVADA-C01-P04.json",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "reference_sources": [
+        "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+      ],
+      "identity_cast": [
+        "aldric"
+      ],
+      "human_visual_approval_required": true,
+      "verify_camera_is_distinct_from_source": true,
+      "prompt": "PLANO C02-P01: CLOSE CINEMATOGRÁFICO FRONTAL de REI ALDRIC, 55 anos, sentado no MESMO trono do episódio MMORPG: Conquiste a Princesa. O PNG ORIGINAL C01-P04 aprovado está ANEXADO nesta requisição como referência VISUAL OBRIGATÓRIA; preserve exatamente o MESMO rosto maduro, formato de olhos, barba volumosa prateada/grisalha, cabelo, coroa dourada ornamentada, gola clara/pelo, manto exterior preto-escuro, túnica vinho central e brocados dourados. A referência de grupo pode mostrar Aldric mais distante; não inventar nova identidade nem trocar a cor do traje.\nCâmera frontal close 70 mm a uma altura levemente abaixo dos olhos, olhar severo direcionado a Kael fora de quadro. Mostrar cabeça, coroa completa, barba, parte dos ombros e tronco superior; expressão austera com pequena tensão nos músculos faciais. Fundo do MESMO trono dourado com veludo vermelho profundamente desfocado, vitrais violetas e luz dourada lateral da mesma posição do C01-P04. Perspectiva nova verdadeira, não ampliar artificialmente a pequena cabeça do plano geral.\nCONTRATO DE CONTINUIDADE: mesmo anime medieval semirrealista cinematográfico 2D e a mesma pintura detalhada das imagens C01-P04 e C01-P05. NÃO foto realista, 3D, cartoon, outra barba, cabelo tingido ou outra coroa. Aldric é o ÚNICO personagem visível: não desenhar Kael, Elara ou guardas, nem duplicar trono. Sem letras, legenda, texto, cartaz, marcas ou HUD. Um único frame vertical próximo de 9:16 com espaço seguro para legendas posteriores. Fonte C01-P04 deve estar ANEXADA POR SHA ao endpoint image edits; se não, não gerar.\nAinda é imagem-mãe candidata: o usuário avaliará a continuidade do rosto e figurino antes do rig, sem aprovação automática de todas as máscaras anteriores ou publicação."
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",
