@@ -23,6 +23,25 @@ jobs:
         run: python -m unittest tests.test_wardrobe_roi_fragmentation tests.test_wardrobe_roi_archive -v
       - name: Calcular fragmentacao apenas em arquivos existentes
         run: python -m videoforge.wardrobe_roi_fragmentation --sync
+      - name: Exibir resumo tecnico por regiao (sem dados sensiveis)
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from videoforge.wardrobe_roi_fragmentation import OUTPUT
+          from videoforge.remake_autopilot import EPISODE
+          with open(EPISODE / OUTPUT, encoding='utf-8') as file:
+              report = json.load(file)
+          for item in report['rows']:
+              metric = item['pixel_fragmentation']
+              print('ROI_FRAGMENT', item['actor'], item['region'], item['side'],
+                    'pixels', metric['selected_pixels'],
+                    'components', metric['connected_components'],
+                    'small_under_5', metric['small_components_under_5px'],
+                    'largest_percent', metric['largest_component_share_percent'],
+                    'priority', item['review_priority'])
+          print('R2_BLOCKED', report['r2_blocked'])
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: roi-v3-fragmentation
