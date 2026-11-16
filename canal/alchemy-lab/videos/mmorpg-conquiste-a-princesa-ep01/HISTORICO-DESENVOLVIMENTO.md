@@ -583,3 +583,8 @@ Inspeção: corpete B representa cobertura parcial e oclusões de manga/cabelo/a
 ## 16/11/2026 — Revisão contextual integrada (PR #65)
 
 PR https://github.com/HelioConde/VideoForge-IA/pull/65 integrado no commit 69e6d90c5057952bb995500a046861a9a907f1a1. CI https://github.com/HelioConde/VideoForge-IA/actions/runs/43945520844 SUCCESS, 25 testes ROI. Exportação na main https://github.com/HelioConde/VideoForge-IA/actions/runs/43945693308 SUCCESS; artefatos versionados em 123e004d4c838137137f6e3c117b604e021e293d. Hash da prancha e oito referências de fonte e oito máscaras conferidos após fetch; máscaras idênticas ao checkpoint anterior. Nenhuma aprovação semântica, 0/4 pares oficiais e R2 bloqueada. Próximo passo: revisão contextual das oclusões de Elara B e boca/bigode de Aldric B. Nenhuma chamada paga.
+
+## 16/11/2026 — C01-P04, nova imagem do julgamento gerada pelo próprio Github
+
+- Run [#43965460068](https://github.com/HelioConde/VideoForge-IA/actions/runs/43965460068) SUCCESS. Fonte original Kael anexada e conferida SHA; criado e arquivado PNG `assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png`, SHA `605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc`, 941×1672; visual ainda não aprovada. Sem imagem do chat usada, sem YouTube.
+- Registro e checklist: `REVISAR-IMAGEM-INICIAL-C01-P04-V3.md`. A primeira tentativa (run 43965291280) foi encerrada antes de chamar o provedor por um teste pré-API incorreto, corrigido em commit próprio. Retrabalho evitado via asset idempotente e arquivo SHA.

@@ -1891,5 +1891,47 @@
     "r2_official_release": false,
     "youtube_uploaded": false,
     "next_action": "Review rendered MP4 and 5 frames with user; record concrete feedback; optimize approved character motion for further shots."
+  },
+  "c01_p04_new_initial_github_image_20261116": {
+    "schema": "videoforge/dorama-first-judgement-candidate/v1",
+    "channel": "alchemy-lab",
+    "video_id": "mmorpg-conquiste-a-princesa-ep01",
+    "shot_id": "C01-P04",
+    "type": "generated_in_github_actions_with_sha_verified_Kael_original",
+    "mode": "image_edit_with_one_real_sha_source",
+    "source_actor": "kael",
+    "source_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+    "source_inference": "exact original PNG attached, verified by app",
+    "source_actors_not_proven": [
+      "aldric",
+      "guarda_esquerdo",
+      "guarda_direito"
+    ],
+    "elara_in_frame": false,
+    "style_document": "PROMPT-OFICIAL-ESTILO-DORAMA.md",
+    "style_requested": "cinematic-semi-realistic-fantasy-anime",
+    "workflow_run_id": 43965460068,
+    "workflow_status": "success",
+    "archive_path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+    "production_report_path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.production.json",
+    "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+    "image_size": [
+      941,
+      1672
+    ],
+    "requested_image_size": [
+      1024,
+      1536
+    ],
+    "dimensions_match_requested": false,
+    "quality_status": "PNG_VALID_NONCANONICAL_SIZE_VISUAL_REVIEW_PENDING",
+    "sha_recorded_in_permanent_archive": true,
+    "source_original_unchanged": true,
+    "previous_rejected_candidate_preserved": true,
+    "user_visual_approval_pending": true,
+    "canonical_identity_approved": false,
+    "official_rig_ready": false,
+    "youtube_uploaded": false,
+    "next_step": "User should review newly generated PNG for continuity of Kael, Aldric silver beard and burgundy center/dark exterior, two guards and crossed spears; if accepted, only then prepare one shot-specific rig with non-distorting dimensions."
   }
 }

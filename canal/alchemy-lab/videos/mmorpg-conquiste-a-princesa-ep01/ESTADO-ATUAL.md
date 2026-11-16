@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Nova imagem C01-P04 REALMENTE gerada pelo Github (revisão do usuário)
+
+- Após pedido expresso para **não gerar arte no chat**, criado pedido único `c01-p04-imagem-inicial-v3` no `production-art.json` com estilo `PROMPT-OFICIAL-ESTILO-DORAMA.md`, Kael como **PNG original anexo SHA-verificado**, sem Elara, rei Aldric e guardas como candidatos. Enviado para o Codex Proxy exclusivamente no GitHub Actions.
+- [Run #43965460068](https://github.com/HelioConde/VideoForge-IA/actions/runs/43965460068) **SUCCESS**: 1 PNG autenticamente gerado e arquivado permanentemente em [`c01-p04-imagem-inicial-v3.png`](assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png). SHA-256 `605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc`; dimensões originais **941×1672**, não redimensionar para as 1024×1536 pedidas. [QA/manifesto](assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.production.json) registra fonte real e pendência visual. Primeira tentativa #43965291280 falhou em **teste pré-provedor** (nenhum PNG); corrigida e executado uma vez.
+- [Galeria/Checklist para o responsável](REVISAR-IMAGEM-INICIAL-C01-P04-V3.md). Nova imagem é **candidata**: não aprovar automaticamente Aldric, guardas, suas roupas ou os rigs. `C01-P01` (preto e SFX), `C01-P02` (espada) e `C01-P03` (ângulo Kael) seguem tomadas distintas do mesmo plano oficial.
+- Pedir revisão desta imagem para ajustes objetivos antes de recortar camadas RGBA. NENHUM vídeo oficial ou YouTube foi gerado nesta etapa, e as imagens rejeitadas antigas permanecem preservadas.
+
 ## 16/11/2026 — PRIMEIRA ANIMAÇÃO PARA O USUÁRIO (C01-P03)
 
 - Após autorização expressa para testar, executado workflow [43955654094](https://github.com/HelioConde/VideoForge-IA/actions/runs/43955654094): **SUCCESS**. Produzido `directed-rig-preview.mp4` de 90 quadros, 30 fps, 1080×1920, H.264, **3 segundos sem áudio**, renderizados em Remotion/ThreeCanvas com malhas articuladas reais já existentes.
