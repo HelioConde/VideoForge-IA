@@ -87,7 +87,8 @@ def _load_manifest(path: Path) -> tuple[dict, list[dict]]:
         raise VideoForgeError("MANIFEST_JSON_INVALID") from exc
     if not isinstance(manifest, dict) or manifest.get("schema") != "videoforge/mvp/v1":
         raise VideoForgeError("MANIFEST_SCHEMA_INVALID")
-    if manifest.get("channel") != "otaku-br":
+    from .paths import CHANNEL_IDS
+    if manifest.get("channel") not in CHANNEL_IDS:
         raise VideoForgeError("MVP_CHANNEL_NOT_SUPPORTED")
     if manifest.get("youtube_upload") is not False:
         raise VideoForgeError("YOUTUBE_UPLOAD_MUST_BE_DISABLED")
