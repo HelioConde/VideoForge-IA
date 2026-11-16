@@ -28,7 +28,15 @@ jobs:
         run: |
           set -euo pipefail
           python -m unittest tests.test_dorama_continuity tests.test_production_art tests.test_first_dorama_image -v
-      - name: Confirmar nenhuma geracao disparada por QA
+      - name: Confirmar exclusao de imagens rejeitadas e ausencia de upload
         shell: bash
         run: |
-          echo 'CONTINUITY_QA_NO_PROVIDER_CALLS=TRUE'
+          python - <<'PY'
+          from videoforge.dorama_continuity import reference
+          item,raw=reference()
+          assert item['limitations']['old_rejected_reference_is_not_resurrected']
+          assert item['limitations']['youtube_upload'] is False
+          assert raw.startswith(bytes((137,80,78,71)))
+          print('CONTINUITY_APPROVED_ANCHOR_SHA', item['sha256'])
+          print('PROVIDER_CALLS=0; YOUTUBE_UPLOAD=FALSE')
+          PY
