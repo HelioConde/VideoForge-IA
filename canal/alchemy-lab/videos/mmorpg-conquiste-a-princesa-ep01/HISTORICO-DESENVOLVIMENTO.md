@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 16/11/2026 — filtro obrigatório por personagem: reprovação de cores e barba
+
+- O proprietário confirmou que Aldric **sentado tem veste vermelha externamente com centro preto**, porém em pé apresenta **veste preta externamente com centro vermelho**; também muda a **cor da barba**, deixando de parecer o mesmo rei. Isto é uma REPROVAÇÃO CRÍTICA da referência, independentemente de SHA, resolução, beleza ou pose. Não foi escolhida uma cor de barba canônica sem prova; o usuário precisa confirmar uma referência específica para fixar sua tonalidade.
+- Elara no palácio: a parte **roxa** da blusa/corpete some/muda entre imagens. **REPROVADA** a identidade/roupa da candidata atual; no disfarce de rua C07–C10, o roxo do traje real NÃO é obrigatório. Kael permanece sem defeito confirmado, mas **não aprovado**.
+- [Filtro para revisão](RELATORIO-APROVACAO-REPROVACAO-FIGURINO.md) e três checklists permanentes `CHECKLIST-FIGURINO-ALDRIC.json`, `CHECKLIST-FIGURINO-ELARA.json`, `CHECKLIST-FIGURINO-KAEL.json` contêm regras de cores por área, barba/rosto, adornos, gola, capa, cabelo, cenários e variantes. [Run 43879682550](https://github.com/HelioConde/VideoForge-IA/actions/runs/43879682550) concluído com sucesso (11 testes). Acompanhamento de **7 tomadas com Aldric** e **6 com Elara real** é dependência da fonte reprovada, NÃO alegação de inspeção individual de pixels em 13 imagens.
+- O script usa as diferenças que o proprietário comunicou, validadas semanticamente. **Ainda não existem ROIs/máscaras verificadas nem análise visual automática da roupa e barba em pixels**, portanto nenhuma imagem pode receber aprovação automática. R2 continua bloqueada, nenhuma nova chamada IA, MP4 oficial ou upload YouTube nesta correção.
+
 ## 16/11/2026 — detalhe do figurino e regra de 40 tomadas finalizados
 
 - [Comparativo de detalhes run 43876165909](https://github.com/HelioConde/VideoForge-IA/actions/runs/43876165909) **SUCCESS**: dois JPEGs derivados `QA-ALDRIC-ROUPA-DETALE-V2.jpg` e `QA-ELARA-PEITORAL-ROXO-V2.jpg` com 4 imagens cada, original inteiro e *crop central geométrico* (NÃO é detector de personagem), hashes registrados em `QA-FIGURINO-DETALHES-V2.json`. Conferir [REVISAR-DETALHES-FIGURINOS-V2.md](REVISAR-DETALHES-FIGURINOS-V2.md). Sem criação de arte, alteração de PNGs ou aprovação imaginada.

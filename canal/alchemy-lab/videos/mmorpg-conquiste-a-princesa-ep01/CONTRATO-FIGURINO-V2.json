@@ -6,8 +6,8 @@
   "decision": "rejected_wardrobe_inconsistency",
   "canonical_identity_approved": false,
   "rules": {
-    "elara_palace": "Preservar a PARTE ROXA no peitoral/blusa/corpete do traje palaciano em TODOS os planos com a mesma roupa; vestido branco-perola, violeta e detalhes dourados. Disfarce de rua e outra variante narrativa, sem alterar face.",
-    "aldric_royal": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao.",
+    "elara_palace": "Preservar a PARTE ROXA no peitoral/blusa/corpete do traje palaciano em TODOS os planos com a mesma roupa; vestido branco-perola, violeta e detalhes dourados. Disfarce de rua e outra variante narrativa, sem alterar face. Mudanças de iluminação ou câmera não podem fazer o ROXO do painel palaciano desaparecer ou mudar para uma área diferente; roupa de disfarce é uma variante separada.",
+    "aldric_royal": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao. O traje do mesmo rei sentado e em pé deve conservar a MESMA cor em cada região: jamais inverter roupa exterior vermelha/centro preto para exterior preto/centro vermelho. Cor, formato e comprimento da barba devem permanecer idênticos à fonte aprovada, admitindo apenas variações naturais de iluminação. A orientação de sentar ou levantar não autoriza mudança de textura, bordados ou desenho.",
     "kael_trial": "Manter capa vinho rasgada, ombreira escura com ouro e pedra azul; sem inferir reprovação de Kael."
   },
   "required_full_wardrobe_reference_sources": [
@@ -33,5 +33,17 @@
     "no_auto_promote": true,
     "no_auto_publish": true,
     "new_paid_generation_dispatched": false
+  },
+  "quality_gate": {
+    "source_filter": "RELATORIO-FILTRO-FIGURINO-V2.json",
+    "critical_fail_codes": [
+      "aldric_red_black_inversion",
+      "aldric_beard_color_changed",
+      "elara_purple_bodice_missing"
+    ],
+    "reject_on_any_confirmed_semantic_wardrobe_difference": true,
+    "do_not_auto_approve_without_segmented_pixel_or_explicit_human_review": true,
+    "source_whole_outfits_approved": 0,
+    "source_whole_outfits_required": 2
   }
 }

@@ -607,7 +607,14 @@
     "r2_wardrobe_sources_verified": 0,
     "grounded_candidate_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
     "grounded_candidate_run_id": 43868021687,
-    "grounded_visual_approval": false
+    "grounded_visual_approval": false,
+    "blocking_codes": [
+      "aldric_red_black_inversion",
+      "aldric_beard_color_changed",
+      "elara_purple_bodice_missing"
+    ],
+    "wardrobe_quality_filter": "RELATORIO-FILTRO-FIGURINO-V2.json",
+    "human_visual_approved": false
   },
   "policy_consistency_audit_20261115": {
     "current_rules_identified_in_master_files": true,
@@ -1533,6 +1540,37 @@
     "human_visual_approval": false,
     "r2_generated": false,
     "official_mp4": false,
+    "youtube_uploaded": false
+  },
+  "wardrobe_latest_quality_filter_20261116": {
+    "schema": "videoforge/wardrobe-filter-result/v1",
+    "status": "three_owner_reported_critical_defects_confirmed_semantically",
+    "critical_defect_count": 3,
+    "decisions": {
+      "aldric": "REPROVADO",
+      "elara_palace": "REPROVADO",
+      "elara_street": "REVISAO_PENDENTE",
+      "kael": "REVISAO_PENDENTE"
+    },
+    "reference_shot_impact": {
+      "aldric": 7,
+      "elara_royal": 6,
+      "elara_street": 9
+    },
+    "report": "RELATORIO-APROVACAO-REPROVACAO-FIGURINO.md",
+    "report_json": "RELATORIO-FILTRO-FIGURINO-V2.json",
+    "character_checklists": [
+      "CHECKLIST-FIGURINO-ALDRIC.json",
+      "CHECKLIST-FIGURINO-ELARA.json",
+      "CHECKLIST-FIGURINO-KAEL.json"
+    ],
+    "latest_filter_workflow_run": 43879682550,
+    "latest_filter_workflow_conclusion": "success_11_tests",
+    "pixel_level_beard_color_analysis_performed": false,
+    "cannot_auto_approve_art": true,
+    "previous_rejected_reference_sha": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+    "r2_generated": false,
+    "paid_provider_calls_for_quality_filter": 0,
     "youtube_uploaded": false
   }
 }

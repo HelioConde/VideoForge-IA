@@ -27,6 +27,25 @@
       "code": "wardrobe_review_pending",
       "status": "unconfirmed",
       "feedback": "Nao foi informado erro especifico em Kael; continuar conferindo identidade e roupa."
+    },
+    {
+      "actor": "aldric",
+      "code": "aldric_red_black_inversion",
+      "status": "rejected",
+      "severity": "critical",
+      "source": "owner_report",
+      "observation": "Quando sentado, roupa externa vermelha e centro preto; quando em pé, roupa externa preta e centro vermelho. Desenho da roupa invertido, mesmo rei e mesma variante.",
+      "exact_shot_id_confirmed": false,
+      "beard_hex_detected": null
+    },
+    {
+      "actor": "aldric",
+      "code": "aldric_beard_color_changed",
+      "status": "rejected",
+      "severity": "critical",
+      "source": "owner_report",
+      "observation": "O proprietário confirma diferença perceptível na cor da barba; identidade visual não parece o mesmo rei.",
+      "exact_beard_hue_unknown": true
     }
   ],
   "next_stage": "collect_or_lock_better_wardrobe_references",
@@ -35,5 +54,8 @@
   "requires_aldric_full_wardrobe_original": true,
   "keep_previous_archives": true,
   "generate_next_without_sources": false,
-  "youtube_uploaded": false
+  "youtube_uploaded": false,
+  "review_extended_by_user": "2026-11-16",
+  "next_validation_report": "RELATORIO-APROVACAO-REPROVACAO-FIGURINO.md",
+  "no_full_outfit_reference_approved": true
 }
