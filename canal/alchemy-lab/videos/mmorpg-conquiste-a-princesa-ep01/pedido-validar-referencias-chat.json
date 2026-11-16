@@ -17,10 +17,12 @@
     "qa-referencias-chat-cinematograficas.json"
   ],
   "review_policy": "Visual style preference approved; full canonical identity/rig not yet approved.",
-  "revision": 5,
-  "reason": "Revisar três fingerprints de PNGs originais por SHA, brilho e dHash: nenhum bitmap gerado ou render autorizado.",
+  "revision": 6,
+  "reason": "16/11/2026: validar importador contra política REMAKE V2 ativa sem lock V1, reconhecer somente os 3 PNGs originais por SHA, zero chamadas IA, zero aprovação visual, sem upload YouTube",
   "optional_third_camera_candidate": "confronto-trono-c12-p02.png",
   "three_originals_zip": "uploads/alchemy-ep01-cinema-3-originais.zip",
   "fingerprint_baseline": "fingerprints-visuais-referencias.json",
-  "fingerprint_output": "qa-fingerprints-referencias.json"
+  "fingerprint_output": "qa-fingerprints-referencias.json",
+  "v2_readonly_qa_request": true,
+  "expected_active_remake_version": "remake-v2-20261115"
 }
