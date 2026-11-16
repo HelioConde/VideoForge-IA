@@ -18,6 +18,7 @@ class RemakeAutonomyTests(unittest.TestCase):
             "archived_png_verified_human_review_pending",
             "human_visual_review_pending",
             "original_kael_elara_sha_sources_missing",
+            "wardrobe_identity_rejected_reference_missing",
         ))
         self.assertIsInstance(result["source_readiness"],dict)
         self.assertEqual(result["source_readiness"]["verified_style_source_count"],2)
