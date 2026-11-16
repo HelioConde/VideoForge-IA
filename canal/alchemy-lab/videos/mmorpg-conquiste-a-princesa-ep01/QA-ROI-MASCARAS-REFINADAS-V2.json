@@ -29,29 +29,29 @@
               323
             ],
             [
-              548,
-              335
+              546,
+              334
             ],
             [
-              531,
-              350
+              533,
+              345
             ],
             [
               513,
               343
             ]
           ],
-          "seed_polygon_pixels": 929,
-          "color_isolated_pixels": 186,
-          "retained_percent": 20.02,
+          "seed_polygon_pixels": 821,
+          "color_isolated_pixels": 389,
+          "retained_percent": 47.38,
           "mask_viable_for_visual_review": true,
           "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-barba-a-CANDIDATO.png",
-          "candidate_cutout_sha256": "11da75248bf7ee50db4ff492a7fc74bc03d6d62164116386774eb348301babed",
+          "candidate_cutout_sha256": "58d4f2b5bd1191937fb82678af9842817066fdebbbcc346c011d35b15e8ceafa",
           "candidate_cutout_box_xyxy": [
             499,
             307,
-            557,
-            359
+            555,
+            354
           ],
           "semantic_mask_verified": false,
           "official_color_comparison_eligible": false
@@ -67,44 +67,44 @@
           "candidate_polygon_native_px": [
             [
               736,
-              262
+              280
             ],
             [
               760,
-              260
+              277
             ],
             [
               779,
-              279
+              295
             ],
             [
-              775,
-              304
+              777,
+              312
             ],
             [
-              760,
-              319
+              762,
+              326
             ],
             [
               736,
-              306
+              317
             ],
             [
-              729,
-              284
+              727,
+              299
             ]
           ],
-          "seed_polygon_pixels": 2167,
-          "color_isolated_pixels": 226,
-          "retained_percent": 10.43,
+          "seed_polygon_pixels": 1844,
+          "color_isolated_pixels": 908,
+          "retained_percent": 49.24,
           "mask_viable_for_visual_review": true,
           "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-barba-b-CANDIDATO.png",
-          "candidate_cutout_sha256": "81d8aeaf322e86940ac9793d22872f0becf28a3ed84b32eb7ee68fd3af75c821",
+          "candidate_cutout_sha256": "0e739dc1a83428e504e9c42106720d50b74f5167e32cfda043018733300490c5",
           "candidate_cutout_box_xyxy": [
-            721,
-            252,
+            719,
+            269,
             788,
-            328
+            335
           ],
           "semantic_mask_verified": false,
           "official_color_comparison_eligible": false
