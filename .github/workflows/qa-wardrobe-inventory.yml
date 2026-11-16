@@ -1,0 +1,46 @@
+name: "VideoForge - auditar figurinos existentes Aldric e Elara"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/wardrobe_inventory.py'
+      - 'tests/test_wardrobe_inventory.py'
+      - '.github/workflows/qa-wardrobe-inventory.yml'
+permissions:
+  contents: write
+concurrency:
+  group: vf-alchemy-wardrobe-inventory
+  cancel-in-progress: false
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Testar fontes e bloqueio de referencias reprovadas sem IA
+        run: python -m unittest tests.test_wardrobe_inventory tests.test_wardrobe_review -v
+      - name: Arquivar catalogo de roupas e links de revisao
+        run: python -m videoforge.wardrobe_inventory --sync
+      - name: Guardar evidencias e imagens existentes sem modifica-las
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'videoforge-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$EP/QA-INVENTARIO-FIGURINOS-V2.json" "$EP/REVISAR-OPCOES-FIGURINO-V2.md"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(dorama): indexar figurinos existentes sem aprovacao automatica'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
