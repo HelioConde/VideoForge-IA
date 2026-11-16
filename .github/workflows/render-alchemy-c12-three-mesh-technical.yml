@@ -44,8 +44,114 @@ jobs:
           python-version: '3.12'
       - name: Conferir origens hashes imagens e regras de 7 sprites antigos
         run: python -m unittest tests.test_alchemy_c12_technical tests.test_alchemy_c12_import tests.test_alchemy_c12_render_qa tests.test_alchemy_c12_upload_existing_zips -v
+  source-preflight:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      ready: ${{ steps.gate.outputs.ready }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar contrato e politicas V2 sem gerar imagens
+        run: python -m unittest tests.test_alchemy_c12_technical tests.test_alchemy_c12_dispatch_gate -v
+      - name: Auditar todos os 9 originais sem baixar container Remotion
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/c12-source-preflight"
+          mkdir -p "$OUT"
+          rc=0
+          python -m videoforge.c12_technical_preview --output "$OUT" || rc=$?
+          if [[ "$rc" != "0" && "$rc" != "2" ]]; then
+            echo "::error::Preflight C12 apresentou falha inesperada"
+            exit "$rc"
+          fi
+          python -m videoforge.c12_dispatch_gate --report "$OUT/preflight.qa.json" --github-output "$GITHUB_OUTPUT"
+          if grep -q '^ready=true    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:rig-three-remotion4-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Testar cinco malhas e engine ThreeCanvas sem imagens novas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_alchemy_c12_technical tests.test_alchemy_c12_render_qa -v
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+          node --test tests/c12-mesh-technical-contract.test.cjs tests/rig-three-math.test.cjs
+      - name: Preparar pixels originais ou BLOQUEAR no preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.c12_technical_preview
+      - name: Conferir recomposicao neutra com pixels RGBA originais por SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.c12_render_qa neutral
+      - name: Renderizar 8 segundos de malhas Three.js por Remotion SWANGLE
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-mesh-technical"
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/c12-mesh-technical-index.ts \
+            VideoForgeC12MeshDraftQA "../$OUT/c12-three-mesh-8s.mp4" \
+            --props="../$OUT/props.json" --frames=0-239 --codec=h264 \
+            --pixel-format=yuv420p --gl=swangle --concurrency=1 --log=error
+          for frame in 0 73 120 180 239; do
+            ./node_modules/.bin/remotion still src/c12-mesh-technical-index.ts \
+              VideoForgeC12MeshDraftQA "../$OUT/frame-$frame.png" \
+              --props="../$OUT/props.json" --frame="$frame" --gl=swangle --log=error
+          done
+          for frame in 73 180; do
+            ./node_modules/.bin/remotion still src/c12-mesh-technical-index.ts \
+              VideoForgeC12MeshDraftQA "../$OUT/frame-$frame-repeat.png" \
+              --props="../$OUT/props.json" --frame="$frame" --gl=swangle --log=error
+          done
+      - name: Registrar QA de movimento localizado no MP4 e hashes, sem publicar
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.c12_render_qa mp4
+      - name: Disponibilizar MP4 validado OU relatório de arquivos faltantes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-alchemy-c12-threecanvas-draft-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/c12-mesh-technical/
+          retention-days: 14
+          if-no-files-found: warn
+ "$GITHUB_OUTPUT"; then
+            echo 'C12: 9 PNGs originais validados por SHA; render tecnico pode iniciar.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'C12: fontes originais ainda ausentes. Sem iniciar Remotion ou publicar MP4.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Salvar relatorio tecnico mesmo sem PNGs originais
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-c12-source-preflight-${{ github.run_id }}
+          path: ${{ runner.temp }}/c12-source-preflight/preflight.qa.json
+          retention-days: 14
+          if-no-files-found: warn
   render-draft:
-    if: github.ref == 'refs/heads/main'
+    needs: source-preflight
+    if: needs.source-preflight.outputs.ready == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     container:
