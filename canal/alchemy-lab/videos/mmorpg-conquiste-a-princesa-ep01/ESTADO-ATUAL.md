@@ -478,3 +478,8 @@ A tentativa de ler/copiar os bytes por integração de arquivos **falhou com `Th
 ## Regra permanente para o próximo agente / próxima conversa
 
 Ao terminar **qualquer avanço no dorama**, atualizar **este arquivo na `main`** com estado e **o próximo passo exato**, e acrescentar um evento em `HISTORICO-DESENVOLVIMENTO.md` com commit, workflow/run, artifact, SHA, QA e pendências. Links de artifact expiram; não tratá-los como arquivamento permanente. Marcar claramente `feito`, `teste_tecnico`, `pendente`, `bloqueado`. Não repetir tarefas concluídas, não mover progresso apenas para branches ou chat, nem sobrescrever histórico anterior. Para regras globais, obedecer `AGENTS.md` e `docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md`.
+
+## 2026-11-16T01:03:42Z — retomada apos OAuth validado no runner
+
+- Reserva unica de recuperacao persistida ANTES de redisparar o workflow de arte. Nenhuma imagem, cobranca confirmada, aprovacao humana ou upload ao criar reserva.
+- Proxy health autenticado e elegibilidade foram exigidos pelo workflow. Sem resultado de arte ainda; proximo passo: geracao e QA por SHA.

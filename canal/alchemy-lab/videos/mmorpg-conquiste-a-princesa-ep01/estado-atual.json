@@ -598,7 +598,7 @@
   "autopilot_checkpoint": {
     "stage": "generate_character_bible",
     "target": "character-bible",
-    "blocker": "generation_dispatch_already_reserved_wait_for_artifact_or_investigation",
+    "blocker": "recovery_dispatch_reserved_after_verified_oauth",
     "dispatch_allowed": false
   },
   "policy_consistency_audit_20261115": {
@@ -1232,7 +1232,7 @@
     "request_id": "e74840c054fe22d57e9908193cd640c4c0f0b15d5009c7cad4937c8255ea5f67",
     "target": "character-bible",
     "workflow": "production-art-by-request.yml",
-    "status": "blocked_oauth_expired_refresh_http_502",
+    "status": "recovery_dispatch_reserved_after_verified_oauth",
     "reserved_utc": "2026-11-15T21:57:01.983760+00:00",
     "max_calls_per_run": 1,
     "provider_charge_possible": true,
@@ -1246,9 +1246,12 @@
     "image_generation_started": true,
     "image_png_created": false,
     "re_dispatch_without_diagnosis": false,
-    "next_step": "Reauthorize Codex account with local interactive device login; upload renewed secrets; rerun no-cost authenticated eligibility verification before scheduling one image generation.",
+    "next_step": "One production-art-by-request.yml dispatch; inspect run, archive and SHA before any other attempt.",
     "last_retry_workflow_run_id": 43766496772,
-    "last_retry_run_attempt": 2
+    "last_retry_run_attempt": 2,
+    "recovery_dispatch_reserved_utc": "2026-11-16T01:03:42Z",
+    "recovery_attempts_reserved": 1,
+    "recovery_requires_new_visual_approval": true
   },
   "proxy_oauth_incident_20261115": {
     "initial_503_run": 43766496772,

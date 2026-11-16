@@ -386,3 +386,8 @@ Acrescentar uma seção datada com: objetivo e cena, arquivos alterados, commit 
 
 - Etapa: generate_character_bible; alvo: character-bible; bloqueio: no_verified_reference_png.
 - Apenas verificação de estado/arquivos. Nenhuma mídia criada ou aprovação inventada.
+
+## 2026-11-16T01:03:42Z — retomada apos OAuth validado no runner
+
+- Reserva unica de recuperacao persistida ANTES de redisparar o workflow de arte. Nenhuma imagem, cobranca confirmada, aprovacao humana ou upload ao criar reserva.
+- Proxy health autenticado e elegibilidade foram exigidos pelo workflow. Sem resultado de arte ainda; proximo passo: geracao e QA por SHA.
