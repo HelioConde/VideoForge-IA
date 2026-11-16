@@ -57,6 +57,37 @@ def apply_exclusions(mask, proposed, size, source_index):
                 "exclusion_polygons_native_px":converted}
 
 
+def verify_exclusion_pixels(source, before_mask, after_mask, png, box, expected_removed):
+    """Comprova subtracao e pixels originais; nao valida semantica da selecao."""
+    from PIL import Image, ImageChops
+    if (before_mask.mode != "L" or after_mask.mode != "L"
+            or before_mask.size != source.size or after_mask.size != source.size):
+        raise VideoForgeError("ROI_EXCLUSION_MASK_GEOMETRY")
+    if (len(box) != 4 or any(type(v) is not int for v in box)
+            or not 0 <= box[0] < box[2] <= source.width
+            or not 0 <= box[1] < box[3] <= source.height):
+        raise VideoForgeError("ROI_EXCLUSION_CROP_GEOMETRY")
+    before, after = before_mask.tobytes(), after_mask.tobytes()
+    if any(a not in (0, b) for b, a in zip(before, after)):
+        raise VideoForgeError("ROI_EXCLUSION_ALPHA_NOT_SUBTRACTION")
+    removed = sum(bool(b) and not a for b, a in zip(before, after))
+    if type(expected_removed) is not int or removed != expected_removed:
+        raise VideoForgeError("ROI_EXCLUSION_COUNT_MISMATCH")
+    crop_alpha = after_mask.crop(box)
+    if sum(bool(a) for a in crop_alpha.tobytes()) != sum(bool(a) for a in after):
+        raise VideoForgeError("ROI_EXCLUSION_CROP_LOSES_PIXELS")
+    with Image.open(io.BytesIO(png)) as decoded:
+        if decoded.format != "PNG" or decoded.mode != "RGBA" or decoded.size != crop_alpha.size:
+            raise VideoForgeError("ROI_EXCLUSION_PNG_GEOMETRY")
+        if ImageChops.difference(decoded.getchannel("A"), crop_alpha).getbbox():
+            raise VideoForgeError("ROI_EXCLUSION_PNG_ALPHA_CHANGED")
+        if ImageChops.difference(decoded.convert("RGB"), source.convert("RGB").crop(box)).getbbox():
+            raise VideoForgeError("ROI_EXCLUSION_RGB_CHANGED")
+    return {"rgb_matches_source_crop": True, "alpha_only_subtraction": True,
+            "crop_preserves_all_retained_pixels": True, "removed_pixels_verified": removed,
+            "semantic_approval": False}
+
+
 def run(root:Path=ROOT,sync=False):
     from PIL import Image,ImageDraw,ImageFont,ImageOps
     ep=Path(root)/EPISODE
@@ -90,6 +121,7 @@ def run(root:Path=ROOT,sync=False):
         new_mask,delta=apply_exclusions(raw_mask,item["exclude_board_polygons"],im.size,source_index)
         original_png,_=isolated_png(im,raw_mask,polygon)
         clean_png,box=isolated_png(im,new_mask,polygon)
+        integrity=verify_exclusion_pixels(im,raw_mask,new_mask,clean_png,box,delta["removed"])
         name=f"{item['actor']}-{item['region']}-{item['side']}-EXCLUSAO-CANDIDATA.png"
         files[ep/OUTPUT/name]=clean_png
         # Every preview tile shows the same crop, before and after.
@@ -115,6 +147,7 @@ def run(root:Path=ROOT,sync=False):
             "cleaned_candidate_path":f"{OUTPUT}/{name}",
             "cleaned_candidate_sha256":hashlib.sha256(clean_png).hexdigest(),
             "cleaned_candidate_crop_xyxy":list(box),
+            "pixel_integrity":integrity,
             "semantically_verified":False,"official_art_usable":False,
         })
     draw.text((20,1640),"0 MASCARAS VERIFICADAS | R2 BLOQUEADA | SEM IMAGEM PAGA",font=font,fill=(246,198,140))

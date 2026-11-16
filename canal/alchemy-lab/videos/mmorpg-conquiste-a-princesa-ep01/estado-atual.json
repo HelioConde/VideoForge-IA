@@ -1694,5 +1694,17 @@
     "official_mp4": false,
     "youtube_uploaded": false,
     "next_action": "Manually audit all exclusions, confirm identities and attire variants and precisely isolate true body regions before official color QA"
+  },
+  "wardrobe_roi_pixel_integrity_v2": {
+    "date": "2026-11-16",
+    "status": "local_tests_passed_pending_ci_and_merge",
+    "report": "QA-ROI-INTEGRIDADE-PIXELS-V2.json",
+    "technical_tests_passed": 40,
+    "verified_real_regions": 8,
+    "semantic_verified": 0,
+    "human_visual_approval": false,
+    "r2_blocked": true,
+    "paid_calls": 0,
+    "next_action": "review_patch_and_run_ci_then_review_semantic_exclusions_against_full_sources"
   }
 }

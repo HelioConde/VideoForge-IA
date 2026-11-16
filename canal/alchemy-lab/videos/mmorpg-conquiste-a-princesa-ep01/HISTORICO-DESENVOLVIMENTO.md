@@ -542,3 +542,7 @@ Acrescentar uma seção datada com: objetivo e cena, arquivos alterados, commit 
 
 - Etapa: review_identity_reference; alvo: character-bible; bloqueio: wardrobe_identity_rejected_reference_missing.
 - Apenas verificação de estado/arquivos. Nenhuma mídia criada ou aprovação inventada.
+
+## 16/11/2026 — Integridade dos pixels das exclusões (branch de revisão)
+
+Validador integrado a `wardrobe_roi_exclusions.run`: RGB do PNG deve coincidir com a fonte no recorte; alfa só pode ser mantido ou zerado; contagem removida deve conferir; recorte deve conter todos os pixels retidos. Ver `QA-ROI-INTEGRIDADE-PIXELS-V2.json`. Oito regiões reais passaram; 6 testes de exclusão e 34 testes relacionados passaram localmente. Base main `976e779`; esta mudança ainda não foi integrada nem executada em Actions. Não altera polígonos, PNGs arquivados, contrato oficial ou aprovação: 0 máscaras semânticas, R2/MP4/YouTube bloqueados. Próximo passo: revisar este patch e validar em CI; depois conferir as exclusões sobre os originais completos.

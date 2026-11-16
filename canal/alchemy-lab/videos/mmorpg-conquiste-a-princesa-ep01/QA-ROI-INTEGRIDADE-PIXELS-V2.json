@@ -1,0 +1,132 @@
+{
+  "schema": "videoforge/roi-exclusion-pixel-integrity/v1",
+  "date": "2026-11-16",
+  "base_commit": "976e779",
+  "execution": "local_branch_not_main",
+  "regions": [
+    {
+      "actor": "aldric",
+      "region": "barba",
+      "side": "a",
+      "source_path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+      "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "cleaned_candidate_sha256": "8c5c84f01f6ed9e0a9ff738b8a5e657fa11113863bc3c6fa96e87eabf2de2911",
+      "pixel_integrity": {
+        "rgb_matches_source_crop": true,
+        "alpha_only_subtraction": true,
+        "crop_preserves_all_retained_pixels": true,
+        "removed_pixels_verified": 11,
+        "semantic_approval": false
+      }
+    },
+    {
+      "actor": "aldric",
+      "region": "barba",
+      "side": "b",
+      "source_path": "assets/cenas-mae/cena-02.png",
+      "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+      "cleaned_candidate_sha256": "5dde6a366e8596d66f0c0ce424fdcedce89c0aa951c2ab4a7a2652affed22180",
+      "pixel_integrity": {
+        "rgb_matches_source_crop": true,
+        "alpha_only_subtraction": true,
+        "crop_preserves_all_retained_pixels": true,
+        "removed_pixels_verified": 102,
+        "semantic_approval": false
+      }
+    },
+    {
+      "actor": "aldric",
+      "region": "tecido_externo",
+      "side": "a",
+      "source_path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+      "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "cleaned_candidate_sha256": "6070f8bc07de373659d27b5a405382bc5ee150d2524545369627ce854ad88bb7",
+      "pixel_integrity": {
+        "rgb_matches_source_crop": true,
+        "alpha_only_subtraction": true,
+        "crop_preserves_all_retained_pixels": true,
+        "removed_pixels_verified": 701,
+        "semantic_approval": false
+      }
+    },
+    {
+      "actor": "aldric",
+      "region": "tecido_externo",
+      "side": "b",
+      "source_path": "assets/cenas-mae/cena-02.png",
+      "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+      "cleaned_candidate_sha256": "70ad2c17ebdbeb33159dd4ae0a9b70c431eb256960d7547c4a012cbe8fb8a406",
+      "pixel_integrity": {
+        "rgb_matches_source_crop": true,
+        "alpha_only_subtraction": true,
+        "crop_preserves_all_retained_pixels": true,
+        "removed_pixels_verified": 0,
+        "semantic_approval": false
+      }
+    },
+    {
+      "actor": "aldric",
+      "region": "painel_central",
+      "side": "a",
+      "source_path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+      "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "cleaned_candidate_sha256": "ac7fdb2ef2facb9a6e56dd23252381201d5b640be690ea3975e19e4194286731",
+      "pixel_integrity": {
+        "rgb_matches_source_crop": true,
+        "alpha_only_subtraction": true,
+        "crop_preserves_all_retained_pixels": true,
+        "removed_pixels_verified": 253,
+        "semantic_approval": false
+      }
+    },
+    {
+      "actor": "aldric",
+      "region": "painel_central",
+      "side": "b",
+      "source_path": "assets/cenas-mae/cena-02.png",
+      "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+      "cleaned_candidate_sha256": "249a9f730a1ab276673f2a0b65a17532d025dab54a1ee2ea98ab326706e47e8d",
+      "pixel_integrity": {
+        "rgb_matches_source_crop": true,
+        "alpha_only_subtraction": true,
+        "crop_preserves_all_retained_pixels": true,
+        "removed_pixels_verified": 241,
+        "semantic_approval": false
+      }
+    },
+    {
+      "actor": "elara",
+      "region": "corpete_roxo_palacio",
+      "side": "a",
+      "source_path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "source_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "cleaned_candidate_sha256": "5d098c75d3ef450aecde2e883f83ac378198f2a8d307ce947f3c3ddbdc47f361",
+      "pixel_integrity": {
+        "rgb_matches_source_crop": true,
+        "alpha_only_subtraction": true,
+        "crop_preserves_all_retained_pixels": true,
+        "removed_pixels_verified": 219,
+        "semantic_approval": false
+      }
+    },
+    {
+      "actor": "elara",
+      "region": "corpete_roxo_palacio",
+      "side": "b",
+      "source_path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+      "source_sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+      "cleaned_candidate_sha256": "33676af74d6cecfbc729452f41a6ca05f70b772a167084823b5a0657c62f061d",
+      "pixel_integrity": {
+        "rgb_matches_source_crop": true,
+        "alpha_only_subtraction": true,
+        "crop_preserves_all_retained_pixels": true,
+        "removed_pixels_verified": 3,
+        "semantic_approval": false
+      }
+    }
+  ],
+  "technical_tests_passed": 40,
+  "semantic_verified": 0,
+  "r2_blocked": true,
+  "paid_calls": 0
+}
