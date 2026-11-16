@@ -1,0 +1,348 @@
+{
+  "schema": "videoforge/wardrobe-exclusion-candidates/v1",
+  "status": "EXCLUSION_PROPOSALS_ONLY",
+  "results": [
+    {
+      "actor": "aldric",
+      "region": "barba",
+      "side": "a",
+      "source_path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+      "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "reason_unverified": "abaixo do queixo: gola/pele possível, conferir",
+      "candidate_exclusion": {
+        "before": 389,
+        "removed": 11,
+        "after": 378,
+        "fraction_removed_percent": 2.83,
+        "exclusion_polygons_native_px": [
+          [
+            [
+              515,
+              339
+            ],
+            [
+              524,
+              339
+            ],
+            [
+              524,
+              359
+            ],
+            [
+              515,
+              359
+            ]
+          ]
+        ]
+      },
+      "cleaned_candidate_path": "assets/qa-roi-exclusions-v2/aldric-barba-a-EXCLUSAO-CANDIDATA.png",
+      "cleaned_candidate_sha256": "8c5c84f01f6ed9e0a9ff738b8a5e657fa11113863bc3c6fa96e87eabf2de2911",
+      "cleaned_candidate_crop_xyxy": [
+        499,
+        307,
+        555,
+        354
+      ],
+      "semantically_verified": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "aldric",
+      "region": "barba",
+      "side": "b",
+      "source_path": "assets/cenas-mae/cena-02.png",
+      "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+      "reason_unverified": "abertura da boca: candidato, risco de retirar bigode",
+      "candidate_exclusion": {
+        "before": 908,
+        "removed": 102,
+        "after": 806,
+        "fraction_removed_percent": 11.23,
+        "exclusion_polygons_native_px": [
+          [
+            [
+              746,
+              297
+            ],
+            [
+              766,
+              297
+            ],
+            [
+              771,
+              310
+            ],
+            [
+              749,
+              310
+            ]
+          ]
+        ]
+      },
+      "cleaned_candidate_path": "assets/qa-roi-exclusions-v2/aldric-barba-b-EXCLUSAO-CANDIDATA.png",
+      "cleaned_candidate_sha256": "5dde6a366e8596d66f0c0ce424fdcedce89c0aa951c2ab4a7a2652affed22180",
+      "cleaned_candidate_crop_xyxy": [
+        719,
+        269,
+        788,
+        335
+      ],
+      "semantically_verified": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "aldric",
+      "region": "tecido_externo",
+      "side": "a",
+      "source_path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+      "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "reason_unverified": "faixa estreita diagonal da lança sobre manto, conferir orientação",
+      "candidate_exclusion": {
+        "before": 6091,
+        "removed": 701,
+        "after": 5390,
+        "fraction_removed_percent": 11.51,
+        "exclusion_polygons_native_px": [
+          [
+            [
+              385,
+              467
+            ],
+            [
+              396,
+              462
+            ],
+            [
+              427,
+              548
+            ],
+            [
+              416,
+              555
+            ]
+          ]
+        ]
+      },
+      "cleaned_candidate_path": "assets/qa-roi-exclusions-v2/aldric-tecido_externo-a-EXCLUSAO-CANDIDATA.png",
+      "cleaned_candidate_sha256": "6070f8bc07de373659d27b5a405382bc5ee150d2524545369627ce854ad88bb7",
+      "cleaned_candidate_crop_xyxy": [
+        364,
+        423,
+        460,
+        603
+      ],
+      "semantically_verified": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "aldric",
+      "region": "tecido_externo",
+      "side": "b",
+      "source_path": "assets/cenas-mae/cena-02.png",
+      "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+      "reason_unverified": "nenhuma exclusão confiável desenhada",
+      "candidate_exclusion": {
+        "before": 7445,
+        "removed": 0,
+        "after": 7445,
+        "fraction_removed_percent": 0.0,
+        "exclusion_polygons_native_px": []
+      },
+      "cleaned_candidate_path": "assets/qa-roi-exclusions-v2/aldric-tecido_externo-b-EXCLUSAO-CANDIDATA.png",
+      "cleaned_candidate_sha256": "70ad2c17ebdbeb33159dd4ae0a9b70c431eb256960d7547c4a012cbe8fb8a406",
+      "cleaned_candidate_crop_xyxy": [
+        675,
+        478,
+        764,
+        722
+      ],
+      "semantically_verified": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "aldric",
+      "region": "painel_central",
+      "side": "a",
+      "source_path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+      "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "reason_unverified": "faixa da cintura e bordado sobreposto, risco de remover tecido verdadeiro",
+      "candidate_exclusion": {
+        "before": 4257,
+        "removed": 253,
+        "after": 4004,
+        "fraction_removed_percent": 5.94,
+        "exclusion_polygons_native_px": [
+          [
+            [
+              507,
+              484
+            ],
+            [
+              568,
+              484
+            ],
+            [
+              568,
+              497
+            ],
+            [
+              507,
+              497
+            ]
+          ]
+        ]
+      },
+      "cleaned_candidate_path": "assets/qa-roi-exclusions-v2/aldric-painel_central-a-EXCLUSAO-CANDIDATA.png",
+      "cleaned_candidate_sha256": "ac7fdb2ef2facb9a6e56dd23252381201d5b640be690ea3975e19e4194286731",
+      "cleaned_candidate_crop_xyxy": [
+        483,
+        415,
+        592,
+        599
+      ],
+      "semantically_verified": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "aldric",
+      "region": "painel_central",
+      "side": "b",
+      "source_path": "assets/cenas-mae/cena-02.png",
+      "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+      "reason_unverified": "cinto central e ornamentos, confirmar",
+      "candidate_exclusion": {
+        "before": 3837,
+        "removed": 241,
+        "after": 3596,
+        "fraction_removed_percent": 6.28,
+        "exclusion_polygons_native_px": [
+          [
+            [
+              801,
+              566
+            ],
+            [
+              848,
+              566
+            ],
+            [
+              848,
+              583
+            ],
+            [
+              801,
+              583
+            ]
+          ]
+        ]
+      },
+      "cleaned_candidate_path": "assets/qa-roi-exclusions-v2/aldric-painel_central-b-EXCLUSAO-CANDIDATA.png",
+      "cleaned_candidate_sha256": "249a9f730a1ab276673f2a0b65a17532d025dab54a1ee2ea98ab326706e47e8d",
+      "cleaned_candidate_crop_xyxy": [
+        772,
+        514,
+        866,
+        764
+      ],
+      "semantically_verified": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "elara",
+      "region": "corpete_roxo_palacio",
+      "side": "a",
+      "source_path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "source_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "reason_unverified": "joia/ombro no limite superior do decote",
+      "candidate_exclusion": {
+        "before": 17321,
+        "removed": 219,
+        "after": 17102,
+        "fraction_removed_percent": 1.26,
+        "exclusion_polygons_native_px": [
+          [
+            [
+              371,
+              1139
+            ],
+            [
+              403,
+              1143
+            ],
+            [
+              413,
+              1171
+            ],
+            [
+              387,
+              1175
+            ]
+          ]
+        ]
+      },
+      "cleaned_candidate_path": "assets/qa-roi-exclusions-v2/elara-corpete_roxo_palacio-a-EXCLUSAO-CANDIDATA.png",
+      "cleaned_candidate_sha256": "5d098c75d3ef450aecde2e883f83ac378198f2a8d307ce947f3c3ddbdc47f361",
+      "cleaned_candidate_crop_xyxy": [
+        277,
+        1131,
+        432,
+        1487
+      ],
+      "semantically_verified": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "elara",
+      "region": "corpete_roxo_palacio",
+      "side": "b",
+      "source_path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+      "source_sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+      "reason_unverified": "broche próximo ao ombro, baixa resolução",
+      "candidate_exclusion": {
+        "before": 590,
+        "removed": 3,
+        "after": 587,
+        "fraction_removed_percent": 0.51,
+        "exclusion_polygons_native_px": [
+          [
+            [
+              750,
+              321
+            ],
+            [
+              766,
+              325
+            ],
+            [
+              768,
+              349
+            ],
+            [
+              758,
+              355
+            ]
+          ]
+        ]
+      },
+      "cleaned_candidate_path": "assets/qa-roi-exclusions-v2/elara-corpete_roxo_palacio-b-EXCLUSAO-CANDIDATA.png",
+      "cleaned_candidate_sha256": "33676af74d6cecfbc729452f41a6ca05f70b772a167084823b5a0657c62f061d",
+      "cleaned_candidate_crop_xyxy": [
+        710,
+        305,
+        779,
+        394
+      ],
+      "semantically_verified": false,
+      "official_art_usable": false
+    }
+  ],
+  "candidate_count": 8,
+  "verified_semantic_masks": 0,
+  "official_roi_pairs_ready": 0,
+  "r2_blocked": true,
+  "owner_rejections_remain": true,
+  "paid_calls": 0,
+  "image_sources_unchanged": true,
+  "official_mp4": false,
+  "youtube_uploaded": false
+}
