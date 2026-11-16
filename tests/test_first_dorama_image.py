@@ -34,7 +34,7 @@ class FirstDoramaImageTests(unittest.TestCase):
         kael=next(r for r in sources if r["actor"]=="kael")
         self.assertEqual(kael["sha256"],
                          "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f")
-        self.assertTrue(kael["bytes"].startswith(b"\\x89PNG"))
+        self.assertEqual(kael["bytes"][:4], bytes((137, 80, 78, 71)))
     def test_duplicate_is_not_accepted_for_different_asset(self):
         from videoforge.art_request_gate import decide
         gate=decide("alchemy-lab","mmorpg-conquiste-a-princesa-ep01",ASSET,
