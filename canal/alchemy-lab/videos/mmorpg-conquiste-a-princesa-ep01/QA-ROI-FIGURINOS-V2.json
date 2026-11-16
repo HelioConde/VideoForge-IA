@@ -1,0 +1,269 @@
+{
+  "schema": "videoforge/wardrobe-roi-review/v1",
+  "status": "six_existing_images_prepared_for_roi_labeling",
+  "previews": {
+    "aldric": {
+      "path": "QA-ALDRIC-ROI-PROPOSTAS-V2.jpg",
+      "sha256": "143670153c76fc7b4305df647858899f657878d17633b43079d9ba2f19f1be6c",
+      "sources": [
+        {
+          "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+          "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+          "label": "Aldric C01 (candidato sentado)",
+          "approved_full_costume": false
+        },
+        {
+          "path": "assets/cenas-mae/cena-02.png",
+          "sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+          "label": "C02 (pose nao verificada)",
+          "approved_full_costume": false
+        },
+        {
+          "path": "assets/cenas-mae/cena-03.png",
+          "sha256": "36f715186c450c3860091412bf4de68e2eb7f09ae25f4f7d56fdb04d8e09d47c",
+          "label": "C03 (pose nao verificada)",
+          "approved_full_costume": false
+        }
+      ],
+      "draft_polygons": [
+        {
+          "id": "coroa-cabelo-rosto",
+          "vertices": [
+            [
+              468,
+              302
+            ],
+            [
+              482,
+              286
+            ],
+            [
+              500,
+              275
+            ],
+            [
+              526,
+              271
+            ],
+            [
+              547,
+              281
+            ],
+            [
+              562,
+              296
+            ],
+            [
+              572,
+              316
+            ],
+            [
+              563,
+              345
+            ],
+            [
+              550,
+              361
+            ],
+            [
+              539,
+              379
+            ],
+            [
+              497,
+              382
+            ],
+            [
+              477,
+              365
+            ],
+            [
+              465,
+              335
+            ]
+          ],
+          "semantic_beard_or_center_confirmed": false
+        },
+        {
+          "id": "manto-esquerdo",
+          "vertices": [
+            [
+              427,
+              364
+            ],
+            [
+              466,
+              352
+            ],
+            [
+              474,
+              392
+            ],
+            [
+              465,
+              440
+            ],
+            [
+              444,
+              496
+            ],
+            [
+              426,
+              568
+            ],
+            [
+              413,
+              620
+            ],
+            [
+              335,
+              623
+            ],
+            [
+              343,
+              555
+            ],
+            [
+              363,
+              488
+            ],
+            [
+              379,
+              418
+            ]
+          ],
+          "semantic_beard_or_center_confirmed": false
+        },
+        {
+          "id": "manto-direito",
+          "vertices": [
+            [
+              571,
+              362
+            ],
+            [
+              616,
+              364
+            ],
+            [
+              645,
+              418
+            ],
+            [
+              662,
+              481
+            ],
+            [
+              684,
+              559
+            ],
+            [
+              708,
+              619
+            ],
+            [
+              616,
+              621
+            ],
+            [
+              596,
+              561
+            ],
+            [
+              580,
+              488
+            ],
+            [
+              569,
+              428
+            ]
+          ],
+          "semantic_beard_or_center_confirmed": false
+        }
+      ]
+    },
+    "elara": {
+      "path": "QA-ELARA-ROI-CENAS-V2.jpg",
+      "sha256": "e761062c6fa50711ebb6ebb096d936516b1aae2e9adecd113efed3c6ad41fb89",
+      "sources": [
+        {
+          "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+          "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "label": "Close Elara (fonte chat)",
+          "approved_full_costume": false
+        },
+        {
+          "path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+          "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+          "label": "C12-P02 fonte cinematografica",
+          "approved_full_costume": false
+        },
+        {
+          "path": "assets/cenas-mae/cena-12.png",
+          "sha256": "0746e924a0aed132eb596c5442265a38e65d43b4386c071ceedd466ad7e1499e",
+          "label": "C12 antiga (nao canonica)",
+          "approved_full_costume": false
+        }
+      ],
+      "draft_polygons": []
+    }
+  },
+  "region_slots": [
+    {
+      "actor": "aldric",
+      "semantic_region": "beard",
+      "source_a_sha256": null,
+      "source_b_sha256": null,
+      "source_a_polygon": null,
+      "source_b_polygon": null,
+      "mask_pair_human_verified": false,
+      "auto_compare_ready": false,
+      "status": "awaiting_semantically_verified_region_pair"
+    },
+    {
+      "actor": "aldric",
+      "semantic_region": "garment_outer",
+      "source_a_sha256": null,
+      "source_b_sha256": null,
+      "source_a_polygon": null,
+      "source_b_polygon": null,
+      "mask_pair_human_verified": false,
+      "auto_compare_ready": false,
+      "status": "awaiting_semantically_verified_region_pair"
+    },
+    {
+      "actor": "aldric",
+      "semantic_region": "garment_center",
+      "source_a_sha256": null,
+      "source_b_sha256": null,
+      "source_a_polygon": null,
+      "source_b_polygon": null,
+      "mask_pair_human_verified": false,
+      "auto_compare_ready": false,
+      "status": "awaiting_semantically_verified_region_pair"
+    },
+    {
+      "actor": "elara",
+      "semantic_region": "royal_bodice",
+      "source_a_sha256": null,
+      "source_b_sha256": null,
+      "source_a_polygon": null,
+      "source_b_polygon": null,
+      "mask_pair_human_verified": false,
+      "auto_compare_ready": false,
+      "status": "awaiting_semantically_verified_region_pair"
+    }
+  ],
+  "king_polygons_from_unapproved_v1_rig": true,
+  "king_c02_c03_pose_known": false,
+  "actual_beard_roi_verified": false,
+  "actual_outer_center_roi_verified": false,
+  "actual_elara_bodice_roi_verified": false,
+  "approved_full_costumes": 0,
+  "owner_rejected_candidate_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "automatic_approval": false,
+  "provider_calls": 0,
+  "source_pngs_unchanged": true,
+  "official_video_created": false,
+  "youtube_uploaded": false
+}
