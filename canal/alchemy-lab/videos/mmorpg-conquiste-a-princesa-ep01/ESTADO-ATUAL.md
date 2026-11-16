@@ -1,5 +1,10 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — QA iluminação integrado (PR #64)
+
+Commit [5285f51](https://github.com/HelioConde/VideoForge-IA/commit/5285f5150b73279fd26941373e31508b22f6977a) confirmado na main. Workflow [43944144582](https://github.com/HelioConde/VideoForge-IA/actions/runs/43944144582) SUCCESS: 23 testes ROI e recálculo das oito regiões sem escrever imagens. Fixtures de exposição testam o mecanismo, não aprovam os figurinos reais. Nenhuma máscara modificada nesta rodada; 0/8 aprovações semânticas e R2 bloqueada. Próximo passo: revisar as fontes completas, cobertura e iluminação; não definir flags de aprovação por histograma.
+
+
 ## 16/11/2026 — Separar alerta cromático de dúvida de iluminação
 
 Correção em wardrobe_roi_color: divergência forte de histograma com lighting_differences_may_be_present verdadeiro, ausente ou inválido retorna EVIDENCIA_INSUFICIENTE, preservando métricas e chromatic_alert, sem reprovação automática nova. Só False booleano, após revisão externa, permite a reprovação cromática em ROIs verificadas. Nunca preencher esse campo apenas para obter resultado. Reprovações prévias do proprietário continuam ativas.

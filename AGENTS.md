@@ -1,5 +1,7 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+**QA ILUMINACAO INTEGRADO — 16/11/2026:** PR #64, main 5285f51, run 43944144582 SUCCESS (23 testes). Dúvida de iluminação impede reprovação cromática automática nova, nunca desfaz reprovação humana existente. Nenhum PNG mudou; R2 bloqueada.
+
 **QA ILUMINACAO — 16/11/2026:** histogramas com iluminacao nao descartada nao provam troca de tecido: wardrobe_roi_color retorna EVIDENCIA_INSUFICIENTE em alertas fortes. Reprovacoes conhecidas permanecem. Nunca marcar lighting_differences_may_be_present=false sem revisao real. Ver QA-ILUMINACAO-ROI-V3.md no episodio e estado de integracao atual.
 
 **V3 PUBLICADA — 16/11/2026:** PR #63 integrado em f5a7f3e; QA PR 43942403827 (22 testes) e produtor main 43942596191 (8 testes/exportação) SUCCESS. Saída f3ce91e. Conferir QA-ROI-EXCLUSOES-V3.json/jpg e REVISAR-MASCARAS-FILTRADAS-V3.md. As sete máscaras não alteradas e a candidata Aldric exterior A continuam SEM aprovação semântica, R2 bloqueada. Os registros de branch pendente abaixo são históricos.
