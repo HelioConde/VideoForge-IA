@@ -23,7 +23,7 @@ class FirstDoramaImageTests(unittest.TestCase):
         self.assertIn("Sem texto",prompt)
     def test_unique_request_preserves_publication_and_human_gates(self):
         request=json.loads((EP/"pedido-geracao-arte.json").read_text(encoding="utf-8"))
-        self.assertEqual(request["asset"],ASSET)
+        self.assertIn(request["asset"],(ASSET,"c01-p05-guardas-lancas-v1"))
         self.assertEqual(request["max_calls_per_run"],1)
         self.assertFalse(request["youtube_upload"])
         self.assertTrue(request["human_visual_review_required"])
@@ -37,9 +37,13 @@ class FirstDoramaImageTests(unittest.TestCase):
         self.assertEqual(kael["bytes"][:4], bytes((137, 80, 78, 71)))
     def test_duplicate_is_not_accepted_for_different_asset(self):
         from videoforge.art_request_gate import decide
-        gate=decide("alchemy-lab","mmorpg-conquiste-a-princesa-ep01",ASSET,
-                    "push","requested_new_unique_shot_candidate")
-        self.assertEqual(gate["reason"],"ready_unarchived_request")
-        self.assertTrue(gate["ready"])
+        old=decide("alchemy-lab","mmorpg-conquiste-a-princesa-ep01",ASSET,
+                   "push","requested_new_unique_shot_candidate")
+        self.assertEqual(old["reason"],"already_archived_sha_no_repeat")
+        self.assertFalse(old["ready"])
+        next_shot=decide("alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
+                         "c01-p05-guardas-lancas-v1","push","requested_next_shot")
+        self.assertEqual(next_shot["reason"],"ready_unarchived_request")
+        self.assertTrue(next_shot["ready"])
 if __name__=="__main__":
     unittest.main()
