@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Fragmentação de máscaras V3 medida no GitHub
+
+- Novo módulo `videoforge/wardrobe_roi_fragmentation.py` executa contagem de componentes 8-conectados diretamente dos oito PNGs arquivados por SHA (RGB/alfa conferidos), somente leitura, sem geração de IA. O workflow [43951026350](https://github.com/HelioConde/VideoForge-IA/actions/runs/43951026350) concluiu SUCCESS com sete testes.
+- [Relatório com oito regiões](QA-ROI-FRAGMENTACAO-V3.md): prioridade alta para **painel central Aldric B (em pé): 225 componentes, maior área com apenas 14,63%**; painel A tem 57 componentes, maior 68,08%. Manto sentado/em pé tem 20/23 componentes; corpete A/B tem 36/10, barba A/B tem 6/2.
+- Interpretação: fragmentos pequenos podem ser legítimos (bordados/iluminação). Não é evidência de defeito semântico isoladamente. Não preencher lacunas automaticamente nem promover figurino. Revisar as pranchas nativas 1x, sobretudo [painel central B](assets/qa-roi-review-native-v3/aldric-painel_central-b-CONTEXTO-1X.png), antes de alterar parâmetros HSV.
+- Estado oficial mantido: 0/8 máscaras aprovadas, 0/4 pares canônicos habilitados; Aldric e Elara reprovados, R2/MP4/YouTube bloqueados.
+
 ## 16/11/2026 — Pranchas de revisão com pixels fonte nativos 1:1
 
 - `videoforge/wardrobe_roi_native_review.py` e testes novos verificam SHA e integridade V3 antes de criar 8 imagens PNG, cada uma com fonte original, alfa antes, pixels removidos e alfa após exclusão **sem redimensionar os pixels da área**.
