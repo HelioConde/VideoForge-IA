@@ -125,5 +125,16 @@
     "new_mp4": false,
     "operator": "videoforge/remake_autopilot.py",
     "no_extra_paid_costs": false
+  },
+  "approved_visual_anchor": {
+    "id": "C01-P04",
+    "registry": "CONTINUIDADE-VISUAL-APROVADA-C01-P04.json",
+    "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+    "approved_source": "user_2026-11-16",
+    "approved_for": "continuity_of_visible_character_design_and_visual_style",
+    "source_image_must_be_attached_to_future_image_edit": true,
+    "no_text_only_approximation": true,
+    "alar_not_present_typo_guard": "Elara is absent; do not use as source of her identity",
+    "future_shots_still_need_visual_QA": true
   }
 }

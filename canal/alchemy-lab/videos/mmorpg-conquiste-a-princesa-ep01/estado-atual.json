@@ -1933,5 +1933,25 @@
     "official_rig_ready": false,
     "youtube_uploaded": false,
     "next_step": "User should review newly generated PNG for continuity of Kael, Aldric silver beard and burgundy center/dark exterior, two guards and crossed spears; if accepted, only then prepare one shot-specific rig with non-distorting dimensions."
+  },
+  "dorama_approved_visual_reference_20261116": {
+    "schema": "videoforge/visual-continuity-checkpoint/v1",
+    "approved_on": "2026-11-16",
+    "anchor_shot": "C01-P04",
+    "anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+    "approved_for": "same_character_design_and_cinematic_style_in_future_throne_room_shots",
+    "registry": "CONTINUIDADE-VISUAL-APROVADA-C01-P04.json",
+    "rules": "REGRA-CONTINUIDADE-PERSONAGENS-C01-P04.md",
+    "test_workflow": 43969088308,
+    "qa_conclusion": "success",
+    "reusing_exact_png_bytes_in_image_edits": true,
+    "next_shot": "C01-P05",
+    "next_asset": "c01-p05-guardas-lancas-v1",
+    "same_faces_outfits_required": true,
+    "strict_style_consistency": true,
+    "old_rejected_art_still_rejected": true,
+    "automatic_future_visual_approval": false,
+    "ep01_official_mp4": false,
+    "youtube_uploaded": false
   }
 }

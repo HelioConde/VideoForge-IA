@@ -588,3 +588,12 @@ PR https://github.com/HelioConde/VideoForge-IA/pull/65 integrado no commit 69e6d
 
 - Run [#43965460068](https://github.com/HelioConde/VideoForge-IA/actions/runs/43965460068) SUCCESS. Fonte original Kael anexada e conferida SHA; criado e arquivado PNG `assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png`, SHA `605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc`, 941×1672; visual ainda não aprovada. Sem imagem do chat usada, sem YouTube.
 - Registro e checklist: `REVISAR-IMAGEM-INICIAL-C01-P04-V3.md`. A primeira tentativa (run 43965291280) foi encerrada antes de chamar o provedor por um teste pré-API incorreto, corrigido em commit próprio. Retrabalho evitado via asset idempotente e arquivo SHA.
+
+## 16/11/2026 — Referência C01-P04 escolhida para toda a continuidade do tribunal
+
+- O usuário aprovou o visual da nova imagem C01-P04 ("tá bonito") e determinou que as imagens seguintes preservem as MESMAS características dos personagens. Registrada a aprovação **como âncora visual/identidade visível e estilo**, não como aprovação retrospectiva de máscaras antigas.
+- Criado [registro SHA com regras por personagem](CONTINUIDADE-VISUAL-APROVADA-C01-P04.json) e [manual de continuidade](REGRA-CONTINUIDADE-PERSONAGENS-C01-P04.md). O gerador `videoforge.production_art` passou a usar `videoforge.dorama_continuity`: nas novas tomadas elegíveis, envia o **PNG original C01-P04 em /v1/images/edits**, validando SHA/manifests/cast e rejeitando ausência da fonte ANTES do provedor.
+- [Workflow QA #43969088308](https://github.com/HelioConde/VideoForge-IA/actions/runs/43969088308) **SUCCESS**: testes de bytes PNG, SHA, elenco, geração por imagem edit e impedimento de recuperar imagens já rejeitadas.
+- Próximo plano oficial: **C01-P05**, close dos guardas/lanças, mantendo sua aparência, sem duplicar braços ou alterar o salão. O asset `c01-p05-guardas-lancas-v1` já está no catálogo e a geração deve vir somente do workflow do GitHub.
+- A imagem C01-P04 foi produzida em 941×1672; manter pixels originais. Elara não aparece e deve ter referência própria quando for sua vez. Nenhuma publicação é liberada por aprovação de estilo.
+
