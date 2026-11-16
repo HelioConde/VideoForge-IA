@@ -1,5 +1,19 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Candidatas V3 e integridade de pixels (PR #63)
+
+Corrigida a direção da exclusão no tecido externo de Aldric sentado, após inspeção do original: V2 atingia dobras acima da haste. V3 recupera 472 pixels e remove outros 258 em relação à V2; total excluído frente à máscara inicial: 487. Sete máscaras restantes idênticas por SHA. V2 e fontes originais preservadas. Não é aprovação semântica: EVIDENCIA_INSUFICIENTE nas oito regiões.
+
+Programa valida RGB original, alfa somente subtrativo, recorte completo e contagem. Áreas protegidas bloqueiam exclusões sobre tecido anotado. 22 testes locais de ROI passaram; CI da branch será conferida antes do merge. Novo workflow qa-wardrobe-roi-pr.yml não gera imagens nem escreve no repositório. Produtor existente exporta V3 sem sobrescrever V2.
+
+Arquivos: ROI-EXCLUSOES-CANDIDATAS-V3.json, QA-ROI-EXCLUSOES-V3.json, QA-ROI-EXCLUSOES-V3.jpg e assets/qa-roi-exclusions-v3/. Revisão: REVISAR-MASCARAS-FILTRADAS-V3.md. R2, MP4 e YouTube continuam bloqueados, zero chamadas pagas. Próximo passo: validar CI e integração; revisar barba/boca/gola, bordados e corpete pequeno contra as fontes completas antes de alterar contrato semântico.
+
+
+## 16/11/2026 — Integridade dos pixels das exclusões (branch de revisão)
+
+Validador integrado a `wardrobe_roi_exclusions.run`: RGB do PNG deve coincidir com a fonte no recorte; alfa só pode ser mantido ou zerado; contagem removida deve conferir; recorte deve conter todos os pixels retidos. Ver `QA-ROI-INTEGRIDADE-PIXELS-V2.json`. Oito regiões reais passaram; 6 testes de exclusão e 34 testes relacionados passaram localmente. Base main `976e779`; esta mudança ainda não foi integrada nem executada em Actions. Não altera polígonos, PNGs arquivados, contrato oficial ou aprovação: 0 máscaras semânticas, R2/MP4/YouTube bloqueados. Próximo passo: revisar este patch e validar em CI; depois conferir as exclusões sobre os originais completos.
+
+
 ## 16/11/2026 — exclusão manual candidata em oito recortes (QA offline)
 
 - `videoforge/wardrobe_roi_exclusions.py` usa `ROI-EXCLUSOES-CANDIDATAS-V2.json`, verifica fontes PNG originais por SHA, gera oito imagens transparentes em `assets/qa-roi-exclusions-v2/` e a [prancha antes/depois](QA-ROI-EXCLUSOES-V2.jpg) com [relatório](QA-ROI-EXCLUSOES-V2.json), sem sobrescrever máscaras anteriores ou alterar contrato canônico.

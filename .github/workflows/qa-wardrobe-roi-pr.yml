@@ -1,0 +1,25 @@
+name: "VideoForge - QA ROI sem geracao"
+on:
+  pull_request:
+    paths:
+      - 'videoforge/wardrobe_roi_*.py'
+      - 'tests/test_wardrobe_roi_*.py'
+      - '.github/workflows/qa-wardrobe-roi*.yml'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ROI-*.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  roi-integrity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Validar fontes, geometria, exclusoes e gates
+        run: python -m unittest discover -s tests -p 'test_wardrobe_roi_*.py' -v
+      - name: Recalcular oito regioes sem gravar imagens
+        run: python -m videoforge.wardrobe_roi_exclusions
