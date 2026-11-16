@@ -1586,5 +1586,32 @@
     "source_images_unchanged": true,
     "full_episode_mp4_created": false,
     "youtube_uploaded": false
+  },
+  "wardrobe_semantic_roi_20261116": {
+    "status": "six_source_previews_created_four_regions_pending_semantic_validation",
+    "preview_aldric": "QA-ALDRIC-ROI-PROPOSTAS-V2.jpg",
+    "preview_elara": "QA-ELARA-ROI-CENAS-V2.jpg",
+    "preview_guide": "REVISAR-ROI-FIGURINOS-V2.md",
+    "preview_manifest": "QA-ROI-FIGURINOS-V2.json",
+    "preview_workflow_run": 43885264961,
+    "preview_workflow_result": "success_7_tests",
+    "verified_regions": 0,
+    "required_regions": 4,
+    "semantic_pair_contract": "CONTRATO-ROI-SEMANTICAS-V2.json",
+    "semantic_pair_results": "QA-COMPARACAO-ROI-SEMANTICA-V2.json",
+    "semantic_review": "RELATORIO-ROI-SEMANTICA-V2.md",
+    "semantic_comparison_workflow_run": 43885838968,
+    "semantic_comparison_workflow_result": "success_3_tests",
+    "sample_synthetic_red_black_inversion_auto_rejected": true,
+    "actual_pairs_automatically_rejected_without_semantic_masks": 0,
+    "actual_pairs_returned_evidence_insufficient": 4,
+    "full_costume_approved": false,
+    "owner_rejection_still_active": true,
+    "old_v1_polygons_are_not_semantically_approved": true,
+    "provider_calls": 0,
+    "image_sources_unchanged": true,
+    "r2_generated": false,
+    "official_mp4_created": false,
+    "youtube_uploaded": false
   }
 }

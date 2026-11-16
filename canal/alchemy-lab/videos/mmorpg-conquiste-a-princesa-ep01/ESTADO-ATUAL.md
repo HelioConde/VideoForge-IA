@@ -1,5 +1,11 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — ROIs reais e comparador de cores preparados, sem falsificar aprovação
+
+- [Run 43885264961](https://github.com/HelioConde/VideoForge-IA/actions/runs/43885264961) **SUCCESS (7 testes)**: duas pranchas de 6 imagens reais `QA-ALDRIC-ROI-PROPOSTAS-V2.jpg` (C01 com polígonos do rig V1, mais C02/C03 com pose/identidade por verificar) e `QA-ELARA-ROI-CENAS-V2.jpg` (close original, câmera C12 original e cena V1), com manifestos SHA `QA-ROI-FIGURINOS-V2.json` e [guia de conferência](REVISAR-ROI-FIGURINOS-V2.md). **Os polígonos são candidatos V1**, não máscaras individuais de barba, centro/exterior da roupa ou peitoral.
+- [Run 43885838968](https://github.com/HelioConde/VideoForge-IA/actions/runs/43885838968) **SUCCESS (3 testes)**: `videoforge/wardrobe_roi_color.py` compara cromaticamente pares de regiões apenas quando há SHA correto, pose/variante e polígonos semanticamente verificados, com teste sintético reproduzindo vermelho→preto e REPROVAÇÃO automática. Contrato `CONTRATO-ROI-SEMANTICAS-V2.json`. Em imagens reais, `QA-COMPARACAO-ROI-SEMANTICA-V2.json` mostra **4/4 regiões com EVIDÊNCIA INSUFICIENTE**; nenhuma aprovação/reprovação numérica foi inventada. A reprovação anterior do usuário para Aldric (cores/barba) e Elara (roxo do vestido) permanece em vigor.
+- **Para avançar com validação efetiva:** conferir a identidade e pose da C02/C03, delimitar máscaras de barba/tecido externo/centro nas duas poses e corpete de Elara nas duas imagens palacianas. O comparador só pode gerar alertas/reprovações por diferenças cromáticas; histogramas semelhantes não bastam para aprovação visual completa. Nenhuma imagem paga, MP4 oficial ou upload YouTube nesta etapa.
+
 ## 16/11/2026 — medição REAL de pixels em camadas de Aldric, abstendo-se sem máscara de Elara
 
 - [Workflow 43882516901](https://github.com/HelioConde/VideoForge-IA/actions/runs/43882516901) **SUCCESS**, 9 testes. Nova auditoria SHA-verificada e offline em `QA-CORES-PIXELS-FIGURINO-V2.json` e [relatório de cores reais](REVISAR-CORES-MEDIDAS-FIGURINO-V2.md). Foram auditados 6 PNGs; **4 camadas RGBA de Aldric** com alfa mensurável, **2 arquivos RGB de Elara** sem máscara semântica adequada (dados de cor da roupa omitidos deliberadamente).
