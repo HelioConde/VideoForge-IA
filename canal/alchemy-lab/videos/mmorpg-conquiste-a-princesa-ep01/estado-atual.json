@@ -1862,5 +1862,34 @@
       "semantic_verification": false,
       "official_approval": false
     }
+  },
+  "first_user_review_animation_20261116": {
+    "status": "mp4_preview_rendered_qa_passed",
+    "user_authorized_preview": true,
+    "shot": "C01-P03",
+    "render_workflow_run_id": 43955654094,
+    "workflow_conclusion": "success",
+    "artifact_id": 14268694739,
+    "artifact_name": "directed-rig-alchemy-lab-mmorpg-conquiste-a-princesa-ep01-C01-P03-43955654094",
+    "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43955654094/artifacts/14268694739",
+    "mp4_filename": "directed-rig-preview.mp4",
+    "mp4_sha256": "d84361f693f4e1c83b4d5ad7bd7ed55c253044e672fbf80af803ace58b865481",
+    "frame_count": 90,
+    "fps": 30,
+    "resolution": [
+      1080,
+      1920
+    ],
+    "duration_seconds": 3,
+    "codec": "h264",
+    "audio_present": false,
+    "true_articulated_motion_detected": true,
+    "subtle_breathing_pass": true,
+    "unapproved_candidate_art": true,
+    "user_visual_review_pending": true,
+    "new_image_calls": 0,
+    "r2_official_release": false,
+    "youtube_uploaded": false,
+    "next_action": "Review rendered MP4 and 5 frames with user; record concrete feedback; optimize approved character motion for further shots."
   }
 }
