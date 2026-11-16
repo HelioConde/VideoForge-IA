@@ -167,10 +167,10 @@ O [run 43745676658](https://github.com/HelioConde/VideoForge-IA/actions/runs/437
 
 <!-- REMAKE-AUTOPILOT-START -->
 ### Diagnóstico autônomo mais recente
-- Etapa: generate_character_bible
+- Etapa: review_identity_reference
 - Alvo: character-bible
-- Bloqueio: no_verified_reference_png
-- Despacho de geração permitido: True
+- Bloqueio: archived_png_verified_human_review_pending
+- Despacho de geração permitido: False
 - Sem novas imagens, vídeo ou aprovação humana neste diagnóstico.
 <!-- REMAKE-AUTOPILOT-END -->
 

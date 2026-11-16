@@ -36,10 +36,11 @@
   "identity_anchors": [
     {
       "id": "character-bible",
-      "path": null,
-      "sha256": null,
-      "status": "missing",
-      "human_approved": false
+      "path": "assets/geracoes/production-art-request/43784005362/character-bible.png",
+      "sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
+      "status": "candidate_human_review_pending",
+      "human_approved": false,
+      "run_id": 43784005362
     },
     {
       "id": "throne-hall",

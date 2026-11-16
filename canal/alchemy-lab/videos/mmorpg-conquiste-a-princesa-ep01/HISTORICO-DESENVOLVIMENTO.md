@@ -397,3 +397,8 @@ Acrescentar uma seção datada com: objetivo e cena, arquivos alterados, commit 
 
 - Reserva unica de recuperacao persistida ANTES de redisparar o workflow de arte. Nenhuma imagem, cobranca confirmada, aprovacao humana ou upload ao criar reserva.
 - Proxy health autenticado e elegibilidade foram exigidos pelo workflow. Sem resultado de arte ainda; proximo passo: geracao e QA por SHA.
+
+## 2026-11-16T01:09:47Z — diagnóstico automático de retomada
+
+- Etapa: review_identity_reference; alvo: character-bible; bloqueio: archived_png_verified_human_review_pending.
+- Apenas verificação de estado/arquivos. Nenhuma mídia criada ou aprovação inventada.
