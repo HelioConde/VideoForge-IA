@@ -1,0 +1,47 @@
+name: "VideoForge - publicar pranchas ROI V3 em pixels nativos"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/wardrobe_roi_native_review.py'
+      - 'tests/test_wardrobe_roi_native_review.py'
+      - '.github/workflows/qa-wardrobe-roi-native-review.yml'
+permissions:
+  contents: write
+concurrency:
+  group: vf-native-roi-review
+  cancel-in-progress: false
+jobs:
+  prepare-native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Testar pixels nativos e integridade sem aprovar
+        run: python -m unittest tests.test_wardrobe_roi_native_review tests.test_wardrobe_roi_archive -v
+      - name: Gerar oito pranchas PNG lado a lado 1 para 1
+        run: python -m videoforge.wardrobe_roi_native_review --sync
+      - name: Versionar somente as pranchas de QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'videoforge-roi-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f "$EP/assets/qa-roi-review-native-v3/"
+          git add "$EP/QA-ROI-REVISAO-NATIVA-V3.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(dorama): arquivar oito pranchas ROI nativas 1x sem aprovacao'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
