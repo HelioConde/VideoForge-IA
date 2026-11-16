@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Separar alerta cromático de dúvida de iluminação
+
+Correção em wardrobe_roi_color: divergência forte de histograma com lighting_differences_may_be_present verdadeiro, ausente ou inválido retorna EVIDENCIA_INSUFICIENTE, preservando métricas e chromatic_alert, sem reprovação automática nova. Só False booleano, após revisão externa, permite a reprovação cromática em ROIs verificadas. Nunca preencher esse campo apenas para obter resultado. Reprovações prévias do proprietário continuam ativas.
+
+Regressão reproduzida: fixture sintética com mesma proporção RGB e exposição 10x menor era reprovada; após correção mantém incerteza. Controle vermelho versus preto com iluminação descartada continua reprovado. 23 testes ROI locais passaram. PNGs, polígonos V3 e contrato real não foram alterados: 0/8 máscaras semânticas e 0/4 pares, R2 bloqueada, nenhuma chamada paga. CI e integração pendentes nesta entrada; consultar registro mais recente antes de retomar. Próximo passo: revisar fontes e anotar diferenças de iluminação sem apagar a reprovação conhecida dos figurinos.
+
+
 ## 16/11/2026 — V3 integrada e executada no GitHub
 
 PR [#63](https://github.com/HelioConde/VideoForge-IA/pull/63) integrado: [f5a7f3e](https://github.com/HelioConde/VideoForge-IA/commit/f5a7f3e779c0f9284a5f3947f51bfd74084963e5). QA do PR [43942403827](https://github.com/HelioConde/VideoForge-IA/actions/runs/43942403827): SUCCESS, 22 testes ROI. Produtor main [43942596191](https://github.com/HelioConde/VideoForge-IA/actions/runs/43942596191): SUCCESS, 8 testes de exclusões e exportação V3. Commit de saída: f3ce91e. Depois do fetch, SHA das oito fontes e oito máscaras conferidos. PNGs V2 preservados; JPEG V3 foi reexportado pelo Pillow do runner.

@@ -1727,5 +1727,15 @@
     "main_export_run": 43942596191,
     "run_conclusions": "success",
     "remote_source_and_mask_hashes_verified": true
+  },
+  "wardrobe_lighting_qa": {
+    "status": "local_tests_passed_pending_ci",
+    "local_roi_tests": 23,
+    "report": "QA-ILUMINACAO-ROI-V3.md",
+    "synthetic_shadow_regression_verified": true,
+    "real_masks_modified": 0,
+    "semantic_approved": 0,
+    "r2_blocked": true,
+    "paid_calls": 0
   }
 }
