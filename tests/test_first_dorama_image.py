@@ -42,8 +42,13 @@ class FirstDoramaImageTests(unittest.TestCase):
                    "push","requested_new_unique_shot_candidate")
         self.assertEqual(old["reason"],"already_archived_sha_no_repeat")
         self.assertFalse(old["ready"])
-        next_shot=decide("alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
-                         "c01-p05-guardas-lancas-v1","push","requested_next_shot")
+        # The previously pending shot may already have been archived by Actions.
+        # Mock only the archive lookup for the 'new request' positive path;
+        # never assume a specific real shot is still missing.
+        from unittest.mock import patch
+        with patch("videoforge.art_request_gate.archived_reference",return_value=None):
+            next_shot=decide("alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
+                             "c02-p01-aldric-rosto-v1","push","requested_next_shot")
         self.assertEqual(next_shot["reason"],"ready_unarchived_request")
         self.assertTrue(next_shot["ready"])
 if __name__=="__main__":
