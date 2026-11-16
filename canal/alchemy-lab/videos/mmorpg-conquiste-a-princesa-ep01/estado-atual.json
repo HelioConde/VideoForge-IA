@@ -1708,7 +1708,7 @@
     "next_action": "review_patch_and_run_ci_then_review_semantic_exclusions_against_full_sources"
   },
   "wardrobe_roi_exclusion_v3": {
-    "status": "candidate_pending_ci_merge_and_semantic_review",
+    "status": "integrated_main_technical_qa_passed_semantic_pending",
     "pr": 63,
     "manifest": "ROI-EXCLUSOES-CANDIDATAS-V3.json",
     "report": "QA-ROI-EXCLUSOES-V3.json",
@@ -1720,6 +1720,12 @@
     "local_roi_tests_passed": 22,
     "semantic_verified": 0,
     "r2_blocked": true,
-    "paid_calls": 0
+    "paid_calls": 0,
+    "implementation_commit": "f5a7f3e779c0f9284a5f3947f51bfd74084963e5",
+    "export_commit": "f3ce91e",
+    "pr_qa_run": 43942403827,
+    "main_export_run": 43942596191,
+    "run_conclusions": "success",
+    "remote_source_and_mask_hashes_verified": true
   }
 }
