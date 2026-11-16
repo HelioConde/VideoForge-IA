@@ -1,0 +1,453 @@
+{
+  "schema": "videoforge/wardrobe-color-seed-masks/v1",
+  "status": "COLOR_FILTERED_PIXEL_CANDIDATES_NOT_SEMANTICALLY_VERIFIED",
+  "regions": [
+    {
+      "actor": "aldric",
+      "semantic_region": "barba",
+      "status": "CANDIDATAS_A_CONFERIR",
+      "sources": [
+        {
+          "side": "a",
+          "source_path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+          "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+          "source_size": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              507,
+              321
+            ],
+            [
+              520,
+              315
+            ],
+            [
+              539,
+              323
+            ],
+            [
+              548,
+              335
+            ],
+            [
+              531,
+              350
+            ],
+            [
+              513,
+              343
+            ]
+          ],
+          "seed_polygon_pixels": 929,
+          "color_isolated_pixels": 405,
+          "retained_percent": 43.6,
+          "mask_viable_for_visual_review": true,
+          "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-barba-a-CANDIDATO.png",
+          "candidate_cutout_sha256": "e7ffddf99c6dd0033a355154a9341192eaf7d5ba53469afef04df688c26e9404",
+          "candidate_cutout_box_xyxy": [
+            499,
+            307,
+            557,
+            359
+          ],
+          "semantic_mask_verified": false,
+          "official_color_comparison_eligible": false
+        },
+        {
+          "side": "b",
+          "source_path": "assets/cenas-mae/cena-02.png",
+          "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+          "source_size": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              736,
+              262
+            ],
+            [
+              760,
+              260
+            ],
+            [
+              779,
+              279
+            ],
+            [
+              775,
+              304
+            ],
+            [
+              760,
+              319
+            ],
+            [
+              736,
+              306
+            ],
+            [
+              729,
+              284
+            ]
+          ],
+          "seed_polygon_pixels": 2167,
+          "color_isolated_pixels": 1207,
+          "retained_percent": 55.7,
+          "mask_viable_for_visual_review": true,
+          "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-barba-b-CANDIDATO.png",
+          "candidate_cutout_sha256": "cc459442d5a4ee4e55804ed4013798fff885f41e62645315b3cf2d6383255d5c",
+          "candidate_cutout_box_xyxy": [
+            721,
+            252,
+            788,
+            328
+          ],
+          "semantic_mask_verified": false,
+          "official_color_comparison_eligible": false
+        }
+      ],
+      "difference_is_not_an_official_finding": true,
+      "automatic_approval": false,
+      "automatic_rejection": false
+    },
+    {
+      "actor": "aldric",
+      "semantic_region": "tecido_externo",
+      "status": "CANDIDATAS_A_CONFERIR",
+      "sources": [
+        {
+          "side": "a",
+          "source_path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+          "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+          "source_size": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              388,
+              451
+            ],
+            [
+              427,
+              431
+            ],
+            [
+              451,
+              464
+            ],
+            [
+              441,
+              533
+            ],
+            [
+              412,
+              587
+            ],
+            [
+              372,
+              594
+            ]
+          ],
+          "seed_polygon_pixels": 8709,
+          "color_isolated_pixels": 6860,
+          "retained_percent": 78.77,
+          "mask_viable_for_visual_review": true,
+          "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-tecido_externo-a-CANDIDATO.png",
+          "candidate_cutout_sha256": "e97f68ecd38d7b307be4c74ab542ed73b551a3a0225ace924067fd3b4152c3c1",
+          "candidate_cutout_box_xyxy": [
+            364,
+            423,
+            460,
+            603
+          ],
+          "semantic_mask_verified": false,
+          "official_color_comparison_eligible": false
+        },
+        {
+          "side": "b",
+          "source_path": "assets/cenas-mae/cena-02.png",
+          "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+          "source_size": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              698,
+              486
+            ],
+            [
+              731,
+              486
+            ],
+            [
+              755,
+              533
+            ],
+            [
+              740,
+              645
+            ],
+            [
+              702,
+              713
+            ],
+            [
+              683,
+              649
+            ]
+          ],
+          "seed_polygon_pixels": 11040,
+          "color_isolated_pixels": 8641,
+          "retained_percent": 78.27,
+          "mask_viable_for_visual_review": true,
+          "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-tecido_externo-b-CANDIDATO.png",
+          "candidate_cutout_sha256": "9297a500ca0f013372facd0c41361ef6e1757f4a9afd44ed41b9a0c74a56a668",
+          "candidate_cutout_box_xyxy": [
+            675,
+            478,
+            764,
+            722
+          ],
+          "semantic_mask_verified": false,
+          "official_color_comparison_eligible": false
+        }
+      ],
+      "difference_is_not_an_official_finding": true,
+      "automatic_approval": false,
+      "automatic_rejection": false
+    },
+    {
+      "actor": "aldric",
+      "semantic_region": "painel_central",
+      "status": "CANDIDATAS_A_CONFERIR",
+      "sources": [
+        {
+          "side": "a",
+          "source_path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+          "source_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+          "source_size": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              509,
+              427
+            ],
+            [
+              557,
+              423
+            ],
+            [
+              583,
+              488
+            ],
+            [
+              570,
+              577
+            ],
+            [
+              518,
+              590
+            ],
+            [
+              491,
+              513
+            ]
+          ],
+          "seed_polygon_pixels": 11620,
+          "color_isolated_pixels": 6668,
+          "retained_percent": 57.38,
+          "mask_viable_for_visual_review": true,
+          "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-painel_central-a-CANDIDATO.png",
+          "candidate_cutout_sha256": "7a742827b31d1b8daaf74f2500ac7809c372359f3cb4ff4e9168a99ce10d9a9a",
+          "candidate_cutout_box_xyxy": [
+            483,
+            415,
+            592,
+            599
+          ],
+          "semantic_mask_verified": false,
+          "official_color_comparison_eligible": false
+        },
+        {
+          "side": "b",
+          "source_path": "assets/cenas-mae/cena-02.png",
+          "source_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+          "source_size": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              802,
+              522
+            ],
+            [
+              841,
+              533
+            ],
+            [
+              857,
+              629
+            ],
+            [
+              844,
+              755
+            ],
+            [
+              795,
+              748
+            ],
+            [
+              780,
+              632
+            ]
+          ],
+          "seed_polygon_pixels": 13832,
+          "color_isolated_pixels": 10924,
+          "retained_percent": 78.98,
+          "mask_viable_for_visual_review": true,
+          "candidate_cutout_path": "assets/qa-roi-figurino-v2/aldric-painel_central-b-CANDIDATO.png",
+          "candidate_cutout_sha256": "c7861d4e8ee1ff5a09bae96abf6968fef6f345932d30ad0a4ea72d1ee4866c10",
+          "candidate_cutout_box_xyxy": [
+            772,
+            514,
+            866,
+            764
+          ],
+          "semantic_mask_verified": false,
+          "official_color_comparison_eligible": false
+        }
+      ],
+      "difference_is_not_an_official_finding": true,
+      "automatic_approval": false,
+      "automatic_rejection": false
+    },
+    {
+      "actor": "elara",
+      "semantic_region": "corpete_roxo_palacio",
+      "status": "CANDIDATAS_A_CONFERIR",
+      "sources": [
+        {
+          "side": "a",
+          "source_path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+          "source_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "source_size": [
+            941,
+            1672
+          ],
+          "candidate_polygon_native_px": [
+            [
+              327,
+              1139
+            ],
+            [
+              379,
+              1139
+            ],
+            [
+              423,
+              1209
+            ],
+            [
+              413,
+              1379
+            ],
+            [
+              375,
+              1478
+            ],
+            [
+              331,
+              1423
+            ],
+            [
+              285,
+              1291
+            ]
+          ],
+          "seed_polygon_pixels": 31917,
+          "color_isolated_pixels": 17321,
+          "retained_percent": 54.27,
+          "mask_viable_for_visual_review": true,
+          "candidate_cutout_path": "assets/qa-roi-figurino-v2/elara-corpete_roxo_palacio-a-CANDIDATO.png",
+          "candidate_cutout_sha256": "de7f694c4839a225510e471c69c681c5fcac51600e97445d3dc6f492ff88a116",
+          "candidate_cutout_box_xyxy": [
+            277,
+            1131,
+            432,
+            1487
+          ],
+          "semantic_mask_verified": false,
+          "official_color_comparison_eligible": false
+        },
+        {
+          "side": "b",
+          "source_path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+          "source_sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+          "source_size": [
+            941,
+            1672
+          ],
+          "candidate_polygon_native_px": [
+            [
+              718,
+              313
+            ],
+            [
+              754,
+              315
+            ],
+            [
+              770,
+              353
+            ],
+            [
+              752,
+              385
+            ],
+            [
+              722,
+              373
+            ]
+          ],
+          "seed_polygon_pixels": 2805,
+          "color_isolated_pixels": 590,
+          "retained_percent": 21.03,
+          "mask_viable_for_visual_review": true,
+          "candidate_cutout_path": "assets/qa-roi-figurino-v2/elara-corpete_roxo_palacio-b-CANDIDATO.png",
+          "candidate_cutout_sha256": "baa5fb9ad88c215588ec6feaed23344c03c533e9cd3ef87d545ffae53a9d2e0a",
+          "candidate_cutout_box_xyxy": [
+            710,
+            305,
+            779,
+            394
+          ],
+          "semantic_mask_verified": false,
+          "official_color_comparison_eligible": false
+        }
+      ],
+      "difference_is_not_an_official_finding": true,
+      "automatic_approval": false,
+      "automatic_rejection": false
+    }
+  ],
+  "candidate_masks": 8,
+  "verified_semantic_masks": 0,
+  "verified_semantic_pairs": 0,
+  "previous_owner_rejections_remain": true,
+  "r2_blocked": true,
+  "canonical_art_approved": false,
+  "new_paid_images": 0,
+  "provider_calls": 0,
+  "official_mp4": false,
+  "youtube_uploaded": false,
+  "source_images_unchanged": true
+}
