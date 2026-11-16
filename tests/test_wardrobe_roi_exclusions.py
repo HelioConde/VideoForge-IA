@@ -1,11 +1,26 @@
 """Garantir que exclusões são condicionais e não aprovam a identidade."""
 import unittest
 import io
+import json
+from pathlib import Path
 from PIL import Image
 from videoforge.errors import VideoForgeError
 from videoforge.wardrobe_roi_exclusions import run, apply_exclusions, verify_exclusion_pixels, review_crops
 
 class ROIExclusionTests(unittest.TestCase):
+    def test_v4_collar_cleanup_preserves_beard_pixels(self):
+        ep=Path(__file__).resolve().parents[1]/"canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+        previous=json.loads((ep/"QA-ROI-EXCLUSOES-V3.json").read_text(encoding="utf-8"))["results"][0]
+        proposal=json.loads((ep/"ROI-EXCLUSOES-CANDIDATAS-V4.json").read_text(encoding="utf-8"))["rows"][0]
+        mask=Image.new("L",(1024,1536),0)
+        with Image.open(ep/previous["cleaned_candidate_path"]) as patch:
+            mask.paste(patch.getchannel("A"),tuple(previous["cleaned_candidate_crop_xyxy"][:2]))
+        cleaned,delta=apply_exclusions(mask,proposal["exclude_board_polygons"],mask.size,0,proposal["protected_board_polygons"])
+        self.assertEqual(cleaned.crop((0,0,1024,339)).tobytes(),mask.crop((0,0,1024,339)).tobytes())
+        self.assertIsNotNone(mask.crop((0,339,1024,1536)).getbbox())
+        self.assertIsNone(cleaned.crop((0,339,1024,1536)).getbbox())
+        self.assertGreater(delta["removed"],0)
+
     def test_context_panels_are_aligned_and_removed_pixels_are_exact(self):
         source=Image.new("RGB",(100,100),(20,40,80))
         before=Image.new("L",source.size,0)
@@ -99,6 +114,10 @@ class ROIExclusionTests(unittest.TestCase):
             apply_exclusions(src,[[[10,10],[20,10],[20,20]]],src.size,0)
     def test_ep01_eight_real_regions_still_rejected(self):
         data=run()
+        ep=Path(__file__).resolve().parents[1]/"canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+        previous=json.loads((ep/"QA-ROI-EXCLUSOES-V3.json").read_text(encoding="utf-8"))["results"]
+        self.assertEqual([r["cleaned_candidate_sha256"] for r in previous[1:]],
+                         [r["cleaned_candidate_sha256"] for r in data["results"][1:]])
         self.assertEqual(data["candidate_count"],8)
         self.assertEqual(data["verified_semantic_masks"],0)
         self.assertEqual(data["official_roi_pairs_ready"],0)

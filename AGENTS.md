@@ -1,3 +1,5 @@
+**CANDIDATA V4 — 16/11/2026:** barba Aldric A: remove 4 resíduos adicionais na faixa da gola y>=339; preserva pixels superiores e sete outras máscaras. V3 preservada. Ver REVISAR-MASCARAS-FILTRADAS-V4.md; 26 testes locais, sem aprovação, R2 bloqueada.
+
 **CHECKPOINT PR #65 — 16/11/2026:** revisão contextual integrada, CI 43945520844 (25 testes) e exportação 43945693308 SUCCESS; artefatos 123e004. Oito máscaras preservadas e não aprovadas; R2 bloqueada.
 
 # AGENTS.md — VideoForge IA (reconstrução)

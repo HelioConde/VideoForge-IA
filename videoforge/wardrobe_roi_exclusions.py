@@ -16,11 +16,11 @@ from .remake_autopilot import ROOT, EPISODE
 from .wardrobe_roi_candidates import verified_file, board_to_source
 from .wardrobe_roi_refine import run as base_run, refine_mask, isolated_png
 
-EXCLUSIONS="ROI-EXCLUSOES-CANDIDATAS-V3.json"
-REPORT="QA-ROI-EXCLUSOES-V3.json"
-BOARD="QA-ROI-EXCLUSOES-V3.jpg"
-CONTEXT_BOARD="QA-ROI-CONTEXTO-V3.jpg"
-OUTPUT="assets/qa-roi-exclusions-v3"
+EXCLUSIONS="ROI-EXCLUSOES-CANDIDATAS-V4.json"
+REPORT="QA-ROI-EXCLUSOES-V4.json"
+BOARD="QA-ROI-EXCLUSOES-V4.jpg"
+CONTEXT_BOARD="QA-ROI-CONTEXTO-V4.jpg"
+OUTPUT="assets/qa-roi-exclusions-v4"
 EXPECTED=[(a,r,s) for a,r in
     (("aldric","barba"),("aldric","tecido_externo"),
      ("aldric","painel_central"),("elara","corpete_roxo_palacio"))
@@ -139,10 +139,10 @@ def run(root:Path=ROOT,sync=False):
     context_draw=ImageDraw.Draw(context_canvas)
     draw=ImageDraw.Draw(canvas)
     font=ImageFont.load_default(size=16)
-    context_draw.text((16,12),"ROI V3 - CONTEXTO ORIGINAL | ANTES | REMOVIDOS | DEPOIS - SEM APROVACAO",font=font,fill="white")
+    context_draw.text((16,12),"ROI V4 - CONTEXTO ORIGINAL | ANTES | REMOVIDOS | DEPOIS - SEM APROVACAO",font=font,fill="white")
     for column,label in enumerate(("FONTE COM CONTEXTO","MASCARA ANTERIOR","PIXELS REMOVIDOS","MASCARA FINAL")):
         context_draw.text((16+column*400,42),label,font=font,fill=(228,210,172))
-    draw.text((20,15),"EP01 V2 - MASCARAS V3 CANDIDATAS: ANTES / DEPOIS",font=font,fill="white")
+    draw.text((20,15),"EP01 V2 - MASCARAS V4 CANDIDATAS: ANTES / DEPOIS",font=font,fill="white")
     draw.text((20,45),"Mesma fonte PNG SHA, mesma geometria e cores; propostas sem aprovacao.",font=font,fill=(228,210,172))
     results=[]
     files={}

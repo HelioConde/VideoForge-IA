@@ -1758,5 +1758,14 @@
     "pr_ci_run": 43945520844,
     "main_export_run": 43945693308,
     "remote_hashes_verified": true
+  },
+  "wardrobe_collar_v4": {
+    "status": "local_qa_passed_pending_ci",
+    "local_roi_tests": 26,
+    "extra_removed_pixels": 4,
+    "unchanged_other_masks": 7,
+    "semantic_approved": 0,
+    "r2_blocked": true,
+    "paid_calls": 0
   }
 }
