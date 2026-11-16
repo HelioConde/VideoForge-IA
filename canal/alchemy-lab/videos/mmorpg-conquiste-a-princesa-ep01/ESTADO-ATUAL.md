@@ -1,5 +1,13 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Verificação dos PNGs V3 arquivados no GitHub (read-only)
+
+- Workflow [43947082696](https://github.com/HelioConde/VideoForge-IA/actions/runs/43947082696) **SUCCESS** após commit [46adaf0](https://github.com/HelioConde/VideoForge-IA/commit/46adaf0669633d2fb7ab999d199d62482096935d). Testes de arquivo arquivado, SHA alterado, caminho inseguro, corrupção RGB e integridade das exclusões passaram.
+- Nova auditoria `videoforge/wardrobe_roi_archive.py` carrega **os oito PNGs V3 já versionados no checkout** e compara cada um com o hash registrado, o recorte da fonte original SHA-verificada, o alfa recalculado pela regra V3, os pixels removidos e o relatório de origem. Também confere o SHA da prancha contextual V3. Não regrava nenhum PNG.
+- Workflow `qa-wardrobe-roi-archive.yml` possui permissão somente leitura e publica `QA-ROI-ARQUIVO-REMOTO-V3.json` como artifact temporário da Action (não confundir com arquivo permanente no repositório).
+- **Conclusão técnica: 8/8 arquivos arquivados verificados.** Conclusão artística: **0/8 máscaras semanticamente validadas, 0/4 pares canônicos, Aldric e Elara ainda reprovados; R2, MP4 oficial e YouTube bloqueados.** Nenhuma nova imagem IA paga.
+- Próximo passo: conferência visual/semântica com fontes de contexto e anotações por personagem, especialmente barba versus boca, arma versus capa e corpete B parcial. Teste SHA não representa aprovação estética.
+
 ## 16/11/2026 — Revisão contextual das oito máscaras V3
 
 Programa agora exporta QA-ROI-CONTEXTO-V3.jpg com quatro colunas alinhadas: fonte com contexto, máscara anterior, pixels removidos e máscara final. O contexto é recortado da fonte SHA e amplia apenas a prévia; coordenadas e SHA da prancha constam no relatório V3. Medições continuam em pixels nativos, nunca no JPEG. Oito PNGs finais mantêm exatamente os hashes anteriores.
