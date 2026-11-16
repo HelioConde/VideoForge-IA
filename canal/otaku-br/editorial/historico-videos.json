@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/channel-video-history/v1",
   "canal_id": "otaku-br",
-  "atualizado_em": "2026-11-14",
+  "atualizado_em": "2026-11-16",
   "historico_youtube_importado": false,
   "nota": "Indice editorial inicialmente vazio. Nao conclua que o canal nao possui videos publicados.",
   "videos": [
@@ -87,7 +87,35 @@
       "cena01_head_hand_foreground_sep": "technical_draft_not_approved",
       "cena01_hair_mesh_ready": false,
       "rig_three_hand_separation_run_id": 43590074890,
-      "rig_three_hand_preview_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43590074890/artifacts/14111754256"
+      "rig_three_hand_preview_artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43590074890/artifacts/14111754256",
+      "ultima_montagem_real_20261116": {
+        "date": "2026-11-16",
+        "workflow_run_id": 43954339265,
+        "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43954339265",
+        "artifact_id": 14271631010,
+        "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43954339265/artifacts/14271631010",
+        "status": "technical_real_art_mp4_for_review",
+        "scenes": 16,
+        "duration_seconds": 130.847,
+        "video_codec": "h264",
+        "mp4_sha256": "037287be34cd352ad8e1c269e73e8bcad8d803f4e484820da406274b110d1e1c",
+        "provenance_verified": true,
+        "narration": "offline_draft_synthetic",
+        "rig_animation_applied": false,
+        "visual_review": "pending",
+        "official_video_created": false,
+        "youtube_uploaded": false
+      },
+      "nova_narracao_feminina_20261116": {
+        "workflow_run_id": 43954811844,
+        "workflow_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/43954811844",
+        "workflow_status": "success",
+        "female_voice_generated": true,
+        "subtitles_generated": true,
+        "motion_render_run_id": 43954914549,
+        "motion_render_status": "executing_at_time_of_this_checkpoint",
+        "youtube_uploaded": false
+      }
     }
   ]
 }
