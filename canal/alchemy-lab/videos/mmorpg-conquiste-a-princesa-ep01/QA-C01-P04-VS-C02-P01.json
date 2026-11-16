@@ -1,0 +1,26 @@
+{
+  "schema": "videoforge/shot-style-comparison/v1",
+  "status": "COMPARED_PIXELS_FOR_HUMAN_REVIEW_NOT_APPROVED",
+  "anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "anchor_shot": "C01-P04",
+  "new_shot": "C02-P01",
+  "new_sha256": "a18d2284ed7878e7b81537d1673384e8a506df647e2fd1ea0c1d7f81eb5aaf5d",
+  "source_attached_to_generation": true,
+  "reference_sha_verified": true,
+  "comparison_sheet": "QA-C01-P04-VS-C02-P01.jpg",
+  "comparison_sheet_sha256": "ab0f7fe89e33b5c469674391d0bc6698da8ab254ddf68a69b3f3f779e17318be",
+  "anchor_size": [
+    941,
+    1672
+  ],
+  "new_size": [
+    941,
+    1672
+  ],
+  "image_pixels_unchanged": true,
+  "visual_character_continuity_approved": false,
+  "require_human_review": true,
+  "r2_masks_revalidated": false,
+  "youtube_uploaded": false,
+  "generation_calls": 0
+}
