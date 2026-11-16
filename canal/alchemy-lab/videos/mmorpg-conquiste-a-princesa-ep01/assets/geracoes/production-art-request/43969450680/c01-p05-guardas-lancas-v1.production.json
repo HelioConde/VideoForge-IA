@@ -1,0 +1,35 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p05-guardas-lancas-v1",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/c01-p05-guardas-lancas-v1.png",
+  "size": "1024x1536",
+  "sha256": "ad5b40722c786b0c9ba761687eedf1b5626cd3ee1c9b4a3ac43fd788841ae4b5",
+  "model": "gpt-image-2",
+  "actual_width": 941,
+  "actual_height": 1671,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 1,
+  "source_originals_sha_verified": [
+    {
+      "actor": "scene-anchor-C01-P04",
+      "id": "approved-visual-reference",
+      "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+      "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "source_shot_id": "C01-P04",
+      "source_style_approved": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": "C01-P05",
+  "visual_continuity_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}

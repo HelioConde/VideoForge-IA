@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-art-request",
+  "github_run_id": 43969450680,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c01-p05-guardas-lancas-v1.png",
+      "width": 941,
+      "height": 1671,
+      "sha256": "ad5b40722c786b0c9ba761687eedf1b5626cd3ee1c9b4a3ac43fd788841ae4b5",
+      "bytes": 2365365,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
