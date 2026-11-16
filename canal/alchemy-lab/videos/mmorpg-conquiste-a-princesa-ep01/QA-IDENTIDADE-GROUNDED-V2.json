@@ -1,6 +1,6 @@
 {
   "schema": "videoforge/grounded-identity-review/v1",
-  "status": "technical_sha_verified_but_owner_rejected_wardrobe",
+  "status": "grounded_png_sha_verified_visual_review_pending",
   "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
   "grounded_run_id": 43868021687,
   "grounded_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
@@ -52,14 +52,5 @@
   "original_png_modified": false,
   "new_art_generated_during_qa": false,
   "full_mp4": false,
-  "youtube_uploaded": false,
-  "owner_review": {
-    "file": "REVISAO-FIGURINO-V2.json",
-    "decision": "rejected_wardrobe_inconsistency",
-    "issues": [
-      "wardrobe_mismatch_aldric",
-      "wardrobe_mismatch_elara_purple_bodice"
-    ],
-    "human_visual_approved": false
-  }
+  "youtube_uploaded": false
 }

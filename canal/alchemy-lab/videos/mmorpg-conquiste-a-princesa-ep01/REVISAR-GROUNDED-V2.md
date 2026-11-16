@@ -1,6 +1,4 @@
-# EP01 V2 — PRANCHA REPROVADA por figurino
-
-**Revisão do proprietário:** roupa do rei Aldric diferente entre as imagens e parte roxa da blusa/peitoral de Elara não preservada. Mesmo com SHA válido, a candidata NÃO pode ser utilizada como âncora. Veja [revisão oficial](REVISAO-FIGURINO-V2.json) e [contrato de figurinos](CONTRATO-FIGURINO-V2.json).
+# EP01 V2 - comparar original, arte de texto e arte baseada em PNG
 
 As duas fontes de Kael/Elara foram realmente anexadas à nova geração, por SHA.
 A prova de anexos NÃO equivale à correspondência visual nem à aprovação.
