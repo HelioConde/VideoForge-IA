@@ -23,6 +23,8 @@ A auditoria lê os oito PNGs RGBA V3 do repositório e valida SHA, RGB e alfa co
 4. **Elara / corpete A/B:** 36 e 10 componentes; a cobertura da versão B continua muito menor. Verificar oclusão antes de falar em inconsistência do vestido.
 5. **Aldric / barba A/B:** 6 e 2 componentes, mas conectividade alta **não** significa barba correta; verificar boca, pele e bigode.
 
+**Inspeção visual adicional do PNG 1x:** o painel central B original contém tecido bordô amplo ao redor dos bordados; a máscara seleciona principalmente traços finos verticais e omite grandes superfícies do tecido. A cobertura da máscara atual é **inadequada para inferir continuidade da cor do painel**. A anotação `REVISAO-SEMANTICA-ROI-V3.json` marcou a candidata como evidência insuficiente, sem aprovar/reprovar o figurino automaticamente. Reanotar preferencialmente em regiões separadas de torso e saia, preservando cinto e manto como exclusões.
+
 **Não fazer preenchimento morfológico indiscriminado**: ele poderia criar tecido falso e borrar detalhes válidos. Priorizar revisão visual da fonte original e anotações de máscara semântica independentes dos classificadores de cor.
 
 **Estado oficial inalterado:** oito máscaras técnicas candidatas e 0/8 máscaras semanticamente validadas, quatro pares canônicos pendentes, reprovações de Aldric/Elara ativas, R2/MP4/YouTube bloqueados, nenhuma nova imagem paga.
