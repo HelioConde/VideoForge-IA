@@ -15,9 +15,11 @@ class WardrobeReviewTests(unittest.TestCase):
         owner,contract=owner_review()
         self.assertEqual(owner["decision"],"rejected_wardrobe_inconsistency")
         self.assertEqual(owner["sha256"],REJECTED_SHA)
-        self.assertEqual({x["code"] for x in owner["issues"] if x["status"]=="rejected"},
-                         {"wardrobe_mismatch_aldric",
-                          "wardrobe_mismatch_elara_purple_bodice"})
+        actual={x["code"] for x in owner["issues"] if x["status"]=="rejected"}
+        self.assertTrue({"wardrobe_mismatch_aldric",
+                         "wardrobe_mismatch_elara_purple_bodice",
+                         "aldric_red_black_inversion",
+                         "aldric_beard_color_changed"}.issubset(actual))
         self.assertTrue(rejected_reference_sha(REJECTED_SHA))
         self.assertFalse(rejected_reference_sha("0"*64))
         self.assertFalse(contract["canonical_identity_approved"])
