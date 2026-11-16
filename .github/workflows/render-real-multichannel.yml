@@ -1,0 +1,99 @@
+name: "VideoForge - render real reutilizavel por canal"
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "Canal que possui video.json e arquivos de midia reais"
+        type: choice
+        options: [otaku-br, otaku-en, gamer, manu-kids, alchemy-lab]
+        required: true
+      video_id:
+        description: "Pasta do video em canal/<channel>/videos/"
+        type: string
+        required: true
+permissions:
+  contents: read
+  packages: read
+concurrency:
+  group: vf-render-real-${{ inputs.channel }}-${{ inputs.video_id }}
+  cancel-in-progress: false
+jobs:
+  render-authentic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: ghcr.io/helioconde/videoforge-media-runner:ubuntu2404-ffmpeg-espeak-v3
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      VIDEOFORGE_CHANNEL: ${{ inputs.channel }}
+      VIDEOFORGE_VIDEO_ID: ${{ inputs.video_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validar render dos cinco canais e fronteiras
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_render_multichannel tests.test_paths -v
+      - name: Conferir manifesto e todos os assets ANTES de renderizar
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from videoforge.paths import CHANNEL_IDS,IDENTIFIER,resolve_video_context
+          from videoforge.mvp import _load_manifest
+          ch=os.environ["VIDEOFORGE_CHANNEL"]
+          vid=os.environ["VIDEOFORGE_VIDEO_ID"]
+          if ch not in CHANNEL_IDS or len(vid)>64 or not IDENTIFIER.fullmatch(vid):
+              raise SystemExit("INVALID_CHANNEL_OR_ID")
+          p=Path("canal")/ch/"videos"/vid/"video.json"
+          if not p.is_file():
+              raise SystemExit("BLOCKED: VIDEO_MANIFEST_MISSING_OR_ASSETS_NOT_IMPORTED")
+          manifest,scenes=_load_manifest(p)
+          scope=resolve_video_context(p,manifest)
+          if scope.channel!=ch or scope.video_id!=vid:
+              raise SystemExit("BLOCKED: CHANNEL_CROSSOVER")
+          print("VERIFIED_REAL_SCENES",len(scenes),"CHANNEL",ch)
+          print("NOTICE: Valid media does not prove visual/copyright approval")
+          PY
+      - name: Renderizar MP4 a partir de imagens e audio existentes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.mvp render --video "canal/$VIDEOFORGE_CHANNEL/videos/$VIDEOFORGE_VIDEO_ID/video.json"
+      - name: Exigir MP4 H264 AAC e sha real antes de arquivar
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          ch=os.environ["VIDEOFORGE_CHANNEL"];vid=os.environ["VIDEOFORGE_VIDEO_ID"]
+          p=Path("output")/ch/"videos"/vid/"video.mp4"
+          qa=p.with_suffix(".qa.json")
+          if not p.is_file() or not qa.is_file():
+              raise SystemExit("NO_VALID_MP4")
+          data=json.loads(qa.read_text())
+          if (data.get("status")!="technical_verified"
+              or data.get("kind")!="real_supplied_media"
+              or data.get("youtube_uploaded") is not False
+              or data.get("video_codec")!="h264"
+              or data.get("audio_codec")!="aac"
+              or hashlib.sha256(p.read_bytes()).hexdigest()!=data.get("sha256")):
+              raise SystemExit("MP4_QA_FAILED")
+          print("TECHNICAL_MP4_SHA",data["sha256"],"DURATION",data["duration_seconds"])
+          PY
+      - name: Arquivar MP4 tecnico sem chamar YouTube
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-mp4-${{ inputs.channel }}-${{ inputs.video_id }}-${{ github.run_id }}
+          path: |
+            output/${{ inputs.channel }}/videos/${{ inputs.video_id }}/video.mp4
+            output/${{ inputs.channel }}/videos/${{ inputs.video_id }}/video.qa.json
+          retention-days: 14
+          if-no-files-found: error
