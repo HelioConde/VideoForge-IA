@@ -1,0 +1,37 @@
+{
+  "schema": "videoforge/identity-comparison-qa/v1",
+  "status": "ready_for_explicit_human_identity_review",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "comparisons": [
+    {
+      "actor": "kael",
+      "original_path": "assets/referencias/chat-aprovadas/kael-close-salao.png",
+      "original_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+      "candidate_path": "assets/geracoes/production-art-request/43784005362/character-bible.png",
+      "candidate_sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
+      "qa_preview_path": "QA-KAEL-V2-COMPARACAO.jpg",
+      "qa_preview_sha256": "02a594b914613c726cccec7f30c1ce86b3e887601c80d6e18545f660cbc7a643",
+      "original_pixels_modified": false,
+      "identity_match_approved": false
+    },
+    {
+      "actor": "elara",
+      "original_path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "original_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "candidate_path": "assets/geracoes/production-art-request/43784005362/character-bible.png",
+      "candidate_sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
+      "qa_preview_path": "QA-ELARA-V2-COMPARACAO.jpg",
+      "qa_preview_sha256": "f70912c06d78dd0f3b13e0e2b21077fec34de8b0e198bbc30d66600d38c592de",
+      "original_pixels_modified": false,
+      "identity_match_approved": false
+    }
+  ],
+  "camera_c12_sha_verified": true,
+  "aldric_approved_individual_original_missing": true,
+  "provider_calls": 0,
+  "new_art_created": false,
+  "original_pixels_modified": false,
+  "human_approved": false,
+  "official_mp4_created": false,
+  "youtube_uploaded": false
+}
