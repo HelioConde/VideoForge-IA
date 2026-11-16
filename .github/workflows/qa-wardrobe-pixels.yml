@@ -1,0 +1,48 @@
+name: "VideoForge - auditar pixels reais das roupas RGBA (sem IA)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/wardrobe_pixel_audit.py'
+      - 'tests/test_wardrobe_pixel_audit.py'
+      - '.github/workflows/qa-wardrobe-pixels.yml'
+permissions:
+  contents: write
+concurrency:
+  group: vf-wardrobe-pixels
+  cancel-in-progress: false
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Pillow somente para medição local
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Testar hashes, histograma e abstencao em RGB sem máscara
+        run: python -m unittest tests.test_wardrobe_pixel_audit tests.test_wardrobe_filter -v
+      - name: Medir camadas RGBA existentes e registrar resultados honestos
+        run: python -m videoforge.wardrobe_pixel_audit --sync
+      - name: Salvar relatório no arquivo principal do EP01
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'videoforge-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$EP/QA-CORES-PIXELS-FIGURINO-V2.json" "$EP/REVISAR-CORES-MEDIDAS-FIGURINO-V2.md"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(dorama): arquivar medidas de pixels reais das camadas sem aprovacao falsa'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
