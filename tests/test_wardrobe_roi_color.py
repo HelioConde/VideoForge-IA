@@ -9,6 +9,33 @@ from videoforge.wardrobe_roi_color import pair_result, run
 from videoforge.errors import VideoForgeError
 
 class SemanticROIColorTests(unittest.TestCase):
+    def test_unverified_wrong_body_region_never_compares_colors(self):
+        from unittest.mock import patch
+        source={"path":"not-used.png","sha256":"0"*64,"pose_verified":True,
+                "semantic_polygon_verified":False,"polygon":[[1,1],[20,1],[20,20]]}
+        row={"actor":"aldric","semantic_region":"barba","source_a":source,"source_b":source}
+        with patch("videoforge.wardrobe_roi_color.polygon_metric") as metric:
+            result=pair_result(Path("."),row)
+        metric.assert_not_called()
+        self.assertEqual(result["status"],"EVIDENCIA_INSUFICIENTE")
+        self.assertFalse(result["auto_approved"])
+
+    def test_natural_brightness_change_never_approves_identity(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)
+            sources=[]
+            for name,color in (("a.png",(180,25,30)),("b.png",(135,19,23))):
+                Image.new("RGB",(96,96),color).save(folder/name)
+                sources.append({"path":name,"sha256":hashlib.sha256((folder/name).read_bytes()).hexdigest(),
+                                "pose_verified":True,"semantic_polygon_verified":True,
+                                "polygon":[[20,20],[64,20],[64,64],[20,64]]})
+            row={"actor":"aldric","semantic_region":"painel_central",
+                 "source_a":sources[0],"source_b":sources[1]}
+            result=pair_result(folder,row)
+            self.assertFalse(result["automatic_rejection"])
+            self.assertFalse(result["auto_approved"])
+            self.assertEqual(result["status"],"REVISAO_VISUAL_AINDA_NECESSARIA")
+
     def test_four_real_pairs_need_validated_masks_and_stay_unapproved(self):
         result=run()
         self.assertEqual(len(result["pairs"]),4)

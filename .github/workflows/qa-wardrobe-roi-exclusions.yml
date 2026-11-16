@@ -7,7 +7,7 @@ on:
       - 'videoforge/wardrobe_roi_exclusions.py'
       - 'tests/test_wardrobe_roi_exclusions.py'
       - '.github/workflows/qa-wardrobe-roi-exclusions.yml'
-      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ROI-EXCLUSOES-CANDIDATAS-V2.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ROI-EXCLUSOES-CANDIDATAS-V3.json'
 permissions:
   contents: write
 concurrency:
@@ -39,8 +39,8 @@ jobs:
           EP=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
           git config user.name 'videoforge-roi-qa[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f "$EP/assets/qa-roi-exclusions-v2/"
-          git add "$EP/QA-ROI-EXCLUSOES-V2.jpg" "$EP/QA-ROI-EXCLUSOES-V2.json"
+          git add -f "$EP/assets/qa-roi-exclusions-v3/"
+          git add "$EP/QA-ROI-EXCLUSOES-V3.jpg" "$EP/QA-ROI-EXCLUSOES-V3.json"
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'qa(dorama): registrar exclusoes candidatas das 8 ROIs'
           if ! git push origin HEAD:main; then

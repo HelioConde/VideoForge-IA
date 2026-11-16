@@ -6,6 +6,20 @@ from videoforge.errors import VideoForgeError
 from videoforge.wardrobe_roi_exclusions import run, apply_exclusions, verify_exclusion_pixels
 
 class ROIExclusionTests(unittest.TestCase):
+    def test_protected_cloth_rejects_overlapping_exclusion(self):
+        mask=Image.new("L",(1024,1536),255)
+        polygon=[[280,370],[300,370],[300,380],[280,380]]
+        before=mask.tobytes()
+        with self.assertRaisesRegex(VideoForgeError,"TOUCHES_PROTECTED"):
+            apply_exclusions(mask,[polygon],mask.size,0,[polygon])
+        self.assertEqual(mask.tobytes(),before)
+
+    def test_empty_and_wrong_geometry_fail_closed(self):
+        with self.assertRaisesRegex(VideoForgeError,"REMOVED_TOO_MUCH"):
+            apply_exclusions(Image.new("L",(1024,1536)),[],(1024,1536),0)
+        with self.assertRaisesRegex(VideoForgeError,"MASK_GEOMETRY"):
+            apply_exclusions(Image.new("L",(100,100)),[],(1024,1536),0)
+
     def test_integrity_rejects_color_alpha_crop_and_count_corruption(self):
         source=Image.new("RGB",(20,20),(30,60,90))
         before=Image.new("L",source.size,255)

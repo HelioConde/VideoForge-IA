@@ -1706,5 +1706,20 @@
     "r2_blocked": true,
     "paid_calls": 0,
     "next_action": "review_patch_and_run_ci_then_review_semantic_exclusions_against_full_sources"
+  },
+  "wardrobe_roi_exclusion_v3": {
+    "status": "candidate_pending_ci_merge_and_semantic_review",
+    "pr": 63,
+    "manifest": "ROI-EXCLUSOES-CANDIDATAS-V3.json",
+    "report": "QA-ROI-EXCLUSOES-V3.json",
+    "board": "QA-ROI-EXCLUSOES-V3.jpg",
+    "changed_mask": "aldric/tecido_externo/a",
+    "restored_pixels_vs_v2": 472,
+    "newly_removed_pixels_vs_v2": 258,
+    "unchanged_other_mask_hashes": 7,
+    "local_roi_tests_passed": 22,
+    "semantic_verified": 0,
+    "r2_blocked": true,
+    "paid_calls": 0
   }
 }
