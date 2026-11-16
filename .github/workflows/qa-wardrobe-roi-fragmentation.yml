@@ -1,0 +1,30 @@
+name: "VideoForge - auditar fragmentacao ROI V3 sem alterar arte"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/wardrobe_roi_fragmentation.py'
+      - 'tests/test_wardrobe_roi_fragmentation.py'
+      - '.github/workflows/qa-wardrobe-roi-fragmentation.yml'
+permissions:
+  contents: read
+jobs:
+  inspect-fragmentation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Testar componentes conectados e integridade dos PNGs
+        run: python -m unittest tests.test_wardrobe_roi_fragmentation tests.test_wardrobe_roi_archive -v
+      - name: Calcular fragmentacao apenas em arquivos existentes
+        run: python -m videoforge.wardrobe_roi_fragmentation --sync
+      - uses: actions/upload-artifact@v4
+        with:
+          name: roi-v3-fragmentation
+          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-ROI-FRAGMENTACAO-V3.json
+          retention-days: 30
