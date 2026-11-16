@@ -607,14 +607,7 @@
     "r2_wardrobe_sources_verified": 0,
     "grounded_candidate_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
     "grounded_candidate_run_id": 43868021687,
-    "grounded_visual_approval": false,
-    "blocking_codes": [
-      "aldric_red_black_inversion",
-      "aldric_beard_color_changed",
-      "elara_purple_bodice_missing"
-    ],
-    "wardrobe_quality_filter": "RELATORIO-FILTRO-FIGURINO-V2.json",
-    "human_visual_approved": false
+    "grounded_visual_approval": false
   },
   "policy_consistency_audit_20261115": {
     "current_rules_identified_in_master_files": true,
