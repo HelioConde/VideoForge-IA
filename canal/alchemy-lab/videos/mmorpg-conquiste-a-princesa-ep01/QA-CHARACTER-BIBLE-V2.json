@@ -1,0 +1,54 @@
+{
+  "schema": "videoforge/reference-art-qa/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "character-bible",
+  "status": "technical_valid_human_identity_review_pending",
+  "source": {
+    "path": "assets/geracoes/production-art-request/43784005362/character-bible.png",
+    "run_id": 43784005362,
+    "sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
+    "width": 1199,
+    "height": 1312,
+    "bytes": 3033524,
+    "sha_verified": true,
+    "png_structure_verified": true,
+    "source_pixels_unmodified": true
+  },
+  "requested_format": {
+    "width": 1024,
+    "height": 1536,
+    "source_dimensions_match_requested": false,
+    "source_aspect_ratio": 0.913872,
+    "target_aspect_ratio": 0.666667,
+    "preview_only_contain_fit": {
+      "scale": 0.85404504,
+      "fit_width": 1024,
+      "fit_height": 1121,
+      "padding_left": 0,
+      "padding_right": 0,
+      "padding_top": 207,
+      "padding_bottom": 208,
+      "rendered": false,
+      "pixels_resampled": false,
+      "use": "layout guide only; do not deform original faces or bodies"
+    }
+  },
+  "human_review": {
+    "approved": false,
+    "kael_identity_verified": false,
+    "elara_identity_verified": false,
+    "aldric_identity_verified": false,
+    "character_count_and_full_body_verified": false,
+    "style_consistency_vs_previously_approved_art_verified": false,
+    "anatomy_and_hand_artifacts_verified": false,
+    "review_status": "not_reviewed"
+  },
+  "downstream": {
+    "approved_canonical_anchor": false,
+    "can_generate_shot_specific_mothers": false,
+    "can_build_rig_from_this_sheet": false,
+    "youtube_upload": false,
+    "new_image_call_required_for_technical_qa": false
+  },
+  "provider_calls": 0
+}

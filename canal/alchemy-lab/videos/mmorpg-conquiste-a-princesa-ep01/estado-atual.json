@@ -598,9 +598,8 @@
   "autopilot_checkpoint": {
     "stage": "review_identity_reference",
     "target": "character-bible",
-    "blocker": "archived_png_verified_human_review_pending",
-    "dispatch_allowed": false,
-    "candidate_sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4"
+    "blocker": "human_visual_review_pending",
+    "dispatch_allowed": false
   },
   "policy_consistency_audit_20261115": {
     "current_rules_identified_in_master_files": true,
