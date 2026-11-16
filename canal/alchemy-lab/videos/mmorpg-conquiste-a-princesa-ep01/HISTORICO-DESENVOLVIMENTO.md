@@ -1,5 +1,11 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## Continuidade V2: bloquear geracao paga duplicada e auditar referencia real
+
+- Qualquer `production-art-by-request.yml` (inclusive workflow_dispatch manual) DEVE consultar o diretorio permanente `assets/geracoes/production-art-request/<run_id>/`, conferir manifesto, SHA256, integridade PNG e dimensoes antes de criar a mesma arte. Se ja houver PNG valido, abortar com `PRODUCTION_ART_ALREADY_ARCHIVED_SHA_VERIFIED` antes de chamar o provedor. Se o arquivo ja existir mas estiver incompleto/alterado, bloquear para diagnostico, nunca regenerar cegamente.
+- `python -m videoforge.reference_art_qa --sync` grava `QA-CHARACTER-BIBLE-V2.json` com tamanho real, SHA e proposta MATEMATICA de encaixe no formato alvo sem editar pixels. Trata-se de evidencia tecnica, NAO de aprovacao de identidade, desenho, estilo ou rig. O PNG de 1199×1312 continua intacto; NAO usar como imagem-mae oficial nem renderizar o episodio antes de revisao humana.
+- As proximas 39 tomadas visuais, as 4 partes originais da espada em C01-P02 e o MP4 completo continuam pendentes de revisao visual/recortes reais. Gerar referencias adicionais apenas se for de fato necessario, com reserva identificavel e sem duplicacao.
+
 ## 15/11/2026 — sessão OAuth recuperada; primeiro PNG V2 real gerado e preservado
 
 - [Health após login 43783956474](https://github.com/HelioConde/VideoForge-IA/actions/runs/43783956474) **SUCCESS**: 1 conta elegível, OAuth válido, geração liberada. A reconexão funcionou de fato.

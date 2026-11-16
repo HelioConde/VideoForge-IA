@@ -95,6 +95,81 @@ def inspect_generated_dimensions(info: dict, requested_size: str) -> dict:
     }
 
 
+def archived_reference(channel: str, video_id: str, asset_id: str,
+                       root: Path = ROOT) -> dict | None:
+    """Detect SHA-verified, permanent producer art BEFORE any new billed call.
+
+    All GitHub Actions runners have a fresh output/ directory, so checking
+    output alone is insufficient. Corrupt or ambiguous existing archives are
+    a fail-closed blocker; never treat them as permission to regenerate.
+    """
+    if (channel not in CHANNEL_IDS or
+            not IDENTIFIER.fullmatch(video_id) or
+            not IDENTIFIER.fullmatch(asset_id)):
+        raise VideoForgeError("PRODUCTION_ART_ARCHIVE_SCOPE_INVALID")
+    episode=Path(root)/"canal"/channel/"videos"/video_id
+    base=episode/"assets"/"geracoes"/"production-art-request"
+    if not base.exists() and not base.is_symlink():
+        return None
+    if base.is_symlink() or not base.is_dir():
+        raise VideoForgeError("PRODUCTION_ART_ARCHIVE_ROOT_UNSAFE")
+    found=[]
+    for run in sorted(base.iterdir()):
+        if run.is_symlink():
+            raise VideoForgeError("PRODUCTION_ART_ARCHIVE_RUN_SYMLINK")
+        if not run.is_dir() or not run.name.isdigit():
+            continue
+        filename=asset_id+".png"
+        image=run/filename
+        manifest=run/"manifesto-geracoes.json"
+        if image.is_symlink() or manifest.is_symlink():
+            raise VideoForgeError("PRODUCTION_ART_ARCHIVE_SOURCE_SYMLINK")
+        if not image.exists() and not manifest.exists():
+            continue
+        if not manifest.is_file():
+            if image.exists():
+                raise VideoForgeError("PRODUCTION_ART_ARCHIVE_MISSING_MANIFEST_BLOCK_REPEAT")
+            continue
+        try:
+            obj=json.loads(manifest.read_text(encoding="utf-8"))
+        except (ValueError,OSError,UnicodeError):
+            raise VideoForgeError("PRODUCTION_ART_ARCHIVE_MANIFEST_INVALID_BLOCK_REPEAT") from None
+        if (not isinstance(obj,dict) or
+                obj.get("schema")!="videoforge/permanent-generated-image-archive/v1" or
+                obj.get("channel")!=channel or
+                obj.get("video_id")!=video_id or
+                obj.get("producer")!="production-art-request" or
+                obj.get("github_run_id")!=int(run.name) or
+                not isinstance(obj.get("images"),list)):
+            raise VideoForgeError("PRODUCTION_ART_ARCHIVE_MANIFEST_ORIGIN_INVALID_BLOCK_REPEAT")
+        matches=[item for item in obj["images"] if isinstance(item,dict)
+                 and item.get("file")==filename]
+        if not matches and not image.exists():
+            continue
+        if len(matches)!=1 or not image.is_file():
+            raise VideoForgeError("PRODUCTION_ART_ARCHIVE_INCOMPLETE_BLOCK_REPEAT")
+        item=matches[0]
+        try:
+            data=image.read_bytes()
+            digest=hashlib.sha256(data).hexdigest()
+            info=png_info(data)
+        except (OSError,ValueError):
+            raise VideoForgeError("PRODUCTION_ART_ARCHIVE_INVALID_PNG_BLOCK_REPEAT") from None
+        if (digest!=item.get("sha256") or
+                info["width"]!=item.get("width") or
+                info["height"]!=item.get("height") or
+                len(data)!=item.get("bytes")):
+            raise VideoForgeError("PRODUCTION_ART_ARCHIVE_SHA_OR_DIMENSIONS_MISMATCH_BLOCK_REPEAT")
+        found.append({
+            "asset_id":asset_id,
+            "run_id":int(run.name),
+            "path":str(image.relative_to(episode)).replace("\\","/"),
+            "sha256":digest,"width":info["width"],"height":info["height"],
+            "bytes":len(data),"human_visual_approved":False,
+        })
+    return max(found,key=lambda item:item["run_id"]) if found else None
+
+
 def create_image(channel:str,video_id:str,asset_id:str,url:str,
                  model:str="gpt-image-2")->dict:
     image_generation_policy.assert_image_generation_allowed(channel,video_id)
@@ -107,6 +182,8 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
     prompt,size=asset_prompt(plan,story,asset_id)
     if model not in proxy_images.IMAGE_MODELS:
         raise VideoForgeError("PRODUCTION_ART_MODEL_INVALID")
+    if archived_reference(channel,video_id,asset_id) is not None:
+        raise VideoForgeError("PRODUCTION_ART_ALREADY_ARCHIVED_SHA_VERIFIED")
     predicted=proxy_images.destination(channel,video_id,asset_id)
     if predicted.with_suffix(".png").exists() or predicted.with_suffix(".jpg").exists():
         raise VideoForgeError("PRODUCTION_ART_ALREADY_GENERATED")

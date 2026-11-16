@@ -38,6 +38,10 @@ on:
       - 'tests/test_remake_workflow_compatibility.py'
       - 'tests/test_remake_cinematic_integration.py'
       - 'tests/test_remake_autopilot.py'
+      - 'videoforge/reference_art_qa.py'
+      - 'tests/test_reference_art_qa.py'
+      - 'videoforge/production_art.py'
+      - 'tests/test_production_art.py'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/remake-ep01-planos.json'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/autonomy-policy.json'
       - '.github/workflows/remake-autonomy.yml'
@@ -65,12 +69,17 @@ jobs:
       - name: Testar regras e estado do remake sem gastar IA
         run: |
           set -euo pipefail
-          python -m unittest tests.test_production_art tests.test_remake_recovery tests.test_remake_autopilot tests.test_remake_starter tests.test_remake_policy_consistency tests.test_remake_cinematic_integration tests.test_remake_v2_edl tests.test_remake_motion_directions tests.test_remake_episode_audio tests.test_remake_rig_geometry tests.test_remake_reference tests.test_remake_workflow_compatibility tests.test_alchemy_no_image_generation tests.test_cinematic_direction -v
+          python -m unittest tests.test_reference_art_qa tests.test_production_art tests.test_remake_recovery tests.test_remake_autopilot tests.test_remake_starter tests.test_remake_policy_consistency tests.test_remake_cinematic_integration tests.test_remake_v2_edl tests.test_remake_motion_directions tests.test_remake_episode_audio tests.test_remake_rig_geometry tests.test_remake_reference tests.test_remake_workflow_compatibility tests.test_alchemy_no_image_generation tests.test_cinematic_direction -v
       - name: Verificar lista oficial V2 de 40 tomadas e audio de abertura
         run: |
           set -euo pipefail
           python -m videoforge.remake_v2_edl --check
           python -m videoforge.remake_episode_audio --verify-only
+      - name: Auditar referencia real de personagens sem criar novas imagens
+        run: |
+          set -euo pipefail
+          mkdir -p output
+          python -m videoforge.reference_art_qa --sync --output output/remake-identity-reference-qa.json
       - name: Inspecionar SHA, detectar proxima etapa e atualizar checkpoint
         run: |
           set -euo pipefail
@@ -105,6 +114,7 @@ jobs:
           set -euo pipefail
           EP="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
           git add "$EP/ESTADO-ATUAL.md" "$EP/HISTORICO-DESENVOLVIMENTO.md" "$EP/estado-atual.json" "$EP/remake-ep01-planos.json"
+          if [[ -f "$EP/QA-CHARACTER-BIBLE-V2.json" ]]; then git add "$EP/QA-CHARACTER-BIBLE-V2.json"; fi
           if ! git diff --cached --quiet; then
             git config user.name "videoforge-autopilot[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -146,5 +156,6 @@ jobs:
             output/remake-autonomy-report.json
             output/remake-shot-queue.json
             output/remake-generation-reservation.json
+            output/remake-identity-reference-qa.json
           retention-days: 14
           if-no-files-found: warn
