@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — PRIMEIRA ANIMAÇÃO PARA O USUÁRIO (C01-P03)
+
+- Após autorização expressa para testar, executado workflow [43955654094](https://github.com/HelioConde/VideoForge-IA/actions/runs/43955654094): **SUCCESS**. Produzido `directed-rig-preview.mp4` de 90 quadros, 30 fps, 1080×1920, H.264, **3 segundos sem áudio**, renderizados em Remotion/ThreeCanvas com malhas articuladas reais já existentes.
+- [Artifact com MP4 e quadros de QA](https://github.com/HelioConde/VideoForge-IA/actions/runs/43955654094/artifacts/14268694739). MP4 SHA256 `d84361f693f4e1c83b4d5ad7bd7ed55c253044e672fbf80af803ace58b865481`; o QA comprovou movimento de pixels da arte em Kael e respiração sutil; região de Aldric e lanças preservada. Nenhuma imagem paga foi gerada.
+- Esta é a **primeira prévia para o usuário corrigir**, não o EP01 completo. Imagem candidata, pivôs provisórios e 24 pixels de fundo possivelmente expostos sob a gola no quadro 55 ainda exigem conferência visual. A autorização permite experimentar e iterar, não altera a reprovação estética das referências para produção final; R2/YouTube permanecem bloqueados.
+- Priorizar feedback concreto sobre a animação renderizada e, se validada como base, avançar para tomadas seguintes sem reabrir a auditoria da barba/corpete em cada quadro.
+
 ## 16/11/2026 — Fragmentação de máscaras V3 medida no GitHub
 
 - Novo módulo `videoforge/wardrobe_roi_fragmentation.py` executa contagem de componentes 8-conectados diretamente dos oito PNGs arquivados por SHA (RGB/alfa conferidos), somente leitura, sem geração de IA. O workflow [43951026350](https://github.com/HelioConde/VideoForge-IA/actions/runs/43951026350) concluiu SUCCESS com sete testes.
