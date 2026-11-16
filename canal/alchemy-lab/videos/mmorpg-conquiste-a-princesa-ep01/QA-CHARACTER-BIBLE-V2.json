@@ -43,31 +43,31 @@
     "require_character_identity_comparison": true
   },
   "source_originals_current_audit": {
-    "status": "BOTH_SOURCE_FILES_PENDING_UPLOAD",
-    "kael_elara_sources_verified": 0,
+    "status": "TWO_CHAT_STYLE_SOURCES_ARCHIVED",
+    "kael_elara_sources_verified": 2,
     "kael_elara_sources_total": 2,
-    "c12_camera_source_verified": false,
+    "c12_camera_source_verified": true,
     "expected_originals": [
       {
         "id": "ref-kael-close-c12",
         "path": "assets/referencias/chat-aprovadas/kael-close-salao.png",
         "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
-        "status": "UPLOAD_PENDING",
-        "source_verified": false
+        "status": "ORIGINAL_EXACT_SHA_VERIFIED",
+        "source_verified": true
       },
       {
         "id": "ref-elara-close-c12",
         "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
         "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
-        "status": "UPLOAD_PENDING",
-        "source_verified": false
+        "status": "ORIGINAL_EXACT_SHA_VERIFIED",
+        "source_verified": true
       },
       {
         "id": "ref-c12-p02-camera",
         "path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
         "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
-        "status": "UPLOAD_PENDING",
-        "source_verified": false
+        "status": "EXACT_SOURCE_ARCHIVED",
+        "source_verified": true
       }
     ],
     "aldric_individually_approved_original_sha_available": false,
@@ -78,7 +78,7 @@
   "generation_provenance_limits": {
     "generation_used_text_prompt_only": true,
     "approved_originals_attached_to_generation": false,
-    "approved_reference_images_sha_imported_in_repo": false,
+    "approved_reference_images_sha_imported_in_repo": true,
     "claim_exact_original_identity_match": false,
     "cannot_approve_until_reference_comparison": true
   },
