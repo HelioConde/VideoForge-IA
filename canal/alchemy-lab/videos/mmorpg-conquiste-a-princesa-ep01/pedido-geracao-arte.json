@@ -2,22 +2,21 @@
   "schema": "videoforge/image-generation-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "asset": "c01-p05-guardas-lancas-v1",
+  "asset": "c02-p01-aldric-rosto-v1",
   "model": "gpt-image-2",
   "max_calls_per_run": 1,
   "requested_by": "owner_2026-11-16_continue_visual_continuity",
   "requested_on": "2026-11-16",
-  "status": "requested_next_shot_from_approved_C01-P04_anchor",
-  "purpose": "Gerar automaticamente pelo VideoForge/GitHub a C01-P05 mantendo EXATAMENTE os guardas, armaduras, luvas, lanças, traço e cenário da imagem C01-P04 aprovada pelo usuário. Usar PNG original da C01-P04 realmente anexado ao endpoint de edição.",
-  "shot_id": "C01-P05",
+  "status": "requested_new_aldric_closeup_using_approved_visual_anchor",
+  "purpose": "Gerar close de Rei Aldric C02-P01 em GitHub Actions com exatamente o mesmo rosto, barba, coroa, túnica vinho, manto escuro, brocados, pintura 2D e luz da C01-P04 aprovada, anexando PNG original C01-P04 SHA-verificado; não repetir C01-P05 nem usar referência rejeitada.",
+  "shot_id": "C02-P01",
   "visual_anchor_shot": "C01-P04",
   "visual_anchor_registry": "CONTINUIDADE-VISUAL-APROVADA-C01-P04.json",
   "visual_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
   "source_mode": "dorama-approved-shot-anchor-v1",
   "require_real_source_png_attached": true,
   "only_cast": [
-    "guarda_esquerdo",
-    "guarda_direito"
+    "aldric"
   ],
   "elara_absent": true,
   "style_id": "cinematic-semi-realistic-fantasy-anime",
@@ -30,5 +29,9 @@
   "no_duplicate_generation": true,
   "regeneration_is_a_separate_asset": true,
   "youtube_upload": false,
-  "no_publishing": true
+  "no_publishing": true,
+  "user_visual_review_required": true,
+  "previous_completed_asset": "c01-p05-guardas-lancas-v1",
+  "previous_completed_generation_run": 43969450680,
+  "previous_completed_sha256": "ad5b40722c786b0c9ba761687eedf1b5626cd3ee1c9b4a3ac43fd788841ae4b5"
 }
