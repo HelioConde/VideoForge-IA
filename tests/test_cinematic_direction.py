@@ -77,7 +77,7 @@ class CinematicDirectionTests(unittest.TestCase):
     def test_reference_conflict_and_generation_gate_not_silently_approved(self):
         gate=validate_visual_reference_gate(CHANNEL,VIDEO)
         self.assertFalse(gate["new_image_generation_allowed"])
-        self.assertFalse(gate["source_image_files_verified"])
+        self.assertTrue(gate["source_image_files_verified"])
         self.assertTrue(gate["canonical_identity_conflict"])
 
     def test_approved_chat_images_must_be_uploaded_and_canonized_before_generation(self):

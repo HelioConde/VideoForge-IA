@@ -115,7 +115,9 @@ class RemakeCinematicIntegrationTests(unittest.TestCase):
         gate=validate_visual_reference_gate(CH,VID)
         self.assertEqual(gate["active_manifest"],"remake-ep01-planos.json")
         self.assertTrue(gate["editorial_generation_authorized"])
-        self.assertFalse(gate["source_image_files_verified"])
+        # The existing 1199x1312 portrait has a real, valid SHA. That does
+        # NOT mean its visual identity is approved for shots.
+        self.assertTrue(gate["source_image_files_verified"])
         self.assertFalse(gate["new_image_generation_allowed"])
         self.assertTrue(gate["paid_provider_calls_approved"])
         with self.assertRaisesRegex(VideoForgeError,"CINEMATIC_CANONICAL_REFERENCE_NOT_APPROVED"):
