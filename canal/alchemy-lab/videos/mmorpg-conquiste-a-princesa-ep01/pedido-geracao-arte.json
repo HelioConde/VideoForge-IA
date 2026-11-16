@@ -7,7 +7,7 @@
   "max_calls_per_run": 1,
   "requested_by": "owner_2026-11-16_continue_visual_continuity",
   "requested_on": "2026-11-16",
-  "status": "requested_new_aldric_closeup_using_approved_visual_anchor",
+  "status": "completed_archived_visual_review_pending",
   "purpose": "Gerar close de Rei Aldric C02-P01 em GitHub Actions com exatamente o mesmo rosto, barba, coroa, túnica vinho, manto escuro, brocados, pintura 2D e luz da C01-P04 aprovada, anexando PNG original C01-P04 SHA-verificado; não repetir C01-P05 nem usar referência rejeitada.",
   "shot_id": "C02-P01",
   "visual_anchor_shot": "C01-P04",
@@ -33,5 +33,15 @@
   "user_visual_review_required": true,
   "previous_completed_asset": "c01-p05-guardas-lancas-v1",
   "previous_completed_generation_run": 43969450680,
-  "previous_completed_sha256": "ad5b40722c786b0c9ba761687eedf1b5626cd3ee1c9b4a3ac43fd788841ae4b5"
+  "previous_completed_sha256": "ad5b40722c786b0c9ba761687eedf1b5626cd3ee1c9b4a3ac43fd788841ae4b5",
+  "completed_run_id": 43970462482,
+  "permanent_archive_path": "assets/geracoes/production-art-request/43970462482/c02-p01-aldric-rosto-v1.png",
+  "image_sha256": "a18d2284ed7878e7b81537d1673384e8a506df647e2fd1ea0c1d7f81eb5aaf5d",
+  "generated_original_size": [
+    941,
+    1672
+  ],
+  "human_visual_approved": false,
+  "visual_comparison": "QA-C01-P04-VS-C02-P01.jpg",
+  "visual_comparison_qa_success_run": 43970937395
 }

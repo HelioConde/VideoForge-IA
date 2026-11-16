@@ -1,5 +1,14 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Continuidade real C01-P05 e C02-P01 gerada no GitHub
+
+- Aprovada a imagem C01-P04 **como referência visual de estilo e personagens**. Implementados registro `CONTINUIDADE-VISUAL-APROVADA-C01-P04.json`, `videoforge/dorama_continuity.py`, referências PNG anexadas à edição e verificações de SHA/elenco. A imagem original permanece imutável.
+- **C01-P05 guardas:** [run #43969450680](https://github.com/HelioConde/VideoForge-IA/actions/runs/43969450680) **SUCCESS**. Novo PNG SHA `ad5b40722c786b0c9ba761687eedf1b5626cd3ee1c9b4a3ac43fd788841ae4b5` em `assets/geracoes/production-art-request/43969450680/c01-p05-guardas-lancas-v1.png`, 941×1671. Fonte C01-P04 original anexada realmente.
+- **C02-P01 close Aldric:** [run #43970462482](https://github.com/HelioConde/VideoForge-IA/actions/runs/43970462482) **SUCCESS**. Novo PNG SHA `a18d2284ed7878e7b81537d1673384e8a506df647e2fd1ea0c1d7f81eb5aaf5d` em `assets/geracoes/production-art-request/43970462482/c02-p01-aldric-rosto-v1.png`, 941×1672, com mesmo SHA da âncora efetivamente enviado.
+- [Comparações visuais lado a lado e links](QA-IMAGENS-V3-CONTINUIDADE.md) arquivadas pelo workflow [#43970937395](https://github.com/HelioConde/VideoForge-IA/actions/runs/43970937395) **SUCCESS**. Visualmente a paleta e os materiais do cenário, armaduras, barba, traje e iluminação mantêm boa coerência inicial; o usuário ainda deve confirmar detalhes da coroa, rosto e mãos. Nenhum quadro novo é automaticamente aprovado apenas por SHA.
+- Código agora liga `dorama_visual_compare` à geração de novas imagens ancoradas: futura comparação automática tenta ocorrer no mesmo workflow do PNG, sem novo custo de IA. **Automação ainda não exercitada ponta a ponta após integração**. Prévia C01-P03 antiga e rejeições anteriores não foram promovidas.
+- Temos três PNGs reais: uma referência aprovada visualmente e duas tomadas candidatas para revisão; ainda não é episódio MP4 oficial nem upload YouTube.
+
 ## 16/11/2026 — Referência C01-P04 escolhida para toda a continuidade do tribunal
 
 - O usuário aprovou o visual da nova imagem C01-P04 ("tá bonito") e determinou que as imagens seguintes preservem as MESMAS características dos personagens. Registrada a aprovação **como âncora visual/identidade visível e estilo**, não como aprovação retrospectiva de máscaras antigas.

@@ -1953,5 +1953,54 @@
     "automatic_future_visual_approval": false,
     "ep01_official_mp4": false,
     "youtube_uploaded": false
+  },
+  "dorama_visual_consistency_generated_20261116": {
+    "schema": "videoforge/shot-image-progress/v1",
+    "approved_visual_anchor": "C01-P04",
+    "approved_visual_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+    "reference_original_unchanged": true,
+    "images": [
+      {
+        "id": "C01-P04",
+        "run_id": 43965460068,
+        "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+        "visual_reference_approved": true,
+        "size": [
+          941,
+          1672
+        ]
+      },
+      {
+        "id": "C01-P05",
+        "run_id": 43969450680,
+        "sha256": "ad5b40722c786b0c9ba761687eedf1b5626cd3ee1c9b4a3ac43fd788841ae4b5",
+        "visual_reference_approved": false,
+        "source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+        "size": [
+          941,
+          1671
+        ]
+      },
+      {
+        "id": "C02-P01",
+        "run_id": 43970462482,
+        "sha256": "a18d2284ed7878e7b81537d1673384e8a506df647e2fd1ea0c1d7f81eb5aaf5d",
+        "visual_reference_approved": false,
+        "source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+        "size": [
+          941,
+          1672
+        ]
+      }
+    ],
+    "comparison_workflow_run_id": 43970937395,
+    "comparison_workflow_success": true,
+    "automatic_followup_comparison_wired": true,
+    "automatic_comparison_end_to_end_next_image_not_yet_tested": true,
+    "approved_style_reference_only": true,
+    "images_without_new_approval": 2,
+    "official_video_created": false,
+    "youtube_uploaded": false,
+    "next_action": "Continue C02-P02 Kael using approved visual anchor plus SHA-verified original close reference of Kael; review character design in two new shots without rerunning legacy ROI QA."
   }
 }
