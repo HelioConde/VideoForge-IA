@@ -8,7 +8,7 @@
   "youtube_upload": false,
   "requested_by": "owner_explicit_2026-11-16_generate_via_github_not_assistant",
   "purpose": "Gerar nova primeira imagem de conjunto do julgamento C01-P04 DIRETAMENTE no GitHub Actions; referencia Kael PNG original SHA verificada, visual 2D anime medieval semirrealista cinematografico; rei, guardas e figurino candidatos para revisao, sem usar imagens geradas fora do GitHub.",
-  "status": "requested_new_unique_shot_candidate",
+  "status": "requested_after_preprovider_test_fix",
   "previous_rejected_reference_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
   "previous_rejected_reference_must_not_be_used": true,
   "require_real_source_png_attached": true,
@@ -19,5 +19,9 @@
   "human_visual_review_required": true,
   "regeneration_is_a_separate_asset": true,
   "no_publishing": true,
-  "require_original_png_and_sha_archived": true
+  "require_original_png_and_sha_archived": true,
+  "retry_reason": "Test-only failure before any provider call (PNG signature literal); fixed tests/test_first_dorama_image.py, re-run one permitted provider attempt.",
+  "retry_revision": 2,
+  "previous_run_id": 43965291280,
+  "previous_run_provider_called": false
 }
