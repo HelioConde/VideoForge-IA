@@ -1,3 +1,5 @@
+**CHECKPOINT PR #65 — 16/11/2026:** revisão contextual integrada, CI 43945520844 (25 testes) e exportação 43945693308 SUCCESS; artefatos 123e004. Oito máscaras preservadas e não aprovadas; R2 bloqueada.
+
 # AGENTS.md — VideoForge IA (reconstrução)
 
 **REVISAO CONTEXTUAL V3 — 16/11/2026:** conferir QA-ROI-CONTEXTO-V3.jpg (fonte, antes, removidos, depois) antes de ajustar exclusoes. Oito PNGs preservados; JPEG e apenas previa, nao fonte de medicao. Corpete B parcial: nao preencher ou aprovar por cor. Ver checkpoint para CI/publicacao.

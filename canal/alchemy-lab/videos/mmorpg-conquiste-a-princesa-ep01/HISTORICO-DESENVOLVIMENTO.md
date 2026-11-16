@@ -577,4 +577,9 @@ Verificação pós-merge: workflow semântico da main [43944320147](https://gith
 
 Programa agora exporta QA-ROI-CONTEXTO-V3.jpg com quatro colunas alinhadas: fonte com contexto, máscara anterior, pixels removidos e máscara final. O contexto é recortado da fonte SHA e amplia apenas a prévia; coordenadas e SHA da prancha constam no relatório V3. Medições continuam em pixels nativos, nunca no JPEG. Oito PNGs finais mantêm exatamente os hashes anteriores.
 
-Inspeção: corpete B representa cobertura parcial e oclusões de manga/cabelo/adornos. Não expandir por cor nem preencher partes ocultas automaticamente. Barba B ainda exige separação boca/bigode. 25 testes ROI locais passaram, incluindo alinhamento, pixels removidos exatos e bordas sem padding. CI e publicação desta mudança ainda pendentes nesta entrada. Zero máscaras aprovadas e R2 bloqueada; próxima etapa é revisão semântica no contexto original.
+Inspeção: corpete B representa cobertura parcial e oclusões de manga/cabelo/adornos. Não expandir por cor nem preencher partes ocultas automaticamente. Barba B ainda exige separação boca/bigode. 25 testes ROI locais passaram, incluindo alinhamento, pixels removidos exatos e bordas sem padding. CI e publicação concluídos; ver checkpoint PR #65 nesta página. Zero máscaras aprovadas e R2 bloqueada; próxima etapa é revisão semântica no contexto original.
+
+
+## 16/11/2026 — Revisão contextual integrada (PR #65)
+
+PR https://github.com/HelioConde/VideoForge-IA/pull/65 integrado no commit 69e6d90c5057952bb995500a046861a9a907f1a1. CI https://github.com/HelioConde/VideoForge-IA/actions/runs/43945520844 SUCCESS, 25 testes ROI. Exportação na main https://github.com/HelioConde/VideoForge-IA/actions/runs/43945693308 SUCCESS; artefatos versionados em 123e004d4c838137137f6e3c117b604e021e293d. Hash da prancha e oito referências de fonte e oito máscaras conferidos após fetch; máscaras idênticas ao checkpoint anterior. Nenhuma aprovação semântica, 0/4 pares oficiais e R2 bloqueada. Próximo passo: revisão contextual das oclusões de Elara B e boca/bigode de Aldric B. Nenhuma chamada paga.

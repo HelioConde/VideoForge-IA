@@ -1745,12 +1745,18 @@
     "main_semantic_conclusion": "success"
   },
   "wardrobe_context_review": {
-    "status": "local_qa_passed_pending_ci",
+    "status": "merged_ci_passed_semantic_pending",
     "board": "QA-ROI-CONTEXTO-V3.jpg",
     "local_roi_tests": 25,
     "unchanged_mask_hashes": 8,
     "semantic_approved": 0,
     "r2_blocked": true,
-    "paid_calls": 0
+    "paid_calls": 0,
+    "pr": 65,
+    "implementation_commit": "69e6d90c5057952bb995500a046861a9a907f1a1",
+    "artifact_commit": "123e004d4c838137137f6e3c117b604e021e293d",
+    "pr_ci_run": 43945520844,
+    "main_export_run": 43945693308,
+    "remote_hashes_verified": true
   }
 }
