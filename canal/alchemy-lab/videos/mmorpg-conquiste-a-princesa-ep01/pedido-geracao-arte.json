@@ -2,36 +2,22 @@
   "schema": "videoforge/image-generation-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "asset": "character-bible-grounded",
+  "asset": "c01-p04-imagem-inicial-v3",
   "model": "gpt-image-2",
   "max_calls_per_run": 1,
   "youtube_upload": false,
-  "requested_by": "user_standing_authorization_2026-11-15",
-  "purpose": "Refazer a candidata de identidade V2 usando DE VERDADE os dois PNGs originais verificados de Kael e Elara anexados ao endpoint de edicao. A primeira prancha gerada so por texto deve continuar arquivada. 1 chamada por run; QA visual e Aldric pendentes; sem MP4 ou YouTube.",
-  "next_steps": [
-    "validar arquivo PNG e SHA real desta geração",
-    "revisão visual humana de identidade de Kael, Elara e Aldric",
-    "criar imagens-mãe dos planos com a mesma prancha de referência",
-    "reconstruir fundo e extrair partes RGBA reais",
-    "montar rigs e renderizar MP4 somente com QA"
-  ],
-  "status": "completed_but_rejected_by_owner_wardrobe_mismatch",
-  "grounding_sources": [
-    {
-      "actor": "kael",
-      "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f"
-    },
-    {
-      "actor": "elara",
-      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a"
-    }
-  ],
-  "identity_approval_explicitly_required": true,
-  "consumes_image_provider_call_if_executed": true,
-  "auto_publish_youtube": false,
-  "review_file": "REVISAO-FIGURINO-V2.json",
-  "do_not_repeat_original_generation": true,
-  "next_r2_asset": "character-bible-grounded-r2",
-  "next_r2_status": "blocked_until_full_outfit_references_verified",
-  "owner_approval": false
+  "requested_by": "owner_explicit_2026-11-16_generate_via_github_not_assistant",
+  "purpose": "Gerar nova primeira imagem de conjunto do julgamento C01-P04 DIRETAMENTE no GitHub Actions; referencia Kael PNG original SHA verificada, visual 2D anime medieval semirrealista cinematografico; rei, guardas e figurino candidatos para revisao, sem usar imagens geradas fora do GitHub.",
+  "status": "requested_new_unique_shot_candidate",
+  "previous_rejected_reference_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "previous_rejected_reference_must_not_be_used": true,
+  "require_real_source_png_attached": true,
+  "source_reference_actor": "kael",
+  "source_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+  "style_document": "PROMPT-OFICIAL-ESTILO-DORAMA.md",
+  "shot_id": "C01-P04",
+  "human_visual_review_required": true,
+  "regeneration_is_a_separate_asset": true,
+  "no_publishing": true,
+  "require_original_png_and_sha_archived": true
 }

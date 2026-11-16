@@ -210,6 +210,39 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
         output.write_bytes(blob)
     elif (channel,video_id,asset_id)==(
         "alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
+        "c01-p04-imagem-inicial-v3",
+    ):
+        # Primeira imagem de grupo: identidade do Kael preservada por original
+        # EXATO em /v1/images/edits. Elara NAO integra este quadro.
+        # Aldric e guardas permanecem candidatos sujeitos a revisao visual.
+        import base64
+        from .grounded_identity import inputs
+        originals=inputs()
+        kael=[item for item in originals if item["actor"]=="kael"]
+        if len(kael)!=1:
+            raise VideoForgeError("DORAMA_FIRST_FRAME_KAEL_SOURCE_MISSING")
+        if model!="gpt-image-2" or size!="1024x1536":
+            raise VideoForgeError("DORAMA_FIRST_FRAME_MODEL_OR_SIZE_INVALID")
+        item=kael[0]
+        payload={"model":model,"prompt":prompt,
+            "size":size,"n":1,"background":"opaque",
+            "output_format":"png","response_format":"b64_json",
+            "stream":False,
+            "images":[{"image_url":"data:image/png;base64,"+
+                base64.b64encode(item["bytes"]).decode("ascii")}]}
+        source_provenance=[{k:item[k] for k in ("actor","id","path","sha256")}]
+        response=proxy_images.call_proxy(url,"/v1/images/edits",
+            os.getenv("CODEX_PROXY_API_KEY",""),payload)
+        blob,extension=proxy_images.decode_image(response)
+        if extension!=".png":
+            raise VideoForgeError("DORAMA_FIRST_FRAME_PNG_REQUIRED")
+        output=predicted.with_suffix(".png")
+        if output.exists() or output.is_symlink():
+            raise VideoForgeError("DORAMA_FIRST_FRAME_ALREADY_EXISTS")
+        output.parent.mkdir(parents=True,exist_ok=True)
+        output.write_bytes(blob)
+    elif (channel,video_id,asset_id)==(
+        "alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
         "character-bible-grounded-r2",
     ):
         # The rejected reference is not billable again. R2 is a distinct asset
@@ -247,6 +280,8 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
             "preserves_prior_text_only_candidate":True if source_provenance else False,
             "requires_separate_aldric_visual_review":True if source_provenance else False,
             "human_visual_approval":False,"official_video_created":False,
+            "candidate_scene_shot_id":("C01-P04" if asset_id=="c01-p04-imagem-inicial-v3" else None),
+            "no_automatic_scene_or_wardrobe_approval":True,
             "youtube_uploaded":False}
     output.with_suffix(".production.json").write_text(
         json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
