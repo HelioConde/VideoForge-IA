@@ -1758,5 +1758,31 @@
     "pr_ci_run": 43945520844,
     "main_export_run": 43945693308,
     "remote_hashes_verified": true
+  },
+  "wardrobe_roi_archive_verified_v3": {
+    "schema": "videoforge/roi-archive-checkpoint/v1",
+    "date": "2026-11-16",
+    "git_commit": "46adaf0669633d2fb7ab999d199d62482096935d",
+    "workflow_run_id": 43947082696,
+    "workflow_conclusion": "success",
+    "verified_archived_pngs": 8,
+    "checked_source_png_sha": true,
+    "checked_archived_png_sha": true,
+    "checked_rgb_source_unchanged": true,
+    "checked_alpha_exact_subtraction": true,
+    "checked_pixel_removed_counts": true,
+    "checked_context_board_sha": true,
+    "qa_artifact_name": "qa-roi-v3-archive-check",
+    "qa_artifact_retention_days": 30,
+    "readonly_workflow": true,
+    "technical_integrity_verified": true,
+    "semantic_verified": 0,
+    "semantic_pairs_ready": 0,
+    "owner_rejections_still_active": true,
+    "r2_blocked": true,
+    "official_video_allowed": false,
+    "youtube_uploaded": false,
+    "provider_calls": 0,
+    "next_action": "Visually review semantic accuracy of V3 masks on source context, especially beard vs mouth, cloak vs spear, and Elara bodice B; do not auto-promote."
   }
 }
