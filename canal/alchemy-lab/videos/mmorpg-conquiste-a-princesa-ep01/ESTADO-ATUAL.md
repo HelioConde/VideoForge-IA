@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Zoom dos oito recortes candidatos de figurino com fontes SHA
+
+- O [workflow 43889319311](https://github.com/HelioConde/VideoForge-IA/actions/runs/43889319311) executou com sucesso os testes e a produção offline de oito recortes: barba/tecido externo/painel central de Aldric sentado (C01) e em pé (C02), corpete de Elara no close e na câmera C12-P02.
+- A inspeção da primeira prancha detectou que o recorte B da barba atingia a região do peito; as coordenadas de barba B e corpete B foram atualizadas em `ROI-POLIGONOS-CANDIDATOS-V2.json` para nova prévia. Os recortes incluem alguns adornos e exigem refinamento; **nenhum dos 8 é máscara aprovada**.
+- Arquivos de saída: `QA-ROI-RECORTES-CANDIDATOS-V2.jpg` e `QA-ROI-RECORTES-CANDIDATOS-V2.json` pelo workflow `qa-wardrobe-roi-candidates.yml`; todas as fontes originais permanecem intocadas.
+- `CONTRATO-ROI-SEMANTICAS-V2.json` permanece com **0/4 pares validados**. A reprovação do figurino de Aldric e Elara permanece ativa, R2 bloqueada, sem nova imagem paga, MP4 oficial ou upload.
+
 ## 16/11/2026 — ROIs reais e comparador de cores preparados, sem falsificar aprovação
 
 - [Run 43885264961](https://github.com/HelioConde/VideoForge-IA/actions/runs/43885264961) **SUCCESS (7 testes)**: duas pranchas de 6 imagens reais `QA-ALDRIC-ROI-PROPOSTAS-V2.jpg` (C01 com polígonos do rig V1, mais C02/C03 com pose/identidade por verificar) e `QA-ELARA-ROI-CENAS-V2.jpg` (close original, câmera C12 original e cena V1), com manifestos SHA `QA-ROI-FIGURINOS-V2.json` e [guia de conferência](REVISAR-ROI-FIGURINOS-V2.md). **Os polígonos são candidatos V1**, não máscaras individuais de barba, centro/exterior da roupa ou peitoral.
