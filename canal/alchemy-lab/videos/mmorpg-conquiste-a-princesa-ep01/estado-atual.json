@@ -1,6 +1,46 @@
 {
   "schema": "videoforge/episode-checkpoint/v1",
-  "updated_local_date": "2026-11-15",
+  "updated_local_date": "2026-11-16",
+  "wardrobe_roi_refinement_v2": {
+    "schema": "videoforge/roi-color-filter-candidates-checkpoint/v1",
+    "date": "2026-11-16",
+    "issue": 62,
+    "source_manifest": "ROI-POLIGONOS-CANDIDATOS-V2.json",
+    "filter_module": "videoforge/wardrobe_roi_refine.py",
+    "workflow": ".github/workflows/qa-wardrobe-roi-refine.yml",
+    "workflow_success_runs": [
+      43891421816,
+      43891715742,
+      43891981803,
+      43891991622
+    ],
+    "latest_checked_run": 43891991622,
+    "qa_board": "QA-ROI-MASCARAS-REFINADAS-V2.jpg",
+    "qa_report": "QA-ROI-MASCARAS-REFINADAS-V2.json",
+    "qa_candidate_png_folder": "assets/qa-roi-figurino-v2",
+    "sources_checked_by_sha": true,
+    "generated_ai_images": 0,
+    "provider_calls": 0,
+    "candidate_masks": 8,
+    "verified_masks": 0,
+    "verified_pairs": 0,
+    "auto_approved_costumes": 0,
+    "rejected_figures_still_rejected": [
+      "aldric",
+      "elara"
+    ],
+    "r2_blocked": true,
+    "official_mp4": false,
+    "youtube_uploaded": false,
+    "limitations": [
+      "beard_A_may_include_collar_and_hair_boundary",
+      "beard_B_may_include_lips_or_skin_near_jaw",
+      "outer_cloth_may_contain_spear_pixels",
+      "red_center_includes_gold_embroidery",
+      "bodice_B_is_partially_selected_and_not_equivalent_coverage"
+    ],
+    "next_action": "review_candidate_alpha_pixels_and_exclusion_shapes_then_validate_semantic_pairs_before_official_color_comparison"
+  },
   "timezone": "America/Sao_Paulo",
   "source_of_truth": "main",
   "channel": "alchemy-lab",
