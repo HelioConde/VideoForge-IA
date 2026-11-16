@@ -25,6 +25,7 @@ class RecoveryTests(unittest.TestCase):
         state_path=episode/"estado-atual.json"
         state=json.loads(state_path.read_text(encoding="utf-8"))
         state["generation_dispatch_intent"]["status"]="blocked_oauth_expired_refresh_http_502"
+        state["generation_dispatch_intent"]["image_png_created"]=False
         state_path.write_text(json.dumps(state),encoding="utf-8")
         return root
 
