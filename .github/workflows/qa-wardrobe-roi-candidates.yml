@@ -1,0 +1,49 @@
+name: "VideoForge - ampliar ROIs candidatas do dorama sem IA"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/wardrobe_roi_candidates.py'
+      - 'tests/test_wardrobe_roi_candidates.py'
+      - '.github/workflows/qa-wardrobe-roi-candidates.yml'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ROI-POLIGONOS-CANDIDATOS-V2.json'
+permissions:
+  contents: write
+concurrency:
+  group: vf-wardrobe-roi-candidates
+  cancel-in-progress: false
+jobs:
+  zoom-originals:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencia local sem IA
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Testar propostas, hash e estado bloqueado
+        run: python -m unittest tests.test_wardrobe_roi_candidates tests.test_wardrobe_roi_color -v
+      - name: Preparar oito recortes de fotos originais
+        run: python -m videoforge.wardrobe_roi_candidates --sync
+      - name: Persistir somente previsualizacoes e auditoria
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'videoforge-roi-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$EP/QA-ROI-RECORTES-CANDIDATOS-V2.jpg" "$EP/QA-ROI-RECORTES-CANDIDATOS-V2.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(dorama): ampliar oito ROIs candidatas dos originais'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
