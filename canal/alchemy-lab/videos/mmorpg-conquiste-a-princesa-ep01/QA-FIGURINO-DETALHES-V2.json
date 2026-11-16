@@ -1,0 +1,89 @@
+{
+  "schema": "videoforge/wardrobe-detail-qa/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "owner_decision": "rejected_wardrobe_inconsistency",
+  "rejected_candidate_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "comparisons": [
+    {
+      "actor": "aldric",
+      "qa_jpeg_path": "QA-ALDRIC-ROUPA-DETALE-V2.jpg",
+      "qa_jpeg_sha256": "91b8e4c46adb44ff8a56434b9f28da9b049d46636d3fe57e9c988058d83e8254",
+      "source_images": [
+        {
+          "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+          "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+          "label": "Aldric: candidato RGB da cena 01",
+          "origin": "V1 candidate, not an owner-approved costume"
+        },
+        {
+          "path": "assets/cena-01/rig-drafts/aldric-partes/corpo-vestimenta-restante.png",
+          "sha256": "4c6dd51cf87fc9bdd5126ae160474428f2bca9aaf801b051f8f2ad9694897833",
+          "label": "Aldric: corpo/vestimenta recortados",
+          "origin": "V1 partial layer, not full-body canon"
+        },
+        {
+          "path": "assets/cenas-mae/cena-01.png",
+          "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+          "label": "Aldric: cena mae antiga no salao",
+          "origin": "V1 scene context, non-canonical"
+        },
+        {
+          "path": "assets/geracoes/production-art-request/43868021687/character-bible-grounded.png",
+          "sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+          "label": "V2 grounded REPROVADA — para comparação apenas",
+          "origin": "grounded candidate from two attached PNGs, owner-rejected"
+        }
+      ],
+      "detail_crop_method": "center_rect_x_18_82_y_26_72",
+      "detail_crop_is_subject_detection": false,
+      "preserves_png_source_bytes": true,
+      "original_wardrobe_approved": false,
+      "generated_new_art": false
+    },
+    {
+      "actor": "elara",
+      "qa_jpeg_path": "QA-ELARA-PEITORAL-ROXO-V2.jpg",
+      "qa_jpeg_sha256": "e6453f594333b9ef74f331688c0414e7845c47a23e9a953bce6ab695fce3f986",
+      "source_images": [
+        {
+          "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+          "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "label": "Elara: close originalmente aprovado para estilo",
+          "origin": "Exact chat-original for visual style, NOT entire costume approval"
+        },
+        {
+          "path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+          "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+          "label": "Elara: enquadramento original C12-P02",
+          "origin": "Exact original camera framing, not wardrobe approval"
+        },
+        {
+          "path": "assets/cenas-mae/cena-12.png",
+          "sha256": "0746e924a0aed132eb596c5442265a38e65d43b4386c071ceedd466ad7e1499e",
+          "label": "Elara: cena mae antiga C12",
+          "origin": "V1 scene context, non-canonical"
+        },
+        {
+          "path": "assets/geracoes/production-art-request/43868021687/character-bible-grounded.png",
+          "sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+          "label": "V2 grounded REPROVADA — para comparação apenas",
+          "origin": "grounded candidate from two attached PNGs, owner-rejected"
+        }
+      ],
+      "detail_crop_method": "center_rect_x_18_82_y_26_72",
+      "detail_crop_is_subject_detection": false,
+      "preserves_png_source_bytes": true,
+      "original_wardrobe_approved": false,
+      "generated_new_art": false
+    }
+  ],
+  "approved_full_wardrobe_references": 0,
+  "required_full_wardrobe_references": 2,
+  "can_generate_r2": false,
+  "human_visual_approval": false,
+  "image_provider_calls": 0,
+  "new_images_generated": false,
+  "source_pngs_modified": false,
+  "official_mp4_created": false,
+  "youtube_uploaded": false
+}
