@@ -1,5 +1,10 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 16/11/2026 — corrigida espera técnica de C12 após o importador
+
+- [Run anterior 43823602889](https://github.com/HelioConde/VideoForge-IA/actions/runs/43823602889) falhou por exigir o lock V1 já arquivado. O `c12_technical_preview.policy()` agora exige versão V2 ativa e bloqueio de vídeo oficial/YouTube, preservando limites de geração. Não cria imagem nem aprova arte.
+- `c12-after-import.yml` passa a verificar automaticamente o código corrigido, testar e classificar os 9 arquivos técnicos originais. Faltando PNGs, retorna `ASSETS_PENDING` e espera pelos originais sem despachar Remotion. Arquivos com SHA errado continuam falha bloqueante; `character-bible` V2 não substitui os assets C12.
+
 ## 16/11/2026 — agente identifica automaticamente as fontes faltantes antes da revisão
 
 - `videoforge.remake_autopilot.choose_next()` agora consulta a integridade exata dos dois closes originais e da candidata de câmera C12, sem IA nem custo: se os closes de Kael/Elara estiverem ausentes, classifica o bloqueio como `original_kael_elara_sha_sources_missing` (em vez de pedir aprovação sem fontes); se existir arquivo errado, utiliza `invalid_original_reference_sha_stop`.

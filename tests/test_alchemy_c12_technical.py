@@ -29,6 +29,11 @@ class C12TechnicalTest(unittest.TestCase):
 
     def test_unapproved_status_and_no_new_images(self):
         policy()
+        import json
+        state=json.loads((EP/"estado-atual.json").read_text(encoding="utf8"))
+        self.assertEqual(state["active_production_version"],"remake-v2-20261115")
+        self.assertFalse(state["locks"]["official_video_allowed"])
+        self.assertTrue(state["locks"]["no_youtube_upload"])
         p=plan()
         self.assertFalse(p["official_render_allowed"])
         self.assertFalse(p["three_js_remotion_full_rig_ready"])

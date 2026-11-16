@@ -12,11 +12,15 @@ on:
       - '.github/workflows/c12-after-import.yml'
       - 'videoforge/c12_dispatch_gate.py'
       - 'tests/test_alchemy_c12_dispatch_gate.py'
+      - 'videoforge/c12_technical_preview.py'
+      - 'tests/test_alchemy_c12_technical.py'
   pull_request:
     paths:
       - '.github/workflows/c12-after-import.yml'
       - 'videoforge/c12_dispatch_gate.py'
       - 'tests/test_alchemy_c12_dispatch_gate.py'
+      - 'videoforge/c12_technical_preview.py'
+      - 'tests/test_alchemy_c12_technical.py'
 
 permissions:
   contents: read
@@ -61,7 +65,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Garantir politica e unit tests sem gerar imagens
+      - name: Garantir politica V2 e unit tests sem gerar imagens
         shell: bash
         run: |
           set -euo pipefail

@@ -73,9 +73,23 @@ def policy():
         or r.get("technical_preview_only") is not True
         or r.get("official_video_approved") is not False
         or r.get("new_image_generation_calls") != 0
-        or r.get("youtube_upload") is not False
-        or not (EP/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file()):
+        or r.get("youtube_upload") is not False):
         raise AssetGateError("C12_POLICY_BLOCKED")
+    state_file=EP/"estado-atual.json"
+    policy_file=EP/"autonomy-policy.json"
+    if (any(p.is_symlink() or not p.is_file() for p in (state_file,policy_file))
+            or (EP/"SEM-GERACAO-NOVAS-IMAGENS.lock").exists()
+            or not (EP/"REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md").is_file()):
+        raise AssetGateError("C12_REMAKE_ACTIVE_POLICY_MISSING_OR_LEGACY_LOCK")
+    current=json.loads(state_file.read_text(encoding="utf8"))
+    governance=json.loads(policy_file.read_text(encoding="utf8"))
+    if (current.get("active_production_version")!="remake-v2-20261115"
+            or current.get("locks",{}).get("no_new_image_generation") is not False
+            or current.get("locks",{}).get("official_video_allowed") is not False
+            or current.get("locks",{}).get("no_youtube_upload") is not True
+            or governance.get("scope")!="alchemy-lab/mmorpg-conquiste-a-princesa-ep01"
+            or governance.get("auto_publish_youtube") is not False):
+        raise AssetGateError("C12_REMAKE_ACTIVE_POLICY_INVALID")
 
 def required_files(p):
     items = []
