@@ -26,6 +26,9 @@ class CinematicChatReferencesTests(unittest.TestCase):
         self.assertEqual(r["original_source_files_total"],2)
         self.assertEqual(len(r["samples"]),2)
         self.assertTrue(r["preferred_style_confirmed"])
+        self.assertTrue(r["import_read_only"])
+        self.assertTrue(r["legacy_image_generation_lock_archived"])
+        self.assertEqual(r["active_remake_version"],"remake-v2-20261115")
         self.assertFalse(r["render_official_allowed"])
         self.assertFalse(r["official_character_bible_updated"])
         self.assertFalse(r["official_37_shots_approved"])
@@ -77,7 +80,12 @@ class CinematicChatReferencesTests(unittest.TestCase):
         current=(base/"biblia-visual.md").read_text(encoding="utf8")
         self.assertIn("Bíblia visual v2",current)
         self.assertIn("A identidade antiga continua",current)
-        self.assertTrue((base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file())
+        self.assertFalse((base/"SEM-GERACAO-NOVAS-IMAGENS.lock").exists())
+        self.assertTrue((base/"REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md").is_file())
+        state=json.loads((base/"estado-atual.json").read_text(encoding="utf8"))
+        self.assertEqual(state["active_production_version"],"remake-v2-20261115")
+        self.assertFalse(state["locks"]["no_new_image_generation"])
+        self.assertTrue(state["locks"]["no_youtube_upload"])
 
     def test_third_camera_candidate_is_recorded_but_never_implicitly_approved(self):
         r=reference_status()

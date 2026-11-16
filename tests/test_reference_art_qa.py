@@ -17,6 +17,14 @@ class ArchivedIdentityReferenceQATests(unittest.TestCase):
         self.assertFalse(record["downstream"]["approved_canonical_anchor"])
         self.assertFalse(record["generation_provenance_limits"]["approved_originals_attached_to_generation"])
         self.assertFalse(record["generation_provenance_limits"]["claim_exact_original_identity_match"])
+        audit=record["source_originals_current_audit"]
+        self.assertEqual(audit["kael_elara_sources_total"],2)
+        self.assertEqual(len(audit["expected_originals"]),3)
+        self.assertEqual(
+            record["generation_provenance_limits"]["approved_reference_images_sha_imported_in_repo"],
+            audit["kael_elara_sources_verified"]==2)
+        self.assertFalse(audit["aldric_individually_approved_original_sha_available"])
+        self.assertFalse(audit["can_approve_identity_automatically"])
         self.assertIn("cabelo",record["identity_review_criteria"]["kael"])
         self.assertIn("violeta",record["identity_review_criteria"]["elara"])
         self.assertIn("barba",record["identity_review_criteria"]["aldric"])

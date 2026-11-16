@@ -30,4 +30,4 @@ Em seguida salva **qa-referencias-chat-cinematograficas.json**. Exigir a confirm
 
 Os originais arquivados passam a ser **referências rastreáveis**, não automaticamente 36 imagens-mãe específicas. C12-P02 ainda requer revisão visual da posição e do olhar da princesa, mesmo com seu SHA correto. A história não deve revelar sua identidade antes da C12. Continuam obrigatórios recortes RGBA por câmera, fundo reconstruído, rig, pivôs, underlays e QA humano.
 
-Manter o lock SEM-GERACAO-NOVAS-IMAGENS.lock; preservar os 71 PNGs legados e as 14 mães antigas. Nenhum novo PNG, render MP4 ou upload ao YouTube é liberado por esta importação.
+**Política atual do EP01 V2 (16/11/2026):** o arquivo ativo `SEM-GERACAO-NOVAS-IMAGENS.lock` foi arquivado como `REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md`. A autorização de geração V2 permanece válida no `autonomy-policy.json`, mas este workflow de importação **não** gera PNGs de IA, não altera pixels, não aprova identidades/rig e não publica vídeos. Preservar os 71 PNGs legados e as 14 mães antigas como **V1**. Importar os originais por SHA não autoriza por si só render MP4 ou upload ao YouTube.

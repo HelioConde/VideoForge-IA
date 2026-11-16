@@ -105,8 +105,25 @@ def reference_status(root:Path=ROOT)->dict:
     if (not isinstance(samples,list) or len(samples)!=2
             or {x.get("id") for x in samples}!={"ref-kael-close-c12","ref-elara-close-c12"}):
         raise VideoForgeError("CINEMATIC_CHAT_REFERENCE_EXPECTED_TWO_SAMPLES")
-    if not (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").is_file():
-        raise VideoForgeError("CINEMATIC_CHAT_REFERENCE_IMAGE_LOCK_MISSING")
+    # The historic 2026-11-14 image-generation lock was archived for EP01 V2.
+    # This source-import QA never calls a generator; it MUST NOT resurrect that
+    # obsolete lock or mistake a style-reference-only v1 flag for v2 policy.
+    state_file=base/"estado-atual.json"
+    policy_file=base/"autonomy-policy.json"
+    historic=base/"REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md"
+    if (any(p.is_symlink() or not p.is_file()
+            for p in (state_file,policy_file,historic)) or
+            (base/"SEM-GERACAO-NOVAS-IMAGENS.lock").exists()):
+        raise VideoForgeError("CINEMATIC_REFERENCE_ACTIVE_POLICY_OR_HISTORY_INVALID")
+    state=json.loads(state_file.read_text(encoding="utf8"))
+    policy=json.loads(policy_file.read_text(encoding="utf8"))
+    if (state.get("active_production_version")!="remake-v2-20261115"
+            or state.get("locks",{}).get("no_new_image_generation") is not False
+            or state.get("locks",{}).get("no_youtube_upload") is not True
+            or policy.get("scope")!="alchemy-lab/mmorpg-conquiste-a-princesa-ep01"
+            or policy.get("standing_user_authorization",{}).get("per_call_reapproval_required") is not False
+            or policy.get("auto_publish_youtube") is not False):
+        raise VideoForgeError("CINEMATIC_REFERENCE_ACTIVE_REMAKE_V2_POLICY_INVALID")
     rows=[]
     seen=set()
     for item in samples:
@@ -162,6 +179,10 @@ def reference_status(root:Path=ROOT)->dict:
         "channel":CHANNEL,
         "video_id":VIDEO,
         "feedback":"O estilo visual mostrado no chat recebeu aprovação estética; não significa aprovação de rigs.",
+        "import_read_only":True,
+        "legacy_image_generation_lock_archived":True,
+        "active_remake_version":"remake-v2-20261115",
+        "active_remake_standing_generation_policy_unchanged":True,
         "status":result,
         "preferred_style_confirmed":True,
         "original_source_files_sha_verified":verified,

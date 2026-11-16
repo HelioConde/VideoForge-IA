@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Confirmar imagem gerativa proibida e arquivo original exigido
+      - name: Confirmar importacao somente dos originais no remake V2 autorizado
         shell: bash
         run: |
           set -euo pipefail
@@ -42,7 +42,14 @@ jobs:
           assert p['render_mp4'] is False
           assert p['youtube_upload'] is False
           assert (base/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
-          print('EXISTING_SOURCE_SHA_ONLY; image generation permanently denied for episode')
+          assert not (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').exists()
+          state=json.loads((base/'estado-atual.json').read_text(encoding='utf8'))
+          policy=json.loads((base/'autonomy-policy.json').read_text(encoding='utf8'))
+          assert state['active_production_version']=='remake-v2-20261115'
+          assert state['locks']['no_new_image_generation'] is False
+          assert state['locks']['no_youtube_upload'] is True
+          assert policy['paid_provider_calls_approved'] is True
+          print('ONLY_IMPORT_ORIGINAL_SHA; this workflow NEVER generates images; V2 provider policy preserved')
           PY
       - name: Instalar Pillow somente para leitura do fingerprint de referencias
         run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
@@ -75,6 +82,8 @@ jobs:
           assert r['new_image_generation_calls']==0
           assert r['render_official_allowed'] is False
           assert r['official_character_bible_updated'] is False
+          assert r['import_read_only'] is True
+          assert r['active_remake_version']=='remake-v2-20261115'
           candidate=r['camera_candidate_C12_P02']
           assert candidate['shot_id']=='C12-P02'
           assert candidate['human_shot_approval'] is False

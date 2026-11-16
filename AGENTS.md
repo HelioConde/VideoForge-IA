@@ -1,5 +1,7 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+**IMPORTACAO DE ORIGINAIS V2 SEM LOCK V1:** `videoforge.cinematic_chat_references` deve validar `estado-atual.json` e `autonomy-policy.json` em vez de exigir o antigo `SEM-GERACAO-NOVAS-IMAGENS.lock` (arquivado). Workflow `qa-alchemy-chat-cinematic-references.yml` só aceita originais por hash exato, não gera imagens e não modifica autorização de geração V2. `QA-CHARACTER-BIBLE-V2.json` deve refletir SHA realmente importados, não flag obsoleta; sem aprovação automática de Kael/Elara/Aldric ou MP4. Fontes antigas V1 não substituem os closes originais aprovados de 941×1672.
+
 **REFERENCIAS ORIGINAIS ANTES DE APROVACAO:** a `character-bible` V2 gerada por prompt textual nao recebeu anexos com imagens aprovadas de Kael, Elara e Aldric. O relatorio `QA-CHARACTER-BIBLE-V2.json` marca identidade e original visual como pendentes. NUNCA supor a identidade correta nem aprovar uma prancha somente por SHA/tamanho. Comparar com fontes aprovadas (originais SHA-registrados) antes de qualquer canonizacao/rig/roteiro de cena.
 
 **PROTECAO ANTI-DUPLICACAO DE GASTO:** antes de disparar imagem, verificar o PNG permanentemente arquivado por canal/episodio/asset e seu SHA+PNG+manifesto mesmo em runners novos. `videoforge.production_art.archived_reference` bloqueia recompra da mesma referencia; o workflow autonomo grava `QA-CHARACTER-BIBLE-V2.json` com dimensoes e revisao humana pendente. Nao inventar aprovacao ou converter/cortar rostos para forcar 9:16.

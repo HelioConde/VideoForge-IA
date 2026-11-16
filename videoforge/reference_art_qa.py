@@ -12,6 +12,7 @@ from pathlib import Path
 from .errors import VideoForgeError
 from .production_art import archived_reference,read_plan,asset_prompt,ROOT
 from .remake_autopilot import EPISODE
+from .cinematic_chat_references import reference_status
 
 EP_CHANNEL="alchemy-lab"
 EP_ID="mmorpg-conquiste-a-princesa-ep01"
@@ -32,6 +33,14 @@ def inspect_reference(root:Path=ROOT) -> dict:
         }
     plan,story=read_plan(EP_CHANNEL,EP_ID,root)
     _,expected=asset_prompt(plan,story,ASSET_ID)
+    originals=reference_status(root)
+    samples=originals["samples"]
+    camera=originals["camera_candidate_C12_P02"]
+    if (originals["status"]=="BLOCKED_INVALID_REFERENCE_BYTES"
+            or camera["status"]=="INVALID_SOURCE_BYTES"):
+        raise VideoForgeError("REFERENCE_QA_ORIGINAL_SOURCE_INVALID_REFUSE_APPROVAL")
+    kael_elara=originals["original_source_files_sha_verified"]==2
+    c12_camera=camera["source_verified"] is True
     character_bible=plan.get("character_bible")
     if (not isinstance(character_bible,dict)
             or not all(isinstance(character_bible.get(c),str)
@@ -81,11 +90,34 @@ def inspect_reference(root:Path=ROOT) -> dict:
             "preserve_original_facial_features_and_outfits":True,
             "require_character_identity_comparison":True,
         },
+        "source_originals_current_audit":{
+            "status":originals["status"],
+            "kael_elara_sources_verified":originals["original_source_files_sha_verified"],
+            "kael_elara_sources_total":2,
+            "c12_camera_source_verified":c12_camera,
+            "expected_originals":[
+                {"id":sample["id"],
+                 "path":sample["expected_repo_path"],
+                 "sha256":sample["expected_sha256"],
+                 "status":sample["status"],
+                 "source_verified":sample["source_original_verified"]}
+                for sample in samples
+            ]+[{
+                "id":"ref-c12-p02-camera",
+                "path":camera["expected_repo_path"],
+                "sha256":camera["expected_sha256"],
+                "status":camera["status"],
+                "source_verified":c12_camera,
+            }],
+            "aldric_individually_approved_original_sha_available":False,
+            "import_zip":"uploads/alchemy-ep01-cinema-3-originais.zip",
+            "import_script":"scripts/enviar-referencias-cinema.ps1",
+            "can_approve_identity_automatically":False,
+        },
         "generation_provenance_limits":{
             "generation_used_text_prompt_only":True,
             "approved_originals_attached_to_generation":False,
-            "approved_reference_images_sha_imported_in_repo":
-                not plan.get("remake_v2_20261115",{}).get("original_reference_sha_missing_in_repo",True),
+            "approved_reference_images_sha_imported_in_repo":kael_elara,
             "claim_exact_original_identity_match":False,
             "cannot_approve_until_reference_comparison":True,
         },

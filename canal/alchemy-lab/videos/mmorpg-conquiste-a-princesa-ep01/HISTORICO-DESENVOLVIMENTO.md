@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 16/11/2026 — conserto da importação das fontes cinematográficas V2
+
+- Descoberta: a importação original de Kael/Elara/C12-P02 estava presa ao arquivo `SEM-GERACAO-NOVAS-IMAGENS.lock`, já arquivado após autorização de geração do remake V2; a verificação falharia mesmo com um ZIP original correto. O verificador agora exige `estado-atual.json` e `autonomy-policy.json` ativos, preserva proibição de publicação e permite apenas **importação de arquivos existentes sem chamar IA**.
+- Fontes exigidas e já documentadas por SHA256: `kael-close-salao.png` (edb751cd...), `elara-close-trono.png` (bf199f3e...) e `confronto-trono-c12-p02.png` (01eb7c12...). Os originais **não foram encontrados** na árvore atual do GitHub nem nos arquivos recuperáveis do projeto; não confundir imagens V1 com essas fontes. Nenhum dos três hashes deve ser presumido verificado até o ZIP passar pelo importador.
+- O relatório `QA-CHARACTER-BIBLE-V2.json` passa a calcular a disponibilidade das fontes **em tempo real por SHA**, em vez de usar marcador estático `original_reference_sha_missing_in_repo`. Isso não aprova automaticamente a arte V2 gerada por texto. A fonte individual de Aldric continua sem hash aprovado arquivado.
+- Para importar quando o ZIP exato estiver no computador: executar `powershell -File scripts/enviar-referencias-cinema.ps1 -ZipPath <caminho-do-zip>`. O workflow `qa-alchemy-chat-cinematic-references.yml` confere os 3 originais, publica evidências SHA/CRC e mantém MP4/YouTube bloqueados.
+
 ## 15/11/2026 — etapa de referência V2: 86 testes e requisitos reais de identidade
 
 - [Run de QA 43786791088](https://github.com/HelioConde/VideoForge-IA/actions/runs/43786791088) **SUCCESS**: 86 testes executados (6 pulados por requisitos do runner); SHA/PNG da `character-bible.png` conferidos; relatório permanente `QA-CHARACTER-BIBLE-V2.json` gerado na `main` pelo próprio workflow. O coordenador não disparou outra chamada paga.
