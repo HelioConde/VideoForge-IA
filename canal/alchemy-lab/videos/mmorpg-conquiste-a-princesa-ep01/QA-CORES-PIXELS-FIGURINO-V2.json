@@ -1,0 +1,160 @@
+{
+  "schema": "videoforge/wardrobe-pixel-audit/v1",
+  "owner_rejection_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "status": "partial_rgba_color_measurement_no_semantic_mask",
+  "rows": [
+    {
+      "actor": "aldric",
+      "region": "roupa_mista",
+      "path": "assets/cena-01/rig-drafts/aldric-partes/corpo-vestimenta-restante.png",
+      "sha256": "4c6dd51cf87fc9bdd5126ae160474428f2bca9aaf801b051f8f2ad9694897833",
+      "status": "unlabeled_rgba_layer_measured",
+      "mode": "RGBA",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "percent": {
+        "red": 24.24,
+        "very_dark": 45.84,
+        "purple_or_magenta": 0.02,
+        "other": 29.91
+      },
+      "sampled_visible_pixels": 6617,
+      "alpha_coverage_percent": 1.91,
+      "validated_beard_roi": false,
+      "validated_bodice_roi": false,
+      "validated_outer_and_center_roi": false,
+      "outfit_canonical": false,
+      "source_pixels_unchanged": true
+    },
+    {
+      "actor": "aldric",
+      "region": "cabeca_coroa_cabelo_mistos",
+      "path": "assets/cena-01/rig-drafts/aldric-partes/coroa-cabelo-rosto.png",
+      "sha256": "f6028cbd1812695a1713cedf25fd91fe0c5cde0d70cb8b356bf72cf6fd90aea5",
+      "status": "unlabeled_rgba_layer_measured",
+      "mode": "RGBA",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "percent": {
+        "red": 22.81,
+        "very_dark": 25.08,
+        "purple_or_magenta": 0.21,
+        "other": 51.91
+      },
+      "sampled_visible_pixels": 969,
+      "alpha_coverage_percent": 0.28,
+      "validated_beard_roi": false,
+      "validated_bodice_roi": false,
+      "validated_outer_and_center_roi": false,
+      "outfit_canonical": false,
+      "source_pixels_unchanged": true
+    },
+    {
+      "actor": "aldric",
+      "region": "manto_esquerdo",
+      "path": "assets/cena-01/rig-drafts/aldric-partes/manto-esquerdo.png",
+      "sha256": "e67eaaa3eca75260c7866e82447063e62e12dda238eefc145ff6dddd69780695",
+      "status": "unlabeled_rgba_layer_measured",
+      "mode": "RGBA",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "percent": {
+        "red": 2.76,
+        "very_dark": 74.89,
+        "purple_or_magenta": 0.04,
+        "other": 22.31
+      },
+      "sampled_visible_pixels": 2537,
+      "alpha_coverage_percent": 0.73,
+      "validated_beard_roi": false,
+      "validated_bodice_roi": false,
+      "validated_outer_and_center_roi": false,
+      "outfit_canonical": false,
+      "source_pixels_unchanged": true
+    },
+    {
+      "actor": "aldric",
+      "region": "manto_direito",
+      "path": "assets/cena-01/rig-drafts/aldric-partes/manto-direito.png",
+      "sha256": "ef15935d2fb48e5c88946f219da85b927d44b87f56d99bd3cd7fe69fa9b26e53",
+      "status": "unlabeled_rgba_layer_measured",
+      "mode": "RGBA",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "percent": {
+        "red": 6.1,
+        "very_dark": 65.14,
+        "purple_or_magenta": 0.07,
+        "other": 28.69
+      },
+      "sampled_visible_pixels": 1377,
+      "alpha_coverage_percent": 0.4,
+      "validated_beard_roi": false,
+      "validated_bodice_roi": false,
+      "validated_outer_and_center_roi": false,
+      "outfit_canonical": false,
+      "source_pixels_unchanged": true
+    },
+    {
+      "actor": "elara",
+      "region": "close_rgb_sem_mascara",
+      "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "status": "no_trusted_subject_mask",
+      "mode": "RGB",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "percent": null,
+      "sampled_visible_pixels": 0,
+      "validated_beard_roi": false,
+      "validated_bodice_roi": false,
+      "validated_outer_and_center_roi": false,
+      "outfit_canonical": false,
+      "source_pixels_unchanged": true
+    },
+    {
+      "actor": "elara",
+      "region": "c12_rgb_multiplos_personagens",
+      "path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+      "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+      "status": "no_trusted_subject_mask",
+      "mode": "RGB",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "percent": null,
+      "sampled_visible_pixels": 0,
+      "validated_beard_roi": false,
+      "validated_bodice_roi": false,
+      "validated_outer_and_center_roi": false,
+      "outfit_canonical": false,
+      "source_pixels_unchanged": true
+    }
+  ],
+  "measured_rgba_sources": 4,
+  "beard_color_exactly_measured": false,
+  "purple_bodice_exactly_measured": false,
+  "red_outer_vs_black_center_measured": false,
+  "reason_for_abstention": "No trustworthy isolated beard, outer garment, garment center and purple bodice ROIs across both poses",
+  "red_rule": "HSV saturation >= .35, value >= .18, hue <20 or >=345",
+  "dark_rule": "HSV value < .255",
+  "purple_rule": "HSV saturation >= .28, value >= .16, hue in [255,325)",
+  "approved_full_outfits": 0,
+  "required_full_outfits": 2,
+  "canonical_identity_approved": false,
+  "provider_calls": 0,
+  "new_character_art": false,
+  "official_mp4": false,
+  "youtube_uploaded": false
+}
