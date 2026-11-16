@@ -1,5 +1,11 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 15/11/2026 — retomada de OAuth preparada e CI offline aprovado
+
+- [Commit de automacao 5cf744c](https://github.com/HelioConde/VideoForge-IA/commit/5cf744cd4b1421a2212aead68937796558843c4f): reconexao local chama `proxy-health-official.yml` com `resume_remake=true`; conta elegivel confirmada primeiro, script `remake_recovery.py` reserva unica tentativa na main e somente depois dispara `production-art-by-request.yml`. Testes anti-duplicacao, ausencia de PNG anterior, bloqueio de despesas e publicacao.
+- [CI de validacao 43781600055](https://github.com/HelioConde/VideoForge-IA/actions/runs/43781600055): **SUCCESS**, 11 testes offline aprovados, sintaxe dos dois scripts PowerShell aprovada; job de health real em push pulado corretamente. O health manual apos login e separado dos testes de codigo.
+- **Bloqueio real ainda vigente:** nao ha login OAuth renovado comprovado nem novo PNG gerado; ultima conta importada tinha token expirado. Uma autenticacao no navegador do computador local continua necessaria. A autorizacao permanente de geracao ja esta ativa; o fluxo continua depois da reconexao sem solicitar confirmacao para cada chamada. Nenhum MP4 oficial ou upload YouTube foi realizado.
+
 ## 15/11/2026 — automacao segura de retomada depois da reconexao OAuth
 
 O repositorio segue sem nova execucao de imagem desde `43766496772` (tentativa 2): ultimo diagnostico revelou 1 token expirado, 0 contas elegiveis e refresh remoto 502. **Nao existe prova de que o login local ja foi renovado.** Preparada a retomada que exige 1 acao inicial de autenticar no navegador e em seguida executa toda a validacao e 1 nova tentativa da referencia sem pedir liberacao por imagem. O script `renovar-sessao-videoforge.ps1` faz importacao dos secrets e dispara `proxy-health-official.yml` com `resume_remake=true`. Com health aprovado, `remake_recovery.py` verifica o pedido anterior, arquivamento PNG+SHA e regras, grava reserva unica no estado/main e despacha `production-art-by-request.yml`. Nao criar nova imagem sem credenciais validas; nao declarar arte pronta antes do resultado.
