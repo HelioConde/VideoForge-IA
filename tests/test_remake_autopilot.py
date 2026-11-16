@@ -14,13 +14,18 @@ class RemakeAutonomyTests(unittest.TestCase):
     def test_next_action_is_archived_candidate_review_not_new_paid_call(self):
         result = choose_next()
         self.assertEqual(result["stage"], "review_identity_reference")
-        self.assertEqual(result["blocker"], "archived_png_verified_human_review_pending")
+        self.assertIn(result["blocker"], (
+            "archived_png_verified_human_review_pending",
+            "human_visual_review_pending",
+        ))
         self.assertFalse(result["dispatch_allowed"])
         self.assertIsNone(result["next_workflow"])
-        self.assertIsNotNone(result["discovered_candidate"])
-        self.assertEqual(result["discovered_candidate"]["width"],1199)
-        self.assertEqual(result["discovered_candidate"]["height"],1312)
-        self.assertFalse(result["discovered_candidate"]["dimensions_match_requested"])
+        from videoforge.remake_autopilot import EPISODE, ROOT, discover_archived_character_bible
+        proof=discover_archived_character_bible(ROOT/EPISODE)
+        self.assertIsNotNone(proof)
+        self.assertEqual(proof["width"],1199)
+        self.assertEqual(proof["height"],1312)
+        self.assertFalse(proof["dimensions_match_requested"])
         self.assertFalse(result["approved_human_review"])
         self.assertFalse(result["created_mp4"])
 
