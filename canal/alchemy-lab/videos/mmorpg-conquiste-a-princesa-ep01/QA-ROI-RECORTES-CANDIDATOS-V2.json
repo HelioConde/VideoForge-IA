@@ -1,0 +1,362 @@
+{
+  "schema": "videoforge/roi-candidate-preview/v1",
+  "status": "EIGHT_CANDIDATE_MASKS_PENDING_SEMANTIC_REVIEW",
+  "candidates": [
+    {
+      "actor": "aldric",
+      "semantic_region": "barba",
+      "status": "CANDIDATO_NAO_VERIFICADO",
+      "sources": [
+        {
+          "side": "a",
+          "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+          "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              507,
+              321
+            ],
+            [
+              520,
+              315
+            ],
+            [
+              539,
+              323
+            ],
+            [
+              548,
+              335
+            ],
+            [
+              531,
+              350
+            ],
+            [
+              513,
+              343
+            ]
+          ],
+          "candidate_mask_pixels": 929,
+          "pose_semantically_verified": false,
+          "mask_semantically_verified": false,
+          "approved_for_color_comparison": false
+        },
+        {
+          "side": "b",
+          "path": "assets/cenas-mae/cena-02.png",
+          "sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              760,
+              345
+            ],
+            [
+              780,
+              343
+            ],
+            [
+              799,
+              357
+            ],
+            [
+              795,
+              383
+            ],
+            [
+              786,
+              392
+            ],
+            [
+              764,
+              385
+            ],
+            [
+              753,
+              365
+            ]
+          ],
+          "candidate_mask_pixels": 1673,
+          "pose_semantically_verified": false,
+          "mask_semantically_verified": false,
+          "approved_for_color_comparison": false
+        }
+      ],
+      "automatic_approved": false
+    },
+    {
+      "actor": "aldric",
+      "semantic_region": "tecido_externo",
+      "status": "CANDIDATO_NAO_VERIFICADO",
+      "sources": [
+        {
+          "side": "a",
+          "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+          "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              388,
+              451
+            ],
+            [
+              427,
+              431
+            ],
+            [
+              451,
+              464
+            ],
+            [
+              441,
+              533
+            ],
+            [
+              412,
+              587
+            ],
+            [
+              372,
+              594
+            ]
+          ],
+          "candidate_mask_pixels": 8709,
+          "pose_semantically_verified": false,
+          "mask_semantically_verified": false,
+          "approved_for_color_comparison": false
+        },
+        {
+          "side": "b",
+          "path": "assets/cenas-mae/cena-02.png",
+          "sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              698,
+              486
+            ],
+            [
+              731,
+              486
+            ],
+            [
+              755,
+              533
+            ],
+            [
+              740,
+              645
+            ],
+            [
+              702,
+              713
+            ],
+            [
+              683,
+              649
+            ]
+          ],
+          "candidate_mask_pixels": 11040,
+          "pose_semantically_verified": false,
+          "mask_semantically_verified": false,
+          "approved_for_color_comparison": false
+        }
+      ],
+      "automatic_approved": false
+    },
+    {
+      "actor": "aldric",
+      "semantic_region": "painel_central",
+      "status": "CANDIDATO_NAO_VERIFICADO",
+      "sources": [
+        {
+          "side": "a",
+          "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+          "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              509,
+              427
+            ],
+            [
+              557,
+              423
+            ],
+            [
+              583,
+              488
+            ],
+            [
+              570,
+              577
+            ],
+            [
+              518,
+              590
+            ],
+            [
+              491,
+              513
+            ]
+          ],
+          "candidate_mask_pixels": 11620,
+          "pose_semantically_verified": false,
+          "mask_semantically_verified": false,
+          "approved_for_color_comparison": false
+        },
+        {
+          "side": "b",
+          "path": "assets/cenas-mae/cena-02.png",
+          "sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "candidate_polygon_native_px": [
+            [
+              802,
+              522
+            ],
+            [
+              841,
+              533
+            ],
+            [
+              857,
+              629
+            ],
+            [
+              844,
+              755
+            ],
+            [
+              795,
+              748
+            ],
+            [
+              780,
+              632
+            ]
+          ],
+          "candidate_mask_pixels": 13832,
+          "pose_semantically_verified": false,
+          "mask_semantically_verified": false,
+          "approved_for_color_comparison": false
+        }
+      ],
+      "automatic_approved": false
+    },
+    {
+      "actor": "elara",
+      "semantic_region": "corpete_roxo_palacio",
+      "status": "CANDIDATO_NAO_VERIFICADO",
+      "sources": [
+        {
+          "side": "a",
+          "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+          "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "dimensions": [
+            941,
+            1672
+          ],
+          "candidate_polygon_native_px": [
+            [
+              327,
+              1139
+            ],
+            [
+              379,
+              1139
+            ],
+            [
+              423,
+              1209
+            ],
+            [
+              413,
+              1379
+            ],
+            [
+              375,
+              1478
+            ],
+            [
+              331,
+              1423
+            ],
+            [
+              285,
+              1291
+            ]
+          ],
+          "candidate_mask_pixels": 31917,
+          "pose_semantically_verified": false,
+          "mask_semantically_verified": false,
+          "approved_for_color_comparison": false
+        },
+        {
+          "side": "b",
+          "path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+          "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+          "dimensions": [
+            941,
+            1672
+          ],
+          "candidate_polygon_native_px": [
+            [
+              718,
+              353
+            ],
+            [
+              746,
+              347
+            ],
+            [
+              770,
+              387
+            ],
+            [
+              756,
+              439
+            ],
+            [
+              724,
+              427
+            ]
+          ],
+          "candidate_mask_pixels": 3462,
+          "pose_semantically_verified": false,
+          "mask_semantically_verified": false,
+          "approved_for_color_comparison": false
+        }
+      ],
+      "automatic_approved": false
+    }
+  ],
+  "candidate_count": 8,
+  "validated_pair_count": 0,
+  "automatic_approvals": 0,
+  "r2_blocked": true,
+  "original_images_modified": false,
+  "paid_calls": 0,
+  "mp4_created": false,
+  "youtube_uploaded": false
+}
