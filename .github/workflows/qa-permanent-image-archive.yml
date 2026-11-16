@@ -44,11 +44,15 @@ jobs:
           policy=json.loads(Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/autonomy-policy.json').read_text())
           assert state['active_production_version']=='remake-v2-20261115'
           assert state['locks']['no_youtube_upload'] is True
-          assert policy['paid_provider_calls_approved'] is False
+          # QA de persistencia e somente teste em memoria; nao revoga a
+          # autorizacao permanente de geracao da V2.
+          assert policy['paid_provider_calls_approved'] is True
+          assert policy['max_chargeable_calls_per_run']==1
+          assert state['locks']['official_video_allowed'] is False
           print('PERSISTENCE_TESTS_ONLY; NO INFERENCE')
           PY
       - name: Testar arquivo SHA e conexao dos nove workflows com GitHub
-        run: python -m unittest tests.test_persist_generated_assets tests.test_persist_workflow_wiring tests.test_archive_failed_qa_wrapper -v
+        run: python -m unittest tests.test_persist_generated_assets tests.test_persist_workflow_wiring tests.test_archive_failed_qa_wrapper tests.test_art_request_gate tests.test_wardrobe_inventory -v
       - name: Confirmar que o teste não deixou PNGs no canal
         shell: bash
         run: |
