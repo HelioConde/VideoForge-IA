@@ -1806,5 +1806,24 @@
       "elara_bodice_b_partial_coverage"
     ],
     "next_step": "human semantic verification at native resolution, retaining exclusion integrity and SHA checks; no automatic costume approval"
+  },
+  "roi_native_review_v3": {
+    "schema": "videoforge/roi-native-review-checkpoint/v1",
+    "date": "2026-11-16",
+    "workflow_run": 43949781156,
+    "conclusion": "success",
+    "qa_gallery": "REVISAR-ROI-NATIVA-V3.md",
+    "qa_manifest": "QA-ROI-REVISAO-NATIVA-V3.json",
+    "qa_assets": "assets/qa-roi-review-native-v3",
+    "native_preview_pngs": 8,
+    "source_pixel_scale": 1,
+    "geometric_interpolation": false,
+    "originals_unchanged": true,
+    "confirmed_semantic_masks": 0,
+    "official_pairs_ready": 0,
+    "r2_blocked": true,
+    "previous_owner_rejections_active": true,
+    "new_paid_images": 0,
+    "next_action": "Review native context tiles per-region, document original evidence for semantic masks and pose, then validate without premature canonical approval"
   }
 }
