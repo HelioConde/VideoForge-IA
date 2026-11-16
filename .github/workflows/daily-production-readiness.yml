@@ -1,0 +1,31 @@
+name: "VideoForge - diagnostico de producao diaria dos cinco canais"
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 10 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/daily_production.py'
+      - 'tests/test_daily_production.py'
+      - '.github/workflows/daily-production-readiness.yml'
+permissions:
+  contents: read
+jobs:
+  audit-daily:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Testar contagem sem producao falsa
+        run: python -m unittest tests.test_daily_production -v
+      - name: Inventariar fila por canal, sem IA paga ou publicacao
+        run: python -m videoforge.daily_production
+      - uses: actions/upload-artifact@v4
+        with:
+          name: videoforge-daily-readiness
+          path: output/daily-production-readiness.json
+          retention-days: 14
