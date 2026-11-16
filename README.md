@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+**Dorama EP01 V2 — nova revisão de figurinos:** [Aldric e Elara em comparação ampliada](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REVISAR-DETALHES-FIGURINOS-V2.md) e [contrato de continuidade das 40 tomadas](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REGRAS-FIGURINOS-V2-40-TOMADAS.md). O antigo registro de 37 tomadas é histórico. Não gerar R2 nem vídeo com trajes reprovados. Não há aprovação automática de identidade.
+
 **Dorama MMORPG EP01 — revisão de figurinos:** [ver 6 referências existentes de Aldric e Elara](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REVISAR-OPCOES-FIGURINO-V2.md). A prancha V2 anterior foi reprovada por diferenças de roupas; as referências estão em revisão, não são canônicas. Nenhuma nova imagem R2 foi solicitada ou gerada.
 
 **EP01 V2 — revisão visual de identidade (16/11/2026):** os três PNGs originais de Kael, Elara e C12-P02 estão SHA-verificados. [Comparar personagens e prancha V2](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REVISAR-IDENTIDADE-EP01-V2.md) antes de autorizar rig/animação: [Kael](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-KAEL-V2-COMPARACAO.jpg) | [Elara](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-ELARA-V2-COMPARACAO.jpg). As prévias são apenas para QA, não aprovam o novo desenho. O MP4 final e a publicação continuam pendentes.

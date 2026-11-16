@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 16/11/2026 — detalhe do figurino e regra de 40 tomadas finalizados
+
+- [Comparativo de detalhes run 43876165909](https://github.com/HelioConde/VideoForge-IA/actions/runs/43876165909) **SUCCESS**: dois JPEGs derivados `QA-ALDRIC-ROUPA-DETALE-V2.jpg` e `QA-ELARA-PEITORAL-ROXO-V2.jpg` com 4 imagens cada, original inteiro e *crop central geométrico* (NÃO é detector de personagem), hashes registrados em `QA-FIGURINO-DETALHES-V2.json`. Conferir [REVISAR-DETALHES-FIGURINOS-V2.md](REVISAR-DETALHES-FIGURINOS-V2.md). Sem criação de arte, alteração de PNGs ou aprovação imaginada.
+- [Continuidade de 40 tomadas run 43876634280](https://github.com/HelioConde/VideoForge-IA/actions/runs/43876634280) **SUCCESS**: `CONTINUIDADE-FIGURINOS-V2-40-TOMADAS.json` é derivado do `remake-ep01-planos.json`, respeita 40 tomadas e 4890 quadros, e registra disfarce de Elara C07–C10 vs vestido palaciano com painel roxo a partir de C12; roupa real de Aldric constante. O velho `continuidade-figurinos-37-planos.json` é histórico, NÃO usado para instruir agentes nem construir novos vídeos.
+- O registro mantém 0/2 figurinos completos aprovados (Aldric e Elara). A nova `character-bible-grounded-r2` exige SHA, imagem completa e decisão explícita do proprietário para ambas. SHA técnico, recorte central ou cenas legadas V1 não valem como aprovação; não renderizar MP4 oficial ou enviar para YouTube com arte reprovada.
+- O workflow do coordenador central também testa a regra de 40 tomadas (sem Pillow/sem IA), para impedir regressão ao registro de 37.
+
 ## 16/11/2026 — próximas fontes de roupa encontradas sem gerar nenhuma imagem
 
 - [Workflow de inventário 43874152372](https://github.com/HelioConde/VideoForge-IA/actions/runs/43874152372) finalizado com sucesso: examinou **6 PNGs já presentes** no repositório, calculou SHA, e criou `QA-INVENTARIO-FIGURINOS-V2.json` e [galeria revisável](REVISAR-OPCOES-FIGURINO-V2.md) com 3 imagens de Aldric e 3 de Elara. As fontes antigas V1 e suas camadas são apenas *candidatas*, não prova de que o traje é o original aprovado.

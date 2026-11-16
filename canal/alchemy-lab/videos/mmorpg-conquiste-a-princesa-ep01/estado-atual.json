@@ -1500,5 +1500,39 @@
     "youtube_uploaded": false,
     "workflow_run_qa_inventory": 43874152372,
     "workflow_result_qa_inventory": "success"
+  },
+  "wardrobe_detail_comparison_20261116": {
+    "status": "two_offline_existing_source_comparisons_archived",
+    "source_candidates_per_actor": 4,
+    "aldric_review_jpeg": "QA-ALDRIC-ROUPA-DETALE-V2.jpg",
+    "elara_review_jpeg": "QA-ELARA-PEITORAL-ROXO-V2.jpg",
+    "review_markdown": "REVISAR-DETALHES-FIGURINOS-V2.md",
+    "qa_report": "QA-FIGURINO-DETALHES-V2.json",
+    "workflow_run": 43876165909,
+    "workflow_conclusion": "success",
+    "source_originals_modified": false,
+    "image_provider_calls": 0,
+    "human_art_approved": false,
+    "new_images_generated_by_provider": false
+  },
+  "wardrobe_current_shot_continuity_20261116": {
+    "status": "authoritative_40_shot_wardrobe_contract_ready",
+    "derived_from": "remake-ep01-planos.json",
+    "current_json": "CONTINUIDADE-FIGURINOS-V2-40-TOMADAS.json",
+    "current_review_doc": "REGRAS-FIGURINOS-V2-40-TOMADAS.md",
+    "historical_only": "continuidade-figurinos-37-planos.json",
+    "shots": 40,
+    "total_frames": 4890,
+    "shots_elara_royal": 6,
+    "shots_elara_disguise": 9,
+    "shots_with_aldric": 7,
+    "approved_full_outfit_refs": 0,
+    "required_full_outfit_refs": 2,
+    "workflow_run": 43876634280,
+    "workflow_conclusion": "success",
+    "human_visual_approval": false,
+    "r2_generated": false,
+    "official_mp4": false,
+    "youtube_uploaded": false
   }
 }
