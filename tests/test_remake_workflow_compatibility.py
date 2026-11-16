@@ -31,8 +31,13 @@ class RemakeWorkflowCompatibilityTests(unittest.TestCase):
     def test_qa_archive_checks_new_policy_without_allowing_paid_work(self):
         data=(ROOT/".github/workflows/qa-permanent-image-archive.yml").read_text(encoding="utf-8")
         self.assertIn("state['active_production_version']=='remake-v2-20261115'",data)
-        self.assertIn("policy['paid_provider_calls_approved'] is False",data)
+        # Persist-only QA never calls the provider; it must not contradict
+        # the separate, standing V2 editorial authorization.
+        self.assertIn("policy['paid_provider_calls_approved'] is True",data)
         self.assertIn("d['generate_images'] is False",data)
+        self.assertIn("d['render_mp4'] is False",data)
+        self.assertIn("d['youtube_upload'] is False",data)
+        self.assertIn("tests.test_art_request_gate",data)
 
 
 if __name__=="__main__":
