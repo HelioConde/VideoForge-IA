@@ -84,12 +84,22 @@ def pair_result(base:Path,row:dict)->dict:
     }
     # Risk of color swap is high when a dominant color proportion differs.
     severe=max(deltas.values())>=40
+    # Histograma nao distingue tecido escuro de exposicao menor. A ausencia
+    # de anotacao tambem e incerteza; somente False booleano descarta o risco.
+    lighting_uncertain=row.get("lighting_differences_may_be_present") is not False
+    reject=severe and not lighting_uncertain
+    status=("EVIDENCIA_INSUFICIENTE" if severe and lighting_uncertain else
+            "REPROVADO_POR_DIVERGENCIA_CROMATICA" if reject else
+            "REVISAO_VISUAL_AINDA_NECESSARIA")
     return {"actor":actor,"region":region,
-            "status":"REPROVADO_POR_DIVERGENCIA_CROMATICA" if severe
-                     else "REVISAO_VISUAL_AINDA_NECESSARIA",
+            "status":status,
+            "reason":"lighting_difference_not_ruled_out" if severe and lighting_uncertain
+                     else "chromatic_difference_requires_review",
             "metric_a":m1,"metric_b":m2,"deltas_percentage_points":deltas,
             "evidence":"sha_verified_semantically_reviewed_roi",
-            "automatic_rejection":severe,
+            "chromatic_alert":severe,
+            "lighting_difference_not_ruled_out":lighting_uncertain,
+            "automatic_rejection":reject,
             "auto_approved":False,
             "official_art_usable":False}
 

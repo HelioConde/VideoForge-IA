@@ -9,6 +9,31 @@ from videoforge.wardrobe_roi_color import pair_result, run
 from videoforge.errors import VideoForgeError
 
 class SemanticROIColorTests(unittest.TestCase):
+    def test_shadow_uncertainty_blocks_rejection_but_keeps_measurement(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)
+            sources=[]
+            # Mesma proporcao RGB, exposicao 10x menor: histograma muda de classe.
+            for name,color in (("a.png",(180,30,40)),("b.png",(18,3,4))):
+                Image.new("RGB",(96,96),color).save(folder/name)
+                sources.append({"path":name,"sha256":hashlib.sha256((folder/name).read_bytes()).hexdigest(),
+                                "pose_verified":True,"semantic_polygon_verified":True,
+                                "polygon":[[20,20],[64,20],[64,64],[20,64]]})
+            row={"actor":"aldric","semantic_region":"painel_central",
+                 "source_a":sources[0],"source_b":sources[1]}
+            for uncertain in (True,None,"false",0):
+                with self.subTest(uncertain=uncertain):
+                    row["lighting_differences_may_be_present"]=uncertain
+                    result=pair_result(folder,row)
+                    self.assertEqual(result["status"],"EVIDENCIA_INSUFICIENTE")
+                    self.assertEqual(result["reason"],"lighting_difference_not_ruled_out")
+                    self.assertTrue(result["chromatic_alert"])
+                    self.assertFalse(result["automatic_rejection"])
+                    self.assertFalse(result["auto_approved"])
+                    self.assertGreater(result["deltas_percentage_points"]["very_dark"],40)
+            del row["lighting_differences_may_be_present"]
+            self.assertEqual(pair_result(folder,row)["status"],"EVIDENCIA_INSUFICIENTE")
+
     def test_unverified_wrong_body_region_never_compares_colors(self):
         from unittest.mock import patch
         source={"path":"not-used.png","sha256":"0"*64,"pose_verified":True,
@@ -55,6 +80,7 @@ class SemanticROIColorTests(unittest.TestCase):
                         "pose_verified":True,"semantic_polygon_verified":True,
                         "polygon":[[20,20],[64,20],[64,64],[20,64]]}
             record={"actor":"aldric","semantic_region":"tecido_externo",
+                    "lighting_differences_may_be_present":False,
                     "source_a":source("a.png"),"source_b":source("b.png")}
             result=pair_result(folder,record)
             self.assertEqual(result["status"],"REPROVADO_POR_DIVERGENCIA_CROMATICA")

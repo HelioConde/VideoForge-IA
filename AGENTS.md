@@ -1,5 +1,7 @@
 # AGENTS.md — VideoForge IA (reconstrução)
 
+**QA ILUMINACAO — 16/11/2026:** histogramas com iluminacao nao descartada nao provam troca de tecido: wardrobe_roi_color retorna EVIDENCIA_INSUFICIENTE em alertas fortes. Reprovacoes conhecidas permanecem. Nunca marcar lighting_differences_may_be_present=false sem revisao real. Ver QA-ILUMINACAO-ROI-V3.md no episodio e estado de integracao atual.
+
 **V3 PUBLICADA — 16/11/2026:** PR #63 integrado em f5a7f3e; QA PR 43942403827 (22 testes) e produtor main 43942596191 (8 testes/exportação) SUCCESS. Saída f3ce91e. Conferir QA-ROI-EXCLUSOES-V3.json/jpg e REVISAR-MASCARAS-FILTRADAS-V3.md. As sete máscaras não alteradas e a candidata Aldric exterior A continuam SEM aprovação semântica, R2 bloqueada. Os registros de branch pendente abaixo são históricos.
 
 **CHECKPOINT V3 — 16/11/2026, PR #63:** candidatas V3 preservam V2; exclusão do tecido externo Aldric A realinhada à haste, 472 pixels recuperados e 258 adicionais removidos. Validar RGB/alfa/recorte e áreas protegidas com wardrobe_roi_exclusions. Oito máscaras continuam EVIDENCIA_INSUFICIENTE, sem aprovação semântica, R2 bloqueada. Ver ESTADO-ATUAL.md e REVISAR-MASCARAS-FILTRADAS-V3.md no episódio. CI/integracao: consultar evidências atuais do PR antes de afirmar publicação.
