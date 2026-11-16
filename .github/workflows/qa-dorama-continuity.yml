@@ -1,0 +1,34 @@
+name: "VideoForge - QA da referencia visual aprovada do dorama"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/dorama_continuity.py'
+      - 'videoforge/production_art.py'
+      - 'tests/test_dorama_continuity.py'
+      - '.github/workflows/qa-dorama-continuity.yml'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-VISUAL-APROVADA-C01-P04.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/production-art.json'
+permissions:
+  contents: read
+jobs:
+  verify-reuse:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar SHA do original, URL de image edit, elenco e nao publicacao
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_dorama_continuity tests.test_production_art tests.test_first_dorama_image -v
+      - name: Confirmar nenhuma geracao disparada por QA
+        shell: bash
+        run: |
+          echo 'CONTINUITY_QA_NO_PROVIDER_CALLS=TRUE'
