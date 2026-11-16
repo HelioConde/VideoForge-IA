@@ -1784,5 +1784,27 @@
     "youtube_uploaded": false,
     "provider_calls": 0,
     "next_action": "Visually review semantic accuracy of V3 masks on source context, especially beard vs mouth, cloak vs spear, and Elara bodice B; do not auto-promote."
+  },
+  "wardrobe_semantic_review_v3": {
+    "schema": "videoforge/wardrobe-semantic-review-checkpoint/v1",
+    "date": "2026-11-16",
+    "source_board": "QA-ROI-CONTEXTO-V3.jpg",
+    "review_manifest": "REVISAO-SEMANTICA-ROI-V3.json",
+    "workflow_id": 43948755763,
+    "workflow_success": true,
+    "review_items": 8,
+    "human_reviews_documented": 0,
+    "canonical_pairs_ready": 0,
+    "r2_blocked": true,
+    "owner_rejections_remain": true,
+    "paid_image_generation": 0,
+    "official_mp4": false,
+    "youtube_uploaded": false,
+    "priority_risks": [
+      "aldric_beard_b_mouth_open",
+      "aldric_outer_a_spear_occlusion",
+      "elara_bodice_b_partial_coverage"
+    ],
+    "next_step": "human semantic verification at native resolution, retaining exclusion integrity and SHA checks; no automatic costume approval"
   }
 }
