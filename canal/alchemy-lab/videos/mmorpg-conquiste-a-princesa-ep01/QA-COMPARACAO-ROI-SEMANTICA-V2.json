@@ -1,0 +1,55 @@
+{
+  "schema": "videoforge/wardrobe-semantic-roi-qa/v1",
+  "status": "semantic_masks_not_yet_verified",
+  "pairs": [
+    {
+      "actor": "aldric",
+      "region": "barba",
+      "status": "EVIDENCIA_INSUFICIENTE",
+      "reason": "pair_pose_or_semantic_polygon_not_yet_verified",
+      "source_a_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "source_b_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+      "auto_approved": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "aldric",
+      "region": "tecido_externo",
+      "status": "EVIDENCIA_INSUFICIENTE",
+      "reason": "pair_pose_or_semantic_polygon_not_yet_verified",
+      "source_a_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "source_b_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+      "auto_approved": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "aldric",
+      "region": "painel_central",
+      "status": "EVIDENCIA_INSUFICIENTE",
+      "reason": "pair_pose_or_semantic_polygon_not_yet_verified",
+      "source_a_sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "source_b_sha256": "538e3d33e57c4dcc5e790a9516f00e7d30e1602114014822cfc36b6f73f7e1c4",
+      "auto_approved": false,
+      "official_art_usable": false
+    },
+    {
+      "actor": "elara",
+      "region": "corpete_roxo_palacio",
+      "status": "EVIDENCIA_INSUFICIENTE",
+      "reason": "pair_pose_or_semantic_polygon_not_yet_verified",
+      "source_a_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "source_b_sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+      "auto_approved": false,
+      "official_art_usable": false
+    }
+  ],
+  "known_owner_rejections_still_active": true,
+  "automatic_approved_art_count": 0,
+  "automatic_rejected_pairs": 0,
+  "unverified_pairs": 4,
+  "uses_only_existing_sha_verified_images": true,
+  "new_image_generation": false,
+  "provider_calls": 0,
+  "official_mp4": false,
+  "youtube_uploaded": false
+}
