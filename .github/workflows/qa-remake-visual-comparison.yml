@@ -1,0 +1,72 @@
+name: "VideoForge - Comparacao visual V2 offline sem novas imagens"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/remake_visual_comparison.py'
+      - 'tests/test_remake_visual_comparison.py'
+      - '.github/workflows/qa-remake-visual-comparison.yml'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/referencias/chat-aprovadas/**'
+  workflow_run:
+    workflows:
+      - "VideoForge - referencias cinematograficas de Kael e Elara (somente originais)"
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+concurrency:
+  group: videoforge-alchemy-v2-comparison
+  cancel-in-progress: false
+
+jobs:
+  compare-qa:
+    if: >-
+      ${{ github.ref == 'refs/heads/main' &&
+          (github.event_name != 'workflow_run' ||
+           github.event.workflow_run.conclusion == 'success') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencia de QA offline (sem provedor)
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Testar integridade e idempotencia
+        run: python -m unittest tests.test_remake_visual_comparison -v
+      - name: Preparar comparacoes a partir de PNGs SHA-verificados
+        run: python -m videoforge.remake_visual_comparison --sync
+      - name: Preservar relatorio e previas no episodio
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          git config user.name 'videoforge-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for name in QA-KAEL-V2-COMPARACAO.jpg QA-ELARA-V2-COMPARACAO.jpg QA-COMPARACAO-IDENTIDADE-V2.json REVISAR-IDENTIDADE-EP01-V2.md; do
+            if [[ -f "$EP/$name" ]]; then git add -- "$EP/$name"; fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(dorama): salvar comparacao SHA dos personagens originais e V2'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Evidencias de revisao de identidade
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-alchemy-v2-identity-comparison-${{ github.run_id }}
+          path: |
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-KAEL-V2-COMPARACAO.jpg
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-ELARA-V2-COMPARACAO.jpg
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-COMPARACAO-IDENTIDADE-V2.json
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REVISAR-IDENTIDADE-EP01-V2.md
+          retention-days: 30
+          if-no-files-found: warn
