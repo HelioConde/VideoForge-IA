@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — exclusão manual candidata em oito recortes (QA offline)
+
+- `videoforge/wardrobe_roi_exclusions.py` usa `ROI-EXCLUSOES-CANDIDATAS-V2.json`, verifica fontes PNG originais por SHA, gera oito imagens transparentes em `assets/qa-roi-exclusions-v2/` e a [prancha antes/depois](QA-ROI-EXCLUSOES-V2.jpg) com [relatório](QA-ROI-EXCLUSOES-V2.json), sem sobrescrever máscaras anteriores ou alterar contrato canônico.
+- [Run 43938223965](https://github.com/HelioConde/VideoForge-IA/actions/runs/43938223965) **SUCCESS**, quatro testes locais no Actions de subtração, recusa de polígonos fora da imagem, preservação da fonte e ausência de autoaprovação.
+- Pixels removidos nas propostas A/B: barba de Aldric 11/102; tecido exterior 701/0; painel central 253/241; corpete de Elara 219/3. **Não confundir pixels removidos com pixels corretamente corrigidos**: a prévia pode conter recorte de lança/tecido verdadeiro ou remover pelos, brocados e área roxa por engano.
+- **Pendências:** revisão de integridade semântica e confirmação de cada exclusão sobre fonte completa, especialmente lança cruzando capa, boca e bigode do rei, joias e peitoral pequeno da princesa. Nenhuma máscara se tornou validada. Manter o contrato `CONTRATO-ROI-SEMANTICAS-V2.json` com 0/4 pares oficiais; 0/2 figurinos canônicos aprovados; R2, MP4 oficial e YouTube bloqueados; nenhuma geração paga.
+
 ## 16/11/2026 — Oito máscaras cromáticas RGBA de QA, revisadas por arte existente
 
 - Foi adicionado `videoforge/wardrobe_roi_refine.py` + testes e workflow `qa-wardrobe-roi-refine.yml`: usa SOMENTE fontes PNG já existentes SHA-verificadas; gera 8 máscaras PNG com alfa e [`prancha de recortes`](QA-ROI-MASCARAS-REFINADAS-V2.jpg), mais [`manifesto de geometria e SHA`](QA-ROI-MASCARAS-REFINADAS-V2.json).
