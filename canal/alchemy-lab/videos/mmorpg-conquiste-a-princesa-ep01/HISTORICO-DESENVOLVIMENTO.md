@@ -432,3 +432,8 @@ Acrescentar uma seção datada com: objetivo e cena, arquivos alterados, commit 
 
 - Etapa: review_identity_reference; alvo: character-bible; bloqueio: human_visual_review_pending.
 - Apenas verificação de estado/arquivos. Nenhuma mídia criada ou aprovação inventada.
+
+## 2026-11-16T07:26:28Z — diagnóstico automático de retomada
+
+- Etapa: review_identity_reference; alvo: character-bible; bloqueio: original_kael_elara_sha_sources_missing.
+- Apenas verificação de estado/arquivos. Nenhuma mídia criada ou aprovação inventada.

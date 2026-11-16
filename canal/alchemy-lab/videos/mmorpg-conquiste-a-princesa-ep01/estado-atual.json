@@ -598,8 +598,15 @@
   "autopilot_checkpoint": {
     "stage": "review_identity_reference",
     "target": "character-bible",
-    "blocker": "human_visual_review_pending",
-    "dispatch_allowed": false
+    "blocker": "original_kael_elara_sha_sources_missing",
+    "dispatch_allowed": false,
+    "verified_style_source_count": 0,
+    "missing_original_paths": [
+      "assets/referencias/chat-aprovadas/kael-close-salao.png",
+      "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png"
+    ],
+    "aldric_individual_sha_approved_reference_missing": true
   },
   "policy_consistency_audit_20261115": {
     "current_rules_identified_in_master_files": true,
