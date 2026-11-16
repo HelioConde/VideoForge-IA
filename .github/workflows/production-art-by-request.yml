@@ -111,8 +111,7 @@ jobs:
             exit 1
           fi
       - name: Iniciar proxy precompilado se necessario
-        if: steps.request.outputs.execute == 'true'
-        if: env.USE_EPHEMERAL == '1'
+        if: steps.request.outputs.execute == 'true' && env.USE_EPHEMERAL == '1'
         shell: bash
         run: |
           set -euo pipefail

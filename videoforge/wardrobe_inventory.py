@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from .remake_autopilot import EPISODE,ROOT
 from .wardrobe_review import owner_review,source_readiness
-from .scene_layers import png_info
+import struct
 from .errors import VideoForgeError
 
 SOURCES=[
@@ -32,11 +32,20 @@ def inventory(root:Path=ROOT,sync:bool=False)->dict:
         raw=file.read_bytes()
         if not raw.startswith(b"\x89PNG\r\n\x1a\n") or len(raw)>15000000:
             raise VideoForgeError("WARDROBE_INVENTORY_IMAGE_INVALID")
-        info=png_info(raw,require_alpha=False)
+        # Many V1 clothing candidates are RGBA transparency overlays.
+        # scene_layers.png_info(require_alpha=False) enforces OPAQUE full
+        # background and rejects such useful evidence. Inventory only needs
+        # a valid PNG IHDR, never full compositing/image approval.
+        if (len(raw)<33 or raw[12:16]!=b"IHDR"):
+            raise VideoForgeError("WARDROBE_INVENTORY_IHDR_INVALID")
+        width,height,bitdepth,colortype,*_=struct.unpack(">IIBBBBB",raw[16:29])
+        if not (1<=width<=8192 and 1<=height<=8192
+                and bitdepth in (8,16) and colortype in (0,2,4,6)):
+            raise VideoForgeError("WARDROBE_INVENTORY_DIMENSIONS_INVALID")
         rows.append({
             "actor":actor,"label":label,"path":relative,"origin":origin,
             "sha256":hashlib.sha256(raw).hexdigest(),
-            "dimensions":[info["width"],info["height"]],
+            "dimensions":[width,height],
             "exists":True,"owner_approved_full_outfit":False,
             "usable_as_grounded_r2_without_new_review":False,
             "source_pixels_modified":False
