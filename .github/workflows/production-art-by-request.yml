@@ -79,11 +79,19 @@ jobs:
               raise SystemExit('REQUEST_IDENTIFIERS_INVALID')
           plan,story=read_plan(ch,vid)
           asset_prompt(plan,story,asset)
+          from videoforge.art_request_gate import decide
+          event=os.environ.get('GITHUB_EVENT_NAME','workflow_dispatch')
+          request_status=(request.get('status') if event=='push' else None)
+          gate=decide(ch,vid,asset,event,request_status)
           with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as out:
               out.write(f'channel={ch}\nvideo_id={vid}\nasset={asset}\n')
-          print('REQUEST_VALIDATED',ch,vid,asset,'calls=1; do not retry 429; no upload')
+              out.write('execute='+('true' if gate['ready'] else 'false')+'\n')
+          print('ART_REQUEST_GATE',gate['reason'],'execute='+str(gate['ready']).lower())
+          if gate['ready']:
+              print('REQUEST_VALIDATED',ch,vid,asset,'calls=1; no retry 429; no upload')
           PY
       - name: Verificar configuracao do Codex Proxy sem revelar credenciais
+        if: steps.request.outputs.execute == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -103,6 +111,7 @@ jobs:
             exit 1
           fi
       - name: Iniciar proxy precompilado se necessario
+        if: steps.request.outputs.execute == 'true'
         if: env.USE_EPHEMERAL == '1'
         shell: bash
         run: |
@@ -137,6 +146,7 @@ jobs:
           echo "::error::Proxy nao respondeu /health/live"
           exit 1
       - name: Executar gerador REAL do VideoForge sem retry
+        if: steps.request.outputs.execute == 'true'
         shell: bash
         env:
           CHANNEL: ${{ steps.request.outputs.channel }}
@@ -155,7 +165,7 @@ jobs:
           python -m videoforge.production_art --channel "$CHANNEL" --video-id "$VIDEO_ID" \
             --asset "$ASSET" --model gpt-image-2 --url "$PROXY_ENDPOINT"
       - name: Arquivar permanentemente PNG e SHA no GitHub por canal
-        if: always()
+        if: always() && steps.request.outputs.execute == 'true'
         shell: bash
         env:
           CH: ${{ steps.request.outputs.channel }}
@@ -163,7 +173,7 @@ jobs:
         run: |
           bash scripts/arquivar-pngs-se-existirem.sh "$CH" "$VID" "output/$CH/videos/$VID/imagens" "${{ github.run_id }}" "production-art-request" "${{ job.status }}"
       - name: Guardar imagem, proveniencia e diagnostico
-        if: always()
+        if: always() && steps.request.outputs.execute == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: vf-real-art-${{ steps.request.outputs.channel }}-${{ steps.request.outputs.video_id }}-${{ steps.request.outputs.asset }}-${{ github.run_id }}
