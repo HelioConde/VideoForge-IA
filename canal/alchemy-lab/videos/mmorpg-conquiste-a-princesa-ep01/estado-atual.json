@@ -1336,5 +1336,41 @@
     "approved_originals_attached_to_generation": false,
     "exact_identity_match_to_approved_originals_proven": false,
     "next_step": "Human visual review and attach exact approved source references before further shot images; keep original PNG and its SHA."
+  },
+  "reference_sources_20261116": {
+    "status": "0_of_3_original_sha_files_imported",
+    "tracked_originals": 3,
+    "kael_elara_sha_verified": 0,
+    "camera_c12_sha_verified": false,
+    "aldric_approved_individual_original_sha_known": false,
+    "source_status_run_id": 43823567116,
+    "source_status_run_conclusion": "success_pending_original_zip",
+    "sha_only_importer_fixed_commit": "f9417a2d609efb84e3de3a52c60349094986b34e",
+    "autopilot_blocker": "original_kael_elara_sha_sources_missing",
+    "autopilot_verified_run": 43823850136,
+    "autopilot_tests_passed": 95,
+    "originals_checked_in_git_history": false,
+    "image_generation_calls_during_source_audit": 0,
+    "needed_zip": "uploads/alchemy-ep01-cinema-3-originais.zip",
+    "windows_import_script": "scripts/enviar-referencias-cinema.ps1",
+    "can_auto_approve_identity": false,
+    "youtube_uploaded": false
+  },
+  "c12_preflight_20261116": {
+    "status": "waiting_for_existing_source_bytes",
+    "required_sha_verified_original_pngs": 9,
+    "sha_verified_current": 0,
+    "missing_current": 9,
+    "preflight_run": 43824476754,
+    "preflight_conclusion": "success",
+    "unit_tests_passed": 11,
+    "source_preflight_job_conclusion": "success",
+    "remotion_render_job_conclusion": "skipped",
+    "workflow_gate_commit": "e79774745272df42b43eff34a36d42f1d664097d",
+    "legacy_image_lock_not_required": true,
+    "new_image_generation_calls": 0,
+    "technical_mp4_produced": false,
+    "official_episode_mp4_produced": false,
+    "youtube_uploaded": false
   }
 }

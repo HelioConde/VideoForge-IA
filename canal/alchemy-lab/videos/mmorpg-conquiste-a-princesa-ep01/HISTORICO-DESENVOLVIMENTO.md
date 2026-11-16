@@ -1,5 +1,13 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 16/11/2026 — checkpoint confirmado: referencias originais e C12 aguardam bytes, CI verde
+
+- [Importador de originais 43823567116](https://github.com/HelioConde/VideoForge-IA/actions/runs/43823567116): **SUCCESS**, 13 testes, nenhum PNG novo ou alterado; os dois originais de identidade Kael/Elara e a câmera C12-P02 ainda nao foram enviados/arquivados por SHA (0/3). Busca por caminhos exatos no historico de commits GitHub também nao achou copia anterior. Importar `uploads/alchemy-ep01-cinema-3-originais.zip` usando `scripts/enviar-referencias-cinema.ps1` quando os bytes originais estiverem disponíveis.
+- [Coordenador V2 43823850136](https://github.com/HelioConde/VideoForge-IA/actions/runs/43823850136): **SUCCESS**, 95 testes; estado `original_kael_elara_sha_sources_missing` e lista de tres caminhos faltantes gravados automaticamente em `estado-atual.json`. Nenhuma tentativa paga duplicada ou aprovacao humana inventada.
+- [C12 source-preflight 43824476754](https://github.com/HelioConde/VideoForge-IA/actions/runs/43824476754): **SUCCESS** com 11 testes; 0/9 PNGs técnicos originais verificados; `C12_DISPATCH_WAIT_FOR_EXISTING_SOURCE_BYTES` classificado corretamente; **render-draft Remotion SKIPPED** (não iniciou contêiner pesado). O controle testa SHA, integridade e política ativa, não cria imagens nem MP4 fictício.
+- `C01-P02` continua planejada para 4 partes RGBA originais (underlay, sheath, blade, hand), ThreeCanvas + Remotion sem transformar o PNG inteiro em movimento falso. Identidade de Kael/Elara/Aldric não foi aprovada; vídeo oficial e YouTube continuam bloqueados.
+- Os agentes devem preservar exatamente os checkpoints e não reiniciar obras nem copiar imagens legadas V1 como se fossem as fontes aprovadas V2.
+
 ## 16/11/2026 — corrigida espera técnica de C12 após o importador
 
 - [Run anterior 43823602889](https://github.com/HelioConde/VideoForge-IA/actions/runs/43823602889) falhou por exigir o lock V1 já arquivado. O `c12_technical_preview.policy()` agora exige versão V2 ativa e bloqueio de vídeo oficial/YouTube, preservando limites de geração. Não cria imagem nem aprova arte.
