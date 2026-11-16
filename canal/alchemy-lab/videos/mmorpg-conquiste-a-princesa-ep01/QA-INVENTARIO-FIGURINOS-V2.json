@@ -1,0 +1,106 @@
+{
+  "schema": "videoforge/wardrobe-candidate-inventory/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "status": "existing_candidates_waiting_for_owner_costume_review",
+  "rejected_v2_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "candidate_count": 6,
+  "candidates": [
+    {
+      "actor": "aldric",
+      "label": "Aldric: candidato RGB da cena 01",
+      "path": "assets/cena-01/rig-drafts/aldric-origem/aldric-RGB-da-mae-CANDIDATO.png",
+      "origin": "V1 candidate, not an owner-approved costume",
+      "sha256": "35691ca8bf90cbde0181a0d84835e146b0f7bc6507b51c60c35a6cf5b84cdf87",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "exists": true,
+      "owner_approved_full_outfit": false,
+      "usable_as_grounded_r2_without_new_review": false,
+      "source_pixels_modified": false
+    },
+    {
+      "actor": "aldric",
+      "label": "Aldric: corpo/vestimenta recortados",
+      "path": "assets/cena-01/rig-drafts/aldric-partes/corpo-vestimenta-restante.png",
+      "origin": "V1 partial layer, not full-body canon",
+      "sha256": "4c6dd51cf87fc9bdd5126ae160474428f2bca9aaf801b051f8f2ad9694897833",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "exists": true,
+      "owner_approved_full_outfit": false,
+      "usable_as_grounded_r2_without_new_review": false,
+      "source_pixels_modified": false
+    },
+    {
+      "actor": "aldric",
+      "label": "Aldric: cena mae antiga no salao",
+      "path": "assets/cenas-mae/cena-01.png",
+      "origin": "V1 scene context, non-canonical",
+      "sha256": "544548f0ac5f9e4686e2cf0d1477470f77e2fd7f15678d82799609b678fd6ebf",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "exists": true,
+      "owner_approved_full_outfit": false,
+      "usable_as_grounded_r2_without_new_review": false,
+      "source_pixels_modified": false
+    },
+    {
+      "actor": "elara",
+      "label": "Elara: close originalmente aprovado para estilo",
+      "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "origin": "Exact chat-original for visual style, NOT entire costume approval",
+      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "exists": true,
+      "owner_approved_full_outfit": false,
+      "usable_as_grounded_r2_without_new_review": false,
+      "source_pixels_modified": false
+    },
+    {
+      "actor": "elara",
+      "label": "Elara: enquadramento original C12-P02",
+      "path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
+      "origin": "Exact original camera framing, not wardrobe approval",
+      "sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "exists": true,
+      "owner_approved_full_outfit": false,
+      "usable_as_grounded_r2_without_new_review": false,
+      "source_pixels_modified": false
+    },
+    {
+      "actor": "elara",
+      "label": "Elara: cena mae antiga C12",
+      "path": "assets/cenas-mae/cena-12.png",
+      "origin": "V1 scene context, non-canonical",
+      "sha256": "0746e924a0aed132eb596c5442265a38e65d43b4386c071ceedd466ad7e1499e",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "exists": true,
+      "owner_approved_full_outfit": false,
+      "usable_as_grounded_r2_without_new_review": false,
+      "source_pixels_modified": false
+    }
+  ],
+  "required_owner_approved_complete_outfits": 2,
+  "verified_owner_approved_complete_outfits": 0,
+  "r2_ready": false,
+  "visual_approval": false,
+  "images_generated": 0,
+  "image_provider_calls": 0,
+  "youtube_uploaded": false
+}
