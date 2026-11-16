@@ -33,6 +33,22 @@
       "use": "layout guide only; do not deform original faces or bodies"
     }
   },
+  "identity_review_criteria": {
+    "kael": "Kael, homem de 23 anos, cabelo castanho quase preto volumoso, mechas longas desalinhadas sobre a testa, olhos âmbar e sobrancelhas marcantes. No tribunal, rosto com poeira/suor e cortes leves, capa/cachecol vinho-vermelho rasgado, ombreira de metal escuro com filigranas douradas e pedra azul; roupas escuras. Identidade da imagem aprovada no chat; ele NÃO empunha a espada do insert. Cabelo, cicatrizes, roupa e rosto consistentes nos cortes.",
+    "elara": "Princesa Elara, mulher de 21 anos, rosto delicado e olhos violetas, cabelos loiro-dourados longos ondulados com trança lateral, flores brancas e lilases. No palácio, coroa dourada com ametistas, brincos violetas, vestido branco-pérola e violeta imperial com bordados dourados e broches púrpuras. Usa capuz como disfarce no beco mas permanece a mesma mulher; identidade como princesa só é revelada em C12.",
+    "aldric": "Rei Aldric, 55 anos, barba volumosa grisalha a branca, cabelo grisalho, coroa dourada, traje vinho com ouro e gola clara. Sentado no trono dourado de veludo vermelho, presença severa e digna, proporções e iluminação consistentes.",
+    "no_new_unplanned_characters": true,
+    "no_text_watermarks_hud": true,
+    "preserve_original_facial_features_and_outfits": true,
+    "require_character_identity_comparison": true
+  },
+  "generation_provenance_limits": {
+    "generation_used_text_prompt_only": true,
+    "approved_originals_attached_to_generation": false,
+    "approved_reference_images_sha_imported_in_repo": false,
+    "claim_exact_original_identity_match": false,
+    "cannot_approve_until_reference_comparison": true
+  },
   "human_review": {
     "approved": false,
     "kael_identity_verified": false,
