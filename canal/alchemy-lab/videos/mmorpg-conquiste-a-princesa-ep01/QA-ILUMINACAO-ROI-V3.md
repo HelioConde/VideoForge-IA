@@ -9,3 +9,5 @@ Regressão reproduzida: fixture sintética com mesma proporção RGB e exposiç�
 ## 16/11/2026 — QA iluminação integrado (PR #64)
 
 Commit [5285f51](https://github.com/HelioConde/VideoForge-IA/commit/5285f5150b73279fd26941373e31508b22f6977a) confirmado na main. Workflow [43944144582](https://github.com/HelioConde/VideoForge-IA/actions/runs/43944144582) SUCCESS: 23 testes ROI e recálculo das oito regiões sem escrever imagens. Fixtures de exposição testam o mecanismo, não aprovam os figurinos reais. Nenhuma máscara modificada nesta rodada; 0/8 aprovações semânticas e R2 bloqueada. Próximo passo: revisar as fontes completas, cobertura e iluminação; não definir flags de aprovação por histograma.
+
+Verificação pós-merge: workflow semântico da main [43944320147](https://github.com/HelioConde/VideoForge-IA/actions/runs/43944320147) também terminou SUCCESS. Mantidos quatro pares reais sem evidência suficiente e nenhuma aprovação automática.

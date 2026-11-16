@@ -1740,6 +1740,8 @@
     "pr": 64,
     "commit": "5285f5150b73279fd26941373e31508b22f6977a",
     "workflow_run": 43944144582,
-    "workflow_conclusion": "success"
+    "workflow_conclusion": "success",
+    "main_semantic_run": 43944320147,
+    "main_semantic_conclusion": "success"
   }
 }

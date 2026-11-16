@@ -652,3 +652,5 @@ Ao terminar **qualquer avanço no dorama**, atualizar **este arquivo na `main`**
 
 - Reserva unica de recuperacao persistida ANTES de redisparar o workflow de arte. Nenhuma imagem, cobranca confirmada, aprovacao humana ou upload ao criar reserva.
 - Proxy health autenticado e elegibilidade foram exigidos pelo workflow. Sem resultado de arte ainda; proximo passo: geracao e QA por SHA.
+
+Verificação pós-merge: workflow semântico da main [43944320147](https://github.com/HelioConde/VideoForge-IA/actions/runs/43944320147) também terminou SUCCESS. Mantidos quatro pares reais sem evidência suficiente e nenhuma aprovação automática.
