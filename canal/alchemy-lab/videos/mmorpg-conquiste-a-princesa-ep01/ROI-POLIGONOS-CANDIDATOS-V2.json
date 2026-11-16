@@ -25,7 +25,8 @@
   "observations": [
     "C01 mostra Aldric sentado; C02 mostra uma figura de Aldric em pé na prancha, mas identidade, pixels da barba e continuidade ainda requerem validação detalhada.",
     "Elara está no close com corpete roxo e ao fundo em C12-P02 em escala menor; roupa e cor não podem ser aprovadas pela comparação de um zoom geral.",
-    "Primeira prancha ampliada detectou máscara B de barba no peito; segundo rascunho move a proposta para a barba, ainda sem aprovação. Corpete B foi movido para cima; confirmar nas próximas pranchas."
+    "Primeira prancha ampliada detectou máscara B de barba no peito; segundo rascunho move a proposta para a barba, ainda sem aprovação. Corpete B foi movido para cima; confirmar nas próximas pranchas.",
+    "Inspeção da máscara HSV rígida: filtro eliminou grande parte da barba e ainda mostrou região ocular na C02. Geometria da barba C02 revista para excluir testa/olhos; limiar de cinza será menos agressivo, sempre como proposta não validada."
   ],
   "pairs": [
     {
@@ -45,12 +46,12 @@
           276
         ],
         [
-          372,
-          283
+          371,
+          282
         ],
         [
-          363,
-          291
+          364,
+          288
         ],
         [
           353,
@@ -60,31 +61,31 @@
       "board_points_b": [
         [
           1165,
-          243
+          253
         ],
         [
           1178,
-          242
+          251
         ],
         [
           1188,
-          252
+          261
         ],
         [
-          1186,
-          266
+          1187,
+          270
         ],
         [
-          1178,
-          274
+          1179,
+          278
         ],
         [
           1165,
-          267
+          273
         ],
         [
-          1161,
-          255
+          1160,
+          263
         ]
       ]
     },
