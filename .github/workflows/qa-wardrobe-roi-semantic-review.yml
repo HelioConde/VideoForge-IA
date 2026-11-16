@@ -1,0 +1,30 @@
+name: "VideoForge - revisar evidencias semanticas ROI V3"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/wardrobe_roi_semantic_review.py'
+      - 'tests/test_wardrobe_roi_semantic_review.py'
+      - '.github/workflows/qa-wardrobe-roi-semantic-review.yml'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REVISAO-SEMANTICA-ROI-V3.json'
+permissions:
+  contents: read
+jobs:
+  validate-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar hashes, flags e impedir aprovacao implicita
+        run: python -m unittest tests.test_wardrobe_roi_semantic_review -v
+      - name: Gerar auditoria pendente sem sobrescrever arte
+        run: python -m videoforge.wardrobe_roi_semantic_review --sync
+      - uses: actions/upload-artifact@v4
+        with:
+          name: roi-v3-semantic-review-check
+          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-REVISAO-SEMANTICA-ROI-V3.json
+          retention-days: 30
