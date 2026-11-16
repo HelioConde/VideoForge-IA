@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 16/11/2026 — próximas fontes de roupa encontradas sem gerar nenhuma imagem
+
+- [Workflow de inventário 43874152372](https://github.com/HelioConde/VideoForge-IA/actions/runs/43874152372) finalizado com sucesso: examinou **6 PNGs já presentes** no repositório, calculou SHA, e criou `QA-INVENTARIO-FIGURINOS-V2.json` e [galeria revisável](REVISAR-OPCOES-FIGURINO-V2.md) com 3 imagens de Aldric e 3 de Elara. As fontes antigas V1 e suas camadas são apenas *candidatas*, não prova de que o traje é o original aprovado.
+- Para Elara, as opções contêm o close importado do chat, o enquadramento original C12-P02 e a cena-mãe antiga C12; **o peitoral roxo tem de ser confirmado antes de aprovar a roupa palaciana completa**. Para Aldric, há RGB extraído da cena 01, camada de vestimenta e cena-mãe antiga; todas exigem inspeção e confirmação explícita do usuário. Nenhum candidato legado foi promovido a referência.
+- `videoforge/art_request_gate.py` e workflow `production-art-by-request.yml` encerram com **skip/no-op** se um pedido de geração está concluído/reprovado, se seu PNG+SHA já foi arquivado, ou se a futura `character-bible-grounded-r2` ainda não tem referências de vestuário aprovadas com SHA. Isso evita reprocessar o pedido de arte do run 43868021687; a falha anterior no run 43872223471 foi uma proteção contra repetição, não nova imagem.
+- O QA de arquivamento foi alinhado à autorização V2 vigente, mas segue no modo **teste apenas em memória, sem gasto, sem render e sem publicação**. As 40 tomadas continuam planejadas e a aprovação de figurino permanece em 0/2.
+
 ## 16/11/2026 — usuário reprovou figurino da prancha V2 referenciada
 
 - `character-bible-grounded.png` SHA `6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3` (run 43868021687) está **tecnicamente íntegro, mas artisticamente REPROVADO**. Diferenças mais graves: vestes do rei Aldric divergentes; parte roxa da blusa/peitoral da princesa Elara inconsistente ou ausente numa das versões. Não afirmar defeito específico de Kael que não foi relatado.

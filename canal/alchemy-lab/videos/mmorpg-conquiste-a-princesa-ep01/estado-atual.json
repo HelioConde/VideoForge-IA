@@ -1480,5 +1480,25 @@
     "r2_dispatched": false,
     "required_approved_full_outfit_references": 2,
     "verified_approved_full_outfit_references": 0
+  },
+  "wardrobe_existing_sources_inventory_20261116": {
+    "status": "six_archived_candidates_audited_not_canon",
+    "candidates": 6,
+    "review_document": "REVISAR-OPCOES-FIGURINO-V2.md",
+    "qa_report": "QA-INVENTARIO-FIGURINOS-V2.json",
+    "exact_original_sha_source_count_approved_for_complete_outfit": 0,
+    "need_full_outfit_approval_for": [
+      "elara",
+      "aldric"
+    ],
+    "v1_assets_are_not_canonical": true,
+    "original_image_pixels_changed": false,
+    "provider_calls_for_inventory": 0,
+    "owner_rejected_sha": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+    "next_stage": "review_existing_candidates_then_lock_approved_full_outfit_sources",
+    "r2_generated": false,
+    "youtube_uploaded": false,
+    "workflow_run_qa_inventory": 43874152372,
+    "workflow_result_qa_inventory": "success"
   }
 }
