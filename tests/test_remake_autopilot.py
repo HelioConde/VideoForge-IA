@@ -24,6 +24,13 @@ class RemakeAutonomyTests(unittest.TestCase):
         self.assertEqual(len(result["source_readiness"]["missing_original_paths"]),0)
         self.assertTrue(result["source_readiness"]["c12_camera_source_verified"])
         self.assertEqual(result["blocker"],"human_visual_review_pending")
+        grounded=result["grounded_candidate"]
+        self.assertIsNotNone(grounded)
+        self.assertEqual(grounded["run_id"],43868021687)
+        self.assertEqual(grounded["attached_original_pngs"],2)
+        self.assertEqual(grounded["sha256"],"6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3")
+        self.assertFalse(grounded["human_visual_approved"])
+        self.assertFalse(grounded["canonical_identity_approved"])
         self.assertTrue(result["source_readiness"]["aldric_individual_sha_approved_reference_missing"])
         self.assertFalse(result["source_readiness"]["automatic_visual_approval"])
         self.assertFalse(result["dispatch_allowed"])

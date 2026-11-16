@@ -95,6 +95,8 @@ class RemakeStarterTests(unittest.TestCase):
         self.assertEqual(out["autopilot"]["source_readiness"]["verified_style_source_count"],2)
         self.assertEqual(len(out["autopilot"]["source_readiness"]["missing_original_paths"]),0)
         self.assertTrue(out["autopilot"]["source_readiness"]["c12_camera_source_verified"])
+        self.assertEqual(out["autopilot"]["grounded_candidate"]["run_id"],43868021687)
+        self.assertFalse(out["autopilot"]["grounded_candidate"]["canonical_identity_approved"])
         self.assertFalse(out["autopilot"]["source_readiness"]["automatic_visual_approval"])
         for shot in out["production_queue"][1:]:
             self.assertEqual(shot["status"],"blocked_canonical_reference")

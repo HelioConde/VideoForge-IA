@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — segunda prancha ancorada de verdade nos PNGs originais e QA comparativo
+
+- [Geração real 43868021687](https://github.com/HelioConde/VideoForge-IA/actions/runs/43868021687) **SUCCESS**: 1 chamada de `gpt-image-2` para `character-bible-grounded` com **2 fontes PNG originais realmente anexadas** via `images/edits`, fontes com SHA exatos Kael `edb751cd...` e Elara `bf199f3e...`; PNG 1199×1312 arquivado permanentemente com SHA `6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3` no caminho `assets/geracoes/production-art-request/43868021687/character-bible-grounded.png`. A prancha antiga apenas textual segue intacta (run 43784005362).
+- [QA comparativo 43868899761](https://github.com/HelioConde/VideoForge-IA/actions/runs/43868899761) **SUCCESS, 3 testes**: comparação tripla offline (original + primeira prancha textual + nova prancha de referências) gerou `QA-KAEL-TRIPLO-V2.jpg`, `QA-ELARA-TRIPLO-V2.jpg`, `QA-IDENTIDADE-GROUNDED-V2.json` e `REVISAR-GROUNDED-V2.md`. O QA confere SHA e `production.json` que comprova que os dois originais foram anexados. Nenhuma chamada paga adicional para os JPEGs.
+- A nova prancha é **candidata**, sem aprovação visual; o modelo devolveu 1199×1312 em vez de 1024×1536. O relatório não altera o original nem a versão antiga. Aldric continua sem referência individual, e o primeiro movimento real da espada C01-P02 depende da mãe da tomada e quatro camadas RGBA.
+- O coordenador do EP01 deve registrar `grounded_candidate` com SHA/proveniência, manter `human_visual_review_pending` e NÃO liberar cenas, rig, MP4 completo ou YouTube pelo mero sucesso do gerador.
+
 ## 16/11/2026 — corrigida a geracao textual da primeira prancha: nova candidata com referencias reais anexadas
 
 - Diagnosticado: a `character-bible` do run 43784005362 foi produzida por `/v1/images/generations` com **texto apenas**, apesar do prompt mencionar as imagens originais. Isso explica parte do risco de inconsistência e não valida identidade.

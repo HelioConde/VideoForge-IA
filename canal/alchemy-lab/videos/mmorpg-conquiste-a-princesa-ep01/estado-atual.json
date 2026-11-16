@@ -1402,5 +1402,42 @@
     "character_bible_canonical": false,
     "official_mp4_created": false,
     "youtube_uploaded": false
+  },
+  "grounded_identity_production_20261116": {
+    "status": "SHA_verified_png_archived_visual_review_pending",
+    "asset_id": "character-bible-grounded",
+    "workflow_run": 43868021687,
+    "workflow_conclusion": "success",
+    "model": "gpt-image-2",
+    "input_images_attached_count": 2,
+    "input_sources": [
+      {
+        "actor": "kael",
+        "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f"
+      },
+      {
+        "actor": "elara",
+        "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a"
+      }
+    ],
+    "archive_png": "assets/geracoes/production-art-request/43868021687/character-bible-grounded.png",
+    "archive_producer_json": "assets/geracoes/production-art-request/43868021687/character-bible-grounded.production.json",
+    "source_image_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+    "real_width": 1199,
+    "real_height": 1312,
+    "requested": "1024x1536",
+    "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+    "human_visual_approved": false,
+    "aldric_individual_sha_source_missing": true,
+    "prior_character_bible_preserved": true,
+    "comparative_qa_workflow_run": 43868899761,
+    "comparative_qa_conclusion": "success_3_tests",
+    "comparative_qa_report": "QA-IDENTIDADE-GROUNDED-V2.json",
+    "kael_comparison": "QA-KAEL-TRIPLO-V2.jpg",
+    "elara_comparison": "QA-ELARA-TRIPLO-V2.jpg",
+    "provider_calls_for_comparison": 0,
+    "shot_mothers_generated_after_refinement": 0,
+    "full_episode_mp4_created": false,
+    "youtube_uploaded": false
   }
 }

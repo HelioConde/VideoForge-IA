@@ -166,6 +166,7 @@ def choose_next(root: Path = ROOT) -> dict:
             if stage is None:
                 stage, blocker = "final_assembly_preflight", "audio_video_qa_and_final_review_pending"
     source_readiness = None
+    grounded_candidate = None
     if stage == "review_identity_reference":
         # An archived PNG is only a candidate. Do not ask for approval of
         # visual identity while the exact user-approved Kael/Elara originals
@@ -194,8 +195,30 @@ def choose_next(root: Path = ROOT) -> dict:
             blocker = "invalid_original_reference_sha_stop"
         elif originals["original_source_files_sha_verified"] < 2:
             blocker = "original_kael_elara_sha_sources_missing"
-        # Once exact originals are imported, the next gate is HUMAN identity
-        # comparison: never auto-approve merely because SHA matches.
+        # Once exact originals are imported, compare the separately archived
+        # text-only sheet and a new SHA-grounded sheet. Never approve either
+        # from SHA or provider metadata alone.
+        if not missing and blocker == "human_visual_review_pending":
+            from .production_art import archived_reference
+            grounded=archived_reference(
+                "alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
+                "character-bible-grounded",root)
+            if grounded is not None:
+                from .grounded_review import provenance
+                sources=provenance(episode,grounded)
+                grounded_candidate={
+                    "asset_id":"character-bible-grounded",
+                    "run_id":grounded["run_id"],
+                    "path":grounded["path"],
+                    "sha256":grounded["sha256"],
+                    "width":grounded["width"],
+                    "height":grounded["height"],
+                    "attached_original_pngs":len(sources),
+                    "comparative_review_report":"QA-IDENTIDADE-GROUNDED-V2.json",
+                    "comparative_review_document":"REVISAR-GROUNDED-V2.md",
+                    "human_visual_approved":False,
+                    "canonical_identity_approved":False,
+                }
     provider_enabled = (policy.get("paid_provider_calls_approved") is True
                         and type(policy.get("max_chargeable_calls_per_run")) is int
                         and policy["max_chargeable_calls_per_run"] >= 1)
@@ -221,6 +244,7 @@ def choose_next(root: Path = ROOT) -> dict:
         "target": target,
         "discovered_candidate": candidate,
         "source_readiness": source_readiness,
+        "grounded_candidate": grounded_candidate,
         "blocker": blocker,
         "next_workflow": "production-art-by-request.yml" if dispatch_allowed else None,
         "dispatch_allowed": bool(dispatch_allowed),
@@ -310,6 +334,11 @@ def sync_checkpoint(report: dict, root: Path = ROOT) -> bool:
         record["verified_style_source_count"] = source_readiness["verified_style_source_count"]
         record["missing_original_paths"] = source_readiness["missing_original_paths"]
         record["aldric_individual_sha_approved_reference_missing"] = True
+    grounded = report.get("grounded_candidate")
+    if isinstance(grounded, dict):
+        record["grounded_candidate_sha256"] = grounded["sha256"]
+        record["grounded_candidate_run_id"] = grounded["run_id"]
+        record["grounded_visual_approval"] = False
     candidate = report.get("discovered_candidate")
     if isinstance(candidate, dict):
         record["candidate_sha256"] = candidate.get("sha256")
@@ -352,6 +381,13 @@ def sync_checkpoint(report: dict, root: Path = ROOT) -> bool:
             + "; bloqueio: " + str(record["blocker"]) + ".\n"
             + "- Apenas verificação de estado/arquivos. Nenhuma mídia criada ou aprovação inventada.\n")
     state["autopilot_checkpoint"] = record
+    if isinstance(grounded, dict):
+        state["grounded_identity_candidate_current"] = {
+            **grounded,
+            "status":"visual_review_pending",
+            "external_image_provider_calls_in_this_diagnostic":0,
+            "youtube_uploaded":False,
+        }
     if isinstance(source_readiness, dict):
         # Independent live snapshot; historical audit records remain immutable.
         # SHA-verified references are never treated as human identity approval.
