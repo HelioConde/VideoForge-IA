@@ -1,0 +1,200 @@
+{
+  "schema": "videoforge/wardrobe-roi-manual-exclusion-proposals/v1",
+  "status": "unverified_edit_proposals",
+  "notes": "Coordenadas em pixels da prancha 2080x1060, não pixels fonte; propostas manuais para eliminar sobreposição de boca/gola, lança, brocados e joias. Não são máscaras semanticamente aprovadas.",
+  "source_sha_verification_required": true,
+  "automatic_semantic_validation": false,
+  "rows": [
+    {
+      "actor": "aldric",
+      "region": "barba",
+      "side": "a",
+      "exclude_board_polygons": [
+        [
+          [
+            354,
+            285
+          ],
+          [
+            359,
+            285
+          ],
+          [
+            359,
+            296
+          ],
+          [
+            354,
+            296
+          ]
+        ]
+      ],
+      "reason": "abaixo do queixo: gola/pele possível, conferir"
+    },
+    {
+      "actor": "aldric",
+      "region": "barba",
+      "side": "b",
+      "exclude_board_polygons": [
+        [
+          [
+            1170,
+            262
+          ],
+          [
+            1181,
+            262
+          ],
+          [
+            1184,
+            269
+          ],
+          [
+            1172,
+            269
+          ]
+        ]
+      ],
+      "reason": "abertura da boca: candidato, risco de retirar bigode"
+    },
+    {
+      "actor": "aldric",
+      "region": "tecido_externo",
+      "side": "a",
+      "exclude_board_polygons": [
+        [
+          [
+            283,
+            355
+          ],
+          [
+            289,
+            352
+          ],
+          [
+            306,
+            399
+          ],
+          [
+            300,
+            403
+          ]
+        ]
+      ],
+      "reason": "faixa estreita diagonal da lança sobre manto, conferir orientação"
+    },
+    {
+      "actor": "aldric",
+      "region": "tecido_externo",
+      "side": "b",
+      "exclude_board_polygons": [],
+      "reason": "nenhuma exclusão confiável desenhada"
+    },
+    {
+      "actor": "aldric",
+      "region": "painel_central",
+      "side": "a",
+      "exclude_board_polygons": [
+        [
+          [
+            350,
+            364
+          ],
+          [
+            383,
+            364
+          ],
+          [
+            383,
+            371
+          ],
+          [
+            350,
+            371
+          ]
+        ]
+      ],
+      "reason": "faixa da cintura e bordado sobreposto, risco de remover tecido verdadeiro"
+    },
+    {
+      "actor": "aldric",
+      "region": "painel_central",
+      "side": "b",
+      "exclude_board_polygons": [
+        [
+          [
+            1200,
+            409
+          ],
+          [
+            1226,
+            409
+          ],
+          [
+            1226,
+            418
+          ],
+          [
+            1200,
+            418
+          ]
+        ]
+      ],
+      "reason": "cinto central e ornamentos, confirmar"
+    },
+    {
+      "actor": "elara",
+      "region": "corpete_roxo_palacio",
+      "side": "a",
+      "exclude_board_polygons": [
+        [
+          [
+            302,
+            671
+          ],
+          [
+            318,
+            673
+          ],
+          [
+            323,
+            687
+          ],
+          [
+            310,
+            689
+          ]
+        ]
+      ],
+      "reason": "joia/ombro no limite superior do decote"
+    },
+    {
+      "actor": "elara",
+      "region": "corpete_roxo_palacio",
+      "side": "b",
+      "exclude_board_polygons": [
+        [
+          [
+            1182,
+            261
+          ],
+          [
+            1190,
+            263
+          ],
+          [
+            1191,
+            275
+          ],
+          [
+            1186,
+            278
+          ]
+        ]
+      ],
+      "reason": "broche próximo ao ombro, baixa resolução"
+    }
+  ],
+  "manual_exclusion_purpose": "preview_separate_from_previous_masks",
+  "promote_to_official_contract": false
+}
