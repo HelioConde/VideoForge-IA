@@ -42,6 +42,12 @@
             ]
           ],
           "candidate_mask_pixels": 929,
+          "exploratory_unverified_color_share_percent": {
+            "red": 11.52,
+            "very_dark": 26.59,
+            "purple_or_magenta": 0.54,
+            "other": 61.36
+          },
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
@@ -85,11 +91,24 @@
             ]
           ],
           "candidate_mask_pixels": 2167,
+          "exploratory_unverified_color_share_percent": {
+            "red": 13.11,
+            "very_dark": 7.38,
+            "purple_or_magenta": 0.05,
+            "other": 79.46
+          },
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
         }
       ],
+      "exploratory_unverified_color_deltas_pp": {
+        "red": 1.59,
+        "very_dark": 19.21,
+        "purple_or_magenta": 0.49
+      },
+      "exploratory_alert_only": false,
+      "automatic_rejection": false,
       "automatic_approved": false
     },
     {
@@ -132,6 +151,12 @@
             ]
           ],
           "candidate_mask_pixels": 8709,
+          "exploratory_unverified_color_share_percent": {
+            "red": 5.88,
+            "very_dark": 60.0,
+            "purple_or_magenta": 0.05,
+            "other": 34.08
+          },
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
@@ -171,11 +196,24 @@
             ]
           ],
           "candidate_mask_pixels": 11040,
+          "exploratory_unverified_color_share_percent": {
+            "red": 5.53,
+            "very_dark": 73.79,
+            "purple_or_magenta": 0.0,
+            "other": 20.68
+          },
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
         }
       ],
+      "exploratory_unverified_color_deltas_pp": {
+        "red": 0.35,
+        "very_dark": 13.79,
+        "purple_or_magenta": 0.05
+      },
+      "exploratory_alert_only": false,
+      "automatic_rejection": false,
       "automatic_approved": false
     },
     {
@@ -218,6 +256,12 @@
             ]
           ],
           "candidate_mask_pixels": 11620,
+          "exploratory_unverified_color_share_percent": {
+            "red": 38.4,
+            "very_dark": 30.99,
+            "purple_or_magenta": 0.0,
+            "other": 30.61
+          },
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
@@ -257,11 +301,24 @@
             ]
           ],
           "candidate_mask_pixels": 13832,
+          "exploratory_unverified_color_share_percent": {
+            "red": 42.2,
+            "very_dark": 18.93,
+            "purple_or_magenta": 0.01,
+            "other": 38.87
+          },
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
         }
       ],
+      "exploratory_unverified_color_deltas_pp": {
+        "red": 3.8,
+        "very_dark": 12.06,
+        "purple_or_magenta": 0.01
+      },
+      "exploratory_alert_only": false,
+      "automatic_rejection": false,
       "automatic_approved": false
     },
     {
@@ -308,6 +365,12 @@
             ]
           ],
           "candidate_mask_pixels": 31917,
+          "exploratory_unverified_color_share_percent": {
+            "red": 29.52,
+            "very_dark": 29.17,
+            "purple_or_magenta": 26.68,
+            "other": 14.63
+          },
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
@@ -343,17 +406,33 @@
             ]
           ],
           "candidate_mask_pixels": 2805,
+          "exploratory_unverified_color_share_percent": {
+            "red": 23.78,
+            "very_dark": 3.07,
+            "purple_or_magenta": 16.68,
+            "other": 56.47
+          },
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
         }
       ],
+      "exploratory_unverified_color_deltas_pp": {
+        "red": 5.74,
+        "very_dark": 26.1,
+        "purple_or_magenta": 10.0
+      },
+      "exploratory_alert_only": false,
+      "automatic_rejection": false,
       "automatic_approved": false
     }
   ],
   "candidate_count": 8,
   "validated_pair_count": 0,
   "automatic_approvals": 0,
+  "automatic_rejections": 0,
+  "candidate_measurements_are_not_official_qa": true,
+  "official_semantic_filter_executed": false,
   "r2_blocked": true,
   "original_images_modified": false,
   "paid_calls": 0,
