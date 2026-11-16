@@ -30,5 +30,14 @@
     "no_global_provider_quota_override": true,
     "workflow_safety_limit_one_chargeable_call_per_run": true,
     "no_automatic_youtube_publication": true
+  },
+  "wardrobe_gate": {
+    "review_file": "REVISAO-FIGURINO-V2.json",
+    "contract_file": "CONTRATO-FIGURINO-V2.json",
+    "rejected_identity_sha256": [
+      "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3"
+    ],
+    "r2_requires_2_owner_approved_full_wardrobe_sha_sources": true,
+    "no_retry_rejected_candidate": true
   }
 }

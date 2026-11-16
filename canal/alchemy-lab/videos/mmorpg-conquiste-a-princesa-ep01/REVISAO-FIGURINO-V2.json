@@ -1,0 +1,39 @@
+{
+  "schema": "videoforge/human-wardrobe-review/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "date": "2026-11-16",
+  "origin": "explicit_owner_feedback",
+  "asset_id": "character-bible-grounded",
+  "run_id": 43868021687,
+  "sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "decision": "rejected_wardrobe_inconsistency",
+  "human_visual_approved": false,
+  "canonical_identity_approved": false,
+  "issues": [
+    {
+      "actor": "aldric",
+      "code": "wardrobe_mismatch_aldric",
+      "status": "rejected",
+      "feedback": "A roupa do rei difere visivelmente entre as imagens; nao manter redesign entre quadros."
+    },
+    {
+      "actor": "elara",
+      "code": "wardrobe_mismatch_elara_purple_bodice",
+      "status": "rejected",
+      "feedback": "A parte roxa da blusa/peitoral palaciano aparece em uma versao e esta ausente ou diferente em outra."
+    },
+    {
+      "actor": "kael",
+      "code": "wardrobe_review_pending",
+      "status": "unconfirmed",
+      "feedback": "Nao foi informado erro especifico em Kael; continuar conferindo identidade e roupa."
+    }
+  ],
+  "next_stage": "collect_or_lock_better_wardrobe_references",
+  "r2_candidate_id": "character-bible-grounded-r2",
+  "requires_elara_palace_wardrobe_original": true,
+  "requires_aldric_full_wardrobe_original": true,
+  "keep_previous_archives": true,
+  "generate_next_without_sources": false,
+  "youtube_uploaded": false
+}

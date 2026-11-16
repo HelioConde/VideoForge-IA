@@ -15,7 +15,7 @@
     "reconstruir fundo e extrair partes RGBA reais",
     "montar rigs e renderizar MP4 somente com QA"
   ],
-  "status": "requested_one_new_grounded_candidate_no_retry",
+  "status": "completed_but_rejected_by_owner_wardrobe_mismatch",
   "grounding_sources": [
     {
       "actor": "kael",
@@ -28,5 +28,10 @@
   ],
   "identity_approval_explicitly_required": true,
   "consumes_image_provider_call_if_executed": true,
-  "auto_publish_youtube": false
+  "auto_publish_youtube": false,
+  "review_file": "REVISAO-FIGURINO-V2.json",
+  "do_not_repeat_original_generation": true,
+  "next_r2_asset": "character-bible-grounded-r2",
+  "next_r2_status": "blocked_until_full_outfit_references_verified",
+  "owner_approval": false
 }

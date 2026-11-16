@@ -40,7 +40,11 @@
       "sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
       "status": "candidate_human_review_pending",
       "human_approved": false,
-      "run_id": 43784005362
+      "run_id": 43784005362,
+      "review_contract": "CONTRATO-FIGURINO-V2.json",
+      "rejected_alternative_candidate_sha256": [
+        "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3"
+      ]
     },
     {
       "id": "throne-hall",

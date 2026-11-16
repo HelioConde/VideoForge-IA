@@ -1,5 +1,11 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 16/11/2026 — usuário reprovou figurino da prancha V2 referenciada
+
+- `character-bible-grounded.png` SHA `6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3` (run 43868021687) está **tecnicamente íntegro, mas artisticamente REPROVADO**. Diferenças mais graves: vestes do rei Aldric divergentes; parte roxa da blusa/peitoral da princesa Elara inconsistente ou ausente numa das versões. Não afirmar defeito específico de Kael que não foi relatado.
+- Regras novas em `REVISAO-FIGURINO-V2.json` e `CONTRATO-FIGURINO-V2.json` exigem fidelidade de vestes, inclusive detalhes pequenos. Nova `character-bible-grounded-r2` foi **planejada, mas bloqueada** até existirem fontes completas, SHA e aprovação humana do traje de Elara e Aldric. Não inferir roupa do rei por prompt e não fazer gasto duplicado.
+- Continuam bloqueados imagem-mãe C01-P02, rigs oficiais, MP4 completo e publicação, sem mexer nos PNGs originais ou nas 40 tomadas.
+
 ## 16/11/2026 — cenas V2 aceitam referência vertical original sem esticar
 
 - Corrigido o bloqueio de dimensão que tornaria a nova `character-bible-grounded.png` 1199×1312 inutilizável mesmo após aprovação humana. `cinematic_direction._remake_anchor_state` agora aceita **somente PNG retrato SHA-verificado dentro de limites técnicos** para identidade; `remake_reference.prepare_remake_reference` suporta os dois IDs `character-bible` (texto) e `character-bible-grounded` (2 fontes anexadas), com prova de origem estrita e SHA; a cópia fornecida ao editor conserva EXATAMENTE os bytes sem redimensionar.

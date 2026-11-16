@@ -26,7 +26,8 @@
     "Sem personagens extras no fundo desfocado, sem revelar Elara no trono antes do momento previsto.",
     "A bíblia textual v2 segue os closes elogiados no chat, mas os 14 cenários e a prancha PNG antigos são v1: bloquear geração/rig até importar referências exatas e revisar continuidade, sem misturar duas versões.",
     "Kael da v2: cabelo escuro volumoso, olhos âmbar, capa vinho rasgada e ombreira escura dourada; nunca voltar ao modelo sem capa da prancha v1.",
-    "Referências cinematográficas amadas pelo usuário medem 941×1672 (quase 9:16) e NÃO são imagens-mãe antigas de 1024×1536; não esticar nem cortar rosto para fingir compatibilidade."
+    "Referências cinematográficas amadas pelo usuário medem 941×1672 (quase 9:16) e NÃO são imagens-mãe antigas de 1024×1536; não esticar nem cortar rosto para fingir compatibilidade.",
+    "V2 R2: divergencia do painel ROXO do corpete de Elara ou traje do rei Aldric REPROVA a imagem, independente de SHA valido; exigir fotos integrais de roupas aprovadas por SHA."
   ],
   "request_limit": {
     "per_run": 1,
@@ -63,6 +64,16 @@
       "human_visual_approval_required": true,
       "supersedes_text_only_candidate_automatically": false,
       "prompt": "NOVA PRANCHA DE IDENTIDADE V2 PARA O DORAMA DE FANTASIA ARKEN, manhwa 2D cinematográfico refinado, sem fotorrealismo. Use as DUAS imagens PNG ORIGINAIS ANEXADAS REALMENTE NESTA REQUISIÇÃO: imagem 1 é KAEL, imagem 2 é ELARA. São fontes exatas aprovadas para estilo e com SHA verificado, nunca misture os dois rostos. Preserve rigorosamente identidade do rosto, formato dos olhos, corte e volume do cabelo, paleta, traço e proporções das fontes anexadas. KAEL é jovem adulto de cabelo castanho-negro volumoso, olhos âmbar, cape/cachecol vinho rasgado, ombreira de metal escuro filigranado dourado com pedra azul e roupas sombrias; Kael não segura espada. ELARA é princesa jovem de cabelo dourado longo ondulado com trança lateral, olhos violetas, tiara/coroa dourada com ametistas, flores discretas, vestido branco-pérola e violeta com bordados dourados. ALDRIC é rei mais velho de barba branca volumosa, coroa dourada e túnica vinho e dourado, presença severa; NÃO há imagem original individual de Aldric anexada, então esta identidade exige revisão separada. Compor os três PERSONAGENS de corpo inteiro em colunas distintas e bem espaçadas, em pose neutra para referência, pés e mãos visíveis, com cenário palaciano simples e consistente, sem duplicações de membros, sem texto, sem letras, sem legenda, sem marca-d'água, sem HUD, sem montar várias cenas. Repetir exatamente o mesmo traço e iluminação nas três figuras. Esta é uma CANDIDATA de revisão visual, não uma cena-mãe, não altera a prancha antiga e não libera vídeo ou publicação."
+    },
+    {
+      "id": "character-bible-grounded-r2",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "requires_four_sha_verified_source_pngs": true,
+      "requires_owner_approved_aldric_and_elara_wardrobe": true,
+      "auto_dispatch": false,
+      "prompt": "Prancha de identidade Arken V2 R2. Usar quatro PNGs originais aprovados e ANEXADOS: rosto Kael, rosto Elara, roupa palaciana Elara corpo inteiro, roupa Aldric corpo inteiro. Nao redesign. Elara: manter painel ROXO na blusa/peitoral, mesmo desenho em todos os quadros palacianos, vestido branco perola, violeta e ouro; manter coroa ametista. Aldric: reproduzir fielmente a mesma tunica bordo/vinho com ouro, gola clara, detalhes e coroa da imagem aprovada, sem troca de adornos. Kael: capa vinho rasgada, ombreira escura ouro, pedra azul e olhos ambar. Rosto, cabelo e proporcoes identicos aos PNGs. Tres personagens em corpo inteiro, sem membros extras, nao gerar textos nem HUD, nao alterar itens entre vistas. Prioridade absoluta: consistencia de roupa. Candidata nao aprovada ate QA humano."
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",

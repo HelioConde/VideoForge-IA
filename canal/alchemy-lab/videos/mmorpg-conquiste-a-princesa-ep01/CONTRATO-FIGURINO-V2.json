@@ -1,0 +1,37 @@
+{
+  "schema": "videoforge/wardrobe-continuity-contract/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "rejected_candidate_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "source_review": "REVISAO-FIGURINO-V2.json",
+  "decision": "rejected_wardrobe_inconsistency",
+  "canonical_identity_approved": false,
+  "rules": {
+    "elara_palace": "Preservar a PARTE ROXA no peitoral/blusa/corpete do traje palaciano em TODOS os planos com a mesma roupa; vestido branco-perola, violeta e detalhes dourados. Disfarce de rua e outra variante narrativa, sem alterar face.",
+    "aldric_royal": "Manter exatamente o figurino real de Aldric: tunica vinho/bordo e ouro, gola clara, coroa dourada e aderecos. Proibido redesenhar roupa, mudar bordados ou adornos sem autorizacao.",
+    "kael_trial": "Manter capa vinho rasgada, ombreira escura com ouro e pedra azul; sem inferir reprovação de Kael."
+  },
+  "required_full_wardrobe_reference_sources": [
+    {
+      "actor": "elara",
+      "variant": "palace_purple_bodice",
+      "path": "assets/referencias/figurinos-aprovados/elara-traje-palacio-corpo-inteiro.png",
+      "sha256": null,
+      "explicit_owner_approved": false
+    },
+    {
+      "actor": "aldric",
+      "variant": "royal_outfit",
+      "path": "assets/referencias/figurinos-aprovados/aldric-traje-rei-corpo-inteiro.png",
+      "sha256": null,
+      "explicit_owner_approved": false
+    }
+  ],
+  "r2": {
+    "id": "character-bible-grounded-r2",
+    "status": "blocked_until_both_full_wardrobe_sources_verified",
+    "preserve_original_pngs": true,
+    "no_auto_promote": true,
+    "no_auto_publish": true,
+    "new_paid_generation_dispatched": false
+  }
+}
