@@ -56,35 +56,35 @@
           ],
           "candidate_polygon_native_px": [
             [
+              736,
+              262
+            ],
+            [
               760,
-              345
+              260
             ],
             [
-              780,
-              343
+              779,
+              279
             ],
             [
-              799,
-              357
+              775,
+              304
             ],
             [
-              795,
-              383
+              760,
+              319
             ],
             [
-              786,
-              392
+              736,
+              306
             ],
             [
-              764,
-              385
-            ],
-            [
-              753,
-              365
+              729,
+              284
             ]
           ],
-          "candidate_mask_pixels": 1673,
+          "candidate_mask_pixels": 2167,
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
@@ -323,26 +323,26 @@
           "candidate_polygon_native_px": [
             [
               718,
-              353
+              313
             ],
             [
-              746,
-              347
+              754,
+              315
             ],
             [
               770,
-              387
+              353
             ],
             [
-              756,
-              439
+              752,
+              385
             ],
             [
-              724,
-              427
+              722,
+              373
             ]
           ],
-          "candidate_mask_pixels": 3462,
+          "candidate_mask_pixels": 2805,
           "pose_semantically_verified": false,
           "mask_semantically_verified": false,
           "approved_for_color_comparison": false
