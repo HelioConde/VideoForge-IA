@@ -164,6 +164,45 @@ jobs:
               except (OSError,ValueError,TypeError):
                   print("SAFE_UPSTREAM_PROBE",path,"transport_or_json_invalid")
           PY
+      - name: Testar uma renovacao OAuth sem geracao nem revelar credenciais
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os,urllib.error,urllib.parse,urllib.request
+          base=os.environ["PROXY_ENDPOINT"].rstrip("/")
+          key=os.environ["CODEX_PROXY_API_KEY"]
+          opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+          headers={"Authorization":"Bearer "+key,"Accept":"application/json"}
+          def request(route,method="GET"):
+              req=urllib.request.Request(base+route,headers=headers,method=method)
+              with opener.open(req,timeout=25) as response:
+                  return json.load(response)
+          try:
+              accounts=request("/admin/accounts").get("accounts",[])
+              if not isinstance(accounts,list) or len(accounts)!=1:
+                  print("SAFE_OAUTH_REFRESH","skipped_ambiguous_account_count")
+              else:
+                  record=accounts[0]
+                  if record.get("eligible_now") is True:
+                      print("SAFE_OAUTH_REFRESH","skipped_already_eligible")
+                  else:
+                      account_id=record.get("id","")
+                      if not isinstance(account_id,str) or not account_id.startswith("acct_"):
+                          raise ValueError("Unexpected account ID format")
+                      try:
+                          request("/admin/accounts/"+urllib.parse.quote(account_id,safe="")+"/refresh","POST")
+                          after=request("/admin/accounts").get("accounts",[])
+                          eligible=sum(item.get("eligible_now") is True for item in after if isinstance(item,dict))
+                          print("SAFE_OAUTH_REFRESH","ok","eligible_after",eligible)
+                      except urllib.error.HTTPError as exc:
+                          # Deliberately do not read or log refresh error body or secrets.
+                          print("SAFE_OAUTH_REFRESH","failed_http",exc.code)
+                      except (OSError,ValueError,TypeError):
+                          print("SAFE_OAUTH_REFRESH","failed_transport_or_invalid")
+          except (OSError,ValueError,TypeError):
+              print("SAFE_OAUTH_REFRESH","preflight_failed")
+          PY
       - name: Testar contas e autenticacao sem imagem nem custos
         shell: bash
         run: |
