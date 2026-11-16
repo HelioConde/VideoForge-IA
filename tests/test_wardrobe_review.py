@@ -41,6 +41,25 @@ class WardrobeReviewTests(unittest.TestCase):
         self.assertEqual(result["wardrobe_source_readiness"]["verified"],0)
         self.assertFalse(result["grounded_candidate"]["canonical_identity_approved"])
 
+    def test_forged_approved_anchor_cannot_bypass_owner_wardrobe_rejection(self):
+        import copy
+        from videoforge.cinematic_direction import (
+            load_active_remake_plan,_remake_anchor_state,
+        )
+        from videoforge.remake_autopilot import ROOT
+        source=load_active_remake_plan("alchemy-lab","mmorpg-conquiste-a-princesa-ep01")
+        altered=copy.deepcopy(source)
+        altered["identity_anchors"][0].update({
+            "path":"assets/geracoes/production-art-request/43868021687/character-bible-grounded.png",
+            "sha256":REJECTED_SHA,
+            "status":"approved",
+            "human_approved":True,
+        })
+        with patch("videoforge.cinematic_direction.load_active_remake_plan",return_value=altered):
+            result=_remake_anchor_state("alchemy-lab","mmorpg-conquiste-a-princesa-ep01",ROOT)
+        self.assertTrue(result["source_image_files_verified"])
+        self.assertFalse(result["human_approved"])
+
     def test_r2_no_provider_call_before_full_wardrobe_source(self):
         from videoforge.production_art import create_image
         with patch("videoforge.production_art.proxy_images.call_proxy") as proxy:

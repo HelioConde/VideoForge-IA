@@ -135,7 +135,10 @@ def choose_next(root: Path = ROOT) -> dict:
             raise VideoForgeError("REMAKE_AUTOPILOT_ANCHOR_MANIFEST_INVALID")
         anchor = anchors[0]
         has_art = verified_asset(episode, anchor.get("path"), anchor.get("sha256"))
-        if anchor.get("status") == "approved" and not has_art:
+        from .wardrobe_review import rejected_reference_sha
+        if rejected_reference_sha(anchor.get("sha256"),root):
+            stage, target, blocker = "review_identity_reference", "character-bible", "rejected_canonical_reference_must_not_be_used"
+        elif anchor.get("status") == "approved" and not has_art:
             stage, target, blocker = "stop_bad_reference_sha", "character-bible", "anchor_approval_without_real_matching_png"
         elif not has_art:
             candidate = discover_archived_character_bible(episode)
