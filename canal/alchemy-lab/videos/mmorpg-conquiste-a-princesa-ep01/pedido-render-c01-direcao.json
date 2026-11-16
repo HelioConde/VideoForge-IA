@@ -10,8 +10,8 @@
   "youtube_upload": false,
   "human_visual_approval": false,
   "official_video_approved": false,
-  "reason": "User liked the subtle V4 head movement and requested subtle BACK/TORSO breathing too. Keep head motion, world-lock arm/hand and foot, keep king/guards/spears static from SHA verified source. Animate only upper-back mesh of original jacket plus existing shoulder track. No new images, no upload.",
-  "revision": 5,
+  "reason": "Usuário autorizou todas as operações para obter a primeira animação do dorama para avaliação e correções. Reutilizar artes e bindings existentes, executar MP4 Remotion Three.js C01-P03. Prévia técnica autorizada; ainda não é arte final nem publicação.",
+  "revision": 6,
   "performance_review_manifest": "atuacao-c01-p03-v5-respiracao-costas.json",
   "old_v1_technical_mp4_rejected_for_weak_motion": true,
   "required_motion": "Original upper-back jacket mesh expands <=1.05 native px sideways and lifts <=0.6px during shoulder inhale; head rotation continues max 0.32 degrees. Arm/hand/boot static with original king and spears.",
@@ -22,5 +22,8 @@
   "world_contact_locks_required": true,
   "legacy_16000_pixel_movement_gate_disabled_in_v4": true,
   "back_source_mesh_required": true,
-  "no_new_image_generation": true
+  "no_new_image_generation": true,
+  "requested_on": "2026-11-16",
+  "user_authorized_to_render_preview": true,
+  "review_goal": "Primeira animação articulada para feedback do usuário, não vídeo oficial"
 }
