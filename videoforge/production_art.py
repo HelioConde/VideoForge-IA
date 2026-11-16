@@ -187,10 +187,32 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
     predicted=proxy_images.destination(channel,video_id,asset_id)
     if predicted.with_suffix(".png").exists() or predicted.with_suffix(".jpg").exists():
         raise VideoForgeError("PRODUCTION_ART_ALREADY_GENERATED")
-    output=proxy_images.generate(
-        url,os.getenv("CODEX_PROXY_API_KEY",""),
-        channel,video_id,asset_id,model,size,prompt,
-    )
+    source_provenance=[]
+    if (channel,video_id,asset_id)==(
+        "alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
+        "character-bible-grounded",
+    ):
+        # The previous character-bible was text-only. This separate asset
+        # MUST actually attach the two byte-exact, SHA-checked originals.
+        # It never overwrites the first candidate or grants visual approval.
+        from .grounded_identity import edit_payload
+        payload,source_provenance=edit_payload(prompt,model,size)
+        response=proxy_images.call_proxy(
+            url,"/v1/images/edits",os.getenv("CODEX_PROXY_API_KEY",""),
+            payload)
+        blob,extension=proxy_images.decode_image(response)
+        if extension!=".png":
+            raise VideoForgeError("GROUNDED_IDENTITY_OUTPUT_MUST_BE_PNG")
+        output=predicted.with_suffix(".png")
+        if output.exists() or output.is_symlink():
+            raise VideoForgeError("GROUNDED_IDENTITY_OUTPUT_ALREADY_EXISTS")
+        output.parent.mkdir(parents=True,exist_ok=True)
+        output.write_bytes(blob)
+    else:
+        output=proxy_images.generate(
+            url,os.getenv("CODEX_PROXY_API_KEY",""),
+            channel,video_id,asset_id,model,size,prompt,
+        )
     if output.suffix.lower()!=".png":
         raise VideoForgeError("PRODUCTION_ART_REQUIRES_PNG")
     blob=output.read_bytes()
@@ -202,6 +224,10 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
             "asset_id":asset_id,"file":str(output.relative_to(ROOT)),
             "size":size,"sha256":sha,
             "model":model,**dimension_qa,
+            "source_images_attached_to_request":len(source_provenance),
+            "source_originals_sha_verified":source_provenance,
+            "preserves_prior_text_only_candidate":True if source_provenance else False,
+            "requires_separate_aldric_visual_review":True if source_provenance else False,
             "human_visual_approval":False,"official_video_created":False,
             "youtube_uploaded":False}
     output.with_suffix(".production.json").write_text(

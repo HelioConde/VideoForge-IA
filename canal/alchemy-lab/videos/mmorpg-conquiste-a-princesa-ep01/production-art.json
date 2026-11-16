@@ -44,6 +44,25 @@
       "size": "1024x1536",
       "background": "opaque",
       "prompt": "PRANCHA DE IDENTIDADE PARA DORAMA MMORPG ARKEN, VERSÃO VISUAL 2D MANHWA CINEMATOGRÁFICA, PINTURA DIGITAL REFINADA, LUZ DOURADA E VITRAIS VIOLETA, 3 personagens de corpo inteiro separados para conferência. KAEL: jovem adulto, cabelo escuro quase preto volumoso e desfiado, sobrancelhas marcantes, olhos âmbar, marcas leves de poeira e cortes superficiais, capa/cachecol vinho vermelho rasgado, ombreira de metal escuro com detalhes dourados e pedra azul; sem espada própria. ELARA: jovem princesa loira de cabelos longos ondulados e trança lateral, flores claras/lilases, olhos violeta, coroa dourada com ametistas, vestido branco-pérola e violeta com bordados ouro e brincos de cristal violeta. ALDRIC: rei grisalho de barba branca volumosa, coroa dourada, túnica bordô e ouro com gola clara. Reproduzir as proporções e aparência dos arquivos de referência aprovados e verificados no repositório; se ausentes, RECUSAR A GERAÇÃO. Sem texto, marca, HUD ou montagem de múltiplas cenas; fundo palaciano neutro. Esta prancha futura NÃO valida as imagens-mãe v1 arquivadas. A nova imagem pertence exclusivamente ao remake V2 autorizado; arquivar seus bytes e SHA no GitHub antes de declarar conclusão, sem substituir a arte antiga nem assumir aprovação humana."
+    },
+    {
+      "id": "character-bible-grounded",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "two_exact_SHA_verified_cinematic_originals_attached",
+      "reference_sources": [
+        "assets/referencias/chat-aprovadas/kael-close-salao.png",
+        "assets/referencias/chat-aprovadas/elara-close-trono.png"
+      ],
+      "source_order": [
+        "kael",
+        "elara"
+      ],
+      "source_model": "gpt-image-2",
+      "human_visual_approval_required": true,
+      "supersedes_text_only_candidate_automatically": false,
+      "prompt": "NOVA PRANCHA DE IDENTIDADE V2 PARA O DORAMA DE FANTASIA ARKEN, manhwa 2D cinematográfico refinado, sem fotorrealismo. Use as DUAS imagens PNG ORIGINAIS ANEXADAS REALMENTE NESTA REQUISIÇÃO: imagem 1 é KAEL, imagem 2 é ELARA. São fontes exatas aprovadas para estilo e com SHA verificado, nunca misture os dois rostos. Preserve rigorosamente identidade do rosto, formato dos olhos, corte e volume do cabelo, paleta, traço e proporções das fontes anexadas. KAEL é jovem adulto de cabelo castanho-negro volumoso, olhos âmbar, cape/cachecol vinho rasgado, ombreira de metal escuro filigranado dourado com pedra azul e roupas sombrias; Kael não segura espada. ELARA é princesa jovem de cabelo dourado longo ondulado com trança lateral, olhos violetas, tiara/coroa dourada com ametistas, flores discretas, vestido branco-pérola e violeta com bordados dourados. ALDRIC é rei mais velho de barba branca volumosa, coroa dourada e túnica vinho e dourado, presença severa; NÃO há imagem original individual de Aldric anexada, então esta identidade exige revisão separada. Compor os três PERSONAGENS de corpo inteiro em colunas distintas e bem espaçadas, em pose neutra para referência, pés e mãos visíveis, com cenário palaciano simples e consistente, sem duplicações de membros, sem texto, sem letras, sem legenda, sem marca-d'água, sem HUD, sem montar várias cenas. Repetir exatamente o mesmo traço e iluminação nas três figuras. Esta é uma CANDIDATA de revisão visual, não uma cena-mãe, não altera a prancha antiga e não libera vídeo ou publicação."
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",

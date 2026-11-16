@@ -80,6 +80,34 @@ class ProductionArtTests(unittest.TestCase):
                 archived_reference("alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
                                    "character-bible",Path(temp))
 
+
+    def test_grounded_v2_attaches_exact_original_png_bytes(self):
+        import base64
+        import hashlib
+        from videoforge.grounded_identity import inputs,edit_payload
+        original=inputs()
+        self.assertEqual([x["actor"] for x in original],["kael","elara"])
+        payload,proof=edit_payload(
+            "Crie uma prancha fiel aos originais de Kael e Elara, com o rei Aldric "
+            "descrito em texto, sem alterar identidade ou adicionar personagens. "*3,
+            "gpt-image-2","1024x1536")
+        self.assertEqual(len(payload["images"]),2)
+        self.assertNotIn("input_fidelity",payload)
+        self.assertEqual(payload["size"],"1024x1536")
+        for i,origin in enumerate(original):
+            data=base64.b64decode(payload["images"][i]["image_url"].split(",",1)[1])
+            self.assertEqual(hashlib.sha256(data).hexdigest(),proof[i]["sha256"])
+            self.assertEqual(data,origin["bytes"])
+            self.assertNotIn("bytes",proof[i])
+        self.assertNotEqual(original[0]["sha256"],original[1]["sha256"])
+
+    def test_grounded_only_model_and_real_sources(self):
+        from videoforge.grounded_identity import edit_payload
+        with self.assertRaisesRegex(VideoForgeError,"MODEL_OR_SIZE"):
+            edit_payload("x"*200,"gpt-image-1.5","1024x1536")
+        with self.assertRaisesRegex(VideoForgeError,"PROMPT_INVALID"):
+            edit_payload("short","gpt-image-2","1024x1536")
+
     def test_wrong_channel_rejected(self):
         with self.assertRaisesRegex(VideoForgeError,"PRODUCTION_ART_PLAN_MISSING"):
             read_plan("gamer","spy-x-family-familia-de-mentira")

@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — corrigida a geracao textual da primeira prancha: nova candidata com referencias reais anexadas
+
+- Diagnosticado: a `character-bible` do run 43784005362 foi produzida por `/v1/images/generations` com **texto apenas**, apesar do prompt mencionar as imagens originais. Isso explica parte do risco de inconsistência e não valida identidade.
+- Nova candidata isolada `character-bible-grounded`: `videoforge.grounded_identity.edit_payload` exige as duas fontes originais de Kael/Elara com SHA exatos e anexa **os PNGs reais** via `/v1/images/edits`, uma chamada de modelo `gpt-image-2` por run. O modelo usa Kael como fonte 1, Elara como fonte 2. Aldric não tem original individual SHA-verificado, portanto exige revisão separada.
+- O produtor `production_art.py` preserva arquivo, SHA, dimensão real, nomes/hash das fontes e bandeiras `human_visual_approval=false`, `youtube_uploaded=false`. O asset novo jamais substitui `character-bible.png` anterior ou vira âncora sem revisão. Criar o pedido `pedido-geracao-arte.json` usa autorização permanente do usuário, mas custos e cotas reais do provedor continuam aplicáveis; não repetir HTTP 429 ou 502 automaticamente.
+- O fluxo mantém 40 tomadas e a regra das quatro camadas C01-P02 com rig real. Após resultado e QA técnico, comparar a nova candidata aos dois PNGs originais antes de promover qualquer identidade canônica.
+
 ## 16/11/2026 — originais de Kael e Elara recuperados e comparações V2 prontas
 
 - [Importação 43850389922](https://github.com/HelioConde/VideoForge-IA/actions/runs/43850389922) **SUCCESS**: 3 fontes originais por SHA (Kael, Elara, câmera C12-P02), 0 bytes de arte original modificados. O relatório `qa-referencias-chat-cinematograficas.json` agora marca `ORIGINAL_EXACT_SHA_VERIFIED` nos dois closes e `EXACT_SOURCE_ARCHIVED` na câmera.
