@@ -1,0 +1,491 @@
+{
+  "schema": "videoforge/wardrobe-filter-result/v1",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "review_date": "2026-11-16",
+  "owner_report_verified": true,
+  "decision": {
+    "aldric": "REPROVADO",
+    "elara_palace": "REPROVADO",
+    "elara_street": "REVISAO_PENDENTE",
+    "kael": "REVISAO_PENDENTE"
+  },
+  "source_decision_provenance": "explicit_owner_report_2026-11-16",
+  "findings": [
+    {
+      "actor": "aldric",
+      "code": "aldric_red_black_inversion",
+      "verdict": "REPROVADO",
+      "severity": "CRITICO",
+      "evidence": "owner_report_not_pixel_measured",
+      "detected_by": "semantic_comparison_of_user_descriptions",
+      "description": "Rei sentado: roupa externa VERMELHA e centro PRETO. Em pé: roupa externa PRETA e centro VERMELHO. As cores inverteram sem mudança de roupa.",
+      "correction": "Fixar um único mapa de cores por área de tecido, mesma variante sentada ou em pé.",
+      "exact_frame_coordinates": null
+    },
+    {
+      "actor": "aldric",
+      "code": "aldric_beard_color_changed",
+      "verdict": "REPROVADO",
+      "severity": "CRITICO",
+      "evidence": "owner_report_not_pixel_measured",
+      "detected_by": "explicit_owner_visual_feedback",
+      "description": "Cor da barba muda e a identidade visual deixa de parecer o mesmo rei; tonalidades numéricas não medidas.",
+      "correction": "Rever barba/cabelo contra uma referência individual aprovada; bloquear mudança de cor/silhueta sem arco narrativo.",
+      "exact_frame_coordinates": null
+    },
+    {
+      "actor": "elara",
+      "code": "elara_purple_bodice_missing",
+      "verdict": "REPROVADO",
+      "severity": "CRITICO",
+      "evidence": "owner_report_not_pixel_measured",
+      "detected_by": "semantic_comparison_of_user_descriptions",
+      "description": "Parte ROXA no peitoral do vestido real aparece em uma imagem e some ou muda na outra.",
+      "correction": "Manter painel roxo exatamente no mesmo lugar, tamanho e traço do traje palaciano em todos os ângulos.",
+      "exact_frame_coordinates": null
+    }
+  ],
+  "inspections_required": {
+    "aldric": {
+      "rules": 8,
+      "approved": false,
+      "source": "CHECKLIST-FIGURINO-ALDRIC.json"
+    },
+    "elara": {
+      "rules": 8,
+      "approved": false,
+      "source": "CHECKLIST-FIGURINO-ELARA.json"
+    },
+    "kael": {
+      "rules": 7,
+      "approved": false,
+      "source": "CHECKLIST-FIGURINO-KAEL.json"
+    }
+  },
+  "shot_impact": {
+    "aldric": [
+      "C01-P03",
+      "C01-P04",
+      "C02-P01",
+      "C12-P02",
+      "C13-P01",
+      "C14-P01",
+      "C14-P02"
+    ],
+    "elara_royal": [
+      "C12-P02",
+      "C12-P03",
+      "C12-P04",
+      "C13-P01",
+      "C14-P01",
+      "C14-P02"
+    ],
+    "elara_street": [
+      "C07-P01",
+      "C07-P02",
+      "C07-P03",
+      "C08-P01",
+      "C08-P03",
+      "C08-P04",
+      "C09-P01",
+      "C09-P02",
+      "C10-P01"
+    ],
+    "kael": [
+      "C01-P03",
+      "C01-P04",
+      "C02-P02",
+      "C03-P01",
+      "C03-P02",
+      "C04-P01",
+      "C04-P03",
+      "C05-P01",
+      "C05-P02",
+      "C05-P03",
+      "C06-P01",
+      "C06-P02",
+      "C07-P03",
+      "C08-P01",
+      "C08-P02",
+      "C08-P03",
+      "C09-P01",
+      "C09-P02",
+      "C10-P02",
+      "C11-P01",
+      "C11-P02",
+      "C11-P03",
+      "C12-P01",
+      "C12-P02",
+      "C12-P03",
+      "C13-P01",
+      "C13-P02",
+      "C14-P03"
+    ]
+  },
+  "shot_risk_register": [
+    {
+      "shot_id": "C01-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C01-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C01-P03",
+      "affected_by_unapproved_character_reference": true,
+      "blocking_known_reference_defects": [
+        "aldric_beard_color_changed",
+        "aldric_red_black_inversion"
+      ],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "BLOQUEADO_POR_REFERENCIA_REPROVADA",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C01-P04",
+      "affected_by_unapproved_character_reference": true,
+      "blocking_known_reference_defects": [
+        "aldric_beard_color_changed",
+        "aldric_red_black_inversion"
+      ],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "BLOQUEADO_POR_REFERENCIA_REPROVADA",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C01-P05",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C02-P01",
+      "affected_by_unapproved_character_reference": true,
+      "blocking_known_reference_defects": [
+        "aldric_beard_color_changed",
+        "aldric_red_black_inversion"
+      ],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "BLOQUEADO_POR_REFERENCIA_REPROVADA",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C02-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C03-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C03-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C04-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C04-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C04-P03",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C05-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C05-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C05-P03",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C06-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C06-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C07-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C07-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C07-P03",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C08-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C08-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C08-P03",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C08-P04",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C09-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C09-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C10-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C10-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C11-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C11-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C11-P03",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C12-P01",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C12-P02",
+      "affected_by_unapproved_character_reference": true,
+      "blocking_known_reference_defects": [
+        "aldric_beard_color_changed",
+        "aldric_red_black_inversion",
+        "elara_purple_bodice_missing"
+      ],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "BLOQUEADO_POR_REFERENCIA_REPROVADA",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C12-P03",
+      "affected_by_unapproved_character_reference": true,
+      "blocking_known_reference_defects": [
+        "elara_purple_bodice_missing"
+      ],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "BLOQUEADO_POR_REFERENCIA_REPROVADA",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C12-P04",
+      "affected_by_unapproved_character_reference": true,
+      "blocking_known_reference_defects": [
+        "elara_purple_bodice_missing"
+      ],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "BLOQUEADO_POR_REFERENCIA_REPROVADA",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C13-P01",
+      "affected_by_unapproved_character_reference": true,
+      "blocking_known_reference_defects": [
+        "aldric_beard_color_changed",
+        "aldric_red_black_inversion",
+        "elara_purple_bodice_missing"
+      ],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "BLOQUEADO_POR_REFERENCIA_REPROVADA",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C13-P02",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C14-P01",
+      "affected_by_unapproved_character_reference": true,
+      "blocking_known_reference_defects": [
+        "aldric_beard_color_changed",
+        "aldric_red_black_inversion",
+        "elara_purple_bodice_missing"
+      ],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "BLOQUEADO_POR_REFERENCIA_REPROVADA",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C14-P02",
+      "affected_by_unapproved_character_reference": true,
+      "blocking_known_reference_defects": [
+        "aldric_beard_color_changed",
+        "aldric_red_black_inversion",
+        "elara_purple_bodice_missing"
+      ],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "BLOQUEADO_POR_REFERENCIA_REPROVADA",
+      "official_render_allowed": false
+    },
+    {
+      "shot_id": "C14-P03",
+      "affected_by_unapproved_character_reference": false,
+      "blocking_known_reference_defects": [],
+      "individual_shot_pixels_visually_checked": false,
+      "verdict": "REVISAO_VISUAL_PENDENTE",
+      "official_render_allowed": false
+    }
+  ],
+  "shot_count": 40,
+  "total_frames": 4890,
+  "reference_compare_source": "REVISAR-DETALHES-FIGURINOS-V2.md",
+  "comparison_qa": "QA-FIGURINO-DETALHES-V2.json",
+  "approved_full_outfits": 0,
+  "required_full_outfits": 2,
+  "pixel_level_outfit_or_beard_segmentation_available": false,
+  "pixel_color_statistics_claimed": false,
+  "manual_check_of_unreviewed_shots_required": true,
+  "approved_for_canonical_use": false,
+  "r2_dispatched": false,
+  "provider_calls": 0,
+  "new_images_generated": false,
+  "official_mp4_created": false,
+  "youtube_uploaded": false
+}
