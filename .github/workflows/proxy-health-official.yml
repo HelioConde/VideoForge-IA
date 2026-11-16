@@ -1,6 +1,12 @@
 name: "VideoForge - Validar gerador IA integrado (sem gerar imagem)"
 on:
   workflow_dispatch:
+    inputs:
+      resume_remake:
+        description: "Apos reconexao OAuth, retomar UMA tentativa da referencia V2"
+        type: boolean
+        default: false
+        required: false
   push:
     branches: [main]
     paths:
@@ -10,10 +16,13 @@ on:
       - 'tests/test_proxy_images.py'
       - 'scripts/renovar-sessao-videoforge.ps1'
       - 'scripts/migrar-codex-proxy.ps1'
+      - 'videoforge/remake_recovery.py'
+      - 'tests/test_remake_recovery.py'
 
 permissions:
-  contents: read
+  contents: write
   packages: read
+  actions: write
 
 jobs:
   check-proxy:
@@ -26,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -228,12 +237,48 @@ jobs:
             }
             Write-Host "POWERSHELL_SCRIPT_SYNTAX_OK: $script"
           }
+      - name: Testes offline de reserva unica da retomada apos OAuth
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_remake_recovery -v
       - name: Testar contas e autenticacao sem imagem nem custos
         shell: bash
         run: |
           set -euo pipefail
           python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
           echo "PROXY_HEALTH_OK — contas acessiveis; nao confirma disponibilidade do modelo de imagem."
+      - name: Retomar UMA imagem do remake somente apos health validado e pedido explicito
+        if: github.event_name == 'workflow_dispatch' && inputs.resume_remake == true && github.ref == 'refs/heads/main'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mkdir -p output
+          python -m videoforge.remake_recovery --output output/remake-oauth-resume.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path("output/remake-oauth-resume.json").read_text(encoding="utf-8"))
+          print("REMAKE_OAUTH_RESUME_ALLOWED",report["ready"],report.get("reason"))
+          PY
+          if [[ "$(python -c 'import json;print(json.load(open("output/remake-oauth-resume.json"))["ready"])')" != "True" ]]; then
+            echo "RECOVERY_NO_NEW_CALL_NONRECOVERABLE_OR_ALREADY_RESERVED"
+            exit 0
+          fi
+          EP="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+          git config user.name "videoforge-recovery[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$EP/estado-atual.json" "$EP/ESTADO-ATUAL.md" "$EP/HISTORICO-DESENVOLVIMENTO.md"
+          git commit -m "chore(dorama): reserve single OAuth-recovered image dispatch"
+          git push origin HEAD:main
+          gh workflow run production-art-by-request.yml -R "$GH_REPO" --ref main \
+            -f channel=alchemy-lab \
+            -f video_id=mmorpg-conquiste-a-princesa-ep01 \
+            -f asset=character-bible
+          echo "ONE_RECOVERED_IMAGE_WORKFLOW_DISPATCHED_WITH_PERSISTED_RESERVATION"
       - name: Apagar tokens temporarios
         if: always()
         shell: bash

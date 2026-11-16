@@ -75,7 +75,13 @@ try {
     Write-Host 'Conta autenticada. Importando novo snapshot privado no VideoForge-IA.'
     & (Join-Path $PSScriptRoot 'migrar-codex-proxy.ps1') -Container $Container
     if (-not $?) { throw 'Falha na importacao privada dos secrets.' }
-    Write-Host 'Concluido. Use o workflow proxy-health-official.yml para validar antes de gerar imagens.'
+    Write-Host 'Solicitando verificacao autenticada no GitHub e retomada automatica unica do EP01 V2.'
+    & gh workflow run proxy-health-official.yml --repo HelioConde/VideoForge-IA --ref main -f resume_remake=true
+    if ($LASTEXITCODE -ne 0) {
+        throw 'A sessao foi importada, mas o disparo da validacao falhou. Conferir Actions do GitHub.'
+    }
+    Write-Host 'GitHub Actions validara OAuth e so retomara 1 imagem se o health passar.'
+    Write-Host 'Monitorar https://github.com/HelioConde/VideoForge-IA/actions/workflows/proxy-health-official.yml'
 } finally {
     $secretKey = $null
     $headers = $null

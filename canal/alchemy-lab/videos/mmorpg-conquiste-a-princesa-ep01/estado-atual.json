@@ -593,7 +593,7 @@
     "mp4_official": false,
     "channel_isolated": true,
     "autonomous_pipeline_target": true,
-    "next_step": "Codex proxy healthy but imported OAuth expired; upstream OAuth refresh HTTP502. Reconnect account via scripts/renovar-sessao-videoforge.ps1, import fresh account state, run proxy health and only then generate first V2 reference."
+    "next_step": "Run local interactive device login once with scripts/renovar-sessao-videoforge.ps1; script now automatically dispatches GitHub health verification and one-shot V2 character bible resume if recovered."
   },
   "autopilot_checkpoint": {
     "stage": "generate_character_bible",
@@ -1275,6 +1275,16 @@
     ],
     "live_health_expected_failure": "PROXY_OAUTH_SESSION_EXPIRED",
     "recovery_requires_user_browser_login": true,
-    "automatic_paid_retry_blocked": true
+    "automatic_paid_retry_blocked": true,
+    "recovery_auto_resume_prepared": true,
+    "recovery_sequence": [
+      "local_interactive_device_login",
+      "import_renewed_github_secrets",
+      "proxy-health-official.yml workflow_dispatch resume_remake=true",
+      "verify_eligible_oauth_no_paid_calls",
+      "reserve_once_on_main",
+      "dispatch_one_character_bible_production"
+    ],
+    "recovery_code_qa": "pending"
   }
 }

@@ -1,5 +1,12 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — programada retomada idempotente de referencia apos login OAuth
+
+- Nenhuma nova execucao comprovada depois dos testes anteriores; a conta importada permanece com ultimo status `PROXY_OAUTH_SESSION_EXPIRED`.
+- Criado `videoforge/remake_recovery.py` + testes de repeticao/politica/origem e conectado o workflow de health ao unico pedido da arte quando `resume_remake=true`.
+- Script Windows passa a disparar health e retomada unica apos login no navegador/importacao dos secrets, mantendo uma chamada por run, arquivo SHA, sem aprovacao visual falsa e sem publicar no YouTube.
+- Testes e CI do novo fluxo ainda devem ser confirmados e checkpoint atualizado depois da execucao.
+
 ## 15/11/2026 — recuperacao OAuth: CI de codigo aprovado, credencial antiga bloqueada
 - [Run 43779683428](https://github.com/HelioConde/VideoForge-IA/actions/runs/43779683428): **8 testes offline PASS**, parser PowerShell confirmou os scripts `renovar-sessao-videoforge.ps1` e `migrar-codex-proxy.ps1` sem executar login. O job completo ficou **FAILURE esperada de autenticacao**: o preflight real detectou corretamente `PROXY_OAUTH_SESSION_EXPIRED`; nenhum PNG ou chamada de imagem foi emitido.
 - O token importado previamente expirou, a tentativa de renovacao upstream no GH Actions falhou (HTTP 502). **Necessaria autorizacao interativa da conta no navegador**, operacao distinta da permissao permanente de criar imagens. No computador do proprietario, rodar `./scripts/renovar-sessao-videoforge.ps1 -Container chatgpt-codex-proxy` a partir do PowerShell no clone do repositorio (use `.\\scripts\\...` no Windows); autorizar no navegador, reimportar secrets, validar workflow `proxy-health-official.yml`, depois retomar a geração sob SHA/QA e sem duplicacao.
