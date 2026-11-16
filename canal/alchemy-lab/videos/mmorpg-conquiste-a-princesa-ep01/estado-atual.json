@@ -1293,6 +1293,11 @@
     "live_health_job_on_push": "skipped_intentionally",
     "live_oauth_recovery_verified": false,
     "first_real_v2_png_created": false,
-    "next_step": "Owner must complete interactive browser OAuth on local Docker proxy; recovery script imports secrets and dispatches health+one reference attempt automatically. Do not rerun old image workflow before eligible account verified."
+    "next_step": "User: git pull origin main, then run .\\scripts\\renovar-sessao-videoforge.ps1 -Container chatgpt-codex-proxy. Script uses isolated proxy and does not require PROXY_API_KEY in local Docker container.",
+    "local_container_missing_proxy_api_key": true,
+    "isolated_docker_relogin_script_commit": "497094f829098dc32fe686f97425702ad436fb91",
+    "isolated_docker_relogin_offline_ci_run": 43782680348,
+    "isolated_docker_relogin_offline_ci_result": "success_11_tests_and_powershell_syntax",
+    "isolated_login_requires_browser_confirmation": true
   }
 }

@@ -1,5 +1,11 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — corrigido erro PROXY_API_KEY local ausente
+
+- Relato do responsavel: `renovar-sessao-videoforge.ps1 -Container chatgpt-codex-proxy` falhou ao exigir `PROXY_API_KEY` no container preexistente.
+- [Correção 497094f](https://github.com/HelioConde/VideoForge-IA/commit/497094f829098dc32fe686f97425702ad436fb91): renovacao usa um container isolado com chave efemera, porta somente localhost e volume Docker temporario. O container antigo nao e modificado. Login no navegador e importacao privada seguem necessarios antes da retomada automatica.
+- [Testes 43782680348](https://github.com/HelioConde/VideoForge-IA/actions/runs/43782680348) **SUCCESS**: 11 testes offline e sintaxe de ambos os scripts PowerShell. Nao foi feito login real no computador nesta etapa, nem nova geracao. Sem PNG V2 aprovado, sem MP4, sem upload YouTube.
+
 ## 15/11/2026 — retomada de OAuth preparada e CI offline aprovado
 
 - [Commit de automacao 5cf744c](https://github.com/HelioConde/VideoForge-IA/commit/5cf744cd4b1421a2212aead68937796558843c4f): reconexao local chama `proxy-health-official.yml` com `resume_remake=true`; conta elegivel confirmada primeiro, script `remake_recovery.py` reserva unica tentativa na main e somente depois dispara `production-art-by-request.yml`. Testes anti-duplicacao, ausencia de PNG anterior, bloqueio de despesas e publicacao.
