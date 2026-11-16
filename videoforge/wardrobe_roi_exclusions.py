@@ -19,6 +19,7 @@ from .wardrobe_roi_refine import run as base_run, refine_mask, isolated_png
 EXCLUSIONS="ROI-EXCLUSOES-CANDIDATAS-V3.json"
 REPORT="QA-ROI-EXCLUSOES-V3.json"
 BOARD="QA-ROI-EXCLUSOES-V3.jpg"
+CONTEXT_BOARD="QA-ROI-CONTEXTO-V3.jpg"
 OUTPUT="assets/qa-roi-exclusions-v3"
 EXPECTED=[(a,r,s) for a,r in
     (("aldric","barba"),("aldric","tecido_externo"),
@@ -101,6 +102,22 @@ def verify_exclusion_pixels(source, before_mask, after_mask, png, box, expected_
             "semantic_approval": False}
 
 
+def review_crops(source, before, after, box):
+    """Quatro recortes alinhados: fonte, antes, removidos e depois; sem inpainting."""
+    from PIL import ImageChops
+    margin=max(24, (max(box[2]-box[0],box[3]-box[1]))//2)
+    context=(max(0,box[0]-margin),max(0,box[1]-margin),
+             min(source.width,box[2]+margin),min(source.height,box[3]+margin))
+    original=source.convert("RGB").crop(context)
+    removed=ImageChops.subtract(before,after)
+    panels=[original]
+    for mask in (before,removed,after):
+        image=original.convert("RGBA")
+        image.putalpha(mask.crop(context))
+        panels.append(image)
+    return panels,context
+
+
 def run(root:Path=ROOT,sync=False):
     from PIL import Image,ImageDraw,ImageFont,ImageOps
     ep=Path(root)/EPISODE
@@ -118,8 +135,13 @@ def run(root:Path=ROOT,sync=False):
     index={(x["actor"],x["semantic_region"],side["side"]):side
            for x in prev["regions"] for side in x["sources"]}
     canvas=Image.new("RGB",(1280,1660),(23,27,36))
+    context_canvas=Image.new("RGB",(1600,2440),(23,27,36))
+    context_draw=ImageDraw.Draw(context_canvas)
     draw=ImageDraw.Draw(canvas)
     font=ImageFont.load_default(size=16)
+    context_draw.text((16,12),"ROI V3 - CONTEXTO ORIGINAL | ANTES | REMOVIDOS | DEPOIS - SEM APROVACAO",font=font,fill="white")
+    for column,label in enumerate(("FONTE COM CONTEXTO","MASCARA ANTERIOR","PIXELS REMOVIDOS","MASCARA FINAL")):
+        context_draw.text((16+column*400,42),label,font=font,fill=(228,210,172))
     draw.text((20,15),"EP01 V2 - MASCARAS V3 CANDIDATAS: ANTES / DEPOIS",font=font,fill="white")
     draw.text((20,45),"Mesma fonte PNG SHA, mesma geometria e cores; propostas sem aprovacao.",font=font,fill=(228,210,172))
     results=[]
@@ -136,6 +158,13 @@ def run(root:Path=ROOT,sync=False):
         original_png,_=isolated_png(im,raw_mask,polygon)
         clean_png,box=isolated_png(im,new_mask,polygon)
         integrity=verify_exclusion_pixels(im,raw_mask,new_mask,clean_png,box,delta["removed"])
+        panels,context_box=review_crops(im,raw_mask,new_mask,box)
+        for column,panel in enumerate(panels):
+            background=Image.new("RGB",panel.size,(57,60,70))
+            background.paste(panel,mask=panel.getchannel("A") if panel.mode=="RGBA" else None)
+            tile=ImageOps.contain(background,(380,240),Image.Resampling.NEAREST)
+            context_canvas.paste(tile,(10+column*400+(380-tile.width)//2,95+i*290+(240-tile.height)//2))
+        context_draw.text((16,75+i*290),f"{item['actor']} / {item['region']} / {item['side']} - {delta['removed']} removidos",font=font,fill="white")
         name=f"{item['actor']}-{item['region']}-{item['side']}-EXCLUSAO-CANDIDATA.png"
         files[ep/OUTPUT/name]=clean_png
         # Every preview tile shows the same crop, before and after.
@@ -164,16 +193,23 @@ def run(root:Path=ROOT,sync=False):
             "cleaned_candidate_sha256":hashlib.sha256(clean_png).hexdigest(),
             "cleaned_candidate_crop_xyxy":list(box),
             "pixel_integrity":integrity,
+            "context_review_box_xyxy":list(context_box),
             "semantically_verified":False,"official_art_usable":False,
         })
     draw.text((20,1640),"0 MASCARAS VERIFICADAS | R2 BLOQUEADA | SEM IMAGEM PAGA",font=font,fill=(246,198,140))
     stream=io.BytesIO()
     canvas.save(stream,format="JPEG",quality=88,optimize=True)
     files[ep/BOARD]=stream.getvalue()
+    context_stream=io.BytesIO()
+    context_canvas.save(context_stream,format="JPEG",quality=92,optimize=True)
+    files[ep/CONTEXT_BOARD]=context_stream.getvalue()
     report={
         "schema":"videoforge/wardrobe-exclusion-candidates/v1",
         "status":"EXCLUSION_PROPOSALS_ONLY",
         "results":results,
+        "context_review_board":CONTEXT_BOARD,
+        "context_review_board_sha256":hashlib.sha256(context_stream.getvalue()).hexdigest(),
+        "context_preview_only_not_measurement":True,
         "candidate_count":8,"verified_semantic_masks":0,
         "official_roi_pairs_ready":0,"r2_blocked":True,
         "owner_rejections_remain":True,"paid_calls":0,

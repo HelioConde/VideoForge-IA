@@ -1743,5 +1743,14 @@
     "workflow_conclusion": "success",
     "main_semantic_run": 43944320147,
     "main_semantic_conclusion": "success"
+  },
+  "wardrobe_context_review": {
+    "status": "local_qa_passed_pending_ci",
+    "board": "QA-ROI-CONTEXTO-V3.jpg",
+    "local_roi_tests": 25,
+    "unchanged_mask_hashes": 8,
+    "semantic_approved": 0,
+    "r2_blocked": true,
+    "paid_calls": 0
   }
 }

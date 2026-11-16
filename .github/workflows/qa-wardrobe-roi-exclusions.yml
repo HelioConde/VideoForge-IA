@@ -41,6 +41,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -f "$EP/assets/qa-roi-exclusions-v3/"
           git add "$EP/QA-ROI-EXCLUSOES-V3.jpg" "$EP/QA-ROI-EXCLUSOES-V3.json"
+          git add "$EP/QA-ROI-CONTEXTO-V3.jpg"
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'qa(dorama): registrar exclusoes candidatas das 8 ROIs'
           if ! git push origin HEAD:main; then
