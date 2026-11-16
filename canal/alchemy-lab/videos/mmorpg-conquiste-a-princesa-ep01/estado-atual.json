@@ -602,7 +602,10 @@
     "dispatch_allowed": false,
     "verified_style_source_count": 2,
     "missing_original_paths": [],
-    "aldric_individual_sha_approved_reference_missing": true
+    "aldric_individual_sha_approved_reference_missing": true,
+    "grounded_candidate_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+    "grounded_candidate_run_id": 43868021687,
+    "grounded_visual_approval": false
   },
   "policy_consistency_audit_20261115": {
     "current_rules_identified_in_master_files": true,
@@ -1438,6 +1441,22 @@
     "provider_calls_for_comparison": 0,
     "shot_mothers_generated_after_refinement": 0,
     "full_episode_mp4_created": false,
+    "youtube_uploaded": false
+  },
+  "grounded_identity_candidate_current": {
+    "asset_id": "character-bible-grounded",
+    "run_id": 43868021687,
+    "path": "assets/geracoes/production-art-request/43868021687/character-bible-grounded.png",
+    "sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+    "width": 1199,
+    "height": 1312,
+    "attached_original_pngs": 2,
+    "comparative_review_report": "QA-IDENTIDADE-GROUNDED-V2.json",
+    "comparative_review_document": "REVISAR-GROUNDED-V2.md",
+    "human_visual_approved": false,
+    "canonical_identity_approved": false,
+    "status": "visual_review_pending",
+    "external_image_provider_calls_in_this_diagnostic": 0,
     "youtube_uploaded": false
   }
 }
