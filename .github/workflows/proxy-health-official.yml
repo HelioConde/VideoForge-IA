@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'docs/requests/verificar-proxy-spy-family.json'
+      - '.github/workflows/proxy-health-official.yml'
 
 permissions:
   contents: read
@@ -78,6 +79,37 @@ jobs:
           done
           echo "::error::Proxy nao iniciou corretamente"
           exit 1
+      - name: Diagnostico seguro de transporte local sem tokens nem geracao
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os,urllib.request,urllib.error
+          base=os.environ["PROXY_ENDPOINT"].rstrip("/")
+          key=os.environ["CODEX_PROXY_API_KEY"]
+          print("LOCAL_PROXY_ENV", "http_proxy_configured",
+                any(name.lower()=="http_proxy" for name in os.environ),
+                "urllib_bypass_127",urllib.request.proxy_bypass("127.0.0.1"))
+          endpoints=("/health/live","/health")
+          for route in endpoints:
+              for mode in ("default","direct-no-proxy"):
+                  if route=="/health/live" and mode=="default":
+                      continue
+                  opener=(urllib.request.build_opener(urllib.request.ProxyHandler({}))
+                          if mode=="direct-no-proxy" else urllib.request.build_opener())
+                  req=urllib.request.Request(
+                      base+route,
+                      headers={"Authorization":"Bearer "+key,"Accept":"application/json"})
+                  try:
+                      with opener.open(req,timeout=8) as response:
+                          status=response.status
+                          # No response bodies or account/token details in logs.
+                  except urllib.error.HTTPError as error:
+                      status=error.code
+                  except Exception:
+                      status="transport-error"
+                  print("LOCAL_PROXY_HTTP_STATUS",route,mode,status)
+          PY
       - name: Testar contas e autenticacao sem imagem nem custos
         shell: bash
         run: |
