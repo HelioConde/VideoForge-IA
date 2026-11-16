@@ -1,0 +1,35 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c02-p01-aldric-rosto-v1",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/c02-p01-aldric-rosto-v1.png",
+  "size": "1024x1536",
+  "sha256": "a18d2284ed7878e7b81537d1673384e8a506df647e2fd1ea0c1d7f81eb5aaf5d",
+  "model": "gpt-image-2",
+  "actual_width": 941,
+  "actual_height": 1672,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 1,
+  "source_originals_sha_verified": [
+    {
+      "actor": "scene-anchor-C01-P04",
+      "id": "approved-visual-reference",
+      "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+      "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "source_shot_id": "C01-P04",
+      "source_style_approved": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": "C02-P01",
+  "visual_continuity_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}
