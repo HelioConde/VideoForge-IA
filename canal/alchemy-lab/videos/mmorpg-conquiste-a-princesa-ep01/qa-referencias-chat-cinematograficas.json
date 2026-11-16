@@ -7,9 +7,9 @@
   "legacy_image_generation_lock_archived": true,
   "active_remake_version": "remake-v2-20261115",
   "active_remake_standing_generation_policy_unchanged": true,
-  "status": "BOTH_SOURCE_FILES_PENDING_UPLOAD",
+  "status": "TWO_CHAT_STYLE_SOURCES_ARCHIVED",
   "preferred_style_confirmed": true,
-  "original_source_files_sha_verified": 0,
+  "original_source_files_sha_verified": 2,
   "original_source_files_total": 2,
   "source_has_final_9_16_aspect_not_old_2_3": true,
   "new_image_generation_calls": 0,
@@ -29,11 +29,9 @@
         941,
         1672
       ],
-      "status": "UPLOAD_PENDING",
-      "issues": [
-        "SOURCE_FILE_NOT_UPLOADED"
-      ],
-      "source_original_verified": false,
+      "status": "ORIGINAL_EXACT_SHA_VERIFIED",
+      "issues": [],
+      "source_original_verified": true,
       "approved_for_shot_mother": false,
       "approved_as_rig": false
     },
@@ -46,27 +44,23 @@
         941,
         1672
       ],
-      "status": "UPLOAD_PENDING",
-      "issues": [
-        "SOURCE_FILE_NOT_UPLOADED"
-      ],
-      "source_original_verified": false,
+      "status": "ORIGINAL_EXACT_SHA_VERIFIED",
+      "issues": [],
+      "source_original_verified": true,
       "approved_for_shot_mother": false,
       "approved_as_rig": false
     }
   ],
   "camera_candidate_C12_P02": {
     "shot_id": "C12-P02",
-    "status": "UPLOAD_PENDING",
+    "status": "EXACT_SOURCE_ARCHIVED",
     "expected_repo_path": "assets/referencias/chat-aprovadas/confronto-trono-c12-p02.png",
     "expected_sha256": "01eb7c127b0699d2e502d29dacec0bb39c0e1e23bf8205fdcf6fb70976e70535",
-    "source_verified": false,
+    "source_verified": true,
     "human_shot_approval": false,
     "shot_mother_approval": false,
     "rig_approved": false,
-    "issues": [
-      "SOURCE_FILE_NOT_UPLOADED"
-    ]
+    "issues": []
   },
   "next_action": "Importar PNGs idênticos; conciliar nova aparência com bíblia antiga, inspecionar continuidade e nunca aprovar rig por SHA de referência."
 }
