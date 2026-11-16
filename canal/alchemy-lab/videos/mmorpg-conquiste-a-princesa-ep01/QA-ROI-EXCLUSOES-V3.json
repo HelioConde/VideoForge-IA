@@ -476,7 +476,7 @@
     }
   ],
   "context_review_board": "QA-ROI-CONTEXTO-V3.jpg",
-  "context_review_board_sha256": "8515ff9260f8bda46b6adf09ea3b50e8dd645f9cea25c4d751c951789b9d053f",
+  "context_review_board_sha256": "3817c2df8372856741f0a94d177b75b3160680ca76fe43d69f4a28287676fb75",
   "context_preview_only_not_measurement": true,
   "candidate_count": 8,
   "verified_semantic_masks": 0,
