@@ -212,6 +212,22 @@ jobs:
         run: |
           set -euo pipefail
           python -m unittest tests.test_proxy_images -v
+      - name: Validar sintaxe PowerShell da reconexao e importacao sem executar login
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          foreach ($script in @('scripts/renovar-sessao-videoforge.ps1',
+                                'scripts/migrar-codex-proxy.ps1')) {
+            $tokens = $null
+            $parseErrors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile(
+              (Join-Path (Get-Location) $script),
+              [ref]$tokens, [ref]$parseErrors)
+            if ($parseErrors.Count -ne 0) {
+              throw "POWERSHELL_SYNTAX_INVALID: $script"
+            }
+            Write-Host "POWERSHELL_SCRIPT_SYNTAX_OK: $script"
+          }
       - name: Testar contas e autenticacao sem imagem nem custos
         shell: bash
         run: |
