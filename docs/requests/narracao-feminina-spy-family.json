@@ -9,6 +9,8 @@
   "caption_style": "short_phrase_actual_audio_timing",
   "no_external_costs": true,
   "youtube_upload": false,
-  "requested_date": "2026-11-14",
-  "mode": "narracao_feminina_legendas_srt"
+  "requested_date": "2026-11-16",
+  "mode": "narracao_feminina_legendas_srt",
+  "pipeline_goal": "use_reusable_real_art_and_current_female_voice_to_generate_video_for_review",
+  "auto_chain": "production-female-motion-render.yml workflow_run on success"
 }
