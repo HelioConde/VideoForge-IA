@@ -1,0 +1,56 @@
+{
+  "schema": "videoforge/grounded-identity-review/v1",
+  "status": "grounded_png_sha_verified_visual_review_pending",
+  "scope": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+  "grounded_run_id": 43868021687,
+  "grounded_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+  "grounded_dimensions": [
+    1199,
+    1312
+  ],
+  "old_text_only_sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
+  "sha_verified_provider_input_sources": [
+    {
+      "actor": "kael",
+      "id": "ref-kael-close-c12",
+      "path": "assets/referencias/chat-aprovadas/kael-close-salao.png",
+      "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f"
+    },
+    {
+      "actor": "elara",
+      "id": "ref-elara-close-c12",
+      "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a"
+    }
+  ],
+  "comparisons": [
+    {
+      "actor": "kael",
+      "original_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+      "text_candidate_sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
+      "grounded_candidate_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "preview_path": "QA-KAEL-TRIPLO-V2.jpg",
+      "preview_sha256": "9ef634580e9373dfad56271802855ce7f534abe5042aabe319ac9ccd6a81797f",
+      "human_identity_approved": false,
+      "original_png_modified": false
+    },
+    {
+      "actor": "elara",
+      "original_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "text_candidate_sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
+      "grounded_candidate_sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "preview_path": "QA-ELARA-TRIPLO-V2.jpg",
+      "preview_sha256": "606ce7835c16eb41e8958f01a05a3a56e88a1ae3c2561186362c4cce4c5588d8",
+      "human_identity_approved": false,
+      "original_png_modified": false
+    }
+  ],
+  "aldric_individual_reference_sha_missing": true,
+  "human_approved": false,
+  "canonical_approved": false,
+  "provider_calls": 0,
+  "original_png_modified": false,
+  "new_art_generated_during_qa": false,
+  "full_mp4": false,
+  "youtube_uploaded": false
+}
