@@ -56,6 +56,8 @@ on:
       - 'tests/test_remake_wardrobe_40.py'
       - 'videoforge/wardrobe_filter.py'
       - 'tests/test_wardrobe_filter.py'
+      - 'tests/test_wardrobe_pixel_metadata.py'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-CORES-PIXELS-FIGURINO-V2.json'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CHECKLIST-FIGURINO-*.json'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REVISAO-FIGURINO-V2.json'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTRATO-FIGURINO-V2.json'
@@ -90,7 +92,7 @@ jobs:
       - name: Testar regras e estado do remake sem gastar IA
         run: |
           set -euo pipefail
-          python -m unittest tests.test_cinematic_chat_references tests.test_reference_art_qa tests.test_production_art tests.test_production_scenes tests.test_wardrobe_review tests.test_wardrobe_filter tests.test_remake_wardrobe_40 tests.test_remake_recovery tests.test_remake_autopilot tests.test_remake_starter tests.test_remake_policy_consistency tests.test_remake_cinematic_integration tests.test_remake_v2_edl tests.test_remake_motion_directions tests.test_remake_episode_audio tests.test_remake_rig_geometry tests.test_remake_reference tests.test_remake_workflow_compatibility tests.test_alchemy_no_image_generation tests.test_cinematic_direction -v
+          python -m unittest tests.test_cinematic_chat_references tests.test_reference_art_qa tests.test_production_art tests.test_production_scenes tests.test_wardrobe_review tests.test_wardrobe_filter tests.test_wardrobe_pixel_metadata tests.test_remake_wardrobe_40 tests.test_remake_recovery tests.test_remake_autopilot tests.test_remake_starter tests.test_remake_policy_consistency tests.test_remake_cinematic_integration tests.test_remake_v2_edl tests.test_remake_motion_directions tests.test_remake_episode_audio tests.test_remake_rig_geometry tests.test_remake_reference tests.test_remake_workflow_compatibility tests.test_alchemy_no_image_generation tests.test_cinematic_direction -v
       - name: Verificar lista oficial V2 de 40 tomadas e audio de abertura
         run: |
           set -euo pipefail

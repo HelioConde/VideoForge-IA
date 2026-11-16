@@ -1565,5 +1565,26 @@
     "r2_generated": false,
     "paid_provider_calls_for_quality_filter": 0,
     "youtube_uploaded": false
+  },
+  "wardrobe_real_pixel_audit_20261116": {
+    "status": "partial_rgba_color_measurement_no_semantic_mask",
+    "report": "QA-CORES-PIXELS-FIGURINO-V2.json",
+    "review": "REVISAR-CORES-MEDIDAS-FIGURINO-V2.md",
+    "sources_audited": 6,
+    "rgba_layers_with_actual_sampled_pixels": 4,
+    "aldric_clothing_layer_red_percent": 24.24,
+    "aldric_clothing_layer_very_dark_percent": 45.84,
+    "beard_specific_mask_available": false,
+    "red_outer_center_semantic_masks_available": false,
+    "elara_purple_bodice_roi_available": false,
+    "pixel_measurement_does_not_prove_outfit_consistency": true,
+    "owner_reported_rejections_remain_active": true,
+    "automatic_approval": false,
+    "workflow_run": 43882516901,
+    "workflow_conclusion": "success_9_tests",
+    "provider_calls": 0,
+    "source_images_unchanged": true,
+    "full_episode_mp4_created": false,
+    "youtube_uploaded": false
   }
 }

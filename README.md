@@ -1,5 +1,7 @@
 # VideoForge IA — reconstrução orientada a MP4
 
+**Controle de qualidade de pixels no dorama V2:** [medição das cores nas camadas reais de Aldric](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REVISAR-CORES-MEDIDAS-FIGURINO-V2.md), com [metadados e SHA](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-CORES-PIXELS-FIGURINO-V2.json). Quatro camadas RGBA são mensuráveis; barba, exterior/centro e corpete de Elara ainda sem ROI validada. Nenhuma arte foi aprovada pelo histograma.
+
 **Filtro EP01 V2 de figurinos:** [reprovações detalhadas de Aldric (inversão vermelho/preto e barba), Elara (corpete roxo) e checklist de Kael](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/RELATORIO-APROVACAO-REPROVACAO-FIGURINO.md). Fonte: diferenças reportadas pelo proprietário; sem alegar medição automática de cor por pixel. O roteiro tem 40 tomadas, nenhuma aprovação visual ou publicação automática.
 
 **Dorama EP01 V2 — nova revisão de figurinos:** [Aldric e Elara em comparação ampliada](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REVISAR-DETALHES-FIGURINOS-V2.md) e [contrato de continuidade das 40 tomadas](canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REGRAS-FIGURINOS-V2-40-TOMADAS.md). O antigo registro de 37 tomadas é histórico. Não gerar R2 nem vídeo com trajes reprovados. Não há aprovação automática de identidade.

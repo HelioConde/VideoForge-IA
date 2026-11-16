@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — medição REAL de pixels em camadas de Aldric, abstendo-se sem máscara de Elara
+
+- [Workflow 43882516901](https://github.com/HelioConde/VideoForge-IA/actions/runs/43882516901) **SUCCESS**, 9 testes. Nova auditoria SHA-verificada e offline em `QA-CORES-PIXELS-FIGURINO-V2.json` e [relatório de cores reais](REVISAR-CORES-MEDIDAS-FIGURINO-V2.md). Foram auditados 6 PNGs; **4 camadas RGBA de Aldric** com alfa mensurável, **2 arquivos RGB de Elara** sem máscara semântica adequada (dados de cor da roupa omitidos deliberadamente).
+- Nas camadas **misturadas** de Aldric, a vestimenta remanescente tem 24,24% de vermelho e 45,84% de pixels muito escuros; manto esquerdo 2,76% vermelho/74,89% escuro, manto direito 6,10% vermelho/65,14% escuro. Esses valores medem pixels efetivamente amostrados, MAS **não comprovam** se vermelho era exterior ou centro, nem cor exclusiva da barba. A cabeça contém rosto/cabelo/coroa, não uma máscara de barba. O close/câmera RGB de Elara inclui fundo/outros elementos e não permite atribuir roxo à blusa.
+- O usuário já REPROVOU troca vermelho-preto e barba de Aldric, e roxo do peitoral palaciano de Elara. Essas decisões permanecem ativas; QA de pixels parcial NÃO aprova nenhuma imagem nem desfaz reprovação. Futura aprovação/reprovação verdadeiramente automática por **cores de subpartes** exige máscaras/ROIs válidas separadas de barba, centro e exterior do rei nas duas poses e do peitoral de Elara em cenas do palácio, com SHA e variante correta. Uma mudança de iluminação não é necessariamente troca de figurino.
+- Nenhum PNG foi modificado, nenhuma chamada a modelo de imagem, nenhuma R2, rig oficial, MP4 completo ou upload YouTube nesta rodada.
+
 ## 16/11/2026 — filtro obrigatório por personagem: reprovação de cores e barba
 
 - O proprietário confirmou que Aldric **sentado tem veste vermelha externamente com centro preto**, porém em pé apresenta **veste preta externamente com centro vermelho**; também muda a **cor da barba**, deixando de parecer o mesmo rei. Isto é uma REPROVAÇÃO CRÍTICA da referência, independentemente de SHA, resolução, beleza ou pose. Não foi escolhida uma cor de barba canônica sem prova; o usuário precisa confirmar uma referência específica para fixar sua tonalidade.
