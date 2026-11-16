@@ -74,7 +74,8 @@ class CinematicChatReferencesTests(unittest.TestCase):
         self.assertIn("violeta",p["character_bible"]["elara"])
         self.assertIn("ametistas",p["character_bible"]["elara"])
         self.assertTrue(p["cinematic_direction"]["canonical_identity_migration_pending"])
-        self.assertFalse(p["cinematic_direction"]["new_image_generation_allowed"])
+        self.assertTrue(p["cinematic_direction"]["new_image_generation_allowed"])
+        self.assertTrue(p["remake_v2_20261115"]["new_image_generation_editorially_authorized"])
         base=ROOT/"canal"/CHANNEL/"videos"/VIDEO
         self.assertTrue((base/"biblia-visual-v1-arquivada.md").is_file())
         current=(base/"biblia-visual.md").read_text(encoding="utf8")

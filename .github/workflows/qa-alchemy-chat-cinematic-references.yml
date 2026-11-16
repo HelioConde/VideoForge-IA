@@ -42,7 +42,7 @@ jobs:
           assert p['render_mp4'] is False
           assert p['youtube_upload'] is False
           assert (base/'REMAKE-EP01-HISTORICO-BLOQUEIO-2026-11-14.md').is_file()
-          assert not (base/'SEM-GERACAO-NOVAS-IMAGENS.lock').exists()
+          assert not any(base.glob('*.lock'))
           state=json.loads((base/'estado-atual.json').read_text(encoding='utf8'))
           policy=json.loads((base/'autonomy-policy.json').read_text(encoding='utf8'))
           assert state['active_production_version']=='remake-v2-20261115'
