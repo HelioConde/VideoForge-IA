@@ -29,16 +29,19 @@ def prepare_remake_reference(channel:str,video_id:str,destination:Path,
     relative=anchor["path"]
     sha=anchor["sha256"]
     parts=Path(relative).parts
+    permitted_names=("character-bible.png","character-bible-grounded.png")
     if (len(parts)!=5 or parts[:3]!=("assets","geracoes","production-art-request")
-            or not parts[3].isdigit() or parts[4]!="character-bible.png"):
+            or not parts[3].isdigit() or parts[4] not in permitted_names):
         raise VideoForgeError("REMAKE_REFERENCE_ARCHIVE_PATH_INVALID")
+    source_file=parts[4]
+    asset_id=source_file[:-4]
     run_id=int(parts[3])
     episode=Path(root)/"canal"/channel/"videos"/video_id
     if not verified_asset(episode,relative,sha):
         raise VideoForgeError("REMAKE_REFERENCE_SHA_NOT_VERIFIED")
     archive=episode.joinpath(*parts[:-1])
     manifest_file=archive/"manifesto-geracoes.json"
-    production_file=archive/"character-bible.production.json"
+    production_file=archive/(asset_id+".production.json")
     if any(f.is_symlink() or not f.is_file() for f in (manifest_file,production_file)):
         raise VideoForgeError("REMAKE_REFERENCE_PROVENANCE_MISSING")
     try:
@@ -52,19 +55,27 @@ def prepare_remake_reference(channel:str,video_id:str,destination:Path,
             or archive_manifest.get("channel")!=channel
             or archive_manifest.get("video_id")!=video_id
             or not any(isinstance(item,dict)
-                       and item.get("file")=="character-bible.png"
+                       and item.get("file")==source_file
                        and item.get("sha256")==sha
                        for item in archive_manifest.get("images",[]))
             or result.get("schema")!="videoforge/production-art-result/v1"
             or result.get("channel")!=channel or result.get("video_id")!=video_id
-            or result.get("asset_id")!="character-bible"
+            or result.get("asset_id")!=asset_id
             or result.get("sha256")!=sha
             or result.get("official_video_created") is not False):
         raise VideoForgeError("REMAKE_REFERENCE_PROVENANCE_MISMATCH")
-    raw=(archive/"character-bible.png").read_bytes()
+    raw=(archive/source_file).read_bytes()
     info=png_info(raw,require_alpha=False)
-    if (info["width"],info["height"])!=(1024,1536):
+    width,height=info["width"],info["height"]
+    if not (512<=width<=2048 and 512<=height<=3072 and width<=height):
         raise VideoForgeError("REMAKE_REFERENCE_DIMENSIONS_INVALID")
+    if asset_id=="character-bible-grounded":
+        # The provenance must show the TWO exact originals actually submitted
+        # via images/edits. Keep text-only candidate intact, never autoapprove.
+        from .grounded_review import provenance
+        sources=provenance(episode,{"path":relative,"sha256":sha})
+        if len(sources)!=2:
+            raise VideoForgeError("REMAKE_REFERENCE_GROUNDED_PROOF_MISSING")
     target=Path(destination)
     if (target.is_symlink() or any(parent.is_symlink() for parent in target.parents)):
         raise VideoForgeError("REMAKE_REFERENCE_DESTINATION_SYMLINK")
@@ -82,7 +93,10 @@ def prepare_remake_reference(channel:str,video_id:str,destination:Path,
         raise VideoForgeError("REMAKE_REFERENCE_POST_COPY_SHA_MISMATCH")
     return {"source":"approved_immutable_github_archive","channel":channel,
             "video_id":video_id,"sha256":sha,"run_id":run_id,
-            "source_path":relative,"human_approved":True,
+            "source_path":relative,"original_asset_id":asset_id,
+            "reference_source_dimensions":[width,height],
+            "reference_pixels_resampled":False,
+            "human_approved":True,
             "image_generation_calls":0,"youtube_uploaded":False}
 
 

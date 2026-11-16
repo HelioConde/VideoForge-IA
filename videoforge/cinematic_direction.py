@@ -265,7 +265,13 @@ def _remake_anchor_state(channel:str,video_id:str,root:Path=ROOT)->dict:
         try:
             from .scene_layers import png_info
             info=png_info((episode/anchor["path"]).read_bytes(),require_alpha=False)
-            verified=(info.get("width"),info.get("height"))==(1024,1536)
+            # Reference artwork can be portrait-but-not-canonical size.
+            # Do not resample or stretch identity PNGs just to satisfy the
+            # OUTPUT canvas. The edited scene-mother remains 1024x1536.
+            width,height=info.get("width"),info.get("height")
+            verified=(type(width) is int and type(height) is int
+                      and 512<=width<=2048 and 512<=height<=3072
+                      and width<=height)
         except (OSError,ValueError,VideoForgeError):
             verified=False
     approved=(verified and anchor.get("human_approved") is True

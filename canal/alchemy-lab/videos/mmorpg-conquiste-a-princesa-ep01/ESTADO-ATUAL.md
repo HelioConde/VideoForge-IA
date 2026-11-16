@@ -1,5 +1,11 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — cenas V2 aceitam referência vertical original sem esticar
+
+- Corrigido o bloqueio de dimensão que tornaria a nova `character-bible-grounded.png` 1199×1312 inutilizável mesmo após aprovação humana. `cinematic_direction._remake_anchor_state` agora aceita **somente PNG retrato SHA-verificado dentro de limites técnicos** para identidade; `remake_reference.prepare_remake_reference` suporta os dois IDs `character-bible` (texto) e `character-bible-grounded` (2 fontes anexadas), com prova de origem estrita e SHA; a cópia fornecida ao editor conserva EXATAMENTE os bytes sem redimensionar.
+- `production_scenes.reference_bytes(...,allow_grounded=True)` é usado somente no EP01 remake ativo, após verificação de aprovação da âncora no manifesto. A cena-mãe de saída continua com canvas exigido **1024×1536** e rig por partes reais. Outras produções legadas continuam exigindo 1024×1536 como referência; não se altera sua política. A API de `gpt-image-2` dispensa o parâmetro `input_fidelity`.
+- **Nenhuma aprovação foi registrada** nesta mudança, logo o fluxo de cenas continua bloqueado até revisão visual; nenhuma imagem adicional foi solicitada. Testes de path, SHA, proveniência e não-distorção usam apenas PNGs sintéticos temporários.
+
 ## 16/11/2026 — segunda prancha ancorada de verdade nos PNGs originais e QA comparativo
 
 - [Geração real 43868021687](https://github.com/HelioConde/VideoForge-IA/actions/runs/43868021687) **SUCCESS**: 1 chamada de `gpt-image-2` para `character-bible-grounded` com **2 fontes PNG originais realmente anexadas** via `images/edits`, fontes com SHA exatos Kael `edb751cd...` e Elara `bf199f3e...`; PNG 1199×1312 arquivado permanentemente com SHA `6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3` no caminho `assets/geracoes/production-art-request/43868021687/character-bible-grounded.png`. A prancha antiga apenas textual segue intacta (run 43784005362).

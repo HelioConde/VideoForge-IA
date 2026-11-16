@@ -103,7 +103,7 @@ def scene_prompt(channel:str,video_id:str,number:int,shot_id:str|None=None)->tup
     return prompt,scene
 
 
-def reference_bytes(image:Path,report:Path)->tuple[bytes,str]:
+def reference_bytes(image:Path,report:Path,allow_grounded:bool=False)->tuple[bytes,str]:
     if any(p.is_symlink() or not p.is_file() or not p.stat().st_size for p in (image,report)):
         raise VideoForgeError("PRODUCTION_SCENE_REFERENCE_MISSING")
     try:
@@ -112,11 +112,24 @@ def reference_bytes(image:Path,report:Path)->tuple[bytes,str]:
         raise VideoForgeError("PRODUCTION_SCENE_REFERENCE_REPORT_INVALID") from exc
     raw=image.read_bytes()
     digest=hashlib.sha256(raw).hexdigest()
-    if (metadata.get("sha256")!=digest or metadata.get("asset_id")!="character-bible"
+    allowed={"character-bible","character-bible-grounded"} if allow_grounded else {"character-bible"}
+    if (metadata.get("sha256")!=digest or metadata.get("asset_id") not in allowed
         or metadata.get("official_video_created") is not False):
         raise VideoForgeError("PRODUCTION_SCENE_REFERENCE_SHA_MISMATCH")
+    if metadata.get("asset_id")=="character-bible-grounded":
+        from .grounded_identity import EXPECTED
+        expected=[{"actor":actor,"id":sid,"path":path,"sha256":source_sha}
+                  for actor,(sid,path,source_sha) in EXPECTED.items()]
+        if (metadata.get("source_images_attached_to_request")!=2
+                or metadata.get("source_originals_sha_verified")!=expected):
+            raise VideoForgeError("PRODUCTION_SCENE_GROUNDED_INPUT_PROOF_MISSING")
     dimensions=png_info(raw)
-    if (dimensions["width"],dimensions["height"])!=(1024,1536):
+    width,height=dimensions["width"],dimensions["height"]
+    if allow_grounded:
+        valid=512<=width<=2048 and 512<=height<=3072 and width<=height
+    else:
+        valid=(width,height)==(1024,1536)
+    if not valid:
         raise VideoForgeError("PRODUCTION_SCENE_REFERENCE_SIZE_MISMATCH")
     return raw,digest
 
@@ -129,7 +142,8 @@ def generate_scene(channel:str,video_id:str,number:int,reference:Path,
     prompt,scene=scene_prompt(channel,video_id,number,shot_id)
     if model not in proxy.IMAGE_MODELS:
         raise VideoForgeError("PRODUCTION_SCENE_MODEL_INVALID")
-    source,source_sha=reference_bytes(reference,report)
+    remake=cinematic_direction.load_active_remake_plan(channel,video_id) is not None
+    source,source_sha=reference_bytes(reference,report,allow_grounded=remake)
     cinematic_direction.assert_scene_reference_matches_anchor(channel,video_id,source_sha)
     scene_id=f"cena-{number:02d}" + (f"-{shot_id.lower()}" if shot_id else "")
     target=proxy.destination(channel,video_id,scene_id).with_suffix(".png")
@@ -140,7 +154,7 @@ def generate_scene(channel:str,video_id:str,number:int,reference:Path,
             "model":model,"prompt":prompt,"n":1,"size":"1024x1536",
             "background":"opaque","output_format":"png",
             "response_format":"b64_json","stream":False,
-            "input_fidelity":"high",
+            # gpt-image-2 rejects input_fidelity; use actual input PNG without it.
             "images":[{"image_url":"data:image/png;base64,"+
                        base64.b64encode(source).decode("ascii")}],
         })
