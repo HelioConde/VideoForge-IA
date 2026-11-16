@@ -1,5 +1,10 @@
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
+## 15/11/2026 — recuperacao OAuth: CI de codigo aprovado, credencial antiga bloqueada
+- [Run 43779683428](https://github.com/HelioConde/VideoForge-IA/actions/runs/43779683428): **8 testes offline PASS**, parser PowerShell confirmou os scripts `renovar-sessao-videoforge.ps1` e `migrar-codex-proxy.ps1` sem executar login. O job completo ficou **FAILURE esperada de autenticacao**: o preflight real detectou corretamente `PROXY_OAUTH_SESSION_EXPIRED`; nenhum PNG ou chamada de imagem foi emitido.
+- O token importado previamente expirou, a tentativa de renovacao upstream no GH Actions falhou (HTTP 502). **Necessaria autorizacao interativa da conta no navegador**, operacao distinta da permissao permanente de criar imagens. No computador do proprietario, rodar `./scripts/renovar-sessao-videoforge.ps1 -Container chatgpt-codex-proxy` a partir do PowerShell no clone do repositorio (use `.\\scripts\\...` no Windows); autorizar no navegador, reimportar secrets, validar workflow `proxy-health-official.yml`, depois retomar a geração sob SHA/QA e sem duplicacao.
+- C01-P02 e o MP4 de 163s permanecem pendentes. YouTube nao publicado. Nao marcar a fase como pronta enquanto a conta nao estiver elegivel.
+
 ## 15/11/2026 — incidente OAuth do proxy diagnosticado, recuperacao segura preparada
 
 **Evidencia real de GitHub Actions:** [health 43778717568](https://github.com/HelioConde/VideoForge-IA/actions/runs/43778717568) passou 200/200; [rerun 43766496772, tentativa 2](https://github.com/HelioConde/VideoForge-IA/actions/runs/43766496772) passou health mas `/v1/images/generations` respondeu **HTTP 502**, sem criar PNG; [auditoria 43778920877](https://github.com/HelioConde/VideoForge-IA/actions/runs/43778920877) encontrou **1 conta, 0 elegiveis, OAuth expirado**; [refresh 43779044584](https://github.com/HelioConde/VideoForge-IA/actions/runs/43779044584) tentou renovacao pelo `/admin/accounts/:id/refresh`, que tambem respondeu **HTTP 502**. Nenhuma arte nem aprovacao foi criada. Nao declarar cobranca confirmada ou repetir a requisicao cegamente.

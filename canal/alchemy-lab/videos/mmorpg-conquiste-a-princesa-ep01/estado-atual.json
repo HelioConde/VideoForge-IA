@@ -1265,6 +1265,16 @@
     "admin_refresh_status": "http_502",
     "needs_user_device_reauthorization": true,
     "automatic_image_retry_blocked": true,
-    "youtube_uploaded": false
+    "youtube_uploaded": false,
+    "recovery_code_commit": "477912cb67a1b17cc4400cd99a2b07631159cc9e",
+    "recovery_ci_run": 43779683428,
+    "offline_tests_passed": 8,
+    "powershell_syntax_validated": [
+      "scripts/renovar-sessao-videoforge.ps1",
+      "scripts/migrar-codex-proxy.ps1"
+    ],
+    "live_health_expected_failure": "PROXY_OAUTH_SESSION_EXPIRED",
+    "recovery_requires_user_browser_login": true,
+    "automatic_paid_retry_blocked": true
   }
 }
