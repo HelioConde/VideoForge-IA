@@ -11,5 +11,7 @@
   "no_new_image_generation": true,
   "youtube_upload": false,
   "official_articulated_rig_complete": false,
-  "requested_on": "2026-11-14"
+  "requested_on": "2026-11-16",
+  "retry_reason": "Retomar produção diária a partir de artifacts reais ainda presentes; produzir MP4 técnico verificável e diagnosticar bloqueios sem imagens novas.",
+  "target": "technical_mp4_from_existing_16_real_scenes_and_voice"
 }
