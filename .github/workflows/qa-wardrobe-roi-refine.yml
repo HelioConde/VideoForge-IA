@@ -39,7 +39,8 @@ jobs:
           EP=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
           git config user.name 'videoforge-roi-qa[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add "$EP/assets/qa-roi-figurino-v2" "$EP/QA-ROI-MASCARAS-REFINADAS-V2.jpg" "$EP/QA-ROI-MASCARAS-REFINADAS-V2.json"
+          git add -f "$EP/assets/qa-roi-figurino-v2/"
+          git add "$EP/QA-ROI-MASCARAS-REFINADAS-V2.jpg" "$EP/QA-ROI-MASCARAS-REFINADAS-V2.json"
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'qa(dorama): registrar oito mascaras cromaticas para revisao'
           if ! git push origin HEAD:main; then
