@@ -1,0 +1,46 @@
+name: "VideoForge - continuidade figurinos 40 tomadas V2"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/remake_wardrobe_40.py'
+      - 'tests/test_remake_wardrobe_40.py'
+      - '.github/workflows/remake-wardrobe-40.yml'
+permissions:
+  contents: write
+concurrency:
+  group: vf-remake-wardrobe-forty
+  cancel-in-progress: false
+jobs:
+  validate-forty:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Garantir 40 tomadas consistentes e nenhuma identidade aprovada automaticamente
+        run: python -m unittest tests.test_remake_wardrobe_40 tests.test_wardrobe_review -v
+      - name: Regenerar somente JSON e guia de figurinos em canal
+        run: python -m videoforge.remake_wardrobe_40 --sync
+      - name: Arquivar registro atual sem tocar em imagens V1
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'videoforge-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$EP/CONTINUIDADE-FIGURINOS-V2-40-TOMADAS.json" "$EP/REGRAS-FIGURINOS-V2-40-TOMADAS.md"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'docs(dorama): atualizar continuidade para 40 tomadas V2'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
