@@ -1653,5 +1653,46 @@
     "r2_generated": false,
     "official_mp4_created": false,
     "youtube_uploaded": false
+  },
+  "wardrobe_roi_exclusion_qa_v2": {
+    "schema": "videoforge/episode-roi-exclusion-checkpoint/v1",
+    "issue": 62,
+    "run_id": 43938223965,
+    "run_conclusion": "success",
+    "module": "videoforge/wardrobe_roi_exclusions.py",
+    "manifest": "ROI-EXCLUSOES-CANDIDATAS-V2.json",
+    "report": "QA-ROI-EXCLUSOES-V2.json",
+    "contact_sheet": "QA-ROI-EXCLUSOES-V2.jpg",
+    "candidate_assets_dir": "assets/qa-roi-exclusions-v2/",
+    "region_count": 4,
+    "candidate_mask_count": 8,
+    "counts_removed_by_pair": {
+      "aldric_beard": [
+        11,
+        102
+      ],
+      "aldric_outer": [
+        701,
+        0
+      ],
+      "aldric_center": [
+        253,
+        241
+      ],
+      "elara_royal_bodice": [
+        219,
+        3
+      ]
+    },
+    "semantic_verified": 0,
+    "verified_pair_count": 0,
+    "official_color_comparison_allowed": false,
+    "human_visual_approval": false,
+    "r2_blocked": true,
+    "known_owner_rejections_still_active": true,
+    "new_paid_images": 0,
+    "official_mp4": false,
+    "youtube_uploaded": false,
+    "next_action": "Manually audit all exclusions, confirm identities and attire variants and precisely isolate true body regions before official color QA"
   }
 }
