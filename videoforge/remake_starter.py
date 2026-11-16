@@ -62,9 +62,11 @@ def work_queue(root:Path=ROOT)->dict:
     if not anchors or anchors[0].get("id")!="character-bible":
         raise VideoForgeError("REMAKE_STARTER_FIRST_ANCHOR_INVALID")
     anchor=anchors[0]
+    from .wardrobe_review import rejected_reference_sha
     approved_anchor=(anchor.get("human_approved") is True and
                      anchor.get("status")=="approved" and
-                     verified_asset(base,anchor.get("path"),anchor.get("sha256")))
+                     verified_asset(base,anchor.get("path"),anchor.get("sha256"))
+                     and not rejected_reference_sha(anchor.get("sha256"),root))
     paid=(policy.get("paid_provider_calls_approved") is True and
           type(policy.get("max_chargeable_calls_per_run")) is int and
           policy["max_chargeable_calls_per_run"]>0)
@@ -196,7 +198,7 @@ def work_queue(root:Path=ROOT)->dict:
       "format":plan["format"],
       "shot_count":len(work),"visual_shot_count":sum(i["shot_type"]!="black" for i in work),
       "reuse":REUSE,
-      "autopilot":{k:stage.get(k) for k in ("stage","target","blocker","dispatch_allowed","source_readiness","grounded_candidate")},
+      "autopilot":{k:stage.get(k) for k in ("stage","target","blocker","dispatch_allowed","source_readiness","grounded_candidate","wardrobe_source_readiness")},
       "current_blocker":stage.get("blocker"),
       "production_queue":work,
     }

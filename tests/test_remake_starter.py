@@ -91,12 +91,16 @@ class RemakeStarterTests(unittest.TestCase):
             "archived_png_verified_human_review_pending",
             "human_visual_review_pending",
             "original_kael_elara_sha_sources_missing",
+            "wardrobe_identity_rejected_reference_missing",
         ))
         self.assertEqual(out["autopilot"]["source_readiness"]["verified_style_source_count"],2)
         self.assertEqual(len(out["autopilot"]["source_readiness"]["missing_original_paths"]),0)
         self.assertTrue(out["autopilot"]["source_readiness"]["c12_camera_source_verified"])
         self.assertEqual(out["autopilot"]["grounded_candidate"]["run_id"],43868021687)
         self.assertFalse(out["autopilot"]["grounded_candidate"]["canonical_identity_approved"])
+        self.assertEqual(out["autopilot"]["grounded_candidate"]["status"],
+                         "rejected_wardrobe_inconsistency")
+        self.assertFalse(out["autopilot"]["wardrobe_source_readiness"]["r2_ready"])
         self.assertFalse(out["autopilot"]["source_readiness"]["automatic_visual_approval"])
         for shot in out["production_queue"][1:]:
             self.assertEqual(shot["status"],"blocked_canonical_reference")

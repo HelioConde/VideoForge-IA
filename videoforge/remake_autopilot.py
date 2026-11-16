@@ -167,6 +167,7 @@ def choose_next(root: Path = ROOT) -> dict:
                 stage, blocker = "final_assembly_preflight", "audio_video_qa_and_final_review_pending"
     source_readiness = None
     grounded_candidate = None
+    wardrobe_source_readiness = None
     if stage == "review_identity_reference":
         # An archived PNG is only a candidate. Do not ask for approval of
         # visual identity while the exact user-approved Kael/Elara originals
@@ -219,6 +220,12 @@ def choose_next(root: Path = ROOT) -> dict:
                     "human_visual_approved":False,
                     "canonical_identity_approved":False,
                 }
+                from .wardrobe_review import rejected_reference_sha, source_readiness as wardrobe_status
+                if rejected_reference_sha(grounded["sha256"],root):
+                    wardrobe_source_readiness=wardrobe_status(root)
+                    grounded_candidate["status"]="rejected_wardrobe_inconsistency"
+                    grounded_candidate["can_generate_shot_mothers"]=False
+                    blocker="wardrobe_identity_rejected_reference_missing"
     provider_enabled = (policy.get("paid_provider_calls_approved") is True
                         and type(policy.get("max_chargeable_calls_per_run")) is int
                         and policy["max_chargeable_calls_per_run"] >= 1)
@@ -245,6 +252,7 @@ def choose_next(root: Path = ROOT) -> dict:
         "discovered_candidate": candidate,
         "source_readiness": source_readiness,
         "grounded_candidate": grounded_candidate,
+        "wardrobe_source_readiness": wardrobe_source_readiness,
         "blocker": blocker,
         "next_workflow": "production-art-by-request.yml" if dispatch_allowed else None,
         "dispatch_allowed": bool(dispatch_allowed),
@@ -334,6 +342,10 @@ def sync_checkpoint(report: dict, root: Path = ROOT) -> bool:
         record["verified_style_source_count"] = source_readiness["verified_style_source_count"]
         record["missing_original_paths"] = source_readiness["missing_original_paths"]
         record["aldric_individual_sha_approved_reference_missing"] = True
+    wardrobe = report.get("wardrobe_source_readiness")
+    if isinstance(wardrobe, dict):
+        record["wardrobe_review_decision"]="rejected_wardrobe_inconsistency"
+        record["r2_wardrobe_sources_verified"]=wardrobe["verified"]
     grounded = report.get("grounded_candidate")
     if isinstance(grounded, dict):
         record["grounded_candidate_sha256"] = grounded["sha256"]
@@ -384,7 +396,11 @@ def sync_checkpoint(report: dict, root: Path = ROOT) -> bool:
     if isinstance(grounded, dict):
         state["grounded_identity_candidate_current"] = {
             **grounded,
-            "status":"visual_review_pending",
+            "status":grounded.get("status","visual_review_pending"),
+            "owner_review_file":("REVISAO-FIGURINO-V2.json"
+                                  if grounded.get("status")=="rejected_wardrobe_inconsistency"
+                                  else None),
+            "wardrobe_approved":False,
             "external_image_provider_calls_in_this_diagnostic":0,
             "youtube_uploaded":False,
         }

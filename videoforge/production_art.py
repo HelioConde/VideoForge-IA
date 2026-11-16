@@ -208,6 +208,24 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
             raise VideoForgeError("GROUNDED_IDENTITY_OUTPUT_ALREADY_EXISTS")
         output.parent.mkdir(parents=True,exist_ok=True)
         output.write_bytes(blob)
+    elif (channel,video_id,asset_id)==(
+        "alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
+        "character-bible-grounded-r2",
+    ):
+        # The rejected reference is not billable again. R2 is a distinct asset
+        # and requires BOTH exact, owner-approved full-outfit PNGs before API.
+        from .wardrobe_review import r2_edit_payload
+        payload,source_provenance=r2_edit_payload(prompt,model,size)
+        response=proxy_images.call_proxy(
+            url,"/v1/images/edits",os.getenv("CODEX_PROXY_API_KEY",""),payload)
+        blob,extension=proxy_images.decode_image(response)
+        if extension!=".png":
+            raise VideoForgeError("WARDROBE_R2_OUTPUT_MUST_BE_PNG")
+        output=predicted.with_suffix(".png")
+        if output.exists() or output.is_symlink():
+            raise VideoForgeError("WARDROBE_R2_OUTPUT_ALREADY_EXISTS")
+        output.parent.mkdir(parents=True,exist_ok=True)
+        output.write_bytes(blob)
     else:
         output=proxy_images.generate(
             url,os.getenv("CODEX_PROXY_API_KEY",""),

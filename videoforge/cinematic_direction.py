@@ -274,8 +274,10 @@ def _remake_anchor_state(channel:str,video_id:str,root:Path=ROOT)->dict:
                       and width<=height)
         except (OSError,ValueError,VideoForgeError):
             verified=False
+    from .wardrobe_review import rejected_reference_sha
     approved=(verified and anchor.get("human_approved") is True
-              and anchor.get("status")=="approved")
+              and anchor.get("status")=="approved"
+              and not rejected_reference_sha(anchor.get("sha256"),root))
     return {"source_image_files_verified":bool(verified),
             "human_approved":bool(approved),
             "source_sha256":anchor.get("sha256") if verified else None,
