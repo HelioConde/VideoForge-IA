@@ -1,0 +1,71 @@
+name: "VideoForge - QA continuidade C02 C03 (sem IA)"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-C02-C03.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ep01-qa-c02-c03-continuity
+  cancel-in-progress: false
+
+jobs:
+  qa-storyboard:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Pillow para QA local
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Confirmar politica: sem proxy, rig nem upload
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-C02-C03.json')
+          j=json.loads(p.read_text(encoding='utf-8'))
+          assert j['schema']=='videoforge/ep01-c02-c03-continuity-request/v1'
+          assert j['shots']==['C01-P03','C02-P01','C02-P02','C03-P01']
+          assert j['no_provider_calls'] is True
+          assert j['human_visual_approval'] is False
+          assert j['rig_ready'] is False
+          assert j['youtube_upload'] is False
+          print('QA_SOURCE_ONLY_SHA_AND_FRAMES')
+          PY
+      - name: Gerar comparacao de arte e camera sem recortar assets
+        run: python -m scripts.qa_ep01_c02_c03_visual_continuity
+      - name: Persistir prancha, SHAs e flags de QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+          git add "$EP/QA-C02-C03-CONTINUIDADE-IMAGENS.jpg" "$EP/QA-C02-C03-CONTINUIDADE-IMAGENS.json"
+          if git diff --cached --quiet; then
+            echo "QA_COMPARISON_UNCHANGED"
+          else
+            git config user.name "videoforge-qa[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "qa(ep01): registrar continuidade Kael Aldric e macro do olho"
+            git push origin HEAD:main
+          fi
+      - name: Salvar artefato de QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-qa-c02-c03-${{ github.run_id }}
+          path: |
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C02-C03-CONTINUIDADE-IMAGENS.jpg
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C02-C03-CONTINUIDADE-IMAGENS.json
+          retention-days: 14
+          if-no-files-found: warn
