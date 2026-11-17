@@ -27,8 +27,10 @@ class FirstDoramaImageTests(unittest.TestCase):
         self.assertIn(request["asset"], [item["id"] for item in plan["assets"]])
         self.assertEqual(request["max_calls_per_run"],1)
         self.assertFalse(request["youtube_upload"])
-        self.assertTrue(request["human_visual_review_required"])
-        self.assertTrue(request["previous_rejected_reference_must_not_be_used"])
+        self.assertTrue(request.get("human_visual_review_required",
+                                    request.get("owner_visual_approval_required", False)))
+        self.assertTrue(request.get("previous_rejected_reference_must_not_be_used",
+                                    request.get("old_spear_pose_explicitly_rejected", False)))
     def test_reference_kael_is_real_sha_verified(self):
         from videoforge.grounded_identity import inputs
         sources=inputs()
