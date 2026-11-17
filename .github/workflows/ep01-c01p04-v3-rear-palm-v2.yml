@@ -51,7 +51,7 @@ jobs:
               or obj.get("approved_source_sha256")!=guide.APPROVED_SHA
               or obj.get("one_paid_image_per_run") is not True
               or obj.get("retry_on_failure") is not False
-              or obj.get("guide_only_not_final_sprite") is not True
+              or obj.get("rear_palm_excludes_fingers_and_spear") is not True
               or obj.get("human_visual_approval") is not False
               or obj.get("rig_ready") is not False
               or obj.get("youtube_upload") is not False):
