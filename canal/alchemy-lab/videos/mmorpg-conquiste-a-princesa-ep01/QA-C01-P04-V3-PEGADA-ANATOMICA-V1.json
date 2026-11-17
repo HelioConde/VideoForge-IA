@@ -1,0 +1,49 @@
+{
+  "schema": "videoforge/ep01-c01p04-grip-occlusion-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "creator_approved_source_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "grip_reference_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-PEGADA-APROVADA-C01-P04-V3.json",
+  "stage": "independent_grip_parts_review",
+  "left_rear_palm": {
+    "run_id": 44182186174,
+    "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-grip-occlusion-v1/44182186174/c01-p04-v3-left-grip-palm-rear-v1.png",
+    "sha256": "71ddc2931b41f4083af7f548dcee49a63acd2314e6c7fa854deeac8ff3908993",
+    "dimensions": [
+      941,
+      1672
+    ],
+    "alpha_bbox_xyxy": [
+      67,
+      474,
+      468,
+      1034
+    ],
+    "technical_qa": "candidate_pending_hand_contact_review",
+    "visual_qa": "rejected_closed_fist_fingers_already_drawn_in_palm_rear",
+    "visual_qa_reason": "Rear palm layer must NOT duplicate closed fingers; spear requires occlusion between rear palm and separate front fingertips",
+    "use_for_rig": false,
+    "retain_provenance": true
+  },
+  "left_fingers_front": {
+    "state": "requested",
+    "run_id": 44182835612,
+    "visual_approval": false
+  },
+  "right_grip_parts": {
+    "state": "not_started_waiting_for_left_topology",
+    "visual_approval": false
+  },
+  "composition_order": [
+    "guard_corrected_body_without_baked_fist",
+    "palm-rear",
+    "spear",
+    "fingers-front"
+  ],
+  "visual_approval_of_new_layers": false,
+  "grip_contact_verified": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
