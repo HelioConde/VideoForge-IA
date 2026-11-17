@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 40,
+  "total_arquivadas": 41,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1231,6 +1231,34 @@
       "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010485553/biblia-trono-base-v1.png",
       "sha256": "16d64d97ae19d536876ea501f54e465cc527ea82474f630812917ae471127a9d",
       "bytes": 2366411,
+      "width": 1024,
+      "height": 1536,
+      "referencias_usadas": [
+        {
+          "id": "biblia-sala-do-trono-vazio-v1",
+          "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_dimensions",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44010692076:biblia-espada-carrasco-base-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-espada-carrasco-base-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "espada-carrasco",
+      "biblia_categoria": "objetos",
+      "producer": "production-art-request",
+      "github_run_id": 44010692076,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010692076/biblia-espada-carrasco-base-v1.png",
+      "sha256": "1f121063d4b36540105ecdc736dc1bbbd970391c624942df5d396fb9b848f3ba",
+      "bytes": 1889945,
       "width": 1024,
       "height": 1536,
       "referencias_usadas": [

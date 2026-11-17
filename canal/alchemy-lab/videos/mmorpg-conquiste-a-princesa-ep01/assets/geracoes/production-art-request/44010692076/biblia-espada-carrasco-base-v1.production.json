@@ -1,0 +1,37 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-espada-carrasco-base-v1",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-espada-carrasco-base-v1.png",
+  "biblia_item_id": "espada-carrasco",
+  "biblia_categoria": "objetos",
+  "size": "1024x1536",
+  "sha256": "1f121063d4b36540105ecdc736dc1bbbd970391c624942df5d396fb9b848f3ba",
+  "model": "gpt-image-2",
+  "actual_width": 1024,
+  "actual_height": 1536,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": true,
+  "technical_qa": "valid_png_dimensions",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 1,
+  "source_originals_sha_verified": [
+    {
+      "actor": "estilo_ambiente_sem_personagens",
+      "id": "biblia-sala-do-trono-vazio-v1",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png",
+      "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+      "source_visual_only_not_human_approved": true,
+      "source_character_identity_forbidden": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": null,
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}
