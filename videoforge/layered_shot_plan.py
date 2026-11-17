@@ -16,6 +16,10 @@ SCHEMA="videoforge/layered-shot-camera-plan/v1"
 CAMERA_TYPES={"black","insert","low_angle","wide","close_up",
               "extreme_close_up","match_cut","over_shoulder","medium",
               "tracking","two_shot","action"}
+# The broad scene queue can list objects that are deliberately NOT shown in a
+# tighter shot. C01-P03 must not reveal guards' spears or the executioner's sword;
+# those belong to later shots, notably C01-P04.
+EXPLICITLY_HIDDEN_SCENE_PROPS={"C01-P03":{"lanca-guarda","espada-carrasco"}}
 REQUIRED_MOVES={"none","micro_push_and_focus_shift","slow_dolly_out_with_parallax",
                 "slow_tilt_up","subtle_push_in","subtle_focus_shift",
                 "lateral_drift","occlusion_reveal","subject_follow",
@@ -149,8 +153,11 @@ def validate(root: Path = ROOT) -> dict:
         if not set(queued["personagens"])<=actors:
             raise VideoForgeError("LAYERED_PLAN_MISSING_CHARACTERS "+ident)
         animated={x["id"] for x in images.get("objects",[])}
-        if not set(queued["objetos"])<=animated:
-            raise VideoForgeError("LAYERED_PLAN_MISSING_PROPS "+ident)
+        hidden=EXPLICITLY_HIDDEN_SCENE_PROPS.get(ident,set())
+        if (not set(queued["objetos"])-hidden <= animated or
+            hidden & animated or
+            set(shot.get("qa",{}).get("explicitly_hidden_scene_props",[])) != hidden):
+            raise VideoForgeError("LAYERED_PLAN_MISSING_OR_UNEXPECTED_PROPS "+ident)
         if (not images.get("required") or
             shot.get("qa",{}).get("source_sha256_required") is not True or
             shot.get("qa",{}).get("compare_composite_to_alpha_recomposition") is not True or
