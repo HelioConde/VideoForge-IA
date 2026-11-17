@@ -1,25 +1,18 @@
-name: "VideoForge - EP01 extrair 4 camadas C01-P02 em serie"
-run-name: "EP01 / camadas reais C01-P02"
+name: "VideoForge - EP01 lote antigo de camadas descontinuado"
+run-name: "EP01 / conferir máscaras da mãe sem repetir proxy"
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
-      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/FILA-CAMADAS-C01-P02.json'
-  workflow_dispatch:
+      - '.github/workflows/ep01-layered-shot-batch.yml'
 permissions:
   contents: read
-  actions: write
-concurrency:
-  group: ep01-layered-shot-c01-p02-serial-main
-  cancel-in-progress: false
 jobs:
-  run-serial:
+  legacy-check-only:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 150
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GH_REPO: ${{ github.repository }}
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,96 +21,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Garantir fonte real e quatro componentes sem pose
-        shell: bash
+      - name: Validar plano da cena-mãe sem gerar bainha deslocada
         run: |
           set -euo pipefail
-          python -m unittest tests.test_ep01_shot_layers -v
+          python -m videoforge.layered_shot_plan
           python - <<'PY'
           import json
           from pathlib import Path
-          from videoforge import ep01_shot_layers as engine
-          folder=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
-          queue=json.loads((folder/'FILA-CAMADAS-C01-P02.json').read_text())
-          items=queue.get('items',[])
-          if (queue.get('schema')!='videoforge/ep01-layer-queue/v1'
-              or queue.get('channel')!='alchemy-lab'
-              or queue.get('video_id')!='mmorpg-conquiste-a-princesa-ep01'
-              or queue.get('youtube_upload') is not False
-              or queue.get('no_paid_retry') is not True
-              or len(items)!=4
-              or items!=['background-clean','character-carrasco','object-espada','object-bainha']):
-              raise SystemExit('EP01_LAYER_QUEUE_INVALID')
-          plan,mother,info=engine.mother_source()
-          # O primeiro fundo bruto de 941x1670 falhou QA; exigir que o
-          # alinhamento matemático de 2px esteja arquivado por SHA.
-          registry=json.loads(Path('canal/alchemy-lab/biblia-visual/REGISTRO-GERACOES.json').read_text())
-          matched=[x for x in registry['geracoes'] if x.get('asset')=='c01-p02-background-aligned']
-          if len(matched)!=1:
-              raise SystemExit('EP01_LAYER_ALIGNED_BACKGROUND_REQUIRED_BEFORE_RESUME')
-          from hashlib import sha256
-          target=Path(matched[0]['arquivo'])
-          if (target.is_symlink() or not target.is_file() or
-              sha256(target.read_bytes()).hexdigest()!=matched[0]['sha256'] or
-              [matched[0]['width'],matched[0]['height']]!=[info['width'],info['height']]):
-              raise SystemExit('EP01_LAYER_ALIGNED_BACKGROUND_SHA_OR_SIZE_INVALID')
-          print('LAYER_BATCH_SHA_VALID',plan['mother_sha256'],'bytes',len(mother),
-                'dimensions',info['width'],info['height'])
-          print('EP01_ALIGNED_BACKGROUND_VERIFIED',matched[0]['sha256'])
+          data=json.loads(Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P02-ESPADA-PIXELS.json').read_text())
+          assert data['visual_approved'] is False and data['rig_authorized'] is False
+          print('LEGACY_PROXY_LAYER_LOOP_DISABLED; use source pixel cutouts and human visual review')
           PY
-      - name: Gerar camadas individualmente com arquivo SHA antes de avançar
-        shell: bash
-        run: |
-          set -euo pipefail
-          mapfile -t ASSETS < <(python - <<'PY'
-          import json
-          q=json.load(open('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/FILA-CAMADAS-C01-P02.json',encoding='utf-8'))
-          for v in q['items']: print(v)
-          PY
-          )
-          for ((i=0;i<${#ASSETS[@]};i++)); do
-            part="${ASSETS[$i]}"
-            archived=$(python - "$part" <<'PY'
-          import sys
-          from videoforge.ep01_shot_layers import archived_layer
-          print('YES' if archived_layer(sys.argv[1]) else 'NO')
-          PY
-            )
-            if [[ "$archived" == "YES" ]]; then
-              echo "EP01_LAYER_ALREADY_ARCHIVED_SKIP $part"
-              continue
-            fi
-            tag="layers-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${i}"
-            title="EP01 layer $part $tag"
-            echo "EP01_LAYER_DISPATCH $part"
-            response=$(gh workflow run ep01-shot-layer-by-request.yml -R "$GH_REPO" --ref main \
-              -f part="$part" -f request_tag="$tag")
-            runid=$(python -m videoforge.github_dispatch_id "$response" "$GH_REPO")
-            if [[ -z "$runid" ]]; then
-              for attempt in $(seq 1 60); do
-                runid=$(gh api "repos/$GH_REPO/actions/workflows/ep01-shot-layer-by-request.yml/runs?event=workflow_dispatch&per_page=60" \
-                  | jq -r --arg title "$title" '[.workflow_runs[] | select(.display_title == $title)][0].id // empty')
-                if [[ -n "$runid" ]]; then break; fi
-                sleep 10
-              done
-            fi
-            if [[ -z "$runid" ]]; then
-              echo "::error::Cannot find new generation run, STOP with no retry"
-              exit 1
-            fi
-            if ! gh run watch "$runid" -R "$GH_REPO" --exit-status --interval 10; then
-              echo "::error::Layer $part failed (run $runid). STOP without another paid request"
-              exit 1
-            fi
-            git fetch origin main
-            git reset --hard origin/main
-            python - "$part" <<'PY'
-          import sys
-          from videoforge.ep01_shot_layers import archived_layer
-          layer=archived_layer(sys.argv[1])
-          if not layer:
-              raise SystemExit('EP01_LAYER_SUCCESS_BUT_SHA_NOT_ARCHIVED')
-          print('EP01_LAYER_REAL_SHA_ARCHIVED',sys.argv[1],layer['sha256'])
-          PY
-          done
-          echo "EP01_LAYERS: 1 aligned background SHA + 3 extracted pieces, all candidate pending QA"
