@@ -1,0 +1,55 @@
+{
+  "schema": "videoforge/ep01-no-independent-hand-rig/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "status": "active",
+  "decision_by": "creator",
+  "decision_text": "Todas as tentativas de mãos separadas estão erradas. Ignorar essa parte.",
+  "recorded_date": "2026-11-17",
+  "approved_original_scene_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "scope": {
+    "skip_creation_of_independent_fingers": true,
+    "skip_independent_palm": true,
+    "skip_hand_grip_reconstruction": true,
+    "skip_manual_grip_review_as_blocker": true,
+    "disable_previous_hand_generation_workflows": true,
+    "preserve_existing_archived_png_and_manifest_history": true,
+    "do_not_relabel_old_invalid_grip_parts_as_approved": true,
+    "other_rig_validation_unaffected": true
+  },
+  "animation_approach": {
+    "guards_in_c01_p04": "static_approved_integrated_character_and_weapon_visual",
+    "allowed_motion": [
+      "camera_pan",
+      "camera_zoom",
+      "camera_focus_and_composition",
+      "lighting_vfx",
+      "subtle_environment_motion",
+      "independent_cloth_or_hair_when_clean_layers_available"
+    ],
+    "must_not": [
+      "animate_separate_spear_away_from_approved_hand",
+      "animate_guard_hand_joint",
+      "recompose_invalid_R3_W3_hand_proposals",
+      "generate_new_hand_pieces"
+    ],
+    "integration_note": "When a guard is static, keep the approved visual of hand gripping spear as one rigid visual region. If its original independent RGBA guard and spear do not reproduce that grip, do not use those invalid parts in this shot; use the approved complete scene with camera/lighting treatment instead. Do not present whole-image movement as an articulated character rig.",
+    "further_shots": "Independently animate only parts with confirmed continuity; omit hand articulation by default. An explicit future creator request would be needed to re-enable."
+  },
+  "frozen_hand_workflow_ids": [
+    "left_grip_v3",
+    "right_grip_v1",
+    "grip_occlusion",
+    "guard_grip_v2",
+    "canonical_grip_guide",
+    "rear_palm_v2"
+  ],
+  "next_work_item": "Resume approved mother shots and scenes beyond C01-P04; evaluate camera plan and remaining image-mothers; only move on to unrelated rig components after their QA",
+  "scene_mother_approved": true,
+  "hand_rig_required": false,
+  "hand_composition_approval_required": false,
+  "shot_final_rig_approved": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
