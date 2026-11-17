@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 60,
+  "total_arquivadas": 61,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1817,6 +1817,34 @@
       ],
       "status": "gerado",
       "qa_tecnica": "canvas_aligned_lossless_original_pixels_plus_2_edge_rows",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-shot-layer-v2:44038395038:c01-p02-character-carrasco.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p02-character-carrasco",
+      "shot": "C01-P02",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-shot-layer-v2",
+      "github_run_id": 44038395038,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-shot-layer-v2/44038395038/c01-p02-character-carrasco.png",
+      "sha256": "61a78ba3a3749d52335e82d7cc3c671b6bffffe8a421c464ad588b0e750b6bac",
+      "bytes": 1729578,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "c01-p02-scene-mother",
+          "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "candidate_rgba_verified",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }
