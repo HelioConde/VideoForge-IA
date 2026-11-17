@@ -1,0 +1,19 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-grip-v2-review-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "part": "character-guarda_esquerdo",
+  "guard_v2_run_id": 44177109908,
+  "guard_v2_sha256": "d69d1967aa0b2faa63018d18c2d3eccb15b4fdaa45f7e2835056b859e3eeb29c",
+  "compare_with_old": true,
+  "pose_qa": "S4-through-grips",
+  "layering_options": [
+    "spear_under_guard",
+    "spear_over_guard"
+  ],
+  "no_provider_calls": true,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_upload": false
+}
