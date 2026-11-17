@@ -18,7 +18,7 @@ from scripts.qa_ep01_c01p04_v3_layers_board import verified_art
 from scripts.qa_ep01_c01p04_v3_spear_registration import (
     spear_endpoints, draw_spear_preview)
 
-BASENAME="QA-C01-P04-V3-PEGADA-CONTATO"
+BASENAME="QA-C01-P04-V3-PEGADA-CONTATO-REGISTRO-V2"
 # Editorial ROIs: approximate from the approved mother, NOT approved geometry.
 TARGETS={
   "forearm-cuff":[67,780,218,965],
@@ -31,7 +31,7 @@ def f(sz):
     try:return ImageFont.truetype("DejaVuSans.ttf",sz)
     except OSError:return ImageFont.load_default()
 
-def registered(role,variant_x=0):
+def registered(role,offset_xy=(0,0)):
     evidence=review(role)
     if evidence is None:
         raise RuntimeError("GRIP_V3_CONTACT_PART_MISSING "+role)
@@ -53,8 +53,8 @@ def registered(role,variant_x=0):
     middle_x=(target[0]+target[2])/2
     x=round(middle_x-(box[0]+box[2])/2*scale)
     y=round(target[3]-box[3]*scale)
-    if role=="fingers-front":
-        x+=variant_x
+    x+=offset_xy[0]
+    y+=offset_xy[1]
     return pic,(x,y),{
         "role":role,"source_sha256":evidence["source"]["sha256"],
         "native_canvas":[src.width,src.height],
@@ -81,7 +81,9 @@ def create():
     with Image.open(BytesIO(mother["blob"])) as im:
         mother_rgb=im.convert("RGB")
     # Complete set must be archived with exact SHA first.
-    independent={role:registered(role,0) for role in grip.ROLES}
+    for role in grip.ROLES:
+        if review(role) is None:
+            raise RuntimeError("GRIP_V3_CONTACT_PART_NOT_ARCHIVED "+role)
     spear,spear_rec=verified_art("object-lanca-esquerda")
     points=spear_endpoints(spear)
     shaft,shaft_map=draw_spear_preview(spear,points,[65,1130],[525,430])
@@ -92,21 +94,29 @@ def create():
               font=f(13),fill="#a82d22")
     src_crop=mother_rgb.crop((0,750,375,1240))
     paper.paste(panel(src_crop,"MAE APROVADA - PEGADA"),(8,80))
+    variants=[
+        {"id":"R1-close-wrist","forearm-cuff":(20,30),"palm-rear":(-12,0),
+         "fingers-front":(-12,0)},
+        {"id":"R2-shaft-through-fingers","forearm-cuff":(35,40),
+         "palm-rear":(-22,0),"fingers-front":(-25,0)},
+        {"id":"R3-tightest-provisional","forearm-cuff":(45,52),
+         "palm-rear":(-32,6),"fingers-front":(-35,6)},
+    ]
     candidates=[]
-    for i,shift in enumerate((-8,0,8),1):
+    zoom_panels=[("MÃE APROVADA",mother_rgb.crop((90,865,280,1080)))]
+    for variant in variants:
         canvas=Image.new("RGBA",SCENE,(0,0,0,0))
         contacts={}
         for role in ("forearm-cuff","palm-rear"):
-            pic,pos,proof=independent[role]
+            pic,pos,proof=registered(role,variant[role])
             canvas.alpha_composite(pic,pos)
             contacts[role]=proof
         canvas.alpha_composite(shaft)
-        pic,pos,proof=registered("fingers-front",shift)
+        pic,pos,proof=registered("fingers-front",variant["fingers-front"])
         canvas.alpha_composite(pic,pos)
         contacts["fingers-front"]=proof
-        # Contact crop used exclusively for QA; never an exported rig part.
+        # Contact crop is a temporary QA preview, not a mask or rig sprite.
         crop=canvas.crop((0,750,375,1240))
-        # checker background reveals mistaken alpha holes; original PNG remains unchanged
         check=Image.new("RGBA",crop.size,(235,235,235,255))
         d=ImageDraw.Draw(check)
         for y in range(0,check.height,24):
@@ -114,11 +124,27 @@ def create():
                 if (x//24+y//24)%2==0:
                     d.rectangle((x,y,x+23,y+23),fill=(215,215,215,255))
         check.alpha_composite(crop)
-        paper.paste(panel(check.convert("RGB"),f"CONTATO {i} / dedos shift {shift:+d}px"),(8+i*342,80))
-        candidates.append({"id":f"contact-{i}","front_finger_shift_px":shift,
-                           "source_parts":contacts,"spear_sha256":spear_rec["sha256"],
-                           "spear_transform":shaft_map,
-                           "visual_approved":False})
+        i=len(candidates)+1
+        paper.paste(panel(check.convert("RGB"),variant["id"]), (8+i*342,80))
+        zoom=canvas.crop((90,865,280,1080))
+        background=Image.new("RGBA",zoom.size,(230,230,230,255))
+        background.alpha_composite(zoom)
+        zoom_panels.append((variant["id"],background.convert("RGB")))
+        candidates.append({
+            "id":variant["id"],
+            "editorial_offset_deltas_px":{
+               "forearm-cuff":list(variant["forearm-cuff"]),
+               "palm-rear":list(variant["palm-rear"]),
+               "fingers-front":list(variant["fingers-front"])},
+            "source_parts":contacts,"spear_sha256":spear_rec["sha256"],
+            "spear_transform":shaft_map,"visual_approved":False})
+    zoom_board=Image.new("RGB",(4*320+22,435),"#e7e7e6")
+    zoom_pen=ImageDraw.Draw(zoom_board)
+    zoom_pen.text((12,9),"PEGADA V3 / ZOOM ANATOMICO - REGISTRO PROVISORIO",font=f(20),fill="#222222")
+    for col,(label,img) in enumerate(zoom_panels):
+        zoom_board.paste(panel(img,label,305,355),(9+col*320,57))
+    zoom_path=base/(BASENAME+"-MAO-ZOOM.jpg")
+    zoom_board.save(zoom_path,"JPEG",quality=87,optimize=True)
     dest=base/(BASENAME+".jpg")
     paper.save(dest,"JPEG",quality=88,optimize=True)
     report={
@@ -132,6 +158,8 @@ def create():
             "forearm-cuff","palm-rear","spear-independent","fingers-front"],
         "candidates":candidates,
         "board":dest.name,"board_sha256":sha256(dest.read_bytes()).hexdigest(),
+        "hand_zoom_board":zoom_path.name,
+        "hand_zoom_board_sha256":sha256(zoom_path.read_bytes()).hexdigest(),
         "anatomical_contact_verified":False,
         "spatial_registration_approved":False,
         "human_visual_approval":False,
