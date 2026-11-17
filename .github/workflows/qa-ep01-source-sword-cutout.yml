@@ -1,0 +1,71 @@
+name: "VideoForge - EP01 espada da mesma cena-mae"
+run-name: "EP01 C01-P02 / espada original sem IA"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/qa-ep01-source-sword-cutout.yml'
+permissions:
+  contents: write
+jobs:
+  source-sword:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pillow local para máscaras sem proxy
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Validar alfa, coordenadas e oclusão de dedos sem cobrança
+        run: python -m unittest tests.test_ep01_source_sword tests.test_ep01_contact_cutouts -v
+      - name: Verificar se espada original já existe no registro
+        id: archive
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          rows=json.loads(Path('canal/alchemy-lab/biblia-visual/REGISTRO-GERACOES.json').read_text())['geracoes']
+          already=any(r.get('asset')=='c01-p02-object-espada-source-visible' for r in rows)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as out:
+              out.write('generate='+('false' if already else 'true')+'\n')
+          print('EP01_SWORD_SOURCE_ALREADY_ARCHIVED',already)
+          PY
+      - name: Criar espada com os RGBs da cena-mãe e mãos prioritárias
+        if: steps.archive.outputs.generate == 'true'
+        run: python -m videoforge.ep01_source_sword
+      - name: Montar QA comparativo com antes e depois
+        if: steps.archive.outputs.generate == 'true'
+        run: PYTHONPATH=. python scripts/qa-ep01-source-sword-comparison.py
+      - name: Arquivar espada original e SHAs sem regenerar por IA
+        if: steps.archive.outputs.generate == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/arquivar-pngs-se-existirem.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
+            output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
+            "${{ github.run_id }}" production-source-sword-cutout-v1 "success"
+      - name: Guardar prévia da comparação e manter rig bloqueado
+        if: steps.archive.outputs.generate == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'videoforge-qa-sword[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git add -- "$ep/QA-C01-P02-ESPADA-PIXELS.jpg" "$ep/QA-C01-P02-ESPADA-PIXELS.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(ep01): espada da mesma mãe e diferença RGB de contato com luvas'
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            if ! git rebase origin/main; then git rebase --abort || true; exit 1; fi
+          done
+          exit 1
