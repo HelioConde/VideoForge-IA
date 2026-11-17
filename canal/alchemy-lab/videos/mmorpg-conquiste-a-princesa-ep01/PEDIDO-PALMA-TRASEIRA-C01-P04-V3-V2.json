@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/ep01-c01p04-rear-palm-v2-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_source_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "reference_grip_guide_sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+  "rejected_rear_v1_sha256": "71ddc2931b41f4083af7f548dcee49a63acd2314e6c7fa854deeac8ff3908993",
+  "purpose": "draw ONLY open rear palm and wrist with empty channel for independent spear, without knuckles or fingers, new RGBA",
+  "rear_palm_excludes_fingers_and_spear": true,
+  "one_paid_image_per_run": true,
+  "retry_on_failure": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_upload": false
+}
