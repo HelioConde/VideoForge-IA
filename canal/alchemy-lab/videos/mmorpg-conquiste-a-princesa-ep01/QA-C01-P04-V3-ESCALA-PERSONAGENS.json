@@ -1,0 +1,127 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-editorial-roi-scale-audit/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "aligned_mother_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "board": "QA-C01-P04-V3-ESCALA-PERSONAGENS.jpg",
+  "board_sha256": "4e4aa735ed351e6080d9c3243dae82dd2c9cd4b2278946f3b39b61c1eeb97334",
+  "roi_coordinates_are_provisional_editorial_guidance": true,
+  "actor_results": [
+    {
+      "part": "character-aldric",
+      "source_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+      "native_dimensions": [
+        981,
+        1602
+      ],
+      "alpha_bbox_native": [
+        460,
+        150,
+        730,
+        490
+      ],
+      "alpha_bbox_width": 270,
+      "alpha_bbox_height": 340,
+      "editorial_roi_approx_xyxy": [
+        380,
+        155,
+        705,
+        530
+      ],
+      "max_bbox_width_for_preflight": 360,
+      "max_bbox_height_for_preflight": 500,
+      "scale_outlier_warning": false,
+      "reference_roi_is_approximation_not_approved_placement": true,
+      "human_visual_approval": false
+    },
+    {
+      "part": "character-guarda_esquerdo",
+      "source_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+      "native_dimensions": [
+        981,
+        1602
+      ],
+      "alpha_bbox_native": [
+        78,
+        6,
+        710,
+        1529
+      ],
+      "alpha_bbox_width": 632,
+      "alpha_bbox_height": 1523,
+      "editorial_roi_approx_xyxy": [
+        0,
+        500,
+        345,
+        1360
+      ],
+      "max_bbox_width_for_preflight": 410,
+      "max_bbox_height_for_preflight": 970,
+      "scale_outlier_warning": true,
+      "reference_roi_is_approximation_not_approved_placement": true,
+      "human_visual_approval": false
+    },
+    {
+      "part": "character-guarda_direito",
+      "source_sha256": "c3432ac075105f1a412fc634f09d15add6d8f096369b6a5aa412d50b083aee78",
+      "native_dimensions": [
+        941,
+        1672
+      ],
+      "alpha_bbox_native": [
+        327,
+        7,
+        930,
+        1596
+      ],
+      "alpha_bbox_width": 603,
+      "alpha_bbox_height": 1589,
+      "editorial_roi_approx_xyxy": [
+        605,
+        500,
+        941,
+        1360
+      ],
+      "max_bbox_width_for_preflight": 410,
+      "max_bbox_height_for_preflight": 970,
+      "scale_outlier_warning": true,
+      "reference_roi_is_approximation_not_approved_placement": true,
+      "human_visual_approval": false
+    },
+    {
+      "part": "character-kael",
+      "source_sha256": "591b07d9ac3e1e9281e193bb4430fa987fd173e67b7489affc14f3f7677ff151",
+      "native_dimensions": [
+        941,
+        1672
+      ],
+      "alpha_bbox_native": [
+        7,
+        840,
+        608,
+        1487
+      ],
+      "alpha_bbox_width": 601,
+      "alpha_bbox_height": 647,
+      "editorial_roi_approx_xyxy": [
+        65,
+        805,
+        630,
+        1520
+      ],
+      "max_bbox_width_for_preflight": 650,
+      "max_bbox_height_for_preflight": 840,
+      "scale_outlier_warning": false,
+      "reference_roi_is_approximation_not_approved_placement": true,
+      "human_visual_approval": false
+    }
+  ],
+  "model_calls": 0,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "remotion_ready": false,
+  "youtube_uploaded": false,
+  "next": "Use exact scene mother plus layout guides to regenerate wrong-scale figures independently; confirm silhouettes and grip visually"
+}
