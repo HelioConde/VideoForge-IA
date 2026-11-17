@@ -67,6 +67,16 @@ class VisualBibleTests(unittest.TestCase):
             with self.assertRaisesRegex(VideoForgeError, "SHA_OR_SIZE_MISMATCH"):
                 build("alchemy-lab", root)
 
+    def test_permanent_archiver_commits_png_and_bible_together(self):
+        script = (ROOT / "scripts/persistir-imagens-gh.sh").read_text(encoding="utf-8")
+        self.assertIn('python -m videoforge.visual_bible --channel "$CHANNEL"', script)
+        self.assertIn('git add -f -- "$DEST"', script)
+        self.assertIn('git add -A -- "$BIBLE_DIR"', script)
+        self.assertLess(script.index("python -m videoforge.visual_bible"),
+                        script.index("git commit"))
+        self.assertLess(script.index('git add -A -- "$BIBLE_DIR"'),
+                        script.index("git commit"))
+
     def test_no_approval_without_review_evidence(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
