@@ -503,7 +503,22 @@
   ],
   "images_to_generate": 37,
   "match_cut_has_two_distinct_frames": true,
-  "status": "batch_prepared_not_generated",
+  "status": "paused_pending_C01_P04_spear_grip_fix",
   "youtube_upload": false,
-  "official_mp4_created": false
+  "official_mp4_created": false,
+  "image_generation_status": "37_new_images_queued_not_generated_held_until_corrected_anchor",
+  "generation_hold": {
+    "active": true,
+    "issue": "Guardas NÃO seguram as lanças: mãos estão unidas e as armas flutuam",
+    "replacement_candidate_asset": "c01-p04-pegada-lancas-v4",
+    "corrected_anchor_promoted": false,
+    "original_v3_preserved": true,
+    "owner_visual_review_required": true,
+    "affected_shots": [
+      "C01-P04",
+      "C01-P05",
+      "C01-P03",
+      "C11-P01"
+    ]
+  }
 }
