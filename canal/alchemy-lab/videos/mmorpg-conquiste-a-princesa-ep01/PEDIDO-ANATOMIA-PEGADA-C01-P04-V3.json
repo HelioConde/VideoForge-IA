@@ -3,8 +3,8 @@
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "shot_id": "C01-P04",
-  "role": "forearm-cuff",
-  "revision": 1,
+  "role": "palm-rear",
+  "revision": 2,
   "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
   "approved_grip_reference": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-PEGADA-APROVADA-C01-P04-V3.json",
   "additional_candidate_reference_sha": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
@@ -16,5 +16,10 @@
   "rig_ready": false,
   "mp4_generated": false,
   "youtube_upload": false,
-  "next_if_art_looks_correct": "palm-rear"
+  "next_if_art_looks_correct": "fingers-front",
+  "previous_role_generated": "forearm-cuff",
+  "previous_role_run_id": 44186735696,
+  "previous_role_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+  "previous_role_visual_status": "candidate_forearm_only_no_spear_or_fingers_pending_registration",
+  "requested_anatomical_detail": "only real back of glove palm with open shaft channel, not vambrace/forearm and not closed fist"
 }
