@@ -34,13 +34,13 @@ def edit_payload(asset: dict, prompt: str, model: str, size: str, root: Path = R
     # Para interações, NUNCA anexar a V3 de guardas com lanças mal seguradas:
     # usar somente mestres independentes, revisados por humano e SHA-verificados.
     mode = asset.get("reference_mode", "style_scene")
-    if mode not in ("style_scene", "style_scene_kael", "style_scene_elara", "approved_masters_only", "identity_face_only_kael"):
+    if mode not in ("style_scene", "style_scene_kael", "style_scene_elara", "approved_masters_only", "identity_face_only_kael", "master_only"):
         raise VideoForgeError("BIBLE_MASTER_UNSUPPORTED_REFERENCE_MODE")
     # Correção de figurino: ao criar Kael moderno, anexar SÓ o close facial
     # original. A imagem medieval inteira contaminou a primeira versão com capa.
     if mode == "identity_face_only_kael" and (cat, item_id) != ("personagens", "kael"):
         raise VideoForgeError("BIBLE_FACE_ONLY_CHARACTER_INVALID")
-    if mode in ("approved_masters_only", "identity_face_only_kael"):
+    if mode in ("approved_masters_only", "identity_face_only_kael", "master_only"):
         references, blobs = [], []
     else:
         references = [{
@@ -70,6 +70,8 @@ def edit_payload(asset: dict, prompt: str, model: str, size: str, root: Path = R
         raise VideoForgeError("BIBLE_FACE_ONLY_CANNOT_ATTACH_MEDIEVAL_BODY")
     if mode == "approved_masters_only" and not extras:
         raise VideoForgeError("BIBLE_INTERACTION_MASTERS_REQUIRED")
+    if mode == "master_only" and not extras:
+        raise VideoForgeError("BIBLE_MASTER_ONLY_SOURCE_REQUIRED")
     if extras:
         import hashlib
         from .production_art import archived_reference
