@@ -1,0 +1,51 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-kael-casual-antes-v1",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-kael-casual-antes-v1.png",
+  "biblia_item_id": "kael",
+  "biblia_categoria": "personagens",
+  "size": "1024x1536",
+  "sha256": "84ff479d3699d05008c31ba659c6f9d6a135034ed3e571201925436aa3f50ae6",
+  "model": "gpt-image-2",
+  "actual_width": 1024,
+  "actual_height": 1536,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": true,
+  "technical_qa": "valid_png_dimensions",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 3,
+  "source_originals_sha_verified": [
+    {
+      "actor": "estilo_do_palacio",
+      "id": "approved-visual-reference",
+      "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+      "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "source_style_approved": true,
+      "source_spear_pose_rejected": true
+    },
+    {
+      "actor": "kael",
+      "id": "ref-kael-close-c12",
+      "path": "assets/referencias/chat-aprovadas/kael-close-salao.png",
+      "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f"
+    },
+    {
+      "actor": "biblia_mestre",
+      "id": "biblia-kael-medieval-base-v1",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+      "source_spear_pose_rejected": false,
+      "human_visual_approval_pending": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}

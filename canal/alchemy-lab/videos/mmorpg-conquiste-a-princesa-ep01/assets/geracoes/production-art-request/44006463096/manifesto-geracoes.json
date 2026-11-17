@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-art-request",
+  "github_run_id": 44006463096,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "biblia-kael-casual-antes-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "84ff479d3699d05008c31ba659c6f9d6a135034ed3e571201925436aa3f50ae6",
+      "bytes": 2060582,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
