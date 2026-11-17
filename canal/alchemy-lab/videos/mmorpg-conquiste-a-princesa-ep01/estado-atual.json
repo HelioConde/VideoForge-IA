@@ -2155,5 +2155,33 @@
     "art_source_policy": "proxy_generated_separate_image",
     "renders_executed": false,
     "human_approval_changed": false
+  },
+  "skill_routing_six_areas_20261117": {
+    "date": "2026-11-17",
+    "catalog_count": 8,
+    "coordinador": ".agents/skills/videoforge-dorama-remake/SKILL.md",
+    "specialist_skill_paths": [
+      ".agents/skills/videoforge-animation-parts/SKILL.md",
+      ".agents/skills/videoforge-rig-2d-three/SKILL.md",
+      ".agents/skills/videoforge-character-acting/SKILL.md",
+      ".agents/skills/videoforge-qa-and-checkpoint/SKILL.md",
+      ".agents/skills/videoforge-shot-direction/SKILL.md",
+      ".agents/skills/videoforge-audio-editing/SKILL.md",
+      ".agents/skills/videoforge-technical-research/SKILL.md"
+    ],
+    "new_skills": [
+      "videoforge-shot-direction",
+      "videoforge-audio-editing",
+      "videoforge-technical-research"
+    ],
+    "external_sources_status": "references_only_not_installed",
+    "license_note": "OpenMontage skill metadata MIT but repository license AGPL-3.0; do not copy code without provenance/legal check",
+    "image_parts_source": "proxy_generated_separate_image",
+    "rig_clock": "useCurrentFrame",
+    "new_executable_agents_created": false,
+    "pending": "apply skills in actual autonomous production workflow and verify runs",
+    "no_new_images_audio_rig_or_mp4_from_this_change": true,
+    "human_approval": false,
+    "youtube_uploaded": false
   }
 }
