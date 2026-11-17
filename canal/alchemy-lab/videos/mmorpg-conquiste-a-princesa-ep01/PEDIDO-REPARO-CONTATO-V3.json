@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/ep01-contact-repair-request/v1",
+  "shot_id": "C01-P02",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "requested_version": "v3",
+  "source_mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "input_original": "assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png",
+  "rejected_panels": [
+    2,
+    4
+  ],
+  "scope": "corrigir contato mão inferior e bainha por fora da roupa, sem deslocar espada e manter mão superior segurando cabo",
+  "instruction": "Não utilizar a antiga bainha 981x1602 nem as seis variantes deslocadas. Gerar somente uma edição candidata da imagem-mãe. Validar original e patch localizado por SHA antes de qualquer rig.",
+  "retain_previous_source": true,
+  "max_chargeable_calls_per_run": 1,
+  "retry_on_429": false,
+  "human_approval": false,
+  "youtube_upload": false,
+  "mp4_generated": false,
+  "candidate_only": true
+}
