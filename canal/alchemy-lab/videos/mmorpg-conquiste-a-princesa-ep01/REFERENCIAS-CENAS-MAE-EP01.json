@@ -1,0 +1,441 @@
+{
+  "schema": "videoforge/episode-layered-shot-references/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shots_count": 40,
+  "scene_mothers_to_generate": 39,
+  "reference_policy": "sha256_original_png_only_never_old_group_pose_v3_v4",
+  "auto_visual_approval": false,
+  "max_chargeable_calls_per_run": 1,
+  "youtube_upload": false,
+  "shots": [
+    {
+      "id": "C01-P01",
+      "black": true,
+      "reference_asset_ids": []
+    },
+    {
+      "id": "C01-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-carrasco-base-v2",
+        "biblia-espada-carrasco-base-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C01-P03",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-aldric-tribunal-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C01-P04",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-aldric-tribunal-v1",
+        "biblia-guarda-esquerdo-cerimonial-v1",
+        "biblia-guarda-direito-cerimonial-v1",
+        "biblia-lanca-guarda-completa-v2",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C01-P05",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-guarda-esquerdo-cerimonial-v1",
+        "biblia-guarda-direito-cerimonial-v1",
+        "biblia-lanca-guarda-completa-v2",
+        "biblia-lanca-guarda-empunhadura-v2"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C02-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-aldric-tribunal-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C02-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C03-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C03-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C04-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-casual-antes-v2",
+        "biblia-quarto-kael-monitor-aceso-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C04-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-monitor-base-v1",
+        "biblia-quarto-kael-monitor-aceso-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C04-P03",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-casual-antes-v2",
+        "biblia-quarto-kael-monitor-aceso-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C05-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-estrada-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C05-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-estrada-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C05-P03",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-estrada-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C06-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-figurantes-base-v2",
+        "biblia-mercado-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C06-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-mercado-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C07-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C07-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-mascarado-1-base-v2",
+        "biblia-mascarado-2-base-v2",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C07-P03",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-encapuzada-v1",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C08-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-encapuzada-v1",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C08-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-mascarados-base-v2",
+        "biblia-carrinho-base-v1",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C08-P03",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-kael-medieval-base-v1",
+        "biblia-mascarados-base-v2",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C08-P04",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-mascarados-base-v2",
+        "biblia-carrinho-base-v1",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C09-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-encapuzada-v1",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C09-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-encapuzada-v1",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C10-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C10-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-beco-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C11-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-guarda-esquerdo-cerimonial-v1",
+        "biblia-guarda-direito-cerimonial-v1",
+        "biblia-portao-real-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C11-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-guarda-esquerdo-cerimonial-v1",
+        "biblia-portao-real-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C11-P03",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-guarda-esquerdo-cerimonial-v1",
+        "biblia-guarda-direito-cerimonial-v1",
+        "biblia-portao-real-base-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C12-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C12-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-revelada-v1",
+        "biblia-aldric-tribunal-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C12-P03",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-revelada-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C12-P04",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-elara-revelada-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C13-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-revelada-v1",
+        "biblia-aldric-tribunal-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C13-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C14-P01",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-elara-revelada-v1",
+        "biblia-aldric-tribunal-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C14-P02",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-elara-revelada-v1",
+        "biblia-aldric-tribunal-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    },
+    {
+      "id": "C14-P03",
+      "black": false,
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "source_authority": "sha_checked_archived_bible",
+      "portrait_v1_rejected_never_attached": true
+    }
+  ]
+}
