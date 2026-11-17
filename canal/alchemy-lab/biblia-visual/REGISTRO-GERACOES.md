@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**37 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**38 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -41,6 +41,7 @@
 | [biblia-beco-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009676311/biblia-beco-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`83c10082fb1a…\` | [#44009676311](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009676311) |
 | [biblia-portao-real-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009839428/biblia-portao-real-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`e68a242a4cce…\` | [#44009839428](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009839428) |
 | [biblia-castelo-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010033081/biblia-castelo-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`aa5e7a4b4947…\` | [#44010033081](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010033081) |
+| [biblia-coroa-aldric-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010195072/biblia-coroa-aldric-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`303128cd9231…\` | [#44010195072](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010195072) |
 
 ## Regras de consulta
 

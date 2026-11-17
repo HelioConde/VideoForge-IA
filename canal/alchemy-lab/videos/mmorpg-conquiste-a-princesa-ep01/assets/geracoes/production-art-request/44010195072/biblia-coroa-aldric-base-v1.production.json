@@ -1,0 +1,37 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-coroa-aldric-base-v1",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-coroa-aldric-base-v1.png",
+  "biblia_item_id": "coroa-aldric",
+  "biblia_categoria": "objetos",
+  "size": "1024x1536",
+  "sha256": "303128cd923194fade2ff7fdee95da9b8527a3310b65ab6c6f9e0b553205ff17",
+  "model": "gpt-image-2",
+  "actual_width": 1774,
+  "actual_height": 887,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 1,
+  "source_originals_sha_verified": [
+    {
+      "actor": "biblia_mestre",
+      "id": "biblia-aldric-tribunal-v1",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005400386/biblia-aldric-tribunal-v1.png",
+      "sha256": "37c48afcaa240f03406c280af1af4ca49304ead552f0dd89f0bbb25d0080e417",
+      "source_spear_pose_rejected": false,
+      "human_visual_approval_pending": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": null,
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}
