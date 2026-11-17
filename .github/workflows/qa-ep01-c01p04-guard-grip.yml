@@ -1,0 +1,59 @@
+name: "VideoForge - QA das lanças C01-P04 (sem IA)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/qa-ep01-c01p04-guard-grip.py'
+      - '.github/workflows/qa-ep01-c01p04-guard-grip.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  visual-guard-review:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Pillow para visualizacao local gratuita
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Validar SHA da cena original e gerar closes de QA
+        run: python scripts/qa-ep01-c01p04-guard-grip.py
+      - name: Arquivar JPEG de QA e metadados
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+          git add "$EP/QA-C01-P04-LANCAS-CONTATO.jpg" "$EP/QA-C01-P04-LANCAS-CONTATO.json"
+          if git diff --cached --quiet; then
+            echo "C01P04_QA_ALREADY_ARCHIVED"
+            exit 0
+          fi
+          git config user.name "videoforge-qa[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "qa(ep01): criar prancha C01-P04 com pegada das lanças"
+          for i in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            if ! git rebase origin/main; then git rebase --abort || true; exit 1; fi
+          done
+          exit 1
+      - name: Preservar QA para revisar
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-c01p04-guard-qa-${{ github.run_id }}
+          path: |
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-LANCAS-CONTATO.jpg
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-LANCAS-CONTATO.json
+          retention-days: 14
+          if-no-files-found: warn
