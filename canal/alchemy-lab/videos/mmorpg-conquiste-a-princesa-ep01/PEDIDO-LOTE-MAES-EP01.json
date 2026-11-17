@@ -1,0 +1,25 @@
+{
+  "schema": "videoforge/ep01-mother-fill-queue/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "status": "requested_generation_of_missing_scene_mothers",
+  "max_new_images": 17,
+  "allow_automatic_proxy_calls": true,
+  "single_paid_image_per_child_workflow": true,
+  "retry_on_failure": false,
+  "youtube_upload": false,
+  "approved_for_final_render": false,
+  "start_after_checkpoint": "22/39",
+  "next_expected_shot": "C08-P04",
+  "reference_policy": "BIBLIA_VISUAL_SHA_VERIFIED_2D_ANIME_MANHWA_SEMIREALISTA",
+  "persistence": "cada PNG e arquivo independente arquivado com SHA256 no canal e checkpoint",
+  "human_visual_approval_required": true,
+  "stop_conditions": [
+    "all_39_visual_mothers_archived",
+    "first_child_run_failure",
+    "missing_reference_sha",
+    "invalid_inventory",
+    "max_new_images_reached"
+  ],
+  "note": "Aprovacao do estilo nao equivale a aprovacao anatomica por imagem. Gerar apenas maes. Pecas animaveis RGBA e rig ficam para fase posterior."
+}
