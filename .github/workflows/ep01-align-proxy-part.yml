@@ -41,14 +41,16 @@ jobs:
           file=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-ALINHAMENTO-PROXY-EP01.json')
           req=json.loads(file.read_text(encoding='utf-8'))
           if (req.get('schema')!='videoforge/ep01-proxy-part-alignment-request/v1'
-              or req.get('shot_id')!='C01-P03' or req.get('part')!='background-clean'
+              or not isinstance(req.get('shot_id'),str)
+              or not isinstance(req.get('part'),str)
               or req.get('no_provider_calls') is not True
               or req.get('allow_crop_or_resize') is not False
               or req.get('max_bottom_rows_to_add')!=2
               or req.get('youtube_upload') is not False):
               raise SystemExit('EP01_ALIGNMENT_REQUEST_NOT_APPROVED_SCOPE')
           registry=json.loads(Path('canal/alchemy-lab/biblia-visual/REGISTRO-GERACOES.json').read_text())
-          already=any(row.get('asset')=='c01-p03-background-clean-native-aligned-v1'
+          desired=req['shot_id'].lower()+'-'+req['part']+'-native-aligned-v1'
+          already=any(row.get('asset')==desired
               and '/production-proxy-separate-alignment-v1/' in row.get('arquivo','')
               for row in registry['geracoes'])
           if not already:
@@ -60,11 +62,13 @@ jobs:
               print('EP01_ALIGN_ALREADY_ARCHIVED_STOP_WITHOUT_DUPLICATE')
           with open(os.environ['GITHUB_OUTPUT'],'a') as out:
               out.write('execute='+('false' if already else 'true')+'\n')
+              out.write('shot_id='+req['shot_id']+'\n')
+              out.write('part='+req['part']+'\n')
           PY
       - name: Preencher apenas a borda inferior mantendo todos pixels da IA intactos
         if: steps.inspect.outputs.execute == 'true'
         run: |
-          python -m videoforge.ep01_align_proxy_part --shot-id C01-P03 --part background-clean
+          python -m videoforge.ep01_align_proxy_part --shot-id "${{ steps.inspect.outputs.shot_id }}" --part "${{ steps.inspect.outputs.part }}"
       - name: Salvar PNG alinhado versionado e proveniencia
         if: always() && steps.inspect.outputs.execute == 'true'
         shell: bash
