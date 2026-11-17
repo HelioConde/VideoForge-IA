@@ -2,6 +2,10 @@ name: "VideoForge - Biblia Visual galeria de revisao"
 run-name: "Bíblia Visual / galeria de PNGs reais"
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/qa-visual-bible-gallery.yml'
   workflow_run:
     workflows: ["VideoForge - Biblia Visual gerar mestres em lotes"]
     types: [completed]
@@ -12,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   make-gallery:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.head_branch == 'main'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
