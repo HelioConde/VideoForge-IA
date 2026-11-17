@@ -1,3 +1,11 @@
+## 2026-11-17 — Mães C01-P03/P04, background e Kael do proxy + alinhamento técnico
+
+- Criadas imagens-mãe C01-P03 (#44073592014, SHA `89bc3b1b...`) e C01-P04 (#44075357179, SHA `156a9376...`), com 3 e 6 referências da Bíblia respectivamente. São candidatas, não arte aprovada. Mãe V1 C01-P02 segue rejeitada, V3/V4 em revisão.
+- Criados `videoforge/ep01_proxy_separate_parts.py`, workflow `ep01-proxy-separate-part-by-request.yml` e testes. Gerador desenha novo PNG por background/figura/objeto, com referências SHA verificadas; máscara/crop não produz sprite final.
+- Background C01-P03 via proxy #44074495093 e Kael separado RGBA #44075692204: ambos em 941×1671, falharam QA de igualdade de canvas. Preservados originais, corrigida somente 1 linha inferior por processo **offline auditável**: #44074895225 e #44075946150 (941×1672), mantendo todos os pixels da IA. Nenhuma IA paga para alinhamento.
+- Ajustes de confiabilidade: testes históricos de C01-P02 isolados, validação por produtor para não aceitar máscara V1, Pillow carregado antes da chamada paga, verificação de request via SHA do evento em vez de HEAD. Primeira falha local de Pillow ocorreu **depois** de retorno do proxy e não salvou o PNG; corrigida antes de próximas chamadas. Registro completo [RESUMO-PRODUCAO-IMAGENS-EP01.md](RESUMO-PRODUCAO-IMAGENS-EP01.md).
+- 39 visuais planejados, 3 mães originais registradas (somente C01-P03/P04 novas nesta etapa); 36 ainda sem mãe. Sem aprovações visuais, rig, MP4 ou publicação.
+
 ## 2026-11-17 — Seis especialidades com oito skills locais validadas
 
 - Incorporadas 3 skills originais em `.agents/skills/`: `videoforge-shot-direction` (câmera/continuidade), `videoforge-audio-editing` (narração, áudio, SFX e montagem) e `videoforge-technical-research` (versões/licenças/segurança). Preservadas as 5 preexistentes: arte/peças, rig 2D, atuação, QA independente e gerente de dorama.
