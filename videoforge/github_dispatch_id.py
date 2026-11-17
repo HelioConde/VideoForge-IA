@@ -15,8 +15,8 @@ def extract_run_id(stdout: str, repository: str) -> int | None:
     if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository):
         return None
     pattern = re.compile(
-        r"https://github\\.com/" + re.escape(repository)
-        + r"/actions/runs/([1-9][0-9]*)(?:\\b|/)"
+        r"https://github\.com/" + re.escape(repository)
+        + r"/actions/runs/([1-9][0-9]*)(?:\b|/)"
     )
     found = {int(item) for item in pattern.findall(stdout)}
     return next(iter(found)) if len(found) == 1 else None
