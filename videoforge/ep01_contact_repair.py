@@ -176,7 +176,20 @@ def generate(url:str,model:str="gpt-image-2",root:Path=ROOT)->dict:
         draw=ImageDraw.Draw(alpha)
         draw.rectangle((ROI[0]+18,ROI[1]+18,ROI[2]-18,ROI[3]-18),fill=255)
         alpha=alpha.filter(ImageFilter.GaussianBlur(radius=17))
+        # Gaussian blur extends beyond the rectangle. Enforce a HARD
+        # containment fence at ROI, so ALL out-of-ROI original pixels
+        # are byte-for-byte identical despite feathering.
+        allowed=Image.new("L",source_img.size,0)
+        ImageDraw.Draw(allowed).rectangle(ROI,fill=255)
+        alpha=ImageChops.multiply(alpha,allowed)
         patched=Image.composite(edit_img,source_img,alpha)
+        # Verify all four strips OUTSIDE ROI without resampling.
+        outside=Image.new("L",source_img.size,255)
+        ImageDraw.Draw(outside).rectangle(ROI,fill=0)
+        bleed=ImageChops.multiply(
+            ImageChops.difference(source_img,patched).convert("L"),outside)
+        if bleed.getbbox() is not None:
+            raise VideoForgeError("EP01_REPAIR_OUTSIDE_REGION_PIXELS_CHANGED")
         patch_file=folder/(PATCH_ASSET+".png")
         patched.save(patch_file,"PNG",optimize=True)
         blob=patch_file.read_bytes()
