@@ -1,3 +1,11 @@
+## 17/11/2026 — QA detectou desvios V1; preparar reparos V2 em série
+
+- A [primeira prancha](../../biblia-visual/GALERIA-EP01.md) mostrou Kael casual/antes ainda medieval com capa vinho e lança de guarda V1 com base de pedestal; variantes base/empunhadura V1 não são closes apropriados. **Observações preliminares**, não aprovação/rejeição humana.
+- [Detalhes e SHAs](../../biblia-visual/QA-VISUAL-CANDIDATOS.md); [quatro correções programadas](../../biblia-visual/FILA-REPAROS-EP01.json): Kael casual V2 com rosto original, lança completa V2 com ponteira fina, base V2 e empunhadura V2 derivados apenas da lança V2.
+- `videoforge.visual_bible_master` agora aceita `identity_face_only_kael` (não anexa figurino medieval) e `master_only` (close de objeto usando apenas seu mestre SHA). Interações com lanças exigem V2 aprovado.
+- O orquestrador `visual-bible-batch.yml` atualiza galeria por lote e, somente após 42 mestres independentes, despacha `visual-bible-repairs.yml` (1 imagem/run, sem repetição, sem retry/429 e sem concorrência com a fila principal).
+- A publicação YouTube e os 40 planos seguem bloqueados até aprovação visual e contato da mão na parte inferior da haste das duas lanças.
+
 ## Complemento — 16/11/2026: referências-mestre e mãos/lanças
 
 - Fila GitHub operacional com 42 variantes independentes, disparadas por lotes de 4 sequenciais: [visual-bible-batch.yml](https://github.com/HelioConde/VideoForge-IA/blob/main/.github/workflows/visual-bible-batch.yml) e `../../biblia-visual/FILA-GERACAO-MESTRES.json`.
