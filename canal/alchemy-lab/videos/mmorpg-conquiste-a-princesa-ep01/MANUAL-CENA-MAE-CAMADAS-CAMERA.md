@@ -10,27 +10,30 @@ Para cada tomada do roteiro, usar as referências SHA-verificadas da Bíblia Vis
 
 Exemplo C01-P04: Kael ajoelhado, rei ao fundo, dois guardas laterais com suas lanças fazendo X. A mão de **cada guarda deve envolver, com polegar e quatro dedos, o terço inferior da própria haste** próximo à base. A ponta da lança aponta ao centro e para cima. **Nunca anexar V3/V4 rejeitadas como referência física**; usar guardas individuais e lança portátil V2.
 
-## 2. Gerar as separações a partir da mesma imagem-mãe
+## 2. Pedir ao proxy para GERAR CADA imagem separada (não recortar)
 
-O proxy (ou segmentação/reconstrução verificada) recebe a **cena-mãe original** como entrada obrigatória. Produzir:
+**Nova decisão do responsável em 17/11/2026.** A imagem-mãe serve como **referência visual e espacial** enviada ao proxy; os arquivos animáveis devem ser **novas imagens geradas pelo proxy** em pedidos independentes, e NÃO segmentações, máscaras de polígonos ou crops locais de partes da imagem-mãe. O contrato de maior prioridade está em [Contrato de camadas geradas pelo proxy](../../../../docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md).
 
-1. **`scene-mother.png`** — composição integral, imutável como fonte de comparação e edição.
-2. **`background-reconstructed.png`** — mesmo cenário e perspectiva, preenchendo as áreas antes ocultas; sem personagem/objeto de primeiro plano duplicado.
-3. **`characters/<identidade>.png`** — um PNG RGBA transparente por personagem que aparece no plano, com posição e escala correspondentes à cena-mãe. Mãos/partes articuláveis são separadas ou mascaradas **de acordo com necessidade de movimento**, não como novo desenho de pose independente.
-4. **`objects/<objeto>.png`** — objetos movíveis em RGBA (espada, bainha, lanças, broche, carrinho etc.). Itens imóveis (trono/parede) podem ficar em uma camada de profundidade do cenário, evitando chamadas inúteis.
-5. **`masks/` + `rig.json` + `camera.json` + `qa.json`** — máscaras alfa reais, pivôs/hierarquia, posição/oclusão, trajetória de câmera, origem SHA e avaliação visual.
+1. **`scene-mother.png`** — quadro final completo, imutável, gerado primeiro a partir da Bíblia Visual.
+2. **`background-clean.png`** — pedir ao proxy para **gerar o mesmo cenário vazio** e completar o que estava oculto por pessoas/objetos, sem mudar arquitetura, perspectiva, iluminação ou câmera.
+3. **`characters/<identidade>.png`** — pedir ao proxy para **gerar cada personagem separadamente** em PNG RGBA com transparência verdadeira, respeitando identidade, roupa, expressão, escala, posição, luz, perspectiva e proporções da cena-mãe. Um guarda por arquivo, não grupos achatados.
+4. **`objects/<objeto>.png`** — pedir ao proxy para **gerar individualmente** espada, bainha, lanças e todos os outros props móveis com transparência e geometria completa, incluindo partes antes ocultas que serão necessárias ao movimento.
+5. **`characters/<identidade>/rig-parts/<parte>.png`** — quando houver movimento, pedir ao proxy para gerar também cabeça, olhos, boca, braços, mãos, cabelo, capa e partes articuláveis, preservando alinhamento com o personagem e a tomada. Não criar bibliotecas obrigatórias de poses soltas.
+6. **`rig.json`, `camera.json`, `qa.json`** — coordenadas e SHAs, pivôs, hierarquia, profundidade/oclusão, ângulos e focos de câmera. Máscaras e recortes locais são permitidos **somente como ferramentas para QA/visualização de diferenças**, jamais como sprites finais para ossos.
 
-**Invariantes:** a soma de camadas deve reconstruir a composição sem personagens duplicados, sem bordas brilhantes, transparência falsa ou deformação de rostos/roupas. Nenhuma camada de outro enquadramento pode ser inserida sem validar perspectiva, tamanho e luz.
+**Cada solicitação ao proxy usa a imagem-mãe SHA-verificada mais as referências pertinentes da Bíblia.** Gerar novos pixels, em vez de apenas selecionar pixels existentes, é crucial para desenhar a parte escondida atrás de roupa, mãos, objetos e cabelo. Nunca inserir personagem, espada ou cenário de outro enquadramento desconectado.
 
-Os arquivos e registros ficam no próprio canal, priorizando o caminho já usado pelo motor de tomadas `assets/planos/<CXX-PYY>/`, com links dos registros de cena e da Bíblia Visual. Guardar hash, job, custo/chamada, intenção da imagem, versão e estado de QA por arquivo; não declarar arte concluída apenas porque houve retorno HTTP 200.
+**Invariantes:** reconstruir a composição da tomada, validar fidelidade das peças, espessura das armas, pegada da mão e oclusões, sem personagens duplicados, halos, buracos nem mudanças de rosto/roupa. Não aprovar a camada só por SHA, PNG válido ou diferença média RGB. Conservar a versão rejeitada e pedir nova geração específica caso a IA mude a identidade ou o desenho canônico.
+
+Cada PNG gerado fica no canal com identidade, origem `proxy_generated_separate_image`, SHA do próprio PNG, SHA da mãe e das referências, job, estado de QA e decisão visual. **Os recortes antigos do C01-P02 são históricos e não são permitidos como fonte para rig.**
 
 ## 3. Animar pelo rig: sem etapa de poses obrigatória
 
-Mover personagens **pelas peças extraídas da própria cena**: olhos/piscar, boca/lip-sync, pescoço/cabeça, tronco, antebraço, mãos, cabelo, capa, pernas, roupas e itens anexados aos pivôs corretos. Remotion e rig/malha 2D/Three.js compõem movimentos e continuidade entre frames.
+Mover personagens **pelas peças independentes geradas pelo proxy com a cena-mãe como referência**: olhos/piscar, boca/lip-sync, pescoço/cabeça, tronco, antebraço, mãos, cabelo, capa, pernas, roupas e itens anexados aos pivôs corretos. Remotion e rig/malha 2D/Three.js compõem movimentos e continuidade entre frames.
 
 Ação da lança: a haste portátil V2 é um objeto separado. Seu pivô/constraint deve ficar acoplado à mão do guarda no **terço inferior/base** durante toda a animação. Verificar frames extremos, transições e contato fechado de dedos. **Não substituir por lanceiro imóvel com haste flutuante.**
 
-Para ajoelhar, sentar, girar, tirar capuz ou desembainhar, ajustar os pivôs das camadas existentes e a oclusão. **Se um movimento exigir anatomia que a cena-mãe não contém ou ficar visualmente impossível com rig**, refazer **a própria cena-mãe para aquele enquadramento**, com novos recortes vinculados ao mesmo conjunto de referências; não instituir biblioteca de poses como pré-requisito.
+Para ajoelhar, sentar, girar, tirar capuz ou desembainhar, ajustar os pivôs das camadas existentes e a oclusão. **Se um movimento exigir anatomia que a cena-mãe não contém ou ficar visualmente impossível com rig**, refazer **a própria cena-mãe para aquele enquadramento**, com novas imagens separadas solicitadas ao proxy e vinculadas ao mesmo conjunto de referências; não instituir biblioteca de poses como pré-requisito.
 
 ## 4. Direção de câmera é obrigatória
 
