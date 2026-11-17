@@ -61,18 +61,42 @@ def run():
                 thumb=ImageOps.contain(checked(entry["file"],entry["sha256"]),
                                       (229,437),Image.Resampling.LANCZOS)
                 board.paste(thumb,(x+(250-thumb.width)//2,y+35))
-                pen.text((x+11,y+474),"GERADA - REVISÃO PENDENTE",
-                         font=font(11),fill="#97600a")
+                pen.text((x+11,y+474),
+                         "V1 REPROVADA - VER ALTERNATIVAS" if shot in {"C01-P02","C01-P03","C01-P04"}
+                         else "GERADA - REVISÃO PENDENTE",
+                         font=font(10),fill="#a33024" if shot in {"C01-P02","C01-P03","C01-P04"} else "#97600a")
             else:
                 pen.text((x+35,y+231),"PENDENTE",font=font(20),fill="#ab3425")
         dest=ROOT/REL/f"{NAME}-{page+1:02}.jpg"
         board.save(dest,"JPEG",quality=88,optimize=True)
         sheets.append({"file":dest.name,"sha256":sha256(dest.read_bytes()).hexdigest()})
+    alternates=obj.get("versioned_mother_candidates",[])
+    if alternates:
+        board=Image.new("RGB",(1350,625),"#eae8e3")
+        pen=ImageDraw.Draw(board)
+        pen.text((26,16),"EP01 - C01 | VERSÕES ALTERNATIVAS (NÃO APROVADAS)",
+                 font=font(23),fill="#161616")
+        pen.text((26,53),"Comparar com originais reprovadas: mãos, espada, bainha e posição do elenco.",
+                 font=font(14),fill="#a33024")
+        for i,entry in enumerate(alternates[:5]):
+            x=25+i*263;y=93
+            pen.rounded_rectangle((x,y,x+250,y+500),radius=8,fill="#ffffff")
+            pen.text((x+10,y+8),entry["asset"][:25],font=font(11),fill="#222222")
+            thumb=ImageOps.contain(checked(entry["file"],entry["sha256"]),
+                                   (229,443),Image.Resampling.LANCZOS)
+            board.paste(thumb,(x+(250-thumb.width)//2,y+34))
+            pen.text((x+10,y+477),"CANDIDATA / QA PENDENTE",
+                     font=font(11),fill="#a33024")
+        out=ROOT/REL/(NAME+"-C01-ALTERNATIVAS.jpg")
+        board.save(out,"JPEG",quality=88,optimize=True)
+        sheets.append({"file":out.name,"sha256":sha256(out.read_bytes()).hexdigest()})
     result={"schema":"videoforge/ep01-contact-sheet-review/v1",
             "channel":CHANNEL,"video_id":VIDEO,"visual_shots":39,
             "mother_count":obj["visual_shots_with_original_mother"],
             "remaining":obj["visual_shots_missing_original_mother"],
-            "sheets":sheets,"human_visual_approval":False,
+            "sheets":sheets,"alternate_candidate_count":len(alternates),
+            "historical_rejected_original_shots":["C01-P02","C01-P03","C01-P04"],
+            "human_visual_approval":False,
             "rig_ready":False,"youtube_uploaded":False,
             "image_generation_calls":0,"no_sprite_extraction":True,
             "manual_checks":["personagem consistente","mãos e anatomia",
