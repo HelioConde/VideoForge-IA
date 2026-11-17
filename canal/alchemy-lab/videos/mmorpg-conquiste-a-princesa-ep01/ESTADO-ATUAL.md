@@ -1,3 +1,10 @@
+## Complemento — 16/11/2026: referências-mestre e mãos/lanças
+
+- Fila GitHub operacional com 42 variantes independentes, disparadas por lotes de 4 sequenciais: [visual-bible-batch.yml](https://github.com/HelioConde/VideoForge-IA/blob/main/.github/workflows/visual-bible-batch.yml) e `../../biblia-visual/FILA-GERACAO-MESTRES.json`.
+- As variações de Kael, Elara, sala de trono, quarto, lança e broche adicionam `additional_master_asset_ids` para anexar PNG-fonte original, verificado por SHA. Os derivados não dependem só de texto e do quadro com pose defeituosa.
+- 12 candidatas de interações físicas agora estão **cadastradas mas não autorizadas a gerar sem revisão humana**: `approved_masters_only` exige fontes mestre aprovadas com evidência; não anexa imagem V3/V4 rejeitada. Lança deve estar presa na BASE/terço inferior, com contato fechado de mão e pertencimento correto a cada guarda.
+- Arquivamento e QA são separados de promoção canônica. As 40 tomadas de EP01 e publicação YouTube continuam em hold. Não repetir produção de arquivo com SHA válido.
+
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
 ## 16/11/2026 — Pedido de gerar todas as imagens (lotes GitHub)
