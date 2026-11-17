@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Salão do trono vazio gerado pelo GitHub e registrado na Bíblia
+
+- [Run #44002126578](https://github.com/HelioConde/VideoForge-IA/actions/runs/44002126578) **SUCCESS** após falhas pré-geração dos runs 44001843499 e 44001957757 por chaves antigas de QA no `pedido-geracao-arte.json`; ambas falhas ocorreram ANTES de gerar qualquer PNG, contrato corrigido no commit `9f15fb346e8b47cc4428da83913eb733dc954cab`.
+- **Primeiro master real**: [biblia-sala-do-trono-vazio-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png) com 941×1672 pixels, 2.593.365 bytes, SHA-256 `1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee`; fonte C01-P04 V3 anexada com SHA **apenas** para estilo/arquitetura/iluminação, não para copiar pose dos guardas/lanças. Não resamplear pixels.
+- PNG, manifesto e `.production.json` arquivados no GitHub. `REGISTRO-GERACOES.json` passou de 6 para **7 imagens**, `cenarios/sala-do-trono/status.json` recebeu run e histórico; `status=em_revisao`, `aprovacao_mestra=false`. **Inspeção visual humana ainda pendente**: cenário realmente vazio (sem vestígios de pessoas, lanças e sombras), arquitetura, trono e iluminação. Nenhum mestre aprovado por sucesso de Actions.
+- Próximo marco: revisar o master, preparar identidades separadas de Kael, Aldric, Elara e dois guardas, depois objetos e demonstrações anatômicas de pegar cada lança pela **base**. [Plano detalhado](../../biblia-visual/PLANO-MESTRES-EP01.md). Manter as 37 tomadas suspensas e não declarar MP4 oficial/YouTube.
+
 ## 16/11/2026 — Bíblia Visual estruturada e registro automático de imagens
 
 - Criada [Bíblia Visual do canal](../../biblia-visual/README.md) com **39 fichas individuais e status**: 11 personagens (Kael, Aldric, Elara, rainha futura, guardas e secundários), 7 cenários, 11 objetos, 10 interações; [fila de todas as 40 tomadas](../../biblia-visual/FILA-EP01.json).
