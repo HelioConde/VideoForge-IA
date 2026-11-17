@@ -1,0 +1,80 @@
+name: "VideoForge - EP01 QA eixo Kael Trono V3"
+run-name: "EP01 QA C01 V2 x V3: 3 candidatas"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-C01-EIXO-TRONO-V3.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ep01-qa-throne-v3-main
+  cancel-in-progress: false
+
+jobs:
+  qa-c01-orientacao:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Pillow para miniaturas locais gratuitas
+        run: python -m pip install --quiet Pillow==11.2.1
+      - name: Conferir os 3 PNGs V3 arquivados e montar comparativo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_throne_orientation_v3 -v
+          python scripts/qa_ep01_throne_orientation_v3.py
+      - name: Registrar QA e links no estado principal sem aprovar arte
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          root=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
+          state=root/"ESTADO-ATUAL.md"
+          marker="## 17/11/2026 — Correção de orientação Kael/Trono V3 (3 candidatos)"
+          original=state.read_text(encoding="utf-8")
+          if marker not in original:
+              lines=[
+                marker,"",
+                "- **Três imagens novas V3 geradas no GitHub a partir da Bíblia Visual e fontes V2**, originais preservados.",
+                "- [C01-P03 V3](assets/geracoes/production-scene-mother-orientation-v3/44151964491/c01-p03-scene-mother-facing-throne-v3.png): Kael ajoelhado voltado ao rei de pé; sem guardas nem lanças.",
+                "- [C01-P04 V3](assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png): Kael orientado ao rei sentado; 2 guardas e pegadas na base das lanças.",
+                "- [C01-P04 V3 alternativa](assets/geracoes/production-scene-mother-orientation-v3/44152731865/c01-p04-scene-mother-facing-throne-v3-alt.png): variante de câmera para comparação.",
+                "- [Prancha comparativa QA V2 × V3](QA-C01-EIXO-TRONO-V3.jpg) e [metadados SHA](QA-C01-EIXO-TRONO-V3.json).",
+                "- [Regras e escopo da correção](CORRECAO-C01-EIXO-KAEL-TRONO-V3.md).",
+                "- **Todas continuam candidatas: aprovação visual humana, sprites RGBA, rig, MP4 e publicação pendentes.**",
+                "- A geração V3 não substitui silenciosamente o inventário 39/39 nem aprova os antigos arquivos.",
+                "",""]
+              state.write_text("\n".join(lines)+original,encoding="utf-8")
+          PY
+          ep='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f "$ep/QA-C01-EIXO-TRONO-V3.jpg" "$ep/QA-C01-EIXO-TRONO-V3.json" "$ep/ESTADO-ATUAL.md"
+          if git diff --cached --quiet; then
+            echo 'EP01_QA_V3_ALREADY_ARCHIVED'
+            exit 0
+          fi
+          git commit -m "qa(ep01): comparar orientacao Kael trono V2 x V3 sem aprovacao automatica"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-throne-orientation-v3-qa
+          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-EIXO-TRONO-V3*
+          if-no-files-found: warn
+          retention-days: 30
