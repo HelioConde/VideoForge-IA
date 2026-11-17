@@ -1,0 +1,54 @@
+name: "VideoForge - EP01 C01-P04 V3 contato lanças QA"
+run-name: "EP01 C01-P04 / testar contato das lanças sem IA"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-LANCAS-C01-P04-V3.json'
+permissions:
+  contents: write
+concurrency:
+  group: ep01-c01p04-v3-spear-qa-main
+  cancel-in-progress: false
+jobs:
+  check-rigid-spears:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet 'Pillow==11.3.0'
+      - name: Conferir originais e criar candidatas de lança para QA (zero IA)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/qa_ep01_c01p04_v3_spear_registration.py
+      - name: Arquivar somente pranchas e metadados
+        shell: bash
+        run: |
+          set -euo pipefail
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f "$ep/QA-C01-P04-V3-PEGADA-LANCAS.jpg" "$ep/QA-C01-P04-V3-PEGADA-LANCAS-PREVIEW.jpg" "$ep/QA-C01-P04-V3-PEGADA-LANCAS.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(ep01): registrar 3 poses de lanças rigidas sem aprovar contato'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-c01p04-v3-spear-position-qa
+          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-PEGADA-LANCAS*
+          retention-days: 30
+          if-no-files-found: warn
