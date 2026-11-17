@@ -1,3 +1,11 @@
+## 17/11/2026 — V4 de contato gerada e comparada, continuação bloqueada no rig
+
+- **Geração V4 executada com sucesso:** [Actions #44063304090](https://github.com/HelioConde/VideoForge-IA/actions/runs/44063304090), arquivados dois PNGs candidatos de 941×1672 (edição SHA `078ba6c72bd8cba74d5a28f12948b94f06c8c348a5c291438820ee7f7e9c2c14`; patch SHA `3a3d96e9328426c857b1e40d43d0c4edfbe79f07ef9d43c86ef63f6c57f919a9`).
+- **QA técnico:** [#44063462507](https://github.com/HelioConde/VideoForge-IA/actions/runs/44063462507) `success`; [prancha real V1 × V3 × V4](QA-C01-P02-CONTATO-V4.jpg) e [relatório visual preliminar](REVISAO-VISUAL-ASSISTIDA-C01-P02-V4.md). Patch conserva pixels originais de V3 fora da ROI e apresenta MAE RGB de 3,0983/255 contra V3 (apenas mudança de pixels).
+- **Revisão visual assistida:** a entrada da lâmina parece mais explícita no bocal, porém o **ornamento dourado do bocal foi simplificado** em relação à V3; comparar com a Bíblia Visual. Manter V3 e V4 como candidatas, sem promover a final.
+- Primeiro disparo #44063003598 terminou em HTTP 400 e não gerou PNG. O segundo disparo concluiu e os arquivos ficaram registrados. Sem reexecuções desnecessárias.
+- **Obrigatório:** decisão humana da fonte, novas máscaras RGBA desta mesma fonte e novo gate (gate V1 antigo não valida V4), depois rig. `human_approval=false`, `rig_ready=false`, sem MP4/publicação.
+
 ## 17/11/2026 — Preparação da V4 de contato físico (C01-P02)
 
 - V3 preservada como candidata. Fonte preferida para novo reparo: **patch V3 SHA `17da28fcf733727a11d2d67a38a84611bd1192cff0e97d45d7db10169de9089d`**, canvas 941×1672, não a imagem V1 reprovada.
