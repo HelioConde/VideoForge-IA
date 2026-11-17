@@ -1,3 +1,5 @@
+# LEGADO SOMENTE PARA AUDITORIA HISTÓRICA. Não executar geração/recorte.
+# Política oficial: docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md
 name: "VideoForge - EP01 contato de mãos e bainha por pixels"
 run-name: "EP01 C01-P02 / recortes reais sem IA"
 on:
@@ -10,7 +12,7 @@ permissions:
   contents: write
 jobs:
   extract-with-zero-ia-calls:
-    if: github.ref == 'refs/heads/main'
+    if: false  # DESATIVADO: candidato legado V1 não aprovado para rig
     runs-on: ubuntu-24.04
     timeout-minutes: 18
     steps:
