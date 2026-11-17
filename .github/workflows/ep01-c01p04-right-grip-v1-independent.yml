@@ -49,7 +49,7 @@ jobs:
           python - <<'PY'
           import json,os,subprocess
           from pathlib import Path
-          from videoforge import ep01_c01p04_grip_v3 as engine
+          from videoforge import ep01_c01p04_right_grip_v1 as engine
           p=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-ANATOMIA-GUARDA-DIREITO-C01-P04-V3.json")
           request=json.loads(p.read_text(encoding="utf-8"))
           if (request.get("schema")!="videoforge/ep01-c01p04-right-grip-v1-request/v1"
