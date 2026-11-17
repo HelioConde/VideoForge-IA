@@ -18,8 +18,10 @@
   "youtube_upload": false,
   "mp4_generated": false,
   "process": "one_new_independent_png_per_workflow",
-  "request_revision": 2,
-  "previous_attempt_run_id": 44073981371,
-  "previous_attempt": "preflight only; legacy V1 asset ID collision caused test failure, no proxy image generation",
-  "fix": "videoforge/ep01_proxy_separate_parts.py filters new producer provenance separately"
+  "request_revision": 3,
+  "previous_attempt_run_id": 44074144638,
+  "previous_attempt": "proxy returned response but Pillow was missing; PNG was not saved, no archive; image provider call may have been consumed",
+  "fix": "videoforge/ep01_proxy_separate_parts.py filters new producer provenance separately",
+  "dependency_fix": "Pillow==11.3.0 installed and checked BEFORE provider call",
+  "last_failure_kind": "local_post_proxy_missing_dependency"
 }
