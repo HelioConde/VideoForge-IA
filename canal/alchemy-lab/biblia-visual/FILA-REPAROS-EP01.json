@@ -3,7 +3,7 @@
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "requested_by": "user_continue_ep01_bible_generation_2026-11-17",
-  "purpose": "Corrigir Kael casual medieval indevido e lança V1 com pedestal; gerar V2 sem contaminar referências; depois registrar imagens com SHA; manter aprovação humana.",
+  "purpose": "Corrigir 9 candidatos: Kael moderno, lança portátil e seus detalhes, carrasco, figurantes e perseguidor(es) mascarados clonados indevidamente; manter revisão humana, SHA e histórico.",
   "source_review": "canal/alchemy-lab/biblia-visual/QA-VISUAL-CANDIDATOS.md",
   "start_policy": "dispatch_after_all_42_independent_masters_are_sha_archived_to_avoid_concurrent_codex_proxy_billing",
   "maximum_chargeable_calls_per_image_run": 1,
@@ -51,6 +51,56 @@
       ],
       "review_target": "close do terço inferior com madeira lisa para pega",
       "phase": "repair_candidate"
+    },
+    {
+      "asset_id": "biblia-carrasco-base-v2",
+      "category": "personagens",
+      "item": "carrasco",
+      "variant": "base",
+      "depends_on": [],
+      "review_target": "carrasco cabeça raspada, couro escuro, sem capa nem rosto de Kael",
+      "phase": "repair_candidate"
+    },
+    {
+      "asset_id": "biblia-figurantes-base-v2",
+      "category": "personagens",
+      "item": "figurantes",
+      "variant": "base",
+      "depends_on": [],
+      "review_target": "prancha de quatro cidadãos diferentes, sem protagonista, guardas ou capa",
+      "phase": "repair_candidate"
+    },
+    {
+      "asset_id": "biblia-mascarado-1-base-v2",
+      "category": "personagens",
+      "item": "mascarado_1",
+      "variant": "base",
+      "depends_on": [],
+      "review_target": "mascarado alto esguio máscara prata, sem rosto de Kael",
+      "phase": "repair_candidate"
+    },
+    {
+      "asset_id": "biblia-mascarado-2-base-v2",
+      "category": "personagens",
+      "item": "mascarado_2",
+      "variant": "base",
+      "depends_on": [],
+      "review_target": "mascarado baixo robusto máscara preta, diferente do primeiro",
+      "phase": "repair_candidate"
+    },
+    {
+      "asset_id": "biblia-mascarados-base-v2",
+      "category": "personagens",
+      "item": "mascarados",
+      "variant": "base",
+      "depends_on": [
+        "biblia-mascarado-1-base-v2",
+        "biblia-mascarado-2-base-v2"
+      ],
+      "review_target": "apenas os dois mascarados novos, corpo inteiro, sem guarda palaciano",
+      "phase": "repair_candidate"
     }
-  ]
+  ],
+  "planned_corrections": 9,
+  "queue_version": 2
 }
