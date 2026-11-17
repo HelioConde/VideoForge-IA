@@ -1,3 +1,14 @@
+## 17/11/2026 — Correção de orientação Kael/Trono V3 (3 candidatos)
+
+- **Três imagens novas V3 geradas no GitHub a partir da Bíblia Visual e fontes V2**, originais preservados.
+- [C01-P03 V3](assets/geracoes/production-scene-mother-orientation-v3/44151964491/c01-p03-scene-mother-facing-throne-v3.png): Kael ajoelhado voltado ao rei de pé; sem guardas nem lanças.
+- [C01-P04 V3](assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png): Kael orientado ao rei sentado; 2 guardas e pegadas na base das lanças.
+- [C01-P04 V3 alternativa](assets/geracoes/production-scene-mother-orientation-v3/44152731865/c01-p04-scene-mother-facing-throne-v3-alt.png): variante de câmera para comparação.
+- [Prancha comparativa QA V2 × V3](QA-C01-EIXO-TRONO-V3.jpg) e [metadados SHA](QA-C01-EIXO-TRONO-V3.json).
+- [Regras e escopo da correção](CORRECAO-C01-EIXO-KAEL-TRONO-V3.md).
+- **Todas continuam candidatas: aprovação visual humana, sprites RGBA, rig, MP4 e publicação pendentes.**
+- A geração V3 não substitui silenciosamente o inventário 39/39 nem aprova os antigos arquivos.
+
 ## 17/11/2026 — Conclusão das 39 imagens-mãe e pranchas de conferência
 
 - **39/39 imagens-mãe originais SHA-arquivadas**; inventário oficial em CHECKPOINT-IMAGENS-EP01-AUTO.json.

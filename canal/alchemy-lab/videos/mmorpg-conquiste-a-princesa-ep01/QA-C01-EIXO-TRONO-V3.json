@@ -1,0 +1,53 @@
+{
+  "schema": "videoforge/ep01-throne-orientation-review-v3/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "comparison_image": "QA-C01-EIXO-TRONO-V3.jpg",
+  "comparison_sha256": "31055d47091f3b1b154987f02e45062992243a790f141f284047cccbbe57dc52",
+  "shots": [
+    {
+      "target": "C01-P03",
+      "shot_id": "C01-P03",
+      "source_sha256": "bfc1249dc1f83b004b620c333f5aa81689b0ba0c23a3e7573d57c09dcf3539e3",
+      "original_source_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-repair-v2/44080234599/c01-p03-scene-mother-v2.png",
+      "new_sha256": "e668f713456dd5a41e312885f66c10e2cc033c3aed69ffb7bb577a7d62f79b3d",
+      "new_run_id": 44151964491,
+      "new_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44151964491/c01-p03-scene-mother-facing-throne-v3.png",
+      "approved": false
+    },
+    {
+      "target": "C01-P04",
+      "shot_id": "C01-P04",
+      "source_sha256": "2d11099a536999409a33dae2fc30c517e260c4ad640e41c6942c85b9db499ec5",
+      "original_source_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2-aligned/44080887693/c01-p04-scene-mother-v2-native-aligned-v1.png",
+      "new_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+      "new_run_id": 44152300579,
+      "new_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png",
+      "approved": false
+    },
+    {
+      "target": "C01-P04-ALT",
+      "shot_id": "C01-P04",
+      "source_sha256": "2d11099a536999409a33dae2fc30c517e260c4ad640e41c6942c85b9db499ec5",
+      "original_source_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2-aligned/44080887693/c01-p04-scene-mother-v2-native-aligned-v1.png",
+      "new_sha256": "b10828c9262b49168e5a78833db22424adc452d2fad985fb1a493633082a4608",
+      "new_run_id": 44152731865,
+      "new_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152731865/c01-p04-scene-mother-facing-throne-v3-alt.png",
+      "approved": false
+    }
+  ],
+  "checks_needing_human_review": [
+    "Kael faces the king and throne physically, not only with head",
+    "Knee planted, hip and chest orientation consistent with gaze",
+    "C01-P03: king standing, no guards/spears/sword",
+    "C01-P04: king seated and two guards with spears crossed high",
+    "Hands wrap spear lower/base and shafts not floating",
+    "Outfits/identities and camera/light continuity"
+  ],
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "no_paid_provider_calls": true,
+  "no_sprite_cutout_for_rig": true
+}
