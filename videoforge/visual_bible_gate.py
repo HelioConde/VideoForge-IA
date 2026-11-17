@@ -40,11 +40,24 @@ def require_ready(channel: str, video_id: str, shot_id: str, root: Path = ROOT):
         return {"checked": True, "ready": True, "source": "black_screen_no_image"}
     if queue.get("hold") is True or index.get("hold_novas_cenas") is True:
         raise VideoForgeError("BIBLE_SCENE_PRODUCTION_HOLD_ACTIVE")
+    # Interações são restrições físicas para o rig/cena, NÃO imagens
+    # canônicas de pose exigidas antes da cena-mãe. Continuam validadas
+    # no QA da composição e do movimento, sem liberar publicação.
+    actions = shot.get("interacoes", [])
+    if (not isinstance(actions, list) or
+            any(not isinstance(x, str) or not x for x in actions)
+            or len(set(actions)) != len(actions)):
+        raise VideoForgeError("BIBLE_SCENE_INTERACTION_CONTRACT_INVALID")
+    for action_id in actions:
+        matches = [x for x in index["categorias"].get("interacoes", [])
+                   if x.get("id") == action_id]
+        if len(matches) != 1:
+            raise VideoForgeError("BIBLE_SCENE_UNKNOWN_INTERACTION")
     requirements = [
         ("personagens", x) for x in shot.get("personagens", [])
     ] + [("cenarios", shot.get("cenario"))] + [
         ("objetos", x) for x in shot.get("objetos", [])
-    ] + [("interacoes", x) for x in shot.get("interacoes", [])]
+    ]
     if not requirements or any(not isinstance(x, str) or not x for _, x in requirements):
         raise VideoForgeError("BIBLE_SCENE_MISSING_DEPENDENCIES")
     verified = []
@@ -87,7 +100,9 @@ def require_ready(channel: str, video_id: str, shot_id: str, root: Path = ROOT):
         if state.get("status") != "aprovado" or state.get("aprovacao_mestra") is not True:
             raise VideoForgeError("BIBLE_SCENE_APPROVAL_RECORD_MISSING")
         verified.append({"categoria": category, "id": item_id, "sha256": key["sha256"]})
-    return {"checked": True, "ready": True, "shot": shot_id, "referencias": verified}
+    return {"checked": True, "ready": True, "shot": shot_id,
+            "referencias": verified, "interacoes_requeridas_no_rig": actions,
+            "poses_png_independentes_obrigatorias": False}
 
 
 def main():
