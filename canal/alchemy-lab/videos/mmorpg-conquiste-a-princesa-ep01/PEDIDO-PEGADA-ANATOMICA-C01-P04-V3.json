@@ -6,9 +6,9 @@
   "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
   "approved_grip_reference_manifest": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-PEGADA-APROVADA-C01-P04-V3.json",
   "side": "left",
-  "role": "palm-rear",
-  "request_sequence": 1,
-  "objective": "New independent rear palm/gauntlet under a real spear; no spear pixels, fingers in separate image; accepted mother reference only",
+  "role": "fingers-front",
+  "request_sequence": 2,
+  "objective": "Generate only camera-front isolated fingers and thumb that pass across the spear shaft, with no palm/forearm or full fist; creator-approved grip source",
   "one_paid_image_per_run": true,
   "retry_on_failure": false,
   "new_art_not_mother_cutout": true,
@@ -16,5 +16,7 @@
   "rig_ready": false,
   "mp4_generated": false,
   "youtube_upload": false,
-  "next_if_success": "left fingers-front"
+  "next_if_success": "review_front_fingers_then_redraw_rear_palm_without_fingers",
+  "previous_candidate_run": 44182186174,
+  "previous_candidate_visual_status": "rejected_palm_layer_contains_closed_fingers"
 }
