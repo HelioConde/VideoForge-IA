@@ -25,10 +25,13 @@
   "request_sequence": 3,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "request_revision": 4,
+  "request_revision": 5,
   "last_shot_archived": {
     "shot_id": "C01-P03",
     "run_id": 44073592014,
     "sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765"
-  }
+  },
+  "previous_attempt_run_id": 44074952463,
+  "previous_attempt": "preflight event commit marker raced with unrelated main push; no proxy image called",
+  "ci_fix": "compare changed files against GITHUB_SHA event and fetch full history, not HEAD main"
 }
