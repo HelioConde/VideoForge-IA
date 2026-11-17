@@ -287,6 +287,25 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
         output.write_bytes(blob)
     elif any(
         isinstance(item,dict) and item.get("id")==asset_id
+        and item.get("source_mode")=="dorama-visual-bible-edit-v1"
+        for item in plan.get("assets",[])
+    ):
+        # Only a new Bible master can use an approved STYLE image as source.
+        # The rejected spear pose is explicitly marked not canonical.
+        from .visual_bible_master import edit_payload
+        payload,source_provenance=edit_payload(asset,prompt,model,size)
+        response=proxy_images.call_proxy(
+            url,"/v1/images/edits",os.getenv("CODEX_PROXY_API_KEY",""),payload)
+        blob,extension=proxy_images.decode_image(response)
+        if extension!=".png":
+            raise VideoForgeError("BIBLE_MASTER_PNG_REQUIRED")
+        output=predicted.with_suffix(".png")
+        if output.exists() or output.is_symlink():
+            raise VideoForgeError("BIBLE_MASTER_ALREADY_GENERATED")
+        output.parent.mkdir(parents=True,exist_ok=True)
+        output.write_bytes(blob)
+    elif any(
+        isinstance(item,dict) and item.get("id")==asset_id
         and item.get("source_mode")=="dorama-episode-multiref-v1"
         for item in plan.get("assets",[])
     ):
