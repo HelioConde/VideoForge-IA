@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**56 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**57 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -60,6 +60,7 @@
 | [biblia-figurantes-base-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016029012/biblia-figurantes-base-v2.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`5a798858eccd…\` | [#44016029012](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016029012) |
 | [biblia-mascarado-1-base-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016161296/biblia-mascarado-1-base-v2.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`fa149cf97127…\` | [#44016161296](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016161296) |
 | [biblia-mascarado-2-base-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016309119/biblia-mascarado-2-base-v2.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`3f632cf2fd38…\` | [#44016309119](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016309119) |
+| [biblia-mascarados-base-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016503620/biblia-mascarados-base-v2.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`212d8c9e93e8…\` | [#44016503620](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016503620) |
 
 ## Regras de consulta
 

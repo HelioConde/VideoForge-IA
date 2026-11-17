@@ -1,0 +1,45 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-mascarados-base-v2",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-mascarados-base-v2.png",
+  "biblia_item_id": "mascarados",
+  "biblia_categoria": "personagens",
+  "size": "1024x1536",
+  "sha256": "212d8c9e93e8671962b6d247e703c96b747e28619ff680985d17749807b213de",
+  "model": "gpt-image-2",
+  "actual_width": 1199,
+  "actual_height": 1312,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 2,
+  "source_originals_sha_verified": [
+    {
+      "actor": "biblia_mestre",
+      "id": "biblia-mascarado-1-base-v2",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016161296/biblia-mascarado-1-base-v2.png",
+      "sha256": "fa149cf971273a6416fb2a6e12f81d63bbf33466366a8481bae3b5955c86dda8",
+      "source_spear_pose_rejected": false,
+      "human_visual_approval_pending": true
+    },
+    {
+      "actor": "biblia_mestre",
+      "id": "biblia-mascarado-2-base-v2",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016309119/biblia-mascarado-2-base-v2.png",
+      "sha256": "3f632cf2fd38ee4a83ab8f8de67413af897cade13b871b8a577af174c5260817",
+      "source_spear_pose_rejected": false,
+      "human_visual_approval_pending": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": null,
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}
