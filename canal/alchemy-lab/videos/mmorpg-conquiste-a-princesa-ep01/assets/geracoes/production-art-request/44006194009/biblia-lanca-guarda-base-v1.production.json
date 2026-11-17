@@ -1,0 +1,45 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-lanca-guarda-base-v1",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-lanca-guarda-base-v1.png",
+  "biblia_item_id": "lanca-guarda",
+  "biblia_categoria": "objetos",
+  "size": "1024x1536",
+  "sha256": "59173823904d297acefcbbe834d5b97be1e93182b5b821987ef07e9e1fc937fd",
+  "model": "gpt-image-2",
+  "actual_width": 941,
+  "actual_height": 1672,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 2,
+  "source_originals_sha_verified": [
+    {
+      "actor": "estilo_do_palacio",
+      "id": "approved-visual-reference",
+      "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+      "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "source_style_approved": true,
+      "source_spear_pose_rejected": true
+    },
+    {
+      "actor": "biblia_mestre",
+      "id": "biblia-lanca-guarda-completa-v1",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006036546/biblia-lanca-guarda-completa-v1.png",
+      "sha256": "710b49e6a39435356cdded9141363e3d064d283d8e61bff95da21a92c955a379",
+      "source_spear_pose_rejected": false,
+      "human_visual_approval_pending": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}
