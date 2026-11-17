@@ -1,0 +1,37 @@
+{
+  "schema": "videoforge/ep01-contact-repair-candidate/v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p02-contact-local-patch-v4",
+  "candidate_scene_shot_id": "C01-P02",
+  "sha256": "3a3d96e9328426c857b1e40d43d0c4edfbe79f07ef9d43c86ef63f6c57f919a9",
+  "source_image_sha256": "17da28fcf733727a11d2d67a38a84611bd1192cff0e97d45d7db10169de9089d",
+  "source_originals_sha_verified": [
+    {
+      "id": "c01-p02-contact-local-patch-v3",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-repair-v3/44047381550/c01-p02-contact-local-patch-v3.png",
+      "sha256": "17da28fcf733727a11d2d67a38a84611bd1192cff0e97d45d7db10169de9089d"
+    },
+    {
+      "id": "c01-p02-contact-detail-v4",
+      "path": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/c01-p02-contact-detail-v4.png",
+      "sha256": "078ba6c72bd8cba74d5a28f12948b94f06c8c348a5c291438820ee7f7e9c2c14"
+    }
+  ],
+  "source_ancestor_v1_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "crop_roi": [
+    370,
+    790,
+    900,
+    1660
+  ],
+  "source_unrelated_pixels_retained": true,
+  "mean_rgb_difference_from_v3_patch": 3.0983,
+  "no_spatial_resampling": true,
+  "human_visual_approval": false,
+  "rig_authorized": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_image_calls": 0,
+  "technical_qa": "local_edit_candidate_not_approved"
+}
