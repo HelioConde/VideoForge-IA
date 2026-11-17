@@ -128,6 +128,13 @@ jobs:
             fi
             echo "BIBLE_MASTER_TECHNICAL_SUCCESS_VISUAL_REVIEW_PENDING $asset run=$runid"
           done
+          # Atualizar galeria ao concluir cada lote, sem imagem paga.
+          # Falha na galeria não interrompe produção; sempre registrar aviso.
+          if ! gh workflow run qa-visual-bible-gallery.yml -R "$GH_REPO" --ref main; then
+            echo "::warning::Falha ao solicitar galeria; imagens originais permanecem arquivadas"
+          else
+            echo "BIBLE_GALLERY_DISPATCHED_FOR_REVIEW count=$end/$total"
+          fi
           if ((end<total)); then
             echo "BIBLE_BATCH_CONTINUE next_cursor=$end"
             gh workflow run visual-bible-batch.yml -R "$GH_REPO" --ref main -f cursor="$end"
