@@ -26,6 +26,12 @@ SCHEMA="videoforge/proxy-separate-canvas-alignment/v1"
 def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
     root=Path(root)
     _,req=read_shot(shot_id,part_id,root)
+    registry=root/"canal"/CHANNEL/"biblia-visual"/"REGISTRO-GERACOES.json"
+    asset_id=shot_id.lower()+"-"+part_id+"-native-aligned-v1"
+    entries=json.loads(registry.read_text(encoding="utf-8")).get("geracoes",[])
+    if any(x.get("asset")==asset_id and
+           f"/{PRODUCER}/" in str(x.get("arquivo","")) for x in entries):
+        raise VideoForgeError("EP01_ALIGN_ALREADY_ARCHIVED_NO_REPEAT")
     if shot_id=="C01-P02":
         raise VideoForgeError("EP01_ALIGN_REJECTED_MOTHER_NOT_ALLOWED")
     source=existing_part(shot_id,part_id,root)
