@@ -1,0 +1,29 @@
+{
+  "schema": "videoforge/ep01-c01p04-right-grip-v1-review-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "role": "all-right-three-and-independent-spear",
+  "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "art_sources": {
+    "forearm-cuff": {
+      "run_id": 44191357598,
+      "sha256": "6486a540041406f9cfc90e883e7890703fa5e0726df56ad1ccfd9bdded7833a4"
+    },
+    "palm-rear": {
+      "run_id": 44191916900,
+      "sha256": "363e3d9e59fa9ad0a1f36c3471c6f6b69a93311cc13cd34383ebb0f21e3021dc"
+    },
+    "fingers-front": {
+      "run_id": 44192293405,
+      "sha256": "c091bf343b6309fbbc09befe1042baf652b55178a8e34a9ae33151db4540585c"
+    }
+  },
+  "requested_review": "three spatial candidate layouts compared with original right guard spear grip, check orientation not mirrored, 2D overlap and holes",
+  "zero_paid_model_calls": true,
+  "no_final_sprite_exports": true,
+  "visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_upload": false
+}
