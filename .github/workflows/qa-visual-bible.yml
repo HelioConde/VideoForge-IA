@@ -6,6 +6,10 @@ on:
     paths:
       - 'videoforge/visual_bible.py'
       - 'tests/test_visual_bible.py'
+      - 'videoforge/stage_layers_for_bible.py'
+      - 'tests/test_stage_layers_for_bible.py'
+      - 'scripts/persistir-imagens-gh.sh'
+      - '.github/workflows/production-layers-by-request.yml'
       - '.github/workflows/qa-visual-bible.yml'
       - 'canal/alchemy-lab/biblia-visual/INDEX-BIBLIA.json'
       - 'canal/alchemy-lab/biblia-visual/REVISOES-MANUAIS.json'
@@ -31,7 +35,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_visual_bible -v
+          bash -n scripts/persistir-imagens-gh.sh scripts/arquivar-pngs-se-existirem.sh
+          python -m unittest tests.test_visual_bible tests.test_stage_layers_for_bible -v
       - name: Criar fichas e sincronizar PNGs arquivados de todos os canais
         shell: bash
         run: |
