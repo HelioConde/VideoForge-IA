@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from .errors import VideoForgeError
 from .layered_shot_plan import ROOT, REL, CHANNEL, VIDEO
-from .ep01_contact_cutouts import EXPECTED_MOTHER_SHA
+EXPECTED_MOTHER_SHA="b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e"
 
 REQUIRED={
     "c01-p02-object-bainha-source-visible",
