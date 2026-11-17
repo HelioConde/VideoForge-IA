@@ -1,0 +1,68 @@
+{
+  "schema": "videoforge/ep01-c01p04-approved-v3-aldric-repair/v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "candidate_scene_shot_id": "C01-P04",
+  "asset_id": "c01-p04-v3-character-aldric-repair-v2",
+  "component": "character-aldric",
+  "generation_method": "proxy_generated_separate_image_new_revision",
+  "not_a_pixel_cutout": true,
+  "source_image_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "replaces_rejected_candidate_sha256": "934e2129e0d42db47610eff327d37d6b369d4a2258e53f7997edef4314a32828",
+  "sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+  "provider_native_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+  "provider_native_dimensions": [
+    981,
+    1602
+  ],
+  "source_originals_sha_verified": [
+    {
+      "asset_id": "c01-p04-scene-mother-facing-throne-v3-native-aligned",
+      "sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3-aligned/44156724769/c01-p04-scene-mother-facing-throne-v3-native-aligned.png"
+    },
+    {
+      "asset_id": "biblia-aldric-tribunal-v1",
+      "sha256": "37c48afcaa240f03406c280af1af4ca49304ead552f0dd89f0bbb25d0080e417",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005400386/biblia-aldric-tribunal-v1.png"
+    },
+    {
+      "asset_id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+    },
+    {
+      "asset_id": "biblia-guarda-esquerdo-cerimonial-v1",
+      "sha256": "cfa01b0f4781a67ffda243a97c640909f30755f246bc82dde14b8274272d1679",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005682487/biblia-guarda-esquerdo-cerimonial-v1.png"
+    },
+    {
+      "asset_id": "biblia-guarda-direito-cerimonial-v1",
+      "sha256": "3fcdaa067b55d3d75599dab6253ec4605f44453e7ecbc469581f67783bfbb5fb",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005833952/biblia-guarda-direito-cerimonial-v1.png"
+    },
+    {
+      "asset_id": "biblia-lanca-guarda-completa-v2",
+      "sha256": "b6fb64fe457b6b87415176110d5169fa2afef4e61d859bc56ece858d8727d072",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44012069505/biblia-lanca-guarda-completa-v2.png"
+    },
+    {
+      "asset_id": "biblia-sala-do-trono-vazio-v1",
+      "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+    }
+  ],
+  "technical_postprocess": "none",
+  "width": 981,
+  "height": 1602,
+  "technical_qa": "rejected_unacceptable_canvas",
+  "alpha_channel_checked": true,
+  "human_visual_approval": false,
+  "placement_verified": false,
+  "visual_recomposition_approved": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_image_calls": 1
+}
