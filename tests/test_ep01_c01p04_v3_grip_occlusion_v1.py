@@ -24,7 +24,7 @@ class GripOcclusionV1(unittest.TestCase):
                 self.assertIn("NO spear pixels",q["prompt"])
                 self.assertIn("not an approved sprite",q["prompt"])
                 self.assertIn("near original hand location",q["prompt"])
-                self.assertIn("independent",q["prompt"])
+                self.assertIn("New original artwork",q["prompt"])
 
 if __name__=="__main__":
     unittest.main()
