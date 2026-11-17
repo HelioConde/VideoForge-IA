@@ -1,0 +1,56 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-guard-grip-v2-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_source_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "technical_source_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "old_guard_source_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+  "new_guard_source_sha256": "d69d1967aa0b2faa63018d18c2d3eccb15b4fdaa45f7e2835056b859e3eeb29c",
+  "new_guard_native_bbox_xyxy": [
+    6,
+    349,
+    466,
+    1530
+  ],
+  "new_guard_native_dimensions": [
+    981,
+    1602
+  ],
+  "new_guard_technical_qa": "candidate_for_grip_and_spatial_review",
+  "registration_candidate": {
+    "scale": 0.6790855,
+    "offset_xy": [
+      7,
+      286
+    ],
+    "preview_bbox_scene_xyxy": [
+      11,
+      523,
+      323,
+      1325
+    ],
+    "variant": "A-fit-target",
+    "uniform_scale": true,
+    "approved": false
+  },
+  "spear_pose_candidate": "S4-through-grips",
+  "alternative_layering_orders": [
+    "spear_over_guard",
+    "spear_under_guard"
+  ],
+  "full_board": "QA-C01-P04-V3-GUARDA-ESQUERDO-PEGADA-V2.jpg",
+  "full_sha256": "0f9090312ce99e4e8c43ef0d83ed8b8d9c31579314b4964b4ad15a32943e8a89",
+  "preview_board": "QA-C01-P04-V3-GUARDA-ESQUERDO-PEGADA-V2-PREVIEW.jpg",
+  "preview_sha256": "26f2715ffa45746494437781027a6466f22cab25b85922f71dea93c3091f2d88",
+  "hand_zoom_board": "QA-C01-P04-V3-GUARDA-ESQUERDO-PEGADA-V2-MAO-ZOOM.jpg",
+  "hand_zoom_sha256": "734dba4ed6a5015848f6909714fdbb7e86e26d7530d23c05cbe1bec6977e0c8d",
+  "hand_grip_contact_visual_approved": false,
+  "scale_visual_approved": false,
+  "original_pngs_modified": false,
+  "no_final_mask_extraction": true,
+  "provider_calls": 0,
+  "rig_ready": false,
+  "youtube_uploaded": false,
+  "mp4_generated": false
+}
