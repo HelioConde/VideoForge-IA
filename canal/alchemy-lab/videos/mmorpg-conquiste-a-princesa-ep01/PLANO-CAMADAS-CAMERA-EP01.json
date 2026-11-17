@@ -328,7 +328,7 @@
       "source_plan": "direcao-cinematografica-planos.json",
       "timecode_frames": {
         "start": 240,
-        "end_exclusive": 360
+        "end_exclusive": 310
       },
       "editorial_beat": "Revelar guardas e lanças cruzadas",
       "scene_status": "planned_pending_real_assets",
@@ -424,7 +424,8 @@
         "format": "vertical_9_16",
         "require_new_scene_mother_only_when_reframing_would_expose_missing_pixels": true,
         "switch_shot_scale": "wide",
-        "hud_policy": "none"
+        "hud_policy": "none",
+        "note": "Frame timing from canonical 40-shot roteiro.json; 37-shot camera plan contributes framing/lens."
       },
       "rig": {
         "from_generated_layers": true,
@@ -2141,7 +2142,7 @@
       "source_plan": "direcao-cinematografica-planos.json",
       "timecode_frames": {
         "start": 2790,
-        "end_exclusive": 2940
+        "end_exclusive": 2880
       },
       "editorial_beat": "Bloqueia passagem",
       "scene_status": "planned_pending_real_assets",
@@ -2217,7 +2218,8 @@
         "format": "vertical_9_16",
         "require_new_scene_mother_only_when_reframing_would_expose_missing_pixels": true,
         "switch_shot_scale": "wide",
-        "hud_policy": "none"
+        "hud_policy": "none",
+        "note": "Frame timing from canonical 40-shot roteiro.json; 37-shot camera plan contributes framing/lens."
       },
       "rig": {
         "from_generated_layers": true,
@@ -3243,7 +3245,7 @@
       "source_plan": "direcao-cinematografica-planos.json",
       "timecode_frames": {
         "start": 4230,
-        "end_exclusive": 4350
+        "end_exclusive": 4290
       },
       "editorial_beat": "Reconhecimento",
       "scene_status": "planned_pending_real_assets",
@@ -3318,7 +3320,8 @@
         "format": "vertical_9_16",
         "require_new_scene_mother_only_when_reframing_would_expose_missing_pixels": true,
         "switch_shot_scale": "close_up",
-        "hud_policy": "none"
+        "hud_policy": "none",
+        "note": "Frame timing from canonical 40-shot roteiro.json; 37-shot camera plan contributes framing/lens."
       },
       "rig": {
         "from_generated_layers": true,
@@ -3939,5 +3942,6 @@
         "youtube_upload": false
       }
     }
-  ]
+  ],
+  "source_frame_authority": "roteiro.json (40 shots / 4890 frames); cinematic file supplies focus/lens, not overlapping durations"
 }
