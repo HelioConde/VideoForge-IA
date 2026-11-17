@@ -27,5 +27,7 @@
   "all_proposals_require_visual_approval": true,
   "rig_ready": false,
   "mp4_generated": false,
-  "youtube_upload": false
+  "youtube_upload": false,
+  "request_revision": 2,
+  "reason": "workflow QA YAML corrigido; refazer apenas comparativo local sem gerar imagens"
 }
