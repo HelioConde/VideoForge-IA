@@ -3,10 +3,11 @@
   "categoria": "personagens",
   "id": "carrasco",
   "status": "gerado",
-  "ultima_geracao": 44007665783,
-  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007665783/biblia-carrasco-base-v1.png",
+  "ultima_geracao": 44015867309,
+  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44015867309/biblia-carrasco-base-v2.png",
   "aprovacao_mestra": false,
   "historico_de_versoes": [
-    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44007665783:biblia-carrasco-base-v1.png"
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44007665783:biblia-carrasco-base-v1.png",
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44015867309:biblia-carrasco-base-v2.png"
   ]
 }
