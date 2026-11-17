@@ -3,10 +3,11 @@
   "categoria": "personagens",
   "id": "mascarado_2",
   "status": "gerado",
-  "ultima_geracao": 44008127022,
-  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008127022/biblia-mascarado-2-base-v1.png",
+  "ultima_geracao": 44016309119,
+  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016309119/biblia-mascarado-2-base-v2.png",
   "aprovacao_mestra": false,
   "historico_de_versoes": [
-    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44008127022:biblia-mascarado-2-base-v1.png"
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44008127022:biblia-mascarado-2-base-v1.png",
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44016309119:biblia-mascarado-2-base-v2.png"
   ]
 }
