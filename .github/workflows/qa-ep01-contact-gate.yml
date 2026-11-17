@@ -1,0 +1,33 @@
+name: "VideoForge - EP01 QA rig seguro espada e bainha"
+run-name: "EP01 / bloqueio de contato e comparação RGB"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/qa-ep01-contact-gate.yml'
+      - 'videoforge/ep01_contact_gate.py'
+      - 'tests/test_ep01_contact_gate.py'
+permissions:
+  contents: read
+jobs:
+  audit-no-paid-calls:
+    runs-on: ubuntu-24.04
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar pixels, hashes, revisão humana e impedir render
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_contact_gate -v
+          python -m videoforge.ep01_contact_gate
+          echo 'EP01_RIG_PENDENTE_ATE_CONTATO_E_RECOMPOSICAO_VALIDOS'
+          echo 'ZERO_PROVIDER_CALLS_ZERO_MP4_ZERO_YOUTUBE'
