@@ -2207,12 +2207,19 @@
       "C03-P02",
       "C04-P01",
       "C04-P02",
+      "C04-P03",
       "C05-P01",
       "C05-P02",
-      "C06-P01"
+      "C05-P03",
+      "C06-P01",
+      "C06-P02",
+      "C07-P01",
+      "C07-P02",
+      "C07-P03",
+      "C08-P01"
     ],
-    "original_mother_shots_archived": 13,
-    "original_mother_shots_missing": 26,
+    "original_mother_shots_archived": 20,
+    "original_mother_shots_missing": 19,
     "mother_c01_p02_source_rejected": true,
     "mother_c01_p03": {
       "run_id": 44073592014,
@@ -2302,12 +2309,11 @@
     "local_pixel_padding_is_not_cutout": true,
     "do_not_reuse_v1_cutouts_for_rig": true,
     "next_needed": [
-      "review_C06-P01_fingers_gripping_empty_bag_and_market_bible",
-      "continue_remaining_26_scene_mothers",
-      "repair_C03-P01_iris_macro_and_facial_marks",
-      "reconcile_C03-P02_standing_to_C04-P01_seated",
-      "qa_spear_grips_C01-P04_V2",
-      "generate_new_independent_RGBA_from_selected_approved_mothers"
+      "continue_generating_remaining_19_scene_mothers_from_C08-P02",
+      "visual_qa_new_mothers_including_Elara_pursuers_cart",
+      "correct_earlier_known_C01_P02_sword_scabbard_contact_before_rig",
+      "after_visual_selection_request_independent_RGBA_layers_from_proxy",
+      "rig_and_mp4_only_after_assets_qa"
     ],
     "new_png_images_human_approved": false,
     "rig_ready": false,
@@ -2461,6 +2467,127 @@
       "report": "REVISAO-VISUAL-C05-ARKEN.md",
       "visual_status": "architecture_consistent_road_texture_needs_review",
       "human_visual_approval": false
+    },
+    "auto_inventory_path": "CHECKPOINT-IMAGENS-EP01-AUTO.json",
+    "new_mother_shots_after_style_feedback": [
+      {
+        "shot_id": "C06-P02",
+        "asset_id": "c06-p02-scene-mother",
+        "run_id": 44092962223,
+        "sha256": "9f16478e93c29a4f0328c7edee6fd2de45dd7a5f6453da9ecf01cc998fcc0701",
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44092962223/c06-p02-scene-mother.png",
+        "dimensions": [
+          941,
+          1672
+        ],
+        "generation_method": "proxy_scene_mother_from_sha_verified_visual_bible",
+        "style_reference": "creator_approved_general_aesthetic",
+        "human_approval": false,
+        "rig_ready": false
+      },
+      {
+        "shot_id": "C04-P03",
+        "asset_id": "c04-p03-scene-mother",
+        "run_id": 44093679602,
+        "sha256": "aee9dd3ef22eee8f0ce3fac293ca30a0a1797fbfee86b561d5476ee11d5730a9",
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44093679602/c04-p03-scene-mother.png",
+        "dimensions": [
+          941,
+          1672
+        ],
+        "generation_method": "proxy_scene_mother_from_sha_verified_visual_bible",
+        "style_reference": "creator_approved_general_aesthetic",
+        "human_approval": false,
+        "rig_ready": false
+      },
+      {
+        "shot_id": "C05-P03",
+        "asset_id": "c05-p03-scene-mother",
+        "run_id": 44094221512,
+        "sha256": "b375eda14a3f554bb675e24b80c22d9cec752451852e929955c050ca6e2039ee",
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44094221512/c05-p03-scene-mother.png",
+        "dimensions": [
+          941,
+          1672
+        ],
+        "generation_method": "proxy_scene_mother_from_sha_verified_visual_bible",
+        "style_reference": "creator_approved_general_aesthetic",
+        "human_approval": false,
+        "rig_ready": false
+      },
+      {
+        "shot_id": "C07-P01",
+        "asset_id": "c07-p01-scene-mother",
+        "run_id": 44094654952,
+        "sha256": "1fd042f2a7cde4e6afb126cb8640ad5178cdea16ca60d8650e1e88a98c75e319",
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44094654952/c07-p01-scene-mother.png",
+        "dimensions": [
+          941,
+          1672
+        ],
+        "generation_method": "proxy_scene_mother_from_sha_verified_visual_bible",
+        "style_reference": "creator_approved_general_aesthetic",
+        "human_approval": false,
+        "rig_ready": false
+      },
+      {
+        "shot_id": "C07-P02",
+        "asset_id": "c07-p02-scene-mother",
+        "run_id": 44095149637,
+        "sha256": "cddafbba6378f9daa2e1c2f252c125af86389a11d072927a92504224ac790bc8",
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44095149637/c07-p02-scene-mother.png",
+        "dimensions": [
+          941,
+          1672
+        ],
+        "generation_method": "proxy_scene_mother_from_sha_verified_visual_bible",
+        "style_reference": "creator_approved_general_aesthetic",
+        "human_approval": false,
+        "rig_ready": false
+      },
+      {
+        "shot_id": "C07-P03",
+        "asset_id": "c07-p03-scene-mother",
+        "run_id": 44095398312,
+        "sha256": "9f00c738d5abf9c9b3fc7314ffbb31a56b3d051b36ec753268f97bc5ce0a433e",
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44095398312/c07-p03-scene-mother.png",
+        "dimensions": [
+          941,
+          1672
+        ],
+        "generation_method": "proxy_scene_mother_from_sha_verified_visual_bible",
+        "style_reference": "creator_approved_general_aesthetic",
+        "human_approval": false,
+        "rig_ready": false
+      },
+      {
+        "shot_id": "C08-P01",
+        "asset_id": "c08-p01-scene-mother",
+        "run_id": 44095687671,
+        "sha256": "334e52a875e5d02b79ce38314e0b556e28c6df3a69f329f2d9dc62c00ccb0b03",
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44095687671/c08-p01-scene-mother.png",
+        "dimensions": [
+          941,
+          1672
+        ],
+        "generation_method": "proxy_scene_mother_from_sha_verified_visual_bible",
+        "style_reference": "creator_approved_general_aesthetic",
+        "human_approval": false,
+        "rig_ready": false
+      }
+    ],
+    "bible_source_coverage_review": {
+      "status": "checked",
+      "missing_reference_assets_for_remaining_shots": 0,
+      "notes": "Each remaining scene mother in REFERENCES-CENAS-MAE-EP01.json names archived Bible assets. This checks existence, not visual approval."
+    },
+    "cart_reference_fix": {
+      "shots": [
+        "C08-P01",
+        "C08-P03"
+      ],
+      "source": "biblia-carrinho-base-v1",
+      "sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36"
     }
   },
   "creator_visual_style_feedback_20261117": {
