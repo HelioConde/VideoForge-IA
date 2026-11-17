@@ -5,7 +5,7 @@
   "approved_on": "2026-11-16",
   "approval_source": "user_feedback_in_conversation: imagem C01-P04 bonita; próximas imagens devem seguir mesmas características dos personagens",
   "approved_for_future_image_reference": true,
-  "approved_scope": "visual-identity-and-style-for-characters-and-palace-visible-in_C01-P04",
+  "approved_scope": "visual_identity_outfits_environment_only_NOT_weapon_grip_or_pose",
   "source_shot_id": "C01-P04",
   "image_path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
   "source_report_path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.production.json",
@@ -41,6 +41,18 @@
     "character_style_reference_not_human_validation_for_every_future_shot": true,
     "generation_must_attach_exact_original_png_bytes": true,
     "original_dimensions_not_resampled": true,
-    "youtube_upload": false
-  }
+    "youtube_upload": false,
+    "source_spear_grip_not_approved": true,
+    "source_for_next_shot_spear_pose_blocked": true
+  },
+  "known_visual_defects": [
+    {
+      "code": "guards_not_holding_spears",
+      "reported_by": "owner",
+      "shot": "C01-P04",
+      "status": "rejected_physical_pose",
+      "detail": "Os dois guardas aparecem com as mãos unidas à frente da armadura; nenhuma mão está em contato/grip com sua própria haste de lança",
+      "corrective_asset": "c01-p04-pegada-lancas-v4"
+    }
+  ]
 }
