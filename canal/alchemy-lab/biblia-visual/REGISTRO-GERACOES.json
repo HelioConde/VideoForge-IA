@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 30,
+  "total_arquivadas": 31,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -953,6 +953,34 @@
           "id": "biblia-sala-do-trono-vazio-v1",
           "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44008695444:biblia-quarto-kael-vazio-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-quarto-kael-vazio-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "quarto-kael",
+      "biblia_categoria": "cenarios",
+      "producer": "production-art-request",
+      "github_run_id": 44008695444,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008695444/biblia-quarto-kael-vazio-v1.png",
+      "sha256": "84ba05fbc8a6da12545a9d37091003d80dbfa64e2bf6c2fceac8993746ebe8b2",
+      "bytes": 2307185,
+      "width": 941,
+      "height": 1671,
+      "referencias_usadas": [
+        {
+          "id": "approved-visual-reference",
+          "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+          "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
         }
       ],
       "status": "gerado",

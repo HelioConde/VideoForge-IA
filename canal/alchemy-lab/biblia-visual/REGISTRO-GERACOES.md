@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**30 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**31 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -34,6 +34,7 @@
 | [biblia-mascarados-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008263650/biblia-mascarados-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`54426224625f…\` | [#44008263650](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008263650) |
 | [biblia-sala-do-trono-angulo-frontal-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008401251/biblia-sala-do-trono-angulo-frontal-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`22b0420faf6b…\` | [#44008401251](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008401251) |
 | [biblia-sala-do-trono-detalhes-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008517998/biblia-sala-do-trono-detalhes-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`a81380c718e4…\` | [#44008517998](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008517998) |
+| [biblia-quarto-kael-vazio-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008695444/biblia-quarto-kael-vazio-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`84ba05fbc8a6…\` | [#44008695444](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008695444) |
 
 ## Regras de consulta
 
