@@ -27,12 +27,29 @@ jobs:
       - name: Instalar Pillow apenas para revisar PNGs ja gerados
         run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
       - name: Confirmar SHA origem, anexo real, RGBA e bloqueio de aprovacao
-        run: python -m unittest tests.test_dorama_visual_compare tests.test_dorama_continuity -v
+        run: python -m unittest tests.test_dorama_visual_compare tests.test_dorama_continuity tests.test_dorama_grip_correction -v
       - name: Criar duas pranchas referenciais sem chamadas de IA
         shell: bash
         run: |
           python -m videoforge.dorama_visual_compare --sync
           python -m videoforge.dorama_visual_compare --sync --shot C02-P01 --asset c02-p01-aldric-rosto-v1 --run-id 43970462482
+          python -m videoforge.dorama_visual_compare --sync --shot C01-P04 --asset c01-p04-pegada-lancas-v4 --run-id 43990928355
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          ep=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
+          old=ep/"QA-C01-P04-VS-C01-P04.jpg"
+          new=ep/"QA-C01-P04-V3-VS-V4-LANCAS.jpg"
+          old.replace(new)
+          report=ep/"QA-C01-P04-VS-C01-P04.json"
+          data=json.loads(report.read_text(encoding="utf-8"))
+          data["comparison_sheet"]=new.name
+          data["physical_spear_grip_verified"]=False
+          data["owner_review_required"]=True
+          result=ep/"QA-C01-P04-V3-VS-V4-LANCAS.json"
+          result.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          report.unlink()
+          PY
       - name: Versionar prancha JPG e relatorio no mesmo episodio
         shell: bash
         run: |
@@ -40,7 +57,7 @@ jobs:
           EP=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
           git config user.name 'videoforge-continuity-qa[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add "$EP/QA-C01-P04-VS-C01-P05.jpg" "$EP/QA-C01-P04-VS-C01-P05.json" "$EP/QA-C01-P04-VS-C02-P01.jpg" "$EP/QA-C01-P04-VS-C02-P01.json"
+          git add "$EP/QA-C01-P04-VS-C01-P05.jpg" "$EP/QA-C01-P04-VS-C01-P05.json" "$EP/QA-C01-P04-VS-C02-P01.jpg" "$EP/QA-C01-P04-VS-C02-P01.json" "$EP/QA-C01-P04-V3-VS-V4-LANCAS.jpg" "$EP/QA-C01-P04-V3-VS-V4-LANCAS.json"
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'qa(dorama): comparar C01-P05 com referencia visual C01-P04 por SHA'
           if ! git push origin HEAD:main; then
