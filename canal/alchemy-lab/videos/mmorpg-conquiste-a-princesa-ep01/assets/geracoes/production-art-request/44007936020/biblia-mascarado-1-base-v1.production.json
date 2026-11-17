@@ -1,0 +1,37 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-mascarado-1-base-v1",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-mascarado-1-base-v1.png",
+  "biblia_item_id": "mascarado_1",
+  "biblia_categoria": "personagens",
+  "size": "1024x1536",
+  "sha256": "7102378830dec69d24fcca8d706c915e87648a06ccba3f310536a660a1eb7abb",
+  "model": "gpt-image-2",
+  "actual_width": 981,
+  "actual_height": 1602,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 1,
+  "source_originals_sha_verified": [
+    {
+      "actor": "estilo_do_palacio",
+      "id": "approved-visual-reference",
+      "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+      "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "source_style_approved": true,
+      "source_spear_pose_rejected": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}
