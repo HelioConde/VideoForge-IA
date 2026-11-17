@@ -1,0 +1,21 @@
+{
+  "schema": "videoforge/ep01-approved-v3-independent-part-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "approved_source_run_id": 44152300579,
+  "aligned_source_run_id": 44156724769,
+  "part": "background-clean",
+  "request_sequence": 1,
+  "one_paid_call_per_part_run": true,
+  "retry_on_failure": false,
+  "no_pixel_segmentation": true,
+  "reference_policy": "approved_source_and_bible_sha_checked",
+  "source_method": "proxy_generated_separate_image",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_upload": false,
+  "next_if_technically_accepted": "character-kael"
+}
