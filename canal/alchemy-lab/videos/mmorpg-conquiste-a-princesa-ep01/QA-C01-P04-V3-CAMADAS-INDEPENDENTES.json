@@ -1,0 +1,138 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-independent-layer-review/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_original_source_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "technical_reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "board": "QA-C01-P04-V3-CAMADAS-INDEPENDENTES.jpg",
+  "board_sha256": "8c78a5dc07c1d82bc244c03010e102080478019ce4590867af81fe2803258820",
+  "parts": [
+    {
+      "part": "background-clean",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44157781835/c01-p04-v3-background-clean.png",
+      "sha256": "67806c296163706abd56d06cc438e957d485dba8209ea0f4b07416e0c2917df4",
+      "source_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "role": "background",
+      "provider_native_sha256": "9386241413704eccc3ac5600704efe1d423ef0936b6e9d4e040efb29be495f03",
+      "technical_qa": "candidate_needs_visual_alignment_review",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "spatial_registration_pending": false,
+      "visual_approval": false
+    },
+    {
+      "part": "character-kael",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44158487425/c01-p04-v3-character-kael.png",
+      "sha256": "591b07d9ac3e1e9281e193bb4430fa987fd173e67b7489affc14f3f7677ff151",
+      "source_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "role": "character",
+      "provider_native_sha256": "84d081f0a83b03797088ef823b6c329bf3fa05def53b324483ffbef440474848",
+      "technical_qa": "candidate_needs_visual_alignment_review",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "spatial_registration_pending": false,
+      "visual_approval": false
+    },
+    {
+      "part": "character-aldric",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-independent-parts-repair-v2/44159799863/c01-p04-v3-character-aldric-repair-v2.png",
+      "sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+      "source_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "role": "character",
+      "provider_native_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+      "technical_qa": "rejected_unacceptable_canvas",
+      "native_canvas_dimensions": [
+        981,
+        1602
+      ],
+      "spatial_registration_pending": true,
+      "visual_approval": false
+    },
+    {
+      "part": "character-guarda_esquerdo",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44160952746/c01-p04-v3-character-guarda_esquerdo.png",
+      "sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+      "source_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "role": "character",
+      "provider_native_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+      "technical_qa": "candidate_native_canvas_requires_spatial_registration",
+      "native_canvas_dimensions": [
+        981,
+        1602
+      ],
+      "spatial_registration_pending": true,
+      "visual_approval": false
+    },
+    {
+      "part": "character-guarda_direito",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161192391/c01-p04-v3-character-guarda_direito.png",
+      "sha256": "c3432ac075105f1a412fc634f09d15add6d8f096369b6a5aa412d50b083aee78",
+      "source_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "role": "character",
+      "provider_native_sha256": "d00a149d03303033fc131ce019bd804e0b215653b4cab9effe5ac1107ce47310",
+      "technical_qa": "candidate_needs_visual_alignment_review",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "spatial_registration_pending": false,
+      "visual_approval": false
+    },
+    {
+      "part": "object-lanca-esquerda",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161430230/c01-p04-v3-object-lanca-esquerda.png",
+      "sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+      "source_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "role": "object",
+      "provider_native_sha256": "db47503513ba44b8e0ca1f804561d738e52b1c04b8c998b6f44e0c4d8fd858e6",
+      "technical_qa": "candidate_needs_visual_alignment_review",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "spatial_registration_pending": false,
+      "visual_approval": false
+    },
+    {
+      "part": "object-lanca-direita",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161666235/c01-p04-v3-object-lanca-direita.png",
+      "sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194",
+      "source_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "role": "object",
+      "provider_native_sha256": "509f7f2ae6571369b34275b9ca19926104b3b6e5b36000d5a674d254884b8b37",
+      "technical_qa": "candidate_needs_visual_alignment_review",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "spatial_registration_pending": false,
+      "visual_approval": false
+    }
+  ],
+  "spatial_registration_pending": [
+    "character-aldric",
+    "character-guarda_esquerdo"
+  ],
+  "composite_does_not_guess_native_sprite_position": true,
+  "preview_composite_for_QA_only": true,
+  "human_visual_approval_of_parts": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "manual_review_checks": [
+    "background truly clean with architecture restored",
+    "Kael remains kneeling and faces the throne, exact scale",
+    "Aldric seated in correct high throne position",
+    "both guards stay on original sides with anatomically correct gauntlets",
+    "two spears are separately generated and attach at lower shafts",
+    "alpha is true transparent outside sprites and no ghost background",
+    "provisional layering has no doubled hands or missing cloth",
+    "hidden regions are fully redrawn for later movement",
+    "camera still supports planned focus and dolly out"
+  ]
+}

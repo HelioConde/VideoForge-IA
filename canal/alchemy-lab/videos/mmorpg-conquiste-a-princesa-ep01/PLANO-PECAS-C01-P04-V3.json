@@ -35,9 +35,16 @@
       "pose_requirement": "full_frame",
       "rule": "remove_all_characters_and_spears_restore_throne_carpet_and_stairs",
       "generation_method": "proxy_generated_separate_image",
-      "status": "requested_or_pending",
+      "status": "generated_full_canvas_pending_visual_review",
       "visual_approval": false,
-      "rig_ready": false
+      "rig_ready": false,
+      "archived_png_sha256": "67806c296163706abd56d06cc438e957d485dba8209ea0f4b07416e0c2917df4",
+      "archived_png_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44157781835/c01-p04-v3-background-clean.png",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "technical_qa": "candidate_needs_visual_alignment_review"
     },
     {
       "order": 2,
@@ -48,9 +55,16 @@
       "pose_requirement": "same_pose_approved",
       "rule": "kneeling_facing_king_3_4_low_center_ground_contact",
       "generation_method": "proxy_generated_separate_image",
-      "status": "requested_or_pending",
+      "status": "generated_full_canvas_pending_visual_review",
       "visual_approval": false,
-      "rig_ready": false
+      "rig_ready": false,
+      "archived_png_sha256": "591b07d9ac3e1e9281e193bb4430fa987fd173e67b7489affc14f3f7677ff151",
+      "archived_png_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44158487425/c01-p04-v3-character-kael.png",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "technical_qa": "candidate_needs_visual_alignment_review"
     },
     {
       "order": 3,
@@ -61,9 +75,16 @@
       "pose_requirement": "same_pose_approved",
       "rule": "king_seated_on_throne_no_throne_pixels",
       "generation_method": "proxy_generated_separate_image",
-      "status": "requested_or_pending",
+      "status": "generated_native_pending_spatial_registration",
       "visual_approval": false,
-      "rig_ready": false
+      "rig_ready": false,
+      "archived_png_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+      "archived_png_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-independent-parts-repair-v2/44159799863/c01-p04-v3-character-aldric-repair-v2.png",
+      "native_canvas_dimensions": [
+        981,
+        1602
+      ],
+      "technical_qa": "rejected_unacceptable_canvas"
     },
     {
       "order": 4,
@@ -74,9 +95,16 @@
       "pose_requirement": "same_pose_approved",
       "rule": "gauntlets_form_grip_without_baked_spear",
       "generation_method": "proxy_generated_separate_image",
-      "status": "requested_or_pending",
+      "status": "generated_native_pending_spatial_registration",
       "visual_approval": false,
-      "rig_ready": false
+      "rig_ready": false,
+      "archived_png_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+      "archived_png_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44160952746/c01-p04-v3-character-guarda_esquerdo.png",
+      "native_canvas_dimensions": [
+        981,
+        1602
+      ],
+      "technical_qa": "candidate_native_canvas_requires_spatial_registration"
     },
     {
       "order": 5,
@@ -87,9 +115,16 @@
       "pose_requirement": "same_pose_approved",
       "rule": "gauntlets_form_grip_without_baked_spear",
       "generation_method": "proxy_generated_separate_image",
-      "status": "requested_or_pending",
+      "status": "generated_full_canvas_pending_visual_review",
       "visual_approval": false,
-      "rig_ready": false
+      "rig_ready": false,
+      "archived_png_sha256": "c3432ac075105f1a412fc634f09d15add6d8f096369b6a5aa412d50b083aee78",
+      "archived_png_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161192391/c01-p04-v3-character-guarda_direito.png",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "technical_qa": "candidate_needs_visual_alignment_review"
     },
     {
       "order": 6,
@@ -100,9 +135,16 @@
       "pose_requirement": "same_position_approved",
       "rule": "one_spear_lower_third_gripped_by_left_guard_tip_high",
       "generation_method": "proxy_generated_separate_image",
-      "status": "requested_or_pending",
+      "status": "generated_full_canvas_pending_visual_review",
       "visual_approval": false,
-      "rig_ready": false
+      "rig_ready": false,
+      "archived_png_sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+      "archived_png_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161430230/c01-p04-v3-object-lanca-esquerda.png",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "technical_qa": "candidate_needs_visual_alignment_review"
     },
     {
       "order": 7,
@@ -113,9 +155,16 @@
       "pose_requirement": "same_position_approved",
       "rule": "one_spear_lower_third_gripped_by_right_guard_tip_high",
       "generation_method": "proxy_generated_separate_image",
-      "status": "requested_or_pending",
+      "status": "generated_full_canvas_pending_visual_review",
       "visual_approval": false,
-      "rig_ready": false
+      "rig_ready": false,
+      "archived_png_sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194",
+      "archived_png_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161666235/c01-p04-v3-object-lanca-direita.png",
+      "native_canvas_dimensions": [
+        941,
+        1672
+      ],
+      "technical_qa": "candidate_needs_visual_alignment_review"
     }
   ],
   "unplanned_hidden_prop": "object-espada-carrasco is NOT visible in C01-P04 V3; exclude from this shot's pieces until story beat explicitly shows it",
@@ -140,5 +189,10 @@
   "automatic_approval_of_parts": false,
   "rig_ready": false,
   "mp4_generated": false,
-  "youtube_uploaded": false
+  "youtube_uploaded": false,
+  "qa_report": "QA-C01-P04-V3-CAMADAS-INDEPENDENTES.json",
+  "spatial_registration_pending": [
+    "character-aldric",
+    "character-guarda_esquerdo"
+  ]
 }

@@ -1,3 +1,10 @@
+## 17/11/2026 — QA do lote de 7 camadas C01-P04 V3
+
+- **7 imagens independentes geradas pelo proxy** com referência SHA da C01-P04 V3 visualmente aprovada; originais arquivados em `production-c01p04-approved-v3-independent-parts/`.
+- [Prancha QA: mãe + fundo + personagens + duas lanças + composição provisória](QA-C01-P04-V3-CAMADAS-INDEPENDENTES.jpg) e [manifesto completo de SHAs](QA-C01-P04-V3-CAMADAS-INDEPENDENTES.json).
+- **Aprovação visual das partes continua pendente.** Requer conferir escala, punhos, pontos de contato nas lanças, silhuetas/alpha, continuidade e recomposição. A composição é exclusivamente de QA, não MP4.
+- Rig Three.js/Remotion, QA temporal, MP4 e publicação no YouTube **não iniciados automaticamente**.
+
 ## 17/11/2026 — C01-P04 V3: QA das peças e tratamento do canvas nativo de Aldric
 
 - **PNG de Kael separado gerado e preservado**, [workflow #44158487425](https://github.com/HelioConde/VideoForge-IA/actions/runs/44158487425), SHA `591b07d9ac3e1e9281e193bb4430fa987fd173e67b7489affc14f3f7677ff151`, RGBA 941×1672 e **QA visual pendente**.
