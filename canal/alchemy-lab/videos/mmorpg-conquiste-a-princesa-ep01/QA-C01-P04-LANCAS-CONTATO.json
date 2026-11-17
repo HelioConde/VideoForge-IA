@@ -1,0 +1,25 @@
+{
+  "schema": "videoforge/ep01-c01p04-guard-grip-qa/v1",
+  "shot_id": "C01-P04",
+  "mother_sha256": "156a9376298166045654706e75b876a20b7f8201c70d6d494ae9a2b7465f5ab3",
+  "preview_sha256": "043424c903c7de0b06efca5984f852f4be71c208f210bc2015ee8be74fbf7adc",
+  "preview": "QA-C01-P04-LANCAS-CONTATO.jpg",
+  "source_size": [
+    941,
+    1672
+  ],
+  "crop_purpose": "QA_only_not_rig_assets",
+  "review_targets": [
+    "guard-left-hand-on-lower-shaft",
+    "guard-right-hand-on-lower-shaft",
+    "spear-cross-X-high",
+    "hands-not-floating",
+    "king-outfit"
+  ],
+  "technical_qa": "verified_sha_and_contact_sheet",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_calls": 0
+}
