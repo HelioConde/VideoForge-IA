@@ -1,0 +1,47 @@
+{
+  "schema": "videoforge/ep01-shot-mother-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p02-scene-mother",
+  "candidate_scene_shot_id": "C01-P02",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/c01-p02-scene-mother.png",
+  "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "bytes": 2431385,
+  "width": 941,
+  "height": 1672,
+  "model": "gpt-image-2",
+  "size": "1024x1536",
+  "source_originals_sha_verified": [
+    {
+      "id": "biblia-carrasco-base-v2",
+      "sha256": "24d1ed5187417fe96de2175ce1ae0a5c78a5feb9b588b64ed3799a04d83e3e73",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44015867309/biblia-carrasco-base-v2.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    },
+    {
+      "id": "biblia-espada-carrasco-base-v1",
+      "sha256": "1f121063d4b36540105ecdc736dc1bbbd970391c624942df5d396fb9b848f3ba",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010692076/biblia-espada-carrasco-base-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    },
+    {
+      "id": "biblia-sala-do-trono-vazio-v1",
+      "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    }
+  ],
+  "source_images_attached_to_request": 3,
+  "technical_qa": "valid_png_source_refs_sha_verified",
+  "human_visual_approval": false,
+  "scene_complete": false,
+  "background_generated": false,
+  "characters_rgba_generated": false,
+  "rig_generated": false,
+  "camera_plan_registered": true,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
