@@ -22,7 +22,7 @@ class EP01ShotLayerTests(unittest.TestCase):
         # arquivada; o guard anti-duplicação é testado separadamente.
         with patch.object(layer,"archived_layer",return_value=None):
             with patch.object(layer.proxy_images,"call_proxy") as paid:
-                for ident in sorted(layer.VALID_PARTS):
+                for ident in sorted(layer.VALID_PARTS-{"object-bainha"}):
                     with self.subTest(component=ident):
                         spec=layer.prepare(ident)
                         self.assertEqual(hashlib.sha256(spec["source"]).hexdigest(),
@@ -42,6 +42,12 @@ class EP01ShotLayerTests(unittest.TestCase):
                 with self.assertRaisesRegex(VideoForgeError,"EP01_LAYER_ALREADY_ARCHIVED"):
                     layer.prepare("object-espada")
                 paid.assert_not_called()
+
+    def test_old_scabbard_proxy_method_never_spends_another_call(self):
+        with patch.object(layer.proxy_images,"call_proxy") as paid:
+            with self.assertRaisesRegex(VideoForgeError,"EP01_SCABBARD_PROXY_DISABLED_USE_SOURCE_MASK"):
+                layer.prepare("object-bainha")
+            paid.assert_not_called()
 
     def test_invalid_model_rejected_before_provider(self):
         with patch.object(layer.proxy_images,"call_proxy") as paid:
