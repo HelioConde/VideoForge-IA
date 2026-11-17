@@ -913,7 +913,12 @@
     "visual_approval_pending": true,
     "youtube_upload": false,
     "check_separated_asset_provenance": "proxy_generated_separate_image",
-    "reject_cutout_or_segmentation_final_sprites": true
+    "reject_cutout_or_segmentation_final_sprites": true,
+    "assistant_visual_review_20261117": {
+     "status": "continuity_check_needed",
+     "concern": "crown size gem layout and cream-gold neckline vs Bible and C01-P03 V2",
+     "human_approval": false
+    }
    }
   },
   {
@@ -1047,7 +1052,12 @@
     "visual_approval_pending": true,
     "youtube_upload": false,
     "check_separated_asset_provenance": "proxy_generated_separate_image",
-    "reject_cutout_or_segmentation_final_sprites": true
+    "reject_cutout_or_segmentation_final_sprites": true,
+    "assistant_visual_review_20261117": {
+     "status": "candidate_pending",
+     "concern": "facial injury severity must match C03-P01",
+     "human_approval": false
+    }
    }
   },
   {
@@ -1174,7 +1184,16 @@
     "visual_approval_pending": true,
     "youtube_upload": false,
     "check_separated_asset_provenance": "proxy_generated_separate_image",
-    "reject_cutout_or_segmentation_final_sprites": true
+    "reject_cutout_or_segmentation_final_sprites": true,
+    "assistant_visual_review_20261117": {
+     "status": "needs_controlled_repair_before_rig",
+     "defects": [
+      "not_extreme_macro_of_eye_full_face_visible",
+      "facial_injuries_more_prominent_than_c02_p02"
+     ],
+     "human_approval": false,
+     "reference_report": "REVISAO-VISUAL-C02-C03-CONTINUIDADE.md"
+    }
    }
   },
   {
