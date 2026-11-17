@@ -12,11 +12,11 @@ from videoforge.visual_bible import build, sync, _markdown
 
 
 class VisualBibleTests(unittest.TestCase):
-    def test_ep01_has_39_items_and_40_shots(self):
+    def test_ep01_bible_grows_without_limiting_40_story_shots(self):
         bible = ROOT / "canal/alchemy-lab/biblia-visual"
         index = json.loads((bible / "INDEX-BIBLIA.json").read_text(encoding="utf-8"))
         count = sum(len(v) for v in index["categorias"].values())
-        self.assertEqual(count, 39)
+        self.assertGreaterEqual(count, 39)\n        self.assertEqual(len({(cat,x['id']) for cat,items in index['categorias'].items() for x in items}),count)\n        self.assertIn('arken-muralhas',[x['id'] for x in index['categorias']['cenarios']])\n        self.assertFalse(next(x['aprovacao_mestra'] for x in index['categorias']['cenarios'] if x['id']=='arken-muralhas'))
         plan = json.loads((bible / "FILA-EP01.json").read_text(encoding="utf-8"))
         self.assertEqual(len(plan["tomadas"]), 40)
         self.assertNotIn("rainha", [actor for s in plan["tomadas"] for actor in s["personagens"]])
