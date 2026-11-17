@@ -1,0 +1,18 @@
+{
+  "schema": "videoforge/ep01-c01p04-grip-guide-human-review-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "source_image_sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+  "source_run_id": 44183662671,
+  "required_visual_checks": [
+    "shaft_centered_in_curled_fingers",
+    "thumb_wraps_over_wood",
+    "butt_extends_below_fist"
+  ],
+  "preview_only": true,
+  "model_calls": 0,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_upload": false
+}
