@@ -1,0 +1,113 @@
+name: "VideoForge - Biblia Visual corrigir artes V2"
+run-name: "Bíblia Visual / correções V2"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: alchemy-bible-repairs-main
+  cancel-in-progress: false
+jobs:
+  reparar-mestres:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      CHANNEL: alchemy-lab
+      VIDEO_ID: mmorpg-conquiste-a-princesa-ep01
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirmar 42 mestres arquivados e quatro reparos V2
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from videoforge.production_art import archived_reference,read_plan
+          folder=Path('canal/alchemy-lab/biblia-visual')
+          queue=json.loads((folder/'FILA-GERACAO-MESTRES.json').read_text())
+          corrections=json.loads((folder/'FILA-REPAROS-EP01.json').read_text())
+          plan,_=read_plan('alchemy-lab','mmorpg-conquiste-a-princesa-ep01')
+          assets={a['id']:a for a in plan['assets']}
+          independent=[x for x in queue['items'] if x['phase']=='independent_master']
+          if len(independent)!=42:
+              raise SystemExit('REPAIR_INVALID_42_MASTER_QUEUE')
+          missing=[i['asset_id'] for i in independent
+                   if not archived_reference('alchemy-lab','mmorpg-conquiste-a-princesa-ep01',i['asset_id'])]
+          if missing:
+              raise SystemExit('REPAIR_BLOCKED_MASTERS_MISSING '+','.join(missing[:6]))
+          if corrections.get('schema')!='videoforge/bible-correction-queue/v1':
+              raise SystemExit('REPAIR_QUEUE_INVALID_SCHEMA')
+          entries=corrections.get('items',[])
+          if len(entries)!=4 or len({i.get('asset_id') for i in entries})!=4:
+              raise SystemExit('REPAIR_INVALID_4_VARIANTS')
+          for e in entries:
+              source=assets.get(e['asset_id'])
+              if not source or source.get('source_mode')!='dorama-visual-bible-edit-v1':
+                  raise SystemExit('REPAIR_MISSING_ASSET '+e['asset_id'])
+              if source.get('youtube_upload') is not False or source.get('human_visual_approval_required') is not True:
+                  raise SystemExit('REPAIR_INVALID_APPROVAL_FLAGS')
+              if source.get('additional_master_asset_ids',[]) != e['depends_on']:
+                  raise SystemExit('REPAIR_DEPENDENCIES_NOT_MATCHED '+e['asset_id'])
+          print('REPAIR_SAFE_V2_ALL_42_PRESENT; 4 candidates; no automatic approval')
+          PY
+      - name: Gerar quatro reparos em série sem repetição
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t ASSETS < <(python - <<'PY'
+          import json
+          from pathlib import Path
+          q=json.loads(Path('canal/alchemy-lab/biblia-visual/FILA-REPAROS-EP01.json').read_text())
+          for x in q['items']: print(x['asset_id'])
+          PY
+          )
+          for i in 0 1 2 3; do
+            asset="${ASSETS[$i]}"
+            already=$(python - "$asset" <<'PY'
+          import sys
+          from videoforge.production_art import archived_reference
+          row=archived_reference('alchemy-lab','mmorpg-conquiste-a-princesa-ep01',sys.argv[1])
+          print('YES' if row else 'NO')
+          PY
+            )
+            if [[ "$already" == "YES" ]]; then
+              echo "REPAIR_ASSET_SHA_ARCHIVED_SKIP $asset"
+              continue
+            fi
+            tag="repair-${GITHUB_RUN_ID}-${i}"
+            title="Arte Bíblia $asset $tag"
+            echo "REPAIR_V2_DISPATCH $asset $tag"
+            gh workflow run production-art-by-request.yml -R "$GH_REPO" --ref main \
+              -f channel="$CHANNEL" -f video_id="$VIDEO_ID" -f asset="$asset" -f request_tag="$tag"
+            runid=""
+            for attempt in $(seq 1 60); do
+              runid=$(gh api "repos/$GH_REPO/actions/workflows/production-art-by-request.yml/runs?event=workflow_dispatch&per_page=60" \
+                | jq -r --arg title "$title" '[.workflow_runs[] | select(.display_title == $title)][0].id // empty')
+              if [[ -n "$runid" ]]; then break; fi
+              sleep 10
+            done
+            if [[ -z "$runid" ]]; then
+              echo "::error::Cannot find correction run for $asset; no additional paid call"
+              exit 1
+            fi
+            if ! gh run watch "$runid" -R "$GH_REPO" --exit-status --interval 10; then
+              echo "::error::Correction $asset failed in run $runid; STOP without paid retry"
+              exit 1
+            fi
+            echo "REPAIR_V2_ARCHIVED_SHA_NO_HUMAN_APPROVAL $asset $runid"
+          done
+          if ! gh workflow run qa-visual-bible-gallery.yml -R "$GH_REPO" --ref main; then
+            echo "::warning::Gallery dispatch failed; correction files remain archived"
+          fi
+          echo "ALL_FOUR_CORRECTIONS_GENERATED_CANDIDATES_NOT_APPROVED"
