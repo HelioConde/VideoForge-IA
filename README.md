@@ -1,3 +1,5 @@
+**Atualização da geração EP01 (16/11/2026):** os mestres derivados usam PNG mestre real anexado por SHA; 12 interações físicas estão preparadas mas bloqueadas até aprovação humana, sem usar V3/V4 de pegada rejeitada. Gerador de lotes [visual-bible-batch.yml](.github/workflows/visual-bible-batch.yml); conferir o andamento real em [REGISTRO-GERACOES.json](canal/alchemy-lab/biblia-visual/REGISTRO-GERACOES.json). Nenhum vídeo final foi autorizado. 
+
 # VideoForge IA — reconstrução orientada a MP4
 
 **Geração em lote da Bíblia Visual:** [Fila de 42 referências individuais](canal/alchemy-lab/biblia-visual/FILA-GERACAO-MESTRES.json) · [GitHub Actions — orquestrador sequencial](.github/workflows/visual-bible-batch.yml) · [Primeira execução](https://github.com/HelioConde/VideoForge-IA/actions/runs/44005370074). No início havia 3 já geradas e 39 a produzir; 12 interações/poses e 37 tomadas novas ficam suspensas até aprovação visual e QA físico das mãos/lanças. Falhas interrompem a fila; **não afirmar que todas estão geradas sem conferir `REGISTRO-GERACOES.json`.**
