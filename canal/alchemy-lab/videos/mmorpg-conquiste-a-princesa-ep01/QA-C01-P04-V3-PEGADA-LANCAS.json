@@ -233,5 +233,17 @@
   "board_sha256": "93c8ed1e95eb7a75a3f19d3d990957fca3d8cf08c3d60b4f6d41d29bb2a2532b",
   "preview": "QA-C01-P04-V3-PEGADA-LANCAS-PREVIEW.jpg",
   "preview_sha256": "1674731038ee240780346cbcf72fdc88a4e35acd3543f59fdd4910892e422002",
+  "hand_grip_qa_board": "QA-C01-P04-V3-PEGADA-LANCAS-PEGADAS-ZOOM.jpg",
+  "hand_grip_qa_board_sha256": "d2a1b64fa4e026d5f2a893db6de4a429146ac84486ae8dad8de080bc5469e63b",
+  "hand_grip_centers_provisional": {
+    "left": [
+      175,
+      1115
+    ],
+    "right": [
+      764,
+      1115
+    ]
+  },
   "next": "Review whether spear bases align to real fingers and tips cross above Kael; if not, regenerate gripping hands or spears as independent parts"
 }
