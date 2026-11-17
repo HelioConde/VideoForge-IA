@@ -33,7 +33,7 @@ jobs:
         with:
           ref: main
           persist-credentials: true
-          fetch-depth: 2
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -52,7 +52,7 @@ jobs:
               shot_id=os.environ.get('INPUT_SHOT_ID','').strip()
           else:
               expected=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-CENA-MAE-EP01.json')
-              changed=subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','-r','HEAD'],
+              changed=subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','-r',os.environ['GITHUB_SHA']],
                                               text=True).splitlines()
               if str(expected) not in changed:
                   raise SystemExit('EP01_MOTHER_PUSH_REQUEST_NOT_CHANGED')
