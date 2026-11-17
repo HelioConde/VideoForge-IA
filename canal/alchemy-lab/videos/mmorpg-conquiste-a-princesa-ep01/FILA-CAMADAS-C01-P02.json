@@ -1,0 +1,21 @@
+{
+  "schema": "videoforge/ep01-layer-queue/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P02",
+  "source_scene_mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "workflow": "ep01-layered-shot-batch.yml",
+  "user_direction": "Extrair do mesmo frame os elementos que serão movidos via rig e câmera; não criar poses isoladas.",
+  "items": [
+    "background-clean",
+    "character-carrasco",
+    "object-espada",
+    "object-bainha"
+  ],
+  "no_paid_retry": true,
+  "max_chargeable_calls_per_layer_run": 1,
+  "youtube_upload": false,
+  "human_visual_approval_required": true,
+  "rig_after_alpha_qa": true,
+  "mp4_generated": false
+}
