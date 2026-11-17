@@ -1,0 +1,32 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-parts-batch/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "aligned_reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "source_approval_manifest": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/APROVACOES-VISUAIS-C01-V3.json",
+  "parts": [
+    "character-kael",
+    "character-aldric",
+    "character-guarda_esquerdo",
+    "character-guarda_direito",
+    "object-lanca-esquerda",
+    "object-lanca-direita"
+  ],
+  "max_new_images": 6,
+  "one_paid_call_per_child": true,
+  "retry_on_failure": false,
+  "allow_spurious_parts": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_upload": false,
+  "stop_conditions": [
+    "first_failed_child_workflow",
+    "all_requested_components_archived",
+    "invalid_source_sha_or_approval"
+  ],
+  "technical_alignment_policy": "preserve_raw_plus_append_one_row_when_only_one_row_missing",
+  "final_character_rig_policy": "no_local_pixel_crops"
+}
