@@ -120,11 +120,17 @@ def main():
         records.append(row)
     dest=root/(BASENAME+".jpg")
     board.save(dest,"JPEG",quality=88,optimize=True)
+    # Small companion for human visual verification, not a rig asset.
+    preview=root/(BASENAME+"-PREVIEW.jpg")
+    small=ImageOps.contain(board,(1040,1480),Image.Resampling.LANCZOS)
+    small.save(preview,"JPEG",quality=69,optimize=True)
     report={"schema":"videoforge/ep01-c01p04-v3-subject-space-registration/v1",
             "channel":CHANNEL,"video_id":VIDEO,"shot_id":"C01-P04",
             "creator_approved_original_sha256":"a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
             "reference_sha256":EXPECTED_SOURCE,"board":dest.name,
             "board_sha256":sha256(dest.read_bytes()).hexdigest(),
+            "smaller_review_preview":preview.name,
+            "smaller_review_preview_sha256":sha256(preview.read_bytes()).hexdigest(),
             "targets":records,
             "placement_rois_are_provisional":True,
             "geometry_is_preview_only_no_final_sprite_export":True,
