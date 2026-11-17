@@ -63,5 +63,21 @@
   "rig_ready": false,
   "mp4_generated": false,
   "youtube_uploaded": false,
-  "provider_calls": 0
+  "provider_calls": 0,
+  "assistant_visual_review_20261117": {
+    "status": "improved_modern_room_but_visual_followup_required",
+    "report": "REVISAO-VISUAL-C03-C04-QUARTO.md",
+    "findings": [
+      "blue_eye_to_blue_monitor_match_cut_plausible",
+      "modern_room_references_corrected_before_generation",
+      "kael_standing_in_C03-P02_vs_seated_in_C04-P01",
+      "possible_casual_kael_injury_discontinuity",
+      "C04-P02_monitor_clean_for_Remotion_UI",
+      "fingers_on_mouse_require_native_closeup_QA"
+    ],
+    "human_visual_approval": false,
+    "rig_ready": false,
+    "mp4_generated": false,
+    "youtube_uploaded": false
+  }
 }
