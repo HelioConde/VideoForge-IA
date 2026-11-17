@@ -1,0 +1,23 @@
+{
+  "schema": "videoforge/ep01-c02-c03-continuity-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shots": [
+    "C01-P03",
+    "C02-P01",
+    "C02-P02",
+    "C03-P01"
+  ],
+  "source_mothers_sha256": {
+    "C01-P03-V2": "bfc1249dc1f83b004b620c333f5aa81689b0ba0c23a3e7573d57c09dcf3539e3",
+    "C02-P01": "0d1f8367c76cdf0c9b63f10071406a567b5a5a10cf799e1aa6c5d814019fa2a0",
+    "C02-P02": "a963b04237e6fdd0ff82474e792e15b3cc6bf6a4337e218d595f067593b78bf3",
+    "C03-P01": "b0c416e3c0dd10883e2de37a5c2652ee02030d1f6925ec6f47d9a6d56ade09f3"
+  },
+  "no_provider_calls": true,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_upload": false,
+  "qa_only": true,
+  "objective": "Prancha de continuidade Kael/Aldric e olho com quatro imagens-mãe SHA verificadas; não recortar nem usar como sprites finais."
+}
