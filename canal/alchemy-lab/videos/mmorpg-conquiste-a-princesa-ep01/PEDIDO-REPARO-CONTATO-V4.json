@@ -1,0 +1,34 @@
+{
+  "schema": "videoforge/ep01-contact-repair-request/v1",
+  "shot_id": "C01-P02",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "requested_version": "v4",
+  "source_mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "source_v3_patch_sha256": "17da28fcf733727a11d2d67a38a84611bd1192cff0e97d45d7db10169de9089d",
+  "parent_asset": "c01-p02-contact-local-patch-v3",
+  "parent_archived_run_id": 44047381550,
+  "reason": "V3 needs stricter blade-entry-and-lower-hand-contact visual QA before rig",
+  "constraints": [
+    "bainha outside coat",
+    "blade aligned and physically enters open scabbard mouth",
+    "lower glove fingers wrap scabbard naturally",
+    "upper glove maintains sword hilt grip",
+    "no duplicated weapons/fingers",
+    "identical frame and camera",
+    "preserve V1 and V3 as immutable"
+  ],
+  "roi": [
+    370,
+    790,
+    900,
+    1660
+  ],
+  "max_chargeable_calls_per_run": 1,
+  "retry_on_429": false,
+  "human_approval": false,
+  "youtube_upload": false,
+  "mp4_generated": false,
+  "candidate_only": true,
+  "quality_gate": "no rig or publish until V4 visual inspection, RGBA reconciling and explicit human approval"
+}
