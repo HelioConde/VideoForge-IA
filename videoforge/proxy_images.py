@@ -72,7 +72,35 @@ def call_proxy(base_url: str, route: str, api_key: str, payload: dict | None = N
     except urllib.error.HTTPError as exc:
         if exc.code == 429:
             raise ProxyImageError("Proxy limitou a chamada (HTTP 429). Verifique cotas, sem tentativas cegas.") from None
-        raise ProxyImageError(f"Proxy retornou HTTP {exc.code}; corpo omitido por seguranca.") from None
+        # Only print a controlled CATEGORY of provider errors. Never log the
+        # original message/body, image, credentials, or upstream request data.
+        category = "unspecified"
+        if exc.code in (400, 422):
+            try:
+                error_body = json.loads(exc.read(8192).decode("utf-8"))
+                error = error_body.get("error", error_body) if isinstance(error_body, dict) else {}
+                if isinstance(error, dict):
+                    detail = str(error.get("message", ""))[:1200].lower()
+                    safe_code = str(error.get("code", "")).lower()
+                    safe_type = str(error.get("type", "")).lower()
+                    check = " ".join((detail, safe_code, safe_type))
+                    patterns = (
+                        ("image_format_or_base64", ("base64", "image format", "invalid image", "decode image")),
+                        ("image_size_or_dimensions", ("too large", "image size", "image dimensions", "resolution", "dimensions")),
+                        ("unsupported_model", ("unsupported model", "model not found", "invalid model")),
+                        ("unsupported_endpoint_or_request", ("unsupported endpoint", "invalid parameter", "unknown parameter", "invalid request", "endpoint")),
+                        ("content_policy", ("safety", "policy", "moderation", "content filter")),
+                        ("quota_or_entitlement", ("quota", "insufficient", "not entitled", "billing", "credits")),
+                    )
+                    for code, keywords in patterns:
+                        if any(word in check for word in keywords):
+                            category = code
+                            break
+            except (ValueError, UnicodeDecodeError, TypeError):
+                pass
+        raise ProxyImageError(
+            f"Proxy retornou HTTP {exc.code}; categoria={category}; corpo omitido por seguranca."
+        ) from None
     except (urllib.error.URLError, TimeoutError) as exc:
         raise ProxyImageError("Nao foi possivel comunicar com o proxy; detalhes privados omitidos.") from None
     if len(raw) > MAX_RESPONSE:
