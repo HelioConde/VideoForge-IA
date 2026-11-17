@@ -1,0 +1,31 @@
+{
+  "schema": "videoforge/ep01-shot-layer-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p02-background-clean",
+  "candidate_scene_shot_id": "C01-P02",
+  "sha256": "0b70145b3cb5cfff9ff577d561f324d590d2afa7cb90ba24d782a4c295a53017",
+  "source_mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "source_originals_sha_verified": [
+    {
+      "id": "c01-p02-scene-mother",
+      "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png"
+    }
+  ],
+  "source_images_attached_to_request": 1,
+  "technical_qa": "rejected_canvas_mismatch",
+  "png_info": {
+    "width": 941,
+    "height": 1670,
+    "color_type": 2,
+    "has_alpha": false,
+    "alpha_zero_fraction": 0.0,
+    "alpha_visible_fraction": 1.0
+  },
+  "human_visual_approval": false,
+  "recomposition_review": "pending",
+  "rig_approved": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
