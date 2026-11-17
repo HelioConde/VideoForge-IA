@@ -234,8 +234,13 @@ def validate_and_save(part: str, raw: bytes, root: Path, spec: dict) -> dict:
     elif img.getbands() not in (("R","G","B"),("R","G","B","A")):
         qa_errors.append("background_invalid_channels")
     width,height=img.size
-    if width!=941 or height not in (1671,1672):
-        qa_errors.append("unacceptable_canvas")
+    # A newly generated transparent sprite may have a native canvas different
+    # from the scene. Preserve its pixels and defer scale/anchor registration to
+    # rig QA instead of falsifying a full-scene layer by resizing/cropping it.
+    # This is NOT a technically ready same-canvas compositing layer.
+    needs_registration = width!=941 or height not in (1671,1672)
+    if needs_registration and not (512 <= width <= 2048 and 512 <= height <= 3072):
+        qa_errors.append("implausible_native_canvas")
     base.mkdir(parents=True,exist_ok=True)
     # Store byte-exact provider image under its own name only when padding.
     original_digest = hashlib.sha256(raw).hexdigest()
@@ -284,7 +289,14 @@ def validate_and_save(part: str, raw: bytes, root: Path, spec: dict) -> dict:
         "height":1672 if postprocess!="none" else height,
         "transparent_alpha_required":transparent,
         "alpha_channel_checked":image_mode=="RGBA" if transparent else None,
-        "technical_qa":"candidate_needs_visual_alignment_review" if not qa_errors else "rejected_"+",".join(qa_errors),
+        "technical_qa":(
+            "rejected_"+",".join(qa_errors) if qa_errors
+            else ("candidate_native_canvas_requires_spatial_registration"
+                  if needs_registration
+                  else "candidate_needs_visual_alignment_review")),
+        "scene_canvas":[941,1672],
+        "native_canvas_requires_spatial_registration":bool(needs_registration),
+        "source_is_independent_sprite_not_mother_cutout":True,
         "placement_verified":False,"visual_recomposition_approved":False,
         "human_visual_approval":False,"rig_ready":False,
         "mp4_generated":False,"youtube_uploaded":False,
