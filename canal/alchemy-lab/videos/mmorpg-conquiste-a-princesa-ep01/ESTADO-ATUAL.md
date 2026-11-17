@@ -1,3 +1,11 @@
+## 17/11/2026 — Registro espacial C01-P04 V3: evidência de alfa e escala
+
+- **Concluído workflow QA sem custo de imagem [#44165580930](https://github.com/HelioConde/VideoForge-IA/actions/runs/44165580930)**, com [prancha de 3 opções por personagem](QA-C01-P04-V3-REGISTRO-ESPACIAL.jpg) e [manifesto com SHA, bounding boxes e transparência real](QA-C01-P04-V3-REGISTRO-ESPACIAL.json). Nenhuma imagem-mãe ou sprite de produção alterado.
+- **Aldric**, PNG RGBA nativo 981×1602, bbox de alfa `[460,150,730,490]`, altura relativa 21,22% do canvas; cobertura real alfa (>15) 4,30%. As opções A/B/C são **propostas visuais**, não posições comprovadas. Ainda não selecionar, exportar, compor ou animar.
+- **Guarda esquerdo**, PNG RGBA nativo 981×1602, bbox de alfa `[78,6,710,1529]`, altura relativa **95,07% do canvas** e cobertura real alfa (>15) **38,87%**. ALERTA de possível personagem desproporcionalmente grande para o plano geral: não resolver com recorte/zoom arbitrário; conferir o tamanho/posição com a mãe aprovada, corrigir a geração se necessário.
+- O [plano oficial das sete peças](PLANO-PECAS-C01-P04-V3.json) agora guarda as opções A (origem), B (centralização 1:1) e C (fit uniforme apenas para a prancha). **Nenhuma opção aprovada nem aplicada a arte final**; RGBA originais imutáveis.
+- **Bloqueio**: sem confirmação visual de Aldric, guarda esquerdo, silhuetas dos demais, pegadas das duas lanças e recomposição, **não iniciar rig Three.js, Remotion, MP4 nem YouTube**. O próximo passo é revisar a prancha e indicar qual proposta é plausível, ou refazer as peças problemáticas usando a Bíblia Visual.
+
 ## 17/11/2026 — QA do lote de 7 camadas C01-P04 V3
 
 - **7 imagens independentes geradas pelo proxy** com referência SHA da C01-P04 V3 visualmente aprovada; originais arquivados em `production-c01p04-approved-v3-independent-parts/`.
