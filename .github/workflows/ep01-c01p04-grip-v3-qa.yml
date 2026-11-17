@@ -13,7 +13,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   gerar-comparacao:
-    if: github.ref == 'refs/heads/main'
+    # DISABLED_CREATOR_NO_HAND_QA_2026_11_17
+    if: ${{ false }} # historical grip QA not needed
     runs-on: ubuntu-24.04
     timeout-minutes: 18
     env:
