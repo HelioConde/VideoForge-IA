@@ -99,7 +99,7 @@ jobs:
             echo "REPAIR_V2_DISPATCH_URL $dispatch_url"
             # O gh retorna URL exata do run recém-criado; não buscar run antigo
             # só por título, especialmente quando GH Actions reexecuta o job.
-            runid=$(printf '%s\n' "$dispatch_url" | sed -nE "s#^https://github.com/${GH_REPO}/actions/runs/([0-9]+).*$#\\1#p" | head -n 1)
+            runid=$(python -m videoforge.github_dispatch_id "$dispatch_url" "$GH_REPO")
             if [[ -z "$runid" ]]; then
               for attempt in $(seq 1 60); do
                 runid=$(gh api "repos/$GH_REPO/actions/workflows/production-art-by-request.yml/runs?event=workflow_dispatch&per_page=60" \
