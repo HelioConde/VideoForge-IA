@@ -1,3 +1,13 @@
+## Snapshot automático e novas imagens — 17/11/2026
+
+**Contagem verificável atual:** [CHECKPOINT-IMAGENS-EP01-AUTO.json](CHECKPOINT-IMAGENS-EP01-AUTO.json) = **12/39 mães originais geradas, 27 faltantes**, 1 abertura preta. A contagem dos trechos históricos antigos (3/36, 5/34 e outros) é obsoleta. O inventário é recalculado automaticamente em cada arquivamento SHA.
+
+**Últimas mães geradas (todas candidatas 941×1672):** C02-P02 [#44084059723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44084059723), C03-P01 [#44084423826](https://github.com/HelioConde/VideoForge-IA/actions/runs/44084423826), C03-P02 [#44085499606](https://github.com/HelioConde/VideoForge-IA/actions/runs/44085499606), C04-P01 [#44085725018](https://github.com/HelioConde/VideoForge-IA/actions/runs/44085725018), C04-P02 [#44085933750](https://github.com/HelioConde/VideoForge-IA/actions/runs/44085933750), C05-P01 [#44086437259](https://github.com/HelioConde/VideoForge-IA/actions/runs/44086437259), C05-P02 [#44087638566](https://github.com/HelioConde/VideoForge-IA/actions/runs/44087638566). Novo mestre da Bíblia para **muralhas de Arken** [#44087301592](https://github.com/HelioConde/VideoForge-IA/actions/runs/44087301592); todos com SHA real no registro.
+
+**Correções de continuidade antes de gastar IA:** referências de C03-P02 alteradas para Kael casual V2, quarto moderno e monitor (anteriormente erradamente medievais); câmera canônica preservada com nota do match cut. Para C05-P02, novo mestre Arken foi gerado primeiro e anexado por SHA junto à estrada.
+
+**QA sem IA:** [C02-C03](QA-C02-C03-CONTINUIDADE-IMAGENS.jpg) e [C03-C04](QA-C03-C04-CONTINUIDADE-QUARTO.jpg). C03-P01 precisa real macro da íris e consistência dos ferimentos; quarto gamer precisa revisão de salto de pose e possível marca casual; nenhum rig está autorizado.
+
 ## Correção da auditoria — 17/11/2026
 
 **Contagem válida do registro atual:** 5 tomadas têm imagem-mãe: C01-P02, C01-P03, C01-P04, C01-P05 e C02-P01. São 39 tomadas visuais ao todo, logo **34 sem mãe**. Números históricos de 3/36 presentes mais abaixo representam um momento anterior e foram substituídos por esta conferência.
