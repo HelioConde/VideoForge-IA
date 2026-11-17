@@ -1,0 +1,628 @@
+{
+  "schema": "videoforge/visual-bible-episode-queue/v1",
+  "episode": "mmorpg-conquiste-a-princesa-ep01",
+  "total_tomadas": 40,
+  "tomadas": [
+    {
+      "id": "C01-P01",
+      "cena": "C01",
+      "personagens": [],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "lanca-guarda",
+        "trono",
+        "espada-carrasco"
+      ],
+      "interacoes": [
+        "guardas-cruzando-lancas",
+        "guarda-segurando-lanca-na-base",
+        "rei-sentado-no-trono",
+        "kael-ajoelhado"
+      ],
+      "status": "tela_preta_sem_png"
+    },
+    {
+      "id": "C01-P02",
+      "cena": "C01",
+      "personagens": [
+        "carrasco"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "lanca-guarda",
+        "trono",
+        "espada-carrasco"
+      ],
+      "interacoes": [
+        "guardas-cruzando-lancas",
+        "guarda-segurando-lanca-na-base",
+        "rei-sentado-no-trono",
+        "kael-ajoelhado"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C01-P03",
+      "cena": "C01",
+      "personagens": [
+        "kael",
+        "aldric"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "lanca-guarda",
+        "trono",
+        "espada-carrasco"
+      ],
+      "interacoes": [
+        "guardas-cruzando-lancas",
+        "guarda-segurando-lanca-na-base",
+        "rei-sentado-no-trono",
+        "kael-ajoelhado"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C01-P04",
+      "cena": "C01",
+      "personagens": [
+        "kael",
+        "aldric",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "lanca-guarda",
+        "trono",
+        "espada-carrasco"
+      ],
+      "interacoes": [
+        "guardas-cruzando-lancas",
+        "guarda-segurando-lanca-na-base",
+        "rei-sentado-no-trono",
+        "kael-ajoelhado"
+      ],
+      "status": "gerada_com_pose_rejeitada"
+    },
+    {
+      "id": "C01-P05",
+      "cena": "C01",
+      "personagens": [
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "lanca-guarda",
+        "trono",
+        "espada-carrasco"
+      ],
+      "interacoes": [
+        "guardas-cruzando-lancas",
+        "guarda-segurando-lanca-na-base",
+        "rei-sentado-no-trono",
+        "kael-ajoelhado"
+      ],
+      "status": "gerada_em_revisao"
+    },
+    {
+      "id": "C02-P01",
+      "cena": "C02",
+      "personagens": [
+        "aldric"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "trono",
+        "coroa-aldric"
+      ],
+      "interacoes": [],
+      "status": "gerada_em_revisao"
+    },
+    {
+      "id": "C02-P02",
+      "cena": "C02",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "trono",
+        "coroa-aldric"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C03-P01",
+      "cena": "C03",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "monitor"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C03-P02",
+      "cena": "C03",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "monitor"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C04-P01",
+      "cena": "C04",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "quarto-kael",
+      "objetos": [
+        "monitor"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C04-P02",
+      "cena": "C04",
+      "personagens": [],
+      "cenario": "quarto-kael",
+      "objetos": [
+        "monitor"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C04-P03",
+      "cena": "C04",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "quarto-kael",
+      "objetos": [
+        "monitor"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C05-P01",
+      "cena": "C05",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "estrada",
+      "objetos": [
+        "capa-kael"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C05-P02",
+      "cena": "C05",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "estrada",
+      "objetos": [
+        "capa-kael"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C05-P03",
+      "cena": "C05",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "estrada",
+      "objetos": [
+        "capa-kael"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C06-P01",
+      "cena": "C06",
+      "personagens": [
+        "kael",
+        "figurantes"
+      ],
+      "cenario": "mercado",
+      "objetos": [],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C06-P02",
+      "cena": "C06",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "mercado",
+      "objetos": [],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C07-P01",
+      "cena": "C07",
+      "personagens": [
+        "elara"
+      ],
+      "cenario": "beco",
+      "objetos": [
+        "capuz-elara"
+      ],
+      "interacoes": [
+        "elara-encapuzada"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C07-P02",
+      "cena": "C07",
+      "personagens": [
+        "elara",
+        "mascarado_1",
+        "mascarado_2"
+      ],
+      "cenario": "beco",
+      "objetos": [
+        "capuz-elara"
+      ],
+      "interacoes": [
+        "elara-encapuzada"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C07-P03",
+      "cena": "C07",
+      "personagens": [
+        "kael",
+        "elara"
+      ],
+      "cenario": "beco",
+      "objetos": [
+        "capuz-elara"
+      ],
+      "interacoes": [
+        "elara-encapuzada"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C08-P01",
+      "cena": "C08",
+      "personagens": [
+        "kael",
+        "elara"
+      ],
+      "cenario": "beco",
+      "objetos": [
+        "carrinho"
+      ],
+      "interacoes": [
+        "perseguicao-beco",
+        "kael-protegendo-elara"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C08-P02",
+      "cena": "C08",
+      "personagens": [
+        "kael",
+        "mascarados"
+      ],
+      "cenario": "beco",
+      "objetos": [
+        "carrinho"
+      ],
+      "interacoes": [
+        "perseguicao-beco",
+        "kael-protegendo-elara"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C08-P03",
+      "cena": "C08",
+      "personagens": [
+        "elara",
+        "kael",
+        "mascarados"
+      ],
+      "cenario": "beco",
+      "objetos": [
+        "carrinho"
+      ],
+      "interacoes": [
+        "perseguicao-beco",
+        "kael-protegendo-elara"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C08-P04",
+      "cena": "C08",
+      "personagens": [
+        "elara",
+        "mascarados"
+      ],
+      "cenario": "beco",
+      "objetos": [
+        "carrinho"
+      ],
+      "interacoes": [
+        "perseguicao-beco",
+        "kael-protegendo-elara"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C09-P01",
+      "cena": "C09",
+      "personagens": [
+        "kael",
+        "elara"
+      ],
+      "cenario": "beco",
+      "objetos": [],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C09-P02",
+      "cena": "C09",
+      "personagens": [
+        "kael",
+        "elara"
+      ],
+      "cenario": "beco",
+      "objetos": [],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C10-P01",
+      "cena": "C10",
+      "personagens": [
+        "elara"
+      ],
+      "cenario": "beco",
+      "objetos": [
+        "broche-flor"
+      ],
+      "interacoes": [
+        "kael-segurando-broche"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C10-P02",
+      "cena": "C10",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "beco",
+      "objetos": [
+        "broche-flor"
+      ],
+      "interacoes": [
+        "kael-segurando-broche"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C11-P01",
+      "cena": "C11",
+      "personagens": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "cenario": "portao-real",
+      "objetos": [
+        "broche-flor",
+        "lanca-guarda"
+      ],
+      "interacoes": [
+        "guarda-segurando-lanca-na-base"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C11-P02",
+      "cena": "C11",
+      "personagens": [
+        "kael",
+        "guarda_esquerdo"
+      ],
+      "cenario": "portao-real",
+      "objetos": [
+        "broche-flor",
+        "lanca-guarda"
+      ],
+      "interacoes": [
+        "guarda-segurando-lanca-na-base"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C11-P03",
+      "cena": "C11",
+      "personagens": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "cenario": "portao-real",
+      "objetos": [
+        "broche-flor",
+        "lanca-guarda"
+      ],
+      "interacoes": [
+        "guarda-segurando-lanca-na-base"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C12-P01",
+      "cena": "C12",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "coroa-elara",
+        "trono"
+      ],
+      "interacoes": [
+        "elara-revelada"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C12-P02",
+      "cena": "C12",
+      "personagens": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "coroa-elara",
+        "trono"
+      ],
+      "interacoes": [
+        "elara-revelada"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C12-P03",
+      "cena": "C12",
+      "personagens": [
+        "kael",
+        "elara"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "coroa-elara",
+        "trono"
+      ],
+      "interacoes": [
+        "elara-revelada"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C12-P04",
+      "cena": "C12",
+      "personagens": [
+        "elara"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "coroa-elara",
+        "trono"
+      ],
+      "interacoes": [
+        "elara-revelada"
+      ],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C13-P01",
+      "cena": "C13",
+      "personagens": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "coroa-elara"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C13-P02",
+      "cena": "C13",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "coroa-elara"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C14-P01",
+      "cena": "C14",
+      "personagens": [
+        "elara",
+        "aldric"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "trono",
+        "coroa-elara"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C14-P02",
+      "cena": "C14",
+      "personagens": [
+        "elara",
+        "aldric"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "trono",
+        "coroa-elara"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    },
+    {
+      "id": "C14-P03",
+      "cena": "C14",
+      "personagens": [
+        "kael"
+      ],
+      "cenario": "sala-do-trono",
+      "objetos": [
+        "trono",
+        "coroa-elara"
+      ],
+      "interacoes": [],
+      "status": "planejada_nao_gerada"
+    }
+  ],
+  "hold": true,
+  "nota": "Rainha planejada para histórias futuras; não figura nas 40 tomadas. C03-P02 tem match-cut com monitor."
+}

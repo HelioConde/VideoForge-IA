@@ -1,0 +1,30 @@
+{
+  "schema": "videoforge/visual-bible-reviews/v1",
+  "channel": "alchemy-lab",
+  "by_sha256": {
+    "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc": {
+      "status": "em_revisao",
+      "motivo": "Visual apreciado, pose das lanças reprovada: guardas não seguram as hastes",
+      "escopo_permitido": [
+        "estilo",
+        "identidade_geral"
+      ],
+      "escopo_proibido": [
+        "pose",
+        "contato_mão_lança",
+        "rig"
+      ],
+      "evidencia": "feedback_usuario_2026-11-16"
+    },
+    "0bb72ea525d81b6e935af49eb873d308a88ce8230a4a2b7d89c62d5d0e88a8dc": {
+      "status": "rejeitado",
+      "motivo": "Direção e pegada da lança incorretas; base não segurada como solicitado",
+      "escopo_permitido": [],
+      "escopo_proibido": [
+        "referencia_de_pose",
+        "animacao"
+      ],
+      "evidencia": "feedback_usuario_2026-11-16"
+    }
+  }
+}

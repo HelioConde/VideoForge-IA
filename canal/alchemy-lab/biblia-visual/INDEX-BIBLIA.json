@@ -1,0 +1,501 @@
+{
+  "schema": "videoforge/visual-bible-index/v1",
+  "channel": "alchemy-lab",
+  "episode": "mmorpg-conquiste-a-princesa-ep01",
+  "categorias": {
+    "personagens": [
+      {
+        "id": "kael",
+        "nome": "Kael",
+        "descricao": "23 anos; rosto jovem, cabelo castanho muito escuro volumoso, olhos âmbar, capa vinho rasgada e ombreira de metal escuro com ouro e gema azul; variantes medieval, casual, ferido e depois.",
+        "variantes": [
+          "medieval",
+          "casual_antes",
+          "ferido",
+          "depois"
+        ],
+        "status": "em_revisao",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/kael",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "aldric",
+        "nome": "Rei Aldric",
+        "descricao": "55 anos; barba cinza/branca volumosa, coroa dourada, manto exterior escuro, túnica vinho, ouro e gola clara.",
+        "variantes": [
+          "tribunal",
+          "revelacao"
+        ],
+        "status": "em_revisao",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/aldric",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "rainha",
+        "nome": "Rainha",
+        "descricao": "Aparência e presença narrativa ainda não definidas no EP01; não inventar imagem.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/rainha",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "elara",
+        "nome": "Princesa Elara",
+        "descricao": "21 anos, cabelo loiro trançado, olhos violeta; vestido branco/violeta e coroa; disfarce encapuzado sem revelar coroa até C12.",
+        "variantes": [
+          "palacio",
+          "encapuzada",
+          "revelada",
+          "antes",
+          "depois"
+        ],
+        "status": "em_revisao",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/elara",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "guarda_esquerdo",
+        "nome": "Guarda real esquerdo",
+        "descricao": "Armadura prateada/dourada, elmo fechado e pluma vinho; lança empunhada pela BASE, sem mãos ou armas flutuantes.",
+        "variantes": [
+          "cerimonial",
+          "cruzando_lanca"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/guarda_esquerdo",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "guarda_direito",
+        "nome": "Guarda real direito",
+        "descricao": "Armadura prateada/dourada, elmo fechado e pluma vinho; lança empunhada pela BASE, sem mãos ou armas flutuantes.",
+        "variantes": [
+          "cerimonial",
+          "cruzando_lanca"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/guarda_direito",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "carrasco",
+        "nome": "Carrasco",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/carrasco",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "figurantes",
+        "nome": "Figurantes",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/figurantes",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "mascarado_1",
+        "nome": "Mascarado 1",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/mascarado_1",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "mascarado_2",
+        "nome": "Mascarado 2",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/mascarado_2",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "mascarados",
+        "nome": "Perseguidores",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/personagens/mascarados",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      }
+    ],
+    "cenarios": [
+      {
+        "id": "sala-do-trono",
+        "nome": "Salão do trono",
+        "descricao": "Trono dourado, tapete vermelho, vitrais azul-violeta e luz dourada lateral; gerar fundo limpo.",
+        "variantes": [
+          "vazio",
+          "angulo_frontal",
+          "detalhes"
+        ],
+        "status": "em_revisao",
+        "pasta": "canal/alchemy-lab/biblia-visual/cenarios/sala-do-trono",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "quarto-kael",
+        "nome": "Quarto contemporâneo",
+        "descricao": "Quarto moderno e monitor azul; Kael sem armadura medieval.",
+        "variantes": [
+          "vazio",
+          "monitor_aceso"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/cenarios/quarto-kael",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "estrada",
+        "nome": "Estrada",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/cenarios/estrada",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "mercado",
+        "nome": "Mercado",
+        "descricao": "Bancas/arquitetura de Arken, luz e distribuição consistentes.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/cenarios/mercado",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "beco",
+        "nome": "Beco",
+        "descricao": "Beco de Arken, mesmos obstáculos e posições entre perseguições.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/cenarios/beco",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "portao-real",
+        "nome": "Portão real",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/cenarios/portao-real",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "castelo",
+        "nome": "Castelo",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/cenarios/castelo",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      }
+    ],
+    "objetos": [
+      {
+        "id": "lanca-guarda",
+        "nome": "Lança real",
+        "descricao": "Lança completa com ponta, haste, punho e BASE; contato mão/objeto fisicamente plausível.",
+        "variantes": [
+          "completa",
+          "base",
+          "empunhadura"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/lanca-guarda",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "coroa-aldric",
+        "nome": "Coroa de Aldric",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/coroa-aldric",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "coroa-elara",
+        "nome": "Coroa de Elara",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/coroa-elara",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "trono",
+        "nome": "Trono",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/trono",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "espada-carrasco",
+        "nome": "Espada do carrasco",
+        "descricao": "A espada da abertura pertence ao carrasco, não a Kael.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/espada-carrasco",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "broche-flor",
+        "nome": "Broche de flor prateada",
+        "descricao": "Broche de flor prateada consistente entre queda, resgate e porte de Kael.",
+        "variantes": [
+          "completo",
+          "detalhe"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/broche-flor",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "capa-kael",
+        "nome": "Capa de Kael",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/capa-kael",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "ombreira-kael",
+        "nome": "Ombreira de Kael",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/ombreira-kael",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "capuz-elara",
+        "nome": "Capuz de Elara",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/capuz-elara",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "monitor",
+        "nome": "Monitor",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/monitor",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "carrinho",
+        "nome": "Carrinho de madeira",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/objetos/carrinho",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      }
+    ],
+    "interacoes": [
+      {
+        "id": "guarda-segurando-lanca-na-base",
+        "nome": "Guarda segura lança pela BASE",
+        "descricao": "Conexão ombro→cotovelo→punho→mão→BASE inferior da própria lança; direção correta e peso suportado.",
+        "variantes": [
+          "base"
+        ],
+        "status": "rejeitado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/guarda-segurando-lanca-na-base",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "guardas-cruzando-lancas",
+        "nome": "Guardas cruzam lanças",
+        "descricao": "Duas lanças formando X, cada uma segurada pela BASE pelo seu respectivo guarda.",
+        "variantes": [
+          "base"
+        ],
+        "status": "rejeitado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/guardas-cruzando-lancas",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "rei-sentado-no-trono",
+        "nome": "Rei sentado",
+        "descricao": "Contato físico dos braços e mãos do rei com o trono.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/rei-sentado-no-trono",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "kael-ajoelhado",
+        "nome": "Kael ajoelhado",
+        "descricao": "Joelhos, capa e corpo realmente apoiados no piso.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/kael-ajoelhado",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "espada-desembainhada",
+        "nome": "Espada desembainhada",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/espada-desembainhada",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "elara-encapuzada",
+        "nome": "Elara encapuzada",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/elara-encapuzada",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "elara-revelada",
+        "nome": "Princesa revelada",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/elara-revelada",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "kael-segurando-broche",
+        "nome": "Kael segura broche",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/kael-segurando-broche",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "perseguicao-beco",
+        "nome": "Perseguição no beco",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/perseguicao-beco",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      },
+      {
+        "id": "kael-protegendo-elara",
+        "nome": "Kael protege Elara",
+        "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/interacoes/kael-protegendo-elara",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
+      }
+    ]
+  },
+  "hold_novas_cenas": true,
+  "geracoes_arquivadas_fonte": "REGISTRO-GERACOES.json"
+}
