@@ -1,0 +1,37 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-lanca-guarda-empunhadura-v2",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-lanca-guarda-empunhadura-v2.png",
+  "biblia_item_id": "lanca-guarda",
+  "biblia_categoria": "objetos",
+  "size": "1024x1536",
+  "sha256": "b335529e7a4f4cf1f61d09da8e0fd2cde304fe7392cdfa68d54f246ff1a1ec48",
+  "model": "gpt-image-2",
+  "actual_width": 941,
+  "actual_height": 1672,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 1,
+  "source_originals_sha_verified": [
+    {
+      "actor": "biblia_mestre",
+      "id": "biblia-lanca-guarda-completa-v2",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44012069505/biblia-lanca-guarda-completa-v2.png",
+      "sha256": "b6fb64fe457b6b87415176110d5169fa2afef4e61d859bc56ece858d8727d072",
+      "source_spear_pose_rejected": false,
+      "human_visual_approval_pending": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": null,
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}

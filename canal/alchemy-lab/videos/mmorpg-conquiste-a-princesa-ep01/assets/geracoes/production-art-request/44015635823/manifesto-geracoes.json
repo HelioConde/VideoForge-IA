@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-art-request",
+  "github_run_id": 44015635823,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "biblia-lanca-guarda-empunhadura-v2.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "b335529e7a4f4cf1f61d09da8e0fd2cde304fe7392cdfa68d54f246ff1a1ec48",
+      "bytes": 1557469,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
