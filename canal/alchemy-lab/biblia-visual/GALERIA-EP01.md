@@ -1,13 +1,15 @@
 # Galeria visual de revisão — EP01
 
-**23 de 42 referências-mestre** arquivadas e verificadas por SHA256.
-**0 de 4 reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.
+**26 de 42 referências-mestre** arquivadas e verificadas por SHA256.
+**0 de 9 reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.
 **Nenhuma miniatura substitui o original. Gerado não significa aprovado.**
 Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geração de IA.
 
 ![Prancha de revisão PREVIA-01.jpg](galeria/PREVIA-01.jpg)
 
 ![Prancha de revisão PREVIA-02.jpg](galeria/PREVIA-02.jpg)
+
+![Prancha de revisão PREVIA-03.jpg](galeria/PREVIA-03.jpg)
 
 ## Arquivos originais e proveniência
 
@@ -36,12 +38,12 @@ Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geraç�
 | [biblia-mascarado-2-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008127022/biblia-mascarado-2-base-v1.png) | gerado (não aprovado automaticamente) | `159ddbda6ed18001…` | [#44008127022](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008127022) |
 | [biblia-mascarados-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008263650/biblia-mascarados-base-v1.png) | gerado (não aprovado automaticamente) | `54426224625f945a…` | [#44008263650](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008263650) |
 | [biblia-sala-do-trono-angulo-frontal-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008401251/biblia-sala-do-trono-angulo-frontal-v1.png) | gerado (não aprovado automaticamente) | `22b0420faf6b2fca…` | [#44008401251](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008401251) |
+| [biblia-sala-do-trono-detalhes-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008517998/biblia-sala-do-trono-detalhes-v1.png) | gerado (não aprovado automaticamente) | `a81380c718e41d8a…` | [#44008517998](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008517998) |
+| [biblia-quarto-kael-vazio-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008695444/biblia-quarto-kael-vazio-v1.png) | gerado (não aprovado automaticamente) | `84ba05fbc8a6da12…` | [#44008695444](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008695444) |
+| [biblia-quarto-kael-monitor-aceso-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008857880/biblia-quarto-kael-monitor-aceso-v1.png) | gerado (não aprovado automaticamente) | `6eb1fb244a596b55…` | [#44008857880](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008857880) |
 
 ## Pendentes de geração
 
-- biblia-sala-do-trono-detalhes-v1
-- biblia-quarto-kael-vazio-v1
-- biblia-quarto-kael-monitor-aceso-v1
 - biblia-estrada-base-v1
 - biblia-mercado-base-v1
 - biblia-beco-base-v1
@@ -65,6 +67,11 @@ Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geraç�
 - Pendente: biblia-lanca-guarda-completa-v2
 - Pendente: biblia-lanca-guarda-base-v2
 - Pendente: biblia-lanca-guarda-empunhadura-v2
+- Pendente: biblia-carrasco-base-v2
+- Pendente: biblia-figurantes-base-v2
+- Pendente: biblia-mascarado-1-base-v2
+- Pendente: biblia-mascarado-2-base-v2
+- Pendente: biblia-mascarados-base-v2
 
 ## Travamentos preservados
 
