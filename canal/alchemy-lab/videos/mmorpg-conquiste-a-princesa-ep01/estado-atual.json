@@ -2013,11 +2013,22 @@
     "correction_asset": "c01-p04-pegada-lancas-v4",
     "source_original_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
     "owner_visual_review_required": true,
-    "correction_status": "requested_after_preflight",
+    "correction_status": "generated_archived_technical_success_owner_visual_review_pending",
     "ep01_37_other_images_paused": true,
     "official_video_blocked": true,
     "youtube_uploaded": false,
     "qa_preflight_run": 43990756383,
-    "qa_preflight_conclusion": "success"
+    "qa_preflight_conclusion": "success",
+    "correction_run_id": 43990928355,
+    "correction_run_success": true,
+    "correction_image": "assets/geracoes/production-art-request/43990928355/c01-p04-pegada-lancas-v4.png",
+    "correction_image_sha256": "0bb72ea525d81b6e935af49eb873d308a88ce8230a4a2b7d89c62d5d0e88a8dc",
+    "image_width": 941,
+    "image_height": 1672,
+    "side_by_side_preview": "QA-C01-P04-V3-VS-V4-LANCAS.jpg",
+    "comparison_run": 43991247393,
+    "comparison_run_success": true,
+    "first_visual_inspection": "both guards now visibly gripping their own spears with their raised arms; final owner review pending",
+    "correction_promoted_as_new_anchor": false
   }
 }
