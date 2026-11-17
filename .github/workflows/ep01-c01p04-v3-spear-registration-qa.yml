@@ -40,7 +40,7 @@ jobs:
           ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f "$ep/QA-C01-P04-V3-PEGADA-LANCAS.jpg" "$ep/QA-C01-P04-V3-PEGADA-LANCAS-PREVIEW.jpg" "$ep/QA-C01-P04-V3-PEGADA-LANCAS.json"
+          git add -f "$ep/QA-C01-P04-V3-PEGADA-LANCAS.jpg" "$ep/QA-C01-P04-V3-PEGADA-LANCAS-PREVIEW.jpg" "$ep/QA-C01-P04-V3-PEGADA-LANCAS-PEGADAS-ZOOM.jpg" "$ep/QA-C01-P04-V3-PEGADA-LANCAS.json"
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'qa(ep01): registrar 3 poses de lanças rigidas sem aprovar contato'
           git pull --rebase origin main
