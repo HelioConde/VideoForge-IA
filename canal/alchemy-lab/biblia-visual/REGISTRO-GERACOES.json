@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 54,
+  "total_arquivadas": 55,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1625,6 +1625,34 @@
       "bytes": 2277605,
       "width": 1199,
       "height": 1312,
+      "referencias_usadas": [
+        {
+          "id": "biblia-sala-do-trono-vazio-v1",
+          "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44016161296:biblia-mascarado-1-base-v2.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-mascarado-1-base-v2",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "mascarado_1",
+      "biblia_categoria": "personagens",
+      "producer": "production-art-request",
+      "github_run_id": 44016161296,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016161296/biblia-mascarado-1-base-v2.png",
+      "sha256": "fa149cf971273a6416fb2a6e12f81d63bbf33466366a8481bae3b5955c86dda8",
+      "bytes": 1974541,
+      "width": 941,
+      "height": 1672,
       "referencias_usadas": [
         {
           "id": "biblia-sala-do-trono-vazio-v1",
