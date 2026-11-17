@@ -19,5 +19,11 @@
   "rig_ready": false,
   "youtube_upload": false,
   "qa_only": true,
-  "objective": "Prancha de continuidade Kael/Aldric e olho com quatro imagens-mãe SHA verificadas; não recortar nem usar como sprites finais."
+  "objective": "Prancha de continuidade Kael/Aldric e olho com quatro imagens-mãe SHA verificadas; não recortar nem usar como sprites finais.",
+  "request_revision": 2,
+  "first_attempt_runs": [
+    44084664066,
+    44084739295
+  ],
+  "first_attempt_result": "workflow YAML syntax failed before running QA; no provider calls"
 }
