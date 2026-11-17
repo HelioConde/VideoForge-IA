@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**118 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**119 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -122,6 +122,7 @@
 | [c13-p02-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44104343861/c13-p02-scene-mother.png) / C13-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`8957be6fbf66…\` | [#44104343861](https://github.com/HelioConde/VideoForge-IA/actions/runs/44104343861) |
 | [c14-p01-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44104542962/c14-p01-scene-mother.png) / C14-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`9f58d04201ba…\` | [#44104542962](https://github.com/HelioConde/VideoForge-IA/actions/runs/44104542962) |
 | [c14-p02-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44104792481/c14-p02-scene-mother.png) / C14-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`a7f4dbeac632…\` | [#44104792481](https://github.com/HelioConde/VideoForge-IA/actions/runs/44104792481) |
+| [c14-p03-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44105086877/c14-p03-scene-mother.png) / C14-P03 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`d94216954a56…\` | [#44105086877](https://github.com/HelioConde/VideoForge-IA/actions/runs/44105086877) |
 
 ## Regras de consulta
 
