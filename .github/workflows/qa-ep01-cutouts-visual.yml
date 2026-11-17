@@ -1,0 +1,47 @@
+name: "VideoForge - QA recortes reais C01-P02"
+run-name: "EP01 / prévia 5 artes e desvio da bainha"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/qa-ep01-cutouts-visual.yml'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pillow local sem proxy
+        run: python -m pip install --quiet Pillow==11.3.0
+      - name: Prévia de mãe, fundo, personagem e objetos com SHA
+        run: python scripts/qa-c01-p02-recortes-visual.py
+      - name: Guardar JPG e proveniência sem alterar PNG original
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'videoforge-cutout-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git add -- "$ep/QA-C01-P02-RECORTES.jpg" "$ep/QA-C01-P02-RECORTES.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(ep01): inspecionar PNGs reais de carrasco, espada e bainha'
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              exit 1
+            fi
+          done
+          exit 1
