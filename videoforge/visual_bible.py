@@ -176,6 +176,7 @@ def _verified_images(root: Path, channel: str):
                     if isinstance(s, dict)
                 ],
                 "status": "gerado",
+                "qa_tecnica": origin.get("technical_status", origin.get("technical_qa", "não_informado")),
                 "aprovacao_automatica": False,
                 "youtube_uploaded": False
             })
@@ -275,6 +276,13 @@ def sync(channel: str, root: Path = ROOT):
     md = bible / "REGISTRO-GERACOES.md"
     if _write(md, _markdown(registry)):
         changed.append(md)
+    sources = _read(bible / "REFERENCIAS-OFICIAIS.json",
+                    default={"schema": "videoforge/visual-bible-references/v1",
+                             "channel": channel, "referencias": []})
+    if (sources.get("schema") != "videoforge/visual-bible-references/v1"
+            or sources.get("channel") != channel
+            or not isinstance(sources.get("referencias"), list)):
+        raise VideoForgeError("BIBLE_REFERENCE_MANIFEST_INVALID")
     for category, items in index["categorias"].items():
         for item in items:
             folder = bible / category / item["id"]
@@ -287,7 +295,21 @@ def sync(channel: str, root: Path = ROOT):
                      "referencias_aprovadas": [],
                      "fonte": "INDEX-BIBLIA.json",
                      "aviso": "Não inventar imagem ou aprovação."}
-            if not sheetfile.exists() and _write(sheetfile, _dump(ficha)):
+            actual_ficha = _read(sheetfile, default=ficha)
+            if (actual_ficha.get("schema") != ITEM_SCHEMA
+                    or actual_ficha.get("id") != item["id"]
+                    or actual_ficha.get("categoria") != category):
+                raise VideoForgeError("BIBLE_ITEM_SHEET_INVALID")
+            matching = [r for r in sources["referencias"]
+                        if isinstance(r, dict) and r.get("item") == item["id"]]
+            if matching:
+                actual_ficha["referencias_disponiveis"] = [
+                    {"path": ref.get("path"), "sha256": ref.get("sha256"),
+                     "escopo": ref.get("escopo"),
+                     "aprovacao_nao_generalizavel": True}
+                    for ref in matching
+                ]
+            if _write(sheetfile, _dump(actual_ficha)):
                 changed.append(sheetfile)
             status = _read(statefile,
                            default={"schema": STATUS_SCHEMA, "categoria": category,
