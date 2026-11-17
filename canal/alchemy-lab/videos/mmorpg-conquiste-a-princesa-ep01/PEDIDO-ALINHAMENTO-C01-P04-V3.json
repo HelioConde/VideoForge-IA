@@ -1,0 +1,24 @@
+{
+  "schema": "videoforge/ep01-v3-one-row-alignment-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "source_run_id": 44152300579,
+  "source_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "creator_visual_approved": true,
+  "operation": "duplicate_last_scanline_at_bottom",
+  "source_canvas": [
+    941,
+    1671
+  ],
+  "result_canvas": [
+    941,
+    1672
+  ],
+  "no_proxy_calls": true,
+  "allow_crop_or_resize": false,
+  "original_png_immutable": true,
+  "derived_visual_approval": false,
+  "rig_ready": false,
+  "youtube_upload": false
+}
