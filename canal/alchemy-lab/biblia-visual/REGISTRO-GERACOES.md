@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**125 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**127 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -129,6 +129,8 @@
 | [c01-p04-scene-mother-facing-throne-v3-native-aligned.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3-aligned/44156724769/c01-p04-scene-mother-facing-throne-v3-native-aligned.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`b439b45f3dcf…\` | [#44156724769](https://github.com/HelioConde/VideoForge-IA/actions/runs/44156724769) |
 | [c01-p04-v3-background-clean-provider-native.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44157781835/c01-p04-v3-background-clean-provider-native.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`938624141370…\` | [#44157781835](https://github.com/HelioConde/VideoForge-IA/actions/runs/44157781835) |
 | [c01-p04-v3-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44157781835/c01-p04-v3-background-clean.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`67806c296163…\` | [#44157781835](https://github.com/HelioConde/VideoForge-IA/actions/runs/44157781835) |
+| [c01-p04-v3-character-kael-provider-native.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44158487425/c01-p04-v3-character-kael-provider-native.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`84d081f0a83b…\` | [#44158487425](https://github.com/HelioConde/VideoForge-IA/actions/runs/44158487425) |
+| [c01-p04-v3-character-kael.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44158487425/c01-p04-v3-character-kael.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`591b07d9ac3e…\` | [#44158487425](https://github.com/HelioConde/VideoForge-IA/actions/runs/44158487425) |
 
 ## Regras de consulta
 
