@@ -173,6 +173,47 @@ class VisualBibleMasterTests(unittest.TestCase):
         with self.assertRaisesRegex(VideoForgeError, "BIBLE_MASTER_EXTRA_SOURCE_NOT_ARCHIVED"):
             edit_payload(asset, prompt, "gpt-image-2", size)
 
+    def test_style_only_review_does_not_unlock_spear_interactions(self):
+        from unittest.mock import patch
+        from videoforge.production_art import archived_reference
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = next(x for x in plan["assets"] if x["id"] == "biblia-guarda-esquerdo-cruzando-lanca-v1")
+        deps = asset["additional_master_asset_ids"]
+        archived = [archived_reference(
+            "alchemy-lab", "mmorpg-conquiste-a-princesa-ep01", dep) for dep in deps]
+        self.assertTrue(all(archived))
+        reviews = {ref["sha256"]: {
+            "status": "aprovado", "revisor": "teste", "evidencia": "teste-local",
+            "escopo_permitido": ["referencia_canonica"], "escopo_proibido": [],
+        } for ref in archived}
+        reviews[archived[0]["sha256"]]["escopo_permitido"] = ["estilo"]
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        with patch("videoforge.visual_bible._review", return_value=reviews):
+            with self.assertRaisesRegex(VideoForgeError, "BIBLE_INTERACTION_MASTER_SCOPE_NOT_AUTHORIZED"):
+                edit_payload(asset, prompt, "gpt-image-2", size)
+
+    def test_full_manual_scope_is_still_a_candidate_not_autoapproved(self):
+        from unittest.mock import patch
+        from videoforge.production_art import archived_reference
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = next(x for x in plan["assets"] if x["id"] == "biblia-guarda-esquerdo-cruzando-lanca-v1")
+        deps = asset["additional_master_asset_ids"]
+        archived = [archived_reference(
+            "alchemy-lab", "mmorpg-conquiste-a-princesa-ep01", dep) for dep in deps]
+        self.assertTrue(all(archived))
+        reviews = {ref["sha256"]: {
+            "status": "aprovado", "revisor": "teste", "evidencia": "teste-local",
+            "escopo_permitido": ["referencia_canonica"], "escopo_proibido": [],
+        } for ref in archived}
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        with patch("videoforge.visual_bible._review", return_value=reviews):
+            payload, proof = edit_payload(asset, prompt, "gpt-image-2", size)
+        self.assertEqual(len(payload["images"]), len(deps))
+        self.assertEqual([x["sha256"] for x in proof],
+                         [x["sha256"] for x in archived])
+        self.assertTrue(all(x["human_visual_approval_pending"] is False for x in proof))
+        self.assertFalse(asset["youtube_upload"])
+
     def test_spear_interaction_requires_human_approved_masters(self):
         plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
         asset = next(x for x in plan["assets"] if x["id"] == "biblia-guardas-cruzando-lancas-base-v1")
