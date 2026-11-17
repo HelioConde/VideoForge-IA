@@ -1,3 +1,10 @@
+## 17/11/2026 — Verificação atualizada (último QA e novas mães)
+- **Registro de gerações auditado:** existem **5 tomadas diferentes** com imagens-mãe arquivadas entre as **39 visuais** (C01-P02, C01-P03, C01-P04, C01-P05 e C02-P01). **Faltam 34 imagens-mãe por tomada**, além de novas versões/peças para tomadas reprovadas. Contagens antigas de 3/36 nos trechos históricos abaixo foram superadas.
+- [QA de recomposição C01-P03 V1 #44077543911](https://github.com/HelioConde/VideoForge-IA/actions/runs/44077543911) teve êxito técnico, mas **a arte foi reprovada para rig**: 58,21% de pixels acima do limiar e personagens em posição/escala incorretas, com guardas e espada indevidos na mãe.
+- **Mães V2 candidatas**, ainda sem aprovação humana: [C01-P03 V2](assets/geracoes/production-scene-mother-repair-v2/44080234599/c01-p03-scene-mother-v2.png) remove guardas/lanças/espada; [C01-P04 V2](assets/geracoes/production-scene-mother-v2-aligned/44080887693/c01-p04-scene-mother-v2-native-aligned-v1.png) corrige Kael ajoelhado. [Prancha de revisão V2](QA-MAES-C01-P03-P04-V2.jpg) e [relatório](REVISAO-VISUAL-MAES-C01-P03-P04-V2.md). O contato das mãos dos guardas com lanças requer close.
+- **Nova tomada:** [C02-P01 mãe](assets/geracoes/production-scene-mother-v2/44081215706/c02-p01-scene-mother.png), SHA `0d1f8367c76cdf0c9b63f10071406a567b5a5a10cf799e1aa6c5d814019fa2a0`; [run #44081215706](https://github.com/HelioConde/VideoForge-IA/actions/runs/44081215706) `success`, sem revisão visual definitiva.
+- **Crítico:** não reaproveitar Kael, Aldric nem background gerados a partir da C01-P03 V1 para compor V2; pedir novas imagens separadas ao proxy após seleção da mãe V2, nunca recortes da imagem-mãe. `human_approval=false`, `rig_ready=false`, `mp4_generated=false`, `youtube_uploaded=false`.
+
 ## 17/11/2026 — Checkpoint consolidado: 5 mães, V2 reparadas e QA visual
 
 - **40 tomadas = 39 com arte + C01-P01 preta.** Mães originais arquivadas para **C01-P02, C01-P03, C01-P04, C01-P05 e C02-P01** (5/39); **34 tomadas ainda sem mãe original**. O registro de geração tem 84 PNGs de diferentes papéis, não 84 tomadas.
