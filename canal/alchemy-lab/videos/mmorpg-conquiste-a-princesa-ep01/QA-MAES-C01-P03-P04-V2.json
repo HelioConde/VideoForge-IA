@@ -1,0 +1,36 @@
+{
+  "schema": "videoforge/ep01-mother-repair-v2-visual-compare/v1",
+  "sources": [
+    {
+      "shot": "C01-P03",
+      "v1_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+      "v2_provider_raw_sha256": "bfc1249dc1f83b004b620c333f5aa81689b0ba0c23a3e7573d57c09dcf3539e3",
+      "v2_provider_raw_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-repair-v2/44080234599/c01-p03-scene-mother-v2.png",
+      "v2_preview_sha256": "bfc1249dc1f83b004b620c333f5aa81689b0ba0c23a3e7573d57c09dcf3539e3",
+      "v2_preview_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-repair-v2/44080234599/c01-p03-scene-mother-v2.png",
+      "v2_aligned_one_bottom_row": false,
+      "source_v1_png": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44073592014/c01-p03-scene-mother.png",
+      "global_mean_rgb_difference": 12.6306,
+      "human_visual_approval": false
+    },
+    {
+      "shot": "C01-P04",
+      "v1_sha256": "156a9376298166045654706e75b876a20b7f8201c70d6d494ae9a2b7465f5ab3",
+      "v2_provider_raw_sha256": "cf19543377960b2100148846f9d77852ca94510c949c62c27b9390e4fbee0f84",
+      "v2_provider_raw_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-repair-v2/44080462345/c01-p04-scene-mother-v2.png",
+      "v2_preview_sha256": "2d11099a536999409a33dae2fc30c517e260c4ad640e41c6942c85b9db499ec5",
+      "v2_preview_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2-aligned/44080887693/c01-p04-scene-mother-v2-native-aligned-v1.png",
+      "v2_aligned_one_bottom_row": true,
+      "source_v1_png": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44075357179/c01-p04-scene-mother.png",
+      "global_mean_rgb_difference": 16.8244,
+      "human_visual_approval": false
+    }
+  ],
+  "contact_sheet": "QA-MAES-C01-P03-P04-V2.jpg",
+  "contact_sheet_sha256": "1525a961c39454ffc8712632e007184182801ee2f302b6fc2890b2bfa0b3745a",
+  "visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_calls": 0
+}
