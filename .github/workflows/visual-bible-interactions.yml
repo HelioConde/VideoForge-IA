@@ -1,26 +1,18 @@
-name: "VideoForge - Biblia Visual gerar interacoes fisicas aprovadas"
-run-name: "Bíblia EP01 / interações físicas revisadas"
+name: "VideoForge - Biblia Visual poses antigas descontinuadas"
+run-name: "EP01 / validar fluxo cena-mae e cameras (sem poses)"
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - '.github/workflows/visual-bible-interactions.yml'
-      - 'canal/alchemy-lab/biblia-visual/REVISOES-MANUAIS.json'
 permissions:
   contents: read
-  actions: write
-concurrency:
-  group: alchemy-ep01-interactions-approved-only
-  cancel-in-progress: false
 jobs:
-  candidate-physical-interactions:
+  check-only-no-pose-generation:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 150
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GH_REPO: ${{ github.repository }}
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,101 +21,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verificar 12 interações e revisão humana com escopo canônico
-        id: reviews
-        shell: bash
+      - name: Confirmar plano de 40 tomadas sem poses obrigatorias
         run: |
           set -euo pipefail
-          python - <<'PY'
-          import json,os
-          from pathlib import Path
-          from videoforge.production_art import archived_reference,read_plan
-          from videoforge.visual_bible import _review
-          from videoforge.paths import IDENTIFIER
-          channel,video='alchemy-lab','mmorpg-conquiste-a-princesa-ep01'
-          bible=Path('canal/alchemy-lab/biblia-visual')
-          queue=json.loads((bible/'FILA-GERACAO-MESTRES.json').read_text())
-          plan,_=read_plan(channel,video)
-          assets={a['id']:a for a in plan['assets']}
-          reviews=_review(channel,bible)
-          items=[x for x in queue['items'] if x.get('phase')=='after_canonical_approval']
-          if len(items)!=12 or len({x['asset_id'] for x in items})!=12:
-              raise SystemExit('INTERACTIONS_EXPECTED_12_UNIQUE')
-          ready,blocked=[],[]
-          for item in items:
-              asset_id=item['asset_id']
-              if not IDENTIFIER.fullmatch(asset_id):
-                  raise SystemExit('INTERACTION_ID_INVALID')
-              asset=assets.get(asset_id)
-              if not asset or asset.get('reference_mode')!='approved_masters_only':
-                  raise SystemExit('INTERACTION_SOURCE_MODE_INVALID '+asset_id)
-              if asset.get('youtube_upload') is not False or asset.get('human_visual_approval_required') is not True:
-                  raise SystemExit('INTERACTION_APPROVAL_FLAGS_INVALID '+asset_id)
-              deps=asset.get('additional_master_asset_ids',[])
-              if not isinstance(deps,list) or not 1<=len(deps)<=3:
-                  raise SystemExit('INTERACTION_MASTERS_MISSING '+asset_id)
-              if archived_reference(channel,video,asset_id):
-                  print('INTERACTION_ALREADY_ARCHIVED_NO_REPEAT',asset_id)
-                  continue
-              missing=[]
-              for dep in deps:
-                  ref=archived_reference(channel,video,dep)
-                  approval=reviews.get(ref['sha256'],{}) if ref else {}
-                  allowed=approval.get('escopo_permitido',[])
-                  forbidden=approval.get('escopo_proibido',[])
-                  if (not ref or approval.get('status')!='aprovado'
-                      or not approval.get('revisor') or not approval.get('evidencia')
-                      or not isinstance(allowed,list) or 'referencia_canonica' not in allowed
-                      or not isinstance(forbidden,list) or any(
-                          x in forbidden for x in ('pose','contato_mão_lança','rig'))):
-                      missing.append(dep)
-              if missing:
-                  blocked.append((asset_id,missing))
-              else:
-                  ready.append(asset_id)
-          print('INTERACTION_READY_TO_GENERATE',len(ready),'of',len(items))
-          for asset,requirements in blocked:
-              print('INTERACTION_WAITING_CANONICAL_REVIEW',asset,','.join(requirements))
-          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as out:
-              out.write('ready_ids='+','.join(ready)+'\n')
-              out.write('ready_count='+str(len(ready))+'\n')
-          PY
-      - name: Gerar apenas interações com TODAS as fontes humanas aprovadas
-        if: steps.reviews.outputs.ready_count != '0'
-        shell: bash
-        env:
-          READY_IDS: ${{ steps.reviews.outputs.ready_ids }}
-        run: |
-          set -euo pipefail
-          IFS=',' read -ra ASSETS <<< "$READY_IDS"
-          for ((i=0;i<${#ASSETS[@]};i++)); do
-            asset="${ASSETS[$i]}"
-            tag="interaction-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${i}"
-            title="Arte Bíblia $asset $tag"
-            echo "INTERACTION_GENERATION_REQUEST $asset tag=$tag"
-            url=$(gh workflow run production-art-by-request.yml -R "$GH_REPO" --ref main \
-              -f channel=alchemy-lab -f video_id=mmorpg-conquiste-a-princesa-ep01 \
-              -f asset="$asset" -f request_tag="$tag")
-            runid=$(python -m videoforge.github_dispatch_id "$url" "$GH_REPO")
-            if [[ -z "$runid" ]]; then
-              for attempt in $(seq 1 60); do
-                runid=$(gh api "repos/$GH_REPO/actions/workflows/production-art-by-request.yml/runs?event=workflow_dispatch&per_page=60" \
-                  | jq -r --arg title "$title" '[.workflow_runs[] | select(.display_title == $title)][0].id // empty')
-                if [[ -n "$runid" ]]; then break; fi
-                sleep 10
-              done
-            fi
-            if [[ -z "$runid" ]]; then
-              echo "::error::No new interaction run ID for $asset; STOP without retry"
-              exit 1
-            fi
-            if ! gh run watch "$runid" -R "$GH_REPO" --exit-status --interval 10; then
-              echo "::error::Interaction $asset failed run $runid; STOP without paid retry"
-              exit 1
-            fi
-            echo "INTERACTION_PNG_SHA_ARCHIVED_VISUAL_APPROVAL_PENDING $asset run=$runid"
-          done
-          echo "INTERACTION_CANDIDATES_GENERATED_NOT_APPROVED_NO_YOUTUBE"
-      - name: Explicar bloqueio se nenhuma fonte esta aprovada
-        if: steps.reviews.outputs.ready_count == '0'
-        run: echo "INTERACTIONS_ON_HOLD_BY_HUMAN_VISUAL_SCOPE; NO_IMAGE_CALLS_NO_YOUTUBE"
+          python -m videoforge.layered_shot_plan
+          python -m unittest tests.test_layered_shot_plan -v
+          echo 'LEGACY_POSE_WORKFLOW_DISABLED_NO_PROVIDER_CALLS_NO_YOUTUBE'
