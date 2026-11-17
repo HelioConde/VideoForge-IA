@@ -4,8 +4,8 @@
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "shot_id": "C01-P04",
   "side": "right",
-  "role": "forearm-cuff",
-  "revision": 2,
+  "role": "palm-rear",
+  "revision": 3,
   "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
   "grip_reference": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-PEGADA-APROVADA-C01-P04-V3.json",
   "right_spear_from_independent_parts": true,
@@ -20,5 +20,9 @@
   "youtube_upload": false,
   "previous_workflow_run_id": 44190779781,
   "previous_attempt_result": "skipped_generation_due_to_wrong_left_guard_archive_reference",
-  "fix": "preflight imports right guard module"
+  "fix": "preflight imports right guard module",
+  "previous_role_sha256": "6486a540041406f9cfc90e883e7890703fa5e0726df56ad1ccfd9bdded7833a4",
+  "previous_role_run_id": 44191357598,
+  "previous_role_visual_status": "forearm armor isolated, no fingers or spear, scale and final orientation unapproved",
+  "objective": "draw a distinct back palm near actual right guard grip, not a repeated forearm cuff and not full clenched fist"
 }
