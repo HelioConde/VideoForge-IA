@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/ep01-gamer-room-qa-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shots": [
+    "C03-P01",
+    "C03-P02",
+    "C04-P01",
+    "C04-P02"
+  ],
+  "original_mother_sha256": {
+    "C03-P01": "b0c416e3c0dd10883e2de37a5c2652ee02030d1f6925ec6f47d9a6d56ade09f3",
+    "C03-P02": "116fab14bb7d910a73f5fc61e12dac92efc73d3988f0648ee4b336c9fb241c3c",
+    "C04-P01": "d4c51415314823c5e7092aa4e45bbc9f8fce9092352e4a18560e118f40488d1a",
+    "C04-P02": "9755e8457dac710abafdddca3da17cd5102d03385cc686711981e236015716bf"
+  },
+  "no_provider_calls": true,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_upload": false,
+  "objective": "comparar em prancha os quatro originais para avaliar identidade Kael casual, quarto, foco azul, monitor sem texto, mão no mouse; zero recortes finais."
+}
