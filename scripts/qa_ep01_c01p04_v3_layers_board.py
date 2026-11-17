@@ -15,6 +15,7 @@ from PIL import Image,ImageDraw,ImageFont,ImageOps
 from videoforge.ep01_approved_v3_parts import (
     ROLE_CONFIG, SCHEMA as PART_SCHEMA, aligned_source, existing_part)
 from videoforge.layered_shot_plan import ROOT,REL,CHANNEL,VIDEO
+from videoforge.ep01_approved_v3_aldric_repair import archived as archived_aldric_repair, SCHEMA as ALDRIC_SCHEMA
 
 PREFIX="QA-C01-P04-V3-CAMADAS-INDEPENDENTES"
 ORDER=["background-clean","character-kael","character-aldric",
@@ -28,8 +29,10 @@ def font(sz:int):
 def check_png(blob:bytes,part:str) -> Image.Image:
     with Image.open(BytesIO(blob)) as im:
         im.load()
-        if im.format!="PNG" or im.size!=(941,1672):
+        if im.format!="PNG" or not (512 <= im.width <= 2048 and 512 <= im.height <= 3072):
             raise RuntimeError("EP01_C01P04_QA_BAD_PNG_CANVAS "+part)
+        if part in ("background-clean", "approved-aligned-mother") and im.size!=(941,1672):
+            raise RuntimeError("EP01_C01P04_QA_SCENE_BACKGROUND_MUST_BE_FULL_CANVAS "+part)
         has_alpha="A" in im.getbands()
         if part not in ("background-clean", "approved-aligned-mother"):
             if not has_alpha:
@@ -40,7 +43,14 @@ def check_png(blob:bytes,part:str) -> Image.Image:
         return im.convert("RGBA").copy()
 
 def verified_art(part:str):
-    cached=existing_part(part)
+    # Aldric's native RGBA revisions were archived with nonmatching canvas.
+    # Review as standalone candidate only, NEVER composited without registration.
+    if part == "character-aldric":
+        cached=archived_aldric_repair()
+        if cached is None:
+            cached=existing_part(part)
+    else:
+        cached=existing_part(part)
     if cached is None:
         raise RuntimeError("EP01_C01P04_QA_PART_NOT_ARCHIVED "+part)
     p=ROOT / cached["file"]
@@ -50,21 +60,32 @@ def verified_art(part:str):
     blob=p.read_bytes()
     data=json.loads(proof.read_text(encoding="utf-8"))
     digest=sha256(blob).hexdigest()
+    allowed_technical = {
+        "candidate_needs_visual_alignment_review",
+        "candidate_native_canvas_requires_spatial_registration",
+        # Aldric repair V2 rejected only for full-scene canvas, not alpha.
+        "rejected_unacceptable_canvas" if part=="character-aldric" else "",
+    }
     if (digest != cached["sha256"]
-            or data.get("schema") != PART_SCHEMA
+            or data.get("schema") not in ({PART_SCHEMA,ALDRIC_SCHEMA} if part=="character-aldric" else {PART_SCHEMA})
             or data.get("component") != part
             or data.get("candidate_scene_shot_id") != "C01-P04"
             or data.get("sha256") != digest
             or data.get("not_a_pixel_cutout") is not True
             or data.get("human_visual_approval") is not False
             or data.get("rig_ready") is not False
-            or data.get("technical_qa") != "candidate_needs_visual_alignment_review"):
+            or data.get("technical_qa") not in allowed_technical):
         raise RuntimeError("EP01_C01P04_QA_PROVENANCE_FAIL "+part)
-    return (check_png(blob,part),
+    frame=check_png(blob,part)
+    must_register=frame.size!=(941,1672)
+    return (frame,
             {"part":part,"file":cached["file"],"sha256":digest,
              "source_sha256":data["source_image_sha256"],
              "role":ROLE_CONFIG[part]["role"],
              "provider_native_sha256":data.get("provider_native_sha256"),
+             "technical_qa":data.get("technical_qa"),
+             "native_canvas_dimensions":list(frame.size),
+             "spatial_registration_pending":must_register,
              "visual_approval":False})
 
 def preview_frame(img:Image.Image) -> Image.Image:
@@ -94,10 +115,15 @@ def create():
         metadata.append(proof)
     # Editorial recomposition only, no render/rig approval.
     composite=frames["background-clean"].copy()
+    omitted_from_composite=[]
     for part in ["character-aldric","character-guarda_esquerdo",
                  "character-guarda_direito","object-lanca-esquerda",
                  "object-lanca-direita","character-kael"]:
-        composite.alpha_composite(frames[part])
+        if frames[part].size == (941,1672):
+            composite.alpha_composite(frames[part])
+        else:
+            # Never stretch or guess an actor's position/scale.
+            omitted_from_composite.append(part)
     items=[("MÃE APROVADA (ORIGEM V3)",mother),
            ("FUNDO LIMPO (NOVO)",frames["background-clean"]),
            ("KAEL (PNG RGBA)",frames["character-kael"]),
@@ -106,7 +132,7 @@ def create():
            ("GUARDA DIREITO",frames["character-guarda_direito"]),
            ("LANÇA ESQUERDA",frames["object-lanca-esquerda"]),
            ("LANÇA DIREITA",frames["object-lanca-direita"]),
-           ("COMPOSIÇÃO PROVISÓRIA / QA",composite)]
+           ("COMPOSIÇÃO PARCIAL / NÃO USAR NO RIG",composite)]
     W,H=1195,2220
     canvas=Image.new("RGB",(W,H),"#e6e6e3")
     draw=ImageDraw.Draw(canvas)
@@ -130,6 +156,8 @@ def create():
         "technical_reference_sha256":source["sha256"],
         "board":board.name,"board_sha256":sha256(board.read_bytes()).hexdigest(),
         "parts":metadata,
+        "spatial_registration_pending":omitted_from_composite,
+        "composite_does_not_guess_native_sprite_position":True,
         "preview_composite_for_QA_only":True,
         "human_visual_approval_of_parts":False,
         "rig_ready":False,"mp4_generated":False,"youtube_uploaded":False,
