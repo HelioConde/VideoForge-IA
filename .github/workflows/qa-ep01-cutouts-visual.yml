@@ -25,7 +25,7 @@ jobs:
       - name: Pillow local sem proxy
         run: python -m pip install --quiet Pillow==11.3.0
       - name: Prévia de mãe, fundo, personagem e objetos com SHA
-        run: python scripts/qa-c01-p02-recortes-visual.py
+        run: PYTHONPATH=. python scripts/qa-c01-p02-recortes-visual.py
       - name: Guardar JPG e proveniência sem alterar PNG original
         shell: bash
         run: |
