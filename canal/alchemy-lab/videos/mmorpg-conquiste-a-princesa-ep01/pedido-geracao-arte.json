@@ -2,43 +2,45 @@
   "schema": "videoforge/image-generation-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "asset": "c01-p04-pegada-lancas-v4",
+  "asset": "biblia-sala-do-trono-vazio-v1",
   "model": "gpt-image-2",
   "max_calls_per_run": 1,
-  "status": "completed_archived_owner_visual_review_pending",
+  "status": "requested_master_visual_bible_v1",
   "requested_on": "2026-11-16",
-  "requested_by": "owner_reported_explicit_physical_pose_error_2026-11-16",
-  "purpose": "Corrigir pelo GitHub o erro principal da imagem C01-P04: os dois guardas NÃO seguram suas lanças. Gerar nova V4 como edição localizada de V3 SHA-verificada, mãos e dedos envolvendo fisicamente cada haste, preservar personagens, roupas, trono, luz e estilo; não publicar.",
-  "shot_id": "C01-P04",
-  "correction_of": "c01-p04-imagem-inicial-v3",
-  "source_mode": "dorama-physical-spear-grip-correction-v1",
-  "visual_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "requested_by": "owner_continuar_biblia_visual_2026-11-16",
+  "purpose": "Gerar UMA imagem-mestre do salão do trono VAZIO, sem personagens/lanças, usando C01-P04 V3 exclusivamente para arquitetura, iluminação, composição e estilo; não copiar poses rejeitadas; registrar PNG SHA e run na Bíblia no mesmo commit e aguardar revisão humana.",
+  "stage": "visual_bible_background_master",
+  "bible_category": "cenarios",
+  "bible_item_id": "sala-do-trono",
+  "source_mode": "dorama-visual-bible-edit-v1",
   "source_original_png_required": true,
-  "source_attached_with_sha_required": true,
-  "target_physical_contact": [
-    "left_guard_gloved_hand_grips_own_spear",
-    "right_guard_gloved_hand_grips_own_spear"
+  "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "approved_source_scope": [
+    "estilo",
+    "arquitetura",
+    "composicao",
+    "iluminacao"
   ],
-  "preserve_other_visual_characteristics": true,
-  "previous_rejected_reference_must_not_be_used": true,
-  "human_visual_review_required": true,
-  "visual_approval": false,
-  "corrected_anchor_auto_promotion": false,
-  "ep01_other_37_images_paused": true,
+  "rejected_source_scope": [
+    "pose_guardas",
+    "contato_mao_lanca",
+    "rig",
+    "personagens_da_cena"
+  ],
+  "reference_sources": [
+    "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+  ],
   "no_duplicate_generation": true,
+  "approval_required": true,
+  "visual_approval": false,
+  "new_shot_generation_allowed": false,
+  "other_37_shots_paused": true,
   "youtube_upload": false,
-  "no_publishing": true,
-  "previous_completed_asset": "c02-p01-aldric-rosto-v1",
-  "previous_completed_generation_run": 43970462482,
-  "completed_run_id": 43990928355,
-  "permanent_archive_path": "assets/geracoes/production-art-request/43990928355/c01-p04-pegada-lancas-v4.png",
-  "image_sha256": "0bb72ea525d81b6e935af49eb873d308a88ce8230a4a2b7d89c62d5d0e88a8dc",
-  "generated_original_size": [
-    941,
-    1672
-  ],
-  "human_visual_approved": false,
-  "visual_comparison": "QA-C01-P04-V3-VS-V4-LANCAS.jpg",
-  "comparison_qa_run_id": 43991247393,
-  "another_generation_requested": false
+  "previous_completed_request": {
+    "asset": "c01-p04-pegada-lancas-v4",
+    "completed_run_id": 43990928355,
+    "status": "completed_archived_owner_visual_review_pending",
+    "source_sha256": "0bb72ea525d81b6e935af49eb873d308a88ce8230a4a2b7d89c62d5d0e88a8dc",
+    "human_visual_approved": false
+  }
 }
