@@ -17,5 +17,19 @@
   "youtube_upload": false,
   "human_visual_approval_required": true,
   "rig_after_alpha_qa": true,
-  "mp4_generated": false
+  "mp4_generated": false,
+  "resume_audit": {
+    "date": "2026-11-17",
+    "original_background_run": 44037334699,
+    "aligned_background_run": 44037764414,
+    "resolution": "941x1670 to 941x1672 by border-only padding, no paid retry",
+    "remaining": [
+      "character-carrasco",
+      "object-espada",
+      "object-bainha"
+    ],
+    "skip_archived": true,
+    "preserve_source_png": true,
+    "retries_on_429": false
+  }
 }
