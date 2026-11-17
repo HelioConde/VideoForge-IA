@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**19 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**20 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -23,6 +23,7 @@
 | [biblia-kael-casual-antes-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006463096/biblia-kael-casual-antes-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`84ff479d3699…\` | [#44006463096](https://github.com/HelioConde/VideoForge-IA/actions/runs/44006463096) |
 | [biblia-kael-ferido-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006630342/biblia-kael-ferido-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`694fecfaadb3…\` | [#44006630342](https://github.com/HelioConde/VideoForge-IA/actions/runs/44006630342) |
 | [biblia-kael-depois-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006800520/biblia-kael-depois-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`6ab687fb1abe…\` | [#44006800520](https://github.com/HelioConde/VideoForge-IA/actions/runs/44006800520) |
+| [biblia-elara-encapuzada-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006929092/biblia-elara-encapuzada-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`7c610afc5e0b…\` | [#44006929092](https://github.com/HelioConde/VideoForge-IA/actions/runs/44006929092) |
 
 ## Regras de consulta
 

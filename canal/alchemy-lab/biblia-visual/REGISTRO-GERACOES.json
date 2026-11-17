@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 19,
+  "total_arquivadas": 20,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -595,6 +595,44 @@
           "id": "biblia-kael-medieval-base-v1",
           "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006929092:biblia-elara-encapuzada-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-elara-encapuzada-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "elara",
+      "biblia_categoria": "personagens",
+      "producer": "production-art-request",
+      "github_run_id": 44006929092,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006929092/biblia-elara-encapuzada-v1.png",
+      "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31",
+      "bytes": 2435500,
+      "width": 981,
+      "height": 1602,
+      "referencias_usadas": [
+        {
+          "id": "approved-visual-reference",
+          "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+          "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+        },
+        {
+          "id": "ref-elara-close-c12",
+          "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "path": "assets/referencias/chat-aprovadas/elara-close-trono.png"
+        },
+        {
+          "id": "biblia-elara-palacio-base-v1",
+          "sha256": "36e9bed6325d00961b1370064b4162379c294d751554493f18c926eab2fc0059",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003561770/biblia-elara-palacio-base-v1.png"
         }
       ],
       "status": "gerado",
