@@ -14,7 +14,7 @@ class ApprovedV3PartsTests(unittest.TestCase):
 
     def test_approved_source_sha_and_full_canvas(self):
         source=ep.aligned_source()
-        self.assertTrue(source["file"].endswith("c01-p04-scene-mother-facing-throne-v3-native-aligned.png"))
+        self.assertTrue(source["path"].endswith("c01-p04-scene-mother-facing-throne-v3-native-aligned.png"))
         self.assertEqual(len(source["sha256"]),64)
         self.assertNotEqual(source["sha256"],ep.SOURCE_SHA)
         self.assertTrue(len(source["blob"])>500_000)
