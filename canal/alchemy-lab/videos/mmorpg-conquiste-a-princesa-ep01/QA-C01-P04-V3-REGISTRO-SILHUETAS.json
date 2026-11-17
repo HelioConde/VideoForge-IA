@@ -1,0 +1,245 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-subject-space-registration/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "creator_approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "board": "QA-C01-P04-V3-REGISTRO-SILHUETAS.jpg",
+  "board_sha256": "d3a8f1cb57d540ae556bd4faf0dd34ef19d5ec68c5bf7daa1a98bc22e711e471",
+  "targets": [
+    {
+      "part": "character-aldric",
+      "source_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+      "native_dimensions": [
+        981,
+        1602
+      ],
+      "native_alpha_bbox_xyxy": [
+        460,
+        150,
+        730,
+        490
+      ],
+      "provisional_reference_roi_xyxy": [
+        406,
+        181,
+        663,
+        508
+      ],
+      "provisional_anchor": "seat_on_throne",
+      "options": [
+        {
+          "scale": 0.9518519,
+          "offset_xy": [
+            -32,
+            42
+          ],
+          "preview_bbox_scene_xyxy": [
+            406,
+            185,
+            663,
+            508
+          ],
+          "variant": "A-fit-target",
+          "uniform_scale": true,
+          "approved": false
+        },
+        {
+          "scale": 0.8566667,
+          "offset_xy": [
+            25,
+            88
+          ],
+          "preview_bbox_scene_xyxy": [
+            419,
+            216,
+            650,
+            508
+          ],
+          "variant": "B-90pct",
+          "uniform_scale": true,
+          "approved": false
+        },
+        {
+          "scale": 1.047037,
+          "offset_xy": [
+            -88,
+            -5
+          ],
+          "preview_bbox_scene_xyxy": [
+            394,
+            152,
+            676,
+            508
+          ],
+          "variant": "C-110pct",
+          "uniform_scale": true,
+          "approved": false
+        }
+      ],
+      "accepted_transform": null,
+      "human_visual_approved": false,
+      "rig_ready": false,
+      "for_qa_only": true
+    },
+    {
+      "part": "character-guarda_esquerdo",
+      "source_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+      "native_dimensions": [
+        981,
+        1602
+      ],
+      "native_alpha_bbox_xyxy": [
+        78,
+        6,
+        710,
+        1529
+      ],
+      "provisional_reference_roi_xyxy": [
+        3,
+        523,
+        332,
+        1325
+      ],
+      "provisional_anchor": "left_floor_contact",
+      "options": [
+        {
+          "scale": 0.5205696,
+          "offset_xy": [
+            -38,
+            529
+          ],
+          "preview_bbox_scene_xyxy": [
+            3,
+            532,
+            332,
+            1325
+          ],
+          "variant": "A-fit-target",
+          "uniform_scale": true,
+          "approved": false
+        },
+        {
+          "scale": 0.4685127,
+          "offset_xy": [
+            -17,
+            609
+          ],
+          "preview_bbox_scene_xyxy": [
+            20,
+            612,
+            316,
+            1325
+          ],
+          "variant": "B-90pct",
+          "uniform_scale": true,
+          "approved": false
+        },
+        {
+          "scale": 0.5726266,
+          "offset_xy": [
+            -58,
+            449
+          ],
+          "preview_bbox_scene_xyxy": [
+            -13,
+            452,
+            349,
+            1325
+          ],
+          "variant": "C-110pct",
+          "uniform_scale": true,
+          "approved": false
+        }
+      ],
+      "accepted_transform": null,
+      "human_visual_approved": false,
+      "rig_ready": false,
+      "for_qa_only": true
+    },
+    {
+      "part": "character-guarda_direito",
+      "source_sha256": "c3432ac075105f1a412fc634f09d15add6d8f096369b6a5aa412d50b083aee78",
+      "native_dimensions": [
+        941,
+        1672
+      ],
+      "native_alpha_bbox_xyxy": [
+        327,
+        7,
+        930,
+        1596
+      ],
+      "provisional_reference_roi_xyxy": [
+        621,
+        519,
+        939,
+        1328
+      ],
+      "provisional_anchor": "right_floor_contact",
+      "options": [
+        {
+          "scale": 0.5091252,
+          "offset_xy": [
+            460,
+            515
+          ],
+          "preview_bbox_scene_xyxy": [
+            626,
+            519,
+            933,
+            1328
+          ],
+          "variant": "A-fit-target",
+          "uniform_scale": true,
+          "approved": false
+        },
+        {
+          "scale": 0.4582127,
+          "offset_xy": [
+            492,
+            597
+          ],
+          "preview_bbox_scene_xyxy": [
+            642,
+            600,
+            918,
+            1328
+          ],
+          "variant": "B-90pct",
+          "uniform_scale": true,
+          "approved": false
+        },
+        {
+          "scale": 0.5600378,
+          "offset_xy": [
+            428,
+            434
+          ],
+          "preview_bbox_scene_xyxy": [
+            611,
+            438,
+            949,
+            1328
+          ],
+          "variant": "C-110pct",
+          "uniform_scale": true,
+          "approved": false
+        }
+      ],
+      "accepted_transform": null,
+      "human_visual_approved": false,
+      "rig_ready": false,
+      "for_qa_only": true
+    }
+  ],
+  "placement_rois_are_provisional": true,
+  "geometry_is_preview_only_no_final_sprite_export": true,
+  "no_repeated_model_calls": true,
+  "rig_ready": false,
+  "human_approved_registration": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "next": "Inspect A/B/C and spear contact; accept exact transform explicitly or regenerate wrong sprites using framed guides"
+}
