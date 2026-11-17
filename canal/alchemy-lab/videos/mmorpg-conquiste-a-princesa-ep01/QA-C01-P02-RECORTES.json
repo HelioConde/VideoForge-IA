@@ -1,0 +1,88 @@
+{
+  "schema": "videoforge/ep01-cutouts-visual-qa/v1",
+  "mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "native_canvas": [
+    941,
+    1672
+  ],
+  "compositing_claim": false,
+  "human_visual_approval": false,
+  "layers": [
+    {
+      "asset": "c01-p02-scene-mother",
+      "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+      "size": [
+        941,
+        1672
+      ],
+      "alpha_bbox": [
+        0,
+        0,
+        941,
+        1672
+      ],
+      "native_canvas_match": true
+    },
+    {
+      "asset": "c01-p02-background-aligned",
+      "sha256": "66c79b08f882d699e2e823b080b5a35a32d88401c30812d31936aaef6e466fb9",
+      "size": [
+        941,
+        1672
+      ],
+      "alpha_bbox": [
+        0,
+        0,
+        941,
+        1672
+      ],
+      "native_canvas_match": true
+    },
+    {
+      "asset": "c01-p02-character-carrasco",
+      "sha256": "61a78ba3a3749d52335e82d7cc3c671b6bffffe8a421c464ad588b0e750b6bac",
+      "size": [
+        941,
+        1672
+      ],
+      "alpha_bbox": [
+        26,
+        0,
+        941,
+        1672
+      ],
+      "native_canvas_match": true
+    },
+    {
+      "asset": "c01-p02-object-espada",
+      "sha256": "4ae1fea98908f775d395b498308d690d4e438b69fed3f916c7e96abea7f37b74",
+      "size": [
+        941,
+        1672
+      ],
+      "alpha_bbox": [
+        2,
+        55,
+        892,
+        1562
+      ],
+      "native_canvas_match": true
+    },
+    {
+      "asset": "c01-p02-object-bainha",
+      "sha256": "20435b66518223334d99fa73e5b8412a8a2944ab7f91930c8b3c98d7e251a68d",
+      "size": [
+        981,
+        1602
+      ],
+      "alpha_bbox": [
+        0,
+        56,
+        850,
+        1572
+      ],
+      "native_canvas_match": false
+    }
+  ],
+  "preview_sha256": "07dd1c4a44b90ea064537efa92401d30384ae796c38dc4d4366f206596127f9a"
+}
