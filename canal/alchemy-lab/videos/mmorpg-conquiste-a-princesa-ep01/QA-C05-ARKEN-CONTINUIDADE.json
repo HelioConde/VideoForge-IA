@@ -1,0 +1,56 @@
+{
+  "schema": "videoforge/ep01-c05-arken-visual-qa/v1",
+  "shots": [
+    "C05-P01",
+    "C05-P02"
+  ],
+  "panel_count": 3,
+  "sources": [
+    {
+      "asset": "c05-p01-scene-mother",
+      "sha256": "84520f8047d85930ca2834f57e1c278969aea51e496f3cad5ca3fd330ab07073",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44086437259/c05-p01-scene-mother.png",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "approved_for_rig": false
+    },
+    {
+      "asset": "biblia-arken-muralhas-base-v1",
+      "sha256": "0903946038a6977cc93fe324eee665899e7cccc296bcffab4c5cff38202ab5d4",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44087301592/biblia-arken-muralhas-base-v1.png",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "approved_for_rig": false
+    },
+    {
+      "asset": "c05-p02-scene-mother",
+      "sha256": "281aa0e4cc0dfd9c9d636aa0e186324bdecbd96b569a35f93882971a586765f3",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44087638566/c05-p02-scene-mother.png",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "approved_for_rig": false
+    }
+  ],
+  "sheet": "QA-C05-ARKEN-CONTINUIDADE.jpg",
+  "sheet_sha256": "c6136a1dbf42ba51ee45ce2a6860a3488daf466947316f8baee2a99c5d2d5583",
+  "manual_review_checks": [
+    "road_dirt_vegetation_and_light_match_city_approach",
+    "city_walls_towers_gate_resemble_visual_bible_master",
+    "kael_small_walking_on_road_and_medieval_costume_consistent",
+    "no_duplicate_floating_props_or_invented_cast",
+    "continuous_geography_without_change_of_portal_shape"
+  ],
+  "visual_review_status": "pending",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "proxy_calls": 0,
+  "no_pixel_cutouts_for_rig": true
+}
