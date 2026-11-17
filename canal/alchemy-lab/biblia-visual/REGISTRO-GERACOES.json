@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 46,
+  "total_arquivadas": 47,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1406,6 +1406,34 @@
           "id": "biblia-elara-encapuzada-v1",
           "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006929092/biblia-elara-encapuzada-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44011615034:biblia-monitor-base-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-monitor-base-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "monitor",
+      "biblia_categoria": "objetos",
+      "producer": "production-art-request",
+      "github_run_id": 44011615034,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011615034/biblia-monitor-base-v1.png",
+      "sha256": "3a595a20ed5be72d4d5c9ac9945fca74ffa71239689783dc030704828c95bb53",
+      "bytes": 1458920,
+      "width": 1672,
+      "height": 941,
+      "referencias_usadas": [
+        {
+          "id": "biblia-quarto-kael-vazio-v1",
+          "sha256": "84ba05fbc8a6da12545a9d37091003d80dbfa64e2bf6c2fceac8993746ebe8b2",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008695444/biblia-quarto-kael-vazio-v1.png"
         }
       ],
       "status": "gerado",
