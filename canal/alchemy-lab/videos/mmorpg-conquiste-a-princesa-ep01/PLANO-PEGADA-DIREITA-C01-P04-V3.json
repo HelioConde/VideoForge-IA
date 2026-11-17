@@ -1,0 +1,104 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-right-guard-grip-plan/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "independent_right_side_only": true,
+  "mirror_of_left_guard": false,
+  "layers": [
+    {
+      "role": "forearm-cuff",
+      "run_id": 44191357598,
+      "sha256": "6486a540041406f9cfc90e883e7890703fa5e0726df56ad1ccfd9bdded7833a4",
+      "canvas": [
+        1101,
+        1429
+      ],
+      "native_alpha_bbox": [
+        251,
+        0,
+        1101,
+        1243
+      ],
+      "technical_generation": "success",
+      "approval": false
+    },
+    {
+      "role": "palm-rear",
+      "run_id": 44191916900,
+      "sha256": "363e3d9e59fa9ad0a1f36c3471c6f6b69a93311cc13cd34383ebb0f21e3021dc",
+      "canvas": [
+        1536,
+        1024
+      ],
+      "native_alpha_bbox": [
+        107,
+        82,
+        1420,
+        971
+      ],
+      "technical_generation": "success",
+      "approval": false
+    },
+    {
+      "role": "spear",
+      "source": "object-lanca-direita",
+      "sha256": "pending_reference_from_existing_independent_spear_manifest",
+      "approval": false
+    },
+    {
+      "role": "fingers-front",
+      "run_id": 44192293405,
+      "sha256": "c091bf343b6309fbbc09befe1042baf652b55178a8e34a9ae33151db4540585c",
+      "canvas": [
+        1402,
+        1122
+      ],
+      "native_alpha_bbox": [
+        300,
+        121,
+        1010,
+        975
+      ],
+      "technical_generation": "success",
+      "approval": false
+    }
+  ],
+  "qa_steps": {
+    "initial_grip": {
+      "run_id": 44193138591,
+      "board": "QA-C01-P04-V3-GUARDA-DIREITO-PEGADA-CONTATO-V1-MAO-ZOOM.jpg",
+      "findings": [
+        "R3 leaves cuff disconnected",
+        "R1 and R2 have provisional 2D contact"
+      ]
+    },
+    "cuff_reposition": {
+      "run_id": 44193664350,
+      "board": "QA-C01-P04-V3-GUARDA-DIREITO-ALINHAMENTO-PUNHO-V2.jpg",
+      "candidate": "W3-cuff-right30",
+      "qa_only": true,
+      "anatomical_continuity_confirmed": false,
+      "alternative": "W4 can have too much overlap"
+    },
+    "two_guards": {
+      "run_id": 44193979239,
+      "board": "QA-C01-P04-V3-DUAS-PEGADAS-CONFERENCIA.jpg",
+      "right_candidate": "W3-cuff-right30",
+      "left_candidate": "R3-tightest-provisional"
+    }
+  },
+  "pending": [
+    "creator_visual_review_of_wrist_thumb_and_spear",
+    "spatial_registration_final",
+    "rig_validation_across_frames"
+  ],
+  "rig_ready": false,
+  "hand_contact_verified": false,
+  "spatial_registration_approved": false,
+  "creator_visual_approval": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "last_step": "Compare side-by-side grip QA. If accepted, fix relative transforms and test animated motion without using full-image movement."
+}
