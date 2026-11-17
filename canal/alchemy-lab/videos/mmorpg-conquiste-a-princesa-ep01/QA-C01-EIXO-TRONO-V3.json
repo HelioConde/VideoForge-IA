@@ -23,7 +23,13 @@
       "new_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
       "new_run_id": 44152300579,
       "new_path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png",
-      "approved": false
+      "approved": true,
+      "visual_approval_record": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/APROVACOES-VISUAIS-C01-V3.json",
+      "native_dimensions": [
+        941,
+        1671
+      ],
+      "technical_canvas_status": "pending_non_destructive_alignment"
     },
     {
       "target": "C01-P04-ALT",
@@ -49,5 +55,8 @@
   "mp4_generated": false,
   "youtube_uploaded": false,
   "no_paid_provider_calls": true,
-  "no_sprite_cutout_for_rig": true
+  "no_sprite_cutout_for_rig": true,
+  "visual_approval_scope": "individual_exact_sha_only",
+  "approved_visual_count": 1,
+  "approval_record": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/APROVACOES-VISUAIS-C01-V3.json"
 }
