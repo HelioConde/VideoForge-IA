@@ -1,0 +1,514 @@
+{
+  "schema": "videoforge/bible-master-queue/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "requested_by": "owner_generate_all_images_2026-11-16",
+  "purpose": "Generate 42 individual reference variants via sequential per-image GitHub Actions; do not regenerate existing SHA archived files. 12 interaction/action variants are deferred until explicit human master approval and grip QA; future queen is outside EP01.",
+  "mode": "one_chargeable_image_per_workflow_run_no_retry_429",
+  "max_dispatches_per_orchestrator_run": 4,
+  "approval_policy": "generated_is_not_approved; human visual approval required before canon and scenes",
+  "stop_on_failure": true,
+  "auto_publish": false,
+  "planned_independent_master_variants": 42,
+  "deferred_interaction_variants": 12,
+  "future_story_not_automatically_generated": 1,
+  "episode_shots_planned": 40,
+  "episode_scene_generation_hold": true,
+  "items": [
+    {
+      "asset_id": "biblia-aldric-tribunal-v1",
+      "category": "personagens",
+      "item": "aldric",
+      "variant": "tribunal",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-aldric-revelacao-v1",
+      "category": "personagens",
+      "item": "aldric",
+      "variant": "revelacao",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-guarda-esquerdo-cerimonial-v1",
+      "category": "personagens",
+      "item": "guarda_esquerdo",
+      "variant": "cerimonial",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-guarda-direito-cerimonial-v1",
+      "category": "personagens",
+      "item": "guarda_direito",
+      "variant": "cerimonial",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-lanca-guarda-completa-v1",
+      "category": "objetos",
+      "item": "lanca-guarda",
+      "variant": "completa",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-lanca-guarda-base-v1",
+      "category": "objetos",
+      "item": "lanca-guarda",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-lanca-guarda-empunhadura-v1",
+      "category": "objetos",
+      "item": "lanca-guarda",
+      "variant": "empunhadura",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-kael-casual-antes-v1",
+      "category": "personagens",
+      "item": "kael",
+      "variant": "casual_antes",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-kael-ferido-v1",
+      "category": "personagens",
+      "item": "kael",
+      "variant": "ferido",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-kael-depois-v1",
+      "category": "personagens",
+      "item": "kael",
+      "variant": "depois",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-elara-encapuzada-v1",
+      "category": "personagens",
+      "item": "elara",
+      "variant": "encapuzada",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-elara-revelada-v1",
+      "category": "personagens",
+      "item": "elara",
+      "variant": "revelada",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-elara-antes-v1",
+      "category": "personagens",
+      "item": "elara",
+      "variant": "antes",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-elara-depois-v1",
+      "category": "personagens",
+      "item": "elara",
+      "variant": "depois",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-sala-do-trono-vazio-v1",
+      "category": "cenarios",
+      "item": "sala-do-trono",
+      "variant": "vazio",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-kael-medieval-base-v1",
+      "category": "personagens",
+      "item": "kael",
+      "variant": "medieval",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-elara-palacio-base-v1",
+      "category": "personagens",
+      "item": "elara",
+      "variant": "palacio",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-carrasco-base-v1",
+      "category": "personagens",
+      "item": "carrasco",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-figurantes-base-v1",
+      "category": "personagens",
+      "item": "figurantes",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-mascarado-1-base-v1",
+      "category": "personagens",
+      "item": "mascarado_1",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-mascarado-2-base-v1",
+      "category": "personagens",
+      "item": "mascarado_2",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-mascarados-base-v1",
+      "category": "personagens",
+      "item": "mascarados",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-sala-do-trono-angulo-frontal-v1",
+      "category": "cenarios",
+      "item": "sala-do-trono",
+      "variant": "angulo_frontal",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-sala-do-trono-detalhes-v1",
+      "category": "cenarios",
+      "item": "sala-do-trono",
+      "variant": "detalhes",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-quarto-kael-vazio-v1",
+      "category": "cenarios",
+      "item": "quarto-kael",
+      "variant": "vazio",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-quarto-kael-monitor-aceso-v1",
+      "category": "cenarios",
+      "item": "quarto-kael",
+      "variant": "monitor_aceso",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-estrada-base-v1",
+      "category": "cenarios",
+      "item": "estrada",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-mercado-base-v1",
+      "category": "cenarios",
+      "item": "mercado",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-beco-base-v1",
+      "category": "cenarios",
+      "item": "beco",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-portao-real-base-v1",
+      "category": "cenarios",
+      "item": "portao-real",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-castelo-base-v1",
+      "category": "cenarios",
+      "item": "castelo",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-coroa-aldric-base-v1",
+      "category": "objetos",
+      "item": "coroa-aldric",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-coroa-elara-base-v1",
+      "category": "objetos",
+      "item": "coroa-elara",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-trono-base-v1",
+      "category": "objetos",
+      "item": "trono",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-espada-carrasco-base-v1",
+      "category": "objetos",
+      "item": "espada-carrasco",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-broche-flor-completo-v1",
+      "category": "objetos",
+      "item": "broche-flor",
+      "variant": "completo",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-broche-flor-detalhe-v1",
+      "category": "objetos",
+      "item": "broche-flor",
+      "variant": "detalhe",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-capa-kael-base-v1",
+      "category": "objetos",
+      "item": "capa-kael",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-ombreira-kael-base-v1",
+      "category": "objetos",
+      "item": "ombreira-kael",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-capuz-elara-base-v1",
+      "category": "objetos",
+      "item": "capuz-elara",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-monitor-base-v1",
+      "category": "objetos",
+      "item": "monitor",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-carrinho-base-v1",
+      "category": "objetos",
+      "item": "carrinho",
+      "variant": "base",
+      "phase": "independent_master",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-guarda-esquerdo-cruzando-lanca-v1",
+      "category": "personagens",
+      "item": "guarda_esquerdo",
+      "variant": "cruzando_lanca",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-guarda-direito-cruzando-lanca-v1",
+      "category": "personagens",
+      "item": "guarda_direito",
+      "variant": "cruzando_lanca",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-guarda-segurando-lanca-na-base-base-v1",
+      "category": "interacoes",
+      "item": "guarda-segurando-lanca-na-base",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-guardas-cruzando-lancas-base-v1",
+      "category": "interacoes",
+      "item": "guardas-cruzando-lancas",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-rei-sentado-no-trono-base-v1",
+      "category": "interacoes",
+      "item": "rei-sentado-no-trono",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-kael-ajoelhado-base-v1",
+      "category": "interacoes",
+      "item": "kael-ajoelhado",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-espada-desembainhada-base-v1",
+      "category": "interacoes",
+      "item": "espada-desembainhada",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-elara-encapuzada-base-v1",
+      "category": "interacoes",
+      "item": "elara-encapuzada",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-elara-revelada-base-v1",
+      "category": "interacoes",
+      "item": "elara-revelada",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-kael-segurando-broche-base-v1",
+      "category": "interacoes",
+      "item": "kael-segurando-broche",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-perseguicao-beco-base-v1",
+      "category": "interacoes",
+      "item": "perseguicao-beco",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-kael-protegendo-elara-base-v1",
+      "category": "interacoes",
+      "item": "kael-protegendo-elara",
+      "variant": "base",
+      "phase": "after_canonical_approval",
+      "approval_required": true,
+      "youtube_upload": false
+    },
+    {
+      "asset_id": "biblia-rainha-base-v1",
+      "category": "personagens",
+      "item": "rainha",
+      "variant": "base",
+      "phase": "future_story",
+      "approval_required": false,
+      "youtube_upload": false
+    }
+  ]
+}
