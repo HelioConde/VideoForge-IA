@@ -5,42 +5,21 @@
   "asset": "biblia-sala-do-trono-vazio-v1",
   "model": "gpt-image-2",
   "max_calls_per_run": 1,
-  "status": "requested_master_visual_bible_v1",
   "requested_on": "2026-11-16",
-  "requested_by": "owner_continuar_biblia_visual_2026-11-16",
-  "purpose": "Gerar UMA imagem-mestre do salão do trono VAZIO, sem personagens/lanças, usando C01-P04 V3 exclusivamente para arquitetura, iluminação, composição e estilo; não copiar poses rejeitadas; registrar PNG SHA e run na Bíblia no mesmo commit e aguardar revisão humana.",
-  "stage": "visual_bible_background_master",
-  "bible_category": "cenarios",
-  "bible_item_id": "sala-do-trono",
+  "requested_by": "owner_apply_and_continue_visual_bible",
+  "status": "requested_visual_bible_background_master",
+  "purpose": "Primeira imagem mestre reutilizavel do novo sistema de Biblia Visual: sala do trono VAZIA. Usar C01-P04 V3 somente como fonte exata SHA para estilo/arquitetura/luz; remover todos personagens e lanças, reconstruir fundo. Gravar PNG original+SHA+registro geracoes JSON/MD no mesmo commit pelo arquivador do GitHub.",
+  "biblical_category": "cenarios",
+  "biblia_item_id": "sala-do-trono",
   "source_mode": "dorama-visual-bible-edit-v1",
-  "source_original_png_required": true,
-  "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
-  "approved_source_scope": [
-    "estilo",
-    "arquitetura",
-    "composicao",
-    "iluminacao"
-  ],
-  "rejected_source_scope": [
-    "pose_guardas",
-    "contato_mao_lanca",
-    "rig",
-    "personagens_da_cena"
-  ],
-  "reference_sources": [
-    "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
-  ],
-  "no_duplicate_generation": true,
-  "approval_required": true,
-  "visual_approval": false,
-  "new_shot_generation_allowed": false,
-  "other_37_shots_paused": true,
+  "visual_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "real_reference_png_attached_required": true,
+  "old_spear_pose_explicitly_rejected": true,
+  "owner_visual_approval_required": true,
+  "current_ep01_37_scene_shots_paused": true,
+  "status_after_generation": "gerado_or_em_revisao_not_approved",
+  "no_repeat_previous_assets": true,
   "youtube_upload": false,
-  "previous_completed_request": {
-    "asset": "c01-p04-pegada-lancas-v4",
-    "completed_run_id": 43990928355,
-    "status": "completed_archived_owner_visual_review_pending",
-    "source_sha256": "0bb72ea525d81b6e935af49eb873d308a88ce8230a4a2b7d89c62d5d0e88a8dc",
-    "human_visual_approved": false
-  }
+  "no_publishing": true,
+  "previous_closed_request_asset": "biblia-sala-do-trono-vazio-v1"
 }
