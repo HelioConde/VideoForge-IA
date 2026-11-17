@@ -1,0 +1,57 @@
+name: "VideoForge - Biblia Visual sincronizar registros reais"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/visual_bible.py'
+      - 'tests/test_visual_bible.py'
+      - '.github/workflows/qa-visual-bible.yml'
+      - 'canal/alchemy-lab/biblia-visual/INDEX-BIBLIA.json'
+      - 'canal/alchemy-lab/biblia-visual/REVISOES-MANUAIS.json'
+permissions:
+  contents: write
+concurrency:
+  group: videoforge-biblia-visual-sync
+  cancel-in-progress: false
+jobs:
+  validate-and-register:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Testar catalogo, historico por SHA e falha fechada
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_visual_bible -v
+      - name: Criar fichas e sincronizar PNGs arquivados de todos os canais
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.visual_bible --all-channels
+      - name: Versionar registros e fichas no GitHub
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'videoforge-biblia[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A -- canal/alchemy-lab/biblia-visual canal/otaku-br/biblia-visual canal/otaku-en/biblia-visual canal/gamer/biblia-visual canal/manu-kids/biblia-visual
+          if git diff --cached --quiet; then
+            echo 'BIBLIA_REGISTRY_ALREADY_SYNCHRONIZED'
+            exit 0
+          fi
+          git commit -m 'docs(biblia): registrar PNGs reais por SHA e fichas individuais de todos os canais'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+          echo 'BIBLIA_REGISTRY_COMMITTED_WITH_REAL_IMAGE_HISTORY'
