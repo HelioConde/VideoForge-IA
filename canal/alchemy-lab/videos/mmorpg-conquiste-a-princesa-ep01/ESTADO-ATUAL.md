@@ -1,3 +1,10 @@
+## 17/11/2026 — Aprovação visual específica do criador: C01-P04 V3
+
+- O criador confirmou **"[Ver C01-P04 V3] ... tá boa"** para a imagem [C01-P04 V3 gerada no run #44152300579](assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png). Registrar como **aprovada visualmente somente essa candidata**, SHA-256 `a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd`.
+- Registro canônico de aprovação: [APROVACOES-VISUAIS-C01-V3.json](APROVACOES-VISUAIS-C01-V3.json); [comparativo de QA atualizado](QA-C01-EIXO-TRONO-V3.json). **C01-P03 V3 e C01-P04-ALT continuam aguardando aprovação**; nenhuma aprovação das outras 38 tomadas foi inferida.
+- **Bloqueio técnico distinto da arte:** imagem V3 aprovada tem `941×1671` pixels, enquanto a montagem espera `941×1672`. Fazer alinhamento **não destrutivo**, preservando o PNG original e seu SHA e registrando separadamente o derivado técnico antes de usar o ativo no rig. Não modificar cores, pose, anatomia ou enquadramento aprovado.
+- Ainda **não há camadas RGBA independentes, ossos ou rig validado** para esta versão. Ao prosseguir, o proxy deverá gerar novas peças de personagens, lanças e ambiente usando a V3 aprovada como referência; **nunca extrair sprites definitivos por recorte**. Não renderizar/publicar vídeo a partir do aceite isolado.
+
 ## 17/11/2026 — Correção de orientação Kael/Trono V3 (3 candidatos)
 
 - **Três imagens novas V3 geradas no GitHub a partir da Bíblia Visual e fontes V2**, originais preservados.
