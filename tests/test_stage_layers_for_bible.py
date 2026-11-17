@@ -11,6 +11,14 @@ from videoforge.remake_autopilot import ROOT
 
 
 class StageLayersForBibleTests(unittest.TestCase):
+    def test_layer_workflow_archives_png_and_registry(self):
+        wf = (ROOT / ".github/workflows/production-layers-by-request.yml").read_text(encoding="utf-8")
+        self.assertIn("python -m videoforge.stage_layers_for_bible", wf)
+        self.assertIn("bash scripts/arquivar-pngs-se-existirem.sh", wf)
+        self.assertIn('production-layer-request', wf)
+        self.assertIn("contents: write", wf)
+        self.assertIn("id: generate", wf)
+
     def test_real_png_stage_is_idempotent(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
