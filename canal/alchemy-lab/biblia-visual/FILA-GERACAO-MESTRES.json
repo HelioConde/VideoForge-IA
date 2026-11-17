@@ -510,5 +510,14 @@
       "approval_required": false,
       "youtube_upload": false
     }
-  ]
+  ],
+  "resume_audit": {
+    "requested_on": "2026-11-17",
+    "reason": "Workflow #44009046765 falhou antes da chamada de IA porque production-art.json excedia 200KB; plano reduzido para 196708 bytes, CI voltou a passar. Retomar automaticamente pelo primeiro PNG faltante verificado por SHA.",
+    "blocked_run_id": 44009046765,
+    "expected_first_missing_asset": "biblia-estrada-base-v1",
+    "skip_archived_sha_verified": true,
+    "never_paid_retry": true,
+    "previous_generated_images_preserved": true
+  }
 }
