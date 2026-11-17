@@ -1585,7 +1585,7 @@
    },
    "editorial_beat": "Luz no quarto",
    "scene_status": "planned_pending_real_assets",
-   "visual_prompt": "Câmera lateral vê luz azul nas mãos e no rosto de Kael que tenta proteger os olhos; não mudar anatomia.",
+   "visual_prompt": "PLANO MÉDIO LATERAL 9:16 no mesmo quarto gamer moderno de C03-P02/C04-P01/C04-P02: Kael com o mesmo rosto, cabelo e roupa CASUAL 'antes', sentado diante do monitor, protege OS OLHOS da luz azul intensa que sai da tela. Mão e antebraço erguidos em gesto natural, dedos visíveis e coerentes, sem mãos extras nem deformação. A segunda mão ainda próxima da mesa/cadeira, luz azul no rosto e nas mãos sem duplicar corpos; cenário/móveis/janela/monitor coerentes com Bíblia. O quadro representa o instante do clarão antes da transição ao mundo de fantasia: sem armadura medieval, sangue, rei, texto, HUD ou letras na tela. Cena-mãe nova, NÃO crop da tomada do monitor.",
    "images": {
     "required": [
      "scene-mother",
@@ -1966,7 +1966,7 @@
    },
    "editorial_beat": "Interface nível um",
    "scene_status": "planned_pending_real_assets",
-   "visual_prompt": "Plano médio 3/4 com Kael fitando o próprio campo de visão, olhos seguindo HUD composto no Remotion.",
+   "visual_prompt": "PLANO MÉDIO TRÊS-QUARTOS cinematográfico 9:16 de Kael MEDIEVAL em pé na estrada de terra da floresta após despertar (C05-P01), olhando com incredulidade para uma INTERFACE INVISÍVEL flutuante em sua linha de visão. Manter identidade canônica, cabelo escuro, olhos, armadura com dourado e gema azul no ombro, capa vinho com desgaste e iluminação de pôr do sol. Postura física natural, mãos e braços coerentes; olhos acompanham um HUD que será composto SOMENTE pelo Remotion, portanto não gerar telas holográficas, números, nível 1, textos, símbolos ou letras no PNG. Estrada/cenário idênticos à Bíblia, ausência de cidade/portão em primeiro plano. Produzir uma imagem-mãe integral própria para este ângulo sem recortar frames anteriores.",
    "images": {
     "required": [
      "scene-mother",
