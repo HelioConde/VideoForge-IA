@@ -2208,16 +2208,34 @@
     "mother_c01_p02_source_rejected": true,
     "mother_c01_p03": {
       "run_id": 44073592014,
-      "sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
-      "review": "pending",
-      "assistant_visual_review": "rejected_unexpected_guards_and_weapons",
-      "requires_new_versioned_mother": true,
-      "approved_for_rig": false
+      "v1_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+      "v1_assistant_review": "rejected_extra_guards_spears_sword",
+      "v2_run_id": 44080234599,
+      "v2_sha256": "bfc1249dc1f83b004b620c333f5aa81689b0ba0c23a3e7573d57c09dcf3539e3",
+      "v2_canvas": [
+        941,
+        1672
+      ],
+      "v2_assistant_review": "visually_improved_not_human_approved"
     },
     "mother_c01_p04": {
       "run_id": 44075357179,
-      "sha256": "156a9376298166045654706e75b876a20b7f8201c70d6d494ae9a2b7465f5ab3",
-      "review": "pending"
+      "v1_sha256": "156a9376298166045654706e75b876a20b7f8201c70d6d494ae9a2b7465f5ab3",
+      "v1_assistant_review": "rejected_kael_standing",
+      "v2_run_id": 44080462345,
+      "v2_provider_sha256": "cf19543377960b2100148846f9d77852ca94510c949c62c27b9390e4fbee0f84",
+      "v2_original_canvas": [
+        941,
+        1671
+      ],
+      "v2_original_canvas_qa": "rejected_one_row_short",
+      "v2_alignment_run_id": 44080887693,
+      "v2_aligned_sha256": "2d11099a536999409a33dae2fc30c517e260c4ad640e41c6942c85b9db499ec5",
+      "v2_aligned_canvas": [
+        941,
+        1672
+      ],
+      "v2_assistant_review": "kael_now_kneeling_contact_needs_close_review"
     },
     "proxy_separate_parts": [
       {
@@ -2276,11 +2294,11 @@
     "local_pixel_padding_is_not_cutout": true,
     "do_not_reuse_v1_cutouts_for_rig": true,
     "next_needed": [
-      "inspect_c01_p03_v2_for_canonical_identity",
-      "inspect_c01_p04_v2_spear_hand_contacts",
-      "generate_new_independent_proxy_parts_from_approved_v2_mothers_only",
-      "review_c01_p05_and_c02_p01_mothers",
-      "generate_remaining_34_mothers"
+      "human_review_c01p03_and_c01p04_v2_before_new_proxy_parts",
+      "review_c01p05_guard_hands_and_c02p01_aldric_close",
+      "continue_generate_34_missing_scene_mothers",
+      "generate_new_rgba_from_selected_v2_mother_references_via_proxy",
+      "test_neutral_recomposition_before_rig"
     ],
     "new_png_images_human_approved": false,
     "rig_ready": false,
@@ -2333,6 +2351,24 @@
       "assistant_visual_review": "improved_kael_kneeling_spear_grip_needs_close_review",
       "human_visual_approval": false
     },
-    "c01_p03_v2_c01_p04_v2_qa_run_id": 44080972625
+    "c01_p03_v2_c01_p04_v2_qa_run_id": 44080972625,
+    "last_verified_date": "2026-11-17",
+    "mother_c01_p05": {
+      "run_id": 44079588294,
+      "sha256": "6a599ab681994790b3e9b07bf573817781a448bcf9f77081bc03764448028553",
+      "status": "candidate_visual_review_pending"
+    },
+    "mother_c02_p01": {
+      "run_id": 44081215706,
+      "sha256": "0d1f8367c76cdf0c9b63f10071406a567b5a5a10cf799e1aa6c5d814019fa2a0",
+      "status": "candidate_visual_review_pending"
+    },
+    "c01_p03_v1_independent_parts_rejected_for_v2": true,
+    "versioned_mothers_visual_qa": {
+      "run_id": 44080972625,
+      "status": "success",
+      "report": "REVISAO-VISUAL-MAES-C01-P03-P04-V2.md",
+      "preview": "QA-MAES-C01-P03-P04-V2.jpg"
+    }
   }
 }
