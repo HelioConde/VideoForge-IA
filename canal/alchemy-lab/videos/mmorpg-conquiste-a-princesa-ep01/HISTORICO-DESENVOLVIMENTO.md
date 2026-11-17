@@ -1,3 +1,11 @@
+## 2026-11-17 — Seis especialidades com oito skills locais validadas
+
+- Incorporadas 3 skills originais em `.agents/skills/`: `videoforge-shot-direction` (câmera/continuidade), `videoforge-audio-editing` (narração, áudio, SFX e montagem) e `videoforge-technical-research` (versões/licenças/segurança). Preservadas as 5 preexistentes: arte/peças, rig 2D, atuação, QA independente e gerente de dorama.
+- Corrigido o frontmatter do gerente `videoforge-dorama-remake` e adicionado roteamento explícito às seis áreas. Atualizados `AGENTS.md`, `README.md` e `docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md`.
+- Auditoria externa: CloudAI-X Three.js MIT (loop de tempo precisa de adaptação a `useCurrentFrame()`); Blender Skills MIT (conceitos, não runtime); OpenMontage diverge entre skill `license: MIT` e licença raiz AGPL-3.0, portanto não foi copiado/instalado.
+- Criados `tests/test_video_skill_routing.py` e `.github/workflows/qa-videoforge-skills.yml`. [GitHub Actions #44072866500](https://github.com/HelioConde/VideoForge-IA/actions/runs/44072866500): **success** (sem proxy, imagens, MP4 ou publicação). O catálogo de skills é instrução, **não prova de novos subagentes executáveis** nem de roteamento pelo runtime autónomo.
+- Gate de imagem C01-P02 ainda aguarda mãe aprovada e PNGs individuais gerados pelo proxy; não liberar rig, MP4 ou YouTube por causa da instalação das skills.
+
 ## 2026-11-17 — Regra definitiva de animação: gerar imagens separadas pelo proxy, não recortar
 
 - Decisão do responsável: a cena-mãe é **referência** para o proxy; ele deve gerar background vazio, cada personagem/objeto animável e cada parte de rig em **imagens próprias PNG/RGBA**, com desenho de partes escondidas e consistência canônica. Não criar sprites finais por crop, máscara de pixels, polígonos ou segmentação. Ferramentas locais são apenas QA.
