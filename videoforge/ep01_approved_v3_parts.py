@@ -247,7 +247,7 @@ def validate_and_save(part: str, raw: bytes, root: Path, spec: dict) -> dict:
     output_blob = raw
     postprocess = "none"
     native_file = None
-    if not qa_errors and height == 1671:
+    if not qa_errors and not needs_registration and height == 1671:
         native_file = base / (stem + "-provider-native.png")
         native_file.write_bytes(raw)
         if transparent:
