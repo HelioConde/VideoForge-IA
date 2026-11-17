@@ -1,0 +1,52 @@
+name: "VideoForge - EP01 C01-P04 V3 fila de pecas independentes"
+run-name: "EP01 C01-P04 V3 / fila das partes"
+on:
+  workflow_dispatch:
+    inputs:
+      max_new:
+        type: number
+        required: false
+        default: 6
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-LOTE-PECAS-C01-P04-V3.json'
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: ep01-c01p04-v3-parts-queue-main
+  cancel-in-progress: false
+
+jobs:
+  partes-sequenciais:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias tecnicas (sem imagem IA no controlador)
+        run: python -m pip install --quiet "Pillow==11.3.0"
+      - name: Checar fonte V3 e executabilidade do pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_approved_v3_parts -v
+      - name: Despachar uma imagem por vez; parar no primeiro erro
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/ep01_c01p04_v3_parts_queue.py --max-new "${{ inputs.max_new || 6 }}"
