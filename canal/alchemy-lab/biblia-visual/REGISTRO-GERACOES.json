@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 144,
+  "total_arquivadas": 145,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -5162,6 +5162,28 @@
       "bytes": 880129,
       "width": 1312,
       "height": 1199,
+      "referencias_usadas": [],
+      "status": "gerado",
+      "qa_tecnica": "candidate_pending_spatial_and_anatomical_review",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-c01p04-right-grip-v1-independent-part:44191357598:c01-p04-v3-right-grip-forearm-cuff-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p04-v3-right-grip-forearm-cuff-v1",
+      "shot": "C01-P04",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-c01p04-right-grip-v1-independent-part",
+      "github_run_id": 44191357598,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-right-grip-v1-independent-part/44191357598/c01-p04-v3-right-grip-forearm-cuff-v1.png",
+      "sha256": "6486a540041406f9cfc90e883e7890703fa5e0726df56ad1ccfd9bdded7833a4",
+      "bytes": 1014239,
+      "width": 1101,
+      "height": 1429,
       "referencias_usadas": [],
       "status": "gerado",
       "qa_tecnica": "candidate_pending_spatial_and_anatomical_review",
