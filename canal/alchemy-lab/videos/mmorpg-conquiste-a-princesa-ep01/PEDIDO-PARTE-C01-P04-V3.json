@@ -17,5 +17,7 @@
   "rig_ready": false,
   "mp4_generated": false,
   "youtube_upload": false,
-  "next_if_technically_accepted": "character-kael"
+  "next_if_technically_accepted": "character-kael",
+  "request_revision": 2,
+  "reason": "Retry only after offline preflight assertion typo fixed; no proxy call occurred in failed workflow #44157470302"
 }
