@@ -1,7 +1,7 @@
 # Galeria visual de revisão — EP01
 
 **42 de 42 referências-mestre** arquivadas e verificadas por SHA256.
-**0 de 9 reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.
+**2 de 9 reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.
 **Nenhuma miniatura substitui o original. Gerado não significa aprovado.**
 Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geração de IA.
 
@@ -59,6 +59,8 @@ Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geraç�
 | [biblia-capuz-elara-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011502023/biblia-capuz-elara-base-v1.png) | gerado (não aprovado automaticamente) | `04b21722724c7e09…` | [#44011502023](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011502023) |
 | [biblia-monitor-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011615034/biblia-monitor-base-v1.png) | gerado (não aprovado automaticamente) | `3a595a20ed5be72d…` | [#44011615034](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011615034) |
 | [biblia-carrinho-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011721667/biblia-carrinho-base-v1.png) | gerado (não aprovado automaticamente) | `04f1eca70e79165d…` | [#44011721667](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011721667) |
+| [biblia-kael-casual-antes-v2](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011899028/biblia-kael-casual-antes-v2.png) | gerado (não aprovado automaticamente) | `a9bfad6ba00f7ea1…` | [#44011899028](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011899028) |
+| [biblia-lanca-guarda-completa-v2](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44012069505/biblia-lanca-guarda-completa-v2.png) | gerado (não aprovado automaticamente) | `b6fb64fe457b6b87…` | [#44012069505](https://github.com/HelioConde/VideoForge-IA/actions/runs/44012069505) |
 
 ## Pendentes de geração
 
@@ -66,8 +68,6 @@ As 42 referências individuais possuem arquivos no registro.
 
 ## Correções V2 (sem promoção automática)
 
-- Pendente: biblia-kael-casual-antes-v2
-- Pendente: biblia-lanca-guarda-completa-v2
 - Pendente: biblia-lanca-guarda-base-v2
 - Pendente: biblia-lanca-guarda-empunhadura-v2
 - Pendente: biblia-carrasco-base-v2
