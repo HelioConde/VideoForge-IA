@@ -1,0 +1,402 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-grip-contact-review/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "mother_approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "technical_mother_reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "rendering_for_review_only": true,
+  "geometry_is_editorial_not_verified": true,
+  "compositing_layer_order": [
+    "forearm-cuff",
+    "palm-rear",
+    "spear-independent",
+    "fingers-front"
+  ],
+  "candidates": [
+    {
+      "id": "R1-close-wrist",
+      "editorial_offset_deltas_px": {
+        "forearm-cuff": [
+          -20,
+          30
+        ],
+        "palm-rear": [
+          12,
+          0
+        ],
+        "fingers-front": [
+          12,
+          0
+        ]
+      },
+      "source_parts": {
+        "forearm-cuff": {
+          "role": "forearm-cuff",
+          "source_sha256": "6486a540041406f9cfc90e883e7890703fa5e0726df56ad1ccfd9bdded7833a4",
+          "native_canvas": [
+            1101,
+            1429
+          ],
+          "native_alpha_bbox": [
+            251,
+            0,
+            1101,
+            1243
+          ],
+          "target_roi_provisional_xyxy": [
+            720,
+            780,
+            855,
+            970
+          ],
+          "uniform_scale_for_preview": 0.152856,
+          "offset_xy": [
+            664,
+            810
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "palm-rear": {
+          "role": "palm-rear",
+          "source_sha256": "363e3d9e59fa9ad0a1f36c3471c6f6b69a93311cc13cd34383ebb0f21e3021dc",
+          "native_canvas": [
+            1536,
+            1024
+          ],
+          "native_alpha_bbox": [
+            107,
+            82,
+            1420,
+            971
+          ],
+          "target_roi_provisional_xyxy": [
+            713,
+            925,
+            808,
+            1020
+          ],
+          "uniform_scale_for_preview": 0.0723534,
+          "offset_xy": [
+            717,
+            950
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "fingers-front": {
+          "role": "fingers-front",
+          "source_sha256": "c091bf343b6309fbbc09befe1042baf652b55178a8e34a9ae33151db4540585c",
+          "native_canvas": [
+            1402,
+            1122
+          ],
+          "native_alpha_bbox": [
+            300,
+            121,
+            1010,
+            975
+          ],
+          "target_roi_provisional_xyxy": [
+            712,
+            925,
+            810,
+            1018
+          ],
+          "uniform_scale_for_preview": 0.1088993,
+          "offset_xy": [
+            702,
+            912
+          ],
+          "approved": false,
+          "preview_only": true
+        }
+      },
+      "spear_sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194",
+      "spear_transform": {
+        "source_tip_xy": [
+          28,
+          41
+        ],
+        "source_base_xy": [
+          907,
+          1612
+        ],
+        "preview_tip_xy": [
+          395,
+          430
+        ],
+        "preview_base_xy": [
+          923,
+          1130
+        ],
+        "scale": 0.487062,
+        "rotation_deg": -7.799,
+        "preview_only": true,
+        "physical_grip_verified": false
+      },
+      "visual_approved": false
+    },
+    {
+      "id": "R2-shaft-through-fingers",
+      "editorial_offset_deltas_px": {
+        "forearm-cuff": [
+          -35,
+          40
+        ],
+        "palm-rear": [
+          22,
+          0
+        ],
+        "fingers-front": [
+          25,
+          0
+        ]
+      },
+      "source_parts": {
+        "forearm-cuff": {
+          "role": "forearm-cuff",
+          "source_sha256": "6486a540041406f9cfc90e883e7890703fa5e0726df56ad1ccfd9bdded7833a4",
+          "native_canvas": [
+            1101,
+            1429
+          ],
+          "native_alpha_bbox": [
+            251,
+            0,
+            1101,
+            1243
+          ],
+          "target_roi_provisional_xyxy": [
+            720,
+            780,
+            855,
+            970
+          ],
+          "uniform_scale_for_preview": 0.152856,
+          "offset_xy": [
+            649,
+            820
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "palm-rear": {
+          "role": "palm-rear",
+          "source_sha256": "363e3d9e59fa9ad0a1f36c3471c6f6b69a93311cc13cd34383ebb0f21e3021dc",
+          "native_canvas": [
+            1536,
+            1024
+          ],
+          "native_alpha_bbox": [
+            107,
+            82,
+            1420,
+            971
+          ],
+          "target_roi_provisional_xyxy": [
+            713,
+            925,
+            808,
+            1020
+          ],
+          "uniform_scale_for_preview": 0.0723534,
+          "offset_xy": [
+            727,
+            950
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "fingers-front": {
+          "role": "fingers-front",
+          "source_sha256": "c091bf343b6309fbbc09befe1042baf652b55178a8e34a9ae33151db4540585c",
+          "native_canvas": [
+            1402,
+            1122
+          ],
+          "native_alpha_bbox": [
+            300,
+            121,
+            1010,
+            975
+          ],
+          "target_roi_provisional_xyxy": [
+            712,
+            925,
+            810,
+            1018
+          ],
+          "uniform_scale_for_preview": 0.1088993,
+          "offset_xy": [
+            715,
+            912
+          ],
+          "approved": false,
+          "preview_only": true
+        }
+      },
+      "spear_sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194",
+      "spear_transform": {
+        "source_tip_xy": [
+          28,
+          41
+        ],
+        "source_base_xy": [
+          907,
+          1612
+        ],
+        "preview_tip_xy": [
+          395,
+          430
+        ],
+        "preview_base_xy": [
+          923,
+          1130
+        ],
+        "scale": 0.487062,
+        "rotation_deg": -7.799,
+        "preview_only": true,
+        "physical_grip_verified": false
+      },
+      "visual_approved": false
+    },
+    {
+      "id": "R3-tightest-provisional",
+      "editorial_offset_deltas_px": {
+        "forearm-cuff": [
+          -45,
+          52
+        ],
+        "palm-rear": [
+          32,
+          6
+        ],
+        "fingers-front": [
+          35,
+          6
+        ]
+      },
+      "source_parts": {
+        "forearm-cuff": {
+          "role": "forearm-cuff",
+          "source_sha256": "6486a540041406f9cfc90e883e7890703fa5e0726df56ad1ccfd9bdded7833a4",
+          "native_canvas": [
+            1101,
+            1429
+          ],
+          "native_alpha_bbox": [
+            251,
+            0,
+            1101,
+            1243
+          ],
+          "target_roi_provisional_xyxy": [
+            720,
+            780,
+            855,
+            970
+          ],
+          "uniform_scale_for_preview": 0.152856,
+          "offset_xy": [
+            639,
+            832
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "palm-rear": {
+          "role": "palm-rear",
+          "source_sha256": "363e3d9e59fa9ad0a1f36c3471c6f6b69a93311cc13cd34383ebb0f21e3021dc",
+          "native_canvas": [
+            1536,
+            1024
+          ],
+          "native_alpha_bbox": [
+            107,
+            82,
+            1420,
+            971
+          ],
+          "target_roi_provisional_xyxy": [
+            713,
+            925,
+            808,
+            1020
+          ],
+          "uniform_scale_for_preview": 0.0723534,
+          "offset_xy": [
+            737,
+            956
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "fingers-front": {
+          "role": "fingers-front",
+          "source_sha256": "c091bf343b6309fbbc09befe1042baf652b55178a8e34a9ae33151db4540585c",
+          "native_canvas": [
+            1402,
+            1122
+          ],
+          "native_alpha_bbox": [
+            300,
+            121,
+            1010,
+            975
+          ],
+          "target_roi_provisional_xyxy": [
+            712,
+            925,
+            810,
+            1018
+          ],
+          "uniform_scale_for_preview": 0.1088993,
+          "offset_xy": [
+            725,
+            918
+          ],
+          "approved": false,
+          "preview_only": true
+        }
+      },
+      "spear_sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194",
+      "spear_transform": {
+        "source_tip_xy": [
+          28,
+          41
+        ],
+        "source_base_xy": [
+          907,
+          1612
+        ],
+        "preview_tip_xy": [
+          395,
+          430
+        ],
+        "preview_base_xy": [
+          923,
+          1130
+        ],
+        "scale": 0.487062,
+        "rotation_deg": -7.799,
+        "preview_only": true,
+        "physical_grip_verified": false
+      },
+      "visual_approved": false
+    }
+  ],
+  "board": "QA-C01-P04-V3-GUARDA-DIREITO-PEGADA-CONTATO-V1.jpg",
+  "board_sha256": "a4e86f11f1b6cda58fca24ca56b47802be04a82eca471de944ca08ec774287fd",
+  "hand_zoom_board": "QA-C01-P04-V3-GUARDA-DIREITO-PEGADA-CONTATO-V1-MAO-ZOOM.jpg",
+  "hand_zoom_board_sha256": "fe6acfb56d96c20612cdda2c864dd01923b36fa701032ed4a1dde50505ca86c3",
+  "anatomical_contact_verified": false,
+  "spatial_registration_approved": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "proxy_model_calls": 0,
+  "next": "inspect gaps, shaft position between digits, hand direction and arm seam against approved mother; if wrong regenerate only failing art, never approve transformations from previews"
+}

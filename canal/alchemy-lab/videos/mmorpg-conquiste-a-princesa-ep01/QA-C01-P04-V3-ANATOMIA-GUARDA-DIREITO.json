@@ -1,0 +1,88 @@
+{
+  "schema": "videoforge/ep01-c01p04-grip-v3-review/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "creator_approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "approved_aligned_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "guide_not_approved_as_final_sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+  "parts": [
+    {
+      "role": "forearm-cuff",
+      "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-right-grip-v1-independent-part/44191357598/c01-p04-v3-right-grip-forearm-cuff-v1.png",
+      "source_sha256": "6486a540041406f9cfc90e883e7890703fa5e0726df56ad1ccfd9bdded7833a4",
+      "technical_qa": "candidate_pending_spatial_and_anatomical_review",
+      "native_canvas": [
+        1101,
+        1429
+      ],
+      "alpha_bbox_xyxy": [
+        251,
+        0,
+        1101,
+        1243
+      ],
+      "likely_oversized_bbox_warning": true,
+      "review_sheet": "QA-C01-P04-V3-ANATOMIA-GUARDA-DIREITO-FOREARM-CUFF.jpg",
+      "review_sheet_sha256": "ee8fc72c1d377cb2f10b9f710d6b8281b3e8c60973c7370743ebdb247a461438",
+      "human_visual_approved": false,
+      "rig_ready": false
+    },
+    {
+      "role": "palm-rear",
+      "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-right-grip-v1-independent-part/44191916900/c01-p04-v3-right-grip-palm-rear-v1.png",
+      "source_sha256": "363e3d9e59fa9ad0a1f36c3471c6f6b69a93311cc13cd34383ebb0f21e3021dc",
+      "technical_qa": "candidate_pending_spatial_and_anatomical_review",
+      "native_canvas": [
+        1536,
+        1024
+      ],
+      "alpha_bbox_xyxy": [
+        107,
+        82,
+        1420,
+        971
+      ],
+      "likely_oversized_bbox_warning": true,
+      "review_sheet": "QA-C01-P04-V3-ANATOMIA-GUARDA-DIREITO-PALM-REAR.jpg",
+      "review_sheet_sha256": "b2d0f3f0235e4d773cab9cb70aaac74a9194e7e73b45a082c87261803a264e68",
+      "human_visual_approved": false,
+      "rig_ready": false
+    },
+    {
+      "role": "fingers-front",
+      "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-right-grip-v1-independent-part/44192293405/c01-p04-v3-right-grip-fingers-front-v1.png",
+      "source_sha256": "c091bf343b6309fbbc09befe1042baf652b55178a8e34a9ae33151db4540585c",
+      "technical_qa": "candidate_pending_spatial_and_anatomical_review",
+      "native_canvas": [
+        1402,
+        1122
+      ],
+      "alpha_bbox_xyxy": [
+        300,
+        121,
+        1010,
+        975
+      ],
+      "likely_oversized_bbox_warning": true,
+      "review_sheet": "QA-C01-P04-V3-ANATOMIA-GUARDA-DIREITO-FINGERS-FRONT.jpg",
+      "review_sheet_sha256": "e728ba5e07ac267f9f6154a3868bbe72d8607ad472ee8b14a32b6da053be6c90",
+      "human_visual_approved": false,
+      "rig_ready": false
+    }
+  ],
+  "all_parts_generated": true,
+  "requires_manual_visual_review": true,
+  "checks": [
+    "armour matches source (no extra fingers)",
+    "palm sits behind shaft; must be a PALM, not a tube",
+    "front fingertips and thumb wrap across a real spear",
+    "consistent spatial anchors, hand and shaft contact",
+    "avoid duplicated knuckles and gaps in frame sequence"
+  ],
+  "automatic_rig_ready": false,
+  "human_visual_approval": false,
+  "model_calls": 0,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
