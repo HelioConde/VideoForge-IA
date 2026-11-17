@@ -2,32 +2,33 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C02-P01",
+  "shot_id": "C02-P02",
   "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "Close cinematográfico do rosto do rei Aldric sentado no trono, postura régia e expressão de julgamento, olhos em foco, salão de trono desfocado atrás, com cabelo/coroa/barba/roupa bordô e dourado fiéis à Bíblia Visual. Enquadramento próprio para close, não recortar frame geral C01. Sem guardas e Kael visíveis em primeiro plano, sem novos objetos, sem texto.",
+  "objective": "Close cinematográfico lateral três quartos de Kael ajoelhado, rosto parcialmente ferido, cabeça ainda baixa, sobrancelhas tensas, olhos voltados ao chão e expressão de pânico contido; pele, cabelo escuro, tecido vermelho-vinho, armadura e cicatrizes exatamente como Bíblia Visual. Fundo do salão do trono em profundidade desfocada. NÃO colocar rei, guardas, lanças, espada ou objetos novos no quadro. O enquadramento é próprio para close, nunca ampliar crop de outra tomada.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
   "human_visual_approval_required": true,
   "approved_for_final_render": false,
   "next_steps_if_success": [
-    "arquivar_sha_original_png",
-    "conferir_figurino_rei_e_coroa_vs_biblia",
-    "revisar_continuidade_de_luz_e_ponto_de_vista",
-    "pedir_via_proxy_background_e_aldric_independentes_em_rgba"
+    "arquivar_png_sha_da_mae_C02-P02",
+    "verificar_kael_facial_continuity_vs_bible_e_C01",
+    "examinar_armadura_cabelo_olhos_e_ferimento",
+    "se_mae_aprovada_pedir_background_e_kael_em_PNGs_novos_ao_proxy",
+    "manter_rig_bloqueado_ate_composicao_e_qa"
   ],
   "max_chargeable_calls_per_run": 1,
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 5,
+  "request_sequence": 6,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "request_revision": 7,
+  "request_revision": 8,
   "last_shot_archived": {
-    "shot_id": "C01-P03",
-    "run_id": 44073592014,
-    "sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765"
+    "shot_id": "C02-P01",
+    "run_id": 44081215706,
+    "sha256": "0d1f8367c76cdf0c9b63f10071406a567b5a5a10cf799e1aa6c5d814019fa2a0"
   }
 }
