@@ -234,6 +234,18 @@
         "pasta": "canal/alchemy-lab/biblia-visual/cenarios/castelo",
         "imagem_canonica": null,
         "aprovacao_mestra": false
+      },
+      {
+        "id": "arken-muralhas",
+        "nome": "Muralhas e portão da cidade de Arken",
+        "descricao": "Vista exterior canônica da cidade medieval de Arken: muro alto em pedra cinza-dourada, torres com telhados escuros e bandeiras vinho, portão principal ligado à estrada da Bíblia, relevo e floresta em profundidade, estilo manhwa fantasia 2D semi-realista. Manter silhueta e arquitetura idênticas em todas as cenas exteriores. Arte de referência é cenário, sem personagens.",
+        "variantes": [
+          "base"
+        ],
+        "status": "planejado",
+        "pasta": "canal/alchemy-lab/biblia-visual/cenarios/arken-muralhas",
+        "imagem_canonica": null,
+        "aprovacao_mestra": false
       }
     ],
     "objetos": [
