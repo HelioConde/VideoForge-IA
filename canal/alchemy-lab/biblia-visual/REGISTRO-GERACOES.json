@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 35,
+  "total_arquivadas": 36,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1091,6 +1091,34 @@
       "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009676311/biblia-beco-base-v1.png",
       "sha256": "83c10082fb1a808a3f118625d9aca8bcf1e22707d9af0b91d92440af61436939",
       "bytes": 3036969,
+      "width": 941,
+      "height": 1671,
+      "referencias_usadas": [
+        {
+          "id": "biblia-sala-do-trono-vazio-v1",
+          "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44009839428:biblia-portao-real-base-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-portao-real-base-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "portao-real",
+      "biblia_categoria": "cenarios",
+      "producer": "production-art-request",
+      "github_run_id": 44009839428,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009839428/biblia-portao-real-base-v1.png",
+      "sha256": "e68a242a4cce32b371ab0a97430389cc48619f8a80f38a44670bb944d5193a38",
+      "bytes": 2794738,
       "width": 941,
       "height": 1671,
       "referencias_usadas": [
