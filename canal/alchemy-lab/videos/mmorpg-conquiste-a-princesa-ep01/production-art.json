@@ -858,6 +858,36 @@
       "approved_for_pose": false,
       "youtube_upload": false,
       "prompt": "GERAR A PRIMEIRA IMAGEM-MESTRE DA NOVA BÍBLIA VISUAL: **SALÃO DO TRONO VAZIO** do MMORPG Conquiste a Princesa. A imagem C01-P04 V3 está ANEXADA por SHA exclusivamente como referência de ARQUITETURA, COMPOSIÇÃO, LUZ e estilo, não para copiar a pose defeituosa das lanças.\nRECONSTRUIR O PALÁCIO SEM PESSOAS, SEM LANÇAS, SEM REI, SEM KAEL, SEM GUARDAS, SEM ELARA, SEM RAINHA, SEM ESPADA, SEM PERSONAGENS OU ARMADURAS. Retirar todos os corpos, braços, armas flutuantes, cabelos, sombras humanas e interferências do quadro original. Preencher naturalmente as áreas ocultas do trono e degraus; preservar proporção e arquitetura. Mostrar o trono dourado completamente vazio no topo da escadaria central revestida de tecido vermelho profundo com bordados dourados nas bordas; janelas altas com vitrais violeta azulados, colunas góticas, tapeçarias, luz solar dourada lateral e sombras de fantasia.\nENQUADRAMENTO: plano de estabelecimento vertical 9:16, eixo central, baixo ponto de vista do salão olhando escadaria para trono. Paredes e degraus completos, piso limpo, espaço seguro para futuros personagens em camadas RGBA. Coerência espacial com os planos já aprovados apenas em estética. Não adicionar pessoas, mãos, lanças, textos, símbolos de HUD, marcas, letreiros, personagens escondidos ou silhuetas.\nVISUAL: exatamente o mesmo estilo 2D anime fantasia SEMIRREALISTA CINEMATOGRÁFICA, textura de pintura digital refinada, paleta vinho, ouro e violeta, iluminação física. Não transformar em fotografia, 3D ou anime plano. Apenas uma imagem original de cenário reutilizável para a Bíblia; aguardar QA visual do responsável antes de marcá-la aprovada. Não gerar vídeo nem publicar."
+    },
+    {
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "dorama-visual-bible-edit-v1",
+      "stage": "visual_bible_character_master",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "id": "biblia-kael-medieval-base-v1",
+      "biblia_categoria": "personagens",
+      "biblia_item_id": "kael",
+      "reference_mode": "style_scene_kael",
+      "prompt": "GERAR PERSONAGEM MESTRE DA BÍBLIA VISUAL — KAEL (23 ANOS), versão medieval do EP01. DUAS imagens PNG ORIGINAIS anexadas ao endpoint de edição: (1) close original de Kael SHA-verificado, autoridade total do ROSTO, cabelo e olhos; (2) imagem C01-P04 apenas como referência de estilo 2D semi-realista cinematográfico, tecidos e ombreira. Criar UM retrato de CORPO INTEIRO, postura ereta neutra em três quartos, dos pés à cabeça, contra FUNDO NEUTRO de estúdio em gradiente suave sem trono e sem arquitetura. Preservar exatamente o rosto anguloso, olhos castanho-âmbar, cabelo castanho-escuro desarrumado e volumoso, 23 anos; capa vinho-vermelha grossa e rasgada, ombreira de metal escurecido com filigranas douradas e pequena gema azul, roupa escura e cintos de aventureiro. Mãos livres relaxadas com cinco dedos, braço anatomicamente ligado ao ombro, pernas e botas inteiras, sem espada, sem arma, sem lança, sem personagem extra. Arte anime fantasia SEMIRREALISTA CINEMATOGRÁFICA 2D, pintura digital refinada, proporções humanas e luz suave uniforme. Retrato único vertical para derivar futuras vistas/rig. NÃO copiar mãos ou lanças erradas do grupo C01-P04, não desenhar cenário. Sem texto, selo, múltiplas versões na mesma imagem, colagem ou transparência falsa. CANDIDATA sujeita à revisão do responsável; não aprovar automaticamente."
+    },
+    {
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "dorama-visual-bible-edit-v1",
+      "stage": "visual_bible_character_master",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "id": "biblia-elara-palacio-base-v1",
+      "biblia_categoria": "personagens",
+      "biblia_item_id": "elara",
+      "reference_mode": "style_scene_elara",
+      "prompt": "GERAR PERSONAGEM MESTRE DA BÍBLIA VISUAL — PRINCESA ELARA (21 ANOS), versão oficial do palácio do EP01. DUAS imagens PNG originais anexadas: (1) close original de Elara SHA-verificado, fonte autoritativa do ROSTO, olhos violeta, cabelos loiro-dourados longos ondulados com trança lateral e flores; (2) C01-P04 apenas como fonte do ESTILO artístico anime fantasia semi-realista cinematográfico 2D e iluminação. DESENHAR UMA ÚNICA ELARA DE CORPO INTEIRO, pose neutra em três quartos, dos pés à cabeça, FUNDO NEUTRO de estúdio discreto, sem trono ou outros personagens. Manter rosto delicado, 21 anos, olhos violeta-lilás, cabelo dourado longo com pequenas flores claras, coroa dourada com ametistas, brincos dourados com cristais violetas, vestido branco-pérola com detalhes violeta imperial e bordados dourados; vestido com costura e geometria única coerente nas próximas cenas. Mãos soltas anatomicamente corretas, cinco dedos, nenhuma arma e sem interações físicas. A versão encapuzada do beco é OUTRA variante futura; NÃO misturar capuz e coroa, não revelar a princesa nas imagens das cenas iniciais. Arte digital 2D detalhada, anatomia realista, mesmo acabamento do dorama, vertical 9:16. Sem texto, colagem, manequim, corpo cortado, HUD ou personagens extras. CANDIDATA para revisão e Bíblia; não declarar aprovada nem vídeo pronto."
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",
