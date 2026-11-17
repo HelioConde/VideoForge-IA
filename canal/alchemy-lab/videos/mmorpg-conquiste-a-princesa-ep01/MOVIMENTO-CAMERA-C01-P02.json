@@ -107,18 +107,28 @@
       },
       {
         "id": "c01-p02-character-carrasco",
-        "movement": "micro_breathing_and_glove_constraints",
+        "movement": "micro_breathing_after_mask_review",
         "z": 20
       },
       {
-        "id": "c01-p02-object-bainha",
-        "movement": "anchored_to_lower_glove",
+        "id": "c01-p02-object-bainha-source-visible",
+        "movement": "anchored_to_lower_glove_only_after_qa",
         "z": 25
       },
       {
-        "id": "c01-p02-object-espada",
-        "movement": "partial_draw_out_of_scabbard",
+        "id": "c01-p02-object-espada-source-visible",
+        "movement": "partial_draw_only_after_hidden_geometry_qa",
         "z": 30
+      },
+      {
+        "id": "c01-p02-hand-upper-contact-occlusion",
+        "movement": "attached_to_sword_hilt_after_pivot_qa",
+        "z": 40
+      },
+      {
+        "id": "c01-p02-hand-lower-contact-occlusion",
+        "movement": "attached_to_scabbard_after_pivot_qa",
+        "z": 41
       }
     ],
     "blade_keyframes": [
@@ -169,7 +179,23 @@
     ],
     "no_draw_full_unseen_blade": true,
     "manual_anchor_review_required": true,
-    "source_pivots_approximate_only": true
+    "source_pivots_approximate_only": true,
+    "depth_order": [
+      "background",
+      "body_clothing",
+      "sheath_front_of_clothing",
+      "sword",
+      "upper_glove",
+      "lower_glove"
+    ],
+    "forbidden_assets": [
+      "c01-p02-object-bainha",
+      "c01-p02-object-espada",
+      "qa_c01_p02_registro_bainha_offsets"
+    ],
+    "animation_ready": false,
+    "visible_sword_and_scabbard_masks_still_need_visual_refinement": true,
+    "hidden_blade_geometry_required_before_complete_draw": true
   },
   "qa": {
     "mother_sha_mandatory": true,
@@ -180,7 +206,13 @@
     "visual_approval_pending": true,
     "forbid_duplicated_hands_sword_scabbard": true,
     "forbid_moving_png_as_one_static_puppet": true,
-    "no_render_claim_without_real_mp4": true
+    "no_render_claim_without_real_mp4": true,
+    "clothing_occludes_sheath": false,
+    "legacy_offset_images_3_and_4_rejected": true,
+    "corrected_depth_preview": "QA-C01-P02-BAINHA-FRENTE-ROUPA.jpg",
+    "corrected_preview_mae_rgb": 7.654,
+    "target_mae_rgb_max": 6,
+    "still_blocked_by_contact_gate": true
   },
   "youtube_upload": false,
   "mp4_generated": false,
