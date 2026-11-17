@@ -1,3 +1,9 @@
+## 17/11/2026 — Inspeção assistida da comparação V3: contato segue sem aprovação
+
+- [Inspeção visual da V3 e próximos passos](REVISAO-VISUAL-ASSISTIDA-C01-P02-V3.md) registrada. Bainha parece mais externa ao casaco, mas a pegada da luva inferior e a continuidade da lâmina no bocal ainda exigem conferência em close; nenhuma candidata foi aprovada pelo proprietário.
+- **Bloqueio adicional:** `ep01_contact_gate.py` e métricas de recomposição disponíveis ainda avaliam **máscaras provenientes da mãe V1 reprovada**. Não reutilizar os SHAs/QA de V1 para certificar a V3. Escolher mãe V3, reextrair camadas RGBA e executar novo QA antes de atualizar o gate.
+- **Estado:** `human_approval=false`, `rig_ready=false`; sem MP4 ou upload.
+
 ## 17/11/2026 — Reprovação visual painéis 2/4 e reparo localizado V3 da cena-mãe
 
 - **Revisão do responsável:** as imagens numeradas **2 e 4** de [QA-C01-P02-BAINHA-FRENTE-ROUPA.jpg](QA-C01-P02-BAINHA-FRENTE-ROUPA.jpg) continuam erradas. Painel 2 é a composição histórica (bainha coberta pela roupa); **painel 4 é um recorte da própria cena-mãe**, portanto o contato fonte também não pode ser tido como aprovado. A decisão foi persistida em [REVISAO-ERRO-PAINEIS-C01-P02.json](REVISAO-ERRO-PAINEIS-C01-P02.json).
