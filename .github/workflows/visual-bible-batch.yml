@@ -141,4 +141,9 @@ jobs:
           else
             echo "BIBLE_INDEPENDENT_MASTERS_ALL_VISITED count=$total"
             echo "INTERACTIONS_AND_SCENE_SHOTS_REMAIN_BLOCKED_FOR_HUMAN_VISUAL_APPROVAL"
+            # Só após 42 mestres, disparar 4 correções V2 identificadas
+            # por QA: Kael moderno e lança com base portátil.
+            # A própria fila de correção também verifica 42 arquivos SHA.
+            gh workflow run visual-bible-repairs.yml -R "$GH_REPO" --ref main
+            echo "BIBLE_REPAIRS_V2_DISPATCHED_AFTER_ALL_42_MASTERS"
           fi
