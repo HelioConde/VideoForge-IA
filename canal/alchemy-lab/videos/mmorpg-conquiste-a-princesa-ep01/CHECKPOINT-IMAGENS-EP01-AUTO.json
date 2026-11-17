@@ -5,8 +5,8 @@
   "shots_total": 40,
   "black_shot": "C01-P01",
   "visual_shots": 39,
-  "visual_shots_with_original_mother": 36,
-  "visual_shots_missing_original_mother": 3,
+  "visual_shots_with_original_mother": 37,
+  "visual_shots_missing_original_mother": 2,
   "original_mother_shot_ids": [
     "C01-P02",
     "C01-P03",
@@ -43,10 +43,10 @@
     "C12-P03",
     "C12-P04",
     "C13-P01",
-    "C13-P02"
+    "C13-P02",
+    "C14-P01"
   ],
   "missing_original_mother_shot_ids": [
-    "C14-P01",
     "C14-P02",
     "C14-P03"
   ],
@@ -404,6 +404,16 @@
     "C13-P02": {
       "sha256": "8957be6fbf66cc1eddd8d704b0d7adf2405f271efe08d8e6736ec2e2965bb158",
       "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44104343861/c13-p02-scene-mother.png",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "human_visual_approval": false,
+      "source_status": "archived_candidate_not_an_approved_scene"
+    },
+    "C14-P01": {
+      "sha256": "9f58d04201ba4c0b1768433b6788049e2f09fa7720287a09871764f72a1623c3",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44104542962/c14-p01-scene-mother.png",
       "dimensions": [
         941,
         1672
