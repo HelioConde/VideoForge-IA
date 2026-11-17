@@ -28,7 +28,8 @@ concurrency:
 
 jobs:
   gerar-uma-peca:
-    if: github.ref == 'refs/heads/main'
+    # DISABLED_BY_CREATOR_NO_HAND_SPLITS_2026_11_17
+    if: ${{ false }} # archived hand split workflow; never bill proxy
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
