@@ -1,0 +1,75 @@
+name: "VideoForge - EP01 C01-P04 V3 QA imagens independentes"
+run-name: "EP01 C01-P04 V3 / revisar camadas e alfa"
+on:
+  workflow_run:
+    workflows: ["VideoForge - EP01 C01-P04 V3 fila de pecas independentes"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ep01-approved-v3-layers-qa-main
+  cancel-in-progress: false
+
+jobs:
+  montar-prancha:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pillow para conferência offline das imagens originais
+        run: python -m pip install --quiet "Pillow==11.3.0"
+      - name: Conferir 7 imagens e provenance SHA; montar QA sem recortes
+        shell: bash
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          python scripts/qa_ep01_c01p04_v3_layers_board.py
+      - name: Arquivar prancha e relatorio sem aprovar sprites
+        shell: bash
+        run: |
+          set -euo pipefail
+          ep='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
+          python - <<'PY'
+          from pathlib import Path
+          path=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md")
+          original=path.read_text(encoding="utf-8")
+          header="## 17/11/2026 — QA do lote de 7 camadas C01-P04 V3"
+          if header not in original:
+              lines=[
+                  header,"",
+                  "- **7 imagens independentes geradas pelo proxy** com referência SHA da C01-P04 V3 visualmente aprovada; originais arquivados em `production-c01p04-approved-v3-independent-parts/`.",
+                  "- [Prancha QA: mãe + fundo + personagens + duas lanças + composição provisória](QA-C01-P04-V3-CAMADAS-INDEPENDENTES.jpg) e [manifesto completo de SHAs](QA-C01-P04-V3-CAMADAS-INDEPENDENTES.json).",
+                  "- **Aprovação visual das partes continua pendente.** Requer conferir escala, punhos, pontos de contato nas lanças, silhuetas/alpha, continuidade e recomposição. A composição é exclusivamente de QA, não MP4.",
+                  "- Rig Three.js/Remotion, QA temporal, MP4 e publicação no YouTube **não iniciados automaticamente**.",
+                  "",""]
+              path.write_text("\n".join(lines)+original,encoding="utf-8")
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f "$ep/QA-C01-P04-V3-CAMADAS-INDEPENDENTES.jpg" "$ep/QA-C01-P04-V3-CAMADAS-INDEPENDENTES.json" "$ep/ESTADO-ATUAL.md"
+          if git diff --cached --quiet; then
+            echo 'EP01_APPROVED_V3_PARTS_QA_ALREADY_ARCHIVED'
+            exit 0
+          fi
+          git commit -m 'qa(ep01): salvar prancha das camadas V3 com SHA e composicao apenas de QA'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-c01p04-v3-independent-parts-qa
+          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-CAMADAS-INDEPENDENTES*
+          if-no-files-found: warn
+          retention-days: 30
