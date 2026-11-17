@@ -1,3 +1,12 @@
+## 17/11/2026 — Revisão de elenco, limite 200KB e retomada da fila
+
+- A segunda prancha revelou **identidade clonada**: carrasco V1, figurantes V1, mascarado 1 e 2 V1 pareciam Kael com capa; mascarados em grupo V1 saiu como guarda real. Evidências e SHA em `../../biblia-visual/QA-VISUAL-CANDIDATOS.md`. Não são aprovações/rejeições humanas; ficam como pendências visuais de QA.
+- Adicionados **5 reparos V2** com personagens originais e máscaras coerentes; a fila agora totaliza **9 correções** (inclui Kael casual e lança com pedestal). Modo `style_environment_only` agora anexa o salão do trono vazio SHA-verificado, em vez da imagem C01-P04 V3 com elenco; modo `master_only` anexa referências canônicas específicas sem copiar outros personagens. As interações de perseguição e espada dependem dos novos V2.
+- Alteradas referências de **17 futuras imagens de cenário/objeto** para usar estilo sem personagens ou o mestre visual apropriado (coroas, capa, ombreira, capuz, quarto com monitor e outros).
+- Plano `production-art.json` havia ultrapassado **200000 bytes UTF-8**; causa de `PRODUCTION_ART_PLAN_MISSING` no [run 44009046765](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009046765). Corrigido para **196708 bytes UTF-8**, CI passou, sem cobrança do provedor no run falho.
+- [Fila reativada](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009318478) com detecção do primeiro PNG faltante via SHA, inicialmente `biblia-estrada-base-v1` índice 26. Nenhuma imagem arquivada será regenerada. Após 42 mestres arquivados, o GitHub dispara os nove reparos em série sem concorrência.
+- As 12 interações de poses e as 40 tomadas do vídeo seguem suspensas até revisão humana e pegada correta de lança pela base, nunca YouTube agora.
+
 ## 17/11/2026 — QA detectou desvios V1; preparar reparos V2 em série
 
 - A [primeira prancha](../../biblia-visual/GALERIA-EP01.md) mostrou Kael casual/antes ainda medieval com capa vinho e lança de guarda V1 com base de pedestal; variantes base/empunhadura V1 não são closes apropriados. **Observações preliminares**, não aprovação/rejeição humana.
