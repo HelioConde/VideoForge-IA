@@ -245,10 +245,12 @@
       "reference_asset_ids": [
         "biblia-kael-medieval-base-v1",
         "biblia-elara-encapuzada-v1",
+        "biblia-carrinho-base-v1",
         "biblia-beco-base-v1"
       ],
       "source_authority": "sha_checked_archived_bible",
-      "portrait_v1_rejected_never_attached": true
+      "portrait_v1_rejected_never_attached": true,
+      "cart_consistency_rule_20261117": "Attach SHA-verified biblia-carrinho-base-v1 because cart is physically visible; align wood wheels scale and geometry with C08-P02 and C08-P04; do not ask AI to invent new cart."
     },
     {
       "id": "C08-P02",
@@ -269,10 +271,12 @@
         "biblia-elara-encapuzada-v1",
         "biblia-kael-medieval-base-v1",
         "biblia-mascarados-base-v2",
+        "biblia-carrinho-base-v1",
         "biblia-beco-base-v1"
       ],
       "source_authority": "sha_checked_archived_bible",
-      "portrait_v1_rejected_never_attached": true
+      "portrait_v1_rejected_never_attached": true,
+      "cart_consistency_rule_20261117": "Attach SHA-verified biblia-carrinho-base-v1 because cart is physically visible; align wood wheels scale and geometry with C08-P02 and C08-P04; do not ask AI to invent new cart."
     },
     {
       "id": "C08-P04",
