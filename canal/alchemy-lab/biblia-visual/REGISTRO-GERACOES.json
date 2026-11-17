@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 94,
+  "total_arquivadas": 95,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -2990,6 +2990,39 @@
           "id": "biblia-mercado-base-v1",
           "sha256": "93a795fb323b8035a408c1661236cc5282563470d1ed27ef6eb03479baa0de30",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009519845/biblia-mercado-base-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_source_refs_sha_verified",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-scene-mother-v2:44093679602:c04-p03-scene-mother.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c04-p03-scene-mother",
+      "shot": "C04-P03",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-scene-mother-v2",
+      "github_run_id": 44093679602,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44093679602/c04-p03-scene-mother.png",
+      "sha256": "aee9dd3ef22eee8f0ce3fac293ca30a0a1797fbfee86b561d5476ee11d5730a9",
+      "bytes": 2026613,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "biblia-kael-casual-antes-v2",
+          "sha256": "a9bfad6ba00f7ea1e3f9af33e3943d572e3e3918d41a29eceefd98df169a4dcd",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011899028/biblia-kael-casual-antes-v2.png"
+        },
+        {
+          "id": "biblia-quarto-kael-monitor-aceso-v1",
+          "sha256": "6eb1fb244a596b55b85fd3115511fe8f3a3f4e33bf7efe2cdfaec64b4789dfa7",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008857880/biblia-quarto-kael-monitor-aceso-v1.png"
         }
       ],
       "status": "gerado",
