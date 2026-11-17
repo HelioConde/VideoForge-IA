@@ -1,0 +1,54 @@
+name: "VideoForge - EP01 C01-P04 V3 QA do guia de pegada"
+run-name: "EP01 C01-P04 / miniatura de QA da pegada real"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-GUIA-PEGADA-C01-P04-V3.json'
+permissions:
+  contents: write
+concurrency:
+  group: ep01-c01p04-v3-grip-guide-qa-main
+  cancel-in-progress: false
+jobs:
+  quality-check:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet "Pillow==11.3.0"
+      - name: Verificar SHA e preparar comparacao leve
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/qa_ep01_c01p04_grip_guide_review.py
+      - name: Salvar JPEG e manifesto de QA sem aprovar imagem
+        shell: bash
+        run: |
+          set -euo pipefail
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f "$ep/QA-C01-P04-V3-GUIA-PEGADA-V1-PREVIEW.jpg" "$ep/QA-C01-P04-V3-GUIA-PEGADA-V1.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(ep01): arquivar miniatura de referencia da pegada real'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-c01p04-v3-grip-guide-qa
+          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-GUIA-PEGADA-V1*
+          retention-days: 30
+          if-no-files-found: warn
