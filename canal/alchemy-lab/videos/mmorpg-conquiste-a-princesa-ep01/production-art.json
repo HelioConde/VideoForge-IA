@@ -839,6 +839,25 @@
       "visual_approval": false,
       "youtube_upload": false,
       "prompt": "CORRIGIR C01-P04 V4 usando a imagem PNG original C01-P04 ANEXADA POR SHA ao gerador. É uma EDIÇÃO localizada, não criar novos personagens ou reformular a composição. PRESERVAR integralmente Kael ajoelhado, rosto/cabelo/capa vinho/ombro de Kael, Rei Aldric com barba grisalha/coroa/roupas, dois guardas com elmos/armaduras, trono, degraus, vitrais, luz e mesmo estilo 2D fantasia anime semirrealista cinematográfica.\nERRO CRÍTICO: os guardas NÃO SEGURAM AS LANÇAS na imagem anterior; ambas as mãos estão juntas sobre o ventre e as duas hastes cruzam o ar sem dono. ARRUMAR FISICAMENTE A PEGA. O guarda da ESQUERDA deve erguer/estender a mão enluvada até sua PRÓPRIA haste da lança à altura de peito ou cintura, com polegar e cinco dedos anatomicamente coerentes envolvendo e pressionando a haste. O guarda da DIREITA deve fazer o mesmo com sua PRÓPRIA lança, sem troca de armas entre guardas. Cada punho tem ligação correta com antebraço, cotovelo e ombro; as mãos NÃO podem permanecer juntas e afastadas das hastes.\nExatamente DOIS guardas e DUAS lanças. Hastes contínuas da ponta até sua extremidade inferior, com trecho visivelmente dentro do grip de cada luva, sem mãos flutuantes, dedos extras, arma atravessando corpo, luva ou rosto. Ajustar posição de punhos, antebraços e ângulo das hastes só o necessário para tornar a sustentação realista. As lanças podem continuar em X diante do trono, mas a cruz precisa ser coerente e não pode atravessar o corpo de Kael. O observador deve conseguir seguir cada lança até a mão do guarda que realmente a SEGURA.\nNão alterar pintura, paleta, roupas, rostos, barba/coroa, fundo, quantidade de guardas ou narrativa. Não adicionar texto, UI, legendas, marcas, armas extras ou Elara. ÚNICO PNG retrato: candidato corrigido para o usuário avaliar; não é aprovado automaticamente."
+    },
+    {
+      "id": "biblia-sala-do-trono-vazio-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "dorama-visual-bible-edit-v1",
+      "reference_mode": "style_scene",
+      "stage": "visual_bible_background_master",
+      "biblia_categoria": "cenarios",
+      "biblia_item_id": "sala-do-trono",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "reference_sources": [
+        "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+      ],
+      "human_visual_approval_required": true,
+      "approved_for_pose": false,
+      "youtube_upload": false,
+      "prompt": "GERAR A PRIMEIRA IMAGEM-MESTRE DA NOVA BÍBLIA VISUAL: **SALÃO DO TRONO VAZIO** do MMORPG Conquiste a Princesa. A imagem C01-P04 V3 está ANEXADA por SHA exclusivamente como referência de ARQUITETURA, COMPOSIÇÃO, LUZ e estilo, não para copiar a pose defeituosa das lanças.\nRECONSTRUIR O PALÁCIO SEM PESSOAS, SEM LANÇAS, SEM REI, SEM KAEL, SEM GUARDAS, SEM ELARA, SEM RAINHA, SEM ESPADA, SEM PERSONAGENS OU ARMADURAS. Retirar todos os corpos, braços, armas flutuantes, cabelos, sombras humanas e interferências do quadro original. Preencher naturalmente as áreas ocultas do trono e degraus; preservar proporção e arquitetura. Mostrar o trono dourado completamente vazio no topo da escadaria central revestida de tecido vermelho profundo com bordados dourados nas bordas; janelas altas com vitrais violeta azulados, colunas góticas, tapeçarias, luz solar dourada lateral e sombras de fantasia.\nENQUADRAMENTO: plano de estabelecimento vertical 9:16, eixo central, baixo ponto de vista do salão olhando escadaria para trono. Paredes e degraus completos, piso limpo, espaço seguro para futuros personagens em camadas RGBA. Coerência espacial com os planos já aprovados apenas em estética. Não adicionar pessoas, mãos, lanças, textos, símbolos de HUD, marcas, letreiros, personagens escondidos ou silhuetas.\nVISUAL: exatamente o mesmo estilo 2D anime fantasia SEMIRREALISTA CINEMATOGRÁFICA, textura de pintura digital refinada, paleta vinho, ouro e violeta, iluminação física. Não transformar em fotografia, 3D ou anime plano. Apenas uma imagem original de cenário reutilizável para a Bíblia; aguardar QA visual do responsável antes de marcá-la aprovada. Não gerar vídeo nem publicar."
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",
