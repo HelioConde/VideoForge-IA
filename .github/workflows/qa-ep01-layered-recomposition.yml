@@ -24,7 +24,7 @@ jobs:
       - name: Instalar Pillow apenas para PNG RGBA local, sem proxy
         run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
       - name: Reconstruir frame com background, carrasco, bainha e espada
-        run: python scripts/qa-recomposicao-c01-p02.py
+        run: PYTHONPATH=. python scripts/qa-recomposicao-c01-p02.py
       - name: Arquivar JPEG comparativo e medição, sem aprovação artificial
         shell: bash
         run: |
