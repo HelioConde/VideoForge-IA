@@ -1,0 +1,85 @@
+name: "VideoForge - EP01 contato de mãos e bainha por pixels"
+run-name: "EP01 C01-P02 / recortes reais sem IA"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/qa-ep01-contact-source-cutouts.yml'
+permissions:
+  contents: write
+jobs:
+  extract-with-zero-ia-calls:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pillow fixado para preservar pixels originais
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Conferir máscara de bainha e ordem de oclusão das luvas
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_contact_cutouts -v
+      - name: Não duplicar recortes já arquivados
+        id: archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          reg=json.loads(Path('canal/alchemy-lab/biblia-visual/REGISTRO-GERACOES.json').read_text())
+          needed={f'c01-p02-{k}' for k in (
+              'object-bainha-source-visible','hand-upper-contact-occlusion',
+              'hand-lower-contact-occlusion')}
+          have={r['asset'] for r in reg['geracoes']}
+          partial=needed&have
+          if partial and partial!=needed:
+              raise SystemExit('CONTACT_ARCHIVE_PARTIAL_STOP_FOR_MANUAL_QA')
+          action='false' if partial==needed else 'true'
+          print('CONTACT_SOURCE_MASKS_ARCHIVE_REQUIRED',action)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write(f'execute={action}\n')
+          PY
+      - name: Criar bainha e mãos RGBA da cena-mãe original SHA
+        if: steps.archive.outputs.execute == 'true'
+        run: python -m videoforge.ep01_contact_cutouts
+      - name: Comparar composição, pixels e oclusão, gerar prancha de QA
+        if: steps.archive.outputs.execute == 'true'
+        run: PYTHONPATH=. python scripts/qa-ep01-contact-cutouts.py
+      - name: Arquivar PNGs e metadados SHA no canal
+        if: steps.archive.outputs.execute == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/arquivar-pngs-se-existirem.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
+            output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
+            "${{ github.run_id }}" production-contact-source-masks-v1 "success"
+      - name: Publicar prancha de inspeção sem aprovar arte ou gerar MP4
+        if: steps.archive.outputs.execute == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'videoforge-qa-contact[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git add -- "$ep/QA-C01-P02-CONTATO-PIXELS.jpg" "$ep/QA-C01-P02-CONTATO-PIXELS.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(ep01): bainha original, luvas à frente e diferença de recomposição'
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo 'EP01_CONTACT_PREVIEW_ARCHIVED_PENDING_HUMAN_QA'
+              exit 0
+            fi
+            git fetch origin main
+            if ! git rebase origin/main; then git rebase --abort || true; exit 1; fi
+          done
+          exit 1
