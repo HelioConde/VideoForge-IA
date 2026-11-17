@@ -16,7 +16,10 @@ class VisualBibleTests(unittest.TestCase):
         bible = ROOT / "canal/alchemy-lab/biblia-visual"
         index = json.loads((bible / "INDEX-BIBLIA.json").read_text(encoding="utf-8"))
         count = sum(len(v) for v in index["categorias"].values())
-        self.assertGreaterEqual(count, 39)\n        self.assertEqual(len({(cat,x['id']) for cat,items in index['categorias'].items() for x in items}),count)\n        self.assertIn('arken-muralhas',[x['id'] for x in index['categorias']['cenarios']])\n        self.assertFalse(next(x['aprovacao_mestra'] for x in index['categorias']['cenarios'] if x['id']=='arken-muralhas'))
+        self.assertGreaterEqual(count, 39)
+        self.assertEqual(len({(cat,x['id']) for cat,items in index['categorias'].items() for x in items}),count)
+        self.assertIn('arken-muralhas',[x['id'] for x in index['categorias']['cenarios']])
+        self.assertFalse(next(x['aprovacao_mestra'] for x in index['categorias']['cenarios'] if x['id']=='arken-muralhas'))
         plan = json.loads((bible / "FILA-EP01.json").read_text(encoding="utf-8"))
         self.assertEqual(len(plan["tomadas"]), 40)
         self.assertNotIn("rainha", [actor for s in plan["tomadas"] for actor in s["personagens"]])
