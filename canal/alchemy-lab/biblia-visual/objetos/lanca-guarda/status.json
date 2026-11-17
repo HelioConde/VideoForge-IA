@@ -3,13 +3,14 @@
   "categoria": "objetos",
   "id": "lanca-guarda",
   "status": "gerado",
-  "ultima_geracao": 44012069505,
-  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44012069505/biblia-lanca-guarda-completa-v2.png",
+  "ultima_geracao": 44015381933,
+  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44015381933/biblia-lanca-guarda-base-v2.png",
   "aprovacao_mestra": false,
   "historico_de_versoes": [
     "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006036546:biblia-lanca-guarda-completa-v1.png",
     "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006194009:biblia-lanca-guarda-base-v1.png",
     "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006327786:biblia-lanca-guarda-empunhadura-v1.png",
-    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44012069505:biblia-lanca-guarda-completa-v2.png"
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44012069505:biblia-lanca-guarda-completa-v2.png",
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44015381933:biblia-lanca-guarda-base-v2.png"
   ]
 }

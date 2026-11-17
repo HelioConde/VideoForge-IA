@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 50,
+  "total_arquivadas": 51,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1518,6 +1518,34 @@
           "id": "approved-visual-reference",
           "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
           "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44015381933:biblia-lanca-guarda-base-v2.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-lanca-guarda-base-v2",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "lanca-guarda",
+      "biblia_categoria": "objetos",
+      "producer": "production-art-request",
+      "github_run_id": 44015381933,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44015381933/biblia-lanca-guarda-base-v2.png",
+      "sha256": "2d25214fa9afe9dc151c265082d2be67be95f850ce0d72ac3a7f132353292f51",
+      "bytes": 1511983,
+      "width": 981,
+      "height": 1602,
+      "referencias_usadas": [
+        {
+          "id": "biblia-lanca-guarda-completa-v2",
+          "sha256": "b6fb64fe457b6b87415176110d5169fa2afef4e61d859bc56ece858d8727d072",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44012069505/biblia-lanca-guarda-completa-v2.png"
         }
       ],
       "status": "gerado",
