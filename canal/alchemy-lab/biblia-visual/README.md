@@ -1,3 +1,5 @@
+**Correções V2 após revisão visual:** [relatório de desvios](QA-VISUAL-CANDIDATOS.md) · [fila de quatro reparos](FILA-REPAROS-EP01.json). Kael casual V1 ainda veste capa medieval; a lança V1 tem base semelhante a pedestal, base/empunhadura não são closes adequados. O modo `identity_face_only_kael` evita roupa medieval como referência; `master_only` permite close da lança V2 sem importar a haste errada. As 42 referências originais seguem em geração; depois o orquestrador chama `.github/workflows/visual-bible-repairs.yml` em série. Não registrar nada como aprovado sem decisão humana e SHA.
+
 # Bíblia Visual de Alchemy Lab
 
 **Fonte central de personagens, cenários, objetos, interações, variantes antes/depois e histórico de gerações.**
