@@ -3,12 +3,13 @@
   "categoria": "personagens",
   "id": "kael",
   "status": "em_revisao",
-  "ultima_geracao": 44006630342,
-  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006630342/biblia-kael-ferido-v1.png",
+  "ultima_geracao": 44006800520,
+  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006800520/biblia-kael-depois-v1.png",
   "aprovacao_mestra": false,
   "historico_de_versoes": [
     "mmorpg-conquiste-a-princesa-ep01:production-art-request:44003234837:biblia-kael-medieval-base-v1.png",
     "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006463096:biblia-kael-casual-antes-v1.png",
-    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006630342:biblia-kael-ferido-v1.png"
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006630342:biblia-kael-ferido-v1.png",
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006800520:biblia-kael-depois-v1.png"
   ]
 }

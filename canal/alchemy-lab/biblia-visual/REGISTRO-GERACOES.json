@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 18,
+  "total_arquivadas": 19,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -540,6 +540,44 @@
       "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006630342/biblia-kael-ferido-v1.png",
       "sha256": "694fecfaadb377f1f92512a46e50716a47e4c3ad530bc55c9893ff9e7b4aafee",
       "bytes": 2200104,
+      "width": 981,
+      "height": 1602,
+      "referencias_usadas": [
+        {
+          "id": "approved-visual-reference",
+          "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+          "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+        },
+        {
+          "id": "ref-kael-close-c12",
+          "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "path": "assets/referencias/chat-aprovadas/kael-close-salao.png"
+        },
+        {
+          "id": "biblia-kael-medieval-base-v1",
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006800520:biblia-kael-depois-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-kael-depois-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "kael",
+      "biblia_categoria": "personagens",
+      "producer": "production-art-request",
+      "github_run_id": 44006800520,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006800520/biblia-kael-depois-v1.png",
+      "sha256": "6ab687fb1abecfadf56f2ff44aada35bb59229c522156be7fa794880ca2e519b",
+      "bytes": 2218916,
       "width": 981,
       "height": 1602,
       "referencias_usadas": [
