@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 59,
+  "total_arquivadas": 60,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1789,6 +1789,34 @@
       ],
       "status": "gerado",
       "qa_tecnica": "rejected_canvas_mismatch",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-shot-alignment-v2:44037764414:c01-p02-background-aligned.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p02-background-aligned",
+      "shot": "C01-P02",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-shot-alignment-v2",
+      "github_run_id": 44037764414,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-shot-alignment-v2/44037764414/c01-p02-background-aligned.png",
+      "sha256": "66c79b08f882d699e2e823b080b5a35a32d88401c30812d31936aaef6e466fb9",
+      "bytes": 1781562,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "c01-p02-background-clean",
+          "sha256": "0b70145b3cb5cfff9ff577d561f324d590d2afa7cb90ba24d782a4c295a53017",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-shot-layer-v2/44037334699/c01-p02-background-clean.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "canvas_aligned_lossless_original_pixels_plus_2_edge_rows",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }
