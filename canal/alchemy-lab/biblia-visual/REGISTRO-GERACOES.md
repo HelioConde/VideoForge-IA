@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**132 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**134 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -136,6 +136,8 @@
 | [c01-p04-v3-character-guarda_esquerdo.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44160952746/c01-p04-v3-character-guarda_esquerdo.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`77106f1d2211…\` | [#44160952746](https://github.com/HelioConde/VideoForge-IA/actions/runs/44160952746) |
 | [c01-p04-v3-character-guarda_direito-provider-native.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161192391/c01-p04-v3-character-guarda_direito-provider-native.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`d00a149d0330…\` | [#44161192391](https://github.com/HelioConde/VideoForge-IA/actions/runs/44161192391) |
 | [c01-p04-v3-character-guarda_direito.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161192391/c01-p04-v3-character-guarda_direito.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`c3432ac07510…\` | [#44161192391](https://github.com/HelioConde/VideoForge-IA/actions/runs/44161192391) |
+| [c01-p04-v3-object-lanca-esquerda-provider-native.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161430230/c01-p04-v3-object-lanca-esquerda-provider-native.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`db47503513ba…\` | [#44161430230](https://github.com/HelioConde/VideoForge-IA/actions/runs/44161430230) |
+| [c01-p04-v3-object-lanca-esquerda.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161430230/c01-p04-v3-object-lanca-esquerda.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`465284cb74df…\` | [#44161430230](https://github.com/HelioConde/VideoForge-IA/actions/runs/44161430230) |
 
 ## Regras de consulta
 
