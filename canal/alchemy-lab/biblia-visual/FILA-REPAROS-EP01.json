@@ -1,0 +1,56 @@
+{
+  "schema": "videoforge/bible-correction-queue/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "requested_by": "user_continue_ep01_bible_generation_2026-11-17",
+  "purpose": "Corrigir Kael casual medieval indevido e lança V1 com pedestal; gerar V2 sem contaminar referências; depois registrar imagens com SHA; manter aprovação humana.",
+  "source_review": "canal/alchemy-lab/biblia-visual/QA-VISUAL-CANDIDATOS.md",
+  "start_policy": "dispatch_after_all_42_independent_masters_are_sha_archived_to_avoid_concurrent_codex_proxy_billing",
+  "maximum_chargeable_calls_per_image_run": 1,
+  "no_auto_retry": true,
+  "no_auto_approval": true,
+  "no_youtube_upload": true,
+  "ep01_shots_hold": true,
+  "items": [
+    {
+      "asset_id": "biblia-kael-casual-antes-v2",
+      "category": "personagens",
+      "item": "kael",
+      "variant": "casual_antes",
+      "depends_on": [],
+      "review_target": "roupa casual moderna sem capa/armadura",
+      "phase": "repair_candidate"
+    },
+    {
+      "asset_id": "biblia-lanca-guarda-completa-v2",
+      "category": "objetos",
+      "item": "lanca-guarda",
+      "variant": "completa",
+      "depends_on": [],
+      "review_target": "lança portátil com virote fino, não suporte de chão",
+      "phase": "repair_candidate"
+    },
+    {
+      "asset_id": "biblia-lanca-guarda-base-v2",
+      "category": "objetos",
+      "item": "lanca-guarda",
+      "variant": "base",
+      "depends_on": [
+        "biblia-lanca-guarda-completa-v2"
+      ],
+      "review_target": "close da base fina empunhável",
+      "phase": "repair_candidate"
+    },
+    {
+      "asset_id": "biblia-lanca-guarda-empunhadura-v2",
+      "category": "objetos",
+      "item": "lanca-guarda",
+      "variant": "empunhadura",
+      "depends_on": [
+        "biblia-lanca-guarda-completa-v2"
+      ],
+      "review_target": "close do terço inferior com madeira lisa para pega",
+      "phase": "repair_candidate"
+    }
+  ]
+}
