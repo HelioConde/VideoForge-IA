@@ -1,5 +1,5 @@
-name: "VideoForge - QA encaixe da bainha no rig EP01"
-run-name: "EP01 / comparar 6 posicoes sem regenerar"
+name: "VideoForge - Historico rejeitado de translações da bainha"
+run-name: "EP01 / confirmar que variantes 3 e 4 não serão reutilizadas"
 on:
   workflow_dispatch:
   push:
@@ -7,38 +7,29 @@ on:
     paths:
       - '.github/workflows/qa-ep01-scabbard-registration.yml'
 permissions:
-  contents: write
+  contents: read
 jobs:
-  align-proposals:
-    runs-on: ubuntu-24.04
+  blocked-deprecated-offsets:
     if: github.ref == 'refs/heads/main'
-    timeout-minutes: 12
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
-          persist-credentials: true
-          fetch-depth: 2
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Preparar Pillow local
-        run: python -m pip install --quiet Pillow==11.3.0
-      - name: Montagem de alternativas sem reamostrar pixels
-        run: PYTHONPATH=. python scripts/qa-ep01-bainha-translacao.py
-      - name: Salvar provas e prévia de posições
-        shell: bash
+          persist-credentials: false
+      - name: Comprovar que 6 deslocamentos permanecem rejeitados
         run: |
           set -euo pipefail
-          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
-          git config user.name 'videoforge-rig-review[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- "$ep/QA-C01-P02-REGISTRO-BAINHA.jpg" "$ep/QA-C01-P02-REGISTRO-BAINHA.json"
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'qa(ep01): comparar 6 translações de bainha a partir de PNG bruto'
-          for attempt in 1 2 3; do
-            if git push origin HEAD:main; then exit 0; fi
-            git fetch origin main
-            if ! git rebase origin/main; then git rebase --abort || true; exit 1; fi
-          done
-          exit 1
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01')
+          old=json.loads((base/'QA-C01-P02-REGISTRO-BAINHA.json').read_text(encoding='utf-8'))
+          assert old['revisao_do_responsavel']['imagens_com_falha_identificadas']==[3,4]
+          assert old['revisao_do_responsavel']['estado']=='rejeitado'
+          assert old['variantes_deslocadas_aceitas']==0
+          assert old['alinhamento_por_deslocamento_autorizado'] is False
+          assert old['permitido_em_rig'] is False
+          print('EP01_SCABBARD_LEGACY_SIX_OFFSETS_REJECTED_NO_REGENERATION')
+          PY
