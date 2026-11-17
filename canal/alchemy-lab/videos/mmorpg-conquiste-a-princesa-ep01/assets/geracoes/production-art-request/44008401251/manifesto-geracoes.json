@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-art-request",
+  "github_run_id": 44008401251,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "biblia-sala-do-trono-angulo-frontal-v1.png",
+      "width": 941,
+      "height": 1671,
+      "sha256": "22b0420faf6b2fca7374cea7cc752d690052d6ff7dc4239c496d123ddc10f6da",
+      "bytes": 2610293,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}

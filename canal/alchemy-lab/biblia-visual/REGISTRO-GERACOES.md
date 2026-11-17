@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**28 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**29 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -32,6 +32,7 @@
 | [biblia-mascarado-1-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007936020/biblia-mascarado-1-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`7102378830de…\` | [#44007936020](https://github.com/HelioConde/VideoForge-IA/actions/runs/44007936020) |
 | [biblia-mascarado-2-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008127022/biblia-mascarado-2-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`159ddbda6ed1…\` | [#44008127022](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008127022) |
 | [biblia-mascarados-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008263650/biblia-mascarados-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`54426224625f…\` | [#44008263650](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008263650) |
+| [biblia-sala-do-trono-angulo-frontal-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008401251/biblia-sala-do-trono-angulo-frontal-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`22b0420faf6b…\` | [#44008401251](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008401251) |
 
 ## Regras de consulta
 
