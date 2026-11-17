@@ -1,5 +1,7 @@
 # Alchemy Lab
 
+**Leia primeiro a [Bíblia Visual](biblia-visual/README.md)**. Ela contém 11 personagens, 7 cenários, 11 objetos e 10 interações, suas fichas/status, referências com SHA e as 40 tomadas do dorama. Todo PNG novo de geração oficial deve aparecer automaticamente em [REGISTRO-GERACOES.md](biblia-visual/REGISTRO-GERACOES.md) ao ser arquivado. Rejeições de pose das lanças não podem contaminar cenas futuras.
+
 > **DORAMA — IDENTIDADE VISUAL OFICIAL:** [ver pasta `dorama/`](dorama/README.md), [bíbia de estilo e prompt](videos/mmorpg-conquiste-a-princesa-ep01/PROMPT-OFICIAL-ESTILO-DORAMA.md) e [JSON de direção](videos/mmorpg-conquiste-a-princesa-ep01/estilo-visual-oficial-dorama.json). Padrão `Cinematic Semi-Realistic Fantasy Anime`; **quase todas as cenas dramáticas, com ângulos realmente diferentes**, mantendo personagens e cenários consistentes. Amostra do responsável arquivada como **miniatura autêntica** no episódio. O EP01 continua com **geração de imagens bloqueada**, somente documentação nesta mudança.
 
 Identificador: `alchemy-lab` · idioma: `pt-BR`.
