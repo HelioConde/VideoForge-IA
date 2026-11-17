@@ -24,6 +24,7 @@ ITEM_SCHEMA = "videoforge/visual-bible-item/v1"
 STATUS_SCHEMA = "videoforge/visual-bible-item-status/v1"
 VALID_STATES = {"planejado", "gerado", "em_revisao", "aprovado", "rejeitado", "substituido"}
 SHA = re.compile(r"^[a-f0-9]{64}$")
+BIBLE_ID = re.compile(r"^[a-z][a-z0-9_-]*$")
 SHOT = re.compile(r"(c[0-9]{2}-p[0-9]{2})", re.I)
 
 
@@ -71,7 +72,7 @@ def _index(channel: str, bible: Path):
             if not isinstance(item, dict) or not isinstance(item.get("id"), str):
                 raise VideoForgeError("BIBLE_INDEX_ITEM_INVALID")
             item_id = item["id"]
-            if not IDENTIFIER.fullmatch(item_id) or (cat, item_id) in seen:
+            if not BIBLE_ID.fullmatch(item_id) or (cat, item_id) in seen:
                 raise VideoForgeError("BIBLE_INDEX_DUPLICATE")
             seen.add((cat, item_id))
             if item.get("status") not in VALID_STATES:
@@ -105,7 +106,7 @@ def _verified_images(root: Path, channel: str):
     for manifest in sorted(folder.glob("*/assets/geracoes/*/*/manifesto-geracoes.json")):
         if any(x.is_symlink() for x in (manifest, *manifest.parents) if x != root):
             raise VideoForgeError("BIBLE_ARCHIVE_SYMLINK")
-        video_id = manifest.parents[3].name  # .../<video>/assets/geracoes/<producer>/<run>/
+        video_id = manifest.parents[4].name  # .../<video>/assets/geracoes/<producer>/<run>/
         producer = manifest.parent.parent.name
         run = manifest.parent.name
         if (not IDENTIFIER.fullmatch(video_id)
@@ -152,7 +153,7 @@ def _verified_images(root: Path, channel: str):
                 SHOT.search(name).group(1).upper() if SHOT.search(name) else None)
             biblia_item = origin.get("biblia_item_id")
             if biblia_item is not None and (
-                not isinstance(biblia_item, str) or not IDENTIFIER.fullmatch(biblia_item)
+                not isinstance(biblia_item, str) or not BIBLE_ID.fullmatch(biblia_item)
             ):
                 raise VideoForgeError("BIBLE_ITEM_ID_INVALID")
             images.append({
