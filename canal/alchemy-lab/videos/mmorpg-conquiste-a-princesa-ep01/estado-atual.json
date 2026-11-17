@@ -2189,5 +2189,79 @@
     "static_validation_result": "success",
     "production_integration_status": "documentation_routing_only_not_new_autonomous_agents",
     "media_generation_from_this_change": false
+  },
+  "ep01_images_progress_20261117": {
+    "date": "2026-11-17",
+    "source_of_truth": "RESUMO-PRODUCAO-IMAGENS-EP01.md",
+    "shots_total": 40,
+    "black_only": "C01-P01",
+    "shots_with_visual_art_expected": 39,
+    "archived_original_mother_shots": [
+      "C01-P02",
+      "C01-P03",
+      "C01-P04"
+    ],
+    "original_mother_shots_archived": 3,
+    "original_mother_shots_missing": 36,
+    "mother_c01_p02_source_rejected": true,
+    "mother_c01_p03": {
+      "run_id": 44073592014,
+      "sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+      "review": "pending"
+    },
+    "mother_c01_p04": {
+      "run_id": 44075357179,
+      "sha256": "156a9376298166045654706e75b876a20b7f8201c70d6d494ae9a2b7465f5ab3",
+      "review": "pending"
+    },
+    "proxy_separate_parts": [
+      {
+        "id": "c01-p03-background-clean",
+        "run_id": 44074495093,
+        "original_sha256": "14d216ed27acda7499404e8c95ac7243c8b3114674453d4321f73f6a12f55991",
+        "source_canvas": [
+          941,
+          1671
+        ],
+        "original_qa": "rejected_canvas_mismatch",
+        "aligned_run_id": 44074895225,
+        "aligned_sha256": "efaf7d320a5635b658f7881453e2b298367536298689927fd0f888aea42c6c07",
+        "aligned_canvas": [
+          941,
+          1672
+        ],
+        "visual_approval": false
+      },
+      {
+        "id": "c01-p03-character-kael",
+        "run_id": 44075692204,
+        "original_sha256": "20c1f8e07ec164280a478dda8b9db1091aa8b5088290767f0858deff54f58b4e",
+        "source_canvas": [
+          941,
+          1671
+        ],
+        "original_qa": "rejected_canvas_mismatch",
+        "aligned_run_id": 44075946150,
+        "aligned_sha256": "a962fad1494c296676879e5a2f1a98c5c68f3349999a75ab39704adec0670889",
+        "aligned_canvas": [
+          941,
+          1672
+        ],
+        "visual_approval": false
+      }
+    ],
+    "generation_method": "proxy_generated_separate_image",
+    "local_pixel_padding_is_not_cutout": true,
+    "do_not_reuse_v1_cutouts_for_rig": true,
+    "next_needed": [
+      "generate_c01_p03_character_aldric_with_proxy",
+      "qa_visual_c01_p03_neutral_recomposition",
+      "review_c01_p04_guard_grips",
+      "continue_missing_mothers"
+    ],
+    "new_png_images_human_approved": false,
+    "rig_ready": false,
+    "mp4_generated": false,
+    "youtube_uploaded": false
   }
 }
