@@ -216,5 +216,9 @@
   },
   "youtube_upload": false,
   "mp4_generated": false,
-  "editorial_note": "Não criar poses individuais. Movimento somente após camadas autênticas da mesma mãe, com QA de recomposição e foco de câmera variando durante a tomada."
+  "editorial_note": "Não criar poses individuais. Movimento somente após camadas autênticas da mesma mãe, com QA de recomposição e foco de câmera variando durante a tomada.",
+  "asset_generation_policy": "proxy_generated_separate_image_only",
+  "pixel_mask_assets_are_qa_only": true,
+  "require_new_independently_proxy_generated_characters_objects_and_rig_parts": true,
+  "legacy_source_layer_ids_not_rig_authorized": true
 }
