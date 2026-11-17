@@ -52,6 +52,37 @@ def edit_payload(asset: dict, prompt: str, model: str, size: str, root: Path = R
         original = matching[0]
         blobs.append(original["bytes"])
         references.append({k: original[k] for k in ("actor", "id", "path", "sha256")})
+    # Variantes reutilizam PNGs reais dos mestres já arquivados, com SHA verificado.
+    # A aprovação humana não é inferida: continuam sendo candidatas para QA.
+    extras = asset.get("additional_master_asset_ids", [])
+    if not isinstance(extras, list) or len(extras) > 3 or len(extras) != len(set(map(str, extras))):
+        raise VideoForgeError("BIBLE_MASTER_EXTRA_REFERENCES_INVALID")
+    if extras:
+        import hashlib
+        from .production_art import archived_reference
+        episode = Path(root) / "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+        for dep in extras:
+            if (not isinstance(dep, str) or not dep.startswith("biblia-")
+                    or dep == asset.get("id")):
+                raise VideoForgeError("BIBLE_MASTER_EXTRA_REFERENCE_ID_INVALID")
+            found = archived_reference("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01", dep, root)
+            if not found:
+                raise VideoForgeError("BIBLE_MASTER_EXTRA_SOURCE_NOT_ARCHIVED")
+            path = episode / found["path"]
+            if path.is_symlink() or not path.is_file() or path.stat().st_size > 35_000_000:
+                raise VideoForgeError("BIBLE_MASTER_EXTRA_SOURCE_INVALID")
+            raw = path.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != found["sha256"]:
+                raise VideoForgeError("BIBLE_MASTER_EXTRA_SOURCE_SHA_MISMATCH")
+            blobs.append(raw)
+            references.append({
+                "actor": "biblia_mestre",
+                "id": dep,
+                "path": str(path.relative_to(Path(root))).replace("\\", "/"),
+                "sha256": found["sha256"],
+                "source_spear_pose_rejected": False,
+                "human_visual_approval_pending": True,
+            })
     payload = {
         "model": model, "prompt": prompt, "size": size, "n": 1,
         "background": "opaque", "output_format": "png",
