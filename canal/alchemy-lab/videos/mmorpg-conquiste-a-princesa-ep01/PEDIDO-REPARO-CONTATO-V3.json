@@ -18,5 +18,8 @@
   "human_approval": false,
   "youtube_upload": false,
   "mp4_generated": false,
-  "candidate_only": true
+  "candidate_only": true,
+  "workflow_yaml_preflight_revision": "corrected_invalid_yaml_before_any_paid_call",
+  "previous_attempt_result": "workflow_invalid_no_job_no_proxy_call",
+  "trigger_revision": 2
 }
