@@ -108,13 +108,16 @@ def archived_reference(channel: str, video_id: str, asset_id: str,
             not IDENTIFIER.fullmatch(asset_id)):
         raise VideoForgeError("PRODUCTION_ART_ARCHIVE_SCOPE_INVALID")
     episode=Path(root)/"canal"/channel/"videos"/video_id
-    base=episode/"assets"/"geracoes"/"production-art-request"
-    if not base.exists() and not base.is_symlink():
-        return None
-    if base.is_symlink() or not base.is_dir():
-        raise VideoForgeError("PRODUCTION_ART_ARCHIVE_ROOT_UNSAFE")
+    archive_root=episode/"assets"/"geracoes"
+    bases=[archive_root/"production-art-request",
+           archive_root/("production-art-request-"+asset_id)]
     found=[]
-    for run in sorted(base.iterdir()):
+    for base in bases:
+      if not base.exists() and not base.is_symlink():
+        continue
+      if base.is_symlink() or not base.is_dir():
+        raise VideoForgeError("PRODUCTION_ART_ARCHIVE_ROOT_UNSAFE")
+      for run in sorted(base.iterdir()):
         if run.is_symlink():
             raise VideoForgeError("PRODUCTION_ART_ARCHIVE_RUN_SYMLINK")
         if not run.is_dir() or not run.name.isdigit():
@@ -138,7 +141,7 @@ def archived_reference(channel: str, video_id: str, asset_id: str,
                 obj.get("schema")!="videoforge/permanent-generated-image-archive/v1" or
                 obj.get("channel")!=channel or
                 obj.get("video_id")!=video_id or
-                obj.get("producer")!="production-art-request" or
+                obj.get("producer")!=base.name or
                 obj.get("github_run_id")!=int(run.name) or
                 not isinstance(obj.get("images"),list)):
             raise VideoForgeError("PRODUCTION_ART_ARCHIVE_MANIFEST_ORIGIN_INVALID_BLOCK_REPEAT")
@@ -239,6 +242,28 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
         output=predicted.with_suffix(".png")
         if output.exists() or output.is_symlink():
             raise VideoForgeError("DORAMA_FIRST_FRAME_ALREADY_EXISTS")
+        output.parent.mkdir(parents=True,exist_ok=True)
+        output.write_bytes(blob)
+    elif any(
+        isinstance(item,dict) and item.get("id")==asset_id
+        and item.get("source_mode")=="dorama-episode-multiref-v1"
+        for item in plan.get("assets",[])
+    ):
+        # All EP01 mother shots attach exact permanent continuity image plus
+        # original Kael/Elara faces when present. No text-only generation.
+        from .dorama_episode_factory import edit_payload
+        candidates=[item for item in plan["assets"] if item.get("id")==asset_id]
+        if len(candidates)!=1:
+            raise VideoForgeError("DORAMA_BATCH_ASSET_AMBIGUOUS")
+        payload,source_provenance=edit_payload(candidates[0],prompt,model,size)
+        response=proxy_images.call_proxy(
+            url,"/v1/images/edits",os.getenv("CODEX_PROXY_API_KEY",""),payload)
+        blob,extension=proxy_images.decode_image(response)
+        if extension!=".png":
+            raise VideoForgeError("DORAMA_BATCH_PNG_REQUIRED")
+        output=predicted.with_suffix(".png")
+        if output.exists() or output.is_symlink():
+            raise VideoForgeError("DORAMA_BATCH_OUTPUT_EXISTS")
         output.parent.mkdir(parents=True,exist_ok=True)
         output.write_bytes(blob)
     elif any(
