@@ -10,6 +10,9 @@ on:
       - 'tests/test_stage_layers_for_bible.py'
       - 'videoforge/visual_bible_gate.py'
       - 'tests/test_visual_bible_gate.py'
+      - 'videoforge/visual_bible_master.py'
+      - 'tests/test_visual_bible_master.py'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/production-art.json'
       - 'videoforge/production_art.py'
       - 'canal/alchemy-lab/biblia-visual/FILA-EP01.json'
       - 'scripts/persistir-imagens-gh.sh'
@@ -40,7 +43,7 @@ jobs:
         run: |
           set -euo pipefail
           bash -n scripts/persistir-imagens-gh.sh scripts/arquivar-pngs-se-existirem.sh
-          python -m unittest tests.test_visual_bible tests.test_stage_layers_for_bible tests.test_visual_bible_gate -v
+          python -m unittest tests.test_visual_bible tests.test_stage_layers_for_bible tests.test_visual_bible_gate tests.test_visual_bible_master -v
       - name: Criar fichas e sincronizar PNGs arquivados de todos os canais
         shell: bash
         run: |
