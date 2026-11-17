@@ -1,0 +1,163 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-grip-contact-metrics/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "contact_roi_xyxy": [
+    100,
+    850,
+    285,
+    1120
+  ],
+  "spear_sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+  "spear_preview_transform": {
+    "source_tip_xy": [
+      840,
+      220
+    ],
+    "source_base_xy": [
+      83,
+      1314
+    ],
+    "preview_tip_xy": [
+      525,
+      430
+    ],
+    "preview_base_xy": [
+      65,
+      1130
+    ],
+    "scale": 0.629611,
+    "rotation_deg": -1.371,
+    "preview_only": true,
+    "physical_grip_verified": false
+  },
+  "variants": [
+    {
+      "id": "R1-close-wrist",
+      "pixel_intersections_in_contact_roi": {
+        "forearm_to_palm": 683,
+        "palm_to_spear": 1483,
+        "fingers_to_spear": 1094,
+        "palm_to_fingers": 2940
+      },
+      "zero_overlap_warnings": [],
+      "all_pairs_touch_in_2d": true,
+      "source_transformations_are_preview_only": {
+        "forearm-cuff": {
+          "source_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+          "offset_xy": [
+            62,
+            802
+          ],
+          "uniform_scale_preview": 0.1487138
+        },
+        "palm-rear": {
+          "source_sha256": "f6ac09a8267ef32b9734f2f68f529e38e995f517c40b203998dcc8f23c3777be",
+          "offset_xy": [
+            89,
+            904
+          ],
+          "uniform_scale_preview": 0.1216931
+        },
+        "fingers-front": {
+          "source_sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
+          "offset_xy": [
+            123,
+            918
+          ],
+          "uniform_scale_preview": 0.097561
+        }
+      },
+      "anatomical_accuracy_verified": false,
+      "visual_approval": false
+    },
+    {
+      "id": "R2-shaft-through-fingers",
+      "pixel_intersections_in_contact_roi": {
+        "forearm_to_palm": 3028,
+        "palm_to_spear": 1485,
+        "fingers_to_spear": 1255,
+        "palm_to_fingers": 3021
+      },
+      "zero_overlap_warnings": [],
+      "all_pairs_touch_in_2d": true,
+      "source_transformations_are_preview_only": {
+        "forearm-cuff": {
+          "source_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+          "offset_xy": [
+            77,
+            812
+          ],
+          "uniform_scale_preview": 0.1487138
+        },
+        "palm-rear": {
+          "source_sha256": "f6ac09a8267ef32b9734f2f68f529e38e995f517c40b203998dcc8f23c3777be",
+          "offset_xy": [
+            79,
+            904
+          ],
+          "uniform_scale_preview": 0.1216931
+        },
+        "fingers-front": {
+          "source_sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
+          "offset_xy": [
+            110,
+            918
+          ],
+          "uniform_scale_preview": 0.097561
+        }
+      },
+      "anatomical_accuracy_verified": false,
+      "visual_approval": false
+    },
+    {
+      "id": "R3-tightest-provisional",
+      "pixel_intersections_in_contact_roi": {
+        "forearm_to_palm": 3184,
+        "palm_to_spear": 1496,
+        "fingers_to_spear": 1183,
+        "palm_to_fingers": 3021
+      },
+      "zero_overlap_warnings": [],
+      "all_pairs_touch_in_2d": true,
+      "source_transformations_are_preview_only": {
+        "forearm-cuff": {
+          "source_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+          "offset_xy": [
+            87,
+            824
+          ],
+          "uniform_scale_preview": 0.1487138
+        },
+        "palm-rear": {
+          "source_sha256": "f6ac09a8267ef32b9734f2f68f529e38e995f517c40b203998dcc8f23c3777be",
+          "offset_xy": [
+            69,
+            910
+          ],
+          "uniform_scale_preview": 0.1216931
+        },
+        "fingers-front": {
+          "source_sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
+          "offset_xy": [
+            100,
+            924
+          ],
+          "uniform_scale_preview": 0.097561
+        }
+      },
+      "anatomical_accuracy_verified": false,
+      "visual_approval": false
+    }
+  ],
+  "what_it_proves": "Count of hard-alpha pixel intersection of independent objects at provisional positions",
+  "what_it_does_not_prove": "Correct grip anatomy, true depth order, style or motion continuity",
+  "pixel_counts_are_not_approval": true,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_calls": 0
+}
