@@ -1,3 +1,11 @@
+## Correção de profundidade C01-P02 — revisão das imagens 3 e 4 (17/11/2026)
+
+- O responsável identificou **a bainha entrando dentro da roupa nas imagens 3 e 4** da prancha [QA-C01-P02-REGISTRO-BAINHA.jpg](QA-C01-P02-REGISTRO-BAINHA.jpg). Esses painéis aplicavam deslocamentos arbitrários `(0,300)` e `(0,500)`; a posição deixa de corresponder à cena original. As **6 translações experimentais estão marcadas rejeitadas**, nenhuma está autorizada para rig. O workflow antigo só faz confirmação de rejeição e não recria a prancha.
+- Novo QA com a ordem correta **background → carrasco/roupa → bainha original → espada original → luva superior → luva inferior**. A prova visual [QA-C01-P02-BAINHA-FRENTE-ROUPA.jpg](QA-C01-P02-BAINHA-FRENTE-ROUPA.jpg) traz antes/depois e close. Gerada pelo [workflow #44043954826](https://github.com/HelioConde/VideoForge-IA/actions/runs/44043954826) **success**, com zero chamadas IA, usando o **mesmo frame, mesmo canvas, escala 1, deslocamento zero**.
+- O desvio de recomposição RGB médio baixou de **9,151/255** para **7,654/255**, mas o alvo técnico é **≤6/255**, e ainda falta refinar as máscaras das bordas e as partes ocluídas da espada; **não declarar aprovado**. A interseção de máscara corpo/bainha detectada foi apenas **16 pixels**, então mudar z-index sozinho **não certifica segmentação perfeita**.
+- `videoforge/ep01_layer_stack.py` e seus testes garantem a ordem. `videoforge/ep01_contact_gate.py` agora consulta o último QA e impede render até passar o limite e receber revisão visual humana. [Workflow de contato #44044160636](https://github.com/HelioConde/VideoForge-IA/actions/runs/44044160636) passou, **com o render bloqueado corretamente**.
+- O [MOVIMENTO-CAMERA-C01-P02.json](MOVIMENTO-CAMERA-C01-P02.json) identifica seis camadas com z-index, invalida os recortes antigos do proxy, preserva o foco da câmera, e declara **`animation_ready=false`**. Nenhum MP4 nem upload ao YouTube nesta etapa.
+
 ## 17/11/2026 — Contato espada+bainha corrigido na fonte, mas rig AINDA BLOQUEADO
 
 - **Referência visual válida para a composição:** cena-mãe original `C01-P02`, SHA `b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e`. As seis variantes deslocadas de [QA-C01-P02-REGISTRO-BAINHA.jpg](QA-C01-P02-REGISTRO-BAINHA.jpg) **foram rejeitadas**; não representam posições de rig nem aprovação da arte.
