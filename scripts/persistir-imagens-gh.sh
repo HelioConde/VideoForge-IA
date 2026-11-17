@@ -17,18 +17,23 @@ python -m videoforge.persist_generated_assets \
   --channel "$CHANNEL" --video-id "$VIDEO_ID" \
   --input "$OUTPUT_DIR" --run-id "$RUN_ID" --producer "$PRODUCER"
 
+# P0 Bíblia Visual: commit atômico entre a imagem original e o registro.
+# Qualquer falha no SHA/JSON/status bloqueia o push do PNG, nunca finge sucesso.
+python -m videoforge.visual_bible --channel "$CHANNEL"
 DEST="canal/$CHANNEL/videos/$VIDEO_ID/assets/geracoes/$PRODUCER/$RUN_ID"
+BIBLE_DIR="canal/$CHANNEL/biblia-visual"
 git config user.name 'videoforge-assets[bot]'
 git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 git add -f -- "$DEST"
+git add -A -- "$BIBLE_DIR"
 if git diff --cached --quiet; then
   echo "GITHUB_IMAGE_ARCHIVE_ALREADY_IDENTICAL $DEST"
   exit 0
 fi
-git commit -m "assets($CHANNEL): persistir PNG original $PRODUCER run-$RUN_ID com SHA"
+git commit -m "assets($CHANNEL): PNG SHA + registro Bib Visual $PRODUCER run-$RUN_ID"
 for attempt in 1 2 3; do
   if git push origin HEAD:main; then
-    echo "GITHUB_IMAGE_ARCHIVE_COMMITTED $DEST"
+    echo "GITHUB_IMAGE_ARCHIVE_AND_BIBLE_REGISTRY_COMMITTED $DEST $BIBLE_DIR"
     exit 0
   fi
   if [[ "$attempt" -lt 3 ]]; then
