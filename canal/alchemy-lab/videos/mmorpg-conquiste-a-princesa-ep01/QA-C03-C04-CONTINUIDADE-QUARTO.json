@@ -1,0 +1,67 @@
+{
+  "schema": "videoforge/ep01-gamer-room-qa/v1",
+  "shots": [
+    {
+      "shot_id": "C03-P01",
+      "sha256": "b0c416e3c0dd10883e2de37a5c2652ee02030d1f6925ec6f47d9a6d56ade09f3",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44084423826/c03-p01-scene-mother.png",
+      "size": [
+        941,
+        1672
+      ],
+      "technical_png_ok": true,
+      "human_visual_approval": false
+    },
+    {
+      "shot_id": "C03-P02",
+      "sha256": "116fab14bb7d910a73f5fc61e12dac92efc73d3988f0648ee4b336c9fb241c3c",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44085499606/c03-p02-scene-mother.png",
+      "size": [
+        941,
+        1672
+      ],
+      "technical_png_ok": true,
+      "human_visual_approval": false
+    },
+    {
+      "shot_id": "C04-P01",
+      "sha256": "d4c51415314823c5e7092aa4e45bbc9f8fce9092352e4a18560e118f40488d1a",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44085725018/c04-p01-scene-mother.png",
+      "size": [
+        941,
+        1672
+      ],
+      "technical_png_ok": true,
+      "human_visual_approval": false
+    },
+    {
+      "shot_id": "C04-P02",
+      "sha256": "9755e8457dac710abafdddca3da17cd5102d03385cc686711981e236015716bf",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44085933750/c04-p02-scene-mother.png",
+      "size": [
+        941,
+        1672
+      ],
+      "technical_png_ok": true,
+      "human_visual_approval": false
+    }
+  ],
+  "sheet": "QA-C03-C04-CONTINUIDADE-QUARTO.jpg",
+  "sheet_sha256": "37682345e4a36200603dae607562e6e17f042541aba2c395d28c03b43ec6d5a6",
+  "checks_for_review": [
+    "C03-P01 eyes blue reflection matches C03-P02 blue monitor light",
+    "C03-P02 scene uses bedroom not medieval throne",
+    "Kael casual outfit and face match C04-P01 and visual bible",
+    "room architecture, desk, monitor and illumination remain consistent",
+    "hand actually grips mouse and rests on keyboard with plausible anatomy",
+    "C04-P02 monitor screen has no AI-painted UI/text",
+    "match-cut is two consecutive shots, not split-screen collage"
+  ],
+  "technical_provenance_qa": "passed",
+  "visual_continuity_qa": "awaiting_review",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_calls": 0
+}
