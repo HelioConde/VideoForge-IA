@@ -58,14 +58,14 @@ jobs:
           if marker not in original:
               note=(marker+'\n\n'
                     '- **39/39 imagens-mãe originais SHA-arquivadas**; inventário oficial em CHECKPOINT-IMAGENS-EP01-AUTO.json.\n'
-                    '- Pranchas para revisão: QA-EP01-MAES-CATALOGO-01.jpg e QA-EP01-MAES-CATALOGO-02.jpg; manifesto QA-EP01-MAES-CATALOGO.json.\n'
+                    '- Pranchas para revisão: QA-EP01-MAES-CATALOGO-01.jpg e QA-EP01-MAES-CATALOGO-02.jpg e QA-EP01-MAES-CATALOGO-C01-ALTERNATIVAS.jpg; manifesto QA-EP01-MAES-CATALOGO.json.\n'
                     '- Estas pranchas são apenas miniaturas para conferência humana; não são fontes de rig. Revisar continuidade, anatomia, roupas, mãos, armas e objetos.\n'
                     '- **Nenhuma aprovação individual automática**, sem sprites/RGBA definitivos, rig, MP4 ou upload YouTube.\n\n')
               path.write_text(note+original,encoding='utf-8')
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add "$ep/QA-EP01-MAES-CATALOGO-01.jpg" "$ep/QA-EP01-MAES-CATALOGO-02.jpg" "$ep/QA-EP01-MAES-CATALOGO.json" "$ep/ESTADO-ATUAL.md"
+          git add "$ep/QA-EP01-MAES-CATALOGO-01.jpg" "$ep/QA-EP01-MAES-CATALOGO-02.jpg" "$ep/QA-EP01-MAES-CATALOGO-C01-ALTERNATIVAS.jpg" "$ep/QA-EP01-MAES-CATALOGO.json" "$ep/ESTADO-ATUAL.md"
           if git diff --cached --quiet; then
             echo 'EP01_CONTACT_QA_ALREADY_ARCHIVED'
             exit 0
