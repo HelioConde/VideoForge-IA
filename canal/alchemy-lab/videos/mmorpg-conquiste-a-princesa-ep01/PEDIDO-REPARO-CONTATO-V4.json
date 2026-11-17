@@ -30,5 +30,9 @@
   "youtube_upload": false,
   "mp4_generated": false,
   "candidate_only": true,
-  "quality_gate": "no rig or publish until V4 visual inspection, RGBA reconciling and explicit human approval"
+  "quality_gate": "no rig or publish until V4 visual inspection, RGBA reconciling and explicit human approval",
+  "trigger_revision": 2,
+  "first_run_id": 44063003598,
+  "first_run_result": "HTTP 400 in proxy image edit; health/preflight success; no PNG created",
+  "diagnostic_update": "only sanitized provider error classification, no response body or credentials"
 }
