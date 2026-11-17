@@ -7,14 +7,12 @@
   "aligned_reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
   "source_approval_manifest": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/APROVACOES-VISUAIS-C01-V3.json",
   "parts": [
-    "character-kael",
-    "character-aldric",
     "character-guarda_esquerdo",
     "character-guarda_direito",
     "object-lanca-esquerda",
     "object-lanca-direita"
   ],
-  "max_new_images": 6,
+  "max_new_images": 4,
   "one_paid_call_per_child": true,
   "retry_on_failure": false,
   "allow_spurious_parts": false,
@@ -28,5 +26,22 @@
     "invalid_source_sha_or_approval"
   ],
   "technical_alignment_policy": "preserve_raw_plus_append_one_row_when_only_one_row_missing",
-  "final_character_rig_policy": "no_local_pixel_crops"
+  "final_character_rig_policy": "no_local_pixel_crops",
+  "request_revision": 2,
+  "resume_reason": "Aldric V1 1200x1310 e reparo V2 981x1602 preservados como RGBA nativos para QA espacial, nao usar automaticamente na composicao; continuar as outras 4 pecas sem novas chamadas para Aldric",
+  "failed_attempts": [
+    {
+      "part": "character-aldric",
+      "run_id": 44158759629,
+      "qa": "rejected_unacceptable_canvas"
+    },
+    {
+      "part": "character-aldric",
+      "run_id": 44159799863,
+      "qa": "rejected_unacceptable_canvas"
+    }
+  ],
+  "spatial_registration_pending": [
+    "character-aldric"
+  ]
 }
