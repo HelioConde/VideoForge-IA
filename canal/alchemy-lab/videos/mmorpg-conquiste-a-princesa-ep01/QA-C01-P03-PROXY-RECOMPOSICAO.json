@@ -1,0 +1,69 @@
+{
+  "schema": "videoforge/ep01-c01p03-proxy-composition-qa/v1",
+  "shot_id": "C01-P03",
+  "mother_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+  "mother_archive_run_id": 44073592014,
+  "source_dimensions": [
+    941,
+    1672
+  ],
+  "independent_proxy_assets": {
+    "background-clean": {
+      "sha256": "efaf7d320a5635b658f7881453e2b298367536298689927fd0f888aea42c6c07",
+      "source_raw_sha256": "14d216ed27acda7499404e8c95ac7243c8b3114674453d4321f73f6a12f55991"
+    },
+    "character-kael": {
+      "sha256": "a962fad1494c296676879e5a2f1a98c5c68f3349999a75ab39704adec0670889",
+      "source_raw_sha256": "20c1f8e07ec164280a478dda8b9db1091aa8b5088290767f0858deff54f58b4e"
+    },
+    "character-aldric": {
+      "sha256": "0bcdbc8ef6263bef8c063f1ea696019998efa32a5a45789a9e3054b8b1544285",
+      "source_raw_sha256": "a6eb021cb6c2788530a6fc541831f14d8f99e0392c21de02510f2fdf2312a0f0"
+    }
+  },
+  "neutral_recomposition_source_order": [
+    "background-clean",
+    "character-aldric",
+    "character-kael"
+  ],
+  "technical_comparison_only": true,
+  "mean_absolute_rgb_difference": 36.6056,
+  "different_pixels_at_threshold_percent": 58.21,
+  "threshold_rgb_intensity": 18,
+  "character_alpha_stats": {
+    "character-kael": {
+      "bbox": [
+        0,
+        32,
+        907,
+        1643
+      ],
+      "nonzero_alpha_percent": 51.59,
+      "background_leak_suspected": false
+    },
+    "character-aldric": {
+      "bbox": [
+        0,
+        16,
+        941,
+        1671
+      ],
+      "nonzero_alpha_percent": 63.86,
+      "background_leak_suspected": false
+    }
+  },
+  "qa_limitations": [
+    "Ungenerated movable props may still be visible in the mother",
+    "Newly painted hidden geometry is not expected to match original pixels perfectly",
+    "MAE cannot certify anatomy, outfit, hand contact or motion",
+    "Art and frame motion still require human review"
+  ],
+  "visual_review_status": "pending",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "generator": "offline QA only",
+  "provider_calls": 0,
+  "contact_sheet_sha256": "92a4477cd1728b3c691c106eb06b3ccfc56cc6d238bdec51de3ebc5453c274cc"
+}
