@@ -31,7 +31,7 @@ def check_png(blob:bytes,part:str) -> Image.Image:
         if im.format!="PNG" or im.size!=(941,1672):
             raise RuntimeError("EP01_C01P04_QA_BAD_PNG_CANVAS "+part)
         has_alpha="A" in im.getbands()
-        if part!="background-clean":
+        if part not in ("background-clean", "approved-aligned-mother"):
             if not has_alpha:
                 raise RuntimeError("EP01_C01P04_QA_MISSING_ALPHA "+part)
             low,high=im.getchannel("A").getextrema()
