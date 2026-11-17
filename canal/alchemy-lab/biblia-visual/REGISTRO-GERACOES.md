@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**7 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**8 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -11,6 +11,7 @@
 | [c02-p01-aldric-rosto-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43970462482/c02-p01-aldric-rosto-v1.png) / C02-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`a18d2284ed78…\` | [#43970462482](https://github.com/HelioConde/VideoForge-IA/actions/runs/43970462482) |
 | [c01-p04-pegada-lancas-v4.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43990928355/c01-p04-pegada-lancas-v4.png) / C01-P04 | rejeitado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`0bb72ea525d8…\` | [#43990928355](https://github.com/HelioConde/VideoForge-IA/actions/runs/43990928355) |
 | [biblia-sala-do-trono-vazio-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`1397aebed672…\` | [#44002126578](https://github.com/HelioConde/VideoForge-IA/actions/runs/44002126578) |
+| [biblia-kael-medieval-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`d30201d04c34…\` | [#44003234837](https://github.com/HelioConde/VideoForge-IA/actions/runs/44003234837) |
 
 ## Regras de consulta
 
