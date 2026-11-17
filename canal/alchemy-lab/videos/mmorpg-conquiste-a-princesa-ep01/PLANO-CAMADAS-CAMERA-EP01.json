@@ -1187,7 +1187,7 @@
    },
    "editorial_beat": "Passagem ao quarto",
    "scene_status": "planned_pending_real_assets",
-   "visual_prompt": "Match cut visual entre o reflexo azul na pupila e a luz do monitor; dois quadros separados, sem morphing do rosto.",
+   "visual_prompt": "Um único quadro no QUARTO GAMER MODERNO de Kael, com o MONITOR aceso emitindo LUZ AZUL no centro da composição. Kael em roupa CASUAL ANTES, visto discretamente de perfil lateral/ombro ao lado do computador, sem armadura ou sangue; mão próxima à mesa. MATCH CUT: luz azul do monitor ecoa o reflexo da íris do plano anterior C03-P01. Este quadro é SÓ a segunda metade da transição, não duas imagens lado a lado, sem rosto macro nem cenário medieval. Sem texto de interface; interfaces serão compostas separadamente pelo Remotion.",
    "images": {
     "required": [
      "scene-mother",
@@ -1202,7 +1202,8 @@
      "alpha": "opaque",
      "approval": "pending",
      "generation_method": "proxy_generated_full_frame",
-     "source_policy": "use_Bible_SHA_references"
+     "source_policy": "use_Bible_SHA_references",
+     "reference_scene_transition": "source_C03-P01_eye_to_target_C03-P02_blue_monitor; two separate shots not a composite split frame"
     },
     "background": {
      "id": "background-clean",
@@ -1233,7 +1234,7 @@
       "source_policy": "scene_mother_and_object_bible_reference"
      }
     ],
-    "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+    "reference_reuse": "kael_casual_v2_and_gamer_room_monitor_sha_only; no_medieval_throne_or_medieval_armor",
     "asset_source_method": "proxy_generated_separate_image",
     "mother_figure_is_visual_reference_not_cutout_source": true,
     "proxy_generation_requests": [
@@ -1262,8 +1263,8 @@
    "camera": {
     "shot_type": "match_cut",
     "lens_mm": 85,
-    "primary_focus": "kael",
-    "virtual_motion": "matched_focal_cut",
+    "primary_focus": "monitor",
+    "virtual_motion": "match_cut_from_previous_iris_to_same_blue_monitor_focal_point",
     "focal_transition": "focus_on_story_target_then_cut_or_rack_focus",
     "depth_layers": [
      "background",
@@ -1271,7 +1272,7 @@
      "characters",
      "foreground_objects"
     ],
-    "tracking_target": "kael",
+    "tracking_target": "monitor",
     "preserve_subject_visibility": true,
     "prevent_nonuniform_stretch": true,
     "format": "vertical_9_16",
@@ -1301,7 +1302,17 @@
     "visual_approval_pending": true,
     "youtube_upload": false,
     "check_separated_asset_provenance": "proxy_generated_separate_image",
-    "reject_cutout_or_segmentation_final_sprites": true
+    "reject_cutout_or_segmentation_final_sprites": true,
+    "match_cut_contract": {
+     "previous_shot": "C03-P01",
+     "visual_link": "blue_iris_reflection_to_blue_screen_light",
+     "result_frame": "single_modern_room_monitor_shot",
+     "must_not_mix_medieval_and_modern_scenes": true,
+     "no_split_screen_or_two_frames_in_one_image": true,
+     "Kael_costume": "casual_before",
+     "no_visible_text_from_model": true,
+     "owner_visual_approval": false
+    }
    }
   },
   {
