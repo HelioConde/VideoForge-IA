@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**22 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**23 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -26,6 +26,7 @@
 | [biblia-elara-encapuzada-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006929092/biblia-elara-encapuzada-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`7c610afc5e0b…\` | [#44006929092](https://github.com/HelioConde/VideoForge-IA/actions/runs/44006929092) |
 | [biblia-elara-revelada-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007068966/biblia-elara-revelada-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`444f5652a0cf…\` | [#44007068966](https://github.com/HelioConde/VideoForge-IA/actions/runs/44007068966) |
 | [biblia-elara-antes-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007283107/biblia-elara-antes-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`42fe40f9f6cb…\` | [#44007283107](https://github.com/HelioConde/VideoForge-IA/actions/runs/44007283107) |
+| [biblia-elara-depois-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007450562/biblia-elara-depois-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`8a80c94c57fd…\` | [#44007450562](https://github.com/HelioConde/VideoForge-IA/actions/runs/44007450562) |
 
 ## Regras de consulta
 

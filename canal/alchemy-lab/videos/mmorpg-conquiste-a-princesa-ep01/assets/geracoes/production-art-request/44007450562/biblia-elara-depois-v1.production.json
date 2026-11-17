@@ -1,0 +1,51 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-elara-depois-v1",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-elara-depois-v1.png",
+  "biblia_item_id": "elara",
+  "biblia_categoria": "personagens",
+  "size": "1024x1536",
+  "sha256": "8a80c94c57fdf5c1903bd2cd53b917cdc2d3ad96a453fc84e9d4dcc1c07181b7",
+  "model": "gpt-image-2",
+  "actual_width": 981,
+  "actual_height": 1602,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 3,
+  "source_originals_sha_verified": [
+    {
+      "actor": "estilo_do_palacio",
+      "id": "approved-visual-reference",
+      "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+      "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "source_style_approved": true,
+      "source_spear_pose_rejected": true
+    },
+    {
+      "actor": "elara",
+      "id": "ref-elara-close-c12",
+      "path": "assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a"
+    },
+    {
+      "actor": "biblia_mestre",
+      "id": "biblia-elara-palacio-base-v1",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003561770/biblia-elara-palacio-base-v1.png",
+      "sha256": "36e9bed6325d00961b1370064b4162379c294d751554493f18c926eab2fc0059",
+      "source_spear_pose_rejected": false,
+      "human_visual_approval_pending": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}

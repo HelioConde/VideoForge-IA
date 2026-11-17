@@ -3,13 +3,14 @@
   "categoria": "personagens",
   "id": "elara",
   "status": "em_revisao",
-  "ultima_geracao": 44007283107,
-  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007283107/biblia-elara-antes-v1.png",
+  "ultima_geracao": 44007450562,
+  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007450562/biblia-elara-depois-v1.png",
   "aprovacao_mestra": false,
   "historico_de_versoes": [
     "mmorpg-conquiste-a-princesa-ep01:production-art-request:44003561770:biblia-elara-palacio-base-v1.png",
     "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006929092:biblia-elara-encapuzada-v1.png",
     "mmorpg-conquiste-a-princesa-ep01:production-art-request:44007068966:biblia-elara-revelada-v1.png",
-    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44007283107:biblia-elara-antes-v1.png"
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44007283107:biblia-elara-antes-v1.png",
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44007450562:biblia-elara-depois-v1.png"
   ]
 }
