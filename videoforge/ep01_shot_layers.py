@@ -123,6 +123,10 @@ def archived_layer(part:str,root:Path=ROOT)->dict|None:
 
 
 def prepare(part:str,root:Path=ROOT)->dict:
+    # A bainha por edicao no proxy falhou no quadro 981x1602.
+    # Nunca refazer a mesma chamada ou exportar arte sem registro nativo.
+    if part=="object-bainha":
+        raise VideoForgeError("EP01_SCABBARD_PROXY_DISABLED_USE_SOURCE_MASK")
     doc,blob,info=mother_source(root)
     if part not in VALID_PARTS:
         raise VideoForgeError("EP01_LAYER_UNKNOWN_COMPONENT")
