@@ -34,9 +34,13 @@ def edit_payload(asset: dict, prompt: str, model: str, size: str, root: Path = R
     # Para interações, NUNCA anexar a V3 de guardas com lanças mal seguradas:
     # usar somente mestres independentes, revisados por humano e SHA-verificados.
     mode = asset.get("reference_mode", "style_scene")
-    if mode not in ("style_scene", "style_scene_kael", "style_scene_elara", "approved_masters_only"):
+    if mode not in ("style_scene", "style_scene_kael", "style_scene_elara", "approved_masters_only", "identity_face_only_kael"):
         raise VideoForgeError("BIBLE_MASTER_UNSUPPORTED_REFERENCE_MODE")
-    if mode == "approved_masters_only":
+    # Correção de figurino: ao criar Kael moderno, anexar SÓ o close facial
+    # original. A imagem medieval inteira contaminou a primeira versão com capa.
+    if mode == "identity_face_only_kael" and (cat, item_id) != ("personagens", "kael"):
+        raise VideoForgeError("BIBLE_FACE_ONLY_CHARACTER_INVALID")
+    if mode in ("approved_masters_only", "identity_face_only_kael"):
         references, blobs = [], []
     else:
         references = [{
@@ -49,8 +53,8 @@ def edit_payload(asset: dict, prompt: str, model: str, size: str, root: Path = R
         }]
         blobs = [source]
     # Later character masters may attach a second ORIGINAL SHA face reference.
-    if mode in ("style_scene_kael", "style_scene_elara"):
-        who = mode.removeprefix("style_scene_")
+    if mode in ("style_scene_kael", "style_scene_elara", "identity_face_only_kael"):
+        who = "kael" if mode == "identity_face_only_kael" else mode.removeprefix("style_scene_")
         matching = [x for x in character_references(root) if x["actor"] == who]
         if len(matching) != 1:
             raise VideoForgeError("BIBLE_MASTER_CHARACTER_SOURCE_MISSING")
@@ -62,6 +66,8 @@ def edit_payload(asset: dict, prompt: str, model: str, size: str, root: Path = R
     extras = asset.get("additional_master_asset_ids", [])
     if not isinstance(extras, list) or len(extras) > 3 or len(extras) != len(set(map(str, extras))):
         raise VideoForgeError("BIBLE_MASTER_EXTRA_REFERENCES_INVALID")
+    if mode == "identity_face_only_kael" and extras:
+        raise VideoForgeError("BIBLE_FACE_ONLY_CANNOT_ATTACH_MEDIEVAL_BODY")
     if mode == "approved_masters_only" and not extras:
         raise VideoForgeError("BIBLE_INTERACTION_MASTERS_REQUIRED")
     if extras:
