@@ -1,11 +1,15 @@
 name: "VideoForge - EP01 lote antigo de camadas descontinuado"
-run-name: "EP01 / conferir máscaras da mãe sem repetir proxy"
+run-name: "EP01 / contrato de imagens separadas pelo proxy (sem geração)"
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - '.github/workflows/ep01-layered-shot-batch.yml'
+      - 'videoforge/layered_shot_plan.py'
+      - 'videoforge/ep01_contact_gate.py'
+      - 'tests/test_proxy_generated_layer_plan.py'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json'
 permissions:
   contents: read
 jobs:
@@ -21,14 +25,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validar plano da cena-mãe sem gerar bainha deslocada
+      - name: Validar 39 tomadas com PNGs gerados pelo proxy e bloquear recortes para rig
         run: |
           set -euo pipefail
           python -m videoforge.layered_shot_plan
+          python -m unittest tests.test_proxy_generated_layer_plan tests.test_ep01_contact_gate -v
           python - <<'PY'
           import json
           from pathlib import Path
           data=json.loads(Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P02-ESPADA-PIXELS.json').read_text())
           assert data['visual_approved'] is False and data['rig_authorized'] is False
-          print('LEGACY_PROXY_LAYER_LOOP_DISABLED; use source pixel cutouts and human visual review')
+          print('LEGACY_PIXEL_CUTOUTS_NOT_ALLOWED_FOR_RIG; require separately proxy generated transparent PNG images')
           PY
