@@ -820,6 +820,25 @@
       "youtube_upload": false,
       "prompt": "EP01 TOMADA C03-P02, segundo quadro DIFERENTE do match cut: macro do monitor no QUARTO CONTEMPORÂNEO, reflexo azul luminoso semelhante ao reflexo da pupila de Kael, sem rosto ou pessoas, sem texto/UI escrita. Uma imagem de objeto independente, sem fusão da face. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada.",
       "variant": "reflexo_monitor"
+    },
+    {
+      "id": "c01-p04-pegada-lancas-v4",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C01-P04",
+      "source_mode": "dorama-physical-spear-grip-correction-v1",
+      "source_shot_id": "C01-P04",
+      "source_continuity_registry": "CONTINUIDADE-VISUAL-APROVADA-C01-P04.json",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "reference_sources": [
+        "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+      ],
+      "physical_grip_required": true,
+      "corrected_anchor_promotion_requires_human_review": true,
+      "visual_approval": false,
+      "youtube_upload": false,
+      "prompt": "CORRIGIR C01-P04 V4 usando a imagem PNG original C01-P04 ANEXADA POR SHA ao gerador. É uma EDIÇÃO localizada, não criar novos personagens ou reformular a composição. PRESERVAR integralmente Kael ajoelhado, rosto/cabelo/capa vinho/ombro de Kael, Rei Aldric com barba grisalha/coroa/roupas, dois guardas com elmos/armaduras, trono, degraus, vitrais, luz e mesmo estilo 2D fantasia anime semirrealista cinematográfica.\nERRO CRÍTICO: os guardas NÃO SEGURAM AS LANÇAS na imagem anterior; ambas as mãos estão juntas sobre o ventre e as duas hastes cruzam o ar sem dono. ARRUMAR FISICAMENTE A PEGA. O guarda da ESQUERDA deve erguer/estender a mão enluvada até sua PRÓPRIA haste da lança à altura de peito ou cintura, com polegar e cinco dedos anatomicamente coerentes envolvendo e pressionando a haste. O guarda da DIREITA deve fazer o mesmo com sua PRÓPRIA lança, sem troca de armas entre guardas. Cada punho tem ligação correta com antebraço, cotovelo e ombro; as mãos NÃO podem permanecer juntas e afastadas das hastes.\nExatamente DOIS guardas e DUAS lanças. Hastes contínuas da ponta até sua extremidade inferior, com trecho visivelmente dentro do grip de cada luva, sem mãos flutuantes, dedos extras, arma atravessando corpo, luva ou rosto. Ajustar posição de punhos, antebraços e ângulo das hastes só o necessário para tornar a sustentação realista. As lanças podem continuar em X diante do trono, mas a cruz precisa ser coerente e não pode atravessar o corpo de Kael. O observador deve conseguir seguir cada lança até a mão do guarda que realmente a SEGURA.\nNão alterar pintura, paleta, roupas, rostos, barba/coroa, fundo, quantidade de guardas ou narrativa. Não adicionar texto, UI, legendas, marcas, armas extras ou Elara. ÚNICO PNG retrato: candidato corrigido para o usuário avaliar; não é aprovado automaticamente."
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",
