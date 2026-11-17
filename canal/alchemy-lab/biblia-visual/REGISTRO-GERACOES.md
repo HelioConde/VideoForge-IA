@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**33 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**34 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -37,6 +37,7 @@
 | [biblia-quarto-kael-vazio-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008695444/biblia-quarto-kael-vazio-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`84ba05fbc8a6…\` | [#44008695444](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008695444) |
 | [biblia-quarto-kael-monitor-aceso-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008857880/biblia-quarto-kael-monitor-aceso-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`6eb1fb244a59…\` | [#44008857880](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008857880) |
 | [biblia-estrada-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009355532/biblia-estrada-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`ae6f411689d4…\` | [#44009355532](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009355532) |
+| [biblia-mercado-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009519845/biblia-mercado-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`93a795fb323b…\` | [#44009519845](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009519845) |
 
 ## Regras de consulta
 
