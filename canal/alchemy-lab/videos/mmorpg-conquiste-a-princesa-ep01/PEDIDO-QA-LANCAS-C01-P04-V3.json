@@ -18,5 +18,7 @@
   "rig_ready": false,
   "mp4_generated": false,
   "youtube_uploaded": false,
-  "no_provider_calls": true
+  "no_provider_calls": true,
+  "request_revision": 2,
+  "reason": "Inspecionar closeups de contato nas mãos após três propostas; QA offline sem IA"
 }
