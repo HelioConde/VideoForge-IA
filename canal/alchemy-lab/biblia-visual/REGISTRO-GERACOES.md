@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**84 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**85 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -88,6 +88,7 @@
 | [c01-p04-scene-mother-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-repair-v2/44080462345/c01-p04-scene-mother-v2.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`cf1954337796…\` | [#44080462345](https://github.com/HelioConde/VideoForge-IA/actions/runs/44080462345) |
 | [c01-p04-scene-mother-v2-native-aligned-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2-aligned/44080887693/c01-p04-scene-mother-v2-native-aligned-v1.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`2d11099a5369…\` | [#44080887693](https://github.com/HelioConde/VideoForge-IA/actions/runs/44080887693) |
 | [c02-p01-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44081215706/c02-p01-scene-mother.png) / C02-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`0d1f8367c76c…\` | [#44081215706](https://github.com/HelioConde/VideoForge-IA/actions/runs/44081215706) |
+| [c02-p02-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44084059723/c02-p02-scene-mother.png) / C02-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`a963b04237e6…\` | [#44084059723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44084059723) |
 
 ## Regras de consulta
 
