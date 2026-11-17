@@ -187,6 +187,13 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
     asset=next(x for x in plan["assets"] if x.get("id")==asset_id)
     biblia_item_id=asset.get("biblia_item_id")
     biblia_categoria=asset.get("biblia_categoria")
+    # A shot needs the whole reusable Bible, not just a pretty group reference.
+    if ((channel, video_id)==("alchemy-lab","mmorpg-conquiste-a-princesa-ep01")
+        and asset.get("source_mode") in (
+            "dorama-episode-multiref-v1","dorama-approved-shot-anchor-v1",
+        )):
+        from .visual_bible_gate import require_ready
+        require_ready(channel, video_id, asset.get("shot_id"))
     if biblia_item_id is not None or biblia_categoria is not None:
         from .visual_bible import _index, BIBLE_ID
         if not isinstance(biblia_item_id,str) or not BIBLE_ID.fullmatch(biblia_item_id):
