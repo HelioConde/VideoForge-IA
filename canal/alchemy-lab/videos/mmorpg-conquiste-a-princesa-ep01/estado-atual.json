@@ -2140,5 +2140,20 @@
     "proxy_generated_assets_for_remaining_shots_not_yet_verified": true,
     "official_mp4_generated": false,
     "youtube_uploaded": false
+  },
+  "animation_skills_installation": {
+    "date": "2026-11-17",
+    "status": "installed_locally",
+    "new": [
+      "videoforge-animation-parts",
+      "videoforge-character-acting"
+    ],
+    "updated": [
+      "videoforge-rig-2d-three",
+      "videoforge-qa-and-checkpoint"
+    ],
+    "art_source_policy": "proxy_generated_separate_image",
+    "renders_executed": false,
+    "human_approval_changed": false
   }
 }

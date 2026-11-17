@@ -5,6 +5,10 @@ description: Fazer QA verificavel de arte, rig Three.js, Remotion e workflows Gi
 
 # Skill — qualidade, evidencias e memoria do VideoForge
 
+Para movimento, contatos, cortes de torso ou defeitos entre frames, consultar [QA temporal](references/temporal-qa.md). Para distinguir falha da peça e do rig, consultar [peças animáveis](../videoforge-animation-parts/SKILL.md). Referências adicionadas em 17/11/2026; carregar apenas quando pertinentes.
+
+**Precedência atual:** conferir [contrato de camadas geradas pelo proxy](../../../docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md). Crop/segmentação local serve somente ao QA. Reconstrução da geometria oculta e correção da peça final são novas gerações/edições via proxy conforme autorização; não aprovar recorte histórico como sprite final nem usar aprovação de uma mãe para outra variante.
+
 1. Ler `AGENTS.md`, `docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md` e `ESTADO-ATUAL.md` no canal antes de executar.
 2. Confirmar bytes reais das imagens e MP4s, manifesto de origem, SHA, ID de workflow, paths e tamanho/frame count; nao tratar relatorio JSON, prompt ou fixture como imagem criada.
 3. Inspecionar continuidade rosto/roupa/cabelo/cenario, 180 graus, geografia, membros e objetos; verificar camadas e reconstruir zonas escondidas para nao revelar transparencia.
