@@ -101,6 +101,46 @@ class VisualBibleMasterTests(unittest.TestCase):
         with self.assertRaisesRegex(VideoForgeError, "BIBLE_FACE_ONLY_CANNOT_ATTACH_MEDIEVAL_BODY"):
             edit_payload(asset, prompt, "gpt-image-2", size)
 
+    def test_new_masked_actors_use_empty_palace_style_not_kael(self):
+        import hashlib
+        from videoforge.production_art import archived_reference
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        source = archived_reference(
+            "alchemy-lab", "mmorpg-conquiste-a-princesa-ep01",
+            "biblia-sala-do-trono-vazio-v1")
+        self.assertIsNotNone(source)
+        for asset_id in ("biblia-carrasco-base-v2", "biblia-figurantes-base-v2",
+                         "biblia-mascarado-1-base-v2", "biblia-mascarado-2-base-v2"):
+            with self.subTest(asset_id=asset_id):
+                asset = next(x for x in plan["assets"] if x["id"] == asset_id)
+                self.assertEqual(asset["reference_mode"], "style_environment_only")
+                prompt, size = asset_prompt(plan, story, asset_id)
+                payload, provenance = edit_payload(asset, prompt, "gpt-image-2", size)
+                self.assertEqual(len(payload["images"]), 1)
+                self.assertEqual(provenance[0]["sha256"], source["sha256"])
+                self.assertTrue(provenance[0]["source_character_identity_forbidden"])
+                self.assertNotEqual(provenance[0]["sha256"], STYLE_SHA)
+                raw = base64.b64decode(payload["images"][0]["image_url"].split(",",1)[1])
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), source["sha256"])
+
+    def test_group_of_masked_actors_requires_two_v2_references(self):
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = next(x for x in plan["assets"] if x["id"] == "biblia-mascarados-base-v2")
+        self.assertEqual(asset["reference_mode"], "master_only")
+        self.assertEqual(asset["additional_master_asset_ids"], [
+            "biblia-mascarado-1-base-v2", "biblia-mascarado-2-base-v2"])
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        with self.assertRaisesRegex(VideoForgeError, "BIBLE_MASTER_EXTRA_SOURCE_NOT_ARCHIVED"):
+            edit_payload(asset, prompt, "gpt-image-2", size)
+
+    def test_wrong_environment_sha_is_rejected_before_provider(self):
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = dict(next(x for x in plan["assets"] if x["id"] == "biblia-mascarado-1-base-v2"))
+        asset["environment_style_sha256"] = "0" * 64
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        with self.assertRaisesRegex(VideoForgeError, "BIBLE_ENVIRONMENT_STYLE_SHA_INVALID"):
+            edit_payload(asset, prompt, "gpt-image-2", size)
+
     def test_spear_interaction_requires_human_approved_masters(self):
         plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
         asset = next(x for x in plan["assets"] if x["id"] == "biblia-guardas-cruzando-lancas-base-v1")
