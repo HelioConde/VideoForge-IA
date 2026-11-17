@@ -75,7 +75,7 @@
       "pose_requirement": "same_pose_approved",
       "rule": "king_seated_on_throne_no_throne_pixels",
       "generation_method": "proxy_generated_separate_image",
-      "status": "generated_native_pending_spatial_registration",
+      "status": "generated_native_spatial_proposals_pending_human_QA",
       "visual_approval": false,
       "rig_ready": false,
       "archived_png_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
@@ -84,7 +84,53 @@
         981,
         1602
       ],
-      "technical_qa": "rejected_unacceptable_canvas"
+      "technical_qa": "rejected_unacceptable_canvas",
+      "spatial_registration_review": {
+        "qa_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-REGISTRO-ESPACIAL.jpg",
+        "qa_manifest": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-REGISTRO-ESPACIAL.json",
+        "source_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+        "native_alpha_bbox_xyxy": [
+          460,
+          150,
+          730,
+          490
+        ],
+        "bbox_height_fraction": 0.21223,
+        "actual_visible_alpha_fraction": 0.04299,
+        "scale_warning": "visual_scale_review_pending",
+        "preview_options": [
+          {
+            "id": "A-top-left-native",
+            "offset_xy": [
+              0,
+              0
+            ],
+            "scale": 1,
+            "preview_only": true
+          },
+          {
+            "id": "B-centered-native",
+            "offset_xy": [
+              -20,
+              35
+            ],
+            "scale": 1,
+            "preview_only": true
+          },
+          {
+            "id": "C-uniform-fit",
+            "offset_xy": [
+              0,
+              68
+            ],
+            "scale": 0.959225,
+            "preview_only": true
+          }
+        ],
+        "selected_option": null,
+        "registration_human_approved": false,
+        "rig_ready": false
+      }
     },
     {
       "order": 4,
@@ -95,7 +141,7 @@
       "pose_requirement": "same_pose_approved",
       "rule": "gauntlets_form_grip_without_baked_spear",
       "generation_method": "proxy_generated_separate_image",
-      "status": "generated_native_pending_spatial_registration",
+      "status": "generated_native_spatial_proposals_pending_human_QA",
       "visual_approval": false,
       "rig_ready": false,
       "archived_png_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
@@ -104,7 +150,53 @@
         981,
         1602
       ],
-      "technical_qa": "candidate_native_canvas_requires_spatial_registration"
+      "technical_qa": "candidate_native_canvas_requires_spatial_registration",
+      "spatial_registration_review": {
+        "qa_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-REGISTRO-ESPACIAL.jpg",
+        "qa_manifest": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-REGISTRO-ESPACIAL.json",
+        "source_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+        "native_alpha_bbox_xyxy": [
+          78,
+          6,
+          710,
+          1529
+        ],
+        "bbox_height_fraction": 0.95069,
+        "actual_visible_alpha_fraction": 0.38874,
+        "scale_warning": "subject_almost_full_height_review_before_registration",
+        "preview_options": [
+          {
+            "id": "A-top-left-native",
+            "offset_xy": [
+              0,
+              0
+            ],
+            "scale": 1,
+            "preview_only": true
+          },
+          {
+            "id": "B-centered-native",
+            "offset_xy": [
+              -20,
+              35
+            ],
+            "scale": 1,
+            "preview_only": true
+          },
+          {
+            "id": "C-uniform-fit",
+            "offset_xy": [
+              0,
+              68
+            ],
+            "scale": 0.959225,
+            "preview_only": true
+          }
+        ],
+        "selected_option": null,
+        "registration_human_approved": false,
+        "rig_ready": false
+      }
     },
     {
       "order": 5,
@@ -194,5 +286,8 @@
   "spatial_registration_pending": [
     "character-aldric",
     "character-guarda_esquerdo"
-  ]
+  ],
+  "spatial_registration_qa_report": "QA-C01-P04-V3-REGISTRO-ESPACIAL.json",
+  "spatial_registration_preview_only": true,
+  "automatic_scale_or_registration_allowed": false
 }
