@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-spear-contact-qa-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "parts": [
+    "object-lanca-esquerda",
+    "object-lanca-direita"
+  ],
+  "versions": [
+    "S1-cross-medium",
+    "S2-cross-higher",
+    "S3-cross-lower"
+  ],
+  "rigid_transform_preview_only": true,
+  "contact_human_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "no_provider_calls": true
+}
