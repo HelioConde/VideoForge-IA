@@ -34,7 +34,7 @@ def edit_payload(asset: dict, prompt: str, model: str, size: str, root: Path = R
     # Para interações, NUNCA anexar a V3 de guardas com lanças mal seguradas:
     # usar somente mestres independentes, revisados por humano e SHA-verificados.
     mode = asset.get("reference_mode", "style_scene")
-    if mode not in ("style_scene", "style_scene_kael", "style_scene_elara", "approved_masters_only", "identity_face_only_kael", "master_only"):
+    if mode not in ("style_scene", "style_scene_kael", "style_scene_elara", "approved_masters_only", "identity_face_only_kael", "master_only", "style_environment_only"):
         raise VideoForgeError("BIBLE_MASTER_UNSUPPORTED_REFERENCE_MODE")
     # Correção de figurino: ao criar Kael moderno, anexar SÓ o close facial
     # original. A imagem medieval inteira contaminou a primeira versão com capa.
@@ -52,6 +52,32 @@ def edit_payload(asset: dict, prompt: str, model: str, size: str, root: Path = R
             "source_spear_pose_rejected": True
         }]
         blobs = [source]
+    # Estilo sem contaminação de elenco: salão vazio SHA-verificado, sem Kael,
+    # guardas ou carrasco. É apenas uma fonte provisória de pintura, não aprovada.
+    if mode == "style_environment_only":
+        import hashlib
+        from .production_art import archived_reference
+        original = archived_reference(
+            "alchemy-lab", "mmorpg-conquiste-a-princesa-ep01",
+            "biblia-sala-do-trono-vazio-v1", root)
+        required = asset.get("environment_style_sha256")
+        if (original is None or required != original.get("sha256")
+                or required != "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee"):
+            raise VideoForgeError("BIBLE_ENVIRONMENT_STYLE_SHA_INVALID")
+        src = Path(root) / "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01" / original["path"]
+        if src.is_symlink() or not src.is_file() or src.stat().st_size > 35_000_000:
+            raise VideoForgeError("BIBLE_ENVIRONMENT_STYLE_PNG_MISSING")
+        raw = src.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != required:
+            raise VideoForgeError("BIBLE_ENVIRONMENT_STYLE_TAMPERED")
+        references, blobs = [{
+            "actor": "estilo_ambiente_sem_personagens",
+            "id": "biblia-sala-do-trono-vazio-v1",
+            "path": str(src.relative_to(Path(root))).replace("\\", "/"),
+            "sha256": required,
+            "source_visual_only_not_human_approved": True,
+            "source_character_identity_forbidden": True,
+        }], [raw]
     # Later character masters may attach a second ORIGINAL SHA face reference.
     if mode in ("style_scene_kael", "style_scene_elara", "identity_face_only_kael"):
         who = "kael" if mode == "identity_face_only_kael" else mode.removeprefix("style_scene_")
