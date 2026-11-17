@@ -1,0 +1,30 @@
+name: "VideoForge - QA skills de producao (gratuito)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.agents/skills/**'
+      - 'docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md'
+      - 'docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md'
+      - 'tests/test_video_skill_routing.py'
+      - '.github/workflows/qa-videoforge-skills.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  skill-routing:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: "Validar 8 skills, 6 areas, links e politica Remotion"
+        run: python -m unittest tests.test_video_skill_routing -v
+      - name: "Confirmar que esta rotina nao produz midia nem usa proxy"
+        run: echo "SKILLS_QA_ONLY no_proxy no_paid_generation no_youtube"
