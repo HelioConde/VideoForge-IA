@@ -1,0 +1,60 @@
+name: "VideoForge - EP01 C01-P04 V3 QA guarda direito"
+run-name: "EP01 C01-P04 / QA direita 3 camadas e lança"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-GUARDA-DIREITO-C01-P04-V3.json'
+permissions:
+  contents: write
+concurrency:
+  group: ep01-c01p04-v3-right-grip-qa-main
+  cancel-in-progress: false
+jobs:
+  qa-right-grip:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pillow offline, zero geracoes de IA
+        run: python -m pip install --quiet 'Pillow==11.3.0'
+      - name: Conferir SHA e produzir painéis de QA sem modificar as fontes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/qa_ep01_c01p04_right_grip_v1.py
+          python scripts/qa_ep01_c01p04_right_grip_v1_contact.py
+          python scripts/qa_ep01_c01p04_right_grip_v1_metrics.py
+      - name: Arquivar comparacoes e relatorios; sem aprovar rig
+        shell: bash
+        run: |
+          set -euo pipefail
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f "$ep"/QA-C01-P04-V3-ANATOMIA-GUARDA-DIREITO*.jpg "$ep/QA-C01-P04-V3-ANATOMIA-GUARDA-DIREITO.json" "$ep"/QA-C01-P04-V3-GUARDA-DIREITO-PEGADA-CONTATO-V1* "$ep/QA-C01-P04-V3-GUARDA-DIREITO-CONTATO-METRICAS.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(ep01): anatomia guarda direito sobre lança independente sem aprovar rig'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-c01p04-v3-right-grip-qa
+          path: |
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-ANATOMIA-GUARDA-DIREITO*
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-GUARDA-DIREITO-PEGADA-CONTATO-V1*
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-GUARDA-DIREITO-CONTATO-METRICAS.json
+          if-no-files-found: warn
+          retention-days: 30
