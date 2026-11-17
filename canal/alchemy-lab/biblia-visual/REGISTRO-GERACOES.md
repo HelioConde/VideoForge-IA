@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**83 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**84 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -87,6 +87,7 @@
 | [c01-p03-scene-mother-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-repair-v2/44080234599/c01-p03-scene-mother-v2.png) / C01-P03 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`bfc1249dc1f8…\` | [#44080234599](https://github.com/HelioConde/VideoForge-IA/actions/runs/44080234599) |
 | [c01-p04-scene-mother-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-repair-v2/44080462345/c01-p04-scene-mother-v2.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`cf1954337796…\` | [#44080462345](https://github.com/HelioConde/VideoForge-IA/actions/runs/44080462345) |
 | [c01-p04-scene-mother-v2-native-aligned-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2-aligned/44080887693/c01-p04-scene-mother-v2-native-aligned-v1.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`2d11099a5369…\` | [#44080887693](https://github.com/HelioConde/VideoForge-IA/actions/runs/44080887693) |
+| [c02-p01-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44081215706/c02-p01-scene-mother.png) / C02-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`0d1f8367c76c…\` | [#44081215706](https://github.com/HelioConde/VideoForge-IA/actions/runs/44081215706) |
 
 ## Regras de consulta
 
