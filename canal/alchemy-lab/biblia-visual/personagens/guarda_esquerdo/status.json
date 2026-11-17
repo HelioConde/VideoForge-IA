@@ -2,9 +2,11 @@
   "schema": "videoforge/visual-bible-item-status/v1",
   "categoria": "personagens",
   "id": "guarda_esquerdo",
-  "status": "planejado",
-  "ultima_geracao": null,
-  "ultimo_arquivo": null,
+  "status": "gerado",
+  "ultima_geracao": 44005682487,
+  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005682487/biblia-guarda-esquerdo-cerimonial-v1.png",
   "aprovacao_mestra": false,
-  "historico_de_versoes": []
+  "historico_de_versoes": [
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44005682487:biblia-guarda-esquerdo-cerimonial-v1.png"
+  ]
 }

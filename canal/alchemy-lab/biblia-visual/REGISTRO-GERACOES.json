@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 11,
+  "total_arquivadas": 12,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -324,6 +324,34 @@
       "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005550858/biblia-aldric-revelacao-v1.png",
       "sha256": "f9e4180cf463d385572adb97d77c3be884f0bce3f4f8a5d86b613f8620ae6175",
       "bytes": 2349521,
+      "width": 981,
+      "height": 1602,
+      "referencias_usadas": [
+        {
+          "id": "approved-visual-reference",
+          "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+          "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44005682487:biblia-guarda-esquerdo-cerimonial-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-guarda-esquerdo-cerimonial-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "guarda_esquerdo",
+      "biblia_categoria": "personagens",
+      "producer": "production-art-request",
+      "github_run_id": 44005682487,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005682487/biblia-guarda-esquerdo-cerimonial-v1.png",
+      "sha256": "cfa01b0f4781a67ffda243a97c640909f30755f246bc82dde14b8274272d1679",
+      "bytes": 2134680,
       "width": 981,
       "height": 1602,
       "referencias_usadas": [
