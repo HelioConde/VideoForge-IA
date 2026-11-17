@@ -23,5 +23,9 @@
   "mp4_uploaded": false,
   "request_sequence": 2,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
-  "followup_asset_generation_method": "proxy_generated_separate_image"
+  "followup_asset_generation_method": "proxy_generated_separate_image",
+  "request_revision": 2,
+  "previous_run_id": 44073458492,
+  "previous_run_result": "preflight_tests_stale_c01p02_source_guard_no_paid_image_calls",
+  "regression_fix": "tests/test_ep01_shot_mother.py mock historical C01-P02 archive guard only in tests"
 }
