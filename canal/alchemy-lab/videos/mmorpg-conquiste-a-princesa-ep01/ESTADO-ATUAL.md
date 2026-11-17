@@ -1,3 +1,10 @@
+## 17/11/2026 — Nova mãe C06-P01 e QA independente de Arken
+
+- Inventário calculado a partir dos SHAs arquivados: **13/39 tomadas visuais com mãe original**, **26 sem mãe**. Novos números substituem snapshots antigos; consultar sempre [CHECKPOINT-IMAGENS-EP01-AUTO.json](CHECKPOINT-IMAGENS-EP01-AUTO.json).
+- [C06-P01 — Kael abrindo bolsa vazia](assets/geracoes/production-scene-mother-v2/44088754480/c06-p01-scene-mother.png) gerada e salva, SHA `1f4f543b085284f419e246909965de4cec532cd9de7f20c55b13aad9eed0f0f6`, [run #44088754480](https://github.com/HelioConde/VideoForge-IA/actions/runs/44088754480) sucesso. **Pendente QA** das duas mãos, abertura real da bolsa, mercado e identidade de Kael.
+- [QA Arken em três painéis](QA-C05-ARKEN-CONTINUIDADE.jpg) gerado gratuitamente, [run #44088952094](https://github.com/HelioConde/VideoForge-IA/actions/runs/44088952094) sucesso. A fachada e o portão são consistentes entre mestre e C05-P02, e Kael aparece pequeno no caminho; o terreno rochoso de C05-P01 contrasta com a pavimentação de C05-P02. [Revisão visual](REVISAO-VISUAL-C05-ARKEN.md). Aprovação humana ainda pendente.
+- Todos os PNGs originais continuam preservados; personagens/props/rig exigem novas imagens independentes solicitadas ao proxy, sem recortes da mãe. `human_visual_approval=false`, `rig_ready=false`, sem MP4/publicação.
+
 ## 17/11/2026 — Continuação efetiva do EP01: 12/39 imagens-mãe + novo mestre Arken
 
 - **Contagem atual derivada do registro de SHAs:** [CHECKPOINT-IMAGENS-EP01-AUTO.json](CHECKPOINT-IMAGENS-EP01-AUTO.json): **12 de 39 tomadas visuais possuem imagem-mãe original**, **27 tomadas ainda sem mãe**. Inclui as V1 reprovadas C01-P02/P03/P04 como imagens arquivadas; **contagem de geração não equivale a aprovação visual**. Nenhuma peça de rig foi liberada.
