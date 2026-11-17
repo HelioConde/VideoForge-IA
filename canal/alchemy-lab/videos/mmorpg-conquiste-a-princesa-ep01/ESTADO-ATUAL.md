@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — C01-P04 V4 gerada e comparada: mãos realmente segurando as lanças
+
+- Confirmada a falha apontada pelo responsável: **V3 tinha lanças sem contato com mãos dos guardas**. Correção localized edit no VideoForge-IA com PNG original V3 SHA-verificado.
+- [Run imagem #43990928355](https://github.com/HelioConde/VideoForge-IA/actions/runs/43990928355) **SUCCESS**, V4 `c01-p04-pegada-lancas-v4.png` arquivada permanentemente, 941×1672, SHA `0bb72ea525d81b6e935af49eb873d308a88ce8230a4a2b7d89c62d5d0e88a8dc`. Fonte V3 imutável.
+- [Comparação V3×V4](QA-C01-P04-V3-VS-V4-LANCAS.jpg) criada com QA [run #43991247393](https://github.com/HelioConde/VideoForge-IA/actions/runs/43991247393) **SUCCESS**. Na V4 os braços se estendem e uma mão de cada guarda está visualmente envolvendo sua própria lança. [Revisão e checklist](QA-REVISAO-PEGADA-LANCAS-V4.md).
+- **A aprovação de geometria/ação final permanece com o responsável.** V4 não é ainda âncora oficial, a pose V3 segue reprovada. As 37 futuras imagens permanecem em hold até essa decisão; nada foi publicado no YouTube. Não reiniciar toda a investigação do figurino por isso.
+
 ## 16/11/2026 — Continuidade real C01-P05 e C02-P01 gerada no GitHub
 
 - Aprovada a imagem C01-P04 **como referência visual de estilo e personagens**. Implementados registro `CONTINUIDADE-VISUAL-APROVADA-C01-P04.json`, `videoforge/dorama_continuity.py`, referências PNG anexadas à edição e verificações de SHA/elenco. A imagem original permanece imutável.
