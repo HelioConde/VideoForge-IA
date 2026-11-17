@@ -1,0 +1,98 @@
+name: "VideoForge - EP01 C01-P04 V3 registro espacial QA"
+run-name: "EP01 C01-P04 V3 / propostas espaciais Aldric e guarda"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-REGISTRO-ESPACIAL-C01-P04-V3.json'
+
+permissions:
+  contents: write
+concurrency:
+  group: ep01-native-registration-c01p04-v3-main
+  cancel-in-progress: false
+
+jobs:
+  criar-pranchas-propostas:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Pillow para conferir pixels localmente (zero IA)
+        run: python -m pip install --quiet 'Pillow==11.3.0'
+      - name: Preflight com SHA, alpha e geometria sem pagamentos
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_c01p04_native_registration -v
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-REGISTRO-ESPACIAL-C01-P04-V3.json')
+          data=json.loads(p.read_text(encoding='utf-8'))
+          from scripts import qa_ep01_c01p04_v3_native_registration as qa
+          if (data.get('schema')!='videoforge/ep01-native-registration-review-request/v1'
+              or data.get('shot_id')!='C01-P04'
+              or data.get('source_mother_sha256')!=qa.EXPECTED_MOTHER_SHA
+              or data.get('targets')!=list(qa.TARGETS)
+              or data.get('no_provider_calls') is not True
+              or data.get('no_final_art_edit') is not True
+              or data.get('rig_ready') is not False
+              or data.get('youtube_upload') is not False):
+              raise SystemExit('EP01_NATIVE_REGISTRATION_REQUEST_INVALID')
+          PY
+      - name: Produzir propostas visuais com alpha bboxes e sem substituir PNGs
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/qa_ep01_c01p04_v3_native_registration.py
+      - name: Arquivar JPEG de QA e manifesto com SHAs no canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          python - <<'PY'
+          from pathlib import Path
+          path=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md')
+          original=path.read_text(encoding='utf-8')
+          heading='## 17/11/2026 — Propostas de registro espacial V3: Aldric e guarda esquerdo'
+          if heading not in original:
+              note='''## 17/11/2026 — Propostas de registro espacial V3: Aldric e guarda esquerdo
+
+- [Prancha de três posicionamentos por personagem](QA-C01-P04-V3-REGISTRO-ESPACIAL.jpg), com fonte RGBA original, mãe aprovada e candidatos em sobreposição translúcida.
+- [Relatório técnico](QA-C01-P04-V3-REGISTRO-ESPACIAL.json): SHAs verificados, caixas de alfa, opções A (origem), B (centralizada) e C (fit uniforme somente para prévia), sem substituir as imagens geradas.
+- **Nenhuma posição é aprovada**, a escala do personagem não foi confirmada contra a cena e as propostas não são assets finais. Não converter essas prévias em sprites, não liberar rig, vídeo ou YouTube.
+
+'''
+              path.write_text(note+original,encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f "$ep/QA-C01-P04-V3-REGISTRO-ESPACIAL.jpg" "$ep/QA-C01-P04-V3-REGISTRO-ESPACIAL.json" "$ep/ESTADO-ATUAL.md"
+          if git diff --cached --quiet; then
+            echo 'EP01_REGISTRATION_QA_ALREADY_SAVED'
+            exit 0
+          fi
+          git commit -m 'qa(ep01): pranchas de registro espacial V3 sem aprovar rig'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-c01p04-v3-native-registration-qa
+          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-REGISTRO-ESPACIAL*
+          if-no-files-found: warn
+          retention-days: 30
