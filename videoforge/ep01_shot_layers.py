@@ -172,18 +172,77 @@ def generate(part:str,url:str,model:str="gpt-image-2",root:Path=ROOT)->dict:
     raw,extension=proxy_images.decode_image(response)
     if extension!=".png":
         raise VideoForgeError("EP01_LAYER_OUTPUT_NOT_PNG")
-    output_sha=hashlib.sha256(raw).hexdigest()
+    # O upstream pode devolver 941x1670 a partir do frame-mãe 941x1672.
+    # Um delta vertical de <=2 pixels é reparável SEM esticar ou recortar:
+    # preservar o PNG bruto como segunda imagem auditada e preencher a borda.
+    original_provider_png=None
+    edge_alignment=None
     try:
         qa=png_info(raw,require_alpha=spec["transparent"])
         technical=("candidate_rgba_verified" if spec["transparent"]
                    else "candidate_opaque_background_verified")
         if (qa["width"],qa["height"])!=spec["dimensions"]:
-            technical="rejected_canvas_mismatch"
+            native_w,native_h=spec["dimensions"]
+            short= native_h-qa["height"]
+            if qa["width"]==native_w and 1<=short<=2:
+                import io
+                from PIL import Image
+                original_provider_png=raw
+                with Image.open(io.BytesIO(raw)) as im:
+                    mode="RGBA" if spec["transparent"] else "RGB"
+                    source=im.convert(mode)
+                frame=Image.new(
+                    "RGBA" if spec["transparent"] else "RGB",
+                    (native_w,native_h),
+                    (0,0,0,0) if spec["transparent"] else (0,0,0))
+                frame.paste(source,(0,0))
+                if not spec["transparent"]:
+                    last=source.crop((0,source.height-1,source.width,source.height))
+                    for line in range(short):
+                        frame.paste(last,(0,source.height+line))
+                buffer=io.BytesIO()
+                frame.save(buffer,"PNG",optimize=True)
+                raw=buffer.getvalue()
+                qa=png_info(raw,require_alpha=spec["transparent"])
+                if (qa["width"],qa["height"])!=spec["dimensions"]:
+                    raise VideoForgeError("EP01_LAYER_EDGE_ALIGNMENT_FAILED")
+                technical=("candidate_rgba_edge_aligned_verified" if spec["transparent"]
+                           else "candidate_background_edge_aligned_verified")
+                edge_alignment={
+                    "original_size":[source.width,source.height],
+                    "aligned_size":[native_w,native_h],
+                    "bottom_rows_added":short,
+                    "original_pixels_resampled":False,
+                    "original_pixels_shifted":False,
+                    "method":"transparent_padding" if spec["transparent"] else "repeat_last_row"
+                }
+            else:
+                technical="rejected_canvas_mismatch"
     except LayerError as exc:
         qa={"error":str(exc)}
         technical="rejected_alpha_or_png_qa"
+    output_sha=hashlib.sha256(raw).hexdigest()
     destination.mkdir(parents=True,exist_ok=True)
     target.write_bytes(raw)
+    if original_provider_png is not None:
+        raw_name=stem+"-provider-raw"
+        raw_file=destination/(raw_name+".png")
+        raw_meta=destination/(raw_name+".production.json")
+        if raw_file.exists() or raw_meta.exists() or raw_file.is_symlink() or raw_meta.is_symlink():
+            raise VideoForgeError("EP01_LAYER_PROVIDER_RAW_EXISTS")
+        raw_file.write_bytes(original_provider_png)
+        raw_meta.write_text(json.dumps({
+            "schema":"videoforge/ep01-unaligned-provider-layer/v1",
+            "channel":CHANNEL,"video_id":VIDEO,
+            "asset_id":raw_name,"candidate_scene_shot_id":"C01-P02",
+            "sha256":hashlib.sha256(original_provider_png).hexdigest(),
+            "source_originals_sha_verified":[
+                {"id":"c01-p02-scene-mother","sha256":spec["source_sha256"],
+                 "path":spec["mother_path"]}],
+            "technical_qa":"raw_unaligned_preserved_before_deterministic_border_padding",
+            "human_visual_approval":False,"youtube_uploaded":False,
+            "rig_approved":False,
+        },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     meta_record={
         "schema":"videoforge/ep01-shot-layer-result/v1",
         "channel":CHANNEL,"video_id":VIDEO,"asset_id":stem,
@@ -194,6 +253,7 @@ def generate(part:str,url:str,model:str="gpt-image-2",root:Path=ROOT)->dict:
              "path":spec["mother_path"]}],
         "source_images_attached_to_request":1,
         "technical_qa":technical,"png_info":qa,
+        "edge_alignment":edge_alignment, "provider_raw_preserved":original_provider_png is not None,
         "human_visual_approval":False,"recomposition_review":"pending",
         "rig_approved":False,"mp4_generated":False,"youtube_uploaded":False,
     }
