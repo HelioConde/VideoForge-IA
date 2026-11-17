@@ -1,3 +1,9 @@
+## 17/11/2026 — Feedback positivo do criador sobre direção visual
+
+O criador confirmou: **“todas as imagens que eu vi até agora tá bonita e seguindo o visual”**. Direção estética geral das imagens vistas **aprovada**: manter pintura anime/manhwa 2D fantasia semirrealista cinematográfica, paleta, luz, desenho de personagens e cenários. [Registro de escopo](DIRECAO-VISUAL-APROVADA-PELO-CRIADOR.md).
+
+**Não** converter esta aprovação estética genérica em aprovação humana por imagem SHA não identificada, nem declarar rig ou vídeo prontos. Continuar gerando as cenas faltantes preservando estilo; QA independente segue para anatomia, encaixe de objetos e continuidade.
+
 ## 17/11/2026 — Nova mãe C06-P01 e QA independente de Arken
 
 - Inventário calculado a partir dos SHAs arquivados: **13/39 tomadas visuais com mãe original**, **26 sem mãe**. Novos números substituem snapshots antigos; consultar sempre [CHECKPOINT-IMAGENS-EP01-AUTO.json](CHECKPOINT-IMAGENS-EP01-AUTO.json).
