@@ -49,5 +49,9 @@
       "source": "scene-mother",
       "description": "ISELE SOMENTE A BAINHA DA ESPADA no canto inferior direito com detalhes de couro vermelho escuro, ponteira e bocal dourado/rubi, exatamente no MESMO lugar, escala, orientação e material da cena-mãe. Não mostrar lâmina, pomo/cabo da espada nem dedos/lúvas do carrasco, NÃO gerar pedestal, objeto novo ou uma bainha extra; alfa zero real fora da peça. Preservar geometria do encaixe no ponto onde a lâmina está sendo desembainhada."
     }
-  ]
+  ],
+  "legacy_qa_only": true,
+  "rig_source_forbidden": true,
+  "superseded_by": "docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md",
+  "note_20261117": "Historical V1 source and proxy-edited candidates; use new provider-generated separate PNGs after valid V3/V4 mother approval. Masks/crops only for QA"
 }
