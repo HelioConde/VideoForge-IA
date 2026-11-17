@@ -1,0 +1,24 @@
+{
+  "schema": "videoforge/ep01-scene-mother-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P02",
+  "status": "requested",
+  "requested_by": "owner_continue_2026-11-17",
+  "objective": "Primeira cena-mãe real do EP01: close da mão do carrasco e espada sendo desembainhada, a partir de 3 PNGs verdadeiros da Bíblia Visual, sem biblioteca de poses",
+  "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
+  "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
+  "result": "candidate_scene_mother_to_be_archived_with_sha",
+  "human_visual_approval_required": true,
+  "approved_for_final_render": false,
+  "next_steps_if_success": [
+    "revisar_perspectiva_e_objetos",
+    "reconstruir_background",
+    "separar_carrasco_e_espada_em_rgba",
+    "validar_rig_e_foco_camera"
+  ],
+  "max_chargeable_calls_per_run": 1,
+  "retry_on_429": false,
+  "youtube_upload": false,
+  "mp4_uploaded": false
+}
