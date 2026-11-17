@@ -1,0 +1,55 @@
+name: "VideoForge - EP01 C01-P04 V3 QA anatomia separada"
+run-name: "EP01 C01-P04 / conferir subcamadas da pegada V3"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-ANATOMIA-C01-P04-V3.json'
+permissions:
+  contents: write
+concurrency:
+  group: ep01-c01p04-v3-grip-review-main
+  cancel-in-progress: false
+jobs:
+  gerar-comparacao:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Pillow para QA sem gerar imagens por IA
+        run: python -m pip install --quiet "Pillow==11.3.0"
+      - name: Conferir SHAs e criar pranchas lado a lado
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/qa_ep01_c01p04_grip_v3.py
+      - name: Arquivar apenas QA e preservar PNGs de origem
+        shell: bash
+        run: |
+          set -euo pipefail
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f "$ep"/QA-C01-P04-V3-ANATOMIA-PEGADA*.jpg "$ep/QA-C01-P04-V3-ANATOMIA-PEGADA.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "qa(ep01): comparar anatomia V3 sem promover rig"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-c01p04-v3-grip-layers-review
+          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-ANATOMIA-PEGADA*
+          if-no-files-found: warn
+          retention-days: 30
