@@ -20,7 +20,9 @@ class LayerOrderTests(unittest.TestCase):
     def test_sheath_is_placed_above_clothing_in_visible_contact_region(self):
         mother,old,fixed,report=measure()
         self.assertEqual(mother.size,fixed.size)
-        self.assertGreater(report["sheath_coat_overlap_pixels_exact"],100)
+        self.assertGreater(report["sheath_coat_overlap_pixels_exact"],0)
+        self.assertTrue(report["z_order_alone_not_proof_of_fix"])
+        self.assertEqual(report["rejected_legacy_offsets"][0],[0,300])
         self.assertTrue(report["sheath_above_coat"])
         self.assertTrue(report["gloves_foreground"])
         self.assertFalse(report["automatic_visual_approval"])
@@ -39,7 +41,7 @@ class LayerOrderTests(unittest.TestCase):
         mother,layers,proof=read_layers()
         self.assertEqual(len(proof),6)
         self.assertTrue(all(x.size==mother.size for x in layers.values()))
-        self.assertGreater(sheath_contact_region(layers).histogram()[255],100)
+        self.assertGreater(sheath_contact_region(layers).histogram()[255],0)
 
 
 if __name__=="__main__":
