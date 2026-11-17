@@ -1,0 +1,95 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-canonical-grip-layer-plan/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "source_mother_approved_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "user_approved_grip_reference": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-PEGADA-APROVADA-C01-P04-V3.json",
+  "anatomical_guide_candidate": {
+    "run_id": 44183662671,
+    "sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+    "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-canonical-grip-guide-v1/44183662671/c01-p04-v3-left-grip-with-real-spear-reference-v1.png",
+    "user_visual_approved": false,
+    "useful_as_provisional_reference": "complete_hand_physically_wrapping_visible_spear"
+  },
+  "failed_hand_separations": [
+    {
+      "part": "left-rear-palm-v1",
+      "sha256": "71ddc2931b41f4083af7f548dcee49a63acd2314e6c7fa854deeac8ff3908993",
+      "failure": "closed_fist_knuckles_baked_in",
+      "run_id": 44182186174
+    },
+    {
+      "part": "left-front-fingers-v1",
+      "sha256": "c4433ab443862a5041ea586c045e7aa1e60dccd8dfc98188ace7aa5d45e77a9d",
+      "failure": "closed_fist_instead_of_only_front_digits",
+      "run_id": 44182835612
+    },
+    {
+      "part": "left-rear-palm-v2",
+      "sha256": "391fa1f6e2c65bf0c99ce11eba93d0965df71dd4cca4628ba363d9a9c447177f",
+      "failure": "forearm_armor_only_no_actual_palm_and_oversized_native_canvas",
+      "dimensions": [
+        1268,
+        1241
+      ],
+      "run_id": 44184932210,
+      "possible_use": "armor_style_reference_only"
+    }
+  ],
+  "required_layers": [
+    {
+      "id": "guard-forearm-cuff",
+      "order": 1,
+      "role": "new independent RGBA forearm/armor cuff",
+      "must_include": "connected_wrist",
+      "must_exclude": "spear_background_unrelated_fingers",
+      "approval": false
+    },
+    {
+      "id": "guard-palm-rear",
+      "order": 2,
+      "role": "new independent RGBA back of palm below shaft",
+      "must_include": "actual_palm_surface_channel_for_wood",
+      "must_exclude": "complete_closed_fist_front_knuckles_spear",
+      "approval": false
+    },
+    {
+      "id": "spear-existing",
+      "order": 3,
+      "role": "reuse already generated SHA-verifiable spear",
+      "must_include": "one_straight_shaft_and_tip",
+      "must_exclude": "hands",
+      "approval": false
+    },
+    {
+      "id": "guard-fingers-front",
+      "order": 4,
+      "role": "new independent RGBA near-side fingertips and thumb",
+      "must_include": "connected_5_digit_geometry_wraps_front_of_real_shaft",
+      "must_exclude": "spear_full_fist_forearm",
+      "approval": false
+    }
+  ],
+  "next_generation_policy": {
+    "method": "controlled proxy image edits using exact approved grip crop and canonical complete-grip guide as references",
+    "no_final_pixel_cutouts_from_mother": true,
+    "no_reuse_of_rejected_fists_as_final_parts": true,
+    "preserve_source_sha": true,
+    "one_paid_image_per_run": true,
+    "no_auto_retries": true,
+    "detect_native_bbox_scale_before_composite": true,
+    "require_visual_qa_of_behind_shaft_front_fingers_contact": true
+  },
+  "gate_status": {
+    "anatomical_reference_original_approved": true,
+    "guide_v1_approved_by_creator": false,
+    "left_grip_parts_complete": false,
+    "right_grip_parts_complete": false,
+    "spatial_registration_approved": false,
+    "hand_contact_validated": false,
+    "rig_ready": false,
+    "mp4_generated": false,
+    "youtube_uploaded": false
+  }
+}
