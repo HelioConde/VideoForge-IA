@@ -1,0 +1,150 @@
+name: "VideoForge - EP01 C01-P04 V3 guia anatomico pegada"
+run-name: "EP01 C01-P04 V3 / guia real de mao segurando lanca"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-GUIA-PEGADA-C01-P04-V3.json'
+permissions:
+  contents: write
+  packages: read
+concurrency:
+  group: ep01-c01p04-v3-canonical-grip-guide-main
+  cancel-in-progress: false
+jobs:
+  gerar-guia-anatomico:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencia de QA offline
+        run: python -m pip install --quiet "Pillow==11.3.0"
+      - name: Conferir SHA do aprovado e bloquear chamada duplicada
+        id: preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_c01p04_canonical_grip_guide -v
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          from videoforge import ep01_c01p04_v3_canonical_grip_guide as guide
+          p=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-GUIA-PEGADA-C01-P04-V3.json')
+          obj=json.loads(p.read_text(encoding="utf-8"))
+          if (obj.get("schema")!="videoforge/ep01-c01p04-canonical-grip-guide-request/v1"
+              or obj.get("channel")!="alchemy-lab"
+              or obj.get("video_id")!="mmorpg-conquiste-a-princesa-ep01"
+              or obj.get("shot_id")!="C01-P04"
+              or obj.get("approved_source_sha256")!=guide.SHA_APPROVED
+              or obj.get("one_paid_image_per_run") is not True
+              or obj.get("retry_on_failure") is not False
+              or obj.get("guide_only_not_final_sprite") is not True
+              or obj.get("human_visual_approval") is not False
+              or obj.get("rig_ready") is not False
+              or obj.get("youtube_upload") is not False):
+              raise SystemExit("EP01_GRIP_GUIDE_BAD_REQUEST")
+          if os.environ["GITHUB_EVENT_NAME"]=="push":
+              changed=subprocess.check_output(
+                 ["git","diff-tree","--no-commit-id","--name-only","-r",os.environ["GITHUB_SHA"]],
+                 text=True).splitlines()
+              if str(p) not in changed:
+                  raise SystemExit("EP01_GRIP_GUIDE_REQUEST_NOT_CHANGED")
+          old=guide.existing()
+          if old:
+              print("EP01_GRIP_GUIDE_ALREADY_ARCHIVED_NO_REPEAT",old["sha256"])
+              execute="false"
+          else:
+              src=guide.prepare()
+              print("EP01_GRIP_GUIDE_SHA_PREFLIGHT_OK",len(src["images"]))
+              execute="true"
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as out:
+              out.write("execute="+execute+"\n")
+          PY
+      - name: Selecionar proxy sem expor tokens
+        if: steps.preflight.outputs.execute == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then
+            echo "::error::CODEX_PROXY_API_KEY ausente"; exit 1
+          fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else
+            echo "::error::Proxy sem URL nem contas"; exit 1
+          fi
+      - name: Iniciar proxy efemero ja compilado
+        if: steps.preflight.outputs.execute == 'true' && env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          data=json.loads(os.environ["CODEX_PROXY_ACCOUNTS_JSON"])
+          assert isinstance(data,dict) and isinstance(data.get("records"),list)
+          assert data["records"] and all(isinstance(x,dict) and isinstance(x.get("token"),dict) for x in data["records"])
+          p=Path(os.environ["RUNNER_TEMP"])/"vf-proxy-state"/"accounts.json"
+          p.write_text(json.dumps(data),encoding="utf-8")
+          p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-c01p04-grip-guide \
+            --user "$(id -u):$(id -g)" --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy nao iniciou"; exit 1
+      - name: Gerar guia completo de mão envolvendo lança real
+        if: steps.preflight.outputs.execute == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          python -m videoforge.ep01_c01p04_v3_canonical_grip_guide
+      - name: Arquivar referencia antes de qualquer QA humana
+        if: always() && steps.preflight.outputs.execute == 'true'
+        shell: bash
+        run: |
+          bash scripts/arquivar-pngs-se-existirem.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
+            output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
+            "${{ github.run_id }}" production-c01p04-v3-canonical-grip-guide-v1 "${{ job.status }}"
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.preflight.outputs.execute == 'true'
+        with:
+          name: ep01-c01p04-v3-grip-guide-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Apagar sessao temporaria
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-c01p04-grip-guide >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
