@@ -1,0 +1,46 @@
+{
+  "schema": "videoforge/ep01-scabbard-registration-preview/v1",
+  "mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "scabbard_raw_sha256": "20435b66518223334d99fa73e5b8412a8a2944ab7f91930c8b3c98d7e251a68d",
+  "scabbard_source_canvas": [
+    981,
+    1602
+  ],
+  "target_scene_canvas": [
+    941,
+    1672
+  ],
+  "offset_trials": [
+    [
+      0,
+      300
+    ],
+    [
+      0,
+      500
+    ],
+    [
+      0,
+      650
+    ],
+    [
+      0,
+      800
+    ],
+    [
+      -80,
+      650
+    ],
+    [
+      80,
+      650
+    ]
+  ],
+  "no_resampling_of_original_layer": true,
+  "png_sources_intact": true,
+  "visual_review_pending": true,
+  "registered_layer_saved": false,
+  "rig_applied": false,
+  "youtube_uploaded": false,
+  "jpg_sha256": "eb2fc16b8ba29e2124d7827abc3c33862db02b6bb18bb8d4771eaad005c74cc2"
+}
