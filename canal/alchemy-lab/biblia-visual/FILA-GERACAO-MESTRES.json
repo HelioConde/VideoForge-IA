@@ -546,5 +546,13 @@
   },
   "legacy_deprecated_pose_requests": 12,
   "no_pose_prerequisite": true,
-  "active_scene_pipeline": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
+  "active_scene_pipeline": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json",
+  "execution_request": {
+    "requested_on": "2026-11-17",
+    "requested_by": "user",
+    "purpose": "Gerar todas as 42 referencias independentes no GitHub para revisao visual antes do rig",
+    "approval_mode": "review_after_generation",
+    "youtube_upload": false,
+    "allow_reuse_archived": true
+  }
 }
