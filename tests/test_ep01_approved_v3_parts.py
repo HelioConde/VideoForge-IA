@@ -32,5 +32,25 @@ class ApprovedV3PartsTests(unittest.TestCase):
             self.assertIn("No automatic rig",spec["prompt"])
             self.assertIn("941x1672",spec["prompt"])
 
+    def test_native_canvas_kept_without_cropping_or_resizing(self):
+        from io import BytesIO
+        from pathlib import Path
+        import tempfile
+        from PIL import Image
+        frame=Image.new("RGBA",(1200,1310),(0,0,0,0))
+        frame.putpixel((600,600),(10,20,30,255))
+        payload=BytesIO()
+        frame.save(payload,format="PNG")
+        spec={"source":{"sha256":"a"*64},"reference_proofs":[]}
+        with tempfile.TemporaryDirectory() as tmp:
+            report=ep.validate_and_save("character-guarda_esquerdo",
+                                         payload.getvalue(),Path(tmp),spec)
+            self.assertEqual((report["width"],report["height"]),(1200,1310))
+            self.assertTrue(report["native_canvas_requires_spatial_registration"])
+            self.assertEqual(report["technical_postprocess"],"none")
+            self.assertEqual(report["technical_qa"],
+                             "candidate_native_canvas_requires_spatial_registration")
+            self.assertFalse(report["rig_ready"])
+
 if __name__=="__main__":
     unittest.main()
