@@ -123,6 +123,12 @@ def _reference_bible(shot_id: str, component: str, root:Path) -> tuple[list[byte
     return data,proofs
 
 
+def enforce_source_qa(shot:dict)->None:
+    """A rejected mother is a stop signal, not a reason to draw more parts."""
+    if shot.get("qa",{}).get("require_versioned_mother_v2_before_more_proxy_parts") is True:
+        raise VideoForgeError("EP01_PROXY_PARTS_MOTHER_REJECTED_NEW_VERSION_REQUIRED")
+
+
 def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
     root=Path(root)
     image_generation_policy.assert_image_generation_allowed(CHANNEL,VIDEO,root)
@@ -132,6 +138,7 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
         raise VideoForgeError("EP01_PROXY_PARTS_C01_P02_MOTHER_NOT_CANONICAL")
     if existing_part(shot_id,part_id,root):
         raise VideoForgeError("EP01_PROXY_PARTS_ALREADY_ARCHIVED_NO_REPEAT")
+    enforce_source_qa(shot)
     mother,proof=mother_source(shot_id,root)
     refs,proofs=_reference_bible(shot_id,part_id,root)
     typ=request["role"]
