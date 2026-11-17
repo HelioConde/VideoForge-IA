@@ -1,0 +1,19 @@
+{
+  "schema": "videoforge/ep01-aldric-independent-v3-repair-request/v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "part": "character-aldric",
+  "original_approved_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "aligned_source_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "rejected_source_run_id": 44158759629,
+  "rejected_source_sha256": "934e2129e0d42db47610eff327d37d6b369d4a2258e53f7997edef4314a32828",
+  "failure_reason": "proxy returned 1200x1310 RGBA instead of 941x1672 full-scene transparent canvas; no scaling/cropping allowed",
+  "request_version": 2,
+  "one_image_per_run": true,
+  "retry_on_failure": false,
+  "allow_crop_or_resize": false,
+  "rig_ready": false,
+  "youtube_upload": false,
+  "visual_approval": false
+}
