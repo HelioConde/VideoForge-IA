@@ -17,5 +17,19 @@ class ArtRequestGateTests(unittest.TestCase):
         self.assertEqual(a["provider_calls"],0)
     def test_unarchived_other_asset_not_blocked_by_costume_feedback(self):
         self.assertTrue(decide(C,V,"throne-hall")["ready"])
+    def test_old_pose_requests_are_blocked_even_when_manually_dispatched(self):
+        for asset in (
+            "biblia-guarda-esquerdo-cruzando-lanca-v1",
+            "biblia-guardas-cruzando-lancas-base-v1",
+            "biblia-rei-sentado-no-trono-base-v1",
+            "biblia-kael-ajoelhado-base-v1",
+            "biblia-perseguicao-beco-base-v1",
+        ):
+            with self.subTest(asset=asset):
+                result=decide(C,V,asset,event="workflow_dispatch")
+                self.assertFalse(result["ready"])
+                self.assertEqual(result["reason"],"legacy_pose_deprecated_use_layered_scene_pipeline")
+                self.assertEqual(result["provider_calls"],0)
+
 if __name__=="__main__":
     unittest.main()
