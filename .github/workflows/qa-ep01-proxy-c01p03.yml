@@ -29,7 +29,7 @@ jobs:
           python-version: '3.12'
       - name: Pillow fixado para comparar pixels sem IA
         run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
-      - name: Verificar contrato: nunca aprovar rig/MP4 nem chamar proxy
+      - name: "Verificar contrato sem aprovar rig ou chamar proxy"
         run: |
           python - <<'PY'
           import json
