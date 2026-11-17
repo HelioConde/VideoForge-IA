@@ -1,0 +1,35 @@
+{
+  "parent_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "edit_sha256": "8b9d9acec8933e345b3099d536a1c410cf8da074d039fcbfd8eca2173ed4a84b",
+  "patch_sha256": "17da28fcf733727a11d2d67a38a84611bd1192cff0e97d45d7db10169de9089d",
+  "source_size": [
+    941,
+    1672
+  ],
+  "candidate_size": [
+    941,
+    1672
+  ],
+  "same_canvas": true,
+  "patch_exists": true,
+  "source_not_overwritten": true,
+  "owner_rejected_panels": [
+    2,
+    4
+  ],
+  "human_approved": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "mean_rgb_difference_from_source": 3.6388,
+  "exact_original_rgb_outside_roi": true,
+  "schema": "videoforge/ep01-contact-v3-qa/v1",
+  "preview_sha256": "f29139ea7e014c14fcc1ae5cb44af2d5649a5c023cd21bf2410fc0646ac97e40",
+  "roi": [
+    370,
+    790,
+    900,
+    1660
+  ],
+  "comparison_type": "same_scene_spatial_reference"
+}
