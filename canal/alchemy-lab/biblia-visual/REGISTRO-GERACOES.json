@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 15,
+  "total_arquivadas": 16,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -436,6 +436,39 @@
       "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006194009/biblia-lanca-guarda-base-v1.png",
       "sha256": "59173823904d297acefcbbe834d5b97be1e93182b5b821987ef07e9e1fc937fd",
       "bytes": 1743175,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "approved-visual-reference",
+          "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+          "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+        },
+        {
+          "id": "biblia-lanca-guarda-completa-v1",
+          "sha256": "710b49e6a39435356cdded9141363e3d064d283d8e61bff95da21a92c955a379",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006036546/biblia-lanca-guarda-completa-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44006327786:biblia-lanca-guarda-empunhadura-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-lanca-guarda-empunhadura-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "lanca-guarda",
+      "biblia_categoria": "objetos",
+      "producer": "production-art-request",
+      "github_run_id": 44006327786,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006327786/biblia-lanca-guarda-empunhadura-v1.png",
+      "sha256": "a34a131bdd0de07aa28f0e46d3e76c4f9299bb29efb96bfffb3ab3e3ab3c67b9",
+      "bytes": 1620404,
       "width": 941,
       "height": 1672,
       "referencias_usadas": [
