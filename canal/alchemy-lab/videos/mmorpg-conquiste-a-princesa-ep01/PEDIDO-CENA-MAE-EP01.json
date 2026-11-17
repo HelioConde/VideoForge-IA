@@ -2,43 +2,29 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C06-P01",
+  "shot_id": "C06-P02",
   "status": "requested_visual_candidate",
-  "requested_by": "owner_continue_2026-11-17",
-  "objective": "PLANO DETALHE CINEMATOGRÁFICO 9:16 da bolsa de couro aberta e VAZIA segurada com DUAS mãos de Kael, à altura da cintura. Dedos e polegares devem segurar a borda e abertura reais da bolsa, sem membros extras ou mãos flutuantes; alça e bolso coerentes, interior visivelmente vazio. Só o tronco e mãos necessários do protagonista, roupas medievais com capa vinho/armadura escura e ornamentos dourados da Bíblia Visual. Ao fundo, bancas de mercado de Arken DESFOCADAS e alguns figurantes distintos, menores, em roupa comum, nunca o rei, guardas com lanças ou princesa. Mesmo nível de pintura fantasia 2D semirrealista; foco na bolsa e dedos, não trocar por retrato do personagem, não incluir texto. A imagem é a MÃE completa; futuros personagens, objetos e background devem ser novos PNGs gerados pelo proxy a partir dela, não recortes.",
+  "requested_by": "owner_continue_after_style_approval_2026-11-17",
+  "objective": "Close de Kael com ironia ao ler missão Sobreviva ao primeiro dia; identidade e figurino medievais intactos, mercado Arken no fundo desfocado, nenhum HUD/letra gerado pela IA (UI adicionada com Remotion). Preservar o estilo artístico aprovado pelo criador.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
   "human_visual_approval_required": true,
   "approved_for_final_render": false,
-  "next_steps_if_success": [
-    "arquivar_png_sha",
-    "conferir_pegada_na_borda_da_bolsa_e_interior_vazio",
-    "verificar_mercado_e_figurantes_da_biblia",
-    "revisar_identidade_e_capa_de_kael",
-    "gerar_camadas_independentes_pelo_proxy_apos_qa",
-    "nao_liberar_rig_mp4_ou_youtube"
-  ],
   "max_chargeable_calls_per_run": 1,
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 13,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "request_revision": 16,
-  "last_shot_archived": {
-    "shot_id": "C05-P02",
-    "run_id": 44087638566,
-    "sha256": "281aa0e4cc0dfd9c9d636aa0e186324bdecbd96b569a35f93882971a586765f3"
-  },
-  "first_attempt_run_id": 44085218453,
-  "first_attempt_result": "preflight only; C03-P02 camera drift rejected by layered plan before any paid calls",
-  "fix": "canonical camera restored; blue monitor continuity stored as supplementary match cut metadata",
-  "new_bible_master": {
-    "asset_id": "biblia-arken-muralhas-base-v1",
-    "sha256": "0903946038a6977cc93fe324eee665899e7cccc296bcffab4c5cff38202ab5d4",
-    "run_id": 44087301592,
-    "visual_approval": false
-  }
+  "request_sequence": 14,
+  "request_revision": 17,
+  "next_steps_if_success": [
+    "archive_sha_and_auto_inventory",
+    "inspect_kael_face_against_bible_and_C06-P01",
+    "ensure_UI_not_generated_in_art",
+    "continue_missing_C04-P03_C05-P03_and_next_shots",
+    "request_independent_proxy_RGBA_only_after_scene_selection"
+  ],
+  "style_approval": "general_visual_direction_approved_2026-11-17_not_individual_SHA_or_rig"
 }
