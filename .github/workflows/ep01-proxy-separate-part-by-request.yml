@@ -43,6 +43,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Instalar Pillow fixado para validacao do PNG antes da chamada de IA
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+          python -c "from PIL import Image; print('PILLOW_PREFLIGHT_OK', Image.__version__)"
       - name: Validar 39 planos, PNG-mãe e componente sem pagar proxy
         id: request
         shell: bash
