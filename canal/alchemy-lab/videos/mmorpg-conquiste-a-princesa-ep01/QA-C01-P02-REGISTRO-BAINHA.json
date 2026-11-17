@@ -42,5 +42,69 @@
   "registered_layer_saved": false,
   "rig_applied": false,
   "youtube_uploaded": false,
-  "jpg_sha256": "eb2fc16b8ba29e2124d7827abc3c33862db02b6bb18bb8d4771eaad005c74cc2"
+  "jpg_sha256": "eb2fc16b8ba29e2124d7827abc3c33862db02b6bb18bb8d4771eaad005c74cc2",
+  "revisao_do_responsavel": {
+    "data": "2026-11-17",
+    "descricao": "As imagens numeradas 3 e 4 inseriram a bainha dentro da roupa; os demais offsets também não representam a cena-mãe fiel.",
+    "imagens_com_falha_identificadas": [
+      3,
+      4
+    ],
+    "estado": "rejeitado",
+    "aprovado": false
+  },
+  "variantes_deslocadas_aceitas": 0,
+  "offsets_descartados": [
+    {
+      "painel": 3,
+      "deslocamento": [
+        0,
+        300
+      ],
+      "status": "rejeitado_por_desalinhamento_da_bainha"
+    },
+    {
+      "painel": 4,
+      "deslocamento": [
+        0,
+        500
+      ],
+      "status": "rejeitado_por_desalinhamento_da_bainha"
+    },
+    {
+      "painel": 5,
+      "deslocamento": [
+        0,
+        650
+      ],
+      "status": "rejeitado_por_desalinhamento_da_bainha"
+    },
+    {
+      "painel": 6,
+      "deslocamento": [
+        0,
+        800
+      ],
+      "status": "rejeitado_por_desalinhamento_da_bainha"
+    },
+    {
+      "painel": 7,
+      "deslocamento": [
+        -80,
+        650
+      ],
+      "status": "rejeitado_por_desalinhamento_da_bainha"
+    },
+    {
+      "painel": 8,
+      "deslocamento": [
+        80,
+        650
+      ],
+      "status": "rejeitado_por_desalinhamento_da_bainha"
+    }
+  ],
+  "substituido_por": "QA-C01-P02-BAINHA-FRENTE-ROUPA.jpg",
+  "alinhamento_por_deslocamento_autorizado": false,
+  "permitido_em_rig": false
 }
