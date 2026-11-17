@@ -35,7 +35,7 @@ APPROVAL_FILE = REL / "REFERENCIA-PEGADA-APROVADA-C01-P04-V3.json"
 ROLENAMES = {
     "forearm-cuff": "LEFT FOREARM CUFF ONLY: gilded armor plate and wrist articulation, without any palm or fingers. Short sleeve end with open wrist ring, no hollow detached tube pretending to be a hand. Must connect to arm, matching exact approved outfit.",
     "palm-rear": "LEFT REAR PALM ONLY: actual open glove palm surface with the natural hand base connecting to the wrist, behind the imaginary cylindrical spear. NOT a forearm guard, NOT a clenched fist, and NO near-side fingers. Must leave the appropriate shaft channel; visible flesh/leather/plate palm with functional hand structure.",
-    "fingers-front": "LEFT NEAR-SIDE FINGERS AND THUMB ONLY: distinct bent digits visibly reaching around the missing spear from camera-facing side, with curvature and gaps of the real wooden shaft's thickness. NOT an entire clenched fist and NOT a palm or forearm.",
+    "fingers-front": "LEFT FRONT DIGITS LAYER ONLY. Draw EXACTLY the four camera-facing CURVED individual fingers (index, middle, ring, little) and the opposite THUMB in a thin connected arc, each showing distinct natural phalange plates and separated tips wrapping the imaginary cylindrical wooden shaft. Preserve a clear TRANSPARENT OPEN SLOT for the shaft between the digits and where the rear palm would be. This is a narrow OVERLAY STRIP of articulated fingers; no solid mitten shape, no closed fist silhouette, no palm surface, no cuff, no wrist, no forearm. The fingers visibly hook toward the viewer around the grip, and must not be painted as a generic glove.",
 }
 SCENE_GUIDANCE = {
     "forearm-cuff": "Original left guard wrist and forearm near x=110..225, y=785..980 in the 941x1672 mother scene.",
