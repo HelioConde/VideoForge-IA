@@ -1,0 +1,47 @@
+{
+  "schema": "videoforge/ep01-c01p04-approved-grip-reference/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approval_scope": "grip_reference_only_not_independent_layers",
+  "approved_by": "creator",
+  "creator_message": "essa está boa",
+  "source_mother_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png",
+  "source_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "source_technical_canvas_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3-aligned/44156724769/c01-p04-scene-mother-facing-throne-v3-native-aligned.png",
+  "source_technical_canvas_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "approved_anatomical_features": [
+    "wooden_spear_shaft_physically_crosses_palm_area",
+    "glove_fingers_and_thumb_wrap_around_shaft_from_front",
+    "spear_lower_butt_extends_below_grip",
+    "wrist_and_forearm_connected_without_extra_fingers",
+    "guard_fist_is_not_beside_spear"
+  ],
+  "layered_occlusion_order": [
+    "rear_gauntlet_and_palm",
+    "independent_spear_shaft",
+    "foreground_fingers_and_thumb"
+  ],
+  "independently_generated_parts_required": true,
+  "reference_crop_only_allowed_for_provider_guidance": true,
+  "prohibit_final_png_extracted_from_mother": true,
+  "left_guard_reference_roi_approx_xyxy": [
+    0,
+    760,
+    375,
+    1230
+  ],
+  "right_guard_reference_roi_approx_xyxy": [
+    562,
+    760,
+    941,
+    1230
+  ],
+  "roi_is_provisional_not_canonical_mask": true,
+  "old_rejected_variant": "c01-p04-v3-character-guarda_esquerdo-grip-v2",
+  "old_rejected_sha256": "d69d1967aa0b2faa63018d18c2d3eccb15b4fdaa45f7e2835056b859e3eeb29c",
+  "human_approval_of_new_hand_layers": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
