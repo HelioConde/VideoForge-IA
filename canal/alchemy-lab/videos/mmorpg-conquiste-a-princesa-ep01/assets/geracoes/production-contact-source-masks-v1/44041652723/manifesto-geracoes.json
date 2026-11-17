@@ -1,0 +1,38 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-contact-source-masks-v1",
+  "github_run_id": 44041652723,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c01-p02-hand-lower-contact-occlusion.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "785c1df2cb04ba1061725e97c5a48bcd21134fdfef8af6ca25ee24fb61e0c7cb",
+      "bytes": 2635577,
+      "human_visual_approval": false
+    },
+    {
+      "file": "c01-p02-hand-upper-contact-occlusion.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "740c3bf52eb2a8a12aa6872bd8e9f60c1d91fd678a48e6d1a054c5a6b6fd4a59",
+      "bytes": 2634538,
+      "human_visual_approval": false
+    },
+    {
+      "file": "c01-p02-object-bainha-source-visible.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "70a05e5de9ab9e56aed986527dc22fa3d8ff12698ad85286ce6675a6c3d154df",
+      "bytes": 2636516,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 3
+}

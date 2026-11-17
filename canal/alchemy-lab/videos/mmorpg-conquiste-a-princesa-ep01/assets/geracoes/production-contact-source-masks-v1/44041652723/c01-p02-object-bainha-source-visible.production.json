@@ -1,0 +1,45 @@
+{
+  "schema": "videoforge/ep01-contact-source-pixel-cutouts/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p02-object-bainha-source-visible",
+  "candidate_scene_shot_id": "C01-P02",
+  "sha256": "70a05e5de9ab9e56aed986527dc22fa3d8ff12698ad85286ce6675a6c3d154df",
+  "source_mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "source_originals_sha_verified": [
+    {
+      "id": "c01-p02-scene-mother",
+      "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png"
+    }
+  ],
+  "mask_qa": {
+    "alpha_bbox": [
+      411,
+      887,
+      807,
+      1672
+    ],
+    "filled_pixels": 83735,
+    "rgb_source_unchanged": true,
+    "canvas": [
+      941,
+      1672
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "scale": 1,
+    "color_resampling": false,
+    "draft_polygon_requires_visual_review": true
+  },
+  "technical_qa": "source_pixels_unmodified_mask_candidate_only",
+  "visual_approval": false,
+  "hand_sword_contact_approved": false,
+  "occluded_parts_invented": false,
+  "rig_approved": false,
+  "youtube_uploaded": false,
+  "mp4_generated": false,
+  "image_provider_calls": 0
+}

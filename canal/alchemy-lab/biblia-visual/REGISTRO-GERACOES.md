@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**63 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**66 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -67,6 +67,9 @@
 | [c01-p02-character-carrasco.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-shot-layer-v2/44038395038/c01-p02-character-carrasco.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`61a78ba3a374…\` | [#44038395038](https://github.com/HelioConde/VideoForge-IA/actions/runs/44038395038) |
 | [c01-p02-object-espada.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-shot-layer-v2/44038570483/c01-p02-object-espada.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`4ae1fea98908…\` | [#44038570483](https://github.com/HelioConde/VideoForge-IA/actions/runs/44038570483) |
 | [c01-p02-object-bainha.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-shot-layer-v2/44038738679/c01-p02-object-bainha.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`20435b665182…\` | [#44038738679](https://github.com/HelioConde/VideoForge-IA/actions/runs/44038738679) |
+| [c01-p02-hand-lower-contact-occlusion.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-source-masks-v1/44041652723/c01-p02-hand-lower-contact-occlusion.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`785c1df2cb04…\` | [#44041652723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44041652723) |
+| [c01-p02-hand-upper-contact-occlusion.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-source-masks-v1/44041652723/c01-p02-hand-upper-contact-occlusion.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`740c3bf52eb2…\` | [#44041652723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44041652723) |
+| [c01-p02-object-bainha-source-visible.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-source-masks-v1/44041652723/c01-p02-object-bainha-source-visible.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`70a05e5de9ab…\` | [#44041652723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44041652723) |
 
 ## Regras de consulta
 
