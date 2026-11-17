@@ -244,11 +244,35 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
             raise VideoForgeError("DORAMA_FIRST_FRAME_ALREADY_EXISTS")
         output.parent.mkdir(parents=True,exist_ok=True)
         output.write_bytes(blob)
+    elif (channel,video_id,asset_id)==(
+        "alchemy-lab","mmorpg-conquiste-a-princesa-ep01",
+        "c01-p04-pegada-lancas-v4",
+    ):
+        # The user's precise correction is physical hand-to-spear contact.
+        # Edit exact archived C01-P04 PNG; do not overwrite or autoapprove it.
+        from .dorama_grip_correction import edit_payload
+        matches=[x for x in plan["assets"] if x.get("id")==asset_id]
+        if len(matches)!=1:
+            raise VideoForgeError("SPEAR_GRIP_ASSET_NOT_UNIQUE")
+        payload,source_provenance=edit_payload(matches[0],prompt,model,size)
+        response=proxy_images.call_proxy(
+            url,"/v1/images/edits",os.getenv("CODEX_PROXY_API_KEY",""),payload)
+        blob,extension=proxy_images.decode_image(response)
+        if extension!=".png":
+            raise VideoForgeError("SPEAR_GRIP_OUTPUT_PNG_REQUIRED")
+        output=predicted.with_suffix(".png")
+        if output.exists() or output.is_symlink():
+            raise VideoForgeError("SPEAR_GRIP_OUTPUT_ALREADY_EXISTS")
+        output.parent.mkdir(parents=True,exist_ok=True)
+        output.write_bytes(blob)
     elif any(
         isinstance(item,dict) and item.get("id")==asset_id
         and item.get("source_mode")=="dorama-episode-multiref-v1"
         for item in plan.get("assets",[])
     ):
+        # Paused: source image shows floating spears not held by guards.
+        from .dorama_grip_correction import block_batch
+        block_batch()
         # All EP01 mother shots attach exact permanent continuity image plus
         # original Kael/Elara faces when present. No text-only generation.
         from .dorama_episode_factory import edit_payload
