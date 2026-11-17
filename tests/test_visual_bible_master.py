@@ -66,6 +66,41 @@ class VisualBibleMasterTests(unittest.TestCase):
         with self.assertRaisesRegex(VideoForgeError, "EXTRA_SOURCE_NOT_ARCHIVED"):
             edit_payload(asset, prompt, "gpt-image-2", size)
 
+    def test_modern_kael_v2_uses_original_face_only_not_medieval_clothes(self):
+        import hashlib
+        from videoforge.grounded_identity import inputs
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = next(x for x in plan["assets"] if x["id"] == "biblia-kael-casual-antes-v2")
+        self.assertEqual(asset["reference_mode"], "identity_face_only_kael")
+        self.assertFalse(asset.get("additional_master_asset_ids"))
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        payload, provenance = edit_payload(asset, prompt, "gpt-image-2", size)
+        self.assertEqual(len(payload["images"]), 1)
+        kael = next(x for x in inputs() if x["actor"] == "kael")
+        original = base64.b64decode(payload["images"][0]["image_url"].split(",", 1)[1])
+        self.assertEqual(hashlib.sha256(original).hexdigest(), kael["sha256"])
+        self.assertEqual(provenance[0]["sha256"], kael["sha256"])
+        self.assertNotIn("estilo_do_palacio", [x.get("actor") for x in provenance])
+        self.assertIn("NÃO usar o mestre de corpo inteiro medieval", prompt)
+
+    def test_spear_base_v2_uses_only_corrected_complete_spear(self):
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = next(x for x in plan["assets"] if x["id"] == "biblia-lanca-guarda-base-v2")
+        self.assertEqual(asset["reference_mode"], "master_only")
+        self.assertEqual(asset["additional_master_asset_ids"],
+                         ["biblia-lanca-guarda-completa-v2"])
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        with self.assertRaisesRegex(VideoForgeError, "BIBLE_MASTER_EXTRA_SOURCE_NOT_ARCHIVED"):
+            edit_payload(asset, prompt, "gpt-image-2", size)
+
+    def test_face_only_refuses_accidental_medieval_body_attachment(self):
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = dict(next(x for x in plan["assets"] if x["id"] == "biblia-kael-casual-antes-v2"))
+        asset["additional_master_asset_ids"] = ["biblia-kael-medieval-base-v1"]
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        with self.assertRaisesRegex(VideoForgeError, "BIBLE_FACE_ONLY_CANNOT_ATTACH_MEDIEVAL_BODY"):
+            edit_payload(asset, prompt, "gpt-image-2", size)
+
     def test_spear_interaction_requires_human_approved_masters(self):
         plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
         asset = next(x for x in plan["assets"] if x["id"] == "biblia-guardas-cruzando-lancas-base-v1")
