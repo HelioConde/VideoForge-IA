@@ -2,36 +2,32 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C01-P04",
+  "shot_id": "C01-P05",
   "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "Plano geral do tribunal: Kael ajoelhado, rei Aldric no trono, guarda esquerdo e direito segurando suas lanças pela BASE com dedos cerrados; lanças cruzadas em X ALTO. Referências SHA da Bíblia, rejeitar poses antigas e respeitar continuidade de figurino.",
+  "objective": "Insert nas mãos e hastes dos dois guardas com referências de lança portátil/empunhadura V2. Cada mão segura o TERÇO INFERIOR da própria lança com dedos/polegar fechados; pontas formam X alto; nenhum braço solto. Foco nos punhos e lanças, manter estilo da Bíblia e continuidade com plano C01-P04.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
   "human_visual_approval_required": true,
   "approved_for_final_render": false,
   "next_steps_if_success": [
-    "registrar_sha_original",
-    "revisar_posicao_das_maos_nas_lancas_e_cena_completa",
-    "conferir_consistencia_de_aldric_kael_guardas",
-    "gerar_background_e_atores_separados_pelo_proxy_com_a_propria_mae_como_referencia",
-    "nao_liberar_rig_sem_qa"
+    "arquivar_png_sha_verificado",
+    "conferir_contato_e_pegada_pela_base",
+    "se_aprovado_gerar_elementos_separados_pelo_proxy",
+    "preservar_qas_sem_rig_ou_youtube"
   ],
   "max_chargeable_calls_per_run": 1,
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 3,
+  "request_sequence": 4,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "request_revision": 5,
+  "request_revision": 6,
   "last_shot_archived": {
     "shot_id": "C01-P03",
     "run_id": 44073592014,
     "sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765"
-  },
-  "previous_attempt_run_id": 44074952463,
-  "previous_attempt": "preflight event commit marker raced with unrelated main push; no proxy image called",
-  "ci_fix": "compare changed files against GITHUB_SHA event and fetch full history, not HEAD main"
+  }
 }
