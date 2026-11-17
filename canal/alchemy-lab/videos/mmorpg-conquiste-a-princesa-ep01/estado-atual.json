@@ -2207,7 +2207,10 @@
     "mother_c01_p03": {
       "run_id": 44073592014,
       "sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
-      "review": "pending"
+      "review": "pending",
+      "assistant_visual_review": "rejected_unexpected_guards_and_weapons",
+      "requires_new_versioned_mother": true,
+      "approved_for_rig": false
     },
     "mother_c01_p04": {
       "run_id": 44075357179,
@@ -2248,20 +2251,48 @@
           1672
         ],
         "visual_approval": false
+      },
+      {
+        "id": "c01-p03-character-aldric",
+        "run_id": 44076356345,
+        "original_sha256": "a6eb021cb6c2788530a6fc541831f14d8f99e0392c21de02510f2fdf2312a0f0",
+        "source_canvas": [
+          941,
+          1671
+        ],
+        "original_qa": "rejected_canvas_mismatch",
+        "aligned_run_id": 44076886141,
+        "aligned_sha256": "0bcdbc8ef6263bef8c063f1ea696019998efa32a5a45789a9e3054b8b1544285",
+        "aligned_canvas": [
+          941,
+          1672
+        ],
+        "visual_approval": false
       }
     ],
     "generation_method": "proxy_generated_separate_image",
     "local_pixel_padding_is_not_cutout": true,
     "do_not_reuse_v1_cutouts_for_rig": true,
     "next_needed": [
-      "generate_c01_p03_character_aldric_with_proxy",
-      "qa_visual_c01_p03_neutral_recomposition",
+      "create_versioned_c01_p03_mother_v2_without_guards",
+      "regenerate_background_kael_aldric_at_original_bbox_from_v2_using_proxy",
       "review_c01_p04_guard_grips",
       "continue_missing_mothers"
     ],
     "new_png_images_human_approved": false,
     "rig_ready": false,
     "mp4_generated": false,
-    "youtube_uploaded": false
+    "youtube_uploaded": false,
+    "c01_p03_neutral_qa": {
+      "run_id": 44077543911,
+      "technical_workflow": "success",
+      "report": "QA-C01-P03-PROXY-RECOMPOSICAO.json",
+      "preview": "QA-C01-P03-PROXY-RECOMPOSICAO.jpg",
+      "review": "REVISAO-VISUAL-C01-P03-PROXY.md",
+      "mean_absolute_rgb_difference": 36.6056,
+      "mismatched_pixels_percent": 58.21,
+      "assistant_visual_review": "rejected_for_rig_scale_and_unexpected_guard_cast",
+      "human_visual_approval": false
+    }
   }
 }
