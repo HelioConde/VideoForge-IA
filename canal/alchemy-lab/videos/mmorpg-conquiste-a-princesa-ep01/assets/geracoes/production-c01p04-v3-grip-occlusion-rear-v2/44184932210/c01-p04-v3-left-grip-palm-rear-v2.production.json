@@ -1,0 +1,32 @@
+{
+  "schema": "videoforge/ep01-c01p04-rear-palm-revision/v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "candidate_scene_shot_id": "C01-P04",
+  "asset_id": "c01-p04-v3-left-grip-palm-rear-v2",
+  "sha256": "391fa1f6e2c65bf0c99ce11eba93d0965df71dd4cca4628ba363d9a9c447177f",
+  "width": 1268,
+  "height": 1241,
+  "alpha_bbox_xyxy": [
+    149,
+    205,
+    841,
+    996
+  ],
+  "technical_qa": "rejected_empty_or_full_frame_hand",
+  "source_image_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "grip_guide_reference_sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+  "rejected_v1_source_sha256": "71ddc2931b41f4083af7f548dcee49a63acd2314e6c7fa854deeac8ff3908993",
+  "spear_reference_sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+  "closeup_reference_sha256": "6aa155da6f503193396702d621eeb26b8623dd683757683825fb5ba8eeb5b706",
+  "fresh_generated_rgba_not_pixel_cutout": true,
+  "fingers_must_be_absent_requires_visual_qa": true,
+  "front_fingers_independent_not_generated_yet": true,
+  "provider_image_calls": 1,
+  "human_visual_approval": false,
+  "hand_contact_verified": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}

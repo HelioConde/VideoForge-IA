@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 140,
+  "total_arquivadas": 141,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -5077,6 +5077,28 @@
       ],
       "status": "gerado",
       "qa_tecnica": "candidate_reference_only",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-c01p04-v3-grip-occlusion-rear-v2:44184932210:c01-p04-v3-left-grip-palm-rear-v2.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p04-v3-left-grip-palm-rear-v2",
+      "shot": "C01-P04",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-c01p04-v3-grip-occlusion-rear-v2",
+      "github_run_id": 44184932210,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-grip-occlusion-rear-v2/44184932210/c01-p04-v3-left-grip-palm-rear-v2.png",
+      "sha256": "391fa1f6e2c65bf0c99ce11eba93d0965df71dd4cca4628ba363d9a9c447177f",
+      "bytes": 692095,
+      "width": 1268,
+      "height": 1241,
+      "referencias_usadas": [],
+      "status": "gerado",
+      "qa_tecnica": "rejected_empty_or_full_frame_hand",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }
