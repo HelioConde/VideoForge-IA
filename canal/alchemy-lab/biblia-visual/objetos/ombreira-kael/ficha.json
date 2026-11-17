@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "objetos",
+  "id": "ombreira-kael",
+  "nome": "Ombreira de Kael",
+  "descricao": "Definir com referência única e aprovada; manter consistência entre cenas.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

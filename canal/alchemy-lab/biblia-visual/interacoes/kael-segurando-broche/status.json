@@ -1,0 +1,10 @@
+{
+  "schema": "videoforge/visual-bible-item-status/v1",
+  "categoria": "interacoes",
+  "id": "kael-segurando-broche",
+  "status": "planejado",
+  "ultima_geracao": null,
+  "ultimo_arquivo": null,
+  "aprovacao_mestra": false,
+  "historico_de_versoes": []
+}

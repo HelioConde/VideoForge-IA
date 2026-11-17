@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "interacoes",
+  "id": "rei-sentado-no-trono",
+  "nome": "Rei sentado",
+  "descricao": "Contato físico dos braços e mãos do rei com o trono.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

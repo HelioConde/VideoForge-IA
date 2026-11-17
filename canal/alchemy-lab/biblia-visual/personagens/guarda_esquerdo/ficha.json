@@ -1,0 +1,14 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "personagens",
+  "id": "guarda_esquerdo",
+  "nome": "Guarda real esquerdo",
+  "descricao": "Armadura prateada/dourada, elmo fechado e pluma vinho; lança empunhada pela BASE, sem mãos ou armas flutuantes.",
+  "variantes": [
+    "cerimonial",
+    "cruzando_lanca"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

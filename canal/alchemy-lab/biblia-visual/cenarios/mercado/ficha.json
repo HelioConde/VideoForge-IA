@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "cenarios",
+  "id": "mercado",
+  "nome": "Mercado",
+  "descricao": "Bancas/arquitetura de Arken, luz e distribuição consistentes.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

@@ -1,0 +1,16 @@
+# Registro de gerações — alchemy-lab
+
+**6 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+
+| Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
+|---|---|---|---|---|
+| [character-bible.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43784005362/character-bible.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`47b7b0cd8368…\` | [#43784005362](https://github.com/HelioConde/VideoForge-IA/actions/runs/43784005362) |
+| [character-bible-grounded.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43868021687/character-bible-grounded.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`6ed16d498df4…\` | [#43868021687](https://github.com/HelioConde/VideoForge-IA/actions/runs/43868021687) |
+| [c01-p04-imagem-inicial-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png) / C01-P04 | em_revisao | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`605ccd361ad9…\` | [#43965460068](https://github.com/HelioConde/VideoForge-IA/actions/runs/43965460068) |
+| [c01-p05-guardas-lancas-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43969450680/c01-p05-guardas-lancas-v1.png) / C01-P05 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`ad5b40722c78…\` | [#43969450680](https://github.com/HelioConde/VideoForge-IA/actions/runs/43969450680) |
+| [c02-p01-aldric-rosto-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43970462482/c02-p01-aldric-rosto-v1.png) / C02-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`a18d2284ed78…\` | [#43970462482](https://github.com/HelioConde/VideoForge-IA/actions/runs/43970462482) |
+| [c01-p04-pegada-lancas-v4.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43990928355/c01-p04-pegada-lancas-v4.png) / C01-P04 | rejeitado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`0bb72ea525d8…\` | [#43990928355](https://github.com/HelioConde/VideoForge-IA/actions/runs/43990928355) |
+
+## Regras de consulta
+
+Arquivo original nunca é reescrito. Revisões humanas ficam em \`REVISOES-MANUAIS.json\`; histórico é sincronizado após cada PNG. Imagens rejeitadas permanecem acessíveis, mas não podem ser usadas como referência canônica para o escopo rejeitado.

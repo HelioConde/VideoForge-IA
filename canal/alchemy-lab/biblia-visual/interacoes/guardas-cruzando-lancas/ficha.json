@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "interacoes",
+  "id": "guardas-cruzando-lancas",
+  "nome": "Guardas cruzam lanças",
+  "descricao": "Duas lanças formando X, cada uma segurada pela BASE pelo seu respectivo guarda.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "interacoes",
+  "id": "guarda-segurando-lanca-na-base",
+  "nome": "Guarda segura lança pela BASE",
+  "descricao": "Conexão ombro→cotovelo→punho→mão→BASE inferior da própria lança; direção correta e peso suportado.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

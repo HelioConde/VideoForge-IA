@@ -1,0 +1,14 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "objetos",
+  "id": "broche-flor",
+  "nome": "Broche de flor prateada",
+  "descricao": "Broche de flor prateada consistente entre queda, resgate e porte de Kael.",
+  "variantes": [
+    "completo",
+    "detalhe"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

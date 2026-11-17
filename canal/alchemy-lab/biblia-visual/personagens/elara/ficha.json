@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "personagens",
+  "id": "elara",
+  "nome": "Princesa Elara",
+  "descricao": "21 anos, cabelo loiro trançado, olhos violeta; vestido branco/violeta e coroa; disfarce encapuzado sem revelar coroa até C12.",
+  "variantes": [
+    "palacio",
+    "encapuzada",
+    "revelada",
+    "antes",
+    "depois"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "cenarios",
+  "id": "quarto-kael",
+  "nome": "Quarto contemporâneo",
+  "descricao": "Quarto moderno e monitor azul; Kael sem armadura medieval.",
+  "variantes": [
+    "vazio",
+    "monitor_aceso"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

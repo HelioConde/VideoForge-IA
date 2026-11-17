@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "cenarios",
+  "id": "beco",
+  "nome": "Beco",
+  "descricao": "Beco de Arken, mesmos obstáculos e posições entre perseguições.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

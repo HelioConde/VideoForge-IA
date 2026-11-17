@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "cenarios",
+  "id": "sala-do-trono",
+  "nome": "Salão do trono",
+  "descricao": "Trono dourado, tapete vermelho, vitrais azul-violeta e luz dourada lateral; gerar fundo limpo.",
+  "variantes": [
+    "vazio",
+    "angulo_frontal",
+    "detalhes"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

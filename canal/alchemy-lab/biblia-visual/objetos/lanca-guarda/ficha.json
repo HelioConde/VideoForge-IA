@@ -1,0 +1,15 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "objetos",
+  "id": "lanca-guarda",
+  "nome": "Lança real",
+  "descricao": "Lança completa com ponta, haste, punho e BASE; contato mão/objeto fisicamente plausível.",
+  "variantes": [
+    "completa",
+    "base",
+    "empunhadura"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

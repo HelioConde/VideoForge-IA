@@ -1,0 +1,16 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "personagens",
+  "id": "kael",
+  "nome": "Kael",
+  "descricao": "23 anos; rosto jovem, cabelo castanho muito escuro volumoso, olhos âmbar, capa vinho rasgada e ombreira de metal escuro com ouro e gema azul; variantes medieval, casual, ferido e depois.",
+  "variantes": [
+    "medieval",
+    "casual_antes",
+    "ferido",
+    "depois"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

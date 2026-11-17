@@ -1,0 +1,182 @@
+{
+  "schema": "videoforge/visual-bible-generation-registry/v1",
+  "channel": "alchemy-lab",
+  "total_arquivadas": 6,
+  "geracoes": [
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "character-bible",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": null,
+      "producer": "production-art-request",
+      "github_run_id": 43784005362,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43784005362/character-bible.png",
+      "sha256": "47b7b0cd83689a72a44e7e44dd61c5ba6beabcfc1e411f0e3850fc78f0e8b5c4",
+      "bytes": 3033524,
+      "width": 1199,
+      "height": 1312,
+      "referencias_usadas": [],
+      "status": "gerado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43868021687:character-bible-grounded.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "character-bible-grounded",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": null,
+      "producer": "production-art-request",
+      "github_run_id": 43868021687,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43868021687/character-bible-grounded.png",
+      "sha256": "6ed16d498df46b59c38e9c34ab25127b5b032159ab3289c073ac0058fcda6fc3",
+      "bytes": 2883998,
+      "width": 1199,
+      "height": 1312,
+      "referencias_usadas": [
+        {
+          "id": "ref-kael-close-c12",
+          "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "path": "assets/referencias/chat-aprovadas/kael-close-salao.png"
+        },
+        {
+          "id": "ref-elara-close-c12",
+          "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+          "path": "assets/referencias/chat-aprovadas/elara-close-trono.png"
+        }
+      ],
+      "status": "gerado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43965460068:c01-p04-imagem-inicial-v3.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p04-imagem-inicial-v3",
+      "shot": "C01-P04",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "producer": "production-art-request",
+      "github_run_id": 43965460068,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+      "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "bytes": 2509837,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "ref-kael-close-c12",
+          "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "path": "assets/referencias/chat-aprovadas/kael-close-salao.png"
+        }
+      ],
+      "status": "em_revisao",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false,
+      "motivo_revisao": "Visual apreciado, pose das lanças reprovada: guardas não seguram as hastes",
+      "escopo_permitido": [
+        "estilo",
+        "identidade_geral"
+      ],
+      "escopo_proibido": [
+        "pose",
+        "contato_mão_lança",
+        "rig"
+      ],
+      "evidencia": "feedback_usuario_2026-11-16"
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43969450680:c01-p05-guardas-lancas-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p05-guardas-lancas-v1",
+      "shot": "C01-P05",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "producer": "production-art-request",
+      "github_run_id": 43969450680,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43969450680/c01-p05-guardas-lancas-v1.png",
+      "sha256": "ad5b40722c786b0c9ba761687eedf1b5626cd3ee1c9b4a3ac43fd788841ae4b5",
+      "bytes": 2365365,
+      "width": 941,
+      "height": 1671,
+      "referencias_usadas": [
+        {
+          "id": "approved-visual-reference",
+          "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+          "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+        }
+      ],
+      "status": "gerado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43970462482:c02-p01-aldric-rosto-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c02-p01-aldric-rosto-v1",
+      "shot": "C02-P01",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "producer": "production-art-request",
+      "github_run_id": 43970462482,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43970462482/c02-p01-aldric-rosto-v1.png",
+      "sha256": "a18d2284ed7878e7b81537d1673384e8a506df647e2fd1ea0c1d7f81eb5aaf5d",
+      "bytes": 2651172,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "approved-visual-reference",
+          "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+          "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+        }
+      ],
+      "status": "gerado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43990928355:c01-p04-pegada-lancas-v4.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p04-pegada-lancas-v4",
+      "shot": "C01-P04",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "producer": "production-art-request",
+      "github_run_id": 43990928355,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43990928355/c01-p04-pegada-lancas-v4.png",
+      "sha256": "0bb72ea525d81b6e935af49eb873d308a88ce8230a4a2b7d89c62d5d0e88a8dc",
+      "bytes": 2417440,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "approved-visual-reference",
+          "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+          "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+        }
+      ],
+      "status": "rejeitado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false,
+      "motivo_revisao": "Direção e pegada da lança incorretas; base não segurada como solicitado",
+      "escopo_permitido": [],
+      "escopo_proibido": [
+        "referencia_de_pose",
+        "animacao"
+      ],
+      "evidencia": "feedback_usuario_2026-11-16"
+    }
+  ],
+  "sem_promocao_automatica": true,
+  "fonte": "PNG original + manifesto-geracoes.json + SHA256"
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "personagens",
+  "id": "aldric",
+  "nome": "Rei Aldric",
+  "descricao": "55 anos; barba cinza/branca volumosa, coroa dourada, manto exterior escuro, túnica vinho, ouro e gola clara.",
+  "variantes": [
+    "tribunal",
+    "revelacao"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

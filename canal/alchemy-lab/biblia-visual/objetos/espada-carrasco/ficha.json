@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "objetos",
+  "id": "espada-carrasco",
+  "nome": "Espada do carrasco",
+  "descricao": "A espada da abertura pertence ao carrasco, não a Kael.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

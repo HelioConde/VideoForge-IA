@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "interacoes",
+  "id": "kael-ajoelhado",
+  "nome": "Kael ajoelhado",
+  "descricao": "Joelhos, capa e corpo realmente apoiados no piso.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

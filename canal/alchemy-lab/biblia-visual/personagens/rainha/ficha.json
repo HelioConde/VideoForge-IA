@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "personagens",
+  "id": "rainha",
+  "nome": "Rainha",
+  "descricao": "Aparência e presença narrativa ainda não definidas no EP01; não inventar imagem.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}

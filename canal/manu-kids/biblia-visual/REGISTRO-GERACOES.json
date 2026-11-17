@@ -1,0 +1,8 @@
+{
+  "schema": "videoforge/visual-bible-generation-registry/v1",
+  "channel": "manu-kids",
+  "total_arquivadas": 0,
+  "geracoes": [],
+  "sem_promocao_automatica": true,
+  "fonte": "PNG original + manifesto-geracoes.json + SHA256"
+}

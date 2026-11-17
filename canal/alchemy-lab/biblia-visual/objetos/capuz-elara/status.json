@@ -1,0 +1,10 @@
+{
+  "schema": "videoforge/visual-bible-item-status/v1",
+  "categoria": "objetos",
+  "id": "capuz-elara",
+  "status": "planejado",
+  "ultima_geracao": null,
+  "ultimo_arquivo": null,
+  "aprovacao_mestra": false,
+  "historico_de_versoes": []
+}
