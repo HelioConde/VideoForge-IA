@@ -1,3 +1,5 @@
+# LEGADO SOMENTE PARA AUDITORIA HISTÓRICA. Não executar geração/recorte.
+# Política oficial: docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md
 name: "VideoForge - EP01 extrair camada da cena-mae"
 run-name: "EP01 layer ${{ inputs.part }} ${{ inputs.request_tag || github.run_id }}"
 on:
@@ -20,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   extrair-camada:
-    if: github.ref == 'refs/heads/main'
+    if: false  # DESATIVADO: candidato legado V1 não aprovado para rig
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
