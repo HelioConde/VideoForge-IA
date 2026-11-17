@@ -183,6 +183,19 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
     if not isinstance(asset_id,str) or not IDENTIFIER.fullmatch(asset_id):
         raise VideoForgeError("PRODUCTION_ART_ID_INVALID")
     prompt,size=asset_prompt(plan,story,asset_id)
+    # Every new Bible reference must name a pre-registered item; no orphan art.
+    asset=next(x for x in plan["assets"] if x.get("id")==asset_id)
+    biblia_item_id=asset.get("biblia_item_id")
+    biblia_categoria=asset.get("biblia_categoria")
+    if biblia_item_id is not None or biblia_categoria is not None:
+        from .visual_bible import _index, BIBLE_ID
+        if not isinstance(biblia_item_id,str) or not BIBLE_ID.fullmatch(biblia_item_id):
+            raise VideoForgeError("PRODUCTION_ART_BIBLE_ITEM_INVALID")
+        bible=_index(channel,ROOT/"canal"/channel/"biblia-visual")
+        if (not isinstance(biblia_categoria,str)
+            or biblia_categoria not in bible["categorias"]
+            or not any(x["id"]==biblia_item_id for x in bible["categorias"][biblia_categoria])):
+            raise VideoForgeError("PRODUCTION_ART_BIBLE_ITEM_NOT_REGISTERED")
     if model not in proxy_images.IMAGE_MODELS:
         raise VideoForgeError("PRODUCTION_ART_MODEL_INVALID")
     if archived_reference(channel,video_id,asset_id) is not None:
@@ -343,6 +356,8 @@ def create_image(channel:str,video_id:str,asset_id:str,url:str,
     result={"schema":"videoforge/production-art-result/v1",
             "channel":channel,"video_id":video_id,
             "asset_id":asset_id,"file":str(output.relative_to(ROOT)),
+            "biblia_item_id":biblia_item_id,
+            "biblia_categoria":biblia_categoria,
             "size":size,"sha256":sha,
             "model":model,**dimension_qa,
             "source_images_attached_to_request":len(source_provenance),
