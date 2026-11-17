@@ -1,6 +1,6 @@
 # Galeria visual de revisão — EP01
 
-**30 de 42 referências-mestre** arquivadas e verificadas por SHA256.
+**34 de 42 referências-mestre** arquivadas e verificadas por SHA256.
 **0 de 9 reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.
 **Nenhuma miniatura substitui o original. Gerado não significa aprovado.**
 Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geração de IA.
@@ -45,13 +45,13 @@ Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geraç�
 | [biblia-mercado-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009519845/biblia-mercado-base-v1.png) | gerado (não aprovado automaticamente) | `93a795fb323b8035…` | [#44009519845](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009519845) |
 | [biblia-beco-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009676311/biblia-beco-base-v1.png) | gerado (não aprovado automaticamente) | `83c10082fb1a808a…` | [#44009676311](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009676311) |
 | [biblia-portao-real-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009839428/biblia-portao-real-base-v1.png) | gerado (não aprovado automaticamente) | `e68a242a4cce32b3…` | [#44009839428](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009839428) |
+| [biblia-castelo-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010033081/biblia-castelo-base-v1.png) | gerado (não aprovado automaticamente) | `aa5e7a4b49473b0e…` | [#44010033081](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010033081) |
+| [biblia-coroa-aldric-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010195072/biblia-coroa-aldric-base-v1.png) | gerado (não aprovado automaticamente) | `303128cd923194fa…` | [#44010195072](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010195072) |
+| [biblia-coroa-elara-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010309849/biblia-coroa-elara-base-v1.png) | gerado (não aprovado automaticamente) | `fbbb5c26dabd5aa6…` | [#44010309849](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010309849) |
+| [biblia-trono-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010485553/biblia-trono-base-v1.png) | gerado (não aprovado automaticamente) | `16d64d97ae19d536…` | [#44010485553](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010485553) |
 
 ## Pendentes de geração
 
-- biblia-castelo-base-v1
-- biblia-coroa-aldric-base-v1
-- biblia-coroa-elara-base-v1
-- biblia-trono-base-v1
 - biblia-espada-carrasco-base-v1
 - biblia-broche-flor-completo-v1
 - biblia-broche-flor-detalhe-v1
