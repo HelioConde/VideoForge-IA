@@ -1,3 +1,9 @@
+## 17/11/2026 — Rotas de habilidades concluídas: seis áreas, três skills adicionais
+
+- Pastas `.agents/skills/` agora incluem oito skills de instruções: 5 já presentes (gerente EP01, arte, atuação, rig, QA) e 3 novas: [direção](../../../../.agents/skills/videoforge-shot-direction/SKILL.md), [áudio e montagem](../../../../.agents/skills/videoforge-audio-editing/SKILL.md), [pesquisa técnica](../../../../.agents/skills/videoforge-technical-research/SKILL.md). [Catálogo auditado](../../../../docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md).
+- As três externas CloudAI-X, OpenMontage e Blender Skills são somente **referências**. OpenMontage apresenta divergência de licença entre skill (MIT) e repositório (AGPL-3.0); não copiar código. Loop `useFrame()`/timer `setAnimationLoop` é incompatível com render determinístico; preservar `useCurrentFrame()`.
+- Responsabilidades separadas: direção planeja câmera e continuidade, áudio planeja timeline e direitos, QA revisa independentemente. O gerente mantém checkpoint e chama skills conforme fase. **Nenhum agent executável novo, chamada de IA, PNG, rig final ou upload nesta etapa**; bloquear render até aprovação e arte real.
+
 ## 17/11/2026 — DECISÃO PRINCIPAL: peças do rig são imagens GERADAS SEPARADAMENTE pelo proxy
 
 - Correção explícita do responsável: **não recortar, segmentar ou extrair pixels da imagem-mãe como método para produzir personagens, objetos ou partes animáveis**. A cena completa é referência; o proxy deve gerar **arquivos independentes** do cenário vazio, cada personagem, cada objeto e cada parte móvel para rig com PNG/RGBA e partes antes ocultas. Máscaras locais e crops passam a ser **apenas QA**, nunca arte do rig.
