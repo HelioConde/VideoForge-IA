@@ -1,0 +1,62 @@
+name: "VideoForge - QA das referencias EP01 e 9 reparos V2"
+run-name: "Bíblia EP01 / laudo SHA de mestres e reparos"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/qa-ep01-bible-repair-provenance.yml'
+  workflow_run:
+    workflows: ["VideoForge - Biblia Visual corrigir artes V2"]
+    types: [completed]
+permissions:
+  contents: write
+concurrency:
+  group: alchemy-ep01-provenance-audit-main
+  cancel-in-progress: false
+jobs:
+  audit-provenance:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar todos os PNGs e insumos exatos dos reparos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.ep01_bible_qa
+      - name: Arquivar laudo sem autoaprovar imagens nem publicar vídeo
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'videoforge-biblia-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- canal/alchemy-lab/biblia-visual/LAUDO-TECNICO-EP01.md
+          if git diff --cached --quiet; then
+            echo "BIBLE_PROVENANCE_REPORT_ALREADY_CURRENT"
+            exit 0
+          fi
+          git commit -m 'qa(biblia): laudo 42 mestres e 9 reparos SHA sem aprovacao'
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo "BIBLE_PROVENANCE_REPORT_COMMITTED_NO_YOUTUBE"
+              exit 0
+            fi
+            if [[ "$attempt" -lt 3 ]]; then
+              git fetch origin main
+              if ! git rebase origin/main; then
+                git rebase --abort || true
+                echo "::error::Audit report conflict; no PNG was modified"
+                exit 1
+              fi
+            fi
+          done
+          exit 1
