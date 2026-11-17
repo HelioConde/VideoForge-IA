@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 24,
+  "total_arquivadas": 25,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -768,6 +768,34 @@
       "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007665783/biblia-carrasco-base-v1.png",
       "sha256": "7c1f8fc4b4d7dba761d30799ee188de8c6b7d3bce5cd4f4e23064b4d5f17b425",
       "bytes": 2116309,
+      "width": 981,
+      "height": 1602,
+      "referencias_usadas": [
+        {
+          "id": "approved-visual-reference",
+          "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+          "path": "assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44007811797:biblia-figurantes-base-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-figurantes-base-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "figurantes",
+      "biblia_categoria": "personagens",
+      "producer": "production-art-request",
+      "github_run_id": 44007811797,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007811797/biblia-figurantes-base-v1.png",
+      "sha256": "dcbdb4383a5d8cb1c0c0b778de36773058f5da345239caa3f54d4493b5aec615",
+      "bytes": 2143427,
       "width": 981,
       "height": 1602,
       "referencias_usadas": [
