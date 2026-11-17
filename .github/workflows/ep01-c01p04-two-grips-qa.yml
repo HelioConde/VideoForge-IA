@@ -1,0 +1,54 @@
+name: "VideoForge - EP01 C01-P04 QA duas pegadas"
+run-name: "EP01 C01-P04 / comparar R3 esquerda e W3 direita"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-DUAS-PEGADAS-C01-P04-V3.json'
+permissions:
+  contents: write
+concurrency:
+  group: ep01-c01p04-v3-both-grips-qa
+  cancel-in-progress: false
+jobs:
+  comparar:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet 'Pillow==11.3.0'
+      - name: SHA exato e comparação offline das duas mãos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/qa_ep01_c01p04_two_grips_compare.py
+      - name: Arquivar pranchas somente de QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f "$ep/QA-C01-P04-V3-DUAS-PEGADAS-CONFERENCIA.jpg" "$ep/QA-C01-P04-V3-DUAS-PEGADAS-CONFERENCIA.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "qa(ep01): comparar ambas pegadas com a mae imutavel"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-c01p04-both-grips-preview
+          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-DUAS-PEGADAS-CONFERENCIA*
+          if-no-files-found: warn
+          retention-days: 30
