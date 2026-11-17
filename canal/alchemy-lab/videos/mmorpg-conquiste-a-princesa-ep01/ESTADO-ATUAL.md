@@ -1,3 +1,10 @@
+## 17/11/2026 — DECISÃO PRINCIPAL: peças do rig são imagens GERADAS SEPARADAMENTE pelo proxy
+
+- Correção explícita do responsável: **não recortar, segmentar ou extrair pixels da imagem-mãe como método para produzir personagens, objetos ou partes animáveis**. A cena completa é referência; o proxy deve gerar **arquivos independentes** do cenário vazio, cada personagem, cada objeto e cada parte móvel para rig com PNG/RGBA e partes antes ocultas. Máscaras locais e crops passam a ser **apenas QA**, nunca arte do rig.
+- Contrato global: [CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md](../../../../docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md), manual geral [MANUAL-PRINCIPAL-ANIMACAO-2D.md](../../../../docs/MANUAL-PRINCIPAL-ANIMACAO-2D.md) e [manual EP01](MANUAL-CENA-MAE-CAMADAS-CAMERA.md). O [plano de 39 imagens-mãe visuais e 40 tomadas](PLANO-CAMADAS-CAMERA-EP01.json) recebeu solicitações explícitas para os assets separados pelo proxy.
+- Gate `ep01_contact_gate.py` rejeita permanentemente máscaras de pixels históricos V1 como fonte para rig; workflows antigos que criavam recortes foram desativados para não produzirem novos candidatos incompatíveis.
+- **Nada disso gera automaticamente os PNGs ainda faltantes**. A V4 C01-P02 permanece candidata em revisão (bocal/orientação da lâmina); escolher imagem-mãe válida, gerar componentes com proxy a partir dela, validar contato, transparência, geometria e recomposição. `human_approval=false`, `rig_ready=false`, sem MP4/YouTube.
+
 ## 17/11/2026 — V4 de contato gerada e comparada, continuação bloqueada no rig
 
 - **Geração V4 executada com sucesso:** [Actions #44063304090](https://github.com/HelioConde/VideoForge-IA/actions/runs/44063304090), arquivados dois PNGs candidatos de 941×1672 (edição SHA `078ba6c72bd8cba74d5a28f12948b94f06c8c348a5c291438820ee7f7e9c2c14`; patch SHA `3a3d96e9328426c857b1e40d43d0c4edfbe79f07ef9d43c86ef63f6c57f919a9`).
