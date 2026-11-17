@@ -1,0 +1,53 @@
+{
+  "schema": "videoforge/ep01-proxy-separate-part/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p03-character-kael",
+  "candidate_scene_shot_id": "C01-P03",
+  "component": "character-kael",
+  "asset_role": "character",
+  "generation_method": "proxy_generated_separate_image",
+  "not_a_pixel_cutout": true,
+  "sha256": "20c1f8e07ec164280a478dda8b9db1091aa8b5088290767f0858deff54f58b4e",
+  "source_image_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+  "source_mother_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+  "source_originals_sha_verified": [
+    {
+      "asset_id": "c01-p03-scene-mother",
+      "sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44073592014/c01-p03-scene-mother.png"
+    },
+    {
+      "asset_id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+    },
+    {
+      "asset_id": "biblia-aldric-tribunal-v1",
+      "sha256": "37c48afcaa240f03406c280af1af4ca49304ead552f0dd89f0bbb25d0080e417",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005400386/biblia-aldric-tribunal-v1.png"
+    },
+    {
+      "asset_id": "biblia-sala-do-trono-vazio-v1",
+      "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+    }
+  ],
+  "source_images_attached_to_request": 4,
+  "width": 941,
+  "height": 1671,
+  "source_canvas": [
+    941,
+    1672
+  ],
+  "transparent_alpha_required": true,
+  "technical_qa": "rejected_canvas_mismatch_no_pixel_resizing",
+  "placement_verified": false,
+  "visual_recomposition_approved": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "model": "gpt-image-2",
+  "provider_image_calls": 1
+}
