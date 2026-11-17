@@ -1,3 +1,5 @@
+**QA do dorama EP01:** foram detectados desvios em Kael casual e na base da lança; [relatório visual](canal/alchemy-lab/biblia-visual/QA-VISUAL-CANDIDATOS.md), [4 correções V2 cadastradas](canal/alchemy-lab/biblia-visual/FILA-REPAROS-EP01.json). Os reparos são disparados após 42 referências-mestre para evitar chamadas simultâneas; nenhum candidato recebe aprovação automática.
+
 **Atualização da geração EP01 (16/11/2026):** os mestres derivados usam PNG mestre real anexado por SHA; 12 interações físicas estão preparadas mas bloqueadas até aprovação humana, sem usar V3/V4 de pegada rejeitada. Gerador de lotes [visual-bible-batch.yml](.github/workflows/visual-bible-batch.yml); conferir o andamento real em [REGISTRO-GERACOES.json](canal/alchemy-lab/biblia-visual/REGISTRO-GERACOES.json). Nenhum vídeo final foi autorizado. 
 
 # VideoForge IA — reconstrução orientada a MP4
