@@ -31,5 +31,19 @@
     900,
     1660
   ],
-  "comparison_type": "same_scene_spatial_reference"
+  "comparison_type": "same_scene_spatial_reference",
+  "assistant_preliminary_visual_review": {
+    "date": "2026-11-17",
+    "status": "needs_closeup_review",
+    "source": "QA-C01-P02-CONTATO-V3.jpg",
+    "report": "REVISAO-VISUAL-ASSISTIDA-C01-P02-V3.md",
+    "observations": [
+      "bainha appears in front of coat but RGBA occlusion unverified",
+      "lower gloved hand overlaps sheath; anatomical grip still requires verification",
+      "blade entry/continuity at mouth of sheath not unambiguously validated",
+      "V1 compositing metrics cannot validate the V3 source"
+    ],
+    "human_approval": false,
+    "rig_ready": false
+  }
 }
