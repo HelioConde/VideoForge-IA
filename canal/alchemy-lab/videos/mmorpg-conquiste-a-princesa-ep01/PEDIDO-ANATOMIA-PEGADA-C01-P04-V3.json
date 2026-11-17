@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/ep01-c01p04-grip-v3-part-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "role": "forearm-cuff",
+  "revision": 1,
+  "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "approved_grip_reference": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-PEGADA-APROVADA-C01-P04-V3.json",
+  "additional_candidate_reference_sha": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+  "one_paid_call_per_part": true,
+  "retry_on_failure": false,
+  "save_native_png": true,
+  "no_pixel_cutout": true,
+  "visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_upload": false,
+  "next_if_art_looks_correct": "palm-rear"
+}
