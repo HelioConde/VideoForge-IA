@@ -37,6 +37,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Instalar Pillow para alinhamento de ate 2px sem reamostragem
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
       - name: Testar origem da mãe SHA e validar camada sem pagar
         id: request
         shell: bash
