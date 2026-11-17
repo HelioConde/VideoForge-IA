@@ -2030,5 +2030,42 @@
     "comparison_run_success": true,
     "first_visual_inspection": "both guards now visibly gripping their own spears with their raised arms; final owner review pending",
     "correction_promoted_as_new_anchor": false
+  },
+  "visual_bible_migration_20261116": {
+    "schema": "videoforge/visual-bible-implementation-checkpoint/v1",
+    "status": "implemented_and_ci_verified",
+    "path": "canal/alchemy-lab/biblia-visual",
+    "visual_bible_index": "INDEX-BIBLIA.json",
+    "episode_queue": "FILA-EP01.json",
+    "number_of_items": 39,
+    "characters": 11,
+    "scenarios": 7,
+    "objects": 11,
+    "interactions": 10,
+    "shots_mapped": 40,
+    "preexisting_episode_images_sha_verified": 6,
+    "other_channel_otaku_br_images_sha_verified": 5,
+    "global_channel_scopes_prepared": 5,
+    "automatic_registry_code": "videoforge/visual_bible.py",
+    "permanent_archive_script": "scripts/persistir-imagens-gh.sh",
+    "atomic_git_commit_for_png_and_bible": true,
+    "layer_registration_enabled": true,
+    "individual_item_ficha_status_files": true,
+    "manual_review_required_for_approvals": true,
+    "v3_visual_style_only": true,
+    "v3_spear_grip_not_approved": true,
+    "v4_physical_pose_rejected": true,
+    "new_episode_images_generated_in_this_migration": 0,
+    "other_37_new_images_still_held": true,
+    "official_mp4_created": false,
+    "youtube_uploaded": false,
+    "github_qa_run_id": 43999926099,
+    "qa_conclusion": "success",
+    "tests_passed": 8,
+    "next_actions": [
+      "gerar mestres dos personagens/cenarios/objetos/poses com revisão de contato físico",
+      "aprovar interação guardas segurando lanças na BASE antes de propagar",
+      "continuar a geração das tomadas do EP01 reutilizando apenas referências aprovadas"
+    ]
   }
 }
