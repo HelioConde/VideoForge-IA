@@ -101,6 +101,10 @@ def audit(root:Path=ROOT)->dict:
         score<0 or old<0 or previous<0 or score>old):
         raise VideoForgeError("EP01_CONTACT_QA_METRIC_INVALID")
     reasons=[]
+    # 17/11/2026: máscaras derivadas dos pixels V1 são apenas QA/histórico.
+    # Não são sprites completos gerados separadamente pelo proxy e nunca
+    # podem autorizar um rig, mesmo que outras métricas antigas melhorem.
+    reasons.append("legacy_v1_pixel_masks_not_proxy_generated_rig_assets")
     # O responsável reprovou os painéis 2 e 4. O painel 4 é um crop da
     # própria cena-mãe: não é lícito inferir que a região de contato
     # original está aprovada pelo mero facto de a imagem ter SHA válido.
