@@ -26,3 +26,28 @@
 5. Nenhuma das 40 tomadas foi automaticamente liberada, e nenhum vídeo pode ser publicado por consequência desses candidatos.
 
 **Critério de aceitação da lança no futuro:** cada guarda segura **sua própria haste perto da BASE, no terço inferior**, com polegar e quatro dedos fechados ao redor da madeira, punho contínuo com antebraço/cotovelo/ombro e pontas cruzadas em X acima do centro, sem duplicar braços, soltar lanças no ar nem inverter a direção.
+
+## Segunda inspeção de pranchas — falha de identidade dos coadjuvantes
+
+Revisada a [segunda prancha da galeria](galeria/PREVIA-02.jpg), contendo carrasco, figurantes e três referências de mascarados. Foram observados **erros de identidade**, não simples ajustes estéticos:
+
+| Candidata V1 (PNG original SHA) | Defeito aparente na prancha | Reparação prevista |
+|---|---|---|
+| [Carrasco V1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007665783/biblia-carrasco-base-v1.png) — `7c1f8fc4b4d7dba761d30799ee188de8c6b7d3bce5cd4f4e23064b4d5f17b425` | Repete a silhueta, cabelo escuro, capa vinho e traje de Kael, em vez de carrasco distinto. | `biblia-carrasco-base-v2`: adulto robusto de cabeça raspada, couro/carvão, sem capa, fonte apenas ambiente vazio. |
+| [Figurantes V1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007811797/biblia-figurantes-base-v1.png) — `dcbdb4383a5d8cb1c0c0b778de36773058f5da345239caa3f54d4493b5aec615` | Gera **um homem com capa vinho**, não uma prancha de pessoas comuns distintas do mercado. | `biblia-figurantes-base-v2`: quatro civis separados (idoso comerciante, vendedora, aprendiz e artesã), sem herói. |
+| [Mascarado 1 V1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007936020/biblia-mascarado-1-base-v1.png) — `7102378830dec69d24fcca8d706c915e87648a06ccba3f310536a660a1eb7abb` | O rosto está **descoberto e se assemelha a Kael**, com capa de herói, em vez de máscara integral. | `biblia-mascarado-1-base-v2`: homem alto/esguio, máscara de prata geométrica fechada, roupa escura verde-acinzentada. |
+| [Mascarado 2 V1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008127022/biblia-mascarado-2-base-v1.png) — `159ddbda6ed18001eefee575f4e394f13724c206b3ce4489d5116e2e45944cdf` | Também parece herói sem máscara, com o mesmo figurino vinho. | `biblia-mascarado-2-base-v2`: corpo baixo/robusto, máscara preta marcada, casaco marrom/oliva, muito diferente do 1. |
+| [Mascarados em grupo V1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008263650/biblia-mascarados-base-v1.png) — `54426224625f945a0c5620aba04752cc31ac5ea1f9aa3ab483033d4cc658dfc0` | Gera **um guarda de armadura e pluma** em vez dos dois perseguidores mascarados. | `biblia-mascarados-base-v2`: incluir exclusivamente os PNGs SHA dos dois mascarados V2; duas figuras inteiras separáveis. |
+
+**Causa técnica provável:** o modo `style_scene` anexava o quadro C01-P04 V3 contendo Kael e guardas à geração de personagens novos; o modelo copiou identidades e figurinos em vez de usar a arte somente como referência estilística. Para corrigir, o modo `style_environment_only` anexa o **salão do trono vazio** com SHA `1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee`, sem pessoas, e seus prompts proíbem copiar protagonistas/guardas. `master_only` agora serve também aos cenários/objetos que exigem continuidade e à dupla de mascarados. Essas modificações foram aplicadas antes de gerar os ambientes e props remanescentes.
+
+**Novas prioridades:** [FILA-REPAROS-EP01.json](FILA-REPAROS-EP01.json) contém agora **9 reparos V2**; os quatro anteriores mais esses cinco. As interações `perseguicao-beco` e `espada-desembainhada` dependem dos personagens V2, sujeitos à aprovação humana. Nenhum dos PNGs V1 acima será automaticamente promovido ou apagado.
+
+## Falha técnica da fila e recuperação segura
+
+- O lote [#44008654469](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008654469) terminou em falha porque o plano `production-art.json` ultrapassou o limite de **200.000 bytes** ao cadastrar as cinco correções. O pedido de estrada [#44009046765](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009046765) falhou na etapa `read_plan` com `PRODUCTION_ART_PLAN_MISSING`, **antes de chamar o provedor de imagem**; não gerou PNG.
+- O plano foi compactado sem retirar referências SHA ou os gates e passou a medir **196.708 bytes UTF-8**; os dois workflows de QA que tinham falhado voltaram a ficar verdes em execuções posteriores.
+- A [fila principal](FILA-GERACAO-MESTRES.json) foi reativada via push [#44009318478](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009318478), com código que procura o **primeiro PNG faltante por SHA**, evitando refazer as 26 referências já arquivadas no ponto de falha.
+- No encerramento dos 42 mestres, o orquestrador aciona `visual-bible-repairs.yml` para os 9 reparos, em série, **uma chamada por run e sem retry cobrável**. As 12 interações e 40 tomadas continuam bloqueadas por revisão humana.
+
+A percepção visual da prancha constitui **relatório preliminar do assistente**, não decisão humana. As aprovações/rejeições manuais continuam exclusivas de `REVISOES-MANUAIS.json`.
