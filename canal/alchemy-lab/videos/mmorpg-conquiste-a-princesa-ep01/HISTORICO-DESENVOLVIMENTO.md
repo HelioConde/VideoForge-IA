@@ -1,3 +1,9 @@
+## 2026-11-17 — C01-P02: V4 a partir do patch V3
+
+- Implementados produtor V4, testes de pré-voo e arquivamento com SHA, além da prancha comparativa de oito painéis.
+- A primeira execução GitHub #44063003598 retornou HTTP 400 sem gerar mídia; a execução controlada #44063304090 criou dois PNGs (edição e patch), arquivados; QA #44063462507 validou dimensões, hashes, origem e invariância fora da ROI. [Revisão visual](REVISAO-VISUAL-ASSISTIDA-C01-P02-V4.md).
+- Novo ponto visual a conferir: bocal dourado simplificado em V4. V1 rejeitada, V3/V4 apenas candidatas. Não foram gerados rig, MP4 ou upload YouTube.
+
 # Histórico de desenvolvimento — Alchemy Lab / Conquiste a Princesa EP01
 
 ## 16/11/2026 — ROIs reais e comparador de cores preparados, sem falsificar aprovação
