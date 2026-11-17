@@ -16,16 +16,18 @@ from scripts.qa_ep01_c01p04_v3_layers_board import verified_art
 from scripts.qa_ep01_c01p04_v3_native_registration import source_entry
 from scripts.qa_ep01_c01p04_v3_clean_recomposition import (
     REPORT as TRANSFORMS_REPORT, SOURCE as MOTHER_SOURCE)
-BASE="QA-C01-P04-V3-PEGADA-LANCAS"
+BASE="QA-C01-P04-V3-PEGADA-LANCAS-GRIP-V2"
 SCENE=(941,1672)
 SOURCE_MOTHER="a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd"
 VARIANTS=[
-    {"id":"S1-cross-medium","left_base":[175,1115],"left_tip":[568,465],
-     "right_base":[764,1115],"right_tip":[374,465]},
-    {"id":"S2-cross-higher","left_base":[175,1160],"left_tip":[590,355],
-     "right_base":[765,1160],"right_tip":[350,355]},
-    {"id":"S3-cross-lower","left_base":[200,1060],"left_tip":[535,525],
-     "right_base":[740,1060],"right_tip":[405,525]},
+    # Bases = lower BUTT points; shaft must run through gloves near y~970.
+    # These landmarks are editorial hypotheses for QA, not human-approved pivots.
+    {"id":"S4-through-grips","left_base":[65,1130],"left_tip":[525,430],
+     "right_base":[923,1130],"right_tip":[395,430]},
+    {"id":"S5-grips-low-X","left_base":[60,1130],"left_tip":[555,500],
+     "right_base":[930,1130],"right_tip":[380,500]},
+    {"id":"S6-grips-tight","left_base":[80,1105],"left_tip":[540,455],
+     "right_base":[905,1105],"right_tip":[415,455]},
 ]
 def font(n):
     try:return ImageFont.truetype("DejaVuSans.ttf",n)
@@ -148,7 +150,7 @@ def main():
     sm=ImageOps.contain(paper,(1024,550),Image.Resampling.LANCZOS)
     sm.save(preview,"JPEG",quality=73,optimize=True)
     # Native scene-space closeups, QA ONLY: no sprite crops are exported.
-    grips=[("MAO ESQUERDA",[175,1115]),("MAO DIREITA",[764,1115])]
+    grips=[("MAO ESQUERDA",[175,970]),("MAO DIREITA",[800,970])]
     detail=Image.new("RGB",(4*338+20,2*476+60),"#ebe9e5")
     p=ImageDraw.Draw(detail)
     p.text((14,10),"C01-P04 / PEGADAS: CONFERIR FINGERS + HASTES",font=font(22),fill="#111111")
@@ -174,6 +176,7 @@ def main():
          k:{"sha256":v[2],**v[1]} for k,v in spears.items()},
       "character_registration_provisional":choices,
       "candidates":candidates,"best_candidate":None,
+      "correction_reason":"V1/S1-S3 anchored spear butts at hand height; V2 routes shaft through gauntlet near y~970 and leaves lower butt segment below grip",
       "source_pngs_changed":False,"only_uniform_rigid_spear_transforms":True,
       "hand_grip_contact_verified":False,
       "camera_and_animation_ready":False,
@@ -183,7 +186,7 @@ def main():
       "preview":preview.name,"preview_sha256":sha256(preview.read_bytes()).hexdigest(),
       "hand_grip_qa_board":detail_path.name,
       "hand_grip_qa_board_sha256":sha256(detail_path.read_bytes()).hexdigest(),
-      "hand_grip_centers_provisional":{"left":[175,1115],"right":[764,1115]},
+      "hand_grip_centers_provisional":{"left":[175,970],"right":[800,970]},
       "next":"Review whether spear bases align to real fingers and tips cross above Kael; if not, regenerate gripping hands or spears as independent parts",
     }
     (root/(BASE+".json")).write_text(json.dumps(output,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
