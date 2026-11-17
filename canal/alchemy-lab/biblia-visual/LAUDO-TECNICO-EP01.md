@@ -2,7 +2,7 @@
 
 > Gerado pelo GitHub exclusivamente de PNGs originais e manifestos SHA-verificados. **Não avalia beleza, identidade facial, anatomia das mãos, pose nem consistência artística.** Não substitui a aprovação humana.
 
-**Mestres arquivados:** 42/42. **Reparos V2 arquivados:** 5/9. **Histórico original:** 53 PNGs reais.
+**Mestres arquivados:** 42/42. **Reparos V2 arquivados:** 9/9. **Histórico original:** 57 PNGs reais.
 
 | Reparação | Registro real | Proveniência / referência de entrada | Revisão |
 |---|---|---|---|
@@ -11,15 +11,15 @@
 | `biblia-lanca-guarda-base-v2` | [PNG #44015381933](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44015381933/biblia-lanca-guarda-base-v2.png) / `2d25214fa9afe9dc…` | `biblia-lanca-guarda-completa-v2` | SHA válido; aprovação visual pendente |
 | `biblia-lanca-guarda-empunhadura-v2` | [PNG #44015635823](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44015635823/biblia-lanca-guarda-empunhadura-v2.png) / `b335529e7a4f4cf1…` | `biblia-lanca-guarda-completa-v2` | SHA válido; aprovação visual pendente |
 | `biblia-carrasco-base-v2` | [PNG #44015867309](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44015867309/biblia-carrasco-base-v2.png) / `24d1ed5187417fe9…` | `biblia-sala-do-trono-vazio-v1` | SHA válido; aprovação visual pendente |
-| `biblia-figurantes-base-v2` | Pendente de geração | Aguardando fontes | Não gerado |
-| `biblia-mascarado-1-base-v2` | Pendente de geração | Aguardando fontes | Não gerado |
-| `biblia-mascarado-2-base-v2` | Pendente de geração | Aguardando fontes | Não gerado |
-| `biblia-mascarados-base-v2` | Pendente de geração | Aguardando fontes | Não gerado |
+| `biblia-figurantes-base-v2` | [PNG #44016029012](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016029012/biblia-figurantes-base-v2.png) / `5a798858eccdb04a…` | `biblia-sala-do-trono-vazio-v1` | SHA válido; aprovação visual pendente |
+| `biblia-mascarado-1-base-v2` | [PNG #44016161296](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016161296/biblia-mascarado-1-base-v2.png) / `fa149cf971273a64…` | `biblia-sala-do-trono-vazio-v1` | SHA válido; aprovação visual pendente |
+| `biblia-mascarado-2-base-v2` | [PNG #44016309119](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016309119/biblia-mascarado-2-base-v2.png) / `3f632cf2fd38ee4a…` | `biblia-sala-do-trono-vazio-v1` | SHA válido; aprovação visual pendente |
+| `biblia-mascarados-base-v2` | [PNG #44016503620](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016503620/biblia-mascarados-base-v2.png) / `212d8c9e93e86719…` | `biblia-mascarado-1-base-v2`, `biblia-mascarado-2-base-v2` | SHA válido; aprovação visual pendente |
 
 ## Bloqueios em vigor
 
 - O quadro C01-P04 V3 é referência **somente de estilo** para a lança completa V2; a pose de mãos da cena antiga está rejeitada.
 - Guardas devem segurar suas próprias lanças no **terço inferior/base**, com punho, dedos e antebraço fisicamente conectados.
 - As **12 poses/interações físicas** continuam aguardando fontes mestras aprovadas por humano com evidência em REVISOES-MANUAIS.json.
-- As **40 tomadas do EP01**, animação final e publicação YouTube permanecem suspensas. Nem a presença de 51 PNGs nem este relatório libera uma cena.
+- As **40 tomadas do EP01**, animação final e publicação YouTube permanecem suspensas. Nem a existência de todos os PNGs nem este relatório libera uma cena.
 - Para comparação estética consultar [GALERIA-EP01.md](GALERIA-EP01.md) e [QA-VISUAL-CANDIDATOS.md](QA-VISUAL-CANDIDATOS.md).
