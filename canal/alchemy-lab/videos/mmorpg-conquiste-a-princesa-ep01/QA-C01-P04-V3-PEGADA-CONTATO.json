@@ -1,0 +1,361 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-grip-contact-review/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "mother_approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "technical_mother_reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "rendering_for_review_only": true,
+  "geometry_is_editorial_not_verified": true,
+  "compositing_layer_order": [
+    "forearm-cuff",
+    "palm-rear",
+    "spear-independent",
+    "fingers-front"
+  ],
+  "candidates": [
+    {
+      "id": "contact-1",
+      "front_finger_shift_px": -8,
+      "source_parts": {
+        "forearm-cuff": {
+          "role": "forearm-cuff",
+          "source_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+          "native_canvas": [
+            1120,
+            1404
+          ],
+          "native_alpha_bbox": [
+            273,
+            55,
+            1078,
+            1299
+          ],
+          "target_roi_provisional_xyxy": [
+            67,
+            780,
+            218,
+            965
+          ],
+          "uniform_scale_for_preview": 0.1487138,
+          "offset_xy": [
+            42,
+            772
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "palm-rear": {
+          "role": "palm-rear",
+          "source_sha256": "f6ac09a8267ef32b9734f2f68f529e38e995f517c40b203998dcc8f23c3777be",
+          "native_canvas": [
+            1448,
+            1086
+          ],
+          "native_alpha_bbox": [
+            345,
+            153,
+            1101,
+            985
+          ],
+          "target_roi_provisional_xyxy": [
+            143,
+            920,
+            235,
+            1024
+          ],
+          "uniform_scale_for_preview": 0.1216931,
+          "offset_xy": [
+            101,
+            904
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "fingers-front": {
+          "role": "fingers-front",
+          "source_sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
+          "native_canvas": [
+            1312,
+            1199
+          ],
+          "native_alpha_bbox": [
+            236,
+            124,
+            984,
+            1026
+          ],
+          "target_roi_provisional_xyxy": [
+            149,
+            930,
+            241,
+            1018
+          ],
+          "uniform_scale_for_preview": 0.097561,
+          "offset_xy": [
+            127,
+            918
+          ],
+          "approved": false,
+          "preview_only": true
+        }
+      },
+      "spear_sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+      "spear_transform": {
+        "source_tip_xy": [
+          840,
+          220
+        ],
+        "source_base_xy": [
+          83,
+          1314
+        ],
+        "preview_tip_xy": [
+          525,
+          430
+        ],
+        "preview_base_xy": [
+          65,
+          1130
+        ],
+        "scale": 0.629611,
+        "rotation_deg": -1.371,
+        "preview_only": true,
+        "physical_grip_verified": false
+      },
+      "visual_approved": false
+    },
+    {
+      "id": "contact-2",
+      "front_finger_shift_px": 0,
+      "source_parts": {
+        "forearm-cuff": {
+          "role": "forearm-cuff",
+          "source_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+          "native_canvas": [
+            1120,
+            1404
+          ],
+          "native_alpha_bbox": [
+            273,
+            55,
+            1078,
+            1299
+          ],
+          "target_roi_provisional_xyxy": [
+            67,
+            780,
+            218,
+            965
+          ],
+          "uniform_scale_for_preview": 0.1487138,
+          "offset_xy": [
+            42,
+            772
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "palm-rear": {
+          "role": "palm-rear",
+          "source_sha256": "f6ac09a8267ef32b9734f2f68f529e38e995f517c40b203998dcc8f23c3777be",
+          "native_canvas": [
+            1448,
+            1086
+          ],
+          "native_alpha_bbox": [
+            345,
+            153,
+            1101,
+            985
+          ],
+          "target_roi_provisional_xyxy": [
+            143,
+            920,
+            235,
+            1024
+          ],
+          "uniform_scale_for_preview": 0.1216931,
+          "offset_xy": [
+            101,
+            904
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "fingers-front": {
+          "role": "fingers-front",
+          "source_sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
+          "native_canvas": [
+            1312,
+            1199
+          ],
+          "native_alpha_bbox": [
+            236,
+            124,
+            984,
+            1026
+          ],
+          "target_roi_provisional_xyxy": [
+            149,
+            930,
+            241,
+            1018
+          ],
+          "uniform_scale_for_preview": 0.097561,
+          "offset_xy": [
+            135,
+            918
+          ],
+          "approved": false,
+          "preview_only": true
+        }
+      },
+      "spear_sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+      "spear_transform": {
+        "source_tip_xy": [
+          840,
+          220
+        ],
+        "source_base_xy": [
+          83,
+          1314
+        ],
+        "preview_tip_xy": [
+          525,
+          430
+        ],
+        "preview_base_xy": [
+          65,
+          1130
+        ],
+        "scale": 0.629611,
+        "rotation_deg": -1.371,
+        "preview_only": true,
+        "physical_grip_verified": false
+      },
+      "visual_approved": false
+    },
+    {
+      "id": "contact-3",
+      "front_finger_shift_px": 8,
+      "source_parts": {
+        "forearm-cuff": {
+          "role": "forearm-cuff",
+          "source_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+          "native_canvas": [
+            1120,
+            1404
+          ],
+          "native_alpha_bbox": [
+            273,
+            55,
+            1078,
+            1299
+          ],
+          "target_roi_provisional_xyxy": [
+            67,
+            780,
+            218,
+            965
+          ],
+          "uniform_scale_for_preview": 0.1487138,
+          "offset_xy": [
+            42,
+            772
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "palm-rear": {
+          "role": "palm-rear",
+          "source_sha256": "f6ac09a8267ef32b9734f2f68f529e38e995f517c40b203998dcc8f23c3777be",
+          "native_canvas": [
+            1448,
+            1086
+          ],
+          "native_alpha_bbox": [
+            345,
+            153,
+            1101,
+            985
+          ],
+          "target_roi_provisional_xyxy": [
+            143,
+            920,
+            235,
+            1024
+          ],
+          "uniform_scale_for_preview": 0.1216931,
+          "offset_xy": [
+            101,
+            904
+          ],
+          "approved": false,
+          "preview_only": true
+        },
+        "fingers-front": {
+          "role": "fingers-front",
+          "source_sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
+          "native_canvas": [
+            1312,
+            1199
+          ],
+          "native_alpha_bbox": [
+            236,
+            124,
+            984,
+            1026
+          ],
+          "target_roi_provisional_xyxy": [
+            149,
+            930,
+            241,
+            1018
+          ],
+          "uniform_scale_for_preview": 0.097561,
+          "offset_xy": [
+            143,
+            918
+          ],
+          "approved": false,
+          "preview_only": true
+        }
+      },
+      "spear_sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+      "spear_transform": {
+        "source_tip_xy": [
+          840,
+          220
+        ],
+        "source_base_xy": [
+          83,
+          1314
+        ],
+        "preview_tip_xy": [
+          525,
+          430
+        ],
+        "preview_base_xy": [
+          65,
+          1130
+        ],
+        "scale": 0.629611,
+        "rotation_deg": -1.371,
+        "preview_only": true,
+        "physical_grip_verified": false
+      },
+      "visual_approved": false
+    }
+  ],
+  "board": "QA-C01-P04-V3-PEGADA-CONTATO.jpg",
+  "board_sha256": "e4efe636cdb3b0914a5d0c4b7074ea22e5c1b39cc6eab63287a62b148845b53f",
+  "anatomical_contact_verified": false,
+  "spatial_registration_approved": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "proxy_model_calls": 0,
+  "next": "inspect gaps, shaft position between digits, hand direction and arm seam against approved mother; if wrong regenerate only failing art, never approve transformations from previews"
+}
