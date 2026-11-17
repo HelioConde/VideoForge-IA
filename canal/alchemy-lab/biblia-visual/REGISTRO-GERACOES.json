@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 119,
+  "total_arquivadas": 120,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -3949,6 +3949,44 @@
       ],
       "status": "gerado",
       "qa_tecnica": "valid_png_source_refs_sha_verified",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-scene-mother-orientation-v3:44151964491:c01-p03-scene-mother-facing-throne-v3.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p03-scene-mother-facing-throne-v3",
+      "shot": "C01-P03",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-scene-mother-orientation-v3",
+      "github_run_id": 44151964491,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44151964491/c01-p03-scene-mother-facing-throne-v3.png",
+      "sha256": "e668f713456dd5a41e312885f66c10e2cc033c3aed69ffb7bb577a7d62f79b3d",
+      "bytes": 2644189,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": null,
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+        },
+        {
+          "id": null,
+          "sha256": "37c48afcaa240f03406c280af1af4ca49304ead552f0dd89f0bbb25d0080e417",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005400386/biblia-aldric-tribunal-v1.png"
+        },
+        {
+          "id": null,
+          "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_provenance_visual_review_pending",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }

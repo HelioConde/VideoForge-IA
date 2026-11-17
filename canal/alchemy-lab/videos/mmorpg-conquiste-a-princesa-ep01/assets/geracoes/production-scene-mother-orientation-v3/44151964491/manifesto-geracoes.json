@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-scene-mother-orientation-v3",
+  "github_run_id": 44151964491,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c01-p03-scene-mother-facing-throne-v3.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "e668f713456dd5a41e312885f66c10e2cc033c3aed69ffb7bb577a7d62f79b3d",
+      "bytes": 2644189,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
