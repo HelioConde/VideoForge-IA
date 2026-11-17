@@ -1,0 +1,26 @@
+{
+  "schema": "videoforge/ep01-contact-v4-qa/v1",
+  "ancestor_v1_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "v3_patch_sha256": "17da28fcf733727a11d2d67a38a84611bd1192cff0e97d45d7db10169de9089d",
+  "v4_edit_sha256": "078ba6c72bd8cba74d5a28f12948b94f06c8c348a5c291438820ee7f7e9c2c14",
+  "v4_patch_sha256": "3a3d96e9328426c857b1e40d43d0c4edfbe79f07ef9d43c86ef63f6c57f919a9",
+  "canvas": [
+    941,
+    1672
+  ],
+  "same_canvas": true,
+  "exact_v3_source_pixels_outside_roi": true,
+  "mean_rgb_difference_v4_patch_from_v3": 3.0983,
+  "roi": [
+    370,
+    790,
+    900,
+    1660
+  ],
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "comparison_type": "visual_candidates_not_approved",
+  "preview_sha256": "162e905e900bb5c915deae9565eff0095be748e5244d70c37246e323b7d1221b"
+}
