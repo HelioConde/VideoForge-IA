@@ -1,5 +1,30 @@
 # Bibliotecas e skills reutilizaveis — VideoForge IA (15/11/2026)
 
+## Atualização de skills por especialidade — 17/11/2026
+
+**Catálogo atual: oito skills locais documentadas, sem instalar ferramentas externas ou criar novos agentes executáveis.** [Roteamento oficial](../.agents/skills/videoforge-dorama-remake/SKILL.md) por tarefa:
+
+| Área | Skills locais responsáveis | Limite obrigatório |
+|---|---|---|
+| Arte e camadas | [animation-parts](../.agents/skills/videoforge-animation-parts/SKILL.md) | Proxy gera RGBA independente; máscara/crop só QA |
+| Rig e animação | [rig-2d-three](../.agents/skills/videoforge-rig-2d-three/SKILL.md) + [character-acting](../.agents/skills/videoforge-character-acting/SKILL.md) | `useCurrentFrame()`, não `useFrame()` ou relógio wall-clock |
+| QA independente | [qa-and-checkpoint](../.agents/skills/videoforge-qa-and-checkpoint/SKILL.md) | valida arte, rig e frames sem promover aprovação humana |
+| Direção de tomadas | [shot-direction](../.agents/skills/videoforge-shot-direction/SKILL.md) | 40 tomadas (39 visuais), mudança de foco, cinematografia e continuidade |
+| Áudio e montagem | [audio-editing](../.agents/skills/videoforge-audio-editing/SKILL.md) | áudio original/licenciado, sincro por frame, sem mídia fictícia |
+| Pesquisa técnica | [technical-research](../.agents/skills/videoforge-technical-research/SKILL.md) | checar versão, licença e custo antes de incorporar código externo |
+
+O [gerente do dorama](../.agents/skills/videoforge-dorama-remake/SKILL.md) coordena essas áreas; **skill não equivale a agent autônomo implantado**. O runtime atual ainda precisa de integração e evidência de execução para concluir produção sem orientação manual.
+
+### Auditoria das três referências externas
+
+- [CloudAI-X / Three.js Animation](https://github.com/CloudAI-X/threejs-skills/blob/main/skills/threejs-animation/SKILL.md): repo MIT, referências de clips/keyframes/morphs. Exemplos usam `THREE.Timer` e `setAnimationLoop()` incompatíveis com o relógio determinístico do Remotion; não copiar loops. Versão-alvo da skill r186, verificar `three` 0.187.0 no projeto.
+- [OpenMontage / Character Rigging](https://github.com/OpenMontageInc/OpenMontage/blob/main/.agents/skills/character-rigging/SKILL.md): padrões úteis de pivôs, partes e hierarquia, mas o arquivo de skill declara MIT **enquanto o repositório principal possui licença AGPL-3.0**. Não copiar runtime/código até esclarecer o escopo da licença.
+- [arjun988 / Blender Animation](https://github.com/arjun988/blender-skills/blob/main/.claude/skills/animation/SKILL.md): repo MIT; blocking, arcos, antecipação e pausas são referências úteis; scripts de Blender/MCP/NLA não são integração atual do VideoForge.
+- [Remotion / ThreeCanvas](https://www.remotion.dev/docs/three-canvas) e [Flickering](https://www.remotion.dev/docs/flickering): documentação oficial confirma que a animação deve depender do frame, inclusive no ThreeCanvas, para suportar acesso fora de ordem e render em paralelo.
+
+**Decisão de integração:** criar apenas skills originais que orientam o uso das bibliotecas já instaladas. Nenhum pacote externo, agente, credencial, imagem, áudio, MP4 ou upload foi criado/instalado por esta atualização. Revisar licenças novamente antes de incorporar código de terceiros.
+
+
 **Meta:** acelerar o desenvolvimento dos videos no GitHub sem perder identidade visual, QA, continuidade nem reimplementar projetos prontos. **Escolha:** reutilizar o motor e dependencias ja existentes do repo, aprender de skills oficiais, nao instalar sistemas concorrentes e nao introduzir custos.
 
 ## Catalogo aprovado para uso no EP01
