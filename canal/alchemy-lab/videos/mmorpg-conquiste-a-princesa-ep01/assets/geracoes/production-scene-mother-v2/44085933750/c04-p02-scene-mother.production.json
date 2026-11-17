@@ -1,0 +1,40 @@
+{
+  "schema": "videoforge/ep01-shot-mother-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c04-p02-scene-mother",
+  "candidate_scene_shot_id": "C04-P02",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/c04-p02-scene-mother.png",
+  "sha256": "9755e8457dac710abafdddca3da17cd5102d03385cc686711981e236015716bf",
+  "bytes": 1568290,
+  "width": 941,
+  "height": 1672,
+  "model": "gpt-image-2",
+  "size": "1024x1536",
+  "source_originals_sha_verified": [
+    {
+      "id": "biblia-monitor-base-v1",
+      "sha256": "3a595a20ed5be72d4d5c9ac9945fca74ffa71239689783dc030704828c95bb53",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011615034/biblia-monitor-base-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    },
+    {
+      "id": "biblia-quarto-kael-monitor-aceso-v1",
+      "sha256": "6eb1fb244a596b55b85fd3115511fe8f3a3f4e33bf7efe2cdfaec64b4789dfa7",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008857880/biblia-quarto-kael-monitor-aceso-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    }
+  ],
+  "source_images_attached_to_request": 2,
+  "technical_qa": "valid_png_source_refs_sha_verified",
+  "human_visual_approval": false,
+  "scene_complete": false,
+  "background_generated": false,
+  "characters_rgba_generated": false,
+  "rig_generated": false,
+  "camera_plan_registered": true,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
