@@ -74,3 +74,14 @@ As [prévia 4](galeria/PREVIA-04.jpg) e [prévia 5](galeria/PREVIA-05.jpg) foram
 | `biblia-mascarado-1-base-v2` | Aparece alto, com capuz e máscara metálica integral; não mostra o rosto de Kael. | [PNG #44016161296](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016161296/biblia-mascarado-1-base-v2.png) / `fa149cf971273a64…` |
 
 A identidade facial de Kael, os detalhes de máscara, as mãos dos guardas e a continuidade de objetos entre cenas continuam pendentes de inspeção do PNG original e decisão explícita do responsável. Manter separação entre **QA técnico SHA**, **QA visual preliminar** e **aprovação humana para uso canônico**.
+
+## Conclusão de pranchas V2 — 17/11/2026 (inspeção preliminar)
+
+A última [prancha 5](galeria/PREVIA-05.jpg) exibe o encerramento da correção de identidade dos perseguidores, com dois modelos individuais distintos e um conjunto de dois atores, sem guarda de armadura vinho. Os PNGs candidatos finais:
+
+- [Mascarado 2 V2](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016309119/biblia-mascarado-2-base-v2.png), SHA `3f632cf2fd38ee4a83ab8f8de67413af897cade13b871b8a577af174c5260817`: aparência robusta e baixa, capuz, couro marrom, máscara preta completa; silhueta diferente do Mascarado 1 alto de casaco verde-acinzentado.
+- [Mascarados em dupla V2](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016503620/biblia-mascarados-base-v2.png), SHA `212d8c9e93e8671962b6d247e703c96b747e28619ff680985d17749807b213de`: apresenta exatamente os dois perseguidores, mantendo roupa, máscara e proporções distintas. **Proveniência** registrada com os dois SHA individuais `fa149cf971273a6416fb2a6e12f81d63bbf33466366a8481bae3b5955c86dda8` e `3f632cf2fd38ee4a83ab8f8de67413af897cade13b871b8a577af174c5260817`.
+
+**Estado técnico final:** 42/42 referências-mestre, 9/9 reparos V2 e 57 PNGs históricos arquivados; [LAUDO-TECNICO-EP01.md](LAUDO-TECNICO-EP01.md) concluído com validação de referências e SHA. O workflow final dos reparos [#44015803741](https://github.com/HelioConde/VideoForge-IA/actions/runs/44015803741) e o de auditoria [#44016672308](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016672308) finalizaram com sucesso.
+
+**Limite da inspeção:** a análise acima utiliza as miniaturas reduzidas. Não certifica espessura de traço, fidelidade facial ao pixel, mãos, anatomia da pegada na lança, costura de rig ou qualidade de animação em movimento. Não houve promoção automática para referências canônicas, e as 12 interações e 40 tomadas seguem bloqueadas até revisão humana com escopo `referencia_canonica`.
