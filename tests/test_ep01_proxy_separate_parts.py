@@ -11,7 +11,7 @@ class SeparatePartsTests(unittest.TestCase):
     def test_new_shot_background_has_sha_verified_mother_and_reference(self):
         # The real background may already be archived by subsequent runs.
         # These prompt/provenance tests never bypass the production no-repeat gate.
-        with patch.object(p, "existing_part", return_value=None):
+        with patch.object(p, "existing_part", return_value=None), patch.object(p,"enforce_source_qa",return_value=None):
             with patch.object(p.proxy_images, "call_proxy") as charged:
                 spec=p.prepare("C01-P03","background-clean")
                 charged.assert_not_called()
@@ -26,7 +26,7 @@ class SeparatePartsTests(unittest.TestCase):
         self.assertLessEqual(len(spec["refs"])+1,p.MAX_REFERENCE_PNGS_PER_REQUEST)
 
     def test_character_is_requested_as_new_png_not_cutout(self):
-        with patch.object(p, "existing_part", return_value=None):
+        with patch.object(p, "existing_part", return_value=None), patch.object(p,"enforce_source_qa",return_value=None):
             with patch.object(p.proxy_images, "call_proxy") as charged:
                 spec=p.prepare("C01-P03","character-kael")
                 charged.assert_not_called()
@@ -34,6 +34,13 @@ class SeparatePartsTests(unittest.TestCase):
         self.assertTrue(spec["transparent"])
         self.assertIn("REAL transparent RGBA",spec["prompt"])
         self.assertIn("no cropping/segmentation",spec["prompt"])
+
+    def test_rejected_p03_mother_is_fail_closed_until_versioned_source(self):
+        shot, _ = p.read_shot("C01-P03","background-clean")
+        self.assertTrue(shot["qa"]["require_versioned_mother_v2_before_more_proxy_parts"])
+        with self.assertRaisesRegex(VideoForgeError,
+                                   "EP01_PROXY_PARTS_MOTHER_REJECTED_NEW_VERSION_REQUIRED"):
+            p.enforce_source_qa(shot)
 
     def test_unapproved_c01_p02_v1_cannot_be_used_for_rig(self):
         with patch.object(p.proxy_images, "call_proxy") as charged:
