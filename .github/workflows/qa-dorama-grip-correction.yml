@@ -1,0 +1,25 @@
+name: "VideoForge - QA mao segurando lanca antes da geracao"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/dorama_grip_correction.py'
+      - 'tests/test_dorama_grip_correction.py'
+      - 'videoforge/production_art.py'
+      - '.github/workflows/qa-dorama-grip-correction.yml'
+permissions:
+  contents: read
+jobs:
+  grip-preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rejeitar lancas sem pega e assegurar PNG original SHA
+        run: python -m unittest tests.test_dorama_grip_correction tests.test_first_dorama_image tests.test_dorama_continuity -v
+      - name: QA somente leitura; sem chamadas de IA
+        run: echo 'VISUAL_GRIP_APPROVAL=PENDING; PROVIDER_CALLS=0'
