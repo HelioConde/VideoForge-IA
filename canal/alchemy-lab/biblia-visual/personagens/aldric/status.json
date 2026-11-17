@@ -3,10 +3,11 @@
   "categoria": "personagens",
   "id": "aldric",
   "status": "em_revisao",
-  "ultima_geracao": 44005400386,
-  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005400386/biblia-aldric-tribunal-v1.png",
+  "ultima_geracao": 44005550858,
+  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005550858/biblia-aldric-revelacao-v1.png",
   "aprovacao_mestra": false,
   "historico_de_versoes": [
-    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44005400386:biblia-aldric-tribunal-v1.png"
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44005400386:biblia-aldric-tribunal-v1.png",
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44005550858:biblia-aldric-revelacao-v1.png"
   ]
 }

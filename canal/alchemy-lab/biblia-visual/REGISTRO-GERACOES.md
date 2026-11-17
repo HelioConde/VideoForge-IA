@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**10 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**11 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -14,6 +14,7 @@
 | [biblia-kael-medieval-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`d30201d04c34…\` | [#44003234837](https://github.com/HelioConde/VideoForge-IA/actions/runs/44003234837) |
 | [biblia-elara-palacio-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003561770/biblia-elara-palacio-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`36e9bed6325d…\` | [#44003561770](https://github.com/HelioConde/VideoForge-IA/actions/runs/44003561770) |
 | [biblia-aldric-tribunal-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005400386/biblia-aldric-tribunal-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`37c48afcaa24…\` | [#44005400386](https://github.com/HelioConde/VideoForge-IA/actions/runs/44005400386) |
+| [biblia-aldric-revelacao-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005550858/biblia-aldric-revelacao-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`f9e4180cf463…\` | [#44005550858](https://github.com/HelioConde/VideoForge-IA/actions/runs/44005550858) |
 
 ## Regras de consulta
 

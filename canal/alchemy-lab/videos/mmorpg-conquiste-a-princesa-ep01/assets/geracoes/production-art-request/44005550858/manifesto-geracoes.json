@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-art-request",
+  "github_run_id": 44005550858,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "biblia-aldric-revelacao-v1.png",
+      "width": 981,
+      "height": 1602,
+      "sha256": "f9e4180cf463d385572adb97d77c3be884f0bce3f4f8a5d86b613f8620ae6175",
+      "bytes": 2349521,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
