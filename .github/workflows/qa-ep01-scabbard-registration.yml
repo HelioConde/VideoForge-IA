@@ -1,0 +1,44 @@
+name: "VideoForge - QA encaixe da bainha no rig EP01"
+run-name: "EP01 / comparar 6 posicoes sem regenerar"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/qa-ep01-scabbard-registration.yml'
+permissions:
+  contents: write
+jobs:
+  align-proposals:
+    runs-on: ubuntu-24.04
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preparar Pillow local
+        run: python -m pip install --quiet Pillow==11.3.0
+      - name: Montagem de alternativas sem reamostrar pixels
+        run: PYTHONPATH=. python scripts/qa-ep01-bainha-translacao.py
+      - name: Salvar provas e prévia de posições
+        shell: bash
+        run: |
+          set -euo pipefail
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          git config user.name 'videoforge-rig-review[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$ep/QA-C01-P02-REGISTRO-BAINHA.jpg" "$ep/QA-C01-P02-REGISTRO-BAINHA.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(ep01): comparar 6 translações de bainha a partir de PNG bruto'
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            if ! git rebase origin/main; then git rebase --abort || true; exit 1; fi
+          done
+          exit 1
