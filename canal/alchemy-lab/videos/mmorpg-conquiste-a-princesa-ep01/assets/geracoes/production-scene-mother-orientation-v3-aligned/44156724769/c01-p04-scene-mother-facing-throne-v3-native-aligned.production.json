@@ -1,0 +1,35 @@
+{
+  "schema": "videoforge/ep01-approved-v3-one-row-technical-alignment/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "candidate_scene_shot_id": "C01-P04",
+  "asset_id": "c01-p04-scene-mother-facing-throne-v3-native-aligned",
+  "sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "source_image_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "source_originals_sha_verified": [
+    {
+      "asset_id": "c01-p04-scene-mother-facing-throne-v3",
+      "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png"
+    }
+  ],
+  "original_visual_approval_manifest": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/APROVACOES-VISUAIS-C01-V3.json",
+  "source_canvas": [
+    941,
+    1671
+  ],
+  "output_canvas": [
+    941,
+    1672
+  ],
+  "technical_postprocess": "duplicate_last_scanline_no_resize_no_crop",
+  "source_pixels_unchanged": true,
+  "pixel_qa": "full_source_region_exact_and_bottom_row_identical",
+  "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "derived_image_visual_approval": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_image_calls": 0
+}

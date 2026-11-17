@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 122,
+  "total_arquivadas": 123,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -4093,6 +4093,34 @@
       ],
       "status": "gerado",
       "qa_tecnica": "valid_png_provenance_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-scene-mother-orientation-v3-aligned:44156724769:c01-p04-scene-mother-facing-throne-v3-native-aligned.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p04-scene-mother-facing-throne-v3-native-aligned",
+      "shot": "C01-P04",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-scene-mother-orientation-v3-aligned",
+      "github_run_id": 44156724769,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3-aligned/44156724769/c01-p04-scene-mother-facing-throne-v3-native-aligned.png",
+      "sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "bytes": 2602752,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": null,
+          "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "não_informado",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }
