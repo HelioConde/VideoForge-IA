@@ -52,5 +52,20 @@
   "mp4_generated": false,
   "youtube_uploaded": false,
   "proxy_calls": 0,
-  "no_pixel_cutouts_for_rig": true
+  "no_pixel_cutouts_for_rig": true,
+  "assistant_visual_review_20261117": {
+    "status": "coherent_architecture_small_kael_visual_followup",
+    "report": "REVISAO-VISUAL-C05-ARKEN.md",
+    "findings": [
+      "walled_city_gate_towers_flags_and_background_preserved_across_bible_and_C05-P02",
+      "kael_small_in_general_shot_as_directed",
+      "sunset_lighting_consistent",
+      "soil_texture_rocky_C05-P01_to_paved_road_C05-P02_needs_editorial_continuity",
+      "kael_facial_scratches_must_match_adjacent_shots"
+    ],
+    "human_visual_approval": false,
+    "rig_ready": false,
+    "mp4_generated": false,
+    "youtube_uploaded": false
+  }
 }
