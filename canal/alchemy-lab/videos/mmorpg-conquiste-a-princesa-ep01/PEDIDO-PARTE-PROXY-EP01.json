@@ -3,13 +3,13 @@
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "shot_id": "C01-P03",
-  "part": "background-clean",
+  "part": "character-kael",
   "generation_method": "proxy_generated_separate_image",
   "parent_mother_asset": "c01-p03-scene-mother",
   "parent_mother_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
   "parent_generation_run_id": 44073592014,
   "status": "requested_visual_candidate",
-  "reason": "Gerar novo cenário vazio pela IA com o mesmo ângulo e iluminação; preencher o trono e piso atrás de Kael/Aldric; não recortar pixels",
+  "reason": "Pedir ao proxy personagem Kael isolado em novo PNG RGBA real, no mesmo ângulo, escala, posição, luz e figurino da tomada mãe C01-P03; sem fundo, rei ou objetos; completar partes ocultas para movimento futuro.",
   "allow_local_crop_or_segmentation_for_final_asset": false,
   "human_visual_approval": false,
   "rig_ready": false,
@@ -18,10 +18,5 @@
   "youtube_upload": false,
   "mp4_generated": false,
   "process": "one_new_independent_png_per_workflow",
-  "request_revision": 3,
-  "previous_attempt_run_id": 44074144638,
-  "previous_attempt": "proxy returned response but Pillow was missing; PNG was not saved, no archive; image provider call may have been consumed",
-  "fix": "videoforge/ep01_proxy_separate_parts.py filters new producer provenance separately",
-  "dependency_fix": "Pillow==11.3.0 installed and checked BEFORE provider call",
-  "last_failure_kind": "local_post_proxy_missing_dependency"
+  "request_revision": 4
 }
