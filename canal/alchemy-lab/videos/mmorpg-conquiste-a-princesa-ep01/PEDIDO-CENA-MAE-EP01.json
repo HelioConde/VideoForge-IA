@@ -2,36 +2,42 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C05-P01",
+  "shot_id": "C05-P02",
   "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "C05-P01 DESPERTAR NA ESTRADA FANTASIA: close cinematográfico de Kael com cabelo escuro e roupa/armadura medieval canônicas caído no chão arenoso de estrada de terra, abrindo os olhos com surpresa. Rosto em foco (sem ferimento gráfico), parte do ombro e capa vinho no chão com poeira coerente, solo com pedras discretas, estrada florestal desenhada segundo Bíblia Visual. Nenhum rei, trono, quarto gamer, monitor, lançа ou placa. Cena-mãe própria e única da tomada, não recorte de C03/C04. A capa está ligada aos ombros e em contato com o chão; sua parte móvel será solicitada posteriormente ao proxy como PNG independente.",
+  "objective": "Plano GERAL de chegada à cidade medieval de Arken: usar o PNG da Bíblia Visual NOVO 'biblia-arken-muralhas-base-v1' anexado como referência SHA, preservar rigorosamente portão, torres, muralhas de pedra, floresta e estrada canônica. Kael deve aparecer PEQUENO, de costas e ao longe na estrada com capa vinho rasgada, ombreira dourada de gema azul e armadura medieval canônicas (NÃO virar retrato do protagonista nem ampliar). Reproduzir escala humana plausível relativamente às torres, perspectiva e profundidade da estrada, luz e cores do mestre. A única ação é ele se aproximar a pé; não criar guardas, rei, princesa, lanças, armas extras, texto ou letreiro ilegível. UMA imagem-mãe 9:16, não mosaico, não character sheet, não imagem de poses.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
   "human_visual_approval_required": true,
   "approved_for_final_render": false,
   "next_steps_if_success": [
-    "arquivar_png_sha_e_auto_checkpoint",
-    "conferir_kael_no_chao_olhos_abertos",
-    "conferir_roupa_medieval_e_capa_em_contato_com_solo",
-    "verificar_estrada_biblia",
-    "nao_gerar_recortes_locais_ou_rig_antes_da_qa"
+    "arquivar_c05p02_png_e_sha",
+    "conferir_portao_muralhas_biblia_e_estrada",
+    "validar_kael_pequeno_e_continuidade_do_traje",
+    "comparar_c05p01_estrada_a_c05p02_cidade",
+    "nao_iniciar_rig_sem_qa_e_peças_separadas_pelo_proxy"
   ],
   "max_chargeable_calls_per_run": 1,
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 11,
+  "request_sequence": 12,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "request_revision": 14,
+  "request_revision": 15,
   "last_shot_archived": {
-    "shot_id": "C04-P02",
-    "run_id": 44085933750,
-    "sha256": "9755e8457dac710abafdddca3da17cd5102d03385cc686711981e236015716bf"
+    "shot_id": "C05-P01",
+    "run_id": 44086437259,
+    "sha256": "84520f8047d85930ca2834f57e1c278969aea51e496f3cad5ca3fd330ab07073"
   },
   "first_attempt_run_id": 44085218453,
   "first_attempt_result": "preflight only; C03-P02 camera drift rejected by layered plan before any paid calls",
-  "fix": "canonical camera restored; blue monitor continuity stored as supplementary match cut metadata"
+  "fix": "canonical camera restored; blue monitor continuity stored as supplementary match cut metadata",
+  "new_bible_master": {
+    "asset_id": "biblia-arken-muralhas-base-v1",
+    "sha256": "0903946038a6977cc93fe324eee665899e7cccc296bcffab4c5cff38202ab5d4",
+    "run_id": 44087301592,
+    "visual_approval": false
+  }
 }
