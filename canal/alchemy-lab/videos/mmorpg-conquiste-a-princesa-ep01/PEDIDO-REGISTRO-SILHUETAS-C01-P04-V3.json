@@ -17,5 +17,7 @@
   "human_visual_approval": false,
   "rig_ready": false,
   "only_provisional_QA": true,
-  "no_provider_calls": true
+  "no_provider_calls": true,
+  "request_revision": 2,
+  "note": "gerar miniatura compacta para facilitar a inspeção visual de variantes sem novas chamadas IA"
 }
