@@ -1,0 +1,24 @@
+{
+  "schema": "videoforge/ep01-c01p04-grip-guide-human-review/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-canonical-grip-guide-v1/44183662671/c01-p04-v3-left-grip-with-real-spear-reference-v1.png",
+  "source_sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+  "preview_file": "QA-C01-P04-V3-GUIA-PEGADA-V1-PREVIEW.jpg",
+  "preview_sha256": "198ac877c43eace76edf49ce18a7db93bbd313ae425c29e2a3f5d8a657188a6f",
+  "source_is_independent_ai_reference_not_rig": true,
+  "human_visual_review_checks": [
+    "wooden_spear_passes_through_palm_center",
+    "fingers_thumb_wrap_around_real_shaft",
+    "spear_base_extends_below_grip",
+    "wrist_and_fingers_match_approved_mother_closeup",
+    "no_floating_spear_or_extra_fingers"
+  ],
+  "human_visual_approval": false,
+  "hand_contact_verified": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "image_provider_calls": 0
+}
