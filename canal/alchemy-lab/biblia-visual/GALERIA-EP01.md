@@ -1,6 +1,6 @@
 # Galeria visual de revisão — EP01
 
-**34 de 42 referências-mestre** arquivadas e verificadas por SHA256.
+**38 de 42 referências-mestre** arquivadas e verificadas por SHA256.
 **0 de 9 reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.
 **Nenhuma miniatura substitui o original. Gerado não significa aprovado.**
 Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geração de IA.
@@ -10,6 +10,8 @@ Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geraç�
 ![Prancha de revisão PREVIA-02.jpg](galeria/PREVIA-02.jpg)
 
 ![Prancha de revisão PREVIA-03.jpg](galeria/PREVIA-03.jpg)
+
+![Prancha de revisão PREVIA-04.jpg](galeria/PREVIA-04.jpg)
 
 ## Arquivos originais e proveniência
 
@@ -49,13 +51,13 @@ Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geraç�
 | [biblia-coroa-aldric-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010195072/biblia-coroa-aldric-base-v1.png) | gerado (não aprovado automaticamente) | `303128cd923194fa…` | [#44010195072](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010195072) |
 | [biblia-coroa-elara-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010309849/biblia-coroa-elara-base-v1.png) | gerado (não aprovado automaticamente) | `fbbb5c26dabd5aa6…` | [#44010309849](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010309849) |
 | [biblia-trono-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010485553/biblia-trono-base-v1.png) | gerado (não aprovado automaticamente) | `16d64d97ae19d536…` | [#44010485553](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010485553) |
+| [biblia-espada-carrasco-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010692076/biblia-espada-carrasco-base-v1.png) | gerado (não aprovado automaticamente) | `1f121063d4b36540…` | [#44010692076](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010692076) |
+| [biblia-broche-flor-completo-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010852169/biblia-broche-flor-completo-v1.png) | gerado (não aprovado automaticamente) | `53ac60fa45483e4f…` | [#44010852169](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010852169) |
+| [biblia-broche-flor-detalhe-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010961561/biblia-broche-flor-detalhe-v1.png) | gerado (não aprovado automaticamente) | `50699ee2593b7bcf…` | [#44010961561](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010961561) |
+| [biblia-capa-kael-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011117376/biblia-capa-kael-base-v1.png) | gerado (não aprovado automaticamente) | `16b3c0e5a20bd304…` | [#44011117376](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011117376) |
 
 ## Pendentes de geração
 
-- biblia-espada-carrasco-base-v1
-- biblia-broche-flor-completo-v1
-- biblia-broche-flor-detalhe-v1
-- biblia-capa-kael-base-v1
 - biblia-ombreira-kael-base-v1
 - biblia-capuz-elara-base-v1
 - biblia-monitor-base-v1
