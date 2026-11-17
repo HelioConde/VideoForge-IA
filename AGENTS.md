@@ -374,3 +374,5 @@ complexos nem trabalhos fictícios.
 ## Diagnosticar rig sem aprovar sprites
 
 Para ver movimento antes de reconstruir partes ocultas, o workflow `rig-draft-preview.yml` produz MP4 **com marca d'água de rascunho** e quadros de revisão. O módulo `videoforge/rig_draft_preview.py` deve aceitar somente `rig-candidate` com `human_review=false`, SHA validado e origem/canal corretos; nunca converter rascunho em aprovação ou publicar o vídeo. Marcar `publishable=false` e registrar inpainting pendente no QA. A versão de produção segue exigindo `validate_rig_dir` com aprovação visual humana.
+
+**Pranchas de revisão EP01:** abrir [`canal/alchemy-lab/biblia-visual/GALERIA-EP01.md`](canal/alchemy-lab/biblia-visual/GALERIA-EP01.md). A galeria é gerada por `scripts/gerar-galeria-biblia.py`, verifica o SHA do PNG original e cria JPGs leves após cada lote pelo `qa-visual-bible-gallery.yml`. Nenhuma prévia significa aprovação; decisões visuais continuam sendo manuais.
