@@ -85,5 +85,20 @@
   "human_visual_approval": false,
   "rig_ready": false,
   "mp4_generated": false,
-  "youtube_uploaded": false
+  "youtube_uploaded": false,
+  "assistant_preliminary_visual_review_20261117": {
+    "status": "needs_corrections_before_rig",
+    "report": "REVISAO-VISUAL-C02-C03-CONTINUIDADE.md",
+    "findings": [
+      "c03_p01_is_face_close_not_expected_iris_macro",
+      "kael_facemark_severity_changes_between_c02_p02_and_c03_p01",
+      "aldric_crown_and_neckline_need_visual_bible_comparison",
+      "c01_p03_v2_is_story_corrected_but_not_human_approved"
+    ],
+    "next": "preserve sources; continue mothers; repair after identity QA before final rig",
+    "human_approval": false,
+    "rig_ready": false,
+    "mp4_generated": false,
+    "youtube_uploaded": false
+  }
 }
