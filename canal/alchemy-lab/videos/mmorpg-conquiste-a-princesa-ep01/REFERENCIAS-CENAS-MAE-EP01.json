@@ -96,11 +96,25 @@
       "id": "C03-P02",
       "black": false,
       "reference_asset_ids": [
-        "biblia-kael-medieval-base-v1",
-        "biblia-sala-do-trono-vazio-v1"
+        "biblia-quarto-kael-monitor-aceso-v1",
+        "biblia-kael-casual-antes-v2",
+        "biblia-monitor-base-v1",
+        "biblia-quarto-kael-vazio-v1"
       ],
       "source_authority": "sha_checked_archived_bible",
-      "portrait_v1_rejected_never_attached": true
+      "portrait_v1_rejected_never_attached": true,
+      "continuity_correction_20261117": {
+        "source_scene": "C03-P01 medieval Kael eye reflection",
+        "target_scene": "modern Kael bedroom and powered blue monitor",
+        "transition": "one second-frame image for match cut, do not combine both frames",
+        "do_not_use_refs": [
+          "biblia-kael-medieval-base-v1",
+          "biblia-sala-do-trono-vazio-v1"
+        ],
+        "new_reference_count": 4,
+        "motivation": "prevent medieval throne/costume leaking into gamer bedroom shot",
+        "human_approval": false
+      }
     },
     {
       "id": "C04-P01",
