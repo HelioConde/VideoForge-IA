@@ -1,3 +1,14 @@
+## 17/11/2026 — 42 referências-mestre e 9 reparos V2 concluídos
+
+- **42/42** referências independentes e **9/9** reparos arquivados por manifesto e SHA256; **57 PNGs no registro histórico** com V1/V4 antigas preservadas.
+- Geração final dos 9 reparos encerrada com [sucesso no run #44015803741](https://github.com/HelioConde/VideoForge-IA/actions/runs/44015803741). Último reparo: `biblia-mascarados-base-v2` [#44016503620](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016503620), compondo dois perseguidores usando os dois mestres mascarados separados SHA-verificados.
+- [GALERIA-EP01.md](../../biblia-visual/GALERIA-EP01.md) exibe 5 pranchas com mestres e V2 e links para originais. A inspeção de miniaturas indicou melhora nas roupas modernas do Kael casual, lança fina sem pedestal, pontas de pega, carrasco e figurantes distintos, mascarados individuais e em par. **Não é aprovação humana**, e não prova contato de mãos ou rig real.
+- [LAUDO-TECNICO-EP01.md](../../biblia-visual/LAUDO-TECNICO-EP01.md) comprova 42/42 + 9/9 com fontes SHA específicas. Auditoria automática [#44016672308](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016672308) concluiu com sucesso.
+- Implantado `.github/workflows/visual-bible-interactions.yml` para gerar as **12 poses físicas** somente quando cada fonte estiver aprovada por humano com `revisor`, `evidencia` e `escopo_permitido:["referencia_canonica"]`, sem bloqueio de pose/rig. A execução de teste [#44016308485](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016308485) foi **success**, geração de imagem skipped por falta de aprovação canônica.
+- `visual_bible_master.py` e `visual_bible_gate.py` reforçados contra usar revisão limitada a estilo como aprovação de pose/rig/cena. O manual continua exigindo lanças seguradas pelo **terço inferior/base**, uma por guarda, dedos e braços conectados.
+- **As 12 poses e 40 tomadas do EP01 não foram geradas aqui.** Não iniciar edição/remotion ou publicar no YouTube sem revisar os PNGs-mestre e registrar decisões humanas.
+
+
 ## 17/11/2026 — Revisão de elenco, limite 200KB e retomada da fila
 
 - A segunda prancha revelou **identidade clonada**: carrasco V1, figurantes V1, mascarado 1 e 2 V1 pareciam Kael com capa; mascarados em grupo V1 saiu como guarda real. Evidências e SHA em `../../biblia-visual/QA-VISUAL-CANDIDATOS.md`. Não são aprovações/rejeições humanas; ficam como pendências visuais de QA.
