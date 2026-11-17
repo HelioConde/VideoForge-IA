@@ -14,9 +14,12 @@ class MotherShotTests(unittest.TestCase):
         self.assertEqual(next(x for x in rows if x["id"] == "C01-P01")["reference_asset_ids"], [])
 
     def test_first_shot_attaches_three_real_sha_verified_masters(self):
-        with patch.object(mother.proxy_images, "call_proxy") as pay:
-            spec = mother.prepare("C01-P02")
-            pay.assert_not_called()
+        # C01-P02 has a real archived V1 mother; bypass only the archive guard
+        # for this pure reference/prompt test (never for production).
+        with patch.object(mother, "existing_mother", return_value=None):
+            with patch.object(mother.proxy_images, "call_proxy") as pay:
+                spec = mother.prepare("C01-P02")
+                pay.assert_not_called()
         self.assertEqual([s["id"] for s in spec["references"]], [
             "biblia-carrasco-base-v2",
             "biblia-espada-carrasco-base-v1",
@@ -49,11 +52,12 @@ class MotherShotTests(unittest.TestCase):
             if asset == "biblia-espada-carrasco-base-v1":
                 return None
             return real(channel, video, asset, root)
-        with patch.object(mother, "archived_reference", side_effect=simulate_missing):
-            with patch.object(mother.proxy_images, "call_proxy") as paid:
-                with self.assertRaisesRegex(VideoForgeError, "EP01_MOTHER_REFERENCE_NOT_ARCHIVED"):
-                    mother.prepare("C01-P02")
-                paid.assert_not_called()
+        with patch.object(mother, "existing_mother", return_value=None):
+            with patch.object(mother, "archived_reference", side_effect=simulate_missing):
+                with patch.object(mother.proxy_images, "call_proxy") as paid:
+                    with self.assertRaisesRegex(VideoForgeError, "EP01_MOTHER_REFERENCE_NOT_ARCHIVED"):
+                        mother.prepare("C01-P02")
+                    paid.assert_not_called()
 
     def test_archive_prevents_second_paid_attempt(self):
         with patch.object(mother, "existing_mother", return_value={"sha256": "a" * 64}):
