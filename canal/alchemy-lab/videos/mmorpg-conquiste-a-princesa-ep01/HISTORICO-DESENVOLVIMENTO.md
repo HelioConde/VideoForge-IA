@@ -1,3 +1,10 @@
+## 2026-11-17 — Regra definitiva de animação: gerar imagens separadas pelo proxy, não recortar
+
+- Decisão do responsável: a cena-mãe é **referência** para o proxy; ele deve gerar background vazio, cada personagem/objeto animável e cada parte de rig em **imagens próprias PNG/RGBA**, com desenho de partes escondidas e consistência canônica. Não criar sprites finais por crop, máscara de pixels, polígonos ou segmentação. Ferramentas locais são apenas QA.
+- Contrato global criado em `docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md`, integrado ao manual geral, manual EP01, `AGENTS.md` e `README.md`. Plano de 40 tomadas (39 visuais) atualizado com pedidos explícitos por peça e validador fail-closed.
+- Workflows legados de recortes/máscaras e produtor antigo ancorado à V1 rejeitada desativados; arquivos permanecem preservados para comparação, não para rig. O `ep01_contact_gate.py` agora rejeita explicitamente máscaras V1 como fontes finais. [Verificação de política CI #44068898163](https://github.com/HelioConde/VideoForge-IA/actions/runs/44068898163) **success**, sem geração de imagens nem cobrança do proxy.
+- Nenhuma nova imagem visual produzida por esta alteração; C01-P02 V3/V4 candidatas em revisão. A integração do produtor autônomo de novos PNGs por peça para as demais tomadas segue pendente. Nada de rig, MP4 ou publicação.
+
 ## 2026-11-17 — C01-P02: V4 a partir do patch V3
 
 - Implementados produtor V4, testes de pré-voo e arquivamento com SHA, além da prancha comparativa de oito painéis.
