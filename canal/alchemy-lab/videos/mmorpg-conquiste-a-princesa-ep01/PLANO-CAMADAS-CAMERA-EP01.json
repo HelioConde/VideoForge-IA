@@ -6,10 +6,10 @@
   "source_queue": "../../biblia-visual/FILA-EP01.json",
   "source_cinema": "direcao-cinematografica-planos.json",
   "source_bible": "../../biblia-visual/INDEX-BIBLIA.json",
-  "production_strategy": "scene_mother_from_shaverified_bible_then_extracted_characters_objects_background_rig_camera",
+  "production_strategy": "scene_mother_proxy_then_proxy_generated_separate_background_characters_objects_rig_parts_then_QA_rig_camera",
   "pose_images_as_prerequisite": false,
   "legacy_pose_queue": "deprecated_archive_only_no_paid_calls",
-  "compositing_contract": "do_not_generate_character_again_as_separate_random_pose; cut transparent layers from actual shot mother, preserving camera perspective and pixels",
+  "compositing_contract": "every animated visual asset must be a separate proxy-generated PNG using approved scene mother and Bible SHA references; local crops and masks are QA-only, never final sprites",
   "generation_calls": "per_real_image_request_no_fixed_scene_limit_no_paid_retry_on_429",
   "images_requested_by_shot_not_yet_generated": true,
   "black_screen_no_png": "C01-P01",
@@ -123,52 +123,93 @@
           "scene-mother",
           "background-clean",
           "character-carrasco",
-          "object-lanca-guarda",
-          "object-espada-carrasco"
+          "object-espada-carrasco",
+          "object-bainha-carrasco"
         ],
         "composite": {
           "id": "scene-mother",
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "carrasco",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
           {
-            "id": "lanca-guarda",
-            "source": "scene-mother",
-            "transparent_rgba": true,
-            "animation": "when_story_action_requires"
-          },
-          {
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           },
           {
             "id": "espada-carrasco",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
+          },
+          {
+            "id": "bainha-carrasco",
+            "source": "scene-mother",
+            "transparent_rgba": true,
+            "animation": "held_fixed_by_lower_glove_during_sword_draw",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-carrasco",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-espada-carrasco",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-bainha-carrasco",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "insert",
@@ -200,7 +241,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -208,7 +251,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": true,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -236,27 +281,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "aldric",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -264,22 +317,63 @@
             "id": "lanca-guarda",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           },
           {
             "id": "espada-carrasco",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-aldric",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-lanca-guarda",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-espada-carrasco",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "low_angle",
@@ -311,7 +405,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -319,7 +415,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": true,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -349,39 +447,51 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "aldric",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "guarda_esquerdo",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "guarda_direito",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -389,22 +499,75 @@
             "id": "lanca-guarda",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           },
           {
             "id": "espada-carrasco",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-aldric",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-guarda_esquerdo",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-guarda_direito",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-lanca-guarda",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-espada-carrasco",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "wide",
@@ -437,7 +600,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -445,7 +610,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": true,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -473,27 +640,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "guarda_esquerdo",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "guarda_direito",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -501,22 +676,63 @@
             "id": "lanca-guarda",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           },
           {
             "id": "espada-carrasco",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-guarda_esquerdo",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-guarda_direito",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-lanca-guarda",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-espada-carrasco",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "insert",
@@ -548,7 +764,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -556,7 +774,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": true,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -582,21 +802,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "aldric",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -604,16 +830,43 @@
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           },
           {
             "id": "coroa-aldric",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-aldric",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-aldric",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "close_up",
@@ -645,7 +898,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -653,7 +908,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -679,21 +936,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -701,16 +964,43 @@
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           },
           {
             "id": "coroa-aldric",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-aldric",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "close_up",
@@ -742,7 +1032,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -750,7 +1042,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -776,21 +1070,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -798,10 +1098,36 @@
             "id": "monitor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-monitor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "extreme_close_up",
@@ -833,7 +1159,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -841,7 +1169,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -867,21 +1197,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -889,10 +1225,36 @@
             "id": "monitor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-monitor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "match_cut",
@@ -924,7 +1286,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -932,7 +1296,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -958,21 +1324,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -980,10 +1352,36 @@
             "id": "monitor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-monitor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "over_shoulder",
@@ -1015,7 +1413,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1023,7 +1423,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1048,14 +1450,18 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [],
         "objects": [
@@ -1063,10 +1469,30 @@
             "id": "monitor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "object-monitor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "insert",
@@ -1098,7 +1524,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1106,7 +1534,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1132,21 +1562,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -1154,10 +1590,36 @@
             "id": "monitor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-monitor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "medium",
@@ -1189,7 +1651,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1197,7 +1661,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1223,21 +1689,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -1245,10 +1717,36 @@
             "id": "capa-kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-capa-kael",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "close_up",
@@ -1280,7 +1778,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1288,7 +1788,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1314,21 +1816,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -1336,10 +1844,36 @@
             "id": "capa-kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-capa-kael",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "wide",
@@ -1371,7 +1905,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1379,7 +1915,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1405,21 +1943,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -1427,10 +1971,36 @@
             "id": "capa-kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-capa-kael",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "medium",
@@ -1462,7 +2032,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1470,7 +2042,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1496,31 +2070,63 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "figurantes",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-figurantes",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "insert",
@@ -1552,7 +2158,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1560,7 +2168,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1585,25 +2195,49 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "close_up",
@@ -1635,7 +2269,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1643,7 +2279,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1669,21 +2307,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -1691,10 +2335,36 @@
             "id": "capuz-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-capuz-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "tracking",
@@ -1726,7 +2396,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1734,7 +2406,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1762,33 +2436,43 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "mascarado_1",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "mascarado_2",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -1796,10 +2480,48 @@
             "id": "capuz-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-mascarado_1",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-mascarado_2",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-capuz-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "low_angle",
@@ -1831,7 +2553,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1839,7 +2563,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1866,27 +2592,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -1894,10 +2628,42 @@
             "id": "capuz-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-capuz-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "two_shot",
@@ -1929,7 +2695,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -1937,7 +2705,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -1964,27 +2734,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -1992,10 +2770,42 @@
             "id": "carrinho",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-carrinho",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "over_shoulder",
@@ -2027,7 +2837,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2035,7 +2847,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2062,27 +2876,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "mascarados",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -2090,10 +2912,42 @@
             "id": "carrinho",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-mascarados",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-carrinho",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "action",
@@ -2125,7 +2979,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2133,7 +2989,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2161,33 +3019,43 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "mascarados",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -2195,10 +3063,48 @@
             "id": "carrinho",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-mascarados",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-carrinho",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "wide",
@@ -2231,7 +3137,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2239,7 +3147,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2266,27 +3176,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "mascarados",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -2294,10 +3212,42 @@
             "id": "carrinho",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-mascarados",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-carrinho",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "tracking",
@@ -2329,7 +3279,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2337,7 +3289,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2363,31 +3317,63 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "close_up",
@@ -2419,7 +3405,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2427,7 +3415,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2453,31 +3443,63 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "over_shoulder",
@@ -2509,7 +3531,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2517,7 +3541,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2543,21 +3569,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -2565,10 +3597,36 @@
             "id": "broche-flor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-broche-flor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "insert",
@@ -2600,7 +3658,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2608,7 +3668,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2634,21 +3696,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -2656,10 +3724,36 @@
             "id": "broche-flor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-broche-flor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "insert",
@@ -2691,7 +3785,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2699,7 +3795,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2728,33 +3826,43 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "guarda_esquerdo",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "guarda_direito",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -2762,16 +3870,62 @@
             "id": "broche-flor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "lanca-guarda",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-guarda_esquerdo",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-guarda_direito",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-broche-flor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-lanca-guarda",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "over_shoulder",
@@ -2803,7 +3957,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2811,7 +3967,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": true,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2839,27 +3997,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "guarda_esquerdo",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -2867,16 +4033,56 @@
             "id": "broche-flor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "lanca-guarda",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-guarda_esquerdo",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-broche-flor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-lanca-guarda",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "close_up",
@@ -2908,7 +4114,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -2916,7 +4124,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": true,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -2945,33 +4155,43 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "guarda_esquerdo",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "guarda_direito",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -2979,16 +4199,62 @@
             "id": "broche-flor",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "lanca-guarda",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-guarda_esquerdo",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-guarda_direito",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-broche-flor",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-lanca-guarda",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "wide",
@@ -3020,7 +4286,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3028,7 +4296,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": true,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -3054,21 +4324,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -3076,16 +4352,43 @@
             "id": "coroa-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "extreme_close_up",
@@ -3117,7 +4420,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3125,7 +4430,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -3153,33 +4460,43 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "aldric",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -3187,16 +4504,55 @@
             "id": "coroa-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-aldric",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "over_shoulder",
@@ -3228,7 +4584,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3236,7 +4594,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -3263,27 +4623,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -3291,16 +4659,49 @@
             "id": "coroa-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "close_up",
@@ -3333,7 +4734,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3341,7 +4744,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -3367,21 +4772,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -3389,16 +4800,43 @@
             "id": "coroa-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           },
           {
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "insert",
@@ -3430,7 +4868,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3438,7 +4878,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -3466,33 +4908,43 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "aldric",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -3500,10 +4952,48 @@
             "id": "coroa-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-aldric",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "medium",
@@ -3535,7 +5025,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3543,7 +5035,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -3569,21 +5063,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -3591,10 +5091,36 @@
             "id": "coroa-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "close_up",
@@ -3626,7 +5152,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3634,7 +5162,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -3661,27 +5191,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "aldric",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -3689,16 +5227,49 @@
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           },
           {
             "id": "coroa-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-aldric",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "medium",
@@ -3730,7 +5301,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3738,7 +5311,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -3765,27 +5340,35 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           },
           {
             "id": "aldric",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -3793,16 +5376,49 @@
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           },
           {
             "id": "coroa-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-elara",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "character-aldric",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "close_up",
@@ -3834,7 +5450,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3842,7 +5460,9 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     },
     {
@@ -3868,21 +5488,27 @@
           "role": "one_coherent_scene_with_everything",
           "reference": "visual_bible_sha_verified",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_full_frame",
+          "source_policy": "use_Bible_SHA_references"
         },
         "background": {
           "id": "background-clean",
           "role": "same_scene_without_characters_or_foreground_props",
           "source": "scene-mother",
           "alpha": "opaque",
-          "approval": "pending"
+          "approval": "pending",
+          "generation_method": "proxy_generated_separate_image",
+          "instructions": "Generate empty same-scene background, fill hidden architecture, no local cutting"
         },
         "characters": [
           {
             "id": "kael",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "rig_parts": "only_required_movable_parts_after_segmentation"
+            "rig_parts": "proxy_generated_separate_parts_only_when_animated",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_visual_bible_are_references"
           }
         ],
         "objects": [
@@ -3890,16 +5516,43 @@
             "id": "trono",
             "source": "scene-mother",
             "transparent_rgba": false,
-            "animation": "static_depth_layer"
+            "animation": "static_depth_layer",
+            "generation_method": "static_background_layer_no_separate_sprite_required"
           },
           {
             "id": "coroa-elara",
             "source": "scene-mother",
             "transparent_rgba": true,
-            "animation": "when_story_action_requires"
+            "animation": "when_story_action_requires",
+            "generation_method": "proxy_generated_separate_image",
+            "source_policy": "scene_mother_and_object_bible_reference"
           }
         ],
-        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip"
+        "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
+        "asset_source_method": "proxy_generated_separate_image",
+        "mother_figure_is_visual_reference_not_cutout_source": true,
+        "proxy_generation_requests": [
+          {
+            "id": "background-clean",
+            "role": "background",
+            "method": "proxy_generated_separate_image",
+            "background": "opaque"
+          },
+          {
+            "id": "character-kael",
+            "role": "character",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          },
+          {
+            "id": "object-coroa-elara",
+            "role": "object",
+            "method": "proxy_generated_separate_image",
+            "background": "transparent"
+          }
+        ],
+        "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
+        "local_segmentation_policy": "QA_only_never_final_source"
       },
       "camera": {
         "shot_type": "extreme_close_up",
@@ -3931,7 +5584,9 @@
         ],
         "continuity": "recompose_same_scene_mother_without_duplicate_figures",
         "animation_authoring": "Remotion_ThreeJS_or_existing_2D_mesh",
-        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only"
+        "eye_blinks_mouth_head_hair_clothes": "animate_visible_pieces_only",
+        "source_asset_generation_method": "proxy_generated_separate_image",
+        "no_pixel_mask_derived_final_layers": true
       },
       "qa": {
         "source_sha256_required": true,
@@ -3939,9 +5594,26 @@
         "verify_identity_outfit_scale_lighting": true,
         "verify_animated_object_grip_by_lower_third_when_spear_present": false,
         "visual_approval_pending": true,
-        "youtube_upload": false
+        "youtube_upload": false,
+        "check_separated_asset_provenance": "proxy_generated_separate_image",
+        "reject_cutout_or_segmentation_final_sprites": true
       }
     }
   ],
-  "source_frame_authority": "roteiro.json (40 shots / 4890 frames); cinematic file supplies focus/lens, not overlapping durations"
+  "source_frame_authority": "roteiro.json (40 shots / 4890 frames); cinematic file supplies focus/lens, not overlapping durations",
+  "asset_generation_contract": {
+    "schema": "videoforge/proxy-generated-separate-assets/v1",
+    "manual": "docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md",
+    "generation_method": "proxy_generated_separate_image",
+    "mother_used_as_reference_not_cutout_source": true,
+    "prohibit_final_sprites_from_local_segmentation": true,
+    "local_masks_allowed_for_QA_only": true,
+    "transparent_RGBA_for_characters_objects_and_rig_parts": true,
+    "background_generated_by_proxy_with_hidden_regions": true,
+    "required_hidden_geometry_for_motion": true,
+    "require_sha256_per_asset_and_reference": true,
+    "require_alignment_and_anatomy_QA": true,
+    "rig_requires_human_visual_approval": true,
+    "no_pose_library_prerequisite": true
+  }
 }
