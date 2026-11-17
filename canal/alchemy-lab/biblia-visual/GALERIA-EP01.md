@@ -1,6 +1,6 @@
 # Galeria visual de revisão — EP01
 
-**26 de 42 referências-mestre** arquivadas e verificadas por SHA256.
+**30 de 42 referências-mestre** arquivadas e verificadas por SHA256.
 **0 de 9 reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.
 **Nenhuma miniatura substitui o original. Gerado não significa aprovado.**
 Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geração de IA.
@@ -41,13 +41,13 @@ Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geraç�
 | [biblia-sala-do-trono-detalhes-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008517998/biblia-sala-do-trono-detalhes-v1.png) | gerado (não aprovado automaticamente) | `a81380c718e41d8a…` | [#44008517998](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008517998) |
 | [biblia-quarto-kael-vazio-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008695444/biblia-quarto-kael-vazio-v1.png) | gerado (não aprovado automaticamente) | `84ba05fbc8a6da12…` | [#44008695444](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008695444) |
 | [biblia-quarto-kael-monitor-aceso-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008857880/biblia-quarto-kael-monitor-aceso-v1.png) | gerado (não aprovado automaticamente) | `6eb1fb244a596b55…` | [#44008857880](https://github.com/HelioConde/VideoForge-IA/actions/runs/44008857880) |
+| [biblia-estrada-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009355532/biblia-estrada-base-v1.png) | gerado (não aprovado automaticamente) | `ae6f411689d4c622…` | [#44009355532](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009355532) |
+| [biblia-mercado-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009519845/biblia-mercado-base-v1.png) | gerado (não aprovado automaticamente) | `93a795fb323b8035…` | [#44009519845](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009519845) |
+| [biblia-beco-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009676311/biblia-beco-base-v1.png) | gerado (não aprovado automaticamente) | `83c10082fb1a808a…` | [#44009676311](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009676311) |
+| [biblia-portao-real-base-v1](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009839428/biblia-portao-real-base-v1.png) | gerado (não aprovado automaticamente) | `e68a242a4cce32b3…` | [#44009839428](https://github.com/HelioConde/VideoForge-IA/actions/runs/44009839428) |
 
 ## Pendentes de geração
 
-- biblia-estrada-base-v1
-- biblia-mercado-base-v1
-- biblia-beco-base-v1
-- biblia-portao-real-base-v1
 - biblia-castelo-base-v1
 - biblia-coroa-aldric-base-v1
 - biblia-coroa-elara-base-v1
