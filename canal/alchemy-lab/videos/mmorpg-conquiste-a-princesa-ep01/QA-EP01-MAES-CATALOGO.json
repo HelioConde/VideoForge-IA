@@ -1,0 +1,41 @@
+{
+  "schema": "videoforge/ep01-contact-sheet-review/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "visual_shots": 39,
+  "mother_count": 39,
+  "remaining": 0,
+  "sheets": [
+    {
+      "file": "QA-EP01-MAES-CATALOGO-01.jpg",
+      "sha256": "e45fab30954e4f70ca9a0619ad0f80290cf8376a83845ca10dff68c56137f709"
+    },
+    {
+      "file": "QA-EP01-MAES-CATALOGO-02.jpg",
+      "sha256": "313629e0cf425f460b667596a8a08c0a68bf19d2b707f8877c4b73847158191d"
+    },
+    {
+      "file": "QA-EP01-MAES-CATALOGO-C01-ALTERNATIVAS.jpg",
+      "sha256": "f87cbc3712b9e356ba787c6a4e35193d51fd1942a299f7dab6b5698d5a32599b"
+    }
+  ],
+  "alternate_candidate_count": 4,
+  "historical_rejected_original_shots": [
+    "C01-P02",
+    "C01-P03",
+    "C01-P04"
+  ],
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_uploaded": false,
+  "image_generation_calls": 0,
+  "no_sprite_extraction": true,
+  "manual_checks": [
+    "personagem consistente",
+    "mãos e anatomia",
+    "carrinho/espada/lanças e contato",
+    "roupas e bainha",
+    "ângulos de câmera",
+    "continuidade de cenários e iluminação"
+  ]
+}

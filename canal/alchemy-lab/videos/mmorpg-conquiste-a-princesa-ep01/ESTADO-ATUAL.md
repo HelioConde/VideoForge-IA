@@ -1,3 +1,10 @@
+## 17/11/2026 — Conclusão das 39 imagens-mãe e pranchas de conferência
+
+- **39/39 imagens-mãe originais SHA-arquivadas**; inventário oficial em CHECKPOINT-IMAGENS-EP01-AUTO.json.
+- Pranchas para revisão: QA-EP01-MAES-CATALOGO-01.jpg e QA-EP01-MAES-CATALOGO-02.jpg e QA-EP01-MAES-CATALOGO-C01-ALTERNATIVAS.jpg; manifesto QA-EP01-MAES-CATALOGO.json.
+- Estas pranchas são apenas miniaturas para conferência humana; não são fontes de rig. Revisar continuidade, anatomia, roupas, mãos, armas e objetos.
+- **Nenhuma aprovação individual automática**, sem sprites/RGBA definitivos, rig, MP4 ou upload YouTube.
+
 ## 17/11/2026 — C08 completa (23/39) e fila independente para restantes
 
 - **Checkpoint no instante do acionamento da fila:** 23/39 mães arquivadas, **16 faltantes**. O número é histórico: consultar sempre `CHECKPOINT-IMAGENS-EP01-AUTO.json` para obter o valor atualizado em tempo real.
