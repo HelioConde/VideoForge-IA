@@ -23,6 +23,25 @@ class VisualBibleMasterTests(unittest.TestCase):
         self.assertIn("SEM PESSOAS", prompt.upper())
         self.assertIn("SEM LANÇAS", prompt.upper())
         self.assertFalse(asset["youtube_upload"])
+    def test_kael_and_elara_use_two_original_images(self):
+        from videoforge.grounded_identity import inputs
+        sources={x["actor"]:x for x in inputs()}
+        plan,story=read_plan("alchemy-lab","mmorpg-conquiste-a-princesa-ep01")
+        for asset_id,actor in (("biblia-kael-medieval-base-v1","kael"),
+                               ("biblia-elara-palacio-base-v1","elara")):
+            with self.subTest(actor=actor):
+                asset=next(x for x in plan["assets"] if x["id"]==asset_id)
+                prompt,size=asset_prompt(plan,story,asset_id)
+                payload,provenance=edit_payload(asset,prompt,"gpt-image-2",size)
+                self.assertEqual(len(payload["images"]),2)
+                source=base64.b64decode(payload["images"][1]["image_url"].split(",",1)[1])
+                self.assertEqual(source,sources[actor]["bytes"])
+                self.assertEqual(provenance[1]["sha256"],sources[actor]["sha256"])
+                self.assertEqual(asset["biblia_item_id"],actor)
+                self.assertEqual(asset["biblia_categoria"],"personagens")
+                self.assertIn("FUNDO NEUTRO",prompt.upper())
+                self.assertFalse(asset["youtube_upload"])
+
     def test_fake_reference_blocks_before_provider(self):
         plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
         asset = dict(next(x for x in plan["assets"] if x["id"] == "biblia-sala-do-trono-vazio-v1"))
