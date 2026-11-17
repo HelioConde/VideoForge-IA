@@ -2067,5 +2067,19 @@
       "aprovar interação guardas segurando lanças na BASE antes de propagar",
       "continuar a geração das tomadas do EP01 reutilizando apenas referências aprovadas"
     ]
+  },
+  "c01_p02_contact_v3_review": {
+    "status": "pending_human_closeup_review",
+    "date": "2026-11-17",
+    "report": "REVISAO-VISUAL-ASSISTIDA-C01-P02-V3.md",
+    "image": "QA-C01-P02-CONTATO-V3.jpg",
+    "selected_final_candidate": null,
+    "source_v1_rejected_contact": true,
+    "assistant_review_is_not_human_approval": true,
+    "legacy_v1_masks_not_valid_for_v3": true,
+    "needs_regeneration_of_rgba_masks_from_selected_mother": true,
+    "render_ready": false,
+    "mp4_generated": false,
+    "youtube_uploaded": false
   }
 }
