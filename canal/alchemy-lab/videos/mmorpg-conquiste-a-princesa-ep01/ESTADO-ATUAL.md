@@ -1,5 +1,12 @@
 # Estado atual — MMORPG: Conquiste a Princesa (EP01)
 
+## 16/11/2026 — Pedido de gerar todas as imagens (lotes GitHub)
+
+- 42 variantes independentes cadastradas em `production-art.json` e ordenadas em [`FILA-GERACAO-MESTRES.json`](../../biblia-visual/FILA-GERACAO-MESTRES.json): 3 arquivadas no início, 39 faltando. O primeiro lote começa por Aldric tribunal/revelação e guardas esquerdo/direito neutros; depois lança por partes, protagonistas, cenários e objetos.
+- Novo workflow [visual-bible-batch.yml](https://github.com/HelioConde/VideoForge-IA/blob/main/.github/workflows/visual-bible-batch.yml) disparado pelo commit `4ceb47d06935c12752e573ec555ae577e034109b`, [run inicial 44005370074](https://github.com/HelioConde/VideoForge-IA/actions/runs/44005370074). Cada lote processa até 4 em sequência por `workflow_dispatch`; cada asset tem uma única chamada por run, sem retry/cobranças extras; arquivo SHA original e proveniência permanecem obrigatórios.
+- 12 variantes de interação/poses (incluindo guardas cruzando lanças/pegada na base) dependem de mestres aceitos e ficam bloqueadas pelo gate. Rainha permanece personagem futuro sem especificação de aparência. A fila de 40 tomadas do EP01 e bloqueio da publicação continuam intactos.
+- Sucesso técnico não implica imagem aprovada. Conferir QA visual, atualizar aprovações apenas com evidência humana e só depois liberar as tomadas dependentes. Sem vídeo/YouTube por este pedido.
+
 ## 16/11/2026 — Salão do trono vazio gerado pelo GitHub e registrado na Bíblia
 
 - [Run #44002126578](https://github.com/HelioConde/VideoForge-IA/actions/runs/44002126578) **SUCCESS** após falhas pré-geração dos runs 44001843499 e 44001957757 por chaves antigas de QA no `pedido-geracao-arte.json`; ambas falhas ocorreram ANTES de gerar qualquer PNG, contrato corrigido no commit `9f15fb346e8b47cc4428da83913eb733dc954cab`.
