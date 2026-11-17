@@ -2182,6 +2182,12 @@
     "pending": "apply skills in actual autonomous production workflow and verify runs",
     "no_new_images_audio_rig_or_mp4_from_this_change": true,
     "human_approval": false,
-    "youtube_uploaded": false
+    "youtube_uploaded": false,
+    "static_tests_file": "tests/test_video_skill_routing.py",
+    "static_validation_workflow": ".github/workflows/qa-videoforge-skills.yml",
+    "static_validation_run_id": 44072866500,
+    "static_validation_result": "success",
+    "production_integration_status": "documentation_routing_only_not_new_autonomous_agents",
+    "media_generation_from_this_change": false
   }
 }
