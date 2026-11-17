@@ -1,3 +1,9 @@
+## 2026-11-17 — C06-P01 e QA Arken
+
+- Cena C06-P01 bolsa vazia produzida e arquivada com SHA `1f4f543b...`, run #44088754480, dimensões 941×1672. Inventário automático: 13/39 visual mothers, 26 faltantes.
+- Criados QA de continuidade C05 estrada/muralhas/cidade (script, workflow, pedido e comparativo), [run #44088952094](https://github.com/HelioConde/VideoForge-IA/actions/runs/44088952094) sucesso, zero chamadas de imagem. Visual geral consistente, solo/traço da estrada precisam conferência. [Relatório](REVISAO-VISUAL-C05-ARKEN.md).
+- Registrado em `AGENTS.md`, `README.md`, `ESTADO-ATUAL.md` e `estado-atual.json`. Nenhuma aprovação de arte, rig, MP4 ou upload.
+
 ## 2026-11-17 — Continuação C02-P02 até C05-P02 + Arken
 
 - Avanço de **5 para 12 mães originais arquivadas** entre 39 tomadas visuais: adicionadas C02-P02, C03-P01, C03-P02, C04-P01, C04-P02, C05-P01 e C05-P02, todas em PNG original 941×1672, SHA e run registrados. Imagens não aprovadas automaticamente.
