@@ -20,12 +20,20 @@ python -m videoforge.persist_generated_assets \
 # P0 Bíblia Visual: commit atômico entre a imagem original e o registro.
 # Qualquer falha no SHA/JSON/status bloqueia o push do PNG, nunca finge sucesso.
 python -m videoforge.visual_bible --channel "$CHANNEL"
+# Keep the EP01 progress checkpoint synchronized with the real SHA archive
+# during each successful image push, not from stale prose or user guesses.
+if [[ "$CHANNEL" == "alchemy-lab" && "$VIDEO_ID" == "mmorpg-conquiste-a-princesa-ep01" ]]; then
+  python -m videoforge.ep01_image_inventory --write
+fi
 DEST="canal/$CHANNEL/videos/$VIDEO_ID/assets/geracoes/$PRODUCER/$RUN_ID"
 BIBLE_DIR="canal/$CHANNEL/biblia-visual"
 git config user.name 'videoforge-assets[bot]'
 git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 git add -f -- "$DEST"
 git add -A -- "$BIBLE_DIR"
+if [[ "$CHANNEL" == "alchemy-lab" && "$VIDEO_ID" == "mmorpg-conquiste-a-princesa-ep01" ]]; then
+  git add -f -- "canal/$CHANNEL/videos/$VIDEO_ID/CHECKPOINT-IMAGENS-EP01-AUTO.json"
+fi
 if git diff --cached --quiet; then
   echo "GITHUB_IMAGE_ARCHIVE_ALREADY_IDENTICAL $DEST"
   exit 0
