@@ -1,0 +1,37 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-ombreira-kael-base-v1",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-ombreira-kael-base-v1.png",
+  "biblia_item_id": "ombreira-kael",
+  "biblia_categoria": "objetos",
+  "size": "1024x1536",
+  "sha256": "ef1fe8e4d3b844c1942a0a693be2f060938ab26931bc7fa7bcd4bf1683e556c1",
+  "model": "gpt-image-2",
+  "actual_width": 1536,
+  "actual_height": 1024,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 1,
+  "source_originals_sha_verified": [
+    {
+      "actor": "biblia_mestre",
+      "id": "biblia-kael-medieval-base-v1",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+      "source_spear_pose_rejected": false,
+      "human_visual_approval_pending": true
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": null,
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}

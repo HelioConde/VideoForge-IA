@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**44 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**45 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -48,6 +48,7 @@
 | [biblia-broche-flor-completo-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010852169/biblia-broche-flor-completo-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`53ac60fa4548…\` | [#44010852169](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010852169) |
 | [biblia-broche-flor-detalhe-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010961561/biblia-broche-flor-detalhe-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`50699ee2593b…\` | [#44010961561](https://github.com/HelioConde/VideoForge-IA/actions/runs/44010961561) |
 | [biblia-capa-kael-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011117376/biblia-capa-kael-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`16b3c0e5a20b…\` | [#44011117376](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011117376) |
+| [biblia-ombreira-kael-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011347479/biblia-ombreira-kael-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`ef1fe8e4d3b8…\` | [#44011347479](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011347479) |
 
 ## Regras de consulta
 
