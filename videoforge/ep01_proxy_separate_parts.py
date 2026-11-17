@@ -49,7 +49,10 @@ def existing_part(shot_id: str, part_id: str, root: Path = ROOT) -> dict | None:
     registry=Path(root)/"canal"/CHANNEL/"biblia-visual"/"REGISTRO-GERACOES.json"
     items=json.loads(registry.read_text(encoding="utf-8")).get("geracoes",[])
     asset_id=shot_id.lower()+"-"+part_id
-    matches=[x for x in items if x.get("asset")==asset_id]
+    # An older pixel-cutout producer may have the SAME logical asset ID.
+    # It must never be accepted as our independent proxy-generated image.
+    matches=[x for x in items if x.get("asset")==asset_id and
+             f"/{PRODUCER}/" in str(x.get("arquivo",""))]
     if not matches:
         return None
     if len(matches)!=1:
@@ -124,6 +127,9 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
     root=Path(root)
     image_generation_policy.assert_image_generation_allowed(CHANNEL,VIDEO,root)
     shot,request=read_shot(shot_id,part_id,root)
+    # C01-P02 mother V1 is rejected; block before any legacy asset lookup.
+    if shot_id=="C01-P02":
+        raise VideoForgeError("EP01_PROXY_PARTS_C01_P02_MOTHER_NOT_CANONICAL")
     if existing_part(shot_id,part_id,root):
         raise VideoForgeError("EP01_PROXY_PARTS_ALREADY_ARCHIVED_NO_REPEAT")
     mother,proof=mother_source(shot_id,root)
