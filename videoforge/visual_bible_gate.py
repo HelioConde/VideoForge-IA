@@ -75,6 +75,13 @@ def require_ready(channel: str, video_id: str, shot_id: str, root: Path = ROOT):
                 or approval.get("status") != "aprovado"
                 or not approval.get("revisor") or not approval.get("evidencia")):
             raise VideoForgeError("BIBLE_SCENE_HUMAN_APPROVAL_REQUIRED")
+        allowed = approval.get("escopo_permitido", [])
+        banned = approval.get("escopo_proibido", [])
+        if (not isinstance(allowed, list)
+                or "referencia_canonica" not in allowed
+                or not isinstance(banned, list)
+                or any(x in banned for x in ("pose", "contato_mão_lança", "rig"))):
+            raise VideoForgeError("BIBLE_SCENE_CANONICAL_VISUAL_SCOPE_REQUIRED")
         status_path = bible / category / item_id / "status.json"
         state = _read(status_path)
         if state.get("status") != "aprovado" or state.get("aprovacao_mestra") is not True:
