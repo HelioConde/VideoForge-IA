@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 45,
+  "total_arquivadas": 46,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1378,6 +1378,34 @@
           "id": "biblia-kael-medieval-base-v1",
           "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44011502023:biblia-capuz-elara-base-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-capuz-elara-base-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "capuz-elara",
+      "biblia_categoria": "objetos",
+      "producer": "production-art-request",
+      "github_run_id": 44011502023,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011502023/biblia-capuz-elara-base-v1.png",
+      "sha256": "04b21722724c7e09db4dd3eecb0ea2e310f15e5ace3617b3ba38c17a260c2445",
+      "bytes": 2298663,
+      "width": 1086,
+      "height": 1448,
+      "referencias_usadas": [
+        {
+          "id": "biblia-elara-encapuzada-v1",
+          "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44006929092/biblia-elara-encapuzada-v1.png"
         }
       ],
       "status": "gerado",
