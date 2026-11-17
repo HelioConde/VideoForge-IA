@@ -1,3 +1,5 @@
+# LEGADO SOMENTE PARA AUDITORIA HISTÓRICA. Não executar geração/recorte.
+# Política oficial: docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md
 name: "VideoForge - EP01 espada da mesma cena-mae"
 run-name: "EP01 C01-P02 / espada original sem IA"
 on:
@@ -12,7 +14,7 @@ permissions:
   contents: write
 jobs:
   source-sword:
-    if: github.ref == 'refs/heads/main'
+    if: false  # DESATIVADO: candidato legado V1 não aprovado para rig
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
