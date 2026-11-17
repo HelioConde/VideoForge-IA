@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/ep01-c01p04-right-cuff-qa-request/v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "side": "right",
+  "reason": "R3 detached forearm from palm; test W1-W4 moving only forearm while retaining R2 palm/digits",
+  "variants": [
+    "W1-cuff-neutral",
+    "W2-cuff-right15",
+    "W3-cuff-right30",
+    "W4-cuff-right45"
+  ],
+  "approved_source_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "no_new_generation": true,
+  "review_only": true,
+  "visual_approval": false,
+  "rig_ready": false,
+  "youtube_upload": false
+}
