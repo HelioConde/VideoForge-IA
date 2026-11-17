@@ -82,6 +82,8 @@ def assemble(root: Path = ROOT):
     out_dir.mkdir(exist_ok=True)
     width, tile_w, tile_h, cols, rows_per_page = 1010, 318, 408, 3, 4
     per_page = cols * rows_per_page
+    master_count = sum(1 for item in independent if item["asset_id"] in archived)
+    repair_count = sum(1 for item in repairs if item["asset_id"] in archived)
     pages = []
     for start in range(0, len(entries), per_page):
         section = entries[start:start + per_page]
@@ -90,8 +92,6 @@ def assemble(root: Path = ROOT):
         font = ImageFont.load_default()
         page = (start // per_page) + 1
         draw.text((20, 15), "BIBLIA VISUAL / EP01 / PREVIA PARA QA", font=font, fill="#222222")
-        master_count = sum(1 for item in independent if item["asset_id"] in archived)
-        repair_count = sum(1 for item in repairs if item["asset_id"] in archived)
         draw.text((20, 37), f"Pagina {page} - {master_count}/{len(independent)} mestres + {repair_count}/{len(repairs)} reparos - NAO APROVADOS AUTOMATICAMENTE",
                   font=font, fill="#555555")
         for offset, (item, row, thumb) in enumerate(section):
