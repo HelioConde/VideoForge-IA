@@ -2,10 +2,10 @@
   "schema": "videoforge/ep01-throne-orientation-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "target": "C01-P03",
-  "request_sequence": 1,
+  "target": "C01-P04",
+  "request_sequence": 2,
   "requested_by": "owner_2026-11-17",
-  "reason": "Kael ajoelhado estava orientado indevidamente; virar torso/quadril/cabeca/olhar em direcao ao trono e ao rei, com camera 3/4 que revela perfil",
+  "reason": "C01-P04, Kael ajoelhado orientado fisicamente ao rei Aldric sentado no trono. Dois guardas segurando as lanças pela base/terço inferior, formando X alto e mantendo anatomia.",
   "visual_source": "V2 SHA-verified plus archived Visual Bible",
   "style": "manhwa anime 2D fantasia semirrealista aprovado",
   "preserve_old_versions": true,
@@ -14,5 +14,6 @@
   "max_chargeable_calls_per_run": 1,
   "retry_on_429": false,
   "youtube_upload": false,
-  "next_if_success": "C01-P04"
+  "next_if_success": "C01-P04-ALT",
+  "previous_successful_run": 44151964491
 }
