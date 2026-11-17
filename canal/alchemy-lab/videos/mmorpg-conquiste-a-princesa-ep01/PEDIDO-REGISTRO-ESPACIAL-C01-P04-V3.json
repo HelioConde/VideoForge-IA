@@ -1,0 +1,31 @@
+{
+  "schema": "videoforge/ep01-native-registration-review-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "targets": [
+    "character-aldric",
+    "character-guarda_esquerdo"
+  ],
+  "source_mother_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "native_canvas": [
+    981,
+    1602
+  ],
+  "scene_canvas": [
+    941,
+    1672
+  ],
+  "no_provider_calls": true,
+  "no_final_art_edit": true,
+  "proposals": [
+    "A-top-left-native",
+    "B-centered-native",
+    "C-uniform-fit"
+  ],
+  "all_proposals_require_visual_approval": true,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_upload": false
+}
