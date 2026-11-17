@@ -1,0 +1,46 @@
+{
+  "schema": "videoforge/ep01-c01p04-grip-v3-review/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "creator_approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "approved_aligned_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "guide_not_approved_as_final_sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+  "parts": [
+    {
+      "role": "forearm-cuff",
+      "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-grip-v3-independent-part/44186735696/c01-p04-v3-left-grip-forearm-cuff-v3.png",
+      "source_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+      "technical_qa": "candidate_pending_spatial_and_anatomical_review",
+      "native_canvas": [
+        1120,
+        1404
+      ],
+      "alpha_bbox_xyxy": [
+        273,
+        55,
+        1078,
+        1299
+      ],
+      "likely_oversized_bbox_warning": true,
+      "review_sheet": "QA-C01-P04-V3-ANATOMIA-PEGADA-FOREARM-CUFF.jpg",
+      "review_sheet_sha256": "46a2b6f6d003af4ec8745c5d00753b6312f0b122c3533dec309fe697d3bfdee8",
+      "human_visual_approved": false,
+      "rig_ready": false
+    }
+  ],
+  "all_parts_generated": false,
+  "requires_manual_visual_review": true,
+  "checks": [
+    "armour matches source (no extra fingers)",
+    "palm sits behind shaft; must be a PALM, not a tube",
+    "front fingertips and thumb wrap across a real spear",
+    "consistent spatial anchors, hand and shaft contact",
+    "avoid duplicated knuckles and gaps in frame sequence"
+  ],
+  "automatic_rig_ready": false,
+  "human_visual_approval": false,
+  "model_calls": 0,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
