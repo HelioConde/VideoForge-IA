@@ -1,0 +1,54 @@
+{
+  "schema": "videoforge/ep01-shot-mother-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c08-p02-scene-mother",
+  "candidate_scene_shot_id": "C08-P02",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/c08-p02-scene-mother.png",
+  "sha256": "471f6923c2a23b23c9a49960d0530d4518ef7e81177defb20a29a339a5c2cf6b",
+  "bytes": 2670967,
+  "width": 941,
+  "height": 1672,
+  "model": "gpt-image-2",
+  "size": "1024x1536",
+  "source_originals_sha_verified": [
+    {
+      "id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    },
+    {
+      "id": "biblia-mascarados-base-v2",
+      "sha256": "212d8c9e93e8671962b6d247e703c96b747e28619ff680985d17749807b213de",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016503620/biblia-mascarados-base-v2.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    },
+    {
+      "id": "biblia-carrinho-base-v1",
+      "sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011721667/biblia-carrinho-base-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    },
+    {
+      "id": "biblia-beco-base-v1",
+      "sha256": "83c10082fb1a808a3f118625d9aca8bcf1e22707d9af0b91d92440af61436939",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009676311/biblia-beco-base-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    }
+  ],
+  "source_images_attached_to_request": 4,
+  "technical_qa": "valid_png_source_refs_sha_verified",
+  "human_visual_approval": false,
+  "scene_complete": false,
+  "background_generated": false,
+  "characters_rgba_generated": false,
+  "rig_generated": false,
+  "camera_plan_registered": true,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
