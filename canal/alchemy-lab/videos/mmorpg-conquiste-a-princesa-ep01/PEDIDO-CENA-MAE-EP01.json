@@ -2,30 +2,33 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C01-P03",
-  "status": "requested",
+  "shot_id": "C01-P04",
+  "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "Nova cena-mãe candidata do plano baixo de Kael ajoelhado diante do rei Aldric com salão do trono da Bíblia Visual; verificar consistência canônica do traje do rei; não gerar camadas por recortes locais",
+  "objective": "Plano geral do tribunal: Kael ajoelhado, rei Aldric no trono, guarda esquerdo e direito segurando suas lanças pela BASE com dedos cerrados; lanças cruzadas em X ALTO. Referências SHA da Bíblia, rejeitar poses antigas e respeitar continuidade de figurino.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
   "human_visual_approval_required": true,
   "approved_for_final_render": false,
   "next_steps_if_success": [
-    "arquivar_png_original_sha",
-    "conferir_kael_ajoelhado_e_roupa_de_aldric",
-    "revisar_continuidade_da_biblia",
-    "apos_aprovacao_gerar_background_personagens_objetos_em_pngs_independentes_via_proxy"
+    "registrar_sha_original",
+    "revisar_posicao_das_maos_nas_lancas_e_cena_completa",
+    "conferir_consistencia_de_aldric_kael_guardas",
+    "gerar_background_e_atores_separados_pelo_proxy_com_a_propria_mae_como_referencia",
+    "nao_liberar_rig_sem_qa"
   ],
   "max_chargeable_calls_per_run": 1,
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 2,
+  "request_sequence": 3,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "request_revision": 2,
-  "previous_run_id": 44073458492,
-  "previous_run_result": "preflight_tests_stale_c01p02_source_guard_no_paid_image_calls",
-  "regression_fix": "tests/test_ep01_shot_mother.py mock historical C01-P02 archive guard only in tests"
+  "request_revision": 4,
+  "last_shot_archived": {
+    "shot_id": "C01-P03",
+    "run_id": 44073592014,
+    "sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765"
+  }
 }
