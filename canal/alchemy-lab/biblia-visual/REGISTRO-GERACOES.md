@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**121 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**122 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -125,6 +125,7 @@
 | [c14-p03-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44105086877/c14-p03-scene-mother.png) / C14-P03 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`d94216954a56…\` | [#44105086877](https://github.com/HelioConde/VideoForge-IA/actions/runs/44105086877) |
 | [c01-p03-scene-mother-facing-throne-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44151964491/c01-p03-scene-mother-facing-throne-v3.png) / C01-P03 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`e668f713456d…\` | [#44151964491](https://github.com/HelioConde/VideoForge-IA/actions/runs/44151964491) |
 | [c01-p04-scene-mother-facing-throne-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`a55a2beb23b9…\` | [#44152300579](https://github.com/HelioConde/VideoForge-IA/actions/runs/44152300579) |
+| [c01-p04-scene-mother-facing-throne-v3-alt.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152731865/c01-p04-scene-mother-facing-throne-v3-alt.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`b10828c9262b…\` | [#44152731865](https://github.com/HelioConde/VideoForge-IA/actions/runs/44152731865) |
 
 ## Regras de consulta
 
