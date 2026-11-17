@@ -624,5 +624,10 @@
     }
   ],
   "hold": true,
-  "nota": "Rainha planejada para histórias futuras; não figura nas 40 tomadas. C03-P02 tem match-cut com monitor."
+  "nota": "Rainha planejada para histórias futuras; não figura nas 40 tomadas. C03-P02 tem match-cut com monitor.\nRegra de 17/11/2026: listas de interacoes nas tomadas sao instrucoes para cena-mae/rig/QA, nao dependencias de PNGs de poses geradas isoladamente. O gatilho de geracao da cena ainda depende dos gates de arte e QA; isto nao aprova automaticamente o video.",
+  "active_production_plan": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json",
+  "independent_pose_pngs_required": false,
+  "interactions_are": "physical_contacts_and_motions_verified_in_scene_mother_and_rig",
+  "camera_directions_required_for_each_shot": true,
+  "scene_mother_then_background_characters_objects_layers": true
 }
