@@ -7,7 +7,7 @@
   "max_calls_per_run": 1,
   "requested_on": "2026-11-16",
   "requested_by": "owner_apply_and_continue_visual_bible",
-  "status": "requested_visual_bible_background_master",
+  "status": "requested_master_visual_bible_contract_fixed",
   "purpose": "Primeira imagem mestre reutilizavel do novo sistema de Biblia Visual: sala do trono VAZIA. Usar C01-P04 V3 somente como fonte exata SHA para estilo/arquitetura/luz; remover todos personagens e lanças, reconstruir fundo. Gravar PNG original+SHA+registro geracoes JSON/MD no mesmo commit pelo arquivador do GitHub.",
   "biblical_category": "cenarios",
   "biblia_item_id": "sala-do-trono",
@@ -21,5 +21,13 @@
   "no_repeat_previous_assets": true,
   "youtube_upload": false,
   "no_publishing": true,
-  "previous_closed_request_asset": "biblia-sala-do-trono-vazio-v1"
+  "previous_closed_request_asset": "biblia-sala-do-trono-vazio-v1",
+  "human_visual_review_required": true,
+  "previous_rejected_reference_must_not_be_used": true,
+  "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "biblia_categoria": "cenarios",
+  "new_scene_generation_allowed": false,
+  "automatic_approval": false,
+  "last_failed_preflight_run": 44001957757,
+  "last_failed_preflight_reason": "tests.test_first_dorama_image expected human_visual_review_required and previous_rejected_reference_must_not_be_used; no image generated"
 }
