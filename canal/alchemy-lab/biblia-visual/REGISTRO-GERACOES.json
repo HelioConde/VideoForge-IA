@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 42,
+  "total_arquivadas": 43,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1294,6 +1294,34 @@
           "id": "biblia-sala-do-trono-vazio-v1",
           "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44010961561:biblia-broche-flor-detalhe-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-broche-flor-detalhe-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "broche-flor",
+      "biblia_categoria": "objetos",
+      "producer": "production-art-request",
+      "github_run_id": 44010961561,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010961561/biblia-broche-flor-detalhe-v1.png",
+      "sha256": "50699ee2593b7bcf25a69f2ef064465c88cc3b3f0bb391e2a7bebe8b6e6b28c0",
+      "bytes": 2432830,
+      "width": 1199,
+      "height": 1312,
+      "referencias_usadas": [
+        {
+          "id": "biblia-broche-flor-completo-v1",
+          "sha256": "53ac60fa45483e4ff5368f9d873207c2909cb71c6206799950bdc1f7fa04de27",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010852169/biblia-broche-flor-completo-v1.png"
         }
       ],
       "status": "gerado",

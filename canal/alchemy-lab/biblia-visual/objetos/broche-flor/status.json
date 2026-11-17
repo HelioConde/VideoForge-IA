@@ -3,10 +3,11 @@
   "categoria": "objetos",
   "id": "broche-flor",
   "status": "gerado",
-  "ultima_geracao": 44010852169,
-  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010852169/biblia-broche-flor-completo-v1.png",
+  "ultima_geracao": 44010961561,
+  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010961561/biblia-broche-flor-detalhe-v1.png",
   "aprovacao_mestra": false,
   "historico_de_versoes": [
-    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44010852169:biblia-broche-flor-completo-v1.png"
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44010852169:biblia-broche-flor-completo-v1.png",
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44010961561:biblia-broche-flor-detalhe-v1.png"
   ]
 }
