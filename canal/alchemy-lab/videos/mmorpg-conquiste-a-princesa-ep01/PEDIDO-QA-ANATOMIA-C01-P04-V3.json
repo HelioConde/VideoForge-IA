@@ -4,11 +4,11 @@
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "shot_id": "C01-P04",
   "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
-  "version": 3,
+  "version": 4,
   "source_run_id": 44187678728,
   "role": "all-three-and-spear",
   "source_png_sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
-  "purpose": "rerun only zero-paid QA of three independent hand layers with spatial offset variants R1/R2/R3 and hand closeup",
+  "purpose": "QA 3 real PNG layers with registered R1/R2/R3 and report alpha intersection counts for forearm/palm/spear/fingers; no paid calls",
   "one_paid_call_per_run": false,
   "model_calls": 0,
   "rig_ready": false,
@@ -20,5 +20,6 @@
     "fingers-front": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305"
   },
   "last_failed_contact_qa": "QA-C01-P04-V3-PEGADA-CONTATO.json",
-  "new_review": "QA-C01-P04-V3-PEGADA-CONTATO-REGISTRO-V2.json"
+  "new_review": "QA-C01-P04-V3-PEGADA-CONTATO-REGISTRO-V2.json",
+  "new_metric_report": "QA-C01-P04-V3-PEGADA-CONTATO-METRICAS.json"
 }
