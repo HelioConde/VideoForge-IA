@@ -3,10 +3,11 @@
   "categoria": "personagens",
   "id": "figurantes",
   "status": "gerado",
-  "ultima_geracao": 44007811797,
-  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007811797/biblia-figurantes-base-v1.png",
+  "ultima_geracao": 44016029012,
+  "ultimo_arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016029012/biblia-figurantes-base-v2.png",
   "aprovacao_mestra": false,
   "historico_de_versoes": [
-    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44007811797:biblia-figurantes-base-v1.png"
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44007811797:biblia-figurantes-base-v1.png",
+    "mmorpg-conquiste-a-princesa-ep01:production-art-request:44016029012:biblia-figurantes-base-v2.png"
   ]
 }

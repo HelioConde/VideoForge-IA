@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 53,
+  "total_arquivadas": 54,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1597,6 +1597,34 @@
       "bytes": 2052288,
       "width": 981,
       "height": 1602,
+      "referencias_usadas": [
+        {
+          "id": "biblia-sala-do-trono-vazio-v1",
+          "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44016029012:biblia-figurantes-base-v2.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-figurantes-base-v2",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "figurantes",
+      "biblia_categoria": "personagens",
+      "producer": "production-art-request",
+      "github_run_id": 44016029012,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016029012/biblia-figurantes-base-v2.png",
+      "sha256": "5a798858eccdb04ad97d5212cd9a4d4cb8ab7f951460445e457680c545804878",
+      "bytes": 2277605,
+      "width": 1199,
+      "height": 1312,
       "referencias_usadas": [
         {
           "id": "biblia-sala-do-trono-vazio-v1",
