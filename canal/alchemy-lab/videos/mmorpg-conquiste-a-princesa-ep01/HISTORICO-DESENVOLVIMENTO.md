@@ -1,3 +1,12 @@
+## 2026-11-17 — Continuação C02-P02 até C05-P02 + Arken
+
+- Avanço de **5 para 12 mães originais arquivadas** entre 39 tomadas visuais: adicionadas C02-P02, C03-P01, C03-P02, C04-P01, C04-P02, C05-P01 e C05-P02, todas em PNG original 941×1672, SHA e run registrados. Imagens não aprovadas automaticamente.
+- QA editorial por pranchas originais, sem chamar proxy: #44084847732 (C02-C03) e #44086630803 (quarto). Achados principais: C03-P01 ainda não é macro da íris; intensidade dos ferimentos muda; possível diferença de coroa/gola do rei; Kael em pé/sentado na transição do quarto.
+- Corrigida referência indevida de C03-P02 (trono medieval) para quarto gamer, monitor e Kael casual V2. Uma tentativa bloqueada por câmera fora do contrato, corrigida restaurando foco/movimento canônicos antes de qualquer geração paga.
+- Novo cenário `arken-muralhas` inserido em `INDEX-BIBLIA.json` e gerado [#44087301592](https://github.com/HelioConde/VideoForge-IA/actions/runs/44087301592), antes de C05-P02. Teste da Bíblia inicialmente impunha 39 itens e depois apresentou escapes inválidos; corrigido e [CI #44087741614](https://github.com/HelioConde/VideoForge-IA/actions/runs/44087741614) passou.
+- Novo `CHECKPOINT-IMAGENS-EP01-AUTO.json` calcula contagem diretamente das imagens-mãe verificadas por SHA; atualiza no script de arquivamento, sem IA e sem aprovação fictícia. [Teste #44086150957](https://github.com/HelioConde/VideoForge-IA/actions/runs/44086150957) aprovado.
+- **Gates de rig/MP4/YouTube permanecem fechados**, sem geração de recortes de imagem-mãe para animação.
+
 ## 17/11/2026 — Checkpoint consolidado: 5 mães, V2 reparadas e QA visual
 
 - **40 tomadas = 39 com arte + C01-P01 preta.** Mães originais arquivadas para **C01-P02, C01-P03, C01-P04, C01-P05 e C02-P01** (5/39); **34 tomadas ainda sem mãe original**. O registro de geração tem 84 PNGs de diferentes papéis, não 84 tomadas.
