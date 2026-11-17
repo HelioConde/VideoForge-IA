@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 38,
+  "total_arquivadas": 39,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1182,6 +1182,34 @@
           "id": "biblia-aldric-tribunal-v1",
           "sha256": "37c48afcaa240f03406c280af1af4ca49304ead552f0dd89f0bbb25d0080e417",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005400386/biblia-aldric-tribunal-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44010309849:biblia-coroa-elara-base-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-coroa-elara-base-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "coroa-elara",
+      "biblia_categoria": "objetos",
+      "producer": "production-art-request",
+      "github_run_id": 44010309849,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010309849/biblia-coroa-elara-base-v1.png",
+      "sha256": "fbbb5c26dabd5aa6728151943851a2aaccf8b41dc02b494b9b1ef55f26077ba3",
+      "bytes": 2097060,
+      "width": 1214,
+      "height": 1295,
+      "referencias_usadas": [
+        {
+          "id": "biblia-elara-palacio-base-v1",
+          "sha256": "36e9bed6325d00961b1370064b4162379c294d751554493f18c926eab2fc0059",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003561770/biblia-elara-palacio-base-v1.png"
         }
       ],
       "status": "gerado",
