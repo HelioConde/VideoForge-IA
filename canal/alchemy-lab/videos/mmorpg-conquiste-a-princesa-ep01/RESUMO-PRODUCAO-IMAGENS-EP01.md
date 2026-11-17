@@ -1,3 +1,13 @@
+## Correção da auditoria — 17/11/2026
+
+**Contagem válida do registro atual:** 5 tomadas têm imagem-mãe: C01-P02, C01-P03, C01-P04, C01-P05 e C02-P01. São 39 tomadas visuais ao todo, logo **34 sem mãe**. Números históricos de 3/36 presentes mais abaixo representam um momento anterior e foram substituídos por esta conferência.
+
+**C01-P03 V1 reprovada para rig:** QA de recomposição técnica [#44077543911](https://github.com/HelioConde/VideoForge-IA/actions/runs/44077543911) concluiu, mas 58,21% dos pixels ficaram acima do limiar de diferença e a inspeção detectou mudanças de posição/escala de Kael/Aldric e elenco incorreto. Os três PNGs independentes V1 não são reutilizáveis com a mãe V2.
+
+**Mães V2 novas e ainda candidatas:** C01-P03 [#44080234599](https://github.com/HelioConde/VideoForge-IA/actions/runs/44080234599) remove guardas/lanças/espada; C01-P04 [#44080462345](https://github.com/HelioConde/VideoForge-IA/actions/runs/44080462345) corrige postura de Kael, com cópia alinhada em [#44080887693](https://github.com/HelioConde/VideoForge-IA/actions/runs/44080887693). [Comparação V2](QA-MAES-C01-P03-P04-V2.jpg); faltam conferência fina de identidade e pega da lança, **sem aprovação humana**.
+
+**C02-P01**: mãe gerada e arquivada na [execução #44081215706](https://github.com/HelioConde/VideoForge-IA/actions/runs/44081215706), ainda requer QA visual. Nenhum destes avanços libera rig, MP4 ou YouTube.
+
 # EP01 — Estado real das imagens e próximos passos (17/11/2026)
 
 ## Checkpoint mais recente — 17/11/2026, após V2 e C02-P01
