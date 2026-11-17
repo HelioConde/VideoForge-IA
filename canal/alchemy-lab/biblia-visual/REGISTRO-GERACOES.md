@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**93 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**94 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -97,6 +97,7 @@
 | [biblia-arken-muralhas-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44087301592/biblia-arken-muralhas-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`0903946038a6…\` | [#44087301592](https://github.com/HelioConde/VideoForge-IA/actions/runs/44087301592) |
 | [c05-p02-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44087638566/c05-p02-scene-mother.png) / C05-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`281aa0e4cc0d…\` | [#44087638566](https://github.com/HelioConde/VideoForge-IA/actions/runs/44087638566) |
 | [c06-p01-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44088754480/c06-p01-scene-mother.png) / C06-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`1f4f543b0852…\` | [#44088754480](https://github.com/HelioConde/VideoForge-IA/actions/runs/44088754480) |
+| [c06-p02-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44092962223/c06-p02-scene-mother.png) / C06-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`9f16478e93c2…\` | [#44092962223](https://github.com/HelioConde/VideoForge-IA/actions/runs/44092962223) |
 
 ## Regras de consulta
 
