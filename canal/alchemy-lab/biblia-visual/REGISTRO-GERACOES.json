@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 113,
+  "total_arquivadas": 114,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -3718,6 +3718,39 @@
           "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
         },
+        {
+          "id": "biblia-elara-revelada-v1",
+          "sha256": "444f5652a0cf8e8e067c7d9fe832cf64d3885e34c8c669bdd3acd5c3c12d9832",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44007068966/biblia-elara-revelada-v1.png"
+        },
+        {
+          "id": "biblia-sala-do-trono-vazio-v1",
+          "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_source_refs_sha_verified",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-scene-mother-v2:44103741020:c12-p04-scene-mother.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c12-p04-scene-mother",
+      "shot": "C12-P04",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-scene-mother-v2",
+      "github_run_id": 44103741020,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44103741020/c12-p04-scene-mother.png",
+      "sha256": "d39ed1dac909f55f0412afa754fb96d76d080f699a0f0a3384f17ee12342137c",
+      "bytes": 2595808,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
         {
           "id": "biblia-elara-revelada-v1",
           "sha256": "444f5652a0cf8e8e067c7d9fe832cf64d3885e34c8c669bdd3acd5c3c12d9832",
