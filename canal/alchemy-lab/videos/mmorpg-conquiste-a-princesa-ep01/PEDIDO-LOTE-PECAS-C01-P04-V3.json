@@ -27,8 +27,8 @@
   ],
   "technical_alignment_policy": "preserve_raw_plus_append_one_row_when_only_one_row_missing",
   "final_character_rig_policy": "no_local_pixel_crops",
-  "request_revision": 2,
-  "resume_reason": "Aldric V1 1200x1310 e reparo V2 981x1602 preservados como RGBA nativos para QA espacial, nao usar automaticamente na composicao; continuar as outras 4 pecas sem novas chamadas para Aldric",
+  "request_revision": 3,
+  "resume_reason": "Teste sintetico de canvas nativo corrigido (spec.path) sem chamadas de imagem na falha #44160622270; gerar 4 partes pendentes",
   "failed_attempts": [
     {
       "part": "character-aldric",
