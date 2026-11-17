@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Confirmar 42 mestres arquivados e quatro reparos V2
+      - name: Confirmar 42 mestres arquivados e nove reparos V2
         shell: bash
         run: |
           set -euo pipefail
@@ -49,8 +49,8 @@ jobs:
           if corrections.get('schema')!='videoforge/bible-correction-queue/v1':
               raise SystemExit('REPAIR_QUEUE_INVALID_SCHEMA')
           entries=corrections.get('items',[])
-          if len(entries)!=4 or len({i.get('asset_id') for i in entries})!=4:
-              raise SystemExit('REPAIR_INVALID_4_VARIANTS')
+          if len(entries)!=9 or len({i.get('asset_id') for i in entries})!=9:
+              raise SystemExit('REPAIR_INVALID_9_VARIANTS')
           for e in entries:
               source=assets.get(e['asset_id'])
               if not source or source.get('source_mode')!='dorama-visual-bible-edit-v1':
@@ -59,9 +59,9 @@ jobs:
                   raise SystemExit('REPAIR_INVALID_APPROVAL_FLAGS')
               if source.get('additional_master_asset_ids',[]) != e['depends_on']:
                   raise SystemExit('REPAIR_DEPENDENCIES_NOT_MATCHED '+e['asset_id'])
-          print('REPAIR_SAFE_V2_ALL_42_PRESENT; 4 candidates; no automatic approval')
+          print('REPAIR_SAFE_V2_ALL_42_PRESENT; 9 candidates; no automatic approval')
           PY
-      - name: Gerar quatro reparos em série sem repetição
+      - name: Gerar nove reparos em série sem repetição
         shell: bash
         run: |
           set -euo pipefail
@@ -72,7 +72,7 @@ jobs:
           for x in q['items']: print(x['asset_id'])
           PY
           )
-          for i in 0 1 2 3; do
+          for ((i=0;i<${#ASSETS[@]};i++)); do
             asset="${ASSETS[$i]}"
             already=$(python - "$asset" <<'PY'
           import sys
@@ -110,4 +110,4 @@ jobs:
           if ! gh workflow run qa-visual-bible-gallery.yml -R "$GH_REPO" --ref main; then
             echo "::warning::Gallery dispatch failed; correction files remain archived"
           fi
-          echo "ALL_FOUR_CORRECTIONS_GENERATED_CANDIDATES_NOT_APPROVED"
+          echo "ALL_NINE_CORRECTIONS_GENERATED_CANDIDATES_NOT_APPROVED"
