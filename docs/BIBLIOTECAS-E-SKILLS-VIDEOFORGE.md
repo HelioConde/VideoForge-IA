@@ -41,3 +41,10 @@ As skills locais usam instrucoes originais adaptadas ao projeto e **apontam** ao
 ## Seguranca e desempenho
 
 Bibliotecas atuais sao suficientes para iniciar. Nao adicionar `rigby2d`, PixiJS, Spine, Live2D, `fluent-ffmpeg` ou motores duplicados sem uma razao mensuravel; `fluent-ffmpeg` esta descontinuado. Nao atualizar dependencias nem rodar instalador remoto durante render. A qualidade tem prioridade sobre teto editorial de imagens, **mas provedor pago, gastos e publicacao exigem autorizacao distinta**.
+
+
+## Skills de animação instaladas — 17/11/2026
+
+Adicionadas videoforge-animation-parts (peças independentes geradas pelo proxy, placement, geometria oculta e diagnóstico de torso cortado) e videoforge-character-acting (poses, intenção e timing). Complementadas rig-2d-three com contatos/deformação e qa-and-checkpoint com QA temporal. Recortes e máscaras permanecem exclusivos de QA conforme CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md. Instalação de instruções; nenhuma geração, rig, render ou aprovação visual ocorreu nesta etapa. Próximo passo: aplicar preparação de peças à tomada selecionada, respeitando aprovação da mãe e proveniência.
+
+Entradas: [.agents/skills/videoforge-animation-parts/SKILL.md](../.agents/skills/videoforge-animation-parts/SKILL.md) e [atuação](../.agents/skills/videoforge-character-acting/SKILL.md). Referências carregadas somente conforme tarefa.

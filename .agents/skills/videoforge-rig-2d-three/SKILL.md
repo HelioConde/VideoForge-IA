@@ -5,6 +5,17 @@ description: Construir ou corrigir animacoes 2D articuladas no VideoForge com Th
 
 # Skill — animador e engenheiro de rig 2D real
 
+## Diagnóstico dirigido — 17/11/2026
+
+**Precedência:** seguir [camadas geradas pelo proxy](../../../docs/CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md). Peças finais exigem geração independente, proveniência e aprovação/recomposição antes do rig. Recortes/máscaras locais e os produtores históricos descritos abaixo são QA/legado, não fontes autorizadas de rig. Código mecânico com fixtures não equivale a rig da arte pendente.
+
+- Peças cortadas, ROI de cor usada como textura ou fundo revelado: consultar [peças animáveis](../videoforge-animation-parts/SKILL.md).
+- Mão/espada deslizando, pivôs ou malhas: consultar [contatos e deformação](references/contacts-and-deformation.md).
+- Movimento mecanicamente válido mas artificial: consultar [atuação](../videoforge-character-acting/SKILL.md).
+- Validar a sequência: consultar [QA temporal](../videoforge-qa-and-checkpoint/references/temporal-qa.md).
+
+Carregar apenas a referência pertinente. Preservar versões do lockfile: skills globais mais novas podem conter APIs ainda indisponíveis no projeto.
+
 ## Bibliotecas e codigos prontos
 
 - `three` e `@react-three/fiber` **ja instalados** para render de geometria, pivôs, texturas e malhas.

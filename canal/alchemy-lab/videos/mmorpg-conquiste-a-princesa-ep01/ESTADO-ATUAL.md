@@ -871,3 +871,8 @@ PR https://github.com/HelioConde/VideoForge-IA/pull/65 integrado no commit 69e6d
 - Automatização `.github/workflows/qa-visual-bible-gallery.yml` atualiza a galeria ao concluir cada lote de referências-mestre; também permite execução manual. Primeiro teste: [Actions #44006804432](https://github.com/HelioConde/VideoForge-IA/actions/runs/44006804432), **sucesso**.
 - Ponto de revisão para o usuário: [`../../biblia-visual/GALERIA-EP01.md`](../../biblia-visual/GALERIA-EP01.md), com links para todos os originais e revisão por imagem. Contagem atual deve ser lida ali ou no registro; não presumir conclusão de 42 com base na programação.
 - A fila segue automaticamente; a regra de contato mão→terço inferior da BASE da lança e o bloqueio de cenas/YouTube permanecem inalterados.
+
+
+## Skills de animação instaladas — 17/11/2026
+
+Adicionadas videoforge-animation-parts (peças independentes geradas pelo proxy, placement, geometria oculta e diagnóstico de torso cortado) e videoforge-character-acting (poses, intenção e timing). Complementadas rig-2d-three com contatos/deformação e qa-and-checkpoint com QA temporal. Recortes e máscaras permanecem exclusivos de QA conforme CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md. Instalação de instruções; nenhuma geração, rig, render ou aprovação visual ocorreu nesta etapa. Próximo passo: aplicar preparação de peças à tomada selecionada, respeitando aprovação da mãe e proveniência.

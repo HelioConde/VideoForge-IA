@@ -620,3 +620,8 @@ PR https://github.com/HelioConde/VideoForge-IA/pull/65 integrado no commit 69e6d
 - Código agora liga `dorama_visual_compare` à geração de novas imagens ancoradas: futura comparação automática tenta ocorrer no mesmo workflow do PNG, sem novo custo de IA. **Automação ainda não exercitada ponta a ponta após integração**. Prévia C01-P03 antiga e rejeições anteriores não foram promovidas.
 - Temos três PNGs reais: uma referência aprovada visualmente e duas tomadas candidatas para revisão; ainda não é episódio MP4 oficial nem upload YouTube.
 
+
+
+## Skills de animação instaladas — 17/11/2026
+
+Adicionadas videoforge-animation-parts (peças independentes geradas pelo proxy, placement, geometria oculta e diagnóstico de torso cortado) e videoforge-character-acting (poses, intenção e timing). Complementadas rig-2d-three com contatos/deformação e qa-and-checkpoint com QA temporal. Recortes e máscaras permanecem exclusivos de QA conforme CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md. Instalação de instruções; nenhuma geração, rig, render ou aprovação visual ocorreu nesta etapa. Próximo passo: aplicar preparação de peças à tomada selecionada, respeitando aprovação da mãe e proveniência.
