@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/ep01-throne-orientation-qa-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "targets": [
+    "C01-P03",
+    "C01-P04",
+    "C01-P04-ALT"
+  ],
+  "source_runs": [
+    44151964491,
+    44152300579,
+    44152731865
+  ],
+  "task": "SHA-verificar fontes originais e candidatos e montar prancha V2 x V3",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
