@@ -1,3 +1,8 @@
+## 17/11/2026 — CI do catálogo de oito skills confirmado
+
+- [Verificação de skills #44072866500](https://github.com/HelioConde/VideoForge-IA/actions/runs/44072866500) encerrada com **success**. Os testes estáticos confirmaram oito skills descobríveis, seis disciplinas com roteamento pelo gerente, respeito à geração de RGBA pelo proxy e relógio determinístico do Remotion.
+- **Escopo técnico:** isso valida os documentos e o roteador textual, não confirma que um agente autónomo esteja executando novas especialidades. Nenhum PNG/rig/MP4/YouTube foi produzido por este workflow. Próximo gate segue: seleção visual da mãe C01-P02 e geração de peças separadas pelo proxy.
+
 ## 17/11/2026 — Rotas de habilidades concluídas: seis áreas, três skills adicionais
 
 - Pastas `.agents/skills/` agora incluem oito skills de instruções: 5 já presentes (gerente EP01, arte, atuação, rig, QA) e 3 novas: [direção](../../../../.agents/skills/videoforge-shot-direction/SKILL.md), [áudio e montagem](../../../../.agents/skills/videoforge-audio-editing/SKILL.md), [pesquisa técnica](../../../../.agents/skills/videoforge-technical-research/SKILL.md). [Catálogo auditado](../../../../docs/BIBLIOTECAS-E-SKILLS-VIDEOFORGE.md).
