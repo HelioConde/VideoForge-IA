@@ -25,7 +25,7 @@ on:
         required: true
 
 permissions:
-  contents: read
+  contents: write
   packages: read
   actions: read
 
@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
           fetch-depth: 2
       - uses: actions/setup-python@v5
         with:
@@ -135,6 +135,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ./input
       - name: Editar mesma cena-mae para fundo e personagem RGBA
+        id: generate
         env:
           CHANNEL: ${{ steps.request.outputs.channel }}
           VIDEO_ID: ${{ steps.request.outputs.video_id }}
@@ -154,6 +155,33 @@ jobs:
             --channel "$CHANNEL" --video-id "$VIDEO_ID" --number "$NUMBER" \
             --source ./input/cena-01.png --source-report ./input/cena-01.production.json \
             --url "$PROXY_ENDPOINT" --model gpt-image-2
+      - name: Preparar PNGs novos e verificaveis para Biblia Visual
+        if: always()
+        shell: bash
+        env:
+          CH: ${{ steps.request.outputs.channel }}
+          VID: ${{ steps.request.outputs.video_id }}
+          NUMBER: ${{ steps.request.outputs.scene_number }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$CH" || -z "$VID" || -z "$NUMBER" ]]; then
+            echo "LAYER_STAGE_NO_VALID_REQUEST"
+            exit 0
+          fi
+          python -m videoforge.stage_layers_for_bible --channel "$CH" --video-id "$VID" --number "$NUMBER"
+      - name: Arquivar camadas reais e REGISTRO-GERACOES no mesmo commit
+        if: always()
+        shell: bash
+        env:
+          CH: ${{ steps.request.outputs.channel }}
+          VID: ${{ steps.request.outputs.video_id }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$CH" || -z "$VID" ]]; then
+            echo "NO_LAYER_REQUEST_TO_ARCHIVE"
+            exit 0
+          fi
+          bash scripts/arquivar-pngs-se-existirem.sh "$CH" "$VID" "output/$CH/videos/$VID/imagens" "${{ github.run_id }}" "production-layer-request" "${{ steps.generate.outcome == 'success' && 'success' || 'failure' }}"
       - name: Guardar fundo e camadas para QA sem fingir rig final
         if: always()
         uses: actions/upload-artifact@v4
