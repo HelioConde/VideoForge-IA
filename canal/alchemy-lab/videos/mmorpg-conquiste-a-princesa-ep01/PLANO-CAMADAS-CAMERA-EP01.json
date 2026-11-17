@@ -124,7 +124,8 @@
      "background-clean",
      "character-carrasco",
      "object-espada-carrasco",
-     "object-bainha-carrasco"
+     "object-bainha-carrasco",
+     "object-lanca-guarda"
     ],
     "composite": {
      "id": "scene-mother",
@@ -177,6 +178,15 @@
       "animation": "held_fixed_by_lower_glove_during_sword_draw",
       "generation_method": "proxy_generated_separate_image",
       "source_policy": "scene_mother_and_object_bible_reference"
+     },
+     {
+      "id": "lanca-guarda",
+      "source": "scene-mother",
+      "transparent_rgba": true,
+      "animation": "when_story_action_requires",
+      "generation_method": "proxy_generated_separate_image",
+      "source_policy": "scene_mother_and_object_bible_reference",
+      "required_only_if_visible_in_final_frame": true
      }
     ],
     "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
@@ -206,6 +216,13 @@
       "role": "object",
       "method": "proxy_generated_separate_image",
       "background": "transparent"
+     },
+     {
+      "id": "object-lanca-guarda",
+      "role": "object",
+      "method": "proxy_generated_separate_image",
+      "background": "transparent",
+      "required_only_if_visible_in_final_frame": true
      }
     ],
     "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
