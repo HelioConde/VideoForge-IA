@@ -101,6 +101,19 @@ def audit(root:Path=ROOT)->dict:
         score<0 or old<0 or previous<0 or score>old):
         raise VideoForgeError("EP01_CONTACT_QA_METRIC_INVALID")
     reasons=[]
+    # O responsável reprovou os painéis 2 e 4. O painel 4 é um crop da
+    # própria cena-mãe: não é lícito inferir que a região de contato
+    # original está aprovada pelo mero facto de a imagem ter SHA válido.
+    feedback=_read_json(root/REL/"REVISAO-ERRO-PAINEIS-C01-P02.json")
+    if (feedback.get("schema")!="videoforge/ep01-user-visual-rejection/v1"
+        or feedback.get("source_sheet")!="QA-C01-P02-BAINHA-FRENTE-ROUPA.jpg"
+        or feedback.get("source_mother_sha256")!=EXPECTED_MOTHER_SHA
+        or feedback.get("owner_review",{}).get("rejected_panels")!=[2,4]
+        or feedback.get("owner_review",{}).get("status")!="rejeitado"
+        or feedback.get("human_approval") is not False):
+        raise VideoForgeError("EP01_CONTACT_OWNER_REJECTION_RECORD_INVALID")
+    if feedback.get("accepted_final_variant") is None:
+        reasons.append("owner_rejected_source_contact_closeup_panel_4")
     if score>MAX_DELTA_RGB:
         reasons.append("recomposition_rgb_diff_exceeds_review_threshold")
     approval_path=root/REL/"APROVACAO-CONTACTO-C01-P02.json"
