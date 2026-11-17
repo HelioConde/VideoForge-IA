@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-clean-recomposition-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "source_independent_parts_shas_verified": true,
+  "variants": [
+    "A-A-A",
+    "A-A-B",
+    "A-B-B"
+  ],
+  "spears_included": false,
+  "all_previews_unapproved": true,
+  "rig_ready": false,
+  "no_proxy_calls": true
+}
