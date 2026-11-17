@@ -1,0 +1,80 @@
+name: "VideoForge - previa da imagem mestra da Biblia Visual"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/qa-visual-bible-master-preview.yml'
+permissions:
+  contents: write
+jobs:
+  make-real-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Gerar JPG de revisao a partir do PNG real SHA-verificado
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json
+          from PIL import Image, ImageOps
+          base=Path("canal/alchemy-lab/biblia-visual")
+          reg=json.loads((base/"REGISTRO-GERACOES.json").read_text(encoding="utf-8"))
+          asset="biblia-sala-do-trono-vazio-v1"
+          found=[x for x in reg["geracoes"] if x["asset"]==asset]
+          if len(found)!=1: raise SystemExit("BIBLE_MASTER_REGISTRY_MISSING_OR_AMBIGUOUS")
+          item=found[0]
+          if (item["status"]!="gerado" or item["github_run_id"]!=44002126578
+              or item["sha256"]!="1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee"):
+              raise SystemExit("BIBLE_MASTER_SHA_OR_STATUS_UNEXPECTED")
+          path=Path(item["arquivo"])
+          raw=path.read_bytes()
+          if hashlib.sha256(raw).hexdigest()!=item["sha256"]:
+              raise SystemExit("BIBLE_MASTER_PNG_SHA_INVALID")
+          with Image.open(path) as image:
+              if image.format!="PNG" or image.size!=(941,1672):
+                  raise SystemExit("BIBLE_MASTER_IMAGE_INVALID")
+              preview=ImageOps.contain(image.convert("RGB"),(600,1066),Image.Resampling.LANCZOS)
+              target=base/"cenarios/sala-do-trono/PREVIA-MESTRE-V1.jpg"
+              target.parent.mkdir(parents=True,exist_ok=True)
+              preview.save(target,quality=85,optimize=True)
+          note=base/"cenarios/sala-do-trono/AVALIAR-MESTRE-V1.md"
+          note.write_text("""# Sala do trono — candidata da Bíblia Visual
+
+          ![Prévia do cenário-mestre gerado no GitHub](PREVIA-MESTRE-V1.jpg)
+
+          - [PNG original com SHA](../../../../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png)
+          - [Registro das gerações](../../REGISTRO-GERACOES.md)
+          - [Workflow #44002126578](https://github.com/HelioConde/VideoForge-IA/actions/runs/44002126578)
+          - **Status: gerado, não aprovado.** Conferir se realmente não aparecem Kael, Rei Aldric, guardas, sombras de personagens ou lanças. Preservar trono, degraus, vitrais, iluminação e câmera.
+          - A prévia JPG reduzida não altera o PNG original de 941×1672. Não promover automaticamente a cenário canônico nem liberar o EP01.
+          """.replace("\n          ","\n"),encoding="utf-8")
+          print("BIBLE_MASTER_PREVIEW_SHA",hashlib.sha256(target.read_bytes()).hexdigest())
+          print("SOURCE_PNG_SHA",item["sha256"])
+          PY
+      - name: Arquivar previa e nota de revisao na Biblia
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'videoforge-biblia[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add canal/alchemy-lab/biblia-visual/cenarios/sala-do-trono/PREVIA-MESTRE-V1.jpg
+          git add canal/alchemy-lab/biblia-visual/cenarios/sala-do-trono/AVALIAR-MESTRE-V1.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'qa(biblia): previa JPG do novo cenario mestre sem promover arte'
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
