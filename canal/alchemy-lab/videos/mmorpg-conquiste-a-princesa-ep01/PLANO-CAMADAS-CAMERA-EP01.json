@@ -2219,7 +2219,7 @@
    },
    "editorial_beat": "Sobreviva ao primeiro dia",
    "scene_status": "planned_pending_real_assets",
-   "visual_prompt": "Close de reação irônica de Kael à missão secundária; sobrancelha e boca expressivas, HUD separado.",
+   "visual_prompt": "CLOSE 9:16 CINEMATOGRÁFICO: Kael com a armadura medieval e capa vinho canonizadas na Bíblia Visual reage com ironia à missão secundária 'sobreviva ao primeiro dia', sobrancelha levemente arqueada, boca com expressão irônica discreta, olhos com foco na área vazia reservada ao HUD à frente dele. Fundo do mesmo mercado da C06-P01, barracas e luz de Arken suavemente desfocados, sem mudança de rosto, cabelo, ferimentos ou ornamentos; personagem em primeiro plano, sem outro elenco. NÃO gerar letras, janelas de interface, elementos gráficos ou texto sobre a imagem: a missão será desenhada como HUD separado no Remotion. Não recortar/ampliar a mãe anterior, criar novo enquadramento coerente com lente de close planejada.",
    "images": {
     "required": [
      "scene-mother",
