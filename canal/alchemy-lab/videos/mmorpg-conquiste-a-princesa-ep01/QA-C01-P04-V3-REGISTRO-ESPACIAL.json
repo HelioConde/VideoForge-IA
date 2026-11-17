@@ -22,7 +22,11 @@
         730,
         490
       ],
-      "native_alpha_coverage_fraction": 0.05841,
+      "bbox_canvas_fraction": 0.05841,
+      "bbox_height_fraction": 0.21223,
+      "visible_alpha_pixel_fraction": 0.04299,
+      "scale_warning": "visual_scale_review_pending",
+      "candidate_is_spatially_registered": false,
       "options": [
         {
           "id": "A-top-left-native",
@@ -97,7 +101,11 @@
         710,
         1529
       ],
-      "native_alpha_coverage_fraction": 0.61247,
+      "bbox_canvas_fraction": 0.61247,
+      "bbox_height_fraction": 0.95069,
+      "visible_alpha_pixel_fraction": 0.38874,
+      "scale_warning": "subject_almost_full_height_review_before_registration",
+      "candidate_is_spatially_registered": false,
       "options": [
         {
           "id": "A-top-left-native",
