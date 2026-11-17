@@ -27,9 +27,23 @@
     "retain_provenance": true
   },
   "left_fingers_front": {
-    "state": "requested",
+    "state": "archived_rejected_for_rig",
     "run_id": 44182835612,
-    "visual_approval": false
+    "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-grip-occlusion-v1/44182835612/c01-p04-v3-left-grip-fingers-front-v1.png",
+    "sha256": "c4433ab443862a5041ea586c045e7aa1e60dccd8dfc98188ace7aa5d45e77a9d",
+    "canvas": [
+      941,
+      1672
+    ],
+    "bbox": [
+      94,
+      797,
+      329,
+      1095
+    ],
+    "technical_qa": "candidate_pending_hand_contact_review",
+    "visual_qa": "rejected_complete_closed_fist_no_shaft_channel",
+    "use_for_rig": false
   },
   "right_grip_parts": {
     "state": "not_started_waiting_for_left_topology",
@@ -45,5 +59,7 @@
   "grip_contact_verified": false,
   "rig_ready": false,
   "mp4_generated": false,
-  "youtube_uploaded": false
+  "youtube_uploaded": false,
+  "next_method": "generate_reference_hand_holding_real_spear_first_then_redraw_independent_behind_palm_and_front_fingers_using_that_approved_grip_guide",
+  "reason_for_change": "proxy_generated_two_closed_fists_when_asked_to_grasp_invisible_spear"
 }
