@@ -2081,5 +2081,20 @@
     "render_ready": false,
     "mp4_generated": false,
     "youtube_uploaded": false
+  },
+  "c01_p02_contact_v4": {
+    "date": "2026-11-17",
+    "stage": "workflow_implemented_not_yet_confirmed_generated",
+    "parent_candidate": "c01-p02-contact-local-patch-v3",
+    "parent_sha256": "17da28fcf733727a11d2d67a38a84611bd1192cff0e97d45d7db10169de9089d",
+    "generation_workflow": ".github/workflows/ep01-contact-v4-by-request.yml",
+    "qa_workflow": ".github/workflows/qa-ep01-contact-v4-preview.yml",
+    "image_generated": false,
+    "sha_verified_candidate": false,
+    "human_approved": false,
+    "rig_ready": false,
+    "mp4_generated": false,
+    "youtube_uploaded": false,
+    "note": "V4 not canonical; require actual image, visual review and new RGBA QA before rig"
   }
 }
