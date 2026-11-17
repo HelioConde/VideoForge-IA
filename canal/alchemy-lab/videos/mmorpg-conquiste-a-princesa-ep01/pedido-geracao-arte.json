@@ -5,7 +5,7 @@
   "asset": "c01-p04-pegada-lancas-v4",
   "model": "gpt-image-2",
   "max_calls_per_run": 1,
-  "status": "requested_guard_spear_hand_grip_correction",
+  "status": "completed_archived_owner_visual_review_pending",
   "requested_on": "2026-11-16",
   "requested_by": "owner_reported_explicit_physical_pose_error_2026-11-16",
   "purpose": "Corrigir pelo GitHub o erro principal da imagem C01-P04: os dois guardas NÃO seguram suas lanças. Gerar nova V4 como edição localizada de V3 SHA-verificada, mãos e dedos envolvendo fisicamente cada haste, preservar personagens, roupas, trono, luz e estilo; não publicar.",
@@ -29,5 +29,16 @@
   "youtube_upload": false,
   "no_publishing": true,
   "previous_completed_asset": "c02-p01-aldric-rosto-v1",
-  "previous_completed_generation_run": 43970462482
+  "previous_completed_generation_run": 43970462482,
+  "completed_run_id": 43990928355,
+  "permanent_archive_path": "assets/geracoes/production-art-request/43990928355/c01-p04-pegada-lancas-v4.png",
+  "image_sha256": "0bb72ea525d81b6e935af49eb873d308a88ce8230a4a2b7d89c62d5d0e88a8dc",
+  "generated_original_size": [
+    941,
+    1672
+  ],
+  "human_visual_approved": false,
+  "visual_comparison": "QA-C01-P04-V3-VS-V4-LANCAS.jpg",
+  "comparison_qa_run_id": 43991247393,
+  "another_generation_requested": false
 }
