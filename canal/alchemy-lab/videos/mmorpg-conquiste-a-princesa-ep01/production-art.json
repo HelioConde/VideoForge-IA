@@ -1604,13 +1604,13 @@
       "variant": "cruzando_lanca",
       "additional_master_asset_ids": [
         "biblia-guarda-esquerdo-cerimonial-v1",
-        "biblia-lanca-guarda-completa-v1"
+        "biblia-lanca-guarda-completa-v2"
       ],
       "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
       "human_visual_approval_required": true,
       "approved_for_pose": false,
       "youtube_upload": false,
-      "prompt": "INTERAÇÃO FÍSICA DA BÍBLIA VISUAL EP01 — guarda_esquerdo — VARIANTE cruzando_lanca. Gerar UMA composição candidato PNG, pintura digital 2D anime-fantasia semi-realista cinematográfica, anatomia rígida e continuidade verificável. REFERÊNCIAS ANEXADAS: apenas os PNGs mestres individuais APROVADOS por humano e SHA-verificados (biblia-guarda-esquerdo-cerimonial-v1, biblia-lanca-guarda-completa-v1). NÃO anexar nem copiar C01-P04 V3 ou V4; guardas nessa fonte tinham pegada ERRADA e interação REJEITADA. UMA mão enluvada do guarda esquerdo fecha totalmente sobre o TERÇO INFERIOR da lança própria, perto do pé da haste, com polegar e quatro dedos contornando fisicamente a madeira; punho, antebraço e ombro conectados. Ponta voltada diagonalmente para cima e para o CENTRO à direita do guarda. A base fica abaixo/lateral da mão; sem mão flutuante, sem contato no centro da haste, uma única lança, um único guarda. Manter cores, proporções e rostos rigorosamente fiéis aos mestres. Sem personagem/objeto extra, mãos ou braços extras, sem CGI, sem texto, sem logo, fundo consistente ou neutro. Se os insumos não estiverem aprovados, não gerar nem chamar provedor. Não aprovar a imagem automaticamente, não renderizar vídeo, não publicar."
+      "prompt": "INTERAÇÃO FÍSICA DA BÍBLIA VISUAL EP01 — guarda_esquerdo — VARIANTE cruzando_lanca. Gerar UMA composição candidato PNG, pintura digital 2D anime-fantasia semi-realista cinematográfica, anatomia rígida e continuidade verificável. REFERÊNCIAS ANEXADAS: apenas os PNGs mestres individuais APROVADOS por humano e SHA-verificados (biblia-guarda-esquerdo-cerimonial-v1, biblia-lanca-guarda-completa-v2). NÃO anexar nem copiar C01-P04 V3 ou V4; guardas nessa fonte tinham pegada ERRADA e interação REJEITADA. UMA mão enluvada do guarda esquerdo fecha totalmente sobre o TERÇO INFERIOR da lança própria, perto do pé da haste, com polegar e quatro dedos contornando fisicamente a madeira; punho, antebraço e ombro conectados. Ponta voltada diagonalmente para cima e para o CENTRO à direita do guarda. A base fica abaixo/lateral da mão; sem mão flutuante, sem contato no centro da haste, uma única lança, um único guarda. Manter cores, proporções e rostos rigorosamente fiéis aos mestres. Sem personagem/objeto extra, mãos ou braços extras, sem CGI, sem texto, sem logo, fundo consistente ou neutro. Se os insumos não estiverem aprovados, não gerar nem chamar provedor. Não aprovar a imagem automaticamente, não renderizar vídeo, não publicar.\nReferência da lança portátil V2 obrigatória: base fina empunhável, sem pedestal circular de exibição."
     },
     {
       "id": "biblia-guarda-direito-cruzando-lanca-v1",
@@ -1625,13 +1625,13 @@
       "variant": "cruzando_lanca",
       "additional_master_asset_ids": [
         "biblia-guarda-direito-cerimonial-v1",
-        "biblia-lanca-guarda-completa-v1"
+        "biblia-lanca-guarda-completa-v2"
       ],
       "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
       "human_visual_approval_required": true,
       "approved_for_pose": false,
       "youtube_upload": false,
-      "prompt": "INTERAÇÃO FÍSICA DA BÍBLIA VISUAL EP01 — guarda_direito — VARIANTE cruzando_lanca. Gerar UMA composição candidato PNG, pintura digital 2D anime-fantasia semi-realista cinematográfica, anatomia rígida e continuidade verificável. REFERÊNCIAS ANEXADAS: apenas os PNGs mestres individuais APROVADOS por humano e SHA-verificados (biblia-guarda-direito-cerimonial-v1, biblia-lanca-guarda-completa-v1). NÃO anexar nem copiar C01-P04 V3 ou V4; guardas nessa fonte tinham pegada ERRADA e interação REJEITADA. Guarda direito na direita; mão enluvada FECHADA sobre a BASE da própria lança, terço inferior da haste junto ao pé, antebraço conectado ao ombro; ponta diagonal para CIMA e para o CENTRO à esquerda do guarda. A base visível permanece abaixo da mão e à direita. UMA lança e um guarda, sem espelhamento acidental de mão nem mão no meio da haste. Manter cores, proporções e rostos rigorosamente fiéis aos mestres. Sem personagem/objeto extra, mãos ou braços extras, sem CGI, sem texto, sem logo, fundo consistente ou neutro. Se os insumos não estiverem aprovados, não gerar nem chamar provedor. Não aprovar a imagem automaticamente, não renderizar vídeo, não publicar."
+      "prompt": "INTERAÇÃO FÍSICA DA BÍBLIA VISUAL EP01 — guarda_direito — VARIANTE cruzando_lanca. Gerar UMA composição candidato PNG, pintura digital 2D anime-fantasia semi-realista cinematográfica, anatomia rígida e continuidade verificável. REFERÊNCIAS ANEXADAS: apenas os PNGs mestres individuais APROVADOS por humano e SHA-verificados (biblia-guarda-direito-cerimonial-v1, biblia-lanca-guarda-completa-v2). NÃO anexar nem copiar C01-P04 V3 ou V4; guardas nessa fonte tinham pegada ERRADA e interação REJEITADA. Guarda direito na direita; mão enluvada FECHADA sobre a BASE da própria lança, terço inferior da haste junto ao pé, antebraço conectado ao ombro; ponta diagonal para CIMA e para o CENTRO à esquerda do guarda. A base visível permanece abaixo da mão e à direita. UMA lança e um guarda, sem espelhamento acidental de mão nem mão no meio da haste. Manter cores, proporções e rostos rigorosamente fiéis aos mestres. Sem personagem/objeto extra, mãos ou braços extras, sem CGI, sem texto, sem logo, fundo consistente ou neutro. Se os insumos não estiverem aprovados, não gerar nem chamar provedor. Não aprovar a imagem automaticamente, não renderizar vídeo, não publicar.\nReferência da lança portátil V2 obrigatória: base fina empunhável, sem pedestal circular de exibição."
     },
     {
       "id": "biblia-guarda-segurando-lanca-na-base-base-v1",
@@ -1646,13 +1646,13 @@
       "variant": "base",
       "additional_master_asset_ids": [
         "biblia-guarda-esquerdo-cerimonial-v1",
-        "biblia-lanca-guarda-completa-v1"
+        "biblia-lanca-guarda-completa-v2"
       ],
       "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
       "human_visual_approval_required": true,
       "approved_for_pose": false,
       "youtube_upload": false,
-      "prompt": "INTERAÇÃO FÍSICA DA BÍBLIA VISUAL EP01 — guarda-segurando-lanca-na-base — VARIANTE base. Gerar UMA composição candidato PNG, pintura digital 2D anime-fantasia semi-realista cinematográfica, anatomia rígida e continuidade verificável. REFERÊNCIAS ANEXADAS: apenas os PNGs mestres individuais APROVADOS por humano e SHA-verificados (biblia-guarda-esquerdo-cerimonial-v1, biblia-lanca-guarda-completa-v1). NÃO anexar nem copiar C01-P04 V3 ou V4; guardas nessa fonte tinham pegada ERRADA e interação REJEITADA. ANATOMIA FÍSICA EXPLICITA: foco claro do braço do guarda esquerdo, ombro→cotovelo→punho→polegar+quatro dedos fechados AO REDOR do terço inferior da lança, perto da extremidade do pé da haste. Contato sem espaço vazio, o peso fica na mão. Uma lança reta, ponta acima, base abaixo; a imagem rejeitada V4 NUNCA entra como fonte. Manter cores, proporções e rostos rigorosamente fiéis aos mestres. Sem personagem/objeto extra, mãos ou braços extras, sem CGI, sem texto, sem logo, fundo consistente ou neutro. Se os insumos não estiverem aprovados, não gerar nem chamar provedor. Não aprovar a imagem automaticamente, não renderizar vídeo, não publicar."
+      "prompt": "INTERAÇÃO FÍSICA DA BÍBLIA VISUAL EP01 — guarda-segurando-lanca-na-base — VARIANTE base. Gerar UMA composição candidato PNG, pintura digital 2D anime-fantasia semi-realista cinematográfica, anatomia rígida e continuidade verificável. REFERÊNCIAS ANEXADAS: apenas os PNGs mestres individuais APROVADOS por humano e SHA-verificados (biblia-guarda-esquerdo-cerimonial-v1, biblia-lanca-guarda-completa-v2). NÃO anexar nem copiar C01-P04 V3 ou V4; guardas nessa fonte tinham pegada ERRADA e interação REJEITADA. ANATOMIA FÍSICA EXPLICITA: foco claro do braço do guarda esquerdo, ombro→cotovelo→punho→polegar+quatro dedos fechados AO REDOR do terço inferior da lança, perto da extremidade do pé da haste. Contato sem espaço vazio, o peso fica na mão. Uma lança reta, ponta acima, base abaixo; a imagem rejeitada V4 NUNCA entra como fonte. Manter cores, proporções e rostos rigorosamente fiéis aos mestres. Sem personagem/objeto extra, mãos ou braços extras, sem CGI, sem texto, sem logo, fundo consistente ou neutro. Se os insumos não estiverem aprovados, não gerar nem chamar provedor. Não aprovar a imagem automaticamente, não renderizar vídeo, não publicar.\nReferência da lança portátil V2 obrigatória: base fina empunhável, sem pedestal circular de exibição."
     },
     {
       "id": "biblia-guardas-cruzando-lancas-base-v1",
@@ -1668,13 +1668,13 @@
       "additional_master_asset_ids": [
         "biblia-guarda-esquerdo-cerimonial-v1",
         "biblia-guarda-direito-cerimonial-v1",
-        "biblia-lanca-guarda-completa-v1"
+        "biblia-lanca-guarda-completa-v2"
       ],
       "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
       "human_visual_approval_required": true,
       "approved_for_pose": false,
       "youtube_upload": false,
-      "prompt": "INTERAÇÃO FÍSICA DA BÍBLIA VISUAL EP01 — guardas-cruzando-lancas — VARIANTE base. Gerar UMA composição candidato PNG, pintura digital 2D anime-fantasia semi-realista cinematográfica, anatomia rígida e continuidade verificável. REFERÊNCIAS ANEXADAS: apenas os PNGs mestres individuais APROVADOS por humano e SHA-verificados (biblia-guarda-esquerdo-cerimonial-v1, biblia-guarda-direito-cerimonial-v1, biblia-lanca-guarda-completa-v1). NÃO anexar nem copiar C01-P04 V3 ou V4; guardas nessa fonte tinham pegada ERRADA e interação REJEITADA. DOIS guardas: esquerdo fica à esquerda, direito à direita, NÃO INVERTER. CADA guarda empunha SUA PRÓPRIA lança pelo TERÇO INFERIOR da haste junto à BASE; cada mão enluvada contorna madeira com contato real, punho ligado ao braço. EXACTAMENTE DUAS lanças RETAS formando X acima e atrás do espaço de Kael. Lança esquerda parte do quadrante inferior esquerdo até superior direito, lança direita parte do inferior direito até superior esquerdo. Pontas se cruzam no alto, NÃO as mãos. Nenhuma terceira haste, nenhum objeto atravessando a luva, sem armas suspensas, sem duplicação de braços. Manter cores, proporções e rostos rigorosamente fiéis aos mestres. Sem personagem/objeto extra, mãos ou braços extras, sem CGI, sem texto, sem logo, fundo consistente ou neutro. Se os insumos não estiverem aprovados, não gerar nem chamar provedor. Não aprovar a imagem automaticamente, não renderizar vídeo, não publicar."
+      "prompt": "INTERAÇÃO FÍSICA DA BÍBLIA VISUAL EP01 — guardas-cruzando-lancas — VARIANTE base. Gerar UMA composição candidato PNG, pintura digital 2D anime-fantasia semi-realista cinematográfica, anatomia rígida e continuidade verificável. REFERÊNCIAS ANEXADAS: apenas os PNGs mestres individuais APROVADOS por humano e SHA-verificados (biblia-guarda-esquerdo-cerimonial-v1, biblia-guarda-direito-cerimonial-v1, biblia-lanca-guarda-completa-v2). NÃO anexar nem copiar C01-P04 V3 ou V4; guardas nessa fonte tinham pegada ERRADA e interação REJEITADA. DOIS guardas: esquerdo fica à esquerda, direito à direita, NÃO INVERTER. CADA guarda empunha SUA PRÓPRIA lança pelo TERÇO INFERIOR da haste junto à BASE; cada mão enluvada contorna madeira com contato real, punho ligado ao braço. EXACTAMENTE DUAS lanças RETAS formando X acima e atrás do espaço de Kael. Lança esquerda parte do quadrante inferior esquerdo até superior direito, lança direita parte do inferior direito até superior esquerdo. Pontas se cruzam no alto, NÃO as mãos. Nenhuma terceira haste, nenhum objeto atravessando a luva, sem armas suspensas, sem duplicação de braços. Manter cores, proporções e rostos rigorosamente fiéis aos mestres. Sem personagem/objeto extra, mãos ou braços extras, sem CGI, sem texto, sem logo, fundo consistente ou neutro. Se os insumos não estiverem aprovados, não gerar nem chamar provedor. Não aprovar a imagem automaticamente, não renderizar vídeo, não publicar.\nReferência da lança portátil V2 obrigatória: base fina empunhável, sem pedestal circular de exibição."
     },
     {
       "id": "biblia-rei-sentado-no-trono-base-v1",
@@ -1848,6 +1848,81 @@
       "approved_for_pose": false,
       "youtube_upload": false,
       "prompt": "INTERAÇÃO FÍSICA DA BÍBLIA VISUAL EP01 — kael-protegendo-elara — VARIANTE base. Gerar UMA composição candidato PNG, pintura digital 2D anime-fantasia semi-realista cinematográfica, anatomia rígida e continuidade verificável. REFERÊNCIAS ANEXADAS: apenas os PNGs mestres individuais APROVADOS por humano e SHA-verificados (biblia-kael-medieval-base-v1, biblia-elara-encapuzada-v1, biblia-beco-base-v1). NÃO anexar nem copiar C01-P04 V3 ou V4; guardas nessa fonte tinham pegada ERRADA e interação REJEITADA. Kael mestre fica entre a ameaça e Elara encapuzada, corpo inclinado com apoio real dos pés no chão do beco, um braço protege Elara pelo ombro ou a guia pelo antebraço sem atravessar a roupa. Faces e trajes iguais aos mestres; duas pessoas apenas, sem fundir cabelo/capa. Manter cores, proporções e rostos rigorosamente fiéis aos mestres. Sem personagem/objeto extra, mãos ou braços extras, sem CGI, sem texto, sem logo, fundo consistente ou neutro. Se os insumos não estiverem aprovados, não gerar nem chamar provedor. Não aprovar a imagem automaticamente, não renderizar vídeo, não publicar."
+    },
+    {
+      "id": "biblia-kael-casual-antes-v2",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "dorama-visual-bible-edit-v1",
+      "reference_mode": "identity_face_only_kael",
+      "stage": "visual_bible_repair_v2",
+      "biblia_categoria": "personagens",
+      "biblia_item_id": "kael",
+      "variant": "casual_antes",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "human_visual_approval_required": true,
+      "approved_for_pose": false,
+      "youtube_upload": false,
+      "prompt": "BÍBLIA VISUAL — CORREÇÃO V2 DO KAEL ANTES DA AVENTURA, personagem de 23 anos. O PNG facial ORIGINAL de Kael está ANEXADO e SHA-verificado; única fonte de imagem, autoridade absoluta sobre rosto, cabelo castanho-escuro volumoso, olhos âmbar, idade, formato do nariz e mandíbula. NÃO usar o mestre de corpo inteiro medieval como fonte e NÃO anexar C01-P04 V3, porque essas fontes contaminam o figurino. Criar UM jovem de corpo inteiro em pose casual neutra de três quartos, DOS SAPATOS ATÉ A CABEÇA, roupa de VIDA REAL CONTEMPORÂNEA 2020s: camiseta lisa de algodão CINZA-ESCURO com gola redonda, jaqueta casual leve PRETA de tecido SEM capuz longo, calça jeans AZUL-ESCURA simples, tênis discretos. Braços e mãos relaxados, anatomia proporcional, cinco dedos, pernas inteiras. Proibido: manto/capa vinho/vermelho, túnica, armadura, ombreira metálica, cinturão de guerreiro, proteção de antebraço, espada, espada nas costas, lança, escudo, coroa, roupa fantasia medieval, espada no chão, botas de cavalaria. Não pode copiar o traje da V1 rejeitada para esta variante. Fundo de estúdio neutro cinza claro, sem trono e sem outros personagens. Arte digital ILUSTRADA, anime 2D SEMIRREALISTA CINEMATOGRÁFICO com sombreado manual sofisticado e proporções naturais, MESMA linguagem de pintura do universo do EP01, sem render CGI fotográfico e sem caricatura. Uma imagem original única, não colagem; sem texto, logotipo ou marca-d'água. Sujeita a QA visual humano, não aprovar automaticamente, não enviar vídeo.",
+      "identity_reference_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f"
+    },
+    {
+      "id": "biblia-lanca-guarda-completa-v2",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "dorama-visual-bible-edit-v1",
+      "reference_mode": "style_scene",
+      "stage": "visual_bible_repair_v2",
+      "biblia_categoria": "objetos",
+      "biblia_item_id": "lanca-guarda",
+      "variant": "completa",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "human_visual_approval_required": true,
+      "approved_for_pose": false,
+      "youtube_upload": false,
+      "prompt": "BÍBLIA VISUAL — CORREÇÃO V2 LANÇA REAL DE COMBATE SEGURADA PELA BASE. C01-P04 V3 SHA-verificada está anexa EXCLUSIVAMENTE PARA PALETA E ESTILO DE PINTURA, e a pose de mãos dessa fonte está rejeitada; NÃO copiar interações. Gerar EXATAMENTE UMA lança de guarda palaciano, LONGA, RETA, PORTÁTIL, EMPUNHÁVEL, isolada verticalmente de ponta a ponta contra fundo neutro cinza. PONTA no alto: lâmina de aço dourado/bronze estilizada, estreita, simétrica, cerca de 10% do comprimento. HASTE principal: madeira dura avermelhada/castanho-escura de diâmetro UNIFORME, sem emendas irreais; ornamentos metálicos dourados discretos, sem alças. TERÇO INFERIOR: madeira lisa e livre para mão enluvada contorná-la e carregar o peso; desenhar com clareza a região de pegada. BASE, NO FIM INFERIOR: somente PEQUENO CUBO/ANEL/VIROTE DE METAL fino e curto, de DIÂMETRO IGUAL à madeira ou no máximo 1,2 vezes o diâmetro; o pé deve ficar quase pontiagudo ou arredondado. ESSENCIAL: É UMA ARMA CARREGADA E CRUZADA NO AR, não uma haste fixada ao chão. PROIBIDO ABSOLUTAMENTE: SUPORTE CIRCULAR, PLATAFORMA, BASE DE CANDELABRO, PÉ DE PEDESTAL, BASE DE ABAJUR, CALÇO PARA EXIBIÇÃO OU SUPORTE PARA CHÃO, anel gigante no pé, bordas decorativas do tamanho de uma mão, encaixe em pedestal. Não desenhar suporte de exibição, nem chão ou sombra da lança fincada. Proibido pessoas, mãos, luvas, braços, guarda, corpo, cenário, texto, inset, colagem ou miniatura lateral. Silhueta completa nítida, uma única lança vertical independente, apta a girar no rig 2D. Estilo 2D fantasia anime semi-realista cinematográfico, pintura digital refinada, iluminação coerente com salão do trono. PNG candidato, QA visual obrigatório, sem aprovação automática, sem vídeo."
+    },
+    {
+      "id": "biblia-lanca-guarda-base-v2",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "dorama-visual-bible-edit-v1",
+      "reference_mode": "master_only",
+      "stage": "visual_bible_repair_v2",
+      "biblia_categoria": "objetos",
+      "biblia_item_id": "lanca-guarda",
+      "variant": "base",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "human_visual_approval_required": true,
+      "approved_for_pose": false,
+      "youtube_upload": false,
+      "prompt": "BÍBLIA VISUAL — DETALHE V2 DA BASE PORTÁTIL DE LANÇA DE GUARDA. ÚNICA imagem-fonte SHA-verificada ANEXADA: lança completa V2, que deve definir obrigatoriamente forma, textura e cor. ENQUADRAMENTO CLOSE-UP APERTADO do TERÇO INFERIOR da arma, mostrando madeira lisa de pegada e a pequena ponteira metálica na extremidade inferior. O pé deve ser FINO, do diâmetro da haste ou no máximo 1,2 vezes, totalmente portátil; nenhuma plataforma de chão. Mostrar claramente o comprimento da parte lisa que cabe na palma de uma mão enluvada. Não mostrar a lança inteira, não mostrar ponta superior, não introduzir novas incrustações ou largura. Proibido pedestal, base circular, castiçal, chão, mão, luva, personagem, colagem, inset, detalhes extras, logotipo ou texto. Mesma pintura digital anime semi-realista 2D da imagem mestre, imagem única em fundo neutro. Esta arte só serve como referencial anatômico/objeto para rig; nunca aprovar automaticamente ou publicar.",
+      "additional_master_asset_ids": [
+        "biblia-lanca-guarda-completa-v2"
+      ]
+    },
+    {
+      "id": "biblia-lanca-guarda-empunhadura-v2",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "source_mode": "dorama-visual-bible-edit-v1",
+      "reference_mode": "master_only",
+      "stage": "visual_bible_repair_v2",
+      "biblia_categoria": "objetos",
+      "biblia_item_id": "lanca-guarda",
+      "variant": "empunhadura",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "human_visual_approval_required": true,
+      "approved_for_pose": false,
+      "youtube_upload": false,
+      "prompt": "BÍBLIA VISUAL — REGIÃO DE EMPUNHADURA V2 DA LANÇA. ÚNICA imagem-fonte em anexo: PNG ORIGINAL SHA-verificado da lança completa V2. Gerar CLOSE-UP DA HASTE NA ÁREA DE PEGADA, no terço inferior próximo ao pequeno pé metálico. Mostrar trecho de madeira visível largo o bastante no enquadramento para mão enluvada fechar o polegar e quatro dedos ao redor, com comprimento livre de pelo menos duas larguras de palma. Material, cor e ornamentos são os MESMOS da referência principal; haste reta e de diâmetro consistente. No rodapé pode aparecer um pedaço da ponteira inferior FINA; NÃO mostrar a lança inteira nem a ponta superior. É uma haste portátil, NUNCA pedestal ou base circular. NÃO desenhar uma mão nem luva neste mestre de objeto; os dedos serão posicionados em etapa posterior do rig de interação. Fundo neutro, sem cenas, sem inset, sem colagem, sem armas adicionais, sem texto. Ilustração 2D semi-realista, QA humano antes de aprovação, não publicar.",
+      "additional_master_asset_ids": [
+        "biblia-lanca-guarda-completa-v2"
+      ]
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",
