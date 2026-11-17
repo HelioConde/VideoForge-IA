@@ -32,7 +32,7 @@ jobs:
           python-version: '3.12'
       - name: Pillow para edição local de pixels fora do contato
         run: python -m pip install --quiet --disable-pip-version-check Pillow==11.3.0
-      - name: Pré-voo: rejeições 2 e 4, SHA e bloqueio de repetição paga
+      - name: "Pré-voo: rejeições 2 e 4, SHA e bloqueio de repetição paga"
         id: preflight
         shell: bash
         run: |
@@ -67,7 +67,7 @@ jobs:
               out.write('execute='+execute+'\n')
           PY
       - name: Verificar configuracao do Codex Proxy sem revelar credenciais
-        if: steps.request.outputs.execute == 'true'
+        if: steps.preflight.outputs.execute == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -87,7 +87,7 @@ jobs:
             exit 1
           fi
       - name: Iniciar proxy precompilado se necessario
-        if: steps.request.outputs.execute == 'true' && env.USE_EPHEMERAL == '1'
+        if: steps.preflight.outputs.execute == 'true' && env.USE_EPHEMERAL == '1'
         shell: bash
         run: |
           set -euo pipefail
