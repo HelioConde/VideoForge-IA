@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**9 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**10 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -13,6 +13,7 @@
 | [biblia-sala-do-trono-vazio-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`1397aebed672…\` | [#44002126578](https://github.com/HelioConde/VideoForge-IA/actions/runs/44002126578) |
 | [biblia-kael-medieval-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`d30201d04c34…\` | [#44003234837](https://github.com/HelioConde/VideoForge-IA/actions/runs/44003234837) |
 | [biblia-elara-palacio-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003561770/biblia-elara-palacio-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`36e9bed6325d…\` | [#44003561770](https://github.com/HelioConde/VideoForge-IA/actions/runs/44003561770) |
+| [biblia-aldric-tribunal-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005400386/biblia-aldric-tribunal-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`37c48afcaa24…\` | [#44005400386](https://github.com/HelioConde/VideoForge-IA/actions/runs/44005400386) |
 
 ## Regras de consulta
 
