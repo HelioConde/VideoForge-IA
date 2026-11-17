@@ -1,5 +1,17 @@
 # EP01 — Estado real das imagens e próximos passos (17/11/2026)
 
+## Checkpoint mais recente — 17/11/2026, após V2 e C02-P01
+
+- **5/39 tomadas visuais possuem imagem-mãe ORIGINAL arquivada**: C01-P02 (rejeitada), C01-P03 (V1 rejeitada e V2 candidata corrigida), C01-P04 (V1 rejeitada e V2 candidata corrigida), C01-P05 (candidata, revisão pendente) e C02-P01 (novo close de Aldric, revisão pendente). **34 tomadas visuais ainda não têm imagem-mãe original.**
+- **84 PNGs no registro da Bíblia** no último levantamento: mestres, versões alternativas, máscaras de QA, backgrounds, personagens gerados isolados e cenas-mãe. Não são 84 cenas prontas.
+- [C01-P03 V2](assets/geracoes/production-scene-mother-repair-v2/44080234599/c01-p03-scene-mother-v2.png): SHA `bfc1249dc1f83b004b620c333f5aa81689b0ba0c23a3e7573d57c09dcf3539e3`, 941×1672; remove guardas, lanças e espada do primeiro plano, mantém Kael ajoelhado.
+- [C01-P04 V2, original](assets/geracoes/production-scene-mother-repair-v2/44080462345/c01-p04-scene-mother-v2.png): SHA `cf19543377960b2100148846f9d77852ca94510c949c62c27b9390e4fbee0f84`, 941×1671, **canvas rejeitado tecnicamente mas PNG arquivado**; [V2 alinhada](assets/geracoes/production-scene-mother-v2-aligned/44080887693/c01-p04-scene-mother-v2-native-aligned-v1.png) SHA `2d11099a536999409a33dae2fc30c517e260c4ad640e41c6942c85b9db499ec5`, 941×1672, apenas uma linha inferior adicional sem IA. Kael agora ajoelhado, rei sentado, guardas com lanças em X. [Revisão assistida](REVISAO-VISUAL-MAES-C01-P03-P04-V2.md) e [prancha V1×V2](QA-MAES-C01-P03-P04-V2.jpg), QA gratuito [#44080972625](https://github.com/HelioConde/VideoForge-IA/actions/runs/44080972625), **sem aprovação humana**.
+- [C01-P05 nova cena-mãe](assets/geracoes/production-scene-mother-v2/44079588294/c01-p05-scene-mother.png), SHA `6a599ab681994790b3e9b07bf573817781a448bcf9f77081bc03764448028553`, 941×1672, candidato de mãos/lanças.
+- [C02-P01 nova cena-mãe](assets/geracoes/production-scene-mother-v2/44081215706/c02-p01-scene-mother.png), SHA `0d1f8367c76cdf0c9b63f10071406a567b5a5a10cf799e1aa6c5d814019fa2a0`, 941×1672, close de rei Aldric, [geração #44081215706](https://github.com/HelioConde/VideoForge-IA/actions/runs/44081215706) sucesso técnico.
+- Os PNGs separados de fundo, Kael e Aldric da C01-P03 foram gerados pelo proxy usando a mãe **V1**, mas a recomposição **reprovou** porque escala/posição se alteraram e mãe incluiu guardas indevidos. **NÃO usar essas peças em V2 ou no rig.** Novas partes devem ser solicitadas ao proxy tomando V2 selecionada/aprovada como referência; não recortar a mãe.
+- **Pendente:** revisão visual por responsável, nova geração dos elementos separados de mães V2 aprovadas, revisão de mãos C01-P05, geração das outras 34 imagens-mãe, rig articulado Remotion/Three.js, MP4 e publicação. Todas as aprovações seguem falsas.
+
+
 ## 17/11/2026 — Resultado da recomposição C01-P03: REPROVADO para rig
 
 - **Aldric separado foi realmente gerado pelo proxy** no [run #44076356345](https://github.com/HelioConde/VideoForge-IA/actions/runs/44076356345), PNG 941×1671 SHA `a6eb021cb6c2788530a6fc541831f14d8f99e0392c21de02510f2fdf2312a0f0`. O original foi arquivado e a cópia técnica foi alinhada SEM nova IA para 941×1672 no [run #44076886141](https://github.com/HelioConde/VideoForge-IA/actions/runs/44076886141), SHA `0bcdbc8ef6263bef8c063f1ea696019998efa32a5a45789a9e3054b8b1544285`.
@@ -14,10 +26,10 @@
 ## Contagem real
 
 - **40 tomadas no roteiro**, sendo C01-P01 uma abertura preta sem geração e **39 tomadas visuais**.
-- **3 imagens-mãe originais arquivadas** para tomadas distintas: C01-P02 (V1 rejeitada visualmente; versões V3/V4 candidatas), C01-P03 e C01-P04 (candidatas). **36 imagens-mãe ainda faltam** no fluxo atual. Três arquivos de uma tomada NÃO significam três planos diferentes.
+- **5 imagens-mãe originais arquivadas** para tomadas distintas: C01-P02 (rejeitada), C01-P03 (V2 em revisão), C01-P04 (V2 em revisão), C01-P05 e C02-P01 (candidatas). **34 imagens-mãe ainda faltam** no fluxo atual. Três arquivos de uma tomada NÃO significam três planos diferentes.
 - Na **C01-P03**, a geração separada via proxy já produziu **background** e **Kael** como PNGs independentes; ambos os arquivos originais vieram com 941×1671 em vez de 941×1672. Os arquivos originais foram preservados; geradas novas cópias técnicas com 1 pixel de padding inferior, sem crop, esticar, recompor a mãe ou fazer nova chamada de IA.
-- **Aldric separado, partes de rig, demais objetos, recomposição e aprovação humana continuam pendentes**. Para C01-P04, só a imagem-mãe está arquivada. C01-P02 permanece bloqueada por anatomia/ornamentos da bainha.
-- O registro da Bíblia possui **77 PNGs de diferentes tipos** (referências, reparos, máscaras históricas e cenas). Não são 77 tomadas prontas.
+- **Aldric separado já gerado, mas recomposição da V1 foi reprovada; novas partes V2, rig e aprovação humana continuam pendentes**. Para C01-P04, só a imagem-mãe está arquivada. C01-P02 permanece bloqueada por anatomia/ornamentos da bainha.
+- O registro da Bíblia possui **84 PNGs de diferentes tipos** (referências, reparos, máscaras históricas e cenas). Não são 77 tomadas prontas.
 
 ## Fontes e hashes principais
 
