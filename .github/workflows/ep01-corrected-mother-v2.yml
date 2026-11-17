@@ -1,0 +1,165 @@
+name: "VideoForge - EP01 correção V2 das mães reprovadas"
+run-name: "EP01 correção mãe V2 ${{ inputs.shot_id || 'pedido' }}"
+on:
+  workflow_dispatch:
+    inputs:
+      shot_id:
+        description: "C01-P03 ou C01-P04 (reprovação V1)"
+        type: string
+        required: true
+        default: "C01-P03"
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-CORRECAO-CENA-MAE-V2.json'
+permissions:
+  contents: write
+  packages: read
+concurrency:
+  group: ep01-versioned-mother-v2-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  corrigir-cena-mae:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      INPUT_SHOT_ID: ${{ inputs.shot_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: "Pré-voo de mães rejeitadas, Bíblia SHA e anti-repetição"
+        id: request
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_corrected_mother_v2 tests.test_layered_shot_plan -v
+          python - <<'PY'
+          import json,os,re,subprocess
+          from pathlib import Path
+          from videoforge import ep01_corrected_mother_v2 as engine
+          if os.environ['GITHUB_EVENT_NAME']=='workflow_dispatch':
+              shot_id=os.environ.get('INPUT_SHOT_ID','').strip()
+          else:
+              expected=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-CORRECAO-CENA-MAE-V2.json')
+              changed=subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','-r',os.environ['GITHUB_SHA']],text=True).splitlines()
+              if str(expected) not in changed:
+                  raise SystemExit('EP01_MOTHER_V2_PUSH_REQUEST_NOT_CHANGED')
+              req=json.loads(expected.read_text(encoding='utf-8'))
+              if (req.get('schema')!='videoforge/ep01-versioned-mother-repair-request/v1'
+                  or req.get('channel')!='alchemy-lab'
+                  or req.get('video_id')!='mmorpg-conquiste-a-princesa-ep01'
+                  or req.get('max_chargeable_calls_per_run')!=1
+                  or req.get('retry_on_429') is not False
+                  or req.get('human_visual_approval') is not False
+                  or req.get('youtube_upload') is not False
+                  or req.get('version')!=2):
+                  raise SystemExit('EP01_MOTHER_V2_REQUEST_INVALID')
+              shot_id=req.get('shot_id','')
+          if shot_id not in engine.REJECTED_SOURCES:
+              raise SystemExit('EP01_MOTHER_V2_SHOT_NOT_REJECTED')
+          previous=engine.existing_repair(shot_id)
+          if previous:
+              execute='false'
+              print('EP01_MOTHER_V2_SKIP_ALREADY_ARCHIVED',previous['sha256'])
+          else:
+              spec=engine.prepare(shot_id)
+              execute='true'
+              print('EP01_MOTHER_V2_REF_SHA_OK',shot_id,'images',len(spec['refs'])+1,'paid_calls=1')
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as out:
+              out.write('shot_id='+shot_id+'\n')
+              out.write('execute='+execute+'\n')
+          PY
+      - name: Verificar configuracao do Codex Proxy sem revelar credenciais
+        if: steps.request.outputs.execute == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then
+            echo "::error::CODEX_PROXY_API_KEY ausente"
+            exit 1
+          fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            echo 'Modo: proxy persistente'
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'Modo: proxy efemero autorizado'
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else
+            echo "::error::Falta CODEX_PROXY_BASE_URL ou CODEX_PROXY_ACCOUNTS_JSON"
+            exit 1
+          fi
+      - name: Iniciar proxy precompilado se necessario
+        if: steps.request.outputs.execute == 'true' && env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          value=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+          assert isinstance(value,dict) and isinstance(value.get('records'),list)
+          assert value['records'] and all(isinstance(r,dict) and isinstance(r.get('token'),dict) for r in value['records'])
+          p=Path(os.environ['RUNNER_TEMP'])/'vf-proxy-state'/'accounts.json'
+          p.write_text(json.dumps(value),encoding='utf-8')
+          p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-ep01-mother-v2 \
+            --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy nao respondeu /health/live"
+          exit 1
+      - name: Gerar V2 da mãe via proxy sem sobrescrever V1
+        if: steps.request.outputs.execute == 'true'
+        shell: bash
+        env:
+          SHOT_ID: ${{ steps.request.outputs.shot_id }}
+        run: |
+          set -euo pipefail
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          python -m videoforge.ep01_corrected_mother_v2 --shot-id "$SHOT_ID" --url "$PROXY_ENDPOINT"
+      - name: Arquivar mãe V2 separadamente mesmo se QA técnico reprovar
+        if: always() && steps.request.outputs.execute == 'true'
+        shell: bash
+        run: |
+          bash scripts/arquivar-pngs-se-existirem.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
+            output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
+            "${{ github.run_id }}" production-scene-mother-repair-v2 "${{ job.status }}"
+      - name: Preservar artefatos da cena e da proveniencia para QA
+        if: always() && steps.request.outputs.execute == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-ep01-mother-repair-v2-${{ steps.request.outputs.shot_id }}-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Apagar tokens temporarios
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-ep01-mother-v2 >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
