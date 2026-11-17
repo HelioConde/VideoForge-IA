@@ -1,0 +1,33 @@
+{
+  "schema": "videoforge/ep01-c01p04-grip-v3-independent-part/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "candidate_scene_shot_id": "C01-P04",
+  "role": "fingers-front",
+  "asset_id": "c01-p04-v3-left-grip-fingers-front-v3",
+  "sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
+  "width": 1312,
+  "height": 1199,
+  "alpha_bbox_xyxy": [
+    236,
+    124,
+    984,
+    1026
+  ],
+  "alpha_bbox_area_fraction": 0.4289,
+  "likely_oversized_native_bbox_warning": true,
+  "technical_qa": "candidate_pending_spatial_and_anatomical_review",
+  "source_image_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "grip_guide_reference_sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+  "grip_closeup_reference_sha256": "6aa155da6f503193396702d621eeb26b8623dd683757683825fb5ba8eeb5b706",
+  "independent_spear_reference_sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+  "generation_method": "fresh_independent_proxy_rgba",
+  "provider_image_calls": 1,
+  "anatomical_component_visual_approved": false,
+  "hand_spear_contact_verified": false,
+  "spatial_registration_approved": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}

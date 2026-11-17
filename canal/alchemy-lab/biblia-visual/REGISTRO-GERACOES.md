@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**143 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**144 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -147,6 +147,7 @@
 | [c01-p04-v3-left-grip-palm-rear-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-grip-occlusion-rear-v2/44184932210/c01-p04-v3-left-grip-palm-rear-v2.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`391fa1f6e2c6…\` | [#44184932210](https://github.com/HelioConde/VideoForge-IA/actions/runs/44184932210) |
 | [c01-p04-v3-left-grip-forearm-cuff-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-grip-v3-independent-part/44186735696/c01-p04-v3-left-grip-forearm-cuff-v3.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`1869fef70a97…\` | [#44186735696](https://github.com/HelioConde/VideoForge-IA/actions/runs/44186735696) |
 | [c01-p04-v3-left-grip-palm-rear-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-grip-v3-independent-part/44187319568/c01-p04-v3-left-grip-palm-rear-v3.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`f6ac09a8267e…\` | [#44187319568](https://github.com/HelioConde/VideoForge-IA/actions/runs/44187319568) |
+| [c01-p04-v3-left-grip-fingers-front-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-grip-v3-independent-part/44187678728/c01-p04-v3-left-grip-fingers-front-v3.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`db0065fa3819…\` | [#44187678728](https://github.com/HelioConde/VideoForge-IA/actions/runs/44187678728) |
 
 ## Regras de consulta
 
