@@ -36,7 +36,10 @@ class MotherShotTests(unittest.TestCase):
     def test_guards_reuse_corrected_portable_spear(self):
         for ident in ("C01-P04", "C01-P05"):
             with self.subTest(ident=ident):
-                spec = mother.prepare(ident)
+                # C01-P04 now exists in the permanent SHA archive.
+                # Only pure prompt test bypasses archive read, not production.
+                with patch.object(mother, "existing_mother", return_value=None):
+                    spec = mother.prepare(ident)
                 refs = [x["id"] for x in spec["references"]]
                 self.assertIn("biblia-lanca-guarda-completa-v2", refs)
                 self.assertNotIn("biblia-lanca-guarda-completa-v1", refs)
