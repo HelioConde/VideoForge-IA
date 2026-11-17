@@ -194,6 +194,11 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
     meta=base/(asset_id+".production.json")
     if any(x.exists() or x.is_symlink() for x in (image,meta)):
         raise VideoForgeError("EP01_PROXY_PARTS_OUTPUT_ALREADY_EXISTS")
+    # Validate local PNG reader BEFORE spending the single provider call.
+    try:
+        from PIL import Image
+    except ImportError as exc:
+        raise VideoForgeError("EP01_PROXY_PARTS_PILLOW_NOT_AVAILABLE_BEFORE_PAID_CALL") from exc
     inputs=[spec["mother"]]+spec["refs"]
     payload={"model":model,"n":1,"prompt":spec["prompt"],
              "size":"1024x1536",
@@ -206,7 +211,6 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
     raw,ext=proxy_images.decode_image(answer)
     if ext!=".png":
         raise VideoForgeError("EP01_PROXY_PARTS_NOT_PNG")
-    from PIL import Image
     with Image.open(io.BytesIO(raw)) as im:
         im.load()
         if im.format!="PNG":
