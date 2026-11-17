@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/ep01-arken-visual-qa-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "sources": [
+    "C05-P01",
+    "biblia-arken-muralhas-base-v1",
+    "C05-P02"
+  ],
+  "source_sha256": {
+    "C05-P01": "84520f8047d85930ca2834f57e1c278969aea51e496f3cad5ca3fd330ab07073",
+    "biblia-arken-muralhas-base-v1": "0903946038a6977cc93fe324eee665899e7cccc296bcffab4c5cff38202ab5d4",
+    "C05-P02": "281aa0e4cc0dfd9c9d636aa0e186324bdecbd96b569a35f93882971a586765f3"
+  },
+  "no_provider_calls": true,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_upload": false,
+  "reason": "comparar estrada/Kael e mestre Arken vs tomada ampla; nenhuma alteração de sprites ou produção de novos PNGs"
+}
