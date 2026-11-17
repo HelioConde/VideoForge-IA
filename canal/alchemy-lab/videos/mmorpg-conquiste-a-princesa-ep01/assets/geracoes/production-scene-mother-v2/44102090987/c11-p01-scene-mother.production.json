@@ -1,0 +1,54 @@
+{
+  "schema": "videoforge/ep01-shot-mother-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c11-p01-scene-mother",
+  "candidate_scene_shot_id": "C11-P01",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/c11-p01-scene-mother.png",
+  "sha256": "c79b2dab32159b3a8b9c23410b21a760529fee459292bcd9106114425cefe3b0",
+  "bytes": 2423823,
+  "width": 941,
+  "height": 1672,
+  "model": "gpt-image-2",
+  "size": "1024x1536",
+  "source_originals_sha_verified": [
+    {
+      "id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    },
+    {
+      "id": "biblia-guarda-esquerdo-cerimonial-v1",
+      "sha256": "cfa01b0f4781a67ffda243a97c640909f30755f246bc82dde14b8274272d1679",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005682487/biblia-guarda-esquerdo-cerimonial-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    },
+    {
+      "id": "biblia-guarda-direito-cerimonial-v1",
+      "sha256": "3fcdaa067b55d3d75599dab6253ec4605f44453e7ecbc469581f67783bfbb5fb",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005833952/biblia-guarda-direito-cerimonial-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    },
+    {
+      "id": "biblia-portao-real-base-v1",
+      "sha256": "e68a242a4cce32b371ab0a97430389cc48619f8a80f38a44670bb944d5193a38",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009839428/biblia-portao-real-base-v1.png",
+      "source_role": "visual_identity_or_environment_not_pose",
+      "visual_approval_pending": true
+    }
+  ],
+  "source_images_attached_to_request": 4,
+  "technical_qa": "valid_png_source_refs_sha_verified",
+  "human_visual_approval": false,
+  "scene_complete": false,
+  "background_generated": false,
+  "characters_rgba_generated": false,
+  "rig_generated": false,
+  "camera_plan_registered": true,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
