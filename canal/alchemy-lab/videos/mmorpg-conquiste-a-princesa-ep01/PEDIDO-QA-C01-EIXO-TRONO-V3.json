@@ -16,5 +16,7 @@
   "human_visual_approval": false,
   "rig_ready": false,
   "mp4_generated": false,
-  "youtube_uploaded": false
+  "youtube_uploaded": false,
+  "request_revision": 2,
+  "qa_retry_reason": "PYTHONPATH de QA corrigido, sem chamadas ao proxy"
 }
