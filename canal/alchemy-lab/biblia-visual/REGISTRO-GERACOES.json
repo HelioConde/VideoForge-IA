@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 48,
+  "total_arquivadas": 49,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1462,6 +1462,34 @@
           "id": "biblia-sala-do-trono-vazio-v1",
           "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44011899028:biblia-kael-casual-antes-v2.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-kael-casual-antes-v2",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "kael",
+      "biblia_categoria": "personagens",
+      "producer": "production-art-request",
+      "github_run_id": 44011899028,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011899028/biblia-kael-casual-antes-v2.png",
+      "sha256": "a9bfad6ba00f7ea1e3f9af33e3943d572e3e3918d41a29eceefd98df169a4dcd",
+      "bytes": 1840423,
+      "width": 981,
+      "height": 1602,
+      "referencias_usadas": [
+        {
+          "id": "ref-kael-close-c12",
+          "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+          "path": "assets/referencias/chat-aprovadas/kael-close-salao.png"
         }
       ],
       "status": "gerado",

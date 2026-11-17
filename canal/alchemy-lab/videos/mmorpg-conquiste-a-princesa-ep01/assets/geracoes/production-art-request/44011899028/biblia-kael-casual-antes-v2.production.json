@@ -1,0 +1,35 @@
+{
+  "schema": "videoforge/production-art-result/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-kael-casual-antes-v2",
+  "file": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/biblia-kael-casual-antes-v2.png",
+  "biblia_item_id": "kael",
+  "biblia_categoria": "personagens",
+  "size": "1024x1536",
+  "sha256": "a9bfad6ba00f7ea1e3f9af33e3943d572e3e3918d41a29eceefd98df169a4dcd",
+  "model": "gpt-image-2",
+  "actual_width": 981,
+  "actual_height": 1602,
+  "requested_size": "1024x1536",
+  "dimensions_match_requested": false,
+  "technical_qa": "valid_png_noncanonical_dimensions_visual_review_pending",
+  "pixel_resampling": false,
+  "source_images_attached_to_request": 1,
+  "source_originals_sha_verified": [
+    {
+      "actor": "kael",
+      "id": "ref-kael-close-c12",
+      "path": "assets/referencias/chat-aprovadas/kael-close-salao.png",
+      "sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f"
+    }
+  ],
+  "preserves_prior_text_only_candidate": true,
+  "requires_separate_aldric_visual_review": true,
+  "human_visual_approval": false,
+  "official_video_created": false,
+  "candidate_scene_shot_id": null,
+  "visual_continuity_anchor_sha256": null,
+  "no_automatic_scene_or_wardrobe_approval": true,
+  "youtube_uploaded": false
+}
