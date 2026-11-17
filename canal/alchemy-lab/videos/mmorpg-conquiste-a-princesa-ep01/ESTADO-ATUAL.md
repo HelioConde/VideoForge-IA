@@ -1,3 +1,11 @@
+## 17/11/2026 — Continuação após aprovação do estilo: 20/39 imagens-mãe
+
+O criador aprovou a **direção estética geral** das imagens vistas. Preservar desenho anime/manhwa 2D semirrealista, identidade e referências SHA. Nesta etapa **7 mães novas** foram geradas e arquivadas pelo proxy: C06-P02 (#44092962223), C04-P03 (#44093679602), C05-P03 (#44094221512), C07-P01 (#44094654952), C07-P02 (#44095149637), C07-P03 (#44095398312), C08-P01 (#44095687671). Todas PNG 941×1672, com SHA em `REGISTRO-GERACOES.json` e `estado-atual.json`.
+
+**Inventário real:** [CHECKPOINT-IMAGENS-EP01-AUTO.json](CHECKPOINT-IMAGENS-EP01-AUTO.json) confirma **20/39 tomadas visuais com imagem-mãe original, 19 ainda faltantes** (C01-P01 é abertura preta); contagem inclui antigas fontes reprovadas e não significa 20 cenas aprovadas. Testes do plano de 40 tomadas e do contrato de PNG independente pelo proxy passaram. As referências de C08-P01 e C08-P03 foram atualizadas com `biblia-carrinho-base-v1` SHA `04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36`, para preservar rodas/estrutura.
+
+**Próxima mãe a produzir:** C08-P02 (Kael empurra carrinho); continuar C08-P03/C08-P04 e próximas tomadas. Conferir futuramente mãos, proporções, Elara/mascarados, continuidade e objetos. **Não usar recortes locais da mãe** para os ossos: solicitar ao proxy novas imagens RGBA independentes. O feedback do criador é aprovação do estilo, não aprovação individual por SHA nem liberação do rig, MP4 ou YouTube.
+
 ## 17/11/2026 — Feedback positivo do criador sobre direção visual
 
 O criador confirmou: **“todas as imagens que eu vi até agora tá bonita e seguindo o visual”**. Direção estética geral das imagens vistas **aprovada**: manter pintura anime/manhwa 2D fantasia semirrealista cinematográfica, paleta, luz, desenho de personagens e cenários. [Registro de escopo](DIRECAO-VISUAL-APROVADA-PELO-CRIADOR.md).
