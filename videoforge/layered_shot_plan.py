@@ -43,6 +43,14 @@ def validate(root: Path = ROOT) -> dict:
         or plan.get("legacy_pose_queue")!="deprecated_archive_only_no_paid_calls"
         or plan.get("images_requested_by_shot_not_yet_generated") is not True):
         raise VideoForgeError("LAYERED_PLAN_ORIGIN_OR_POLICY_INVALID")
+    separation = plan.get("asset_generation_contract", {})
+    if (separation.get("schema") != "videoforge/proxy-generated-separate-assets/v1"
+            or separation.get("generation_method") != "proxy_generated_separate_image"
+            or separation.get("prohibit_final_sprites_from_local_segmentation") is not True
+            or separation.get("local_masks_allowed_for_QA_only") is not True
+            or separation.get("rig_requires_human_visual_approval") is not True
+            or "proxy" not in plan.get("production_strategy", "")):
+        raise VideoForgeError("LAYERED_PLAN_PROXY_ASSET_CONTRACT_MISSING")
     if (plan.get("frame_size")!=
             {"width":1080,"height":1920,"fps":30,"aspect_ratio":"9:16"}
         or plan.get("completion",{}).get("shots_generated_by_this_plan")!=0
@@ -110,6 +118,33 @@ def validate(root: Path = ROOT) -> dict:
             or images.get("background",{}).get("alpha")!="opaque"
             or shot.get("rig",{}).get("independent_pose_image_required") is not False):
             raise VideoForgeError("LAYERED_PLAN_MOTHER_FIRST_INVALID "+ident)
+        if (images.get("asset_source_method") != "proxy_generated_separate_image"
+            or images.get("local_segmentation_policy") != "QA_only_never_final_source"
+            or images.get("mother_figure_is_visual_reference_not_cutout_source") is not True
+            or images.get("rig_parts_policy") != "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout"
+            or shot.get("rig",{}).get("no_pixel_mask_derived_final_layers") is not True
+            or shot.get("qa",{}).get("reject_cutout_or_segmentation_final_sprites") is not True):
+            raise VideoForgeError("LAYERED_PLAN_REQUIRES_PROXY_GENERATED_LAYERS " + ident)
+        requested = images.get("proxy_generation_requests")
+        if not isinstance(requested,list):
+            raise VideoForgeError("LAYERED_PLAN_PROXY_REQUESTS_MISSING " + ident)
+        expected = {"background-clean"} | {
+            "character-" + x["id"] for x in images.get("characters",[])
+        } | {
+            "object-" + x["id"] for x in images.get("objects",[])
+            if x.get("transparent_rgba") is True
+        }
+        if ({x.get("id") for x in requested if isinstance(x,dict)} != expected
+            or len(requested)!=len(expected)
+            or any(x.get("method")!="proxy_generated_separate_image"
+                   for x in requested if isinstance(x,dict))):
+            raise VideoForgeError("LAYERED_PLAN_PROXY_ASSET_IDS_INCONSISTENT "+ident)
+        if (images.get("background",{}).get("generation_method")!="proxy_generated_separate_image"
+            or any(x.get("generation_method")!="proxy_generated_separate_image"
+                   for x in images.get("characters",[]))
+            or any(x.get("generation_method")!="proxy_generated_separate_image"
+                   for x in images.get("objects",[]) if x.get("transparent_rgba") is True)):
+            raise VideoForgeError("LAYERED_PLAN_PROXY_GENERATION_METHOD_INVALID "+ident)
         actors={x["id"] for x in images.get("characters",[])}
         if not set(queued["personagens"])<=actors:
             raise VideoForgeError("LAYERED_PLAN_MISSING_CHARACTERS "+ident)
@@ -130,7 +165,8 @@ def validate(root: Path = ROOT) -> dict:
     return {"shot_count":40,"shot_mothers_to_generate":39,
             "predefined_camera_shots":37,"additional_camera_shots":sorted(supplements),
             "camera_type_distribution":by_type,
-            "pose_images_required":False,"image_provider_calls":0,
+            "pose_images_required":False,"separated_assets_from_proxy":True,
+            "local_cutout_for_rig_allowed":False,"image_provider_calls":0,
             "youtube_uploaded":False}
 
 
