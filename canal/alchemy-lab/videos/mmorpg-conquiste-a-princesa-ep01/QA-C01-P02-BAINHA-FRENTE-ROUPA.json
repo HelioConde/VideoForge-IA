@@ -1,0 +1,77 @@
+{
+  "schema": "videoforge/ep01-c01-p02-clothing-depth-audit/v1",
+  "mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "layer_hashes": {
+    "background": "66c79b08f882d699e2e823b080b5a35a32d88401c30812d31936aaef6e466fb9",
+    "body": "61a78ba3a3749d52335e82d7cc3c671b6bffffe8a421c464ad588b0e750b6bac",
+    "sheath": "70a05e5de9ab9e56aed986527dc22fa3d8ff12698ad85286ce6675a6c3d154df",
+    "sword": "a79f7afafd89d1adee9967f765fc6fa93bd1de62f88d84488d48e03dc8f83c06",
+    "upper_hand": "740c3bf52eb2a8a12aa6872bd8e9f60c1d91fd678a48e6d1a054c5a6b6fd4a59",
+    "lower_hand": "785c1df2cb04ba1061725e97c5a48bcd21134fdfef8af6ca25ee24fb61e0c7cb"
+  },
+  "rejected_order": [
+    "background",
+    "sheath",
+    "sword",
+    "body",
+    "upper_hand",
+    "lower_hand"
+  ],
+  "corrected_order": [
+    "background",
+    "body",
+    "sheath",
+    "sword",
+    "upper_hand",
+    "lower_hand"
+  ],
+  "sword_or_sheath_resampled": false,
+  "all_layers_original_native_canvas": true,
+  "gloves_foreground": true,
+  "sheath_above_coat": true,
+  "sheath_coat_overlap_pixels_exact": 16,
+  "body_mask_already_excludes_most_sheath": true,
+  "z_order_alone_not_proof_of_fix": true,
+  "rejected_legacy_offsets": [
+    [
+      0,
+      300
+    ],
+    [
+      0,
+      500
+    ],
+    [
+      0,
+      650
+    ],
+    [
+      0,
+      800
+    ],
+    [
+      -80,
+      650
+    ],
+    [
+      80,
+      650
+    ]
+  ],
+  "old_mean_rgb_difference": 9.151,
+  "corrected_mean_rgb_difference": 7.654,
+  "automatic_visual_approval": false,
+  "rig_authorized": false,
+  "mp4_rendered": false,
+  "youtube_uploaded": false,
+  "provider_calls": 0,
+  "source_cropped_roi_for_visual_review": [
+    380,
+    815,
+    900,
+    1640
+  ],
+  "jpg_sha256": "576445abf5006dd2fd46ad5e9758e0a5ccfb5bc2ffedbdf0d511db133f1cc845",
+  "comparison_type": "corrected_depth_order_no_redraw_no_pose",
+  "visual_approval": false
+}
