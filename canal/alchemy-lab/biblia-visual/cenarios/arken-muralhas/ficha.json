@@ -1,0 +1,13 @@
+{
+  "schema": "videoforge/visual-bible-item/v1",
+  "categoria": "cenarios",
+  "id": "arken-muralhas",
+  "nome": "Muralhas e portão da cidade de Arken",
+  "descricao": "Vista exterior canônica da cidade medieval de Arken: muro alto em pedra cinza-dourada, torres com telhados escuros e bandeiras vinho, portão principal ligado à estrada da Bíblia, relevo e floresta em profundidade, estilo manhwa fantasia 2D semi-realista. Manter silhueta e arquitetura idênticas em todas as cenas exteriores. Arte de referência é cenário, sem personagens.",
+  "variantes": [
+    "base"
+  ],
+  "referencias_aprovadas": [],
+  "fonte": "INDEX-BIBLIA.json",
+  "aviso": "Não inventar imagem ou aprovação."
+}
