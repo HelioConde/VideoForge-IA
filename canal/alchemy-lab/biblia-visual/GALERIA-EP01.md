@@ -1,7 +1,7 @@
 # Galeria visual de revisão — EP01
 
 **42 de 42 referências-mestre** arquivadas e verificadas por SHA256.
-**7 de 9 reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.
+**9 de 9 reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.
 **Nenhuma miniatura substitui o original. Gerado não significa aprovado.**
 Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geração de IA.
 
@@ -68,6 +68,8 @@ Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geraç�
 | [biblia-carrasco-base-v2](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44015867309/biblia-carrasco-base-v2.png) | gerado (não aprovado automaticamente) | `24d1ed5187417fe9…` | [#44015867309](https://github.com/HelioConde/VideoForge-IA/actions/runs/44015867309) |
 | [biblia-figurantes-base-v2](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016029012/biblia-figurantes-base-v2.png) | gerado (não aprovado automaticamente) | `5a798858eccdb04a…` | [#44016029012](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016029012) |
 | [biblia-mascarado-1-base-v2](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016161296/biblia-mascarado-1-base-v2.png) | gerado (não aprovado automaticamente) | `fa149cf971273a64…` | [#44016161296](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016161296) |
+| [biblia-mascarado-2-base-v2](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016309119/biblia-mascarado-2-base-v2.png) | gerado (não aprovado automaticamente) | `3f632cf2fd38ee4a…` | [#44016309119](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016309119) |
+| [biblia-mascarados-base-v2](../videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44016503620/biblia-mascarados-base-v2.png) | gerado (não aprovado automaticamente) | `212d8c9e93e86719…` | [#44016503620](https://github.com/HelioConde/VideoForge-IA/actions/runs/44016503620) |
 
 ## Pendentes de geração
 
@@ -75,8 +77,7 @@ As 42 referências individuais possuem arquivos no registro.
 
 ## Correções V2 (sem promoção automática)
 
-- Pendente: biblia-mascarado-2-base-v2
-- Pendente: biblia-mascarados-base-v2
+Todos os reparos V2 estão arquivados; ainda requerem revisão visual humana.
 
 ## Travamentos preservados
 
