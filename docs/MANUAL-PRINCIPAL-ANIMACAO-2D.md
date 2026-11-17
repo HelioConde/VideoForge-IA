@@ -16,17 +16,19 @@ Manter o **Remotion 4** existente, reutilizando a arquitetura `canal/<id>/videos
 - FFmpeg/FFprobe são para áudio, QA, extração de quadros, multiplexação quando apropriado; **nunca** a engine principal de animação.
 - Revisar licença comercial do Remotion antes de ampliar equipe/uso; Three.js é MIT. Evitar novos serviços pagos desnecessários.
 
-## 2. Ordem de produção obrigatória — imagem-mãe antes de movimentar
+## 2. Ordem de produção obrigatória — imagem-mãe e depois peças geradas pelo proxy
 
 1. Gerar a **imagem-mãe completa**, visual consistente, mesma composição, estilo, pose, perspectiva, iluminação, vestuário e personagens. Registrar SHA-256 e proveniência por canal/cena.
 2. Com a **própria imagem-mãe como referência da edição de IA**, gerar o `background.png` reconstruído sem personagens/objetos móveis; manter o mesmo canvas e preencher áreas ocultas.
-3. A partir da **mesma referência**, extrair os personagens e objetos móveis em **PNG RGBA verdadeiro**, sempre alinhados ao canvas original. **Nunca gerar uma imagem nova desconectada** para cabeça ou braço.
-4. Separar internamente cada personagem: `body-no-head` (e sem roupa/capa que serão independentes), `head-open`, `head-closed`, `hair-back`, `hair-front`, olhos adicionais quando tecnicamente necessários, braços/objetos e tecido/capa se existirem.
-5. **Reconstruir regiões antes ocultas** (pescoço, ombros, pele, roupa, partes do cenário, braços) por edição/inpainting antes de mover os layers. Apenas pixels visíveis do original não bastam para revelar áreas durante a articulação.
-6. Remover **totalmente da camada base** os elementos que serão animados em layers próprios; proibido duplicar franja, cabelo, capa, roupa, mãos ou objetos na imagem final.
-7. Gerar `rig.json` por cena com origem/proveniência e SHA de cada sprite, bbox em coordenadas do canvas da imagem-mãe, pivôs, z-index/oclusão, malha, amplitudes, frames de piscada, revisão/QA. Sprites recortados podem economizar memória, mas a geometria mantém coordenadas originais.
+3. Enviar a **imagem-mãe e referências canônicas ao proxy** e pedir **UMA NOVA IMAGEM separada para cada personagem e objeto animável**, em PNG RGBA verdadeiro, mantendo identidade, ângulo, escala, luz e alinhamento da cena. **Proibidos crop, segmentação, máscara por polígono ou recorte local como fonte final do rig.** Não gerar cabeça ou braço desconectados da referência da tomada.
+4. **Pedir ao proxy que gere também imagens separadas das partes móveis** de cada personagem quando necessárias: `body-no-head`, `head-open`, `head-closed`, `hair-back`, `hair-front`, braços/mãos, roupas, tecido e capa. As peças devem ser desenhadas com referência SHA da cena-mãe e do personagem isolado, não extraídas por máscaras locais.
+5. **Solicitar ao proxy a geração das regiões antes ocultas** (pescoço, ombros, pele, roupa, cenário, braços, lâmina inteira) como parte das imagens individuais; apenas pixels visíveis da mãe não bastam para a articulação.
+6. O **background gerado pelo proxy** não pode conter personagens, armas ou outros elementos dinâmicos, e os sprites independentes não devem duplicar franja, cabelo, capa, roupa, mãos ou objetos. Não limpar a arte final usando recorte local: pedir correção específica ao proxy.
+7. Gerar `rig.json` por cena com **proveniência `proxy_generated_separate_image`**, SHAs da mãe/referências e de cada PNG independente, bbox e placement no canvas da mãe, pivôs, z-index/oclusão, malha, amplitudes e revisão/QA. Otimizações de memória durante render não autorizam criar sprites animáveis por recorte do frame original.
 8. Montar pose neutra e **comparar pixel a pixel com o original**, por `diff.png`, contact sheet e métricas (round-trip composition QA). Corrigir buracos, halos, membros duplicados, pele transparente e costuras.
 9. Só então animar com Remotion/Three, renderizar, inspecionar e registrar artifact e QA. Sem publicar no YouTube sem autorização específica.
+
+**Política de proveniência:** [Contrato obrigatório — camadas geradas pelo proxy](CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md). Máscaras locais, recortes e `diff.png` são ferramentas de **QA**, não meios de produzir imagens finais para os ossos. O proxy deve gerar as peças independentes com RGBA, inclusive áreas ocultas.
 
 ## 3. Rig híbrido e controles de movimento
 
