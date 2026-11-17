@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-source-sword-cutout-v1",
+  "github_run_id": 44042266407,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c01-p02-object-espada-source-visible.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "a79f7afafd89d1adee9967f765fc6fa93bd1de62f88d84488d48e03dc8f83c06",
+      "bytes": 2635915,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}

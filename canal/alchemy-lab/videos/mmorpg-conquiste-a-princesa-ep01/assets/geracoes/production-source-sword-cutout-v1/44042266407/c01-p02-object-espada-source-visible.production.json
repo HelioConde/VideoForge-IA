@@ -1,0 +1,47 @@
+{
+  "schema": "videoforge/ep01-sword-source-mask/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p02-object-espada-source-visible",
+  "candidate_scene_shot_id": "C01-P02",
+  "sha256": "a79f7afafd89d1adee9967f765fc6fa93bd1de62f88d84488d48e03dc8f83c06",
+  "source_mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "source_originals_sha_verified": [
+    {
+      "id": "c01-p02-scene-mother",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png",
+      "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e"
+    }
+  ],
+  "mask_qa": {
+    "canvas": [
+      941,
+      1672
+    ],
+    "bbox": [
+      151,
+      150,
+      569,
+      939
+    ],
+    "visible_pixels": 66425,
+    "source_rgb_exact": true,
+    "source_coordinate_offset": [
+      0,
+      0
+    ],
+    "source_scale": 1,
+    "original_pixels_resampled": false,
+    "hands_occlude_sword": true,
+    "not_visible_sword_extension_generated": true,
+    "mask_draft_for_visual_review": true
+  },
+  "technical_qa": "source_pixels_unmodified_sword_candidate_only",
+  "old_proxy_sword_approved": false,
+  "source_mask_approved": false,
+  "hand_contact_qc": "candidate_waiting_visual_recomposition",
+  "rig_approved": false,
+  "youtube_uploaded": false,
+  "mp4_generated": false,
+  "image_provider_calls": 0
+}

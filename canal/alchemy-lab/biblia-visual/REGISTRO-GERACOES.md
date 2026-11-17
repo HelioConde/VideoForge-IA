@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**66 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**67 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -70,6 +70,7 @@
 | [c01-p02-hand-lower-contact-occlusion.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-source-masks-v1/44041652723/c01-p02-hand-lower-contact-occlusion.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`785c1df2cb04…\` | [#44041652723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44041652723) |
 | [c01-p02-hand-upper-contact-occlusion.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-source-masks-v1/44041652723/c01-p02-hand-upper-contact-occlusion.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`740c3bf52eb2…\` | [#44041652723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44041652723) |
 | [c01-p02-object-bainha-source-visible.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-source-masks-v1/44041652723/c01-p02-object-bainha-source-visible.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`70a05e5de9ab…\` | [#44041652723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44041652723) |
+| [c01-p02-object-espada-source-visible.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-source-sword-cutout-v1/44042266407/c01-p02-object-espada-source-visible.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`a79f7afafd89…\` | [#44042266407](https://github.com/HelioConde/VideoForge-IA/actions/runs/44042266407) |
 
 ## Regras de consulta
 

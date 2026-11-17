@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 66,
+  "total_arquivadas": 67,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1985,6 +1985,34 @@
       ],
       "status": "gerado",
       "qa_tecnica": "source_pixels_unmodified_mask_candidate_only",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-source-sword-cutout-v1:44042266407:c01-p02-object-espada-source-visible.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p02-object-espada-source-visible",
+      "shot": "C01-P02",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-source-sword-cutout-v1",
+      "github_run_id": 44042266407,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-source-sword-cutout-v1/44042266407/c01-p02-object-espada-source-visible.png",
+      "sha256": "a79f7afafd89d1adee9967f765fc6fa93bd1de62f88d84488d48e03dc8f83c06",
+      "bytes": 2635915,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "c01-p02-scene-mother",
+          "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "source_pixels_unmodified_sword_candidate_only",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }
