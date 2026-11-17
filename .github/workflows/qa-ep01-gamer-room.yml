@@ -1,0 +1,75 @@
+name: "VideoForge - EP01 QA quarto gamer (sem IA)"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-QUARTO-GAMER.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ep01-gamer-room-qa
+  cancel-in-progress: false
+
+jobs:
+  compare-room:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Pillow para QA somente local
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Verificar pedido sem gerar novas imagens
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-QUARTO-GAMER.json')
+          data=json.loads(p.read_text(encoding='utf-8'))
+          assert data.get('schema')=='videoforge/ep01-gamer-room-qa-request/v1'
+          assert data.get('shots')==['C03-P01','C03-P02','C04-P01','C04-P02']
+          assert data.get('no_provider_calls') is True
+          assert data.get('human_visual_approval') is False
+          assert data.get('rig_ready') is False
+          assert data.get('youtube_upload') is False
+          PY
+      - name: Criar comparacao de continuidade e montar relatorio de QA
+        run: python -m scripts.qa_ep01_gamer_room_continuity
+      - name: Preservar prancha e hashes no canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+          git add "$EP/QA-C03-C04-CONTINUIDADE-QUARTO.jpg" "$EP/QA-C03-C04-CONTINUIDADE-QUARTO.json"
+          if git diff --cached --quiet; then
+            echo "EP01_GAMER_QA_UNCHANGED"
+          else
+            git config user.name 'videoforge-qa[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'qa(ep01): comparar a transicao para o quarto gamer'
+            for attempt in 1 2 3; do
+              if git push origin HEAD:main; then exit 0; fi
+              git fetch origin main
+              git rebase origin/main
+            done
+            exit 1
+          fi
+      - name: Preservar copia em artefato de QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-ep01-quarto-gamer-${{ github.run_id }}
+          path: |
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C03-C04-CONTINUIDADE-QUARTO.jpg
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C03-C04-CONTINUIDADE-QUARTO.json
+          retention-days: 14
+          if-no-files-found: warn
