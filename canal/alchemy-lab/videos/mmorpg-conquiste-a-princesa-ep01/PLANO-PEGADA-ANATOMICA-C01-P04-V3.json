@@ -45,7 +45,7 @@
       "must_include": "connected_wrist",
       "must_exclude": "spear_background_unrelated_fingers",
       "approval": false,
-      "status": "generated_independent_native_pending_spatial_registration_and_human_qa",
+      "status": "generated_independent_pending_contact_and_spatial_review",
       "candidate": {
         "run_id": 44186735696,
         "source_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
@@ -53,16 +53,16 @@
           1120,
           1404
         ],
-        "alpha_bbox_xyxy": [
+        "native_alpha_bbox_xyxy": [
           273,
           55,
           1078,
           1299
         ],
-        "scale_warning": true,
-        "visual_review": "forearm_cuff_only_no_fingers_no_spear_consistent_armor_but_large_native_scale",
-        "review_sheet": "QA-C01-P04-V3-ANATOMIA-PEGADA-FOREARM-CUFF.jpg",
-        "human_approval": false,
+        "technical_qa": "candidate_pending_spatial_and_anatomical_review",
+        "visual_review": "forearm cuff isolated from fingers and spear, but native scale large",
+        "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-grip-v3-independent-part/44186735696/c01-p04-v3-left-grip-forearm-cuff-v3.png",
+        "human_visual_approval": false,
         "rig_ready": false
       }
     },
@@ -72,7 +72,27 @@
       "role": "new independent RGBA back of palm below shaft",
       "must_include": "actual_palm_surface_channel_for_wood",
       "must_exclude": "complete_closed_fist_front_knuckles_spear",
-      "approval": false
+      "approval": false,
+      "status": "generated_independent_pending_contact_and_spatial_review",
+      "candidate": {
+        "run_id": 44187319568,
+        "source_sha256": "f6ac09a8267ef32b9734f2f68f529e38e995f517c40b203998dcc8f23c3777be",
+        "native_canvas": [
+          1448,
+          1086
+        ],
+        "native_alpha_bbox_xyxy": [
+          345,
+          153,
+          1101,
+          985
+        ],
+        "technical_qa": "candidate_pending_spatial_and_anatomical_review",
+        "visual_review": "back of glove independent, but shaft channel/contact needs alignment",
+        "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-grip-v3-independent-part/44187319568/c01-p04-v3-left-grip-palm-rear-v3.png",
+        "human_visual_approval": false,
+        "rig_ready": false
+      }
     },
     {
       "id": "spear-existing",
@@ -88,7 +108,27 @@
       "role": "new independent RGBA near-side fingertips and thumb",
       "must_include": "connected_5_digit_geometry_wraps_front_of_real_shaft",
       "must_exclude": "spear_full_fist_forearm",
-      "approval": false
+      "approval": false,
+      "status": "generated_independent_pending_contact_and_spatial_review",
+      "candidate": {
+        "run_id": 44187678728,
+        "source_sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
+        "native_canvas": [
+          1312,
+          1199
+        ],
+        "native_alpha_bbox_xyxy": [
+          236,
+          124,
+          984,
+          1026
+        ],
+        "technical_qa": "candidate_pending_spatial_and_anatomical_review",
+        "visual_review": "individual bent digits, separate from palm; align to real spear with QA",
+        "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-grip-v3-independent-part/44187678728/c01-p04-v3-left-grip-fingers-front-v3.png",
+        "human_visual_approval": false,
+        "rig_ready": false
+      }
     }
   ],
   "next_generation_policy": {
@@ -113,9 +153,21 @@
     "youtube_uploaded": false,
     "left_forearm_cuff_candidate_generated": true,
     "left_forearm_cuff_visual_approved": false,
-    "left_palm_rear_candidate_generated": false,
-    "left_fingers_front_candidate_generated": false
+    "left_palm_rear_candidate_generated": true,
+    "left_fingers_front_candidate_generated": true,
+    "left_grip_three_candidates_generated": true
   },
-  "next_requested_part": "guard-palm-rear",
-  "current_request_workflow_run_id": 44187319568
+  "next_requested_part": "spatial registration precise QA of wrist join and spear grip; do not regenerate art before checking R3 at 100%",
+  "current_request_workflow_run_id": null,
+  "r3_registration_qa": {
+    "run_id": 44188557556,
+    "qa_report": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-PEGADA-CONTATO-REGISTRO-V2.json",
+    "comparison_board": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-PEGADA-CONTATO-REGISTRO-V2.jpg",
+    "hand_zoom": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-PEGADA-CONTATO-REGISTRO-V2-MAO-ZOOM.jpg",
+    "provisional_preferred_candidate": "R3-tightest-provisional",
+    "editorial_justification": "R3 visually reduces the gap between glove and cuff and moves fingers over the spear; needs independent detailed anatomical QA",
+    "approved_spatial_transform": null,
+    "creator_approved": false,
+    "rig_ready": false
+  }
 }
