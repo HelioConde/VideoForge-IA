@@ -1,0 +1,171 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-native-registration-proposals/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "source_mother_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "original_creator_approved_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "board_path": "QA-C01-P04-V3-REGISTRO-ESPACIAL.jpg",
+  "board_sha256": "86642a7b0e5bccded4e3b568762cbd12d4d692cce0755d891c73de3d58c5fff2",
+  "pieces": [
+    {
+      "part": "character-aldric",
+      "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-independent-parts-repair-v2/44159799863/c01-p04-v3-character-aldric-repair-v2.png",
+      "source_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+      "source_dimensions": [
+        981,
+        1602
+      ],
+      "alpha_bbox_native_xyxy": [
+        460,
+        150,
+        730,
+        490
+      ],
+      "native_alpha_coverage_fraction": 0.05841,
+      "options": [
+        {
+          "id": "A-top-left-native",
+          "scale": 1.0,
+          "offset_xy": [
+            0,
+            0
+          ],
+          "explanation": "Native 1:1 at scene origin, with clipping outside the preview only",
+          "alpha_bbox_preview_xyxy": [
+            460,
+            150,
+            730,
+            490
+          ],
+          "visual_approval": false,
+          "preview_transform_only": true,
+          "no_exported_sprite": true
+        },
+        {
+          "id": "B-centered-native",
+          "scale": 1.0,
+          "offset_xy": [
+            -20,
+            35
+          ],
+          "explanation": "Native 1:1 centered on the scene canvas",
+          "alpha_bbox_preview_xyxy": [
+            440,
+            185,
+            710,
+            525
+          ],
+          "visual_approval": false,
+          "preview_transform_only": true,
+          "no_exported_sprite": true
+        },
+        {
+          "id": "C-uniform-fit",
+          "scale": 0.959225,
+          "offset_xy": [
+            0,
+            68
+          ],
+          "explanation": "Uniform scale fit for preview only, not an exported or approved sprite",
+          "alpha_bbox_preview_xyxy": [
+            441,
+            212,
+            700,
+            538
+          ],
+          "visual_approval": false,
+          "preview_transform_only": true,
+          "no_exported_sprite": true
+        }
+      ],
+      "selected_option": null,
+      "human_visual_approval": false,
+      "registration_authorized_for_rig": false
+    },
+    {
+      "part": "character-guarda_esquerdo",
+      "source_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44160952746/c01-p04-v3-character-guarda_esquerdo.png",
+      "source_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+      "source_dimensions": [
+        981,
+        1602
+      ],
+      "alpha_bbox_native_xyxy": [
+        78,
+        6,
+        710,
+        1529
+      ],
+      "native_alpha_coverage_fraction": 0.61247,
+      "options": [
+        {
+          "id": "A-top-left-native",
+          "scale": 1.0,
+          "offset_xy": [
+            0,
+            0
+          ],
+          "explanation": "Native 1:1 at scene origin, with clipping outside the preview only",
+          "alpha_bbox_preview_xyxy": [
+            78,
+            6,
+            710,
+            1529
+          ],
+          "visual_approval": false,
+          "preview_transform_only": true,
+          "no_exported_sprite": true
+        },
+        {
+          "id": "B-centered-native",
+          "scale": 1.0,
+          "offset_xy": [
+            -20,
+            35
+          ],
+          "explanation": "Native 1:1 centered on the scene canvas",
+          "alpha_bbox_preview_xyxy": [
+            58,
+            41,
+            690,
+            1564
+          ],
+          "visual_approval": false,
+          "preview_transform_only": true,
+          "no_exported_sprite": true
+        },
+        {
+          "id": "C-uniform-fit",
+          "scale": 0.959225,
+          "offset_xy": [
+            0,
+            68
+          ],
+          "explanation": "Uniform scale fit for preview only, not an exported or approved sprite",
+          "alpha_bbox_preview_xyxy": [
+            75,
+            74,
+            681,
+            1535
+          ],
+          "visual_approval": false,
+          "preview_transform_only": true,
+          "no_exported_sprite": true
+        }
+      ],
+      "selected_option": null,
+      "human_visual_approval": false,
+      "registration_authorized_for_rig": false
+    }
+  ],
+  "candidate_method": "preview-only compositing native sprite with alpha bbox; no final alignment",
+  "hypotheses_are_not_spatial_measurements": true,
+  "model_generation_calls": 0,
+  "source_pixels_changed": false,
+  "rig_ready": false,
+  "human_approval_of_registration": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "next_step": "human visual comparison against mother; confirm source ROI and contact before adopting a spatial transform"
+}
