@@ -49,8 +49,21 @@ jobs:
               or items!=['background-clean','character-carrasco','object-espada','object-bainha']):
               raise SystemExit('EP01_LAYER_QUEUE_INVALID')
           plan,mother,info=engine.mother_source()
+          # O primeiro fundo bruto de 941x1670 falhou QA; exigir que o
+          # alinhamento matemático de 2px esteja arquivado por SHA.
+          registry=json.loads(Path('canal/alchemy-lab/biblia-visual/REGISTRO-GERACOES.json').read_text())
+          matched=[x for x in registry['geracoes'] if x.get('asset')=='c01-p02-background-aligned']
+          if len(matched)!=1:
+              raise SystemExit('EP01_LAYER_ALIGNED_BACKGROUND_REQUIRED_BEFORE_RESUME')
+          from hashlib import sha256
+          target=Path(matched[0]['arquivo'])
+          if (target.is_symlink() or not target.is_file() or
+              sha256(target.read_bytes()).hexdigest()!=matched[0]['sha256'] or
+              [matched[0]['width'],matched[0]['height']]!=[info['width'],info['height']]):
+              raise SystemExit('EP01_LAYER_ALIGNED_BACKGROUND_SHA_OR_SIZE_INVALID')
           print('LAYER_BATCH_SHA_VALID',plan['mother_sha256'],'bytes',len(mother),
                 'dimensions',info['width'],info['height'])
+          print('EP01_ALIGNED_BACKGROUND_VERIFIED',matched[0]['sha256'])
           PY
       - name: Gerar camadas individualmente com arquivo SHA antes de avançar
         shell: bash
@@ -107,4 +120,4 @@ jobs:
           print('EP01_LAYER_REAL_SHA_ARCHIVED',sys.argv[1],layer['sha256'])
           PY
           done
-          echo "EP01_LAYERS_4_ARCHIVED_CANDIDATES_NOT_VISUALLY_APPROVED"
+          echo "EP01_LAYERS: 1 aligned background SHA + 3 extracted pieces, all candidate pending QA"
