@@ -1,0 +1,56 @@
+{
+  "schema": "videoforge/ep01-user-visual-rejection/v1",
+  "scene": "C01-P02",
+  "source_sheet": "QA-C01-P02-BAINHA-FRENTE-ROUPA.jpg",
+  "date": "2026-11-17",
+  "source_mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "owner_review": {
+    "rejected_panels": [
+      2,
+      4
+    ],
+    "message": "Imagens 2 e 4 ainda está incorreto",
+    "status": "rejeitado"
+  },
+  "panel_interpretations": {
+    "2": {
+      "source": "rejected_layer_order",
+      "type": "old_recomposition",
+      "reason": "bainha sob o casaco; comparação histórica, não render",
+      "may_be_used_as_animation_source": false
+    },
+    "4": {
+      "source": "crop_from_original_scene_mother",
+      "type": "original_mother_contact_closeup",
+      "reason": "o responsável também reprovou o close; fidelidade de contato da própria fonte deve ser revista",
+      "may_be_used_as_anatomical_contact_reference": false
+    }
+  },
+  "important": "Painel 4 não é uma nova imagem gerada, é ampliação do painel 1; a reprovação da região implica rever a cena-mãe nessa área, não apenas z-index ou máscara.",
+  "canonical_image_status": "reference_for_global_style_only_contact_not_approved",
+  "accepted_final_variant": null,
+  "forbidden_operations": [
+    "reuse_old_rejected_offset_panels",
+    "declare_original_hand_scabbard_contact_approved",
+    "fix_only_z_index_then_claim_done",
+    "auto_release_rig"
+  ],
+  "repair_scope": [
+    "lower_glove_anatomy",
+    "scabbard_front_of_clothing",
+    "sword_tip_inside_mouth_of_scabbard",
+    "consistent_contact_constraints"
+  ],
+  "constraints": {
+    "preserve_unrelated_scene_pixels": true,
+    "no_translation_of_scabbard": true,
+    "no_nonuniform_scale": true,
+    "version_repair_in_new_asset": true,
+    "show_before_after_and_closeups": true
+  },
+  "generated_revision_count": 0,
+  "human_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
