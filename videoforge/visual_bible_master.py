@@ -116,6 +116,13 @@ def edit_payload(asset: dict, prompt: str, model: str, size: str, root: Path = R
                 if (approval.get("status") != "aprovado"
                         or not approval.get("revisor") or not approval.get("evidencia")):
                     raise VideoForgeError("BIBLE_INTERACTION_SOURCE_NOT_HUMAN_APPROVED")
+                allowed = approval.get("escopo_permitido", [])
+                prohibited = approval.get("escopo_proibido", [])
+                if (not isinstance(allowed, list)
+                        or "referencia_canonica" not in allowed
+                        or not isinstance(prohibited, list)
+                        or any(x in prohibited for x in ("pose", "contato_mão_lança", "rig"))):
+                    raise VideoForgeError("BIBLE_INTERACTION_MASTER_SCOPE_NOT_AUTHORIZED")
             path = episode / found["path"]
             if path.is_symlink() or not path.is_file() or path.stat().st_size > 35_000_000:
                 raise VideoForgeError("BIBLE_MASTER_EXTRA_SOURCE_INVALID")
