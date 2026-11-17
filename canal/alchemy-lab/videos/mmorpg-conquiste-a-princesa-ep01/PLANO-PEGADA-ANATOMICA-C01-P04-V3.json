@@ -44,7 +44,27 @@
       "role": "new independent RGBA forearm/armor cuff",
       "must_include": "connected_wrist",
       "must_exclude": "spear_background_unrelated_fingers",
-      "approval": false
+      "approval": false,
+      "status": "generated_independent_native_pending_spatial_registration_and_human_qa",
+      "candidate": {
+        "run_id": 44186735696,
+        "source_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+        "native_canvas": [
+          1120,
+          1404
+        ],
+        "alpha_bbox_xyxy": [
+          273,
+          55,
+          1078,
+          1299
+        ],
+        "scale_warning": true,
+        "visual_review": "forearm_cuff_only_no_fingers_no_spear_consistent_armor_but_large_native_scale",
+        "review_sheet": "QA-C01-P04-V3-ANATOMIA-PEGADA-FOREARM-CUFF.jpg",
+        "human_approval": false,
+        "rig_ready": false
+      }
     },
     {
       "id": "guard-palm-rear",
@@ -90,6 +110,12 @@
     "hand_contact_validated": false,
     "rig_ready": false,
     "mp4_generated": false,
-    "youtube_uploaded": false
-  }
+    "youtube_uploaded": false,
+    "left_forearm_cuff_candidate_generated": true,
+    "left_forearm_cuff_visual_approved": false,
+    "left_palm_rear_candidate_generated": false,
+    "left_fingers_front_candidate_generated": false
+  },
+  "next_requested_part": "guard-palm-rear",
+  "current_request_workflow_run_id": 44187319568
 }
