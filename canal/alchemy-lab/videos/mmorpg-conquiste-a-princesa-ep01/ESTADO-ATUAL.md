@@ -1,3 +1,10 @@
+## 17/11/2026 — Preparação da V4 de contato físico (C01-P02)
+
+- V3 preservada como candidata. Fonte preferida para novo reparo: **patch V3 SHA `17da28fcf733727a11d2d67a38a84611bd1192cff0e97d45d7db10169de9089d`**, canvas 941×1672, não a imagem V1 reprovada.
+- Preparado `videoforge/ep01_contact_repair_v4.py`, teste `tests/test_ep01_contact_repair_v4.py`, workflow `ep01-contact-v4-by-request.yml` e comparação `qa-ep01-contact-v4-preview.yml` com `scripts/qa-ep01-contact-v4.py`. Objetivo: contato físico contínuo, ponta da lâmina dentro do bocal e bainha fora do tecido; **uma chamada por execução, nenhuma repetição paga automática**.
+- As fontes V1 e V3 nunca são substituídas; novo arquivo V4 terá SHA e histórico próprios, comparação de corpo inteiro e closes. A revisão final, QA de RGBA novo, rig, MP4 e publicação seguem **bloqueados** até evidência e aprovação visual.
+- **Não confundir código preparado com imagem V4 criada.** Conferir o resultado do workflow e o registro de imagens antes de afirmar geração.
+
 ## 17/11/2026 — Inspeção assistida da comparação V3: contato segue sem aprovação
 
 - [Inspeção visual da V3 e próximos passos](REVISAO-VISUAL-ASSISTIDA-C01-P02-V3.md) registrada. Bainha parece mais externa ao casaco, mas a pegada da luva inferior e a continuidade da lâmina no bocal ainda exigem conferência em close; nenhuma candidata foi aprovada pelo proprietário.
