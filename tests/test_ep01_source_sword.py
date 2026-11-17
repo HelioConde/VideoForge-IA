@@ -12,7 +12,6 @@ class SwordSourceTests(unittest.TestCase):
     def test_same_mother_pixels_and_size_without_redrawing(self):
         plan,raw,_=mother_source()
         first,qa=candidate(raw)
-        _,ref=mother_source()
         self.assertEqual(first.size,(941,1672))
         self.assertTrue(qa["source_rgb_exact"])
         self.assertEqual(qa["source_coordinate_offset"],[0,0])
