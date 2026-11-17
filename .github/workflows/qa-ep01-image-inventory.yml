@@ -1,0 +1,53 @@
+name: "VideoForge - EP01 inventario real de imagens (sem IA)"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'videoforge/ep01_image_inventory.py'
+      - 'tests/test_ep01_image_inventory.py'
+      - '.github/workflows/qa-ep01-image-inventory.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ep01-image-inventory
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Testar contagem sem IA e gerar checkpoint
+        run: |
+          python -m unittest tests.test_ep01_image_inventory -v
+          python -m videoforge.ep01_image_inventory --write
+      - name: Salvar checkpoint derivado do registro SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          P="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CHECKPOINT-IMAGENS-EP01-AUTO.json"
+          git add "$P"
+          if git diff --cached --quiet; then
+            echo "INVENTORY_CURRENT"
+          else
+            git config user.name 'videoforge-inventory[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'docs(ep01): atualizar inventario de imagens por registros SHA'
+            for attempt in 1 2 3; do
+              if git push origin HEAD:main; then exit 0; fi
+              git fetch origin main
+              git rebase origin/main
+            done
+            exit 1
+          fi
