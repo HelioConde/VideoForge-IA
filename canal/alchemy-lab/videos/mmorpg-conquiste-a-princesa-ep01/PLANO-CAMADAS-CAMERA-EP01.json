@@ -2330,7 +2330,7 @@
    },
    "editorial_beat": "Jovem corre no beco",
    "scene_status": "planned_pending_real_assets",
-   "visual_prompt": "Elara encapuzada corre pelo beco em três quartos, olha para trás, rosto parcialmente revelado sem revelar o título real.",
+   "visual_prompt": "CENA-MÃE 9:16 de FUGA NO BECO MEDIEVAL DE ARKEN: Elara encapuzada corre em três quartos, corpo inteiro em movimento plausível, capa e capuz azul-acinzentados/escuros segundo a Bíblia Visual, uma mão segurando a borda do capuz enquanto olha para trás com apreensão, rosto só parcialmente visível e sem coroa, diadema ou roupa palaciana exposta. Perspectiva profunda do beco canônico, pedra irregular, paredes e arcos, sombras dramáticas douradas/violetas coerentes com o manhwa 2D semi-realista aprovado. Nenhum rei, Kael ou soldados visíveis nessa tomada; perseguidores só na tomada seguinte. Anatomia, braços, pernas, mãos e pano coerentes, sem duplicar membros, sem letreiros ou HUD. Geração independente do plano, não crop de imagem anterior.",
    "images": {
     "required": [
      "scene-mother",
