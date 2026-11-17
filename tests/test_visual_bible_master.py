@@ -66,6 +66,17 @@ class VisualBibleMasterTests(unittest.TestCase):
         with self.assertRaisesRegex(VideoForgeError, "EXTRA_SOURCE_NOT_ARCHIVED"):
             edit_payload(asset, prompt, "gpt-image-2", size)
 
+    def test_spear_interaction_requires_human_approved_masters(self):
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = next(x for x in plan["assets"] if x["id"] == "biblia-guardas-cruzando-lancas-base-v1")
+        self.assertEqual(asset["reference_mode"], "approved_masters_only")
+        self.assertEqual(len(asset["additional_master_asset_ids"]), 3)
+        self.assertIn("TERÇO INFERIOR", asset["prompt"])
+        self.assertIn("NÃO anexar nem copiar C01-P04 V3 ou V4", asset["prompt"])
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        with self.assertRaisesRegex(VideoForgeError, "BIBLE_MASTER_EXTRA_SOURCE_NOT_ARCHIVED|BIBLE_INTERACTION_SOURCE_NOT_HUMAN_APPROVED"):
+            edit_payload(asset, prompt, "gpt-image-2", size)
+
     def test_fake_reference_blocks_before_provider(self):
         plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
         asset = dict(next(x for x in plan["assets"] if x["id"] == "biblia-sala-do-trono-vazio-v1"))
