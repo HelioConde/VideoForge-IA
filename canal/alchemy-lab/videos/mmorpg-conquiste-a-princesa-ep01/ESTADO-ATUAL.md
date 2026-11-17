@@ -1,3 +1,14 @@
+## 17/11/2026 — DECISÃO DO CRIADOR: IGNORAR MÃOS SEPARADAS, RETOMAR DORAMA
+
+**Estado vigente / substitui todas as instruções abaixo que exigem separar ou corrigir mãos da C01-P04.**
+
+- O criador revisou as recomposições e declarou que **todas estão erradas**. A separação de dedos, polegar, palma, braçadeira e animação específica da pegada foi **cancelada**. Não propor nem gerar novas mãos, não cobrar chamadas do proxy para essa finalidade; não promover variantes R3/W3 ou outras imagens inválidas a arte final.
+- Motivo: a **imagem-mãe C01-P04 V3 já mostra a pegada correta** do guarda segurando a lança. Preservar a mãe aprovada e tratar as mãos como parte integrada da pose. Na tomada C01-P04 com guardas parados, usar o visual completo aprovado e animar enquadramento/câmera, iluminação e efeitos compatíveis. Não descolar a lança do punho, não dar movimento independente a dedos/mãos e **não chamar pan/zoom de rig articulado do personagem**.
+- Quando personagem e objeto separados não recompõem exatamente a pegada da mãe, **não usar essa decomposição quebrada** nessa tomada. Camadas limpas de cabelo, tecido e cenário podem ser animadas em outras tomadas onde passam no QA. Partes novas continuam independentes apenas quando houver movimento verdadeiro necessário e integração correta.
+- Novo contrato: [`POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json`](POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json). Os planos históricos [esquerda](PLANO-PEGADA-ANATOMICA-C01-P04-V3.json) e [direita](PLANO-PEGADA-DIREITA-C01-P04-V3.json) foram marcados como `superseded`. PNGs antigos e seus SHAs preservados apenas para rastreabilidade, não para produção.
+- Desativados 6 workflows de **geração de mãos pelo proxy** e 8 workflows de QA específico de pegada, sem remover código/arquivos de história. `rig_ready=false` para a tomada até a validação de seus **outros** movimentos; não confundir cancelamento de mãos com liberação de rig global. Nenhum MP4 ou upload foi criado nesta alteração.
+- **PRÓXIMO TRABALHO:** sair da correção da C01-P04, continuar as imagens-mãe/tomadas pendentes do EP01 e dirigir câmera/efeitos e rig de partes realmente móveis. Não voltar à tarefa das mãos sem instrução explícita do criador.
+
 ## 17/11/2026 — Guarda direito V3: 3 camadas novas + encaixe W3 + prancha das duas mãos
 
 - **Etapa realmente executada no GitHub:** um primeiro workflow [#44190779781](https://github.com/HelioConde/VideoForge-IA/actions/runs/44190779781) passou o preflight mas **pulou a geração** porque consultava por engano o arquivo do guarda esquerdo. Corrigido em `.github/workflows/ep01-c01p04-right-grip-v1-independent.yml`; não contabilizar a primeira execução como nova imagem.
