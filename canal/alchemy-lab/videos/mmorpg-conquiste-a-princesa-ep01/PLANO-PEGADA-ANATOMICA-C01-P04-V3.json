@@ -160,16 +160,19 @@
     "left_grip_contact_visual_approved": false,
     "right_grip_three_candidates_generated": true,
     "right_grip_contact_2d_positive": true,
-    "right_grip_approved": false
+    "right_grip_approved": false,
+    "hand_part_qa_skipped_by_creator": true,
+    "hand_rig_required": false,
+    "hand_contact_validation_required_for_static_pose": false
   },
-  "next_requested_part": "Comparar closeups da mãe aprovada versus ambas recomposições, corrigir artefatos de punho/dedos sem refazer imagens-mãe, só iniciar rig após aprovação",
+  "next_requested_part": "Continue approved scene-mothers and other shots/riggable elements; use approved static grip region with camera/light effects, no hand separation.",
   "current_request_workflow_run_id": null,
   "r3_registration_qa": {
     "run_id": 44188557556,
     "qa_report": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-PEGADA-CONTATO-REGISTRO-V2.json",
     "comparison_board": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-PEGADA-CONTATO-REGISTRO-V2.jpg",
     "hand_zoom": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-PEGADA-CONTATO-REGISTRO-V2-MAO-ZOOM.jpg",
-    "provisional_preferred_candidate": "R3-tightest-provisional",
+    "provisional_preferred_candidate": null,
     "editorial_justification": "R3 visually reduces the gap between glove and cuff and moves fingers over the spear; needs independent detailed anatomical QA",
     "approved_spatial_transform": null,
     "creator_approved": false,
@@ -189,7 +192,8 @@
       "palm_to_fingers": 3021
     },
     "numeric_qa_meaning": "all listed pairs intersect in provisional 2D closeup ROI; this does not establish correct grip anatomy or motion compatibility",
-    "human_visual_approved": false
+    "human_visual_approved": false,
+    "superseded": true
   },
   "right_guard_reference": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-PEGADA-DIREITA-C01-P04-V3.json",
   "final_two_guards_side_by_side_qa": {
@@ -200,6 +204,12 @@
     "right_candidate": "W3-cuff-right30",
     "creator_approved": false,
     "qa_only": true,
-    "rig_ready": false
-  }
+    "rig_ready": false,
+    "status": "creator_rejected_all_recompositions"
+  },
+  "workflow_status": "superseded_by_creator_no_separate_hand_parts",
+  "superseded_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json",
+  "note": "Historical plans and R3/W3 are not accepted. Creator rejected ALL independent hand versions, canceled this line of work; no further hand QA or image generation.",
+  "required_layers_for_new_work": [],
+  "legacy_required_layers_status": "archived_only_not_needed_for_scene"
 }
