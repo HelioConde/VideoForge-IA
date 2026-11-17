@@ -1,0 +1,73 @@
+name: "VideoForge - EP01 QA recomposicao de PNGs separados do proxy"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-PROXY-C01-P03.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ep01-c01p03-neutral-composition
+  cancel-in-progress: false
+
+jobs:
+  qa-separate-proxy-images:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pillow fixado para comparar pixels sem IA
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Verificar contrato: nunca aprovar rig/MP4 nem chamar proxy
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          file=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-QA-PROXY-C01-P03.json')
+          req=json.loads(file.read_text(encoding='utf-8'))
+          assert req['schema']=='videoforge/ep01-c01p03-proxy-composition-request/v1'
+          assert req['shot_id']=='C01-P03'
+          assert req['parts']==['background-clean','character-aldric','character-kael']
+          assert req['no_provider_calls'] is True
+          assert req['visual_approval'] is False
+          assert req['rig_render'] is False
+          assert req['youtube_upload'] is False
+          print('QA_ONLY_NO_PROXY_NO_RIG')
+          PY
+      - name: Comparar PNGs SHA da mãe e de cada peça gerada pelo proxy
+        run: python -m videoforge.ep01_proxy_recomposition_qa
+      - name: Arquivar prancha e relatório de QA sem aprovação automática
+        shell: bash
+        run: |
+          set -euo pipefail
+          EP="canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01"
+          git add "$EP/QA-C01-P03-PROXY-RECOMPOSICAO.jpg" "$EP/QA-C01-P03-PROXY-RECOMPOSICAO.json"
+          if git diff --cached --quiet; then
+            echo "PROXY_COMPOSITION_QA_ALREADY_CURRENT"
+          else
+            git config user.name "videoforge-qa[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "qa(ep01): comparar cena C01-P03 com PNGs independentes do proxy"
+            git push origin HEAD:main
+          fi
+      - name: Salvar comparacao para revisao
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-c01p03-proxy-recomposition-${{ github.run_id }}
+          path: |
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P03-PROXY-RECOMPOSICAO.jpg
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P03-PROXY-RECOMPOSICAO.json
+          retention-days: 14
+          if-no-files-found: warn
