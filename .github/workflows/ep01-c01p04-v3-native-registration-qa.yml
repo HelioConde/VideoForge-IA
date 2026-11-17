@@ -64,21 +64,6 @@ jobs:
         run: |
           set -euo pipefail
           ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
-          python - <<'PY'
-          from pathlib import Path
-          path=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md')
-          original=path.read_text(encoding='utf-8')
-          heading='## 17/11/2026 — Propostas de registro espacial V3: Aldric e guarda esquerdo'
-          if heading not in original:
-                        note='''## 17/11/2026 — Propostas de registro espacial V3: Aldric e guarda esquerdo
-          
-          - [Prancha de três posicionamentos por personagem](QA-C01-P04-V3-REGISTRO-ESPACIAL.jpg), com fonte RGBA original, mãe aprovada e candidatos em sobreposição translúcida.
-          - [Relatório técnico](QA-C01-P04-V3-REGISTRO-ESPACIAL.json): SHAs verificados, caixas de alfa, opções A (origem), B (centralizada) e C (fit uniforme somente para prévia), sem substituir as imagens geradas.
-          - **Nenhuma posição é aprovada**, a escala do personagem não foi confirmada contra a cena e as propostas não são assets finais. Não converter essas prévias em sprites, não liberar rig, vídeo ou YouTube.
-          
-          '''
-              path.write_text(note+original,encoding='utf-8')
-          PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -f "$ep/QA-C01-P04-V3-REGISTRO-ESPACIAL.jpg" "$ep/QA-C01-P04-V3-REGISTRO-ESPACIAL.json" "$ep/ESTADO-ATUAL.md"
