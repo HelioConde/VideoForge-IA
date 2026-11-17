@@ -2,10 +2,10 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C07-P01",
+  "shot_id": "C07-P02",
   "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "Elara DISFARÇADA e ENCAPUZADA corre pelo beco medieval Arken canônico e olha para trás em ângulo três-quartos; visual estilo manhwa aprovado. Manter rosto parcialmente encoberto, roupa e capuz do mestre, sem revelar coroa ou identidade real. Sem perseguidores nesta tomada, só na seguinte, e sem texto/artefatos de rig locais.",
+  "objective": "Plano baixo no beco da C07-P01 com dois perseguidores mascarados distintos e Elara encapuzada distante. Manter cada identidade de mascarado V2, roupas e capuz canônicos, sem atores duplicados, mãos/armas flutuantes, detalhes reais coerentes com estética aprovada.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
@@ -15,16 +15,15 @@
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 17,
-  "request_revision": 20,
+  "request_sequence": 18,
+  "request_revision": 21,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "style_approval": "general_visual_direction_approved_2026-11-17_only_for_seen_images",
+  "style_approval": "approved_overall_aesthetic_only_2026-11-17",
   "next_steps_if_success": [
-    "verify_sha_and_archive",
-    "check_elara_cloak_hood_anatomy_and_bible",
-    "continue_C07-P02_two_masked_pursuers",
-    "generate_independent_proxy_RGBA_only_after_mother_review",
-    "preserve_human_approval_false"
+    "archive_sha_and_auto_inventory",
+    "inspect_two_distinct_masked_pursuers_and_Elara_hood",
+    "generate_next_two_shot_C07_P03",
+    "do_not_promote_to_rig_before_QA"
   ]
 }
