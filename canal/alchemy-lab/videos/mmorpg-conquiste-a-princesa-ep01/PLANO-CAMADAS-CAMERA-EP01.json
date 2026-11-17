@@ -1263,8 +1263,8 @@
    "camera": {
     "shot_type": "match_cut",
     "lens_mm": 85,
-    "primary_focus": "monitor",
-    "virtual_motion": "match_cut_from_previous_iris_to_same_blue_monitor_focal_point",
+    "primary_focus": "kael",
+    "virtual_motion": "matched_focal_cut",
     "focal_transition": "focus_on_story_target_then_cut_or_rack_focus",
     "depth_layers": [
      "background",
@@ -1272,13 +1272,16 @@
      "characters",
      "foreground_objects"
     ],
-    "tracking_target": "monitor",
+    "tracking_target": "kael",
     "preserve_subject_visibility": true,
     "prevent_nonuniform_stretch": true,
     "format": "vertical_9_16",
     "require_new_scene_mother_only_when_reframing_would_expose_missing_pixels": true,
     "switch_shot_scale": "match_cut",
-    "hud_policy": "none"
+    "hud_policy": "none",
+    "match_cut_focal_link": "blue_iris_glint_to_blue_monitor_light",
+    "match_cut_visual_subject": "monitor_in_modern_room_with_casual_kael",
+    "match_cut_note": "Canonical direction retains focus on Kael; the monitor blue light is the continuity visual anchor. Render camera may rack focus from monitor toward Kael only after art QA."
    },
    "rig": {
     "from_generated_layers": true,
