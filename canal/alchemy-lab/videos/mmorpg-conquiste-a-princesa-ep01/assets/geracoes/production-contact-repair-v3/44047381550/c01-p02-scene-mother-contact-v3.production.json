@@ -1,0 +1,35 @@
+{
+  "schema": "videoforge/ep01-contact-repair-candidate/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p02-scene-mother-contact-v3",
+  "candidate_scene_shot_id": "C01-P02",
+  "sha256": "8b9d9acec8933e345b3099d536a1c410cf8da074d039fcbfd8eca2173ed4a84b",
+  "source_mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "source_originals_sha_verified": [
+    {
+      "id": "c01-p02-scene-mother",
+      "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png"
+    }
+  ],
+  "revision_reason": "user_rejected_panels_2_and_4",
+  "source_review_file": "REVISAO-ERRO-PAINEIS-C01-P02.json",
+  "new_canvas": [
+    941,
+    1672
+  ],
+  "source_canvas": [
+    941,
+    1672
+  ],
+  "same_canvas": true,
+  "technical_qa": "candidate_requires_visual_review",
+  "source_unchanged": true,
+  "candidate_is_not_canonical": true,
+  "human_visual_approval": false,
+  "rig_authorized": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_image_calls": 1
+}

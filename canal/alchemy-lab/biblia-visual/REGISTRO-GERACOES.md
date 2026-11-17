@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**67 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**69 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -71,6 +71,8 @@
 | [c01-p02-hand-upper-contact-occlusion.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-source-masks-v1/44041652723/c01-p02-hand-upper-contact-occlusion.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`740c3bf52eb2…\` | [#44041652723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44041652723) |
 | [c01-p02-object-bainha-source-visible.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-source-masks-v1/44041652723/c01-p02-object-bainha-source-visible.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`70a05e5de9ab…\` | [#44041652723](https://github.com/HelioConde/VideoForge-IA/actions/runs/44041652723) |
 | [c01-p02-object-espada-source-visible.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-source-sword-cutout-v1/44042266407/c01-p02-object-espada-source-visible.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`a79f7afafd89…\` | [#44042266407](https://github.com/HelioConde/VideoForge-IA/actions/runs/44042266407) |
+| [c01-p02-contact-local-patch-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-repair-v3/44047381550/c01-p02-contact-local-patch-v3.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`17da28fcf733…\` | [#44047381550](https://github.com/HelioConde/VideoForge-IA/actions/runs/44047381550) |
+| [c01-p02-scene-mother-contact-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-repair-v3/44047381550/c01-p02-scene-mother-contact-v3.png) / C01-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`8b9d9acec893…\` | [#44047381550](https://github.com/HelioConde/VideoForge-IA/actions/runs/44047381550) |
 
 ## Regras de consulta
 

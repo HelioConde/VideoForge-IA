@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 67,
+  "total_arquivadas": 69,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -2013,6 +2013,67 @@
       ],
       "status": "gerado",
       "qa_tecnica": "source_pixels_unmodified_sword_candidate_only",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-contact-repair-v3:44047381550:c01-p02-contact-local-patch-v3.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p02-contact-local-patch-v3",
+      "shot": "C01-P02",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-contact-repair-v3",
+      "github_run_id": 44047381550,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-repair-v3/44047381550/c01-p02-contact-local-patch-v3.png",
+      "sha256": "17da28fcf733727a11d2d67a38a84611bd1192cff0e97d45d7db10169de9089d",
+      "bytes": 2291561,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "c01-p02-scene-mother",
+          "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png"
+        },
+        {
+          "id": "c01-p02-scene-mother-contact-v3",
+          "sha256": "8b9d9acec8933e345b3099d536a1c410cf8da074d039fcbfd8eca2173ed4a84b",
+          "path": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/c01-p02-scene-mother-contact-v3.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "local_edit_candidate_not_approved",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-contact-repair-v3:44047381550:c01-p02-scene-mother-contact-v3.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p02-scene-mother-contact-v3",
+      "shot": "C01-P02",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-contact-repair-v3",
+      "github_run_id": 44047381550,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-contact-repair-v3/44047381550/c01-p02-scene-mother-contact-v3.png",
+      "sha256": "8b9d9acec8933e345b3099d536a1c410cf8da074d039fcbfd8eca2173ed4a84b",
+      "bytes": 2315102,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "c01-p02-scene-mother",
+          "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "candidate_requires_visual_review",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }
