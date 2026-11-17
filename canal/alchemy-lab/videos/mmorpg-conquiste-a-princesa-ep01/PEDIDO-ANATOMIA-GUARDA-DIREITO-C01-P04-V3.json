@@ -5,7 +5,7 @@
   "shot_id": "C01-P04",
   "side": "right",
   "role": "forearm-cuff",
-  "revision": 1,
+  "revision": 2,
   "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
   "grip_reference": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/REFERENCIA-PEGADA-APROVADA-C01-P04-V3.json",
   "right_spear_from_independent_parts": true,
@@ -17,5 +17,8 @@
   "visual_approval": false,
   "rig_ready": false,
   "mp4_generated": false,
-  "youtube_upload": false
+  "youtube_upload": false,
+  "previous_workflow_run_id": 44190779781,
+  "previous_attempt_result": "skipped_generation_due_to_wrong_left_guard_archive_reference",
+  "fix": "preflight imports right guard module"
 }
