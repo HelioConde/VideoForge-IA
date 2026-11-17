@@ -1,0 +1,179 @@
+name: "VideoForge - EP01 gerar parte independente pelo proxy"
+run-name: "EP01 PNG separado ${{ inputs.shot_id || 'pedido' }}"
+on:
+  workflow_dispatch:
+    inputs:
+      shot_id:
+        description: "Tomada CXX-PXX"
+        type: string
+        required: true
+        default: "C01-P03"
+      part:
+        description: "background-clean, character-<id>, object-<id>"
+        type: string
+        required: true
+        default: "background-clean"
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PARTE-PROXY-EP01.json'
+permissions:
+  contents: write
+  packages: read
+concurrency:
+  group: ep01-separate-proxy-part-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  gerar-imagem-separada:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      INPUT_SHOT_ID: ${{ inputs.shot_id }}
+      INPUT_PART: ${{ inputs.part }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar 39 planos, PNG-mãe e componente sem pagar proxy
+        id: request
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_proxy_separate_parts tests.test_layered_shot_plan -v
+          python - <<'PY'
+          import json,os,re,subprocess
+          from pathlib import Path
+          from videoforge import ep01_proxy_separate_parts as engine
+          if os.environ['GITHUB_EVENT_NAME']=='workflow_dispatch':
+              shot_id=os.environ.get('INPUT_SHOT_ID','').strip()
+              part=os.environ.get('INPUT_PART','').strip()
+          else:
+              expected=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PARTE-PROXY-EP01.json')
+              changed=subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','-r','HEAD'],text=True).splitlines()
+              if str(expected) not in changed:
+                  raise SystemExit('EP01_SEPARATE_PUSH_REQUEST_NOT_CHANGED')
+              req=json.loads(expected.read_text(encoding='utf-8'))
+              if (req.get('schema')!='videoforge/ep01-separate-proxy-part-request/v1'
+                  or req.get('channel')!='alchemy-lab'
+                  or req.get('video_id')!='mmorpg-conquiste-a-princesa-ep01'
+                  or req.get('generation_method')!='proxy_generated_separate_image'
+                  or req.get('max_chargeable_calls_per_run')!=1
+                  or req.get('retry_on_429') is not False
+                  or req.get('human_visual_approval') is not False
+                  or req.get('youtube_upload') is not False):
+                  raise SystemExit('EP01_SEPARATE_REQUEST_INVALID')
+              shot_id=req.get('shot_id','')
+              part=req.get('part','')
+          if not isinstance(shot_id,str) or not re.fullmatch(r'C[0-9]{2}-P[0-9]{2}',shot_id):
+              raise SystemExit('EP01_SEPARATE_REQUEST_SHOT_INVALID')
+          if not isinstance(part,str) or not re.fullmatch(r'(background-clean|character-[a-z0-9_-]+|object-[a-z0-9_-]+)',part):
+              raise SystemExit('EP01_SEPARATE_REQUEST_PART_INVALID')
+          cached=engine.existing_part(shot_id,part)
+          if cached:
+              action='false'
+              print('EP01_SEPARATE_SHA_ARCHIVED_NO_DUPLICATE',cached['sha256'])
+          else:
+              spec=engine.prepare(shot_id,part)
+              action='true'
+              print('EP01_SEPARATE_PREFLIGHT_SHA_OK',shot_id,part,
+                    'mother',spec['mother_proof']['sha256'],
+                    'real_refs',len(spec['ref_proofs']),'provider_calls=1')
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as out:
+              out.write('shot_id='+shot_id+'\n')
+              out.write('part='+part+'\n')
+              out.write('execute='+action+'\n')
+          PY
+      - name: Verificar configuracao do Codex Proxy sem revelar credenciais
+        if: steps.request.outputs.execute == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then
+            echo "::error::CODEX_PROXY_API_KEY ausente"
+            exit 1
+          fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            echo 'Modo: proxy persistente'
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'Modo: proxy efemero autorizado'
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else
+            echo "::error::Falta CODEX_PROXY_BASE_URL ou CODEX_PROXY_ACCOUNTS_JSON"
+            exit 1
+          fi
+      - name: Iniciar proxy precompilado se necessario
+        if: steps.request.outputs.execute == 'true' && env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          value=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+          assert isinstance(value,dict) and isinstance(value.get('records'),list)
+          assert value['records'] and all(isinstance(r,dict) and isinstance(r.get('token'),dict) for r in value['records'])
+          p=Path(os.environ['RUNNER_TEMP'])/'vf-proxy-state'/'accounts.json'
+          p.write_text(json.dumps(value),encoding='utf-8')
+          p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-ep01-separate \
+            --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy nao respondeu /health/live"
+          exit 1
+      - name: Gerar uma imagem NOVA pelo proxy sem recortar a mae
+        if: steps.request.outputs.execute == 'true'
+        shell: bash
+        env:
+          SHOT_ID: ${{ steps.request.outputs.shot_id }}
+          PART: ${{ steps.request.outputs.part }}
+        run: |
+          set -euo pipefail
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          python -m videoforge.ep01_proxy_separate_parts --shot-id "$SHOT_ID" --part "$PART" --url "$PROXY_ENDPOINT"
+      - name: Arquivar PNG independente (inclusive candidato reprovado) com SHA
+        if: always() && steps.request.outputs.execute == 'true'
+        shell: bash
+        run: |
+          bash scripts/arquivar-pngs-se-existirem.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
+            output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
+            "${{ github.run_id }}" production-proxy-separate-part-v1 "${{ job.status }}"
+      - name: Preservar parte gerada e proveniencia para revisão
+        if: always() && steps.request.outputs.execute == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-ep01-part-${{ steps.request.outputs.shot_id }}-${{ steps.request.outputs.part }}-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Apagar tokens temporarios
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-ep01-separate >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
