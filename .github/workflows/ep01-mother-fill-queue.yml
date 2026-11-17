@@ -1,0 +1,53 @@
+name: "VideoForge - EP01 completar imagens-mae pendentes"
+run-name: "EP01 fila de imagens-mae faltantes"
+on:
+  workflow_dispatch:
+    inputs:
+      max_shots:
+        description: "Maximo de novas cenas-mae (cada uma em workflow filho isolado)"
+        required: false
+        type: number
+        default: 39
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-LOTE-MAES-EP01.json'
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: ep01-mother-fill-queue-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  preencher-faltantes:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - name: Checkout do estado atual
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar plano de cenas e referencias sem gastar proxy
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_shot_mother tests.test_layered_shot_plan -v
+      - name: Executar fila sequencial de workflows filhos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/ep01_mother_queue.py --max-shots "${{ inputs.max_shots || 39 }}"
