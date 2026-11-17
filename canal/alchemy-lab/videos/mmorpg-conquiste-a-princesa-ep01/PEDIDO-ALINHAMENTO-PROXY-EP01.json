@@ -3,9 +3,9 @@
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "shot_id": "C01-P03",
-  "part": "character-kael",
-  "source_sha256": "20c1f8e07ec164280a478dda8b9db1091aa8b5088290767f0858deff54f58b4e",
-  "source_run_id": 44075692204,
+  "part": "character-aldric",
+  "source_sha256": "a6eb021cb6c2788530a6fc541831f14d8f99e0392c21de02510f2fdf2312a0f0",
+  "source_run_id": 44076356345,
   "source_native_dimensions": [
     941,
     1671
@@ -23,5 +23,5 @@
   "human_visual_approval": false,
   "youtube_upload": false,
   "rig_ready": false,
-  "request_revision": 2
+  "request_revision": 3
 }
