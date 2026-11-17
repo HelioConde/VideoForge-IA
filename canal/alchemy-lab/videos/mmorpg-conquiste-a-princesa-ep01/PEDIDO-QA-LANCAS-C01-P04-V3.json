@@ -9,9 +9,9 @@
     "object-lanca-direita"
   ],
   "versions": [
-    "S1-cross-medium",
-    "S2-cross-higher",
-    "S3-cross-lower"
+    "S4-through-grips",
+    "S5-grips-low-X",
+    "S6-grips-tight"
   ],
   "rigid_transform_preview_only": true,
   "contact_human_approval": false,
@@ -19,6 +19,7 @@
   "mp4_generated": false,
   "youtube_uploaded": false,
   "no_provider_calls": true,
-  "request_revision": 2,
-  "reason": "Inspecionar closeups de contato nas mãos após três propostas; QA offline sem IA"
+  "request_revision": 3,
+  "reason": "Revisar shaft through gauntlet fingers around y 970 and butt below y 1105; all candidate coordinates provisional",
+  "old_qa_proposals_archived": "QA-C01-P04-V3-PEGADA-LANCAS.json"
 }
