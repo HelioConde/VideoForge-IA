@@ -160,11 +160,20 @@
       "id": "C05-P02",
       "black": false,
       "reference_asset_ids": [
-        "biblia-kael-medieval-base-v1",
-        "biblia-estrada-base-v1"
+        "biblia-arken-muralhas-base-v1",
+        "biblia-estrada-base-v1",
+        "biblia-kael-medieval-base-v1"
       ],
       "source_authority": "sha_checked_archived_bible",
-      "portrait_v1_rejected_never_attached": true
+      "portrait_v1_rejected_never_attached": true,
+      "new_environment_visual_bible_20261117": {
+        "master_id": "biblia-arken-muralhas-base-v1",
+        "sha256": "0903946038a6977cc93fe324eee665899e7cccc296bcffab4c5cff38202ab5d4",
+        "master_generation_run_id": 44087301592,
+        "master_human_visual_approval": false,
+        "reuse_master_as_visual_reference_only": true,
+        "source_road_kept": true
+      }
     },
     {
       "id": "C05-P03",
