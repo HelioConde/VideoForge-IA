@@ -13,5 +13,13 @@
   ],
   "referencias_aprovadas": [],
   "fonte": "INDEX-BIBLIA.json",
-  "aviso": "Não inventar imagem ou aprovação."
+  "aviso": "Não inventar imagem ou aprovação.",
+  "referencias_disponiveis": [
+    {
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/referencias/chat-aprovadas/elara-close-trono.png",
+      "sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+      "escopo": "identidade_rosto_sem_rig",
+      "aprovacao_nao_generalizavel": true
+    }
+  ]
 }

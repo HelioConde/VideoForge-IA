@@ -21,6 +21,7 @@
       "height": 1536,
       "referencias_usadas": [],
       "status": "gerado",
+      "qa_tecnica": "valid_png_dimensions",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     },
@@ -42,6 +43,7 @@
       "height": 1536,
       "referencias_usadas": [],
       "status": "gerado",
+      "qa_tecnica": "valid_png_opaque",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     },
@@ -63,6 +65,7 @@
       "height": 1536,
       "referencias_usadas": [],
       "status": "gerado",
+      "qa_tecnica": "não_informado",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     },
@@ -84,6 +87,7 @@
       "height": 1536,
       "referencias_usadas": [],
       "status": "gerado",
+      "qa_tecnica": "não_informado",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     },
@@ -105,6 +109,7 @@
       "height": 1536,
       "referencias_usadas": [],
       "status": "gerado",
+      "qa_tecnica": "não_informado",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }

@@ -21,6 +21,7 @@
       "height": 1312,
       "referencias_usadas": [],
       "status": "gerado",
+      "qa_tecnica": "não_informado",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     },
@@ -53,6 +54,7 @@
         }
       ],
       "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     },
@@ -80,6 +82,7 @@
         }
       ],
       "status": "em_revisao",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
       "aprovacao_automatica": false,
       "youtube_uploaded": false,
       "motivo_revisao": "Visual apreciado, pose das lanças reprovada: guardas não seguram as hastes",
@@ -118,6 +121,7 @@
         }
       ],
       "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     },
@@ -145,6 +149,7 @@
         }
       ],
       "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     },
@@ -172,6 +177,7 @@
         }
       ],
       "status": "rejeitado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
       "aprovacao_automatica": false,
       "youtube_uploaded": false,
       "motivo_revisao": "Direção e pegada da lança incorretas; base não segurada como solicitado",

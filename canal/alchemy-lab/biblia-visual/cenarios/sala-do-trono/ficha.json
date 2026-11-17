@@ -11,5 +11,13 @@
   ],
   "referencias_aprovadas": [],
   "fonte": "INDEX-BIBLIA.json",
-  "aviso": "Não inventar imagem ou aprovação."
+  "aviso": "Não inventar imagem ou aprovação.",
+  "referencias_disponiveis": [
+    {
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/43965460068/c01-p04-imagem-inicial-v3.png",
+      "sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "escopo": "estilo_e_identidade_sem_pose_lanca",
+      "aprovacao_nao_generalizavel": true
+    }
+  ]
 }
