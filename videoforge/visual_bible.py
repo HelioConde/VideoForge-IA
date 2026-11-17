@@ -164,6 +164,7 @@ def _verified_images(root: Path, channel: str):
                 "shot": shot,
                 "tipo": "cena" if shot else "referencia_ou_camada",
                 "biblia_item_id": biblia_item,
+                "biblia_categoria": origin.get("biblia_categoria"),
                 "producer": producer,
                 "github_run_id": int(run),
                 "arquivo": path.relative_to(root).as_posix(),
@@ -204,6 +205,12 @@ def build(channel: str, root: Path = ROOT):
         old_by_id[row.get("id")] = row
     results = []
     for fresh in _verified_images(root, channel):
+        if fresh["biblia_item_id"] is not None:
+            category = fresh.get("biblia_categoria")
+            if (category not in index["categorias"]
+                    or not any(item["id"] == fresh["biblia_item_id"]
+                               for item in index["categorias"][category])):
+                raise VideoForgeError("BIBLE_GENERATED_ITEM_NOT_IN_INDEX")
         old = old_by_id.pop(fresh["id"], None)
         if old is not None:
             for key in ("arquivo", "sha256", "bytes", "width", "height", "github_run_id"):
@@ -291,7 +298,7 @@ def sync(channel: str, root: Path = ROOT):
                     status.get("id") != item["id"] or status.get("categoria") != category or
                     status.get("status") not in VALID_STATES):
                 raise VideoForgeError("BIBLE_ITEM_STATUS_INVALID")
-            related = [x for x in registry["geracoes"] if x.get("biblia_item_id") == item["id"]]
+            related = [x for x in registry["geracoes"] if x.get("biblia_item_id") == item["id"] and x.get("biblia_categoria") == category]
             if related:
                 newest = related[-1]
                 status["ultima_geracao"] = newest["github_run_id"]
