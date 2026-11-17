@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 78,
+  "total_arquivadas": 79,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -2411,6 +2411,34 @@
       ],
       "status": "gerado",
       "qa_tecnica": "rejected_canvas_mismatch_no_pixel_resizing",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-proxy-separate-alignment-v1:44076886141:c01-p03-character-aldric-native-aligned-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p03-character-aldric-native-aligned-v1",
+      "shot": "C01-P03",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-proxy-separate-alignment-v1",
+      "github_run_id": 44076886141,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-alignment-v1/44076886141/c01-p03-character-aldric-native-aligned-v1.png",
+      "sha256": "0bcdbc8ef6263bef8c063f1ea696019998efa32a5a45789a9e3054b8b1544285",
+      "bytes": 2078845,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "c01-p03-character-aldric",
+          "sha256": "a6eb021cb6c2788530a6fc541831f14d8f99e0392c21de02510f2fdf2312a0f0",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44076356345/c01-p03-character-aldric.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "candidate_canvas_aligned_needs_visual_recomposition_qa",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }

@@ -1,0 +1,30 @@
+{
+  "schema": "videoforge/proxy-separate-canvas-alignment/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "candidate_scene_shot_id": "C01-P03",
+  "asset_id": "c01-p03-character-aldric-native-aligned-v1",
+  "source_mother_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+  "source_image_sha256": "a6eb021cb6c2788530a6fc541831f14d8f99e0392c21de02510f2fdf2312a0f0",
+  "source_originals_sha_verified": [
+    {
+      "id": "c01-p03-character-aldric",
+      "sha256": "a6eb021cb6c2788530a6fc541831f14d8f99e0392c21de02510f2fdf2312a0f0",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44076356345/c01-p03-character-aldric.png"
+    }
+  ],
+  "generation_method": "proxy_generated_separate_image",
+  "technical_postprocess": "pad_bottom_only_no_crop_or_rescale",
+  "source_pixels_unchanged": true,
+  "bottom_rows_added": 1,
+  "padding_method": "add_transparent_rows",
+  "width": 941,
+  "height": 1672,
+  "sha256": "0bcdbc8ef6263bef8c063f1ea696019998efa32a5a45789a9e3054b8b1544285",
+  "technical_qa": "candidate_canvas_aligned_needs_visual_recomposition_qa",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_uploaded": false,
+  "mp4_generated": false,
+  "provider_image_calls": 0
+}
