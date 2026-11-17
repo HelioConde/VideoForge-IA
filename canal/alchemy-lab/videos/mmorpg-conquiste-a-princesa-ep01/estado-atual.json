@@ -2201,10 +2201,17 @@
       "C01-P03",
       "C01-P04",
       "C01-P05",
-      "C02-P01"
+      "C02-P01",
+      "C02-P02",
+      "C03-P01",
+      "C03-P02",
+      "C04-P01",
+      "C04-P02",
+      "C05-P01",
+      "C05-P02"
     ],
-    "original_mother_shots_archived": 5,
-    "original_mother_shots_missing": 34,
+    "original_mother_shots_archived": 12,
+    "original_mother_shots_missing": 27,
     "mother_c01_p02_source_rejected": true,
     "mother_c01_p03": {
       "run_id": 44073592014,
@@ -2294,11 +2301,12 @@
     "local_pixel_padding_is_not_cutout": true,
     "do_not_reuse_v1_cutouts_for_rig": true,
     "next_needed": [
-      "human_review_c01p03_and_c01p04_v2_before_new_proxy_parts",
-      "review_c01p05_guard_hands_and_c02p01_aldric_close",
-      "continue_generate_34_missing_scene_mothers",
-      "generate_new_rgba_from_selected_v2_mother_references_via_proxy",
-      "test_neutral_recomposition_before_rig"
+      "review_and_repair_C03-P01_eye_macro_and_kael_facemark_continuity",
+      "review_C03-P02_vs_C04-P01_pose_and_casual_injuries",
+      "compare_arken_master_to_C05-P02_and_road",
+      "generate_remaining_27_scene_mothers",
+      "after_mother_choice_generate_independent_transparent_parts_via_proxy_only",
+      "QA_recomposition_before_rig"
     ],
     "new_png_images_human_approved": false,
     "rig_ready": false,
@@ -2369,6 +2377,72 @@
       "status": "success",
       "report": "REVISAO-VISUAL-MAES-C01-P03-P04-V2.md",
       "preview": "QA-MAES-C01-P03-P04-V2.jpg"
+    },
+    "automatic_checkpoint": "CHECKPOINT-IMAGENS-EP01-AUTO.json",
+    "automatic_checkpoint_update": "scripts/persistir-imagens-gh.sh calls videoforge.ep01_image_inventory after each verified archive and stages checkpoint in same commit",
+    "new_mother_shots_this_work": [
+      {
+        "shot_id": "C02-P02",
+        "run_id": 44084059723,
+        "sha256": "a963b04237e6fdd0ff82474e792e15b3cc6bf6a4337e218d595f067593b78bf3",
+        "human_visual_approval": false
+      },
+      {
+        "shot_id": "C03-P01",
+        "run_id": 44084423826,
+        "sha256": "b0c416e3c0dd10883e2de37a5c2652ee02030d1f6925ec6f47d9a6d56ade09f3",
+        "human_visual_approval": false
+      },
+      {
+        "shot_id": "C03-P02",
+        "run_id": 44085499606,
+        "sha256": "116fab14bb7d910a73f5fc61e12dac92efc73d3988f0648ee4b336c9fb241c3c",
+        "human_visual_approval": false
+      },
+      {
+        "shot_id": "C04-P01",
+        "run_id": 44085725018,
+        "sha256": "d4c51415314823c5e7092aa4e45bbc9f8fce9092352e4a18560e118f40488d1a",
+        "human_visual_approval": false
+      },
+      {
+        "shot_id": "C04-P02",
+        "run_id": 44085933750,
+        "sha256": "9755e8457dac710abafdddca3da17cd5102d03385cc686711981e236015716bf",
+        "human_visual_approval": false
+      },
+      {
+        "shot_id": "C05-P01",
+        "run_id": 44086437259,
+        "sha256": "84520f8047d85930ca2834f57e1c278969aea51e496f3cad5ca3fd330ab07073",
+        "human_visual_approval": false
+      },
+      {
+        "shot_id": "C05-P02",
+        "run_id": 44087638566,
+        "sha256": "281aa0e4cc0dfd9c9d636aa0e186324bdecbd96b569a35f93882971a586765f3",
+        "human_visual_approval": false
+      }
+    ],
+    "arken_bible_master": {
+      "asset": "biblia-arken-muralhas-base-v1",
+      "sha256": "0903946038a6977cc93fe324eee665899e7cccc296bcffab4c5cff38202ab5d4",
+      "run_id": 44087301592,
+      "canonical_visual_approval": false,
+      "used_as_reference_in": "C05-P02",
+      "source_road": "biblia-estrada-base-v1"
+    },
+    "c02_c03_continuity_qa": {
+      "run_id": 44084847732,
+      "report": "REVISAO-VISUAL-C02-C03-CONTINUIDADE.md",
+      "status": "needs_art_corrections_macro_eye_face_marks",
+      "human_visual_approval": false
+    },
+    "c03_c04_gamer_room_qa": {
+      "run_id": 44086630803,
+      "report": "REVISAO-VISUAL-C03-C04-QUARTO.md",
+      "status": "technical_ok_visual_followup_standing_to_seated_and_facial_marks",
+      "human_visual_approval": false
     }
   }
 }
