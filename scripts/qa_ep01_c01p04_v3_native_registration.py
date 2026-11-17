@@ -156,10 +156,22 @@ def create() -> dict:
         sprite,data=source_entry(part,report)
         bbox=native_alpha_bbox(sprite)
         proposals_for_part=proposals(sprite.size)
+        box_height_fraction=(bbox[3]-bbox[1])/sprite.height
+        box_fraction=((bbox[2]-bbox[0])*(bbox[3]-bbox[1]))/(sprite.width*sprite.height)
+        alpha_hist=sprite.getchannel("A").histogram()
+        visible_alpha_count=sum(alpha_hist[16:])
+        visible_alpha_fraction=visible_alpha_count/(sprite.width*sprite.height)
+        # Only a QA warning: this is a wide-shot mother, and an actor
+        # occupying almost the full image height is suspect, not verified.
+        suspicious_scale=part=="character-guarda_esquerdo" and box_height_fraction>0.8
         result={"part":part,"source_file":data["file"],"source_sha256":data["sha256"],
                 "source_dimensions":list(sprite.size),"alpha_bbox_native_xyxy":list(bbox),
-                "native_alpha_coverage_fraction":round(
-                    ((bbox[2]-bbox[0])*(bbox[3]-bbox[1]))/(sprite.width*sprite.height),5),
+                "bbox_canvas_fraction":round(box_fraction,5),
+                "bbox_height_fraction":round(box_height_fraction,5),
+                "visible_alpha_pixel_fraction":round(visible_alpha_fraction,5),
+                "scale_warning":("subject_almost_full_height_review_before_registration"
+                                  if suspicious_scale else "visual_scale_review_pending"),
+                "candidate_is_spatially_registered":False,
                 "options":[],"selected_option":None,"human_visual_approval":False,
                 "registration_authorized_for_rig":False}
         y=83+row*655
