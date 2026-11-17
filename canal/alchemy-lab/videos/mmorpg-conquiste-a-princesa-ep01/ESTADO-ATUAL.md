@@ -763,3 +763,10 @@ Verificação pós-merge: workflow semântico da main [43944320147](https://gith
 ## 16/11/2026 — Revisão contextual integrada (PR #65)
 
 PR https://github.com/HelioConde/VideoForge-IA/pull/65 integrado no commit 69e6d90c5057952bb995500a046861a9a907f1a1. CI https://github.com/HelioConde/VideoForge-IA/actions/runs/43945520844 SUCCESS, 25 testes ROI. Exportação na main https://github.com/HelioConde/VideoForge-IA/actions/runs/43945693308 SUCCESS; artefatos versionados em 123e004d4c838137137f6e3c117b604e021e293d. Hash da prancha e oito referências de fonte e oito máscaras conferidos após fetch; máscaras idênticas ao checkpoint anterior. Nenhuma aprovação semântica, 0/4 pares oficiais e R2 bloqueada. Próximo passo: revisão contextual das oclusões de Elara B e boca/bigode de Aldric B. Nenhuma chamada paga.
+
+## 16/11/2026 — Galeria de QA visual por lote
+
+- Implementado `scripts/gerar-galeria-biblia.py`: lê `FILA-GERACAO-MESTRES.json` e `REGISTRO-GERACOES.json`, verifica bytes/dimensões/SHA do PNG antes de gerar pranchas JPG leves. Original imutável, sem custo de geração de imagem e sem aprovação automática.
+- Automatização `.github/workflows/qa-visual-bible-gallery.yml` atualiza a galeria ao concluir cada lote de referências-mestre; também permite execução manual. Primeiro teste: [Actions #44006804432](https://github.com/HelioConde/VideoForge-IA/actions/runs/44006804432), **sucesso**.
+- Ponto de revisão para o usuário: [`../../biblia-visual/GALERIA-EP01.md`](../../biblia-visual/GALERIA-EP01.md), com links para todos os originais e revisão por imagem. Contagem atual deve ser lida ali ou no registro; não presumir conclusão de 42 com base na programação.
+- A fila segue automaticamente; a regra de contato mão→terço inferior da BASE da lança e o bloqueio de cenas/YouTube permanecem inalterados.
