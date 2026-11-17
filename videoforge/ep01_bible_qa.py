@@ -122,7 +122,7 @@ def generate(root: Path = ROOT) -> dict:
                   "- O quadro C01-P04 V3 é referência **somente de estilo** para a lança completa V2; a pose de mãos da cena antiga está rejeitada.",
                   "- Guardas devem segurar suas próprias lanças no **terço inferior/base**, com punho, dedos e antebraço fisicamente conectados.",
                   "- As **12 poses/interações físicas** continuam aguardando fontes mestras aprovadas por humano com evidência em REVISOES-MANUAIS.json.",
-                  "- As **40 tomadas do EP01**, animação final e publicação YouTube permanecem suspensas. Nem a presença de 51 PNGs nem este relatório libera uma cena.",
+                  "- As **40 tomadas do EP01**, animação final e publicação YouTube permanecem suspensas. Nem a existência de todos os PNGs nem este relatório libera uma cena.",
                   "- Para comparação estética consultar [GALERIA-EP01.md](GALERIA-EP01.md) e [QA-VISUAL-CANDIDATOS.md](QA-VISUAL-CANDIDATOS.md).", ""])
     target = bible / "LAUDO-TECNICO-EP01.md"
     body = "\n".join(lines)
