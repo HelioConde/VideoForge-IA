@@ -25,10 +25,13 @@
   "request_sequence": 8,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "request_revision": 10,
+  "request_revision": 11,
   "last_shot_archived": {
     "shot_id": "C03-P01",
     "run_id": 44084423826,
     "sha256": "b0c416e3c0dd10883e2de37a5c2652ee02030d1f6925ec6f47d9a6d56ade09f3"
-  }
+  },
+  "first_attempt_run_id": 44085218453,
+  "first_attempt_result": "preflight only; C03-P02 camera drift rejected by layered plan before any paid calls",
+  "fix": "canonical camera restored; blue monitor continuity stored as supplementary match cut metadata"
 }
