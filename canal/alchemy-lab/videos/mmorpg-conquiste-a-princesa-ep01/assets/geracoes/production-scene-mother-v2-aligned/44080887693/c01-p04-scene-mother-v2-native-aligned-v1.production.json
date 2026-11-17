@@ -1,0 +1,28 @@
+{
+  "schema": "videoforge/ep01-mother-v2-one-row-alignment/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p04-scene-mother-v2-native-aligned-v1",
+  "candidate_scene_shot_id": "C01-P04",
+  "sha256": "2d11099a536999409a33dae2fc30c517e260c4ad640e41c6942c85b9db499ec5",
+  "source_image_sha256": "cf19543377960b2100148846f9d77852ca94510c949c62c27b9390e4fbee0f84",
+  "source_mother_sha256": "156a9376298166045654706e75b876a20b7f8201c70d6d494ae9a2b7465f5ab3",
+  "source_originals_sha_verified": [
+    {
+      "asset_id": "c01-p04-scene-mother-v2",
+      "sha256": "cf19543377960b2100148846f9d77852ca94510c949c62c27b9390e4fbee0f84",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-repair-v2/44080462345/c01-p04-scene-mother-v2.png"
+    }
+  ],
+  "generation_method": "proxy_edited_versioned_scene_mother",
+  "technical_postprocess": "pad_bottom_one_row_no_crop_no_resize",
+  "source_pixels_unchanged": true,
+  "width": 941,
+  "height": 1672,
+  "technical_qa": "candidate_canvas_aligned_needs_human_visual_qa",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "provider_image_calls": 0,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
