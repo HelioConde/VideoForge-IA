@@ -81,6 +81,29 @@ jobs:
           )
           total="${#ASSETS[@]}"
           cursor="${QUEUE_CURSOR}"
+          # Ao retomar por commit na fila, localizar PRIMEIRO asset faltante,
+          # verificando SHA real; sem repetir imagens nem assumir cursor antigo.
+          if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
+            cursor=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          from videoforge.production_art import archived_reference
+          q=json.loads(Path('canal/alchemy-lab/biblia-visual/FILA-GERACAO-MESTRES.json').read_text())
+          items=[x['asset_id'] for x in q['items'] if x['phase']=='independent_master']
+          for i,ident in enumerate(items):
+              if not archived_reference('alchemy-lab','mmorpg-conquiste-a-princesa-ep01',ident):
+                  print(i)
+                  break
+          else:
+              print(len(items))
+          PY
+            )
+            echo "BIBLE_BATCH_AUTOMATIC_RESUME_SHA_VERIFIED cursor=$cursor total=$total"
+          fi
+          if [[ "$cursor" =~ ^[0-9]+$ ]] && ((cursor == total)); then
+            echo "BIBLE_BATCH_ALREADY_ALL_42_ARCHIVED; no additional billed calls"
+            exit 0
+          fi
           if ! [[ "$cursor" =~ ^[0-9]+$ ]] || ((cursor >= total)); then
             echo "::error::Invalid queue cursor $cursor/$total"
             exit 2
