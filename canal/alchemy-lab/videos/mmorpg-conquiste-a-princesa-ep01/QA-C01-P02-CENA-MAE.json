@@ -1,0 +1,12 @@
+{
+  "schema": "videoforge/ep01-scene-mother-preview/v1",
+  "source_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "source_png": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png",
+  "jpg": "QA-C01-P02-CENA-MAE.jpg",
+  "jpg_sha256": "5bed84ea59082314029279a430e882b8752cad26c1541a024a286c819b87416f",
+  "no_image_provider_calls": true,
+  "visual_approval": false,
+  "layers_generated": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
