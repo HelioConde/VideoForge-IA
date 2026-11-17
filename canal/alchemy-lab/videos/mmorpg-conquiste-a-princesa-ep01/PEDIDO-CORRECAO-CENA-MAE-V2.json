@@ -1,0 +1,18 @@
+{
+  "schema": "videoforge/ep01-versioned-mother-repair-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P03",
+  "version": 2,
+  "source_mother_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+  "source_review": "REVISAO-VISUAL-C01-P03-PROXY.md",
+  "correction": "Remove 2 guards, crossed spears, foreground sword and reconstruct throne room. Preserve Kael kneeling lower frame, Aldric distant. Do not zoom or replace identity, outfit or camera.",
+  "source_reference_policy": "SHA-verified old mother plus Bible originals",
+  "output_policy": "new_versioned_image_never_overwrite_original",
+  "max_chargeable_calls_per_run": 1,
+  "retry_on_429": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_upload": false
+}
