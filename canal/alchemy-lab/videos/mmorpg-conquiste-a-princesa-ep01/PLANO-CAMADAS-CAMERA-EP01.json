@@ -426,7 +426,7 @@
    },
    "editorial_beat": "Revelar guardas e lanças cruzadas",
    "scene_status": "planned_pending_real_assets",
-   "visual_prompt": "Grande plano arquitetônico do tribunal, dois guardas em laterais com lanças formando X atrás de Kael; rei no trono; princesa não aparece.",
+   "visual_prompt": "Plano geral da sala do trono com Kael visivelmente AJOELHADO, ao centro em primeiro plano, joelho apoiado no chão e corpo inclinado diante do rei Aldric SENTADO no trono alto. Dois guardas de cada lado seguram CADA UM sua própria lança pelo terço inferior/base com mãos/polegares fechados, pontas cruzadas num X alto por trás de Kael. Preservar figurino e escala da Bíblia.",
    "images": {
     "required": [
      "scene-mother",
@@ -443,7 +443,7 @@
      "role": "one_coherent_scene_with_everything",
      "reference": "visual_bible_sha_verified",
      "alpha": "opaque",
-     "approval": "pending",
+     "approval": "rejected_v1_kael_standing_requires_versioned_mother_v2",
      "generation_method": "proxy_generated_full_frame",
      "source_policy": "use_Bible_SHA_references"
     },
@@ -563,7 +563,9 @@
      }
     ],
     "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
-    "local_segmentation_policy": "QA_only_never_final_source"
+    "local_segmentation_policy": "QA_only_never_final_source",
+    "mother_v1_sha256": "156a9376298166045654706e75b876a20b7f8201c70d6d494ae9a2b7465f5ab3",
+    "mother_v1_assistant_visual_review": "rejected_kael_standing_wrong_story_pose"
    },
    "camera": {
     "shot_type": "wide",
@@ -608,7 +610,12 @@
     "visual_approval_pending": true,
     "youtube_upload": false,
     "check_separated_asset_provenance": "proxy_generated_separate_image",
-    "reject_cutout_or_segmentation_final_sprites": true
+    "reject_cutout_or_segmentation_final_sprites": true,
+    "source_v1_visual_review": "rejected_2026-11-17",
+    "require_versioned_mother_v2_before_more_proxy_parts": true,
+    "review_file": "REVISAO-VISUAL-C01-P04-LANCAS.md",
+    "required_character_pose": "kael_kneeling_not_standing",
+    "guard_grip": "both_hands_lower_shaft_third_base"
    }
   },
   {
