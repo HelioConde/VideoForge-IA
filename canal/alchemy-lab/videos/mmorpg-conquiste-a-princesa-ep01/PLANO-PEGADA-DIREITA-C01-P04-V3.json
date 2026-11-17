@@ -22,7 +22,8 @@
         1243
       ],
       "technical_generation": "success",
-      "approval": false
+      "approval": false,
+      "workflow_status": "archived_not_required"
     },
     {
       "role": "palm-rear",
@@ -39,13 +40,15 @@
         971
       ],
       "technical_generation": "success",
-      "approval": false
+      "approval": false,
+      "workflow_status": "archived_not_required"
     },
     {
       "role": "spear",
       "source": "object-lanca-direita",
       "sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194",
-      "approval": false
+      "approval": false,
+      "workflow_status": "archived_not_required"
     },
     {
       "role": "fingers-front",
@@ -62,7 +65,8 @@
         975
       ],
       "technical_generation": "success",
-      "approval": false
+      "approval": false,
+      "workflow_status": "archived_not_required"
     }
   ],
   "qa_steps": {
@@ -89,16 +93,21 @@
       "left_candidate": "R3-tightest-provisional"
     }
   },
-  "pending": [
-    "creator_visual_review_of_wrist_thumb_and_spear",
-    "spatial_registration_final",
-    "rig_validation_across_frames"
-  ],
+  "pending": [],
   "rig_ready": false,
   "hand_contact_verified": false,
   "spatial_registration_approved": false,
   "creator_visual_approval": false,
   "mp4_generated": false,
   "youtube_uploaded": false,
-  "last_step": "Compare side-by-side grip QA. If accepted, fix relative transforms and test animated motion without using full-image movement."
+  "last_step": "Compare side-by-side grip QA. If accepted, fix relative transforms and test animated motion without using full-image movement.",
+  "workflow_status": "superseded_creator_rejected_separate_hand_parts",
+  "superseded_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json",
+  "creator_feedback": "Todas as reconstruções de mãos estão erradas; ignorar essa parte",
+  "old_pending_archived": [
+    "creator_visual_review_of_wrist_thumb_and_spear",
+    "spatial_registration_final",
+    "rig_validation_across_frames"
+  ],
+  "next_step": "Skip all independent hand pieces and their approval gates; preserve mother with integrated hand/spear static and progress other shots"
 }
