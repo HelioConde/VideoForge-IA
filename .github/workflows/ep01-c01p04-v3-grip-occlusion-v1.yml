@@ -1,0 +1,178 @@
+name: "VideoForge - EP01 C01-P04 V3 gerar palma e dedos RGBA"
+run-name: "EP01 C01-P04 / pegada anatomica ${{ inputs.side || 'pedido' }} ${{ inputs.role || 'pedido' }}"
+on:
+  workflow_dispatch:
+    inputs:
+      side:
+        description: "Lado do guarda na C01-P04"
+        type: choice
+        required: true
+        options: [left, right]
+      role:
+        description: "Peca anatômica independente"
+        type: choice
+        required: true
+        options: [palm-rear, fingers-front]
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PEGADA-ANATOMICA-C01-P04-V3.json'
+
+permissions:
+  contents: write
+  packages: read
+
+concurrency:
+  group: ep01-c01p04-v3-grip-occlusion-v1-main
+  cancel-in-progress: false
+
+jobs:
+  gerar-uma-peca:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      INPUT_SIDE: ${{ inputs.side }}
+      INPUT_ROLE: ${{ inputs.role }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencia offline para conferir PNG
+        run: python -m pip install --quiet 'Pillow==11.3.0'
+      - name: Preflight SHA da mae aprovada, luva e lanca sem IA
+        id: preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ep01_c01p04_v3_grip_occlusion_v1 -v
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          from videoforge import ep01_c01p04_v3_grip_occlusion_v1 as engine
+          if os.environ["GITHUB_EVENT_NAME"] == "workflow_dispatch":
+              side = os.environ.get("INPUT_SIDE", "").strip()
+              role = os.environ.get("INPUT_ROLE", "").strip()
+          else:
+              path = Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PEGADA-ANATOMICA-C01-P04-V3.json")
+              changed = subprocess.check_output(
+                  ["git","diff-tree","--no-commit-id","--name-only","-r",os.environ["GITHUB_SHA"]],
+                  text=True).splitlines()
+              if str(path) not in changed:
+                  raise SystemExit("EP01_GRIP_OCCLUSION_REQUEST_NOT_CHANGED")
+              req = json.loads(path.read_text(encoding="utf-8"))
+              if (req.get("schema")!="videoforge/ep01-c01p04-grip-occlusion-request/v1"
+                  or req.get("channel")!="alchemy-lab"
+                  or req.get("video_id")!="mmorpg-conquiste-a-princesa-ep01"
+                  or req.get("shot_id")!="C01-P04"
+                  or req.get("approved_mother_sha256")!=engine.APPROVED_SHA
+                  or req.get("one_paid_image_per_run") is not True
+                  or req.get("retry_on_failure") is not False
+                  or req.get("new_art_not_mother_cutout") is not True
+                  or req.get("human_visual_approval") is not False
+                  or req.get("rig_ready") is not False
+                  or req.get("youtube_upload") is not False):
+                  raise SystemExit("EP01_GRIP_OCCLUSION_BAD_REQUEST")
+              side = req.get("side","")
+              role = req.get("role","")
+          if side not in engine.SIDES or role not in engine.ROLES:
+              raise SystemExit("EP01_GRIP_OCCLUSION_BAD_TARGET")
+          existing=engine.archived(side,role)
+          if existing:
+              print("GRIP_OCCLUSION_ALREADY_SAVED_NO_BILL",side,role,existing["sha256"])
+              execute="false"
+          else:
+              refs=engine.prepare(side,role)
+              print("GRIP_OCCLUSION_PREFLIGHT_SHA_VERIFIED",side,role,len(refs["images"]))
+              execute="true"
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as output:
+              output.write("side="+side+"\n")
+              output.write("role="+role+"\n")
+              output.write("execute="+execute+"\n")
+          PY
+      - name: Selecionar proxy sem mostrar credenciais
+        if: steps.preflight.outputs.execute == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then
+            echo "::error::CODEX_PROXY_API_KEY ausente"; exit 1
+          fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            printf 'PROXY_ENDPOINT=%s\n' "$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'PROXY_ENDPOINT=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'USE_EPHEMERAL=1' >> "$GITHUB_ENV"
+          else
+            echo "::error::Falta endpoint ou contas do proxy"; exit 1
+          fi
+      - name: Iniciar proxy efemero ja compilado
+        if: steps.preflight.outputs.execute == 'true' && env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          data=json.loads(os.environ["CODEX_PROXY_ACCOUNTS_JSON"])
+          assert isinstance(data,dict) and isinstance(data.get("records"),list)
+          assert data["records"] and all(isinstance(x,dict) and isinstance(x.get("token"),dict) for x in data["records"])
+          p=Path(os.environ["RUNNER_TEMP"])/"vf-proxy-state"/"accounts.json"
+          p.write_text(json.dumps(data),encoding="utf-8")
+          p.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-proxy-grip-occlusion-v1 \
+            --user "$(id -u):$(id -g)" --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::Proxy nao iniciou"; exit 1
+      - name: Gerar somente uma peça RGBA pelo proxy
+        if: steps.preflight.outputs.execute == 'true'
+        shell: bash
+        env:
+          SIDE: ${{ steps.preflight.outputs.side }}
+          ROLE: ${{ steps.preflight.outputs.role }}
+        run: |
+          set -euo pipefail
+          python -m videoforge.proxy_images health --url "$PROXY_ENDPOINT"
+          python -m videoforge.ep01_c01p04_v3_grip_occlusion_v1 --side "$SIDE" --role "$ROLE" --url "$PROXY_ENDPOINT"
+      - name: Arquivar mesmo que QA reprove, sem sobrescrever antigos
+        if: always() && steps.preflight.outputs.execute == 'true'
+        shell: bash
+        run: |
+          bash scripts/arquivar-pngs-se-existirem.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
+            output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
+            "${{ github.run_id }}" production-c01p04-v3-grip-occlusion-v1 "${{ job.status }}"
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.preflight.outputs.execute == 'true'
+        with:
+          name: ep01-grip-occlusion-${{ steps.preflight.outputs.side }}-${{ steps.preflight.outputs.role }}-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Remover material de sessao do runner
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-proxy-grip-occlusion-v1 >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"
