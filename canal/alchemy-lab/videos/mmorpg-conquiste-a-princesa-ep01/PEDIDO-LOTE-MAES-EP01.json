@@ -2,15 +2,15 @@
   "schema": "videoforge/ep01-mother-fill-queue/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "status": "requested_generation_of_missing_scene_mothers",
-  "max_new_images": 17,
+  "status": "resumed_after_C08-P04_archived_via_single_manual_retry",
+  "max_new_images": 16,
   "allow_automatic_proxy_calls": true,
   "single_paid_image_per_child_workflow": true,
   "retry_on_failure": false,
   "youtube_upload": false,
   "approved_for_final_render": false,
-  "start_after_checkpoint": "22/39",
-  "next_expected_shot": "C08-P04",
+  "start_after_checkpoint": "23/39",
+  "next_expected_shot": "C09-P01",
   "reference_policy": "BIBLIA_VISUAL_SHA_VERIFIED_2D_ANIME_MANHWA_SEMIREALISTA",
   "persistence": "cada PNG e arquivo independente arquivado com SHA256 no canal e checkpoint",
   "human_visual_approval_required": true,
@@ -21,5 +21,8 @@
     "invalid_inventory",
     "max_new_images_reached"
   ],
-  "note": "Aprovacao do estilo nao equivale a aprovacao anatomica por imagem. Gerar apenas maes. Pecas animaveis RGBA e rig ficam para fase posterior."
+  "note": "C08-P04 1a tentativa falhou HTTP502; retry manual de workflow isolado concluiu. Fila retoma C09-P01; uma imagem por workflow filho; pare no primeiro erro; sem rig, MP4 ou YouTube.",
+  "resume_revision": 2,
+  "previous_queue_run_id": 44100396424,
+  "recovered_child_run_id": 44100448927
 }
