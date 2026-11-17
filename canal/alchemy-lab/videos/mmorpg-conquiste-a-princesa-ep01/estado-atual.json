@@ -2199,10 +2199,12 @@
     "archived_original_mother_shots": [
       "C01-P02",
       "C01-P03",
-      "C01-P04"
+      "C01-P04",
+      "C01-P05",
+      "C02-P01"
     ],
-    "original_mother_shots_archived": 3,
-    "original_mother_shots_missing": 36,
+    "original_mother_shots_archived": 5,
+    "original_mother_shots_missing": 34,
     "mother_c01_p02_source_rejected": true,
     "mother_c01_p03": {
       "run_id": 44073592014,
@@ -2274,10 +2276,11 @@
     "local_pixel_padding_is_not_cutout": true,
     "do_not_reuse_v1_cutouts_for_rig": true,
     "next_needed": [
-      "create_versioned_c01_p03_mother_v2_without_guards",
-      "regenerate_background_kael_aldric_at_original_bbox_from_v2_using_proxy",
-      "review_c01_p04_guard_grips",
-      "continue_missing_mothers"
+      "inspect_c01_p03_v2_for_canonical_identity",
+      "inspect_c01_p04_v2_spear_hand_contacts",
+      "generate_new_independent_proxy_parts_from_approved_v2_mothers_only",
+      "review_c01_p05_and_c02_p01_mothers",
+      "generate_remaining_34_mothers"
     ],
     "new_png_images_human_approved": false,
     "rig_ready": false,
@@ -2293,6 +2296,43 @@
       "mismatched_pixels_percent": 58.21,
       "assistant_visual_review": "rejected_for_rig_scale_and_unexpected_guard_cast",
       "human_visual_approval": false
-    }
+    },
+    "verification_refresh": "2026-11-17",
+    "additional_mother_archives": {
+      "C01-P05": {
+        "run_id": 44079588294,
+        "sha256": "6a599ab681994790b3e9b07bf573817781a448bcf9f77081bc03764448028553",
+        "human_visual_approval": false
+      },
+      "C02-P01": {
+        "run_id": 44081215706,
+        "sha256": "0d1f8367c76cdf0c9b63f10071406a567b5a5a10cf799e1aa6c5d814019fa2a0",
+        "human_visual_approval": false
+      }
+    },
+    "c01_p03_v1_neutral_composition_qa": {
+      "run_id": 44077543911,
+      "status": "rejected_for_rig",
+      "different_pixels_at_threshold_percent": 58.21,
+      "reason": "wrong_scale_and_extraneous_guards_props",
+      "human_visual_approval": false
+    },
+    "c01_p03_v2_mother": {
+      "run_id": 44080234599,
+      "sha256": "bfc1249dc1f83b004b620c333f5aa81689b0ba0c23a3e7573d57c09dcf3539e3",
+      "technical_qa": "archived",
+      "assistant_visual_review": "improved_guards_spears_oversized_sword_removed",
+      "human_visual_approval": false,
+      "old_v1_parts_may_be_reused": false
+    },
+    "c01_p04_v2_mother": {
+      "run_id": 44080462345,
+      "sha256": "cf19543377960b2100148846f9d77852ca94510c949c62c27b9390e4fbee0f84",
+      "aligned_run_id": 44080887693,
+      "aligned_sha256": "2d11099a536999409a33dae2fc30c517e260c4ad640e41c6942c85b9db499ec5",
+      "assistant_visual_review": "improved_kael_kneeling_spear_grip_needs_close_review",
+      "human_visual_approval": false
+    },
+    "c01_p03_v2_c01_p04_v2_qa_run_id": 44080972625
   }
 }
