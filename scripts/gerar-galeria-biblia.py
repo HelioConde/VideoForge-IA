@@ -43,8 +43,22 @@ def assemble(root: Path = ROOT):
         archived[asset_id] = row
 
     independent = [x for x in queue["items"] if x["phase"] == "independent_master"]
+    # Os reparos V2 ficam lado a lado com o arquivo original para QA.
+    # Não confundir correções com a quantidade das 42 referências independentes.
+    repair_file = bible / "FILA-REPAROS-EP01.json"
+    repairs = []
+    if repair_file.is_file():
+        repair_queue = json.loads(repair_file.read_text(encoding="utf-8"))
+        if (repair_queue.get("schema") != "videoforge/bible-correction-queue/v1"
+                or repair_queue.get("channel") != CHANNEL
+                or repair_queue.get("video_id") != EPISODE):
+            raise ValueError("BIBLE_GALLERY_REPAIR_QUEUE_INVALID")
+        repairs = repair_queue.get("items", [])
+        if not isinstance(repairs, list):
+            raise ValueError("BIBLE_GALLERY_REPAIR_ITEMS_INVALID")
+    candidates = independent + repairs
     entries = []
-    for entry in independent:
+    for entry in candidates:
         row = archived.get(entry["asset_id"])
         if not row:
             continue
@@ -76,7 +90,9 @@ def assemble(root: Path = ROOT):
         font = ImageFont.load_default()
         page = (start // per_page) + 1
         draw.text((20, 15), "BIBLIA VISUAL / EP01 / PREVIA PARA QA", font=font, fill="#222222")
-        draw.text((20, 37), f"Pagina {page} - {len(entries)}/{len(independent)} mestres arquivados - NENHUM APROVADO AUTOMATICAMENTE",
+        master_count = sum(1 for item in independent if item["asset_id"] in archived)
+        repair_count = sum(1 for item in repairs if item["asset_id"] in archived)
+        draw.text((20, 37), f"Pagina {page} - {master_count}/{len(independent)} mestres + {repair_count}/{len(repairs)} reparos - NAO APROVADOS AUTOMATICAMENTE",
                   font=font, fill="#555555")
         for offset, (item, row, thumb) in enumerate(section):
             col, line = offset % cols, offset // cols
@@ -99,7 +115,8 @@ def assemble(root: Path = ROOT):
     # Nunca apagar o histórico das artes originais; JPGs só são miniaturas derivadas.
     lines = [
         "# Galeria visual de revisão — EP01", "",
-        f"**{len(entries)} de {len(independent)} referências-mestre** arquivadas e verificadas por SHA256.",
+        f"**{master_count} de {len(independent)} referências-mestre** arquivadas e verificadas por SHA256.",
+        f"**{repair_count} de {len(repairs)} reparos V2** gerados; são candidatos separados e não substituem os PNGs V1.",
         "**Nenhuma miniatura substitui o original. Gerado não significa aprovado.**",
         "Esta galeria é atualizada pelo GitHub Actions após cada lote, sem nova geração de IA.", "",
     ]
@@ -122,6 +139,12 @@ def assemble(root: Path = ROOT):
         lines.extend(["- " + ident for ident in missing])
     else:
         lines.append("As 42 referências individuais possuem arquivos no registro.")
+    repair_missing = [item["asset_id"] for item in repairs if item["asset_id"] not in archived]
+    lines.extend(["", "## Correções V2 (sem promoção automática)", ""])
+    if repair_missing:
+        lines.extend(["- Pendente: " + ident for ident in repair_missing])
+    else:
+        lines.append("Todos os reparos V2 estão arquivados; ainda requerem revisão visual humana.")
     lines.extend(["", "## Travamentos preservados", "",
                   "- As 12 poses/interações dependem de referências aprovadas por humano; a pose V3/V4 de lança está rejeitada.",
                   "- As tomadas do EP01 e a publicação no YouTube permanecem bloqueadas.",
@@ -130,8 +153,9 @@ def assemble(root: Path = ROOT):
     md_path = bible / "GALERIA-EP01.md"
     if not md_path.exists() or md_path.read_text(encoding="utf-8") != md:
         md_path.write_text(md, encoding="utf-8")
-    return {"review_sheets": len(pages), "archived_individual_masters": len(entries),
-            "planned_individual_masters": len(independent), "missing_masters": len(missing)}
+    return {"review_sheets": len(pages), "archived_individual_masters": master_count,
+            "planned_individual_masters": len(independent), "missing_masters": len(missing),
+            "archived_repairs": repair_count, "planned_repairs": len(repairs)}
 
 
 def main():
