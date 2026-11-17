@@ -2,10 +2,10 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C04-P03",
+  "shot_id": "C05-P03",
   "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "Cena-mãe lateral de Kael casual no mesmo quarto gamer, protegendo os olhos da luz AZUL intensa do monitor, exatamente o mesmo visual aprovado e rosto, sem troca para roupa medieval, sem duplicar mãos e sem texto na tela. A luz prepara o corte de fantasia.",
+  "objective": "Plano médio de Kael medieval olhando para uma missão e nível invisíveis à frente (HUD gerado posteriormente pelo Remotion); armadura/capa vinho, cabelos, olhos, marcas de rosto e estrada da Bíblia consistentes com C05-P01 e demais tomadas. Sem renderizar interface nem texto na arte. Preservar estilo de fantasia semi-realista anime/manhwa aprovado.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
@@ -15,17 +15,16 @@
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 15,
-  "request_revision": 18,
+  "request_sequence": 16,
+  "request_revision": 19,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "style_approval": "preserve_2026-11-17_visual_direction_without_inferring_SHA_approval",
+  "style_approval": "general_visual_direction_approved_for_images_viewed_on_2026-11-17",
   "next_steps_if_success": [
-    "archive_image_and_sha_in_visual_bible",
-    "update_auto_inventory",
-    "inspect_arm_eye_shield_against_bible",
-    "complete_C05-P03_next",
-    "defer_independent_RGBA_to_mother_QA",
-    "rig_and_video_not_authorized"
+    "archive_sha_and_update_inventory",
+    "check_kael_road_and_armor_continuity",
+    "no_UI_text_in_generated_image",
+    "proceed_to_C07_P01_with_Elara_hooded_identity",
+    "request_individual_alpha_layers_from_proxy_only_after_mother_review"
   ]
 }
