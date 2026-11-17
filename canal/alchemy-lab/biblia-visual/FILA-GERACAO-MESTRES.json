@@ -3,14 +3,14 @@
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "requested_by": "owner_generate_all_images_2026-11-16",
-  "purpose": "Generate 42 individual reference variants via sequential per-image GitHub Actions; do not regenerate existing SHA archived files. 12 interaction/action variants are deferred until explicit human master approval and grip QA; future queen is outside EP01.",
+  "purpose": "42 referências e 9 reparos históricos já arquivados; 12 pedidos de poses removidos do fluxo ativo. Próximo passo é gerar cenas-mãe por tomada, extrair PNGs RGBA por personagem/objeto/background e animar via rig/câmera Remotion.",
   "mode": "one_chargeable_image_per_workflow_run_no_retry_429",
   "max_dispatches_per_orchestrator_run": 4,
   "approval_policy": "generated_is_not_approved; human visual approval required before canon and scenes",
   "stop_on_failure": true,
   "auto_publish": false,
   "planned_independent_master_variants": 42,
-  "deferred_interaction_variants": 12,
+  "deferred_interaction_variants": 0,
   "future_story_not_automatically_generated": 1,
   "episode_shots_planned": 40,
   "episode_scene_generation_hold": true,
@@ -398,108 +398,132 @@
       "category": "personagens",
       "item": "guarda_esquerdo",
       "variant": "cruzando_lanca",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-guarda-direito-cruzando-lanca-v1",
       "category": "personagens",
       "item": "guarda_direito",
       "variant": "cruzando_lanca",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-guarda-segurando-lanca-na-base-base-v1",
       "category": "interacoes",
       "item": "guarda-segurando-lanca-na-base",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-guardas-cruzando-lancas-base-v1",
       "category": "interacoes",
       "item": "guardas-cruzando-lancas",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-rei-sentado-no-trono-base-v1",
       "category": "interacoes",
       "item": "rei-sentado-no-trono",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-kael-ajoelhado-base-v1",
       "category": "interacoes",
       "item": "kael-ajoelhado",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-espada-desembainhada-base-v1",
       "category": "interacoes",
       "item": "espada-desembainhada",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-elara-encapuzada-base-v1",
       "category": "interacoes",
       "item": "elara-encapuzada",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-elara-revelada-base-v1",
       "category": "interacoes",
       "item": "elara-revelada",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-kael-segurando-broche-base-v1",
       "category": "interacoes",
       "item": "kael-segurando-broche",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-perseguicao-beco-base-v1",
       "category": "interacoes",
       "item": "perseguicao-beco",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-kael-protegendo-elara-base-v1",
       "category": "interacoes",
       "item": "kael-protegendo-elara",
       "variant": "base",
-      "phase": "after_canonical_approval",
+      "phase": "legacy_pose_request_deprecated",
       "approval_required": true,
-      "youtube_upload": false
+      "youtube_upload": false,
+      "paid_generation_allowed": false,
+      "replaced_by": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
     },
     {
       "asset_id": "biblia-rainha-base-v1",
@@ -519,5 +543,8 @@
     "skip_archived_sha_verified": true,
     "never_paid_retry": true,
     "previous_generated_images_preserved": true
-  }
+  },
+  "legacy_deprecated_pose_requests": 12,
+  "no_pose_prerequisite": true,
+  "active_scene_pipeline": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json"
 }
