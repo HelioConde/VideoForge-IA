@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**49 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**50 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -53,6 +53,7 @@
 | [biblia-monitor-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011615034/biblia-monitor-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`3a595a20ed5b…\` | [#44011615034](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011615034) |
 | [biblia-carrinho-base-v1.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011721667/biblia-carrinho-base-v1.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`04f1eca70e79…\` | [#44011721667](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011721667) |
 | [biblia-kael-casual-antes-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011899028/biblia-kael-casual-antes-v2.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`a9bfad6ba00f…\` | [#44011899028](https://github.com/HelioConde/VideoForge-IA/actions/runs/44011899028) |
+| [biblia-lanca-guarda-completa-v2.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44012069505/biblia-lanca-guarda-completa-v2.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`b6fb64fe457b…\` | [#44012069505](https://github.com/HelioConde/VideoForge-IA/actions/runs/44012069505) |
 
 ## Regras de consulta
 
