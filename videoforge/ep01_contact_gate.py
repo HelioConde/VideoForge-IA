@@ -69,11 +69,36 @@ def audit(root:Path=ROOT)->dict:
         or report.get("rig_authorized") is not False
         or before.get("human_visual_approval") is not False):
         raise VideoForgeError("EP01_CONTACT_QA_REPORT_INCONSISTENT")
-    score=report.get("new_composite_mean_rgb_delta")
-    old=report.get("old_composite_mean_rgb_delta")
+    # Atualização posterior: a bainha precisa ficar na frente da roupa,
+    # não sob o PNG inteiro do carrasco. Conferir a composição mais nova
+    # por SHA antes de considerar qualquer revisão da cena.
+    depth=_read_json(root/REL/"QA-C01-P02-BAINHA-FRENTE-ROUPA.json")
+    required_order=["background","body","sheath","sword","upper_hand","lower_hand"]
+    source_order=["background","sheath","sword","body","upper_hand","lower_hand"]
+    source_hashes={
+      "sheath":proofs["c01-p02-object-bainha-source-visible"],
+      "sword":proofs["c01-p02-object-espada-source-visible"],
+      "upper_hand":proofs["c01-p02-hand-upper-contact-occlusion"],
+      "lower_hand":proofs["c01-p02-hand-lower-contact-occlusion"],
+    }
+    if (depth.get("schema")!="videoforge/ep01-c01-p02-clothing-depth-audit/v1"
+        or depth.get("mother_sha256")!=EXPECTED_MOTHER_SHA
+        or depth.get("corrected_order")!=required_order
+        or depth.get("rejected_order")!=source_order
+        or depth.get("sword_or_sheath_resampled") is not False
+        or depth.get("automatic_visual_approval") is not False
+        or depth.get("rig_authorized") is not False
+        or depth.get("z_order_alone_not_proof_of_fix") is not True
+        or any(depth.get("layer_hashes",{}).get(key)!=digest
+               for key,digest in source_hashes.items())):
+        raise VideoForgeError("EP01_CONTACT_QA_DEPTH_OR_SOURCE_HASH_MISMATCH")
+    score=depth.get("corrected_mean_rgb_difference")
+    previous=report.get("new_composite_mean_rgb_delta")
+    old=depth.get("old_mean_rgb_difference")
     if (not isinstance(score,(float,int)) or isinstance(score,bool) or
         not isinstance(old,(float,int)) or isinstance(old,bool) or
-        score<0 or old<0):
+        not isinstance(previous,(float,int)) or isinstance(previous,bool) or
+        score<0 or old<0 or previous<0 or score>old):
         raise VideoForgeError("EP01_CONTACT_QA_METRIC_INVALID")
     reasons=[]
     if score>MAX_DELTA_RGB:
@@ -96,8 +121,11 @@ def audit(root:Path=ROOT)->dict:
         "source_sha256":EXPECTED_MOTHER_SHA,
         "candidate_sha256":proofs,
         "old_diff_rgb":old,
+        "previous_mask_diff_rgb":previous,
         "new_diff_rgb":score,
         "improved":score<old,
+        "sheath_in_front_of_coat_and_behind_gloves":True,
+        "legacy_offset_images_rejected":True,
         "threshold":MAX_DELTA_RGB,
         "render_ready":len(reasons)==0,
         "blocking_reasons":reasons,
