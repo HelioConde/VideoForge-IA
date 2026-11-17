@@ -111,8 +111,12 @@ def measure()->tuple[Image.Image,Image.Image,Image.Image,dict]:
     mae=lambda img:round(sum(ImageStat.Stat(img).mean)/3,3)
     region=sheath_contact_region(layers)
     count=region.histogram()[255]
-    if count<100:
+    if count<1:
         raise VideoForgeError("EP01_STACK_SHEATH_BODY_OVERLAP_NOT_FOUND")
+    # Uma interseção mínima revela que o recorte antigo do carrasco já
+    # exclui quase toda a bainha. Mudar apenas z-index NÃO resolve a
+    # máscara/canvas/posicionamento das propostas antigas (0,300)/(0,500).
+    # O novo preview é diagnóstico, nunca aprovado automaticamente.
     # O pixel da bainha deve aparecer à frente da roupa e usar exato RGB
     # da mãe no contato que não está ocluído por mãos/espada.
     checked=ImageChops.multiply(
@@ -130,6 +134,9 @@ def measure()->tuple[Image.Image,Image.Image,Image.Image,dict]:
         "gloves_foreground":True,
         "sheath_above_coat":True,
         "sheath_coat_overlap_pixels_exact":count,
+        "body_mask_already_excludes_most_sheath":count<100,
+        "z_order_alone_not_proof_of_fix":True,
+        "rejected_legacy_offsets":[[0,300],[0,500],[0,650],[0,800],[-80,650],[80,650]],
         "old_mean_rgb_difference":mae(old_diff),
         "corrected_mean_rgb_difference":mae(fixed_diff),
         "automatic_visual_approval":False,
