@@ -1,0 +1,38 @@
+{
+  "schema": "videoforge/ep01-shot-mother-visual-approvals/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "approval_scope": "individual_exact_sha_only",
+  "approved_by": "criador_do_projeto",
+  "source_confirmation": "Ver C01-P04 V3 tá boa",
+  "approval_date": "2026-11-17",
+  "approvals": [
+    {
+      "shot_id": "C01-P04",
+      "variant": "C01-P04",
+      "visual_status": "approved_by_creator",
+      "asset_id": "c01-p04-scene-mother-facing-throne-v3",
+      "source_run_id": 44152300579,
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png",
+      "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+      "native_dimensions": [
+        941,
+        1671
+      ],
+      "technical_canvas_status": "needs_non_destructive_alignment_to_941x1672_for_downstream_pipeline",
+      "original_png_immutable": true,
+      "approved_for_visual_reference": true,
+      "rig_ready": false,
+      "approval_note": "Criador aprovou visualmente esta imagem específica; não inclui aprovação das demais variantes ou do arquivo tecnicamente ajustado."
+    }
+  ],
+  "unapproved_variants": [
+    "C01-P03",
+    "C01-P04-ALT"
+  ],
+  "other_shots_approved": false,
+  "automatically_approve_future_versions": false,
+  "animated_parts_generation_requires_independent_proxy_outputs": true,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
