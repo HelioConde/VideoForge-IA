@@ -1,0 +1,97 @@
+{
+  "schema": "videoforge/ep01-source-contact-comparison/v1",
+  "shot_id": "C01-P02",
+  "mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "source_native_size": [
+    941,
+    1672
+  ],
+  "source_rgb_exact_core": true,
+  "position": [
+    0,
+    0
+  ],
+  "scale": 1,
+  "unmodified_sword_bainha_981x1602_rejected": true,
+  "layer_order": [
+    "background-aligned",
+    "bainha-source-visible",
+    "espada-candidate",
+    "carrasco-candidate",
+    "upper-glove-source",
+    "lower-glove-source"
+  ],
+  "masks": {
+    "object-bainha-source-visible": {
+      "alpha_bbox": [
+        411,
+        887,
+        807,
+        1672
+      ],
+      "filled_pixels": 83735,
+      "rgb_source_unchanged": true,
+      "canvas": [
+        941,
+        1672
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "color_resampling": false,
+      "draft_polygon_requires_visual_review": true
+    },
+    "hand-upper-contact-occlusion": {
+      "alpha_bbox": [
+        148,
+        245,
+        426,
+        564
+      ],
+      "filled_pixels": 68591,
+      "rgb_source_unchanged": true,
+      "canvas": [
+        941,
+        1672
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "color_resampling": false,
+      "draft_polygon_requires_visual_review": true
+    },
+    "hand-lower-contact-occlusion": {
+      "alpha_bbox": [
+        450,
+        1058,
+        798,
+        1445
+      ],
+      "filled_pixels": 99620,
+      "rgb_source_unchanged": true,
+      "canvas": [
+        941,
+        1672
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "color_resampling": false,
+      "draft_polygon_requires_visual_review": true
+    }
+  },
+  "rgb_composition_mean_absolute_diff": 9.698,
+  "comparison_only": true,
+  "human_visual_approval": false,
+  "rig_done": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "jpg_sha256": "1fe6bc22e53205b57dc2987a24e2bebc630c241fd8d5f193c4ff7ecbf2f9ad2d",
+  "image_provider_calls": 0
+}
