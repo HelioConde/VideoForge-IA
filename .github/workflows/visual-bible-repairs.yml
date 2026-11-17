@@ -85,22 +85,30 @@ jobs:
               echo "REPAIR_ASSET_SHA_ARCHIVED_SKIP $asset"
               continue
             fi
-            tag="repair-${GITHUB_RUN_ID}-${i}"
+            # A tentativa também faz parte da chave: repetir o job NÃO
+            # deve assistir à execução antiga e falha com o mesmo título.
+            tag="repair-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${i}"
             title="Arte Bíblia $asset $tag"
             echo "REPAIR_V2_DISPATCH $asset $tag"
-            gh workflow run production-art-by-request.yml -R "$GH_REPO" --ref main \
-              -f channel="$CHANNEL" -f video_id="$VIDEO_ID" -f asset="$asset" -f request_tag="$tag"
-            runid=""
-            for attempt in $(seq 1 60); do
-              runid=$(gh api "repos/$GH_REPO/actions/workflows/production-art-by-request.yml/runs?event=workflow_dispatch&per_page=60" \
-                | jq -r --arg title "$title" '[.workflow_runs[] | select(.display_title == $title)][0].id // empty')
-              if [[ -n "$runid" ]]; then break; fi
-              sleep 10
-            done
+            dispatch_url=$(gh workflow run production-art-by-request.yml -R "$GH_REPO" --ref main \
+              -f channel="$CHANNEL" -f video_id="$VIDEO_ID" -f asset="$asset" -f request_tag="$tag")
+            echo "REPAIR_V2_DISPATCH_URL $dispatch_url"
+            # O gh retorna URL exata do run recém-criado; não buscar run antigo
+            # só por título, especialmente quando GH Actions reexecuta o job.
+            runid=$(printf '%s\n' "$dispatch_url" | sed -nE "s#^https://github.com/${GH_REPO}/actions/runs/([0-9]+).*$#\\1#p" | head -n 1)
             if [[ -z "$runid" ]]; then
-              echo "::error::Cannot find correction run for $asset; no additional paid call"
+              for attempt in $(seq 1 60); do
+                runid=$(gh api "repos/$GH_REPO/actions/workflows/production-art-by-request.yml/runs?event=workflow_dispatch&per_page=60" \
+                  | jq -r --arg title "$title" '[.workflow_runs[] | select(.display_title == $title)][0].id // empty')
+                if [[ -n "$runid" ]]; then break; fi
+                sleep 10
+              done
+            fi
+            if [[ -z "$runid" ]]; then
+              echo "::error::Cannot locate the newly dispatched run for $asset; STOP without another billed request"
               exit 1
             fi
+            echo "REPAIR_V2_WATCH_NEW_RUN $asset run=$runid attempt=${GITHUB_RUN_ATTEMPT}"
             if ! gh run watch "$runid" -R "$GH_REPO" --exit-status --interval 10; then
               echo "::error::Correction $asset failed in run $runid; STOP without paid retry"
               exit 1
