@@ -1,0 +1,40 @@
+name: "VideoForge - QA 40 planos cena-mae rig camera"
+run-name: "EP01 / conferir 40 tomadas, RGBA e camera"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/qa-ep01-layered-shot-pipeline.yml'
+      - 'videoforge/layered_shot_plan.py'
+      - 'videoforge/visual_bible_gate.py'
+      - 'videoforge/art_request_gate.py'
+      - 'tests/test_layered_shot_plan.py'
+      - 'tests/test_art_request_gate.py'
+      - 'tests/test_visual_bible_gate.py'
+      - 'canal/alchemy-lab/biblia-visual/FILA-EP01.json'
+      - 'canal/alchemy-lab/biblia-visual/FILA-GERACAO-MESTRES.json'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PLANO-CAMADAS-CAMERA-EP01.json'
+permissions:
+  contents: read
+jobs:
+  preflight-without-paid-calls:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Conferir cortes completos, camera e seguranca de chamadas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.layered_shot_plan
+          python -m unittest tests.test_layered_shot_plan tests.test_art_request_gate tests.test_visual_bible_gate -v
+          echo "EP01_PLANEJAMENTO_APROVADO_TECNICAMENTE_SEM_POSES_NEM_IMAGENS_PAGAS"
+          echo "NENHUMA_IMAGEM_NOVA_OU_MP4_FOI_GERADO_NESTE_QA"
