@@ -11,7 +11,7 @@ from pathlib import Path
 from .errors import VideoForgeError
 from .paths import CHANNEL_IDS, IDENTIFIER
 from .remake_autopilot import ROOT
-from .visual_bible import _index, _read, VALID_STATES, SHA
+from .visual_bible import _index, _read, _review, SHA
 
 SHOT = re.compile(r"^C[0-9]{2}-P[0-9]{2}$")
 QUEUES = {"alchemy-lab": "mmorpg-conquiste-a-princesa-ep01"}
@@ -27,6 +27,7 @@ def require_ready(channel: str, video_id: str, shot_id: str, root: Path = ROOT):
     root = Path(root)
     bible = root / "canal" / channel / "biblia-visual"
     index = _index(channel, bible)
+    reviews = _review(channel, bible)
     queue = _read(bible / "FILA-EP01.json")
     if (queue.get("schema") != "videoforge/visual-bible-episode-queue/v1"
             or queue.get("episode") != video_id or not isinstance(queue.get("tomadas"), list)):
@@ -69,6 +70,11 @@ def require_ready(channel: str, video_id: str, shot_id: str, root: Path = ROOT):
             raise VideoForgeError("BIBLE_SCENE_CANONICAL_IMAGE_MISSING")
         if hashlib.sha256(image.read_bytes()).hexdigest() != key["sha256"]:
             raise VideoForgeError("BIBLE_SCENE_CANONICAL_SHA_CHANGED")
+        approval = reviews.get(key["sha256"])
+        if (not isinstance(approval, dict)
+                or approval.get("status") != "aprovado"
+                or not approval.get("revisor") or not approval.get("evidencia")):
+            raise VideoForgeError("BIBLE_SCENE_HUMAN_APPROVAL_REQUIRED")
         status_path = bible / category / item_id / "status.json"
         state = _read(status_path)
         if state.get("status") != "aprovado" or state.get("aprovacao_mestra") is not True:
