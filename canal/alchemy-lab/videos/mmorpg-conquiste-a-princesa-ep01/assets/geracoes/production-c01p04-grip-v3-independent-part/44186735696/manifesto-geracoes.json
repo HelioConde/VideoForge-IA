@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-c01p04-grip-v3-independent-part",
+  "github_run_id": 44186735696,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c01-p04-v3-left-grip-forearm-cuff-v3.png",
+      "width": 1120,
+      "height": 1404,
+      "sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+      "bytes": 1038715,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
