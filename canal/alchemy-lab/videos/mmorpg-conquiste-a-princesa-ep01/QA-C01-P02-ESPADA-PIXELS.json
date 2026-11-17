@@ -1,0 +1,17 @@
+{
+  "schema": "videoforge/ep01-source-sword-comparison/v1",
+  "mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "sword_source_sha256": "a79f7afafd89d1adee9967f765fc6fa93bd1de62f88d84488d48e03dc8f83c06",
+  "rejected_old_sword_reference": "c01-p02-object-espada",
+  "old_composite_mean_rgb_delta": 9.698,
+  "new_composite_mean_rgb_delta": 9.151,
+  "new_better_by_numeric_metric": true,
+  "alpha_source_frame_native": true,
+  "hands_final_z_order": true,
+  "visual_approved": false,
+  "rig_authorized": false,
+  "finished_mp4": false,
+  "youtube_uploaded": false,
+  "image_provider_calls": 0,
+  "preview_sha256": "193ba6b762b3943b1ac9dbb725577a653d15a1b655d17c770ae83bf639dbbe86"
+}
