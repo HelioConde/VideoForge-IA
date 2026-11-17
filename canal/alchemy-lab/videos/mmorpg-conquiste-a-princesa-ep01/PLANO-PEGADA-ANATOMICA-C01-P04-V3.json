@@ -155,9 +155,11 @@
     "left_forearm_cuff_visual_approved": false,
     "left_palm_rear_candidate_generated": true,
     "left_fingers_front_candidate_generated": true,
-    "left_grip_three_candidates_generated": true
+    "left_grip_three_candidates_generated": true,
+    "left_grip_2d_alpha_contact_positive": true,
+    "left_grip_contact_visual_approved": false
   },
-  "next_requested_part": "spatial registration precise QA of wrist join and spear grip; do not regenerate art before checking R3 at 100%",
+  "next_requested_part": "human/visual QA at full size of wrist seam and thumb shaft occlusion; only then adopt V3 spatial anchors for rig; right side pending",
   "current_request_workflow_run_id": null,
   "r3_registration_qa": {
     "run_id": 44188557556,
@@ -168,6 +170,22 @@
     "editorial_justification": "R3 visually reduces the gap between glove and cuff and moves fingers over the spear; needs independent detailed anatomical QA",
     "approved_spatial_transform": null,
     "creator_approved": false,
-    "rig_ready": false
+    "rig_ready": false,
+    "contact_metrics_file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-PEGADA-CONTATO-METRICAS.json",
+    "contact_metrics_run_id": 44189305638,
+    "r3_contact_counts_hard_alpha_pixels": {
+      "forearm_to_palm": 3184,
+      "palm_to_spear": 1496,
+      "fingers_to_spear": 1183,
+      "palm_to_fingers": 3021
+    },
+    "r2_contact_counts_hard_alpha_pixels": {
+      "forearm_to_palm": 3028,
+      "palm_to_spear": 1485,
+      "fingers_to_spear": 1255,
+      "palm_to_fingers": 3021
+    },
+    "numeric_qa_meaning": "all listed pairs intersect in provisional 2D closeup ROI; this does not establish correct grip anatomy or motion compatibility",
+    "human_visual_approved": false
   }
 }
