@@ -132,6 +132,694 @@
       "human_visual_approval_required": true,
       "verify_camera_is_distinct_from_source": true,
       "prompt": "PLANO C02-P01: CLOSE CINEMATOGRÁFICO FRONTAL de REI ALDRIC, 55 anos, sentado no MESMO trono do episódio MMORPG: Conquiste a Princesa. O PNG ORIGINAL C01-P04 aprovado está ANEXADO nesta requisição como referência VISUAL OBRIGATÓRIA; preserve exatamente o MESMO rosto maduro, formato de olhos, barba volumosa prateada/grisalha, cabelo, coroa dourada ornamentada, gola clara/pelo, manto exterior preto-escuro, túnica vinho central e brocados dourados. A referência de grupo pode mostrar Aldric mais distante; não inventar nova identidade nem trocar a cor do traje.\nCâmera frontal close 70 mm a uma altura levemente abaixo dos olhos, olhar severo direcionado a Kael fora de quadro. Mostrar cabeça, coroa completa, barba, parte dos ombros e tronco superior; expressão austera com pequena tensão nos músculos faciais. Fundo do MESMO trono dourado com veludo vermelho profundamente desfocado, vitrais violetas e luz dourada lateral da mesma posição do C01-P04. Perspectiva nova verdadeira, não ampliar artificialmente a pequena cabeça do plano geral.\nCONTRATO DE CONTINUIDADE: mesmo anime medieval semirrealista cinematográfico 2D e a mesma pintura detalhada das imagens C01-P04 e C01-P05. NÃO foto realista, 3D, cartoon, outra barba, cabelo tingido ou outra coroa. Aldric é o ÚNICO personagem visível: não desenhar Kael, Elara ou guardas, nem duplicar trono. Sem letras, legenda, texto, cartaz, marcas ou HUD. Um único frame vertical próximo de 9:16 com espaço seguro para legendas posteriores. Fonte C01-P04 deve estar ANEXADA POR SHA ao endpoint image edits; se não, não gerar.\nAinda é imagem-mãe candidata: o usuário avaliará a continuidade do rosto e figurino antes do rig, sem aprovação automática de todas as máscaras anteriores ou publicação."
+    },
+    {
+      "id": "c01-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C01-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "carrasco"
+      ],
+      "apply_kael_original": false,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C01-P02 — Detalhe da mão enluvada desembainhando espada; lâmina e bainha no quadro, nenhum rosto.. Câmera: câmera estável focada em objeto/mãos, lente 90 mm, emoção ameaça. Elenco permitido: carrasco. Ambiente: tribunal do reino de Arken, trono dourado, vitrais violetas, degraus rubros; princesa AUSENTE. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c01-p03-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C01-P03",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "aldric"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C01-P03 — Ângulo baixo atrás de Kael ajoelhado; trono imenso alto e severo, cabeça baixa, princesa fora do quadro.. Câmera: câmera abaixo dos personagens, sem distorção, lente 35 mm, emoção humilhação. Elenco permitido: kael, aldric. Ambiente: tribunal do reino de Arken, trono dourado, vitrais violetas, degraus rubros; princesa AUSENTE. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c02-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C02-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C02-P02 — Close lateral 3/4 do rosto ferido de Kael, cabeça ainda baixa, sobrancelhas contraídas, olhos mirando chão.. Câmera: rosto e expressão dominam o quadro, lente 85 mm, emoção medo contido. Elenco permitido: kael. Ambiente: mesmo tribunal/trono e Aldric da C01-P04, princesa AUSENTE. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c03-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C03-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C03-P01 — Macro de olhos e pupila de Kael; reflexo azul dentro da íris, rosto real opaco e franja coerente.. Câmera: recorte de olhos ou objeto, sem face deformada, lente 110 mm, emoção lembrança. Elenco permitido: kael. Ambiente: olhar de Kael e luz azul da memória; não misturar rosto e monitor no mesmo quadro. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c03-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C03-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C03-P02 — Match cut visual entre o reflexo azul na pupila e a luz do monitor; dois quadros separados, sem morphing do rosto.. Câmera: dois planos conectados por forma/cor, sem morphing do personagem, lente 85 mm, emoção desorientação. Elenco permitido: kael. Ambiente: olhar de Kael e luz azul da memória; não misturar rosto e monitor no mesmo quadro. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada.",
+      "variant": "reflexo_olho"
+    },
+    {
+      "id": "c04-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C04-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C04-P01 — Da altura do ombro de Kael no computador; lateral do rosto, mão no mouse e teclado legíveis; luz azul.. Câmera: câmera atrás do ombro de alguém, eixo de 180° preservado, lente 50 mm, emoção imersão. Elenco permitido: kael. Ambiente: quarto CONTEMPORÂNEO e computador; mesma identidade de Kael, roupa casual, NÃO armadura medieval. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c04-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C04-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [],
+      "apply_kael_original": false,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C04-P02 — Tela do monitor como detalhe de objeto; a mensagem de erro deve ser interface separada no Remotion, jamais texto pintado.. Câmera: câmera estável focada em objeto/mãos, lente 90 mm, emoção ruptura. Elenco permitido: nenhum personagem visível. Ambiente: quarto CONTEMPORÂNEO e computador; mesma identidade de Kael, roupa casual, NÃO armadura medieval. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c04-p03-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C04-P03",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C04-P03 — Câmera lateral vê luz azul nas mãos e no rosto de Kael que tenta proteger os olhos; não mudar anatomia.. Câmera: busto até cintura e ambiente funcional, lente 50 mm, emoção pânico. Elenco permitido: kael. Ambiente: quarto CONTEMPORÂNEO e computador; mesma identidade de Kael, roupa casual, NÃO armadura medieval. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c05-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C05-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C05-P01 — Close de Kael no chão quando abre os olhos; surpresa, poeira, contraste entre rosto e estrada desfocada.. Câmera: rosto e expressão dominam o quadro, lente 85 mm, emoção despertar. Elenco permitido: kael. Ambiente: estrada e muralhas de Arken; Kael com sua capa vinho e armadura como no julgamento. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c05-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C05-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C05-P02 — Plano geral de Arken, muralhas e árvores em profundidade; Kael pequeno na estrada, sem rosto dominante.. Câmera: plano de estabelecimento espacial, lente 28 mm, emoção escala do mundo. Elenco permitido: kael. Ambiente: estrada e muralhas de Arken; Kael com sua capa vinho e armadura como no julgamento. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c05-p03-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C05-P03",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C05-P03 — Plano médio 3/4 com Kael fitando o próprio campo de visão, olhos seguindo HUD composto no Remotion.. Câmera: busto até cintura e ambiente funcional, lente 50 mm, emoção descoberta. Elenco permitido: kael. Ambiente: estrada e muralhas de Arken; Kael com sua capa vinho e armadura como no julgamento. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c06-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C06-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "figurantes"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C06-P01 — Detalhe das duas mãos de Kael abrindo bolsa vazia; bancas desfocadas ao fundo.. Câmera: câmera estável focada em objeto/mãos, lente 90 mm, emoção escassez. Elenco permitido: kael, figurantes. Ambiente: mercado medieval Arken, barracas e figurantes; Kael sem espada. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c06-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C06-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C06-P02 — Close de reação irônica de Kael à missão secundária; sobrancelha e boca expressivas, HUD separado.. Câmera: rosto e expressão dominam o quadro, lente 85 mm, emoção ironia. Elenco permitido: kael. Ambiente: mercado medieval Arken, barracas e figurantes; Kael sem espada. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c07-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C07-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "elara"
+      ],
+      "apply_kael_original": false,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C07-P01 — Elara encapuzada corre pelo beco em três quartos, olha para trás, rosto parcialmente revelado sem revelar o título real.. Câmera: travelling guiado, composição de ação, lente 35 mm, emoção urgência. Elenco permitido: elara. Ambiente: beco de Arken e perseguição; Elara encapuzada sem coroa e sem revelar título real; perseguidores mascarados não são guardas reais. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c07-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C07-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "elara",
+        "mascarado_1",
+        "mascarado_2"
+      ],
+      "apply_kael_original": false,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C07-P02 — Perspectiva baixa do beco com os dois mascarados surgindo na curva; Elara recua à distância.. Câmera: câmera abaixo dos personagens, sem distorção, lente 35 mm, emoção perigo. Elenco permitido: elara, mascarado_1, mascarado_2. Ambiente: beco de Arken e perseguição; Elara encapuzada sem coroa e sem revelar título real; perseguidores mascarados não são guardas reais. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c07-p03-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C07-P03",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "elara"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C07-P03 — Plano curto a dois: Elara pede ajuda com mão estendida, Kael se vira assustado, olhos se cruzam.. Câmera: duas pessoas em plano de interação, lente 50 mm, emoção pedido de ajuda. Elenco permitido: kael, elara. Ambiente: beco de Arken e perseguição; Elara encapuzada sem coroa e sem revelar título real; perseguidores mascarados não são guardas reais. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c08-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C08-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "elara"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C08-P01 — Sobre o ombro de Kael, mostrar carrinho de madeira próximo; mão estendida rumo à lateral.. Câmera: câmera atrás do ombro de alguém, eixo de 180° preservado, lente 50 mm, emoção plano improvisado. Elenco permitido: kael, elara. Ambiente: mesmo beco, carrinho de madeira e perseguição com geometria constante; Elara encapuzada. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c08-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C08-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "mascarados"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C08-P02 — Plano lateral de ação: Kael empurra carrinho, rodas e percurso coerentes, mascarados reagindo.. Câmera: ângulo lateral coerente com direção de movimento, lente 35 mm, emoção impacto. Elenco permitido: kael, mascarados. Ambiente: mesmo beco, carrinho de madeira e perseguição com geometria constante; Elara encapuzada. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c08-p03-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C08-P03",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "elara",
+        "kael",
+        "mascarados"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C08-P03 — Plano aberto: carrinho bloqueia caminho, Elara foge por corredor lateral, os mascarados param.. Câmera: plano de estabelecimento espacial, lente 28 mm, emoção fuga. Elenco permitido: elara, kael, mascarados. Ambiente: mesmo beco, carrinho de madeira e perseguição com geometria constante; Elara encapuzada. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c08-p04-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C08-P04",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "elara",
+        "mascarados"
+      ],
+      "apply_kael_original": false,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C08-P04 — Insert baixo da roda do carrinho girando e desacelerando depois de bloquear a passagem; pés e capa encapuzada de Elara desaparecem pelo corredor lateral, perseguidores permanecem atrás do carrinho.. Câmera: composição cinematográfica motivada, lente 50 mm, emoção tensão narrativa. Elenco permitido: elara, mascarados. Ambiente: mesmo beco, carrinho de madeira e perseguição com geometria constante; Elara encapuzada. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c09-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C09-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "elara"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C09-P01 — Close de Elara emocionada e agradecida, uma mão toca a mão de Kael fora de foco.. Câmera: rosto e expressão dominam o quadro, lente 85 mm, emoção gratidão cautelosa. Elenco permitido: kael, elara. Ambiente: beco após resgate, gratidão de Elara encapuzada e despedida. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c09-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C09-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "elara"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C09-P02 — Da nuca/ombro de Kael vê Elara encapuzada desaparecer na esquina; ligação espacial do beco preservada.. Câmera: câmera atrás do ombro de alguém, eixo de 180° preservado, lente 50 mm, emoção mistério. Elenco permitido: kael, elara. Ambiente: beco após resgate, gratidão de Elara encapuzada e despedida. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c10-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C10-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "elara"
+      ],
+      "apply_kael_original": false,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C10-P01 — Macro de flor prateada se soltando da roupa, jóia no ar antes de cair no solo.. Câmera: câmera estável focada em objeto/mãos, lente 90 mm, emoção pista. Elenco permitido: elara. Ambiente: broche de FLOR PRATEADA de Elara, mesmo desenho em todas as tomadas. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c10-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C10-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C10-P02 — Detalhe dos dedos indicador e polegar de Kael recolhendo o broche com perspectiva consistente.. Câmera: câmera estável focada em objeto/mãos, lente 90 mm, emoção curiosidade. Elenco permitido: kael. Ambiente: broche de FLOR PRATEADA de Elara, mesmo desenho em todas as tomadas. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c11-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C11-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C11-P01 — Sobre o ombro do guarda, foco na mão de Kael exibindo o broche, rosto de Kael em plano secundário.. Câmera: câmera atrás do ombro de alguém, eixo de 180° preservado, lente 50 mm, emoção suspeita. Elenco permitido: kael, guarda_esquerdo, guarda_direito. Ambiente: portão e guardas reais com mesmas armaduras da C01-P04; broche na mão de Kael. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c11-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C11-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "guarda_esquerdo"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C11-P02 — Close lateral do rosto de Kael recebendo acusação, olhar surpreso e lança desfocada no primeiro plano.. Câmera: rosto e expressão dominam o quadro, lente 85 mm, emoção injustiça. Elenco permitido: kael, guarda_esquerdo. Ambiente: portão e guardas reais com mesmas armaduras da C01-P04; broche na mão de Kael. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c11-p03-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C11-P03",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C11-P03 — Plano geral do portão, guardas limitam passagem de Kael; eixo de 180 graus conservado.. Câmera: plano de estabelecimento espacial, lente 28 mm, emoção detenção. Elenco permitido: kael, guarda_esquerdo, guarda_direito. Ambiente: portão e guardas reais com mesmas armaduras da C01-P04; broche na mão de Kael. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c12-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C12-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C12-P01 — Close extremo dos olhos: Kael move só as pupilas de rabo de olho, queixo e cabeça completamente estáticos.. Câmera: recorte de olhos ou objeto, sem face deformada, lente 110 mm, emoção reconhecimento. Elenco permitido: kael. Ambiente: revelação de Elara princesa no trono; vestido branco-violeta e coroa ametista, identidade facial do original Elara; Aldric idêntico à C01-P04. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c12-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C12-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C12-P02 — Por trás do ombro de Kael, a câmera revela Elara ao lado do trono pela oclusão; rei visível ao fundo.. Câmera: câmera atrás do ombro de alguém, eixo de 180° preservado, lente 50 mm, emoção revelação. Elenco permitido: kael, elara, aldric. Ambiente: revelação de Elara princesa no trono; vestido branco-violeta e coroa ametista, identidade facial do original Elara; Aldric idêntico à C01-P04. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c12-p03-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C12-P03",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "elara"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C12-P03 — Close de reação de Elara ao reconhecer Kael; olhos e flor prateada reconhecíveis, trono desfocado.. Câmera: rosto e expressão dominam o quadro, lente 85 mm, emoção surpresa contida. Elenco permitido: kael, elara. Ambiente: revelação de Elara princesa no trono; vestido branco-violeta e coroa ametista, identidade facial do original Elara; Aldric idêntico à C01-P04. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c12-p04-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C12-P04",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "elara"
+      ],
+      "apply_kael_original": false,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C12-P04 — Detalhe do broche em forma de flor prateada no traje de Elara ao lado do trono; sua mão toca a joia e revela ser o mesmo desenho da pista encontrada por Kael. Nenhum rosto novo.. Câmera: composição cinematográfica motivada, lente 50 mm, emoção tensão narrativa. Elenco permitido: elara. Ambiente: revelação de Elara princesa no trono; vestido branco-violeta e coroa ametista, identidade facial do original Elara; Aldric idêntico à C01-P04. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c13-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C13-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C13-P01 — Plano médio do rosto de Kael observando o vazio onde HUD surgirá separadamente; Elara ao fundo.. Câmera: busto até cintura e ambiente funcional, lente 50 mm, emoção virada da missão. Elenco permitido: kael, elara, aldric. Ambiente: salão do trono e reação de Kael à revelação; HUD só em Remotion. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c13-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C13-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C13-P02 — Close no rosto de Kael e microexpressão de choque, HUD de risco e recompensa em camada Remotion.. Câmera: rosto e expressão dominam o quadro, lente 85 mm, emoção medo da morte. Elenco permitido: kael. Ambiente: salão do trono e reação de Kael à revelação; HUD só em Remotion. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c14-p01-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C14-P01",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "elara",
+        "aldric"
+      ],
+      "apply_kael_original": false,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C14-P01 — Plano médio da princesa descendo um degrau, mão no vestido; rei ao fundo reage.. Câmera: busto até cintura e ambiente funcional, lente 50 mm, emoção decisão. Elenco permitido: elara, aldric. Ambiente: desfecho do tribunal; Elara desce escada e anuncia falso noivado; Kael surpreso. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c14-p02-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C14-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "elara",
+        "aldric"
+      ],
+      "apply_kael_original": false,
+      "apply_elara_original": true,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C14-P02 — Close marcante no rosto de Elara declarando falso noivado com olhar decidido; reação do rei no contraplano.. Câmera: rosto e expressão dominam o quadro, lente 85 mm, emoção coragem. Elenco permitido: elara, aldric. Ambiente: desfecho do tribunal; Elara desce escada e anuncia falso noivado; Kael surpreso. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c14-p03-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C14-P03",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [
+        "kael"
+      ],
+      "apply_kael_original": true,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C14-P03 — Close extremo dos olhos arregalados de Kael antes de corte seco para preto; vínculo HUD em overlay.. Câmera: recorte de olhos ou objeto, sem face deformada, lente 110 mm, emoção cliffhanger. Elenco permitido: kael. Ambiente: desfecho do tribunal; Elara desce escada e anuncia falso noivado; Kael surpreso. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada."
+    },
+    {
+      "id": "c03-p02-monitor-mae-v1",
+      "kind": "reference",
+      "size": "1024x1536",
+      "background": "opaque",
+      "shot_id": "C03-P02",
+      "source_mode": "dorama-episode-multiref-v1",
+      "source_shot_id": "C01-P04",
+      "required_source_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+      "identity_cast": [],
+      "apply_kael_original": false,
+      "apply_elara_original": false,
+      "human_visual_approval_required": true,
+      "youtube_upload": false,
+      "prompt": "EP01 TOMADA C03-P02, segundo quadro DIFERENTE do match cut: macro do monitor no QUARTO CONTEMPORÂNEO, reflexo azul luminoso semelhante ao reflexo da pupila de Kael, sem rosto ou pessoas, sem texto/UI escrita. Uma imagem de objeto independente, sem fusão da face. 2D FANTASIA ANIME SEMIRREALISTA CINEMATOGRÁFICA, arte digital refinada e luz realista da C01-P04. A imagem original C01-P04 está ANEXADA como identidade estética, trajes/cenário APENAS quando a cena se passa no tribunal. Se Kael ou Elara aparecerem, anexar também suas imagens faciais originais SHA. Mesmo rosto/cabelo/olhos/idade e mesmo figurino conforme contexto da história; Elara no beco usa capuz, não coroa; Kael no quarto contemporâneo não usa sua armadura. NÃO variar para foto, CGI, anime plano ou cartoon. Câmera real com perspectiva coerente, membros íntegros, mãos/lanças sem duplicação; sem lettering/UI/HUD, sem marca d'água, não colagem. Um PNG candidato de uma única tomada, 9:16, para posterior rig de camadas reais. Não reutilizar arte rejeitada.",
+      "variant": "reflexo_monitor"
     }
   ],
   "scene_prompt_template": "Criar UMA CENA-MÃE visual de um único plano de dorama MMORPG 2D original para futura edição em camadas. Copiar EXATAMENTE a identidade visual dos personagens presentes da prancha de referência ANEXADA. Não fazer colagens, split-screen, múltiplos quadros nem infográficos. {visual_direction}. Contexto: {story_goal}. Evitar qualquer personagem ausente no enquadramento. Sem letreiros, HUD, UI, legendas, marcas ou palavras impressas. Ilustração vertical inteira sem cortar cabelo, membros, roupas nem objetos. Todos os elementos móveis precisam depois poder ser separados em PNG RGBA derivados desta mesma arte-mãe.",

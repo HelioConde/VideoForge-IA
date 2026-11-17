@@ -1,0 +1,509 @@
+{
+  "schema": "videoforge/episode-image-factory-plan/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "source_shot_plan": "remake-ep01-planos.json",
+  "scenes": 14,
+  "shots": 40,
+  "duration_seconds": 163,
+  "anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "original_kael_sha256": "edb751cdb1c1511e56cd8c8f314a788d9adfb9d4338085cead281efa931ed65f",
+  "original_elara_sha256": "bf199f3e3315fc8357e9fdec7e17db47f2a56c6fca6225b7f4983201fc2fcd6a",
+  "already_available": [
+    {
+      "shot": "C01-P01",
+      "kind": "black_and_sfx"
+    },
+    {
+      "shot": "C01-P04",
+      "asset": "c01-p04-imagem-inicial-v3",
+      "run": 43965460068
+    },
+    {
+      "shot": "C01-P05",
+      "asset": "c01-p05-guardas-lancas-v1",
+      "run": 43969450680
+    },
+    {
+      "shot": "C02-P01",
+      "asset": "c02-p01-aldric-rosto-v1",
+      "run": 43970462482
+    }
+  ],
+  "missing_image_assets": [
+    {
+      "shot": "C01-P02",
+      "asset": "c01-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "carrasco"
+      ],
+      "refs": [
+        "C01-P04"
+      ]
+    },
+    {
+      "shot": "C01-P03",
+      "asset": "c01-p03-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "aldric"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C02-P02",
+      "asset": "c02-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C03-P01",
+      "asset": "c03-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C03-P02",
+      "asset": "c03-p02-mae-v1",
+      "variant": "reflexo_olho",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C04-P01",
+      "asset": "c04-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C04-P02",
+      "asset": "c04-p02-mae-v1",
+      "variant": "primary",
+      "cast": [],
+      "refs": [
+        "C01-P04"
+      ]
+    },
+    {
+      "shot": "C04-P03",
+      "asset": "c04-p03-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C05-P01",
+      "asset": "c05-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C05-P02",
+      "asset": "c05-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C05-P03",
+      "asset": "c05-p03-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C06-P01",
+      "asset": "c06-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "figurantes"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C06-P02",
+      "asset": "c06-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C07-P01",
+      "asset": "c07-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "elara"
+      ],
+      "refs": [
+        "C01-P04",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C07-P02",
+      "asset": "c07-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "elara",
+        "mascarado_1",
+        "mascarado_2"
+      ],
+      "refs": [
+        "C01-P04",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C07-P03",
+      "asset": "c07-p03-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C08-P01",
+      "asset": "c08-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C08-P02",
+      "asset": "c08-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "mascarados"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C08-P03",
+      "asset": "c08-p03-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "elara",
+        "kael",
+        "mascarados"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C08-P04",
+      "asset": "c08-p04-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "elara",
+        "mascarados"
+      ],
+      "refs": [
+        "C01-P04",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C09-P01",
+      "asset": "c09-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C09-P02",
+      "asset": "c09-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C10-P01",
+      "asset": "c10-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "elara"
+      ],
+      "refs": [
+        "C01-P04",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C10-P02",
+      "asset": "c10-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C11-P01",
+      "asset": "c11-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C11-P02",
+      "asset": "c11-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "guarda_esquerdo"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C11-P03",
+      "asset": "c11-p03-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "guarda_esquerdo",
+        "guarda_direito"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C12-P01",
+      "asset": "c12-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C12-P02",
+      "asset": "c12-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C12-P03",
+      "asset": "c12-p03-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "elara"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C12-P04",
+      "asset": "c12-p04-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "elara"
+      ],
+      "refs": [
+        "C01-P04",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C13-P01",
+      "asset": "c13-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C13-P02",
+      "asset": "c13-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C14-P01",
+      "asset": "c14-p01-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "elara",
+        "aldric"
+      ],
+      "refs": [
+        "C01-P04",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C14-P02",
+      "asset": "c14-p02-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "elara",
+        "aldric"
+      ],
+      "refs": [
+        "C01-P04",
+        "Elara_original"
+      ]
+    },
+    {
+      "shot": "C14-P03",
+      "asset": "c14-p03-mae-v1",
+      "variant": "primary",
+      "cast": [
+        "kael"
+      ],
+      "refs": [
+        "C01-P04",
+        "Kael_original"
+      ]
+    },
+    {
+      "shot": "C03-P02",
+      "asset": "c03-p02-monitor-mae-v1",
+      "variant": "reflexo_monitor",
+      "cast": [],
+      "refs": [
+        "C01-P04"
+      ]
+    }
+  ],
+  "images_to_generate": 37,
+  "match_cut_has_two_distinct_frames": true,
+  "status": "batch_prepared_not_generated",
+  "youtube_upload": false,
+  "official_mp4_created": false
+}
