@@ -42,6 +42,30 @@ class VisualBibleMasterTests(unittest.TestCase):
                 self.assertIn("FUNDO NEUTRO",prompt.upper())
                 self.assertFalse(asset["youtube_upload"])
 
+    def test_character_variant_attaches_sha_verified_character_master(self):
+        import hashlib
+        from videoforge.production_art import archived_reference
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = next(x for x in plan["assets"] if x["id"] == "biblia-kael-casual-antes-v1")
+        self.assertEqual(asset["additional_master_asset_ids"], ["biblia-kael-medieval-base-v1"])
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        payload, provenance = edit_payload(asset, prompt, "gpt-image-2", size)
+        self.assertEqual(len(payload["images"]), 3)
+        archived = archived_reference("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01", "biblia-kael-medieval-base-v1")
+        self.assertIsNotNone(archived)
+        self.assertEqual(provenance[-1]["sha256"], archived["sha256"])
+        self.assertEqual(provenance[-1]["id"], "biblia-kael-medieval-base-v1")
+        raw = base64.b64decode(payload["images"][-1]["image_url"].split(",", 1)[1])
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), archived["sha256"])
+
+    def test_character_variant_missing_master_fails_before_paid_call(self):
+        plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+        asset = dict(next(x for x in plan["assets"] if x["id"] == "biblia-kael-casual-antes-v1"))
+        asset["additional_master_asset_ids"] = ["biblia-master-not-archived-v1"]
+        prompt, size = asset_prompt(plan, story, asset["id"])
+        with self.assertRaisesRegex(VideoForgeError, "EXTRA_SOURCE_NOT_ARCHIVED"):
+            edit_payload(asset, prompt, "gpt-image-2", size)
+
     def test_fake_reference_blocks_before_provider(self):
         plan, story = read_plan("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
         asset = dict(next(x for x in plan["assets"] if x["id"] == "biblia-sala-do-trono-vazio-v1"))
