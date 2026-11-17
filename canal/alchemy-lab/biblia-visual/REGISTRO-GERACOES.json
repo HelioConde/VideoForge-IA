@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 91,
+  "total_arquivadas": 92,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -2885,6 +2885,44 @@
       ],
       "status": "gerado",
       "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-scene-mother-v2:44087638566:c05-p02-scene-mother.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c05-p02-scene-mother",
+      "shot": "C05-P02",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-scene-mother-v2",
+      "github_run_id": 44087638566,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44087638566/c05-p02-scene-mother.png",
+      "sha256": "281aa0e4cc0dfd9c9d636aa0e186324bdecbd96b569a35f93882971a586765f3",
+      "bytes": 3163510,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "biblia-arken-muralhas-base-v1",
+          "sha256": "0903946038a6977cc93fe324eee665899e7cccc296bcffab4c5cff38202ab5d4",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44087301592/biblia-arken-muralhas-base-v1.png"
+        },
+        {
+          "id": "biblia-estrada-base-v1",
+          "sha256": "ae6f411689d4c6229c5dbdfa80156ffa4c7d8f7cfdea072091417bea6412d446",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009355532/biblia-estrada-base-v1.png"
+        },
+        {
+          "id": "biblia-kael-medieval-base-v1",
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_source_refs_sha_verified",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }
