@@ -1,3 +1,13 @@
+## 17/11/2026 — C08 completa (23/39) e fila independente para restantes
+
+- **Checkpoint no instante do acionamento da fila:** 23/39 mães arquivadas, **16 faltantes**. O número é histórico: consultar sempre `CHECKPOINT-IMAGENS-EP01-AUTO.json` para obter o valor atualizado em tempo real.
+- **C08-P02** empurrar carrinho: [workflow #44099166152](https://github.com/HelioConde/VideoForge-IA/actions/runs/44099166152) success, SHA `471f6923c2a23b23c9a49960d0530d4518ef7e81177defb20a29a339a5c2cf6b`.
+- **C08-P03** carrinho bloqueando beco, Elara fugindo: [workflow #44099600027](https://github.com/HelioConde/VideoForge-IA/actions/runs/44099600027) success, SHA `06e99200b305f6c35e2bb0562a167f33169fb2db2fbdc3360c2ed7e628cb5484`.
+- **C08-P04** roda girando/fuga: [workflow #44100448927](https://github.com/HelioConde/VideoForge-IA/actions/runs/44100448927) falhou inicialmente HTTP 502 sem PNG; uma repetição manual controlada do job foi concluída com sucesso, SHA `81eb066bf8cb480ea0f2e26a0fbbd0405343a895f98813a8868d6150ae229b71`.
+- Novo controlador `scripts/ep01_mother_queue.py` + [workflow `ep01-mother-fill-queue.yml`](https://github.com/HelioConde/VideoForge-IA/blob/main/.github/workflows/ep01-mother-fill-queue.yml): dispara **1 imagem paga por workflow filho**, preflight de referências SHA, confirma arquivamento e interrompe em falhas sem repetições automáticas.
+- [Fila inicial #44100396424](https://github.com/HelioConde/VideoForge-IA/actions/runs/44100396424) interrompeu corretamente após o HTTP 502. [Fila retomada #44101030369](https://github.com/HelioConde/VideoForge-IA/actions/runs/44101030369), solicitada para as 16 faltantes a partir de C09-P01. Verificar o status do workflow para saber quantas foram efetivamente geradas; disparo não significa conclusão.
+- Regra preservada: direção estética aprovada, **nenhuma mãe individual aprovada automaticamente**; somente depois da conferência haverá geração de background, personagens e objetos em imagens independentes via proxy (NUNCA recorte da mãe), rig, Remotion, QA temporal, MP4 e YouTube.
+
 ## 17/11/2026 — Continuação após aprovação do estilo: 20/39 imagens-mãe
 
 O criador aprovou a **direção estética geral** das imagens vistas. Preservar desenho anime/manhwa 2D semirrealista, identidade e referências SHA. Nesta etapa **7 mães novas** foram geradas e arquivadas pelo proxy: C06-P02 (#44092962223), C04-P03 (#44093679602), C05-P03 (#44094221512), C07-P01 (#44094654952), C07-P02 (#44095149637), C07-P03 (#44095398312), C08-P01 (#44095687671). Todas PNG 941×1672, com SHA em `REGISTRO-GERACOES.json` e `estado-atual.json`.
