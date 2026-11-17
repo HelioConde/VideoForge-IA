@@ -1,0 +1,237 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-qa-spear-registration/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "aligned_mother_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "independent_spear_sources": {
+    "object-lanca-esquerda": {
+      "sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+      "tip_xy": [
+        840,
+        220
+      ],
+      "base_xy": [
+        83,
+        1314
+      ],
+      "bbox_xyxy": [
+        70,
+        214,
+        848,
+        1321
+      ]
+    },
+    "object-lanca-direita": {
+      "sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194",
+      "tip_xy": [
+        28,
+        41
+      ],
+      "base_xy": [
+        907,
+        1612
+      ],
+      "bbox_xyxy": [
+        23,
+        35,
+        921,
+        1619
+      ]
+    }
+  },
+  "character_registration_provisional": {
+    "character-aldric": "A-fit-target",
+    "character-guarda_esquerdo": "A-fit-target",
+    "character-guarda_direito": "B-90pct"
+  },
+  "candidates": [
+    {
+      "id": "S1-cross-medium",
+      "spear_transforms": {
+        "object-lanca-esquerda": {
+          "source_tip_xy": [
+            840,
+            220
+          ],
+          "source_base_xy": [
+            83,
+            1314
+          ],
+          "preview_tip_xy": [
+            568,
+            465
+          ],
+          "preview_base_xy": [
+            175,
+            1115
+          ],
+          "scale": 0.570948,
+          "rotation_deg": -3.524,
+          "preview_only": true,
+          "physical_grip_verified": false,
+          "sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799"
+        },
+        "object-lanca-direita": {
+          "source_tip_xy": [
+            28,
+            41
+          ],
+          "source_base_xy": [
+            907,
+            1612
+          ],
+          "preview_tip_xy": [
+            374,
+            465
+          ],
+          "preview_base_xy": [
+            764,
+            1115
+          ],
+          "scale": 0.42108,
+          "rotation_deg": -1.736,
+          "preview_only": true,
+          "physical_grip_verified": false,
+          "sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194"
+        }
+      },
+      "characters": {
+        "character-aldric": "A-fit-target",
+        "character-guarda_esquerdo": "A-fit-target",
+        "character-guarda_direito": "B-90pct"
+      },
+      "human_approved": false
+    },
+    {
+      "id": "S2-cross-higher",
+      "spear_transforms": {
+        "object-lanca-esquerda": {
+          "source_tip_xy": [
+            840,
+            220
+          ],
+          "source_base_xy": [
+            83,
+            1314
+          ],
+          "preview_tip_xy": [
+            590,
+            355
+          ],
+          "preview_base_xy": [
+            175,
+            1160
+          ],
+          "scale": 0.68077,
+          "rotation_deg": -7.409,
+          "preview_only": true,
+          "physical_grip_verified": false,
+          "sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799"
+        },
+        "object-lanca-direita": {
+          "source_tip_xy": [
+            28,
+            41
+          ],
+          "source_base_xy": [
+            907,
+            1612
+          ],
+          "preview_tip_xy": [
+            350,
+            355
+          ],
+          "preview_base_xy": [
+            765,
+            1160
+          ],
+          "scale": 0.503101,
+          "rotation_deg": 1.955,
+          "preview_only": true,
+          "physical_grip_verified": false,
+          "sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194"
+        }
+      },
+      "characters": {
+        "character-aldric": "A-fit-target",
+        "character-guarda_esquerdo": "A-fit-target",
+        "character-guarda_direito": "B-90pct"
+      },
+      "human_approved": false
+    },
+    {
+      "id": "S3-cross-lower",
+      "spear_transforms": {
+        "object-lanca-esquerda": {
+          "source_tip_xy": [
+            840,
+            220
+          ],
+          "source_base_xy": [
+            83,
+            1314
+          ],
+          "preview_tip_xy": [
+            535,
+            525
+          ],
+          "preview_base_xy": [
+            200,
+            1060
+          ],
+          "scale": 0.474476,
+          "rotation_deg": -2.628,
+          "preview_only": true,
+          "physical_grip_verified": false,
+          "sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799"
+        },
+        "object-lanca-direita": {
+          "source_tip_xy": [
+            28,
+            41
+          ],
+          "source_base_xy": [
+            907,
+            1612
+          ],
+          "preview_tip_xy": [
+            405,
+            525
+          ],
+          "preview_base_xy": [
+            740,
+            1060
+          ],
+          "scale": 0.350646,
+          "rotation_deg": -2.826,
+          "preview_only": true,
+          "physical_grip_verified": false,
+          "sha256": "b551922e73ece5e1c45fe69603891280ec9c34b89c532782dc3ada4506129194"
+        }
+      },
+      "characters": {
+        "character-aldric": "A-fit-target",
+        "character-guarda_esquerdo": "A-fit-target",
+        "character-guarda_direito": "B-90pct"
+      },
+      "human_approved": false
+    }
+  ],
+  "best_candidate": null,
+  "source_pngs_changed": false,
+  "only_uniform_rigid_spear_transforms": true,
+  "hand_grip_contact_verified": false,
+  "camera_and_animation_ready": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_calls": 0,
+  "board": "QA-C01-P04-V3-PEGADA-LANCAS.jpg",
+  "board_sha256": "93c8ed1e95eb7a75a3f19d3d990957fca3d8cf08c3d60b4f6d41d29bb2a2532b",
+  "preview": "QA-C01-P04-V3-PEGADA-LANCAS-PREVIEW.jpg",
+  "preview_sha256": "1674731038ee240780346cbcf72fdc88a4e35acd3543f59fdd4910892e422002",
+  "next": "Review whether spear bases align to real fingers and tips cross above Kael; if not, regenerate gripping hands or spears as independent parts"
+}
