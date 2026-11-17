@@ -1,0 +1,30 @@
+{
+  "schema": "videoforge/ep01-c01p04-guard-grip-repair-request/v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "part": "character-guarda_esquerdo",
+  "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "reason": "Original V3 tem dedo envolvendo haste; separações guardam punho fechado ao lado da lança. Gerar novo guarda isolado com mãos fechadas ao redor da haste imaginaria, escala pequena da cena.",
+  "grip_anchor_scene_px": [
+    175,
+    970
+  ],
+  "spear_lower_butt_px": [
+    65,
+    1130
+  ],
+  "spear_tip_px": [
+    525,
+    430
+  ],
+  "require_true_alpha": true,
+  "no_spear_baked_into_guard": true,
+  "old_version_preserved": true,
+  "single_paid_call": true,
+  "retry_on_failure": false,
+  "manual_review_required": true,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_upload": false
+}
