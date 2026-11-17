@@ -1,0 +1,188 @@
+{
+  "schema": "videoforge/ep01-shot-rig-camera-motion/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P02",
+  "source_scene_mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "source_of_truth": "PLANO-CAMADAS-CAMERA-EP01.json",
+  "source_rgba": "CAMADAS-C01-P02.json",
+  "status": "keyframes_defined_waiting_for_real_rgba_qa",
+  "timeline": {
+    "global_start": 60,
+    "global_end_exclusive": 150,
+    "local_duration_frames": 90,
+    "fps": 30,
+    "seconds": 3
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "aspect": "9:16",
+    "source_native": [
+      941,
+      1672
+    ],
+    "prevent_nonuniform_stretch": true
+  },
+  "camera": {
+    "type": "insert",
+    "lens_mm_equivalent": 90,
+    "movement": "micro_push_and_focus_shift",
+    "keyframes": [
+      {
+        "local_frame": 0,
+        "scale": 1.015,
+        "center_normalized": [
+          0.47,
+          0.48
+        ],
+        "focus_normalized": [
+          0.36,
+          0.27
+        ],
+        "focus_target": "punho_espada_luva_superior",
+        "focal_blur_background": 0.65
+      },
+      {
+        "local_frame": 30,
+        "scale": 1.04,
+        "center_normalized": [
+          0.485,
+          0.495
+        ],
+        "focus_normalized": [
+          0.46,
+          0.43
+        ],
+        "focus_target": "lamina_parcialmente_exposta",
+        "focal_blur_background": 0.72
+      },
+      {
+        "local_frame": 64,
+        "scale": 1.075,
+        "center_normalized": [
+          0.5,
+          0.52
+        ],
+        "focus_normalized": [
+          0.54,
+          0.57
+        ],
+        "focus_target": "encontro_lamina_bainha",
+        "focal_blur_background": 0.78
+      },
+      {
+        "local_frame": 89,
+        "scale": 1.06,
+        "center_normalized": [
+          0.5,
+          0.52
+        ],
+        "focus_normalized": [
+          0.54,
+          0.57
+        ],
+        "focus_target": "bainha_detalhe_rubi",
+        "focal_blur_background": 0.78
+      }
+    ],
+    "easing": "smoothstep",
+    "avoid_cropping_hands_hilt_or_sheath": true,
+    "parallax_layers": [
+      "background",
+      "character-carrasco",
+      "object-espada",
+      "object-bainha"
+    ],
+    "hard_cut_next": "C01-P03"
+  },
+  "rig": {
+    "type": "remotion_2d_mesh_pivots_from_real_rgba",
+    "pose_images_generated": false,
+    "layers": [
+      {
+        "id": "c01-p02-background-aligned",
+        "movement": "near_static_blur",
+        "z": 0
+      },
+      {
+        "id": "c01-p02-character-carrasco",
+        "movement": "micro_breathing_and_glove_constraints",
+        "z": 20
+      },
+      {
+        "id": "c01-p02-object-bainha",
+        "movement": "anchored_to_lower_glove",
+        "z": 25
+      },
+      {
+        "id": "c01-p02-object-espada",
+        "movement": "partial_draw_out_of_scabbard",
+        "z": 30
+      }
+    ],
+    "blade_keyframes": [
+      {
+        "local_frame": 0,
+        "position_delta_source_px": [
+          0,
+          0
+        ],
+        "rotation_degrees": 0
+      },
+      {
+        "local_frame": 35,
+        "position_delta_source_px": [
+          -15,
+          -27
+        ],
+        "rotation_degrees": -0.7
+      },
+      {
+        "local_frame": 75,
+        "position_delta_source_px": [
+          -44,
+          -78
+        ],
+        "rotation_degrees": -1.3
+      },
+      {
+        "local_frame": 89,
+        "position_delta_source_px": [
+          -50,
+          -88
+        ],
+        "rotation_degrees": -1.3
+      }
+    ],
+    "contact_constraints": [
+      {
+        "source": "object-espada",
+        "target": "luva_superior_carrasco",
+        "contact": "cabo_presos_dedos_no_pomo"
+      },
+      {
+        "source": "object-bainha",
+        "target": "luva_inferior_carrasco",
+        "contact": "bainha_firme_sem_flutuar"
+      }
+    ],
+    "no_draw_full_unseen_blade": true,
+    "manual_anchor_review_required": true,
+    "source_pivots_approximate_only": true
+  },
+  "qa": {
+    "mother_sha_mandatory": true,
+    "layer_manifest_sha_mandatory": true,
+    "exact_canvas_alignment_mandatory": true,
+    "alpha_required_foregrounds": true,
+    "recomposition_pixel_diff_pending": true,
+    "visual_approval_pending": true,
+    "forbid_duplicated_hands_sword_scabbard": true,
+    "forbid_moving_png_as_one_static_puppet": true,
+    "no_render_claim_without_real_mp4": true
+  },
+  "youtube_upload": false,
+  "mp4_generated": false,
+  "editorial_note": "Não criar poses individuais. Movimento somente após camadas autênticas da mesma mãe, com QA de recomposição e foco de câmera variando durante a tomada."
+}
