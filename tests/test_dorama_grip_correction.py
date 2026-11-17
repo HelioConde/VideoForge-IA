@@ -26,7 +26,7 @@ class PhysicalGripTests(unittest.TestCase):
         self.assertEqual(provenance[0]["sha256"],anchor["sha256"])
         self.assertFalse(provenance[0]["source_spear_grip_approved"])
         self.assertIn("SEGURAM",self.prompt)
-        self.assertIn("MÃOS",self.prompt)
+        self.assertIn("MÃOS",self.prompt.upper())
     def test_reference_tampering_fails_before_generation(self):
         mod=copy.deepcopy(self.asset)
         mod["required_source_sha256"]="0"*64
