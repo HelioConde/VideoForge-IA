@@ -42,6 +42,13 @@ class SeparatePartsTests(unittest.TestCase):
                                    "EP01_PROXY_PARTS_MOTHER_REJECTED_NEW_VERSION_REQUIRED"):
             p.enforce_source_qa(shot)
 
+    def test_rejected_p04_standing_kael_mother_is_blocked_for_rig(self):
+        shot, _ = p.read_shot("C01-P04","background-clean")
+        self.assertEqual(shot["qa"]["required_character_pose"],"kael_kneeling_not_standing")
+        with self.assertRaisesRegex(VideoForgeError,
+                                   "EP01_PROXY_PARTS_MOTHER_REJECTED_NEW_VERSION_REQUIRED"):
+            p.enforce_source_qa(shot)
+
     def test_unapproved_c01_p02_v1_cannot_be_used_for_rig(self):
         with patch.object(p.proxy_images, "call_proxy") as charged:
             with self.assertRaisesRegex(VideoForgeError,
