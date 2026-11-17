@@ -1,0 +1,20 @@
+{
+  "schema": "videoforge/ep01-mother-v2-alignment-request/v1",
+  "shot_id": "C01-P04",
+  "source_sha256": "cf19543377960b2100148846f9d77852ca94510c949c62c27b9390e4fbee0f84",
+  "source_run_id": 44080462345,
+  "source_size": [
+    941,
+    1671
+  ],
+  "target_size": [
+    941,
+    1672
+  ],
+  "method": "pad_one_bottom_row_from_last_row_no_crop_no_resize",
+  "no_proxy_calls": true,
+  "allow_crop_or_resize": false,
+  "visual_approval": false,
+  "rig_ready": false,
+  "youtube_upload": false
+}
