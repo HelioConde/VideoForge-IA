@@ -1,0 +1,18 @@
+{
+  "schema": "videoforge/ep01-c01p04-both-grips-qa-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "comparison": {
+    "left": "R3-tightest-provisional",
+    "right": "W3-cuff-right30"
+  },
+  "reference_only": true,
+  "mirror_left_guard": false,
+  "new_model_calls": 0,
+  "rig_ready": false,
+  "visual_approval": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
