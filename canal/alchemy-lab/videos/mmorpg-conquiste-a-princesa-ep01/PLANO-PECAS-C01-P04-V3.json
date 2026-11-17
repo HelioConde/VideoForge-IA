@@ -1,0 +1,144 @@
+{
+  "schema": "videoforge/ep01-c01p04-approved-v3-layer-plan/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "basis": "C01-P04 V3 exact creator-approved SHA and non-destructive technical alignment",
+  "creator_approved_mother": {
+    "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png",
+    "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+    "dimensions": [
+      941,
+      1671
+    ]
+  },
+  "technical_aligned_reference": {
+    "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3-aligned/44156724769/c01-p04-scene-mother-facing-throne-v3-native-aligned.png",
+    "sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+    "dimensions": [
+      941,
+      1672
+    ],
+    "pixels_of_approved_source_unchanged": true,
+    "technical_bottom_row_only": true,
+    "derived_visual_approval": false
+  },
+  "visual_style": "anime_manhwa_2d_semirealista_aprovado",
+  "source_policy": "only SHA-verified approved_V3 and Bible; new full-frame independent proxy image for each part; no mother pixel extraction",
+  "parts": [
+    {
+      "order": 1,
+      "id": "background-clean",
+      "asset_id": "c01-p04-v3-background-clean",
+      "type": "opaque_background",
+      "depth": "background",
+      "pose_requirement": "full_frame",
+      "rule": "remove_all_characters_and_spears_restore_throne_carpet_and_stairs",
+      "generation_method": "proxy_generated_separate_image",
+      "status": "requested_or_pending",
+      "visual_approval": false,
+      "rig_ready": false
+    },
+    {
+      "order": 2,
+      "id": "character-kael",
+      "asset_id": "c01-p04-v3-character-kael",
+      "type": "rgba_character",
+      "depth": "foreground",
+      "pose_requirement": "same_pose_approved",
+      "rule": "kneeling_facing_king_3_4_low_center_ground_contact",
+      "generation_method": "proxy_generated_separate_image",
+      "status": "requested_or_pending",
+      "visual_approval": false,
+      "rig_ready": false
+    },
+    {
+      "order": 3,
+      "id": "character-aldric",
+      "asset_id": "c01-p04-v3-character-aldric",
+      "type": "rgba_character",
+      "depth": "distant_midground",
+      "pose_requirement": "same_pose_approved",
+      "rule": "king_seated_on_throne_no_throne_pixels",
+      "generation_method": "proxy_generated_separate_image",
+      "status": "requested_or_pending",
+      "visual_approval": false,
+      "rig_ready": false
+    },
+    {
+      "order": 4,
+      "id": "character-guarda_esquerdo",
+      "asset_id": "c01-p04-v3-character-guarda_esquerdo",
+      "type": "rgba_character",
+      "depth": "left_midground",
+      "pose_requirement": "same_pose_approved",
+      "rule": "gauntlets_form_grip_without_baked_spear",
+      "generation_method": "proxy_generated_separate_image",
+      "status": "requested_or_pending",
+      "visual_approval": false,
+      "rig_ready": false
+    },
+    {
+      "order": 5,
+      "id": "character-guarda_direito",
+      "asset_id": "c01-p04-v3-character-guarda_direito",
+      "type": "rgba_character",
+      "depth": "right_midground",
+      "pose_requirement": "same_pose_approved",
+      "rule": "gauntlets_form_grip_without_baked_spear",
+      "generation_method": "proxy_generated_separate_image",
+      "status": "requested_or_pending",
+      "visual_approval": false,
+      "rig_ready": false
+    },
+    {
+      "order": 6,
+      "id": "object-lanca-esquerda",
+      "asset_id": "c01-p04-v3-object-lanca-esquerda",
+      "type": "rgba_object",
+      "depth": "left_front_object",
+      "pose_requirement": "same_position_approved",
+      "rule": "one_spear_lower_third_gripped_by_left_guard_tip_high",
+      "generation_method": "proxy_generated_separate_image",
+      "status": "requested_or_pending",
+      "visual_approval": false,
+      "rig_ready": false
+    },
+    {
+      "order": 7,
+      "id": "object-lanca-direita",
+      "asset_id": "c01-p04-v3-object-lanca-direita",
+      "type": "rgba_object",
+      "depth": "right_front_object",
+      "pose_requirement": "same_position_approved",
+      "rule": "one_spear_lower_third_gripped_by_right_guard_tip_high",
+      "generation_method": "proxy_generated_separate_image",
+      "status": "requested_or_pending",
+      "visual_approval": false,
+      "rig_ready": false
+    }
+  ],
+  "unplanned_hidden_prop": "object-espada-carrasco is NOT visible in C01-P04 V3; exclude from this shot's pieces until story beat explicitly shows it",
+  "camera": {
+    "aspect": "9:16",
+    "primary_focus": "kael",
+    "move": "slow_dolly_out_with_parallax",
+    "change_focus_after": "king_aldric",
+    "no_whole_png_fake_character_animation": true
+  },
+  "qa_gates": [
+    "verify_parent_mother_sha_and_aligned_png_integrity",
+    "verify_all_parts_created_by_proxy_not_cutouts",
+    "check_real_alpha_zero_outside_silhouette",
+    "check_staging_exact_pixels_and_scale_against_approved_V3",
+    "check_both_spear_base_grips_and_hands_contact",
+    "no_duplicate_limbs_weapons_king_guards",
+    "compare_layer_composite_against_mother_visual_and_time_sequence",
+    "manual_visual_approval_required_per_part_before_rig"
+  ],
+  "human_visual_approval_of_source": true,
+  "automatic_approval_of_parts": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
