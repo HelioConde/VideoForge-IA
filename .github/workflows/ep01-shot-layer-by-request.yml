@@ -6,7 +6,7 @@ on:
       part:
         type: choice
         required: true
-        options: [background-clean, character-carrasco, object-espada, object-bainha]
+        options: [background-clean, character-carrasco, object-espada]
         default: background-clean
       request_tag:
         required: false
