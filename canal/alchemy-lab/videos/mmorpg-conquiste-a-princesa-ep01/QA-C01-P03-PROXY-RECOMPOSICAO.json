@@ -65,5 +65,33 @@
   "youtube_uploaded": false,
   "generator": "offline QA only",
   "provider_calls": 0,
-  "contact_sheet_sha256": "92a4477cd1728b3c691c106eb06b3ccfc56cc6d238bdec51de3ebc5453c274cc"
+  "contact_sheet_sha256": "92a4477cd1728b3c691c106eb06b3ccfc56cc6d238bdec51de3ebc5453c274cc",
+  "assistant_visual_review_20261117": {
+    "status": "rejected_for_rig",
+    "report": "REVISAO-VISUAL-C01-P03-PROXY.md",
+    "defect_codes": [
+      "character_scale_and_placement_drift",
+      "unexpected_guards_in_c01_p03_mother",
+      "missing_animated_props_from_current_qa_set"
+    ],
+    "observed_kael_bbox": [
+      0,
+      32,
+      907,
+      1643
+    ],
+    "observed_aldric_bbox": [
+      0,
+      16,
+      941,
+      1671
+    ],
+    "original_scene_mother_review": "candidate_needs_cast_correction",
+    "corrective_action": "new versioned mother for C01-P03 with no guards; proxy generate separate RGBA at original spatial anchors; recompose and review again",
+    "original_pngs_preserved": true,
+    "human_approval": false,
+    "rig_authorized": false,
+    "mp4_generated": false,
+    "youtube_uploaded": false
+  }
 }
