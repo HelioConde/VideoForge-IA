@@ -2,33 +2,33 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C03-P01",
+  "shot_id": "C03-P02",
   "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "MACRO cinematográfico dos olhos de Kael, especialmente uma pupila e parte da íris, com pequeno reflexo azul misterioso DENTRO da íris; cor natural dos olhos e características canônicas da Bíblia Visual; franja escura e pele do rosto OPACAS e coerentes, detalhes de cílios e sobrancelha sem deformação. Close próprio (não crop ampliado da cena C02), sem rei, guardas, armas, espada, mãos, texto ou elementos de interface. Um único quadro 9:16 que permita plano match cut seguinte.",
+  "objective": "Gerar o SEGUNDO quadro do match cut: quarto GAMER MODERNO de Kael casual ANTES da aventura, luz AZUL brilhante do monitor no centro, composição vertical cinematográfica em foco no monitor; Kael casual visto discretamente de perfil lateral próximo à mesa, sem armadura, sem capa, sem sangue, sem rei, trono, lanças ou elementos medievais. Refletir a mesma luz azul da pupila do plano C03-P01, mas não desenhar a pupila nem combinar duas cenas num mosaico. Não pintar letras na tela: interface será feita no Remotion. Usar EXCLUSIVAMENTE as quatro referências SHA corretas do quarto/monitor/Kael casual V2.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
   "human_visual_approval_required": true,
   "approved_for_final_render": false,
   "next_steps_if_success": [
-    "arquivar_png_SHA_unico",
-    "conferir_continuidade_cor_olhos_frange_rosto_com_kael_biblia_e_C02-P02",
-    "revisar_reflexo_azul_dentro_da_iris",
-    "se_imagem_aprovada_gerar_novos_olhos_pele_cabelo_em_pecas_geradas_pelo_proxy",
-    "nao_autorizar_rig_ou_mp4_sem_qa"
+    "arquivar_png_sha_c03_p02",
+    "validar_transicao_azul_iris_para_monitor",
+    "conferir_kael_casual_no_quarto_gamer_sem_itens_medievais",
+    "pedir_imagens_independentes_somente_apos_QA_da_mae",
+    "nao_liberar_rig_ou_mp4"
   ],
   "max_chargeable_calls_per_run": 1,
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 7,
+  "request_sequence": 8,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "request_revision": 9,
+  "request_revision": 10,
   "last_shot_archived": {
-    "shot_id": "C02-P02",
-    "run_id": 44084059723,
-    "sha256": "a963b04237e6fdd0ff82474e792e15b3cc6bf6a4337e218d595f067593b78bf3"
+    "shot_id": "C03-P01",
+    "run_id": 44084423826,
+    "sha256": "b0c416e3c0dd10883e2de37a5c2652ee02030d1f6925ec6f47d9a6d56ade09f3"
   }
 }
