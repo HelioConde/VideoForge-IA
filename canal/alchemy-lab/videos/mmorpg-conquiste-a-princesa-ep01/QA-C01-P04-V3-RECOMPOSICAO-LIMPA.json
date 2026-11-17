@@ -1,0 +1,134 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-provisional-clean-recomposition/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_original_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "mother_technical_reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "clean_background_sha256": "67806c296163706abd56d06cc438e957d485dba8209ea0f4b07416e0c2917df4",
+  "kael_sha256": "591b07d9ac3e1e9281e193bb4430fa987fd173e67b7489affc14f3f7677ff151",
+  "sources_are_independent_proxy_images": true,
+  "comparisons": [
+    {
+      "id": "A-A-A",
+      "parts": {
+        "character-aldric": {
+          "source_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+          "variant": "A-fit-target",
+          "scale": 0.9518519,
+          "offset_xy": [
+            -32,
+            42
+          ],
+          "preview_only": true
+        },
+        "character-guarda_esquerdo": {
+          "source_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+          "variant": "A-fit-target",
+          "scale": 0.5205696,
+          "offset_xy": [
+            -38,
+            529
+          ],
+          "preview_only": true
+        },
+        "character-guarda_direito": {
+          "source_sha256": "c3432ac075105f1a412fc634f09d15add6d8f096369b6a5aa412d50b083aee78",
+          "variant": "A-fit-target",
+          "scale": 0.5091252,
+          "offset_xy": [
+            460,
+            515
+          ],
+          "preview_only": true
+        }
+      },
+      "human_approved": false
+    },
+    {
+      "id": "A-A-B",
+      "parts": {
+        "character-aldric": {
+          "source_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+          "variant": "A-fit-target",
+          "scale": 0.9518519,
+          "offset_xy": [
+            -32,
+            42
+          ],
+          "preview_only": true
+        },
+        "character-guarda_esquerdo": {
+          "source_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+          "variant": "A-fit-target",
+          "scale": 0.5205696,
+          "offset_xy": [
+            -38,
+            529
+          ],
+          "preview_only": true
+        },
+        "character-guarda_direito": {
+          "source_sha256": "c3432ac075105f1a412fc634f09d15add6d8f096369b6a5aa412d50b083aee78",
+          "variant": "B-90pct",
+          "scale": 0.4582127,
+          "offset_xy": [
+            492,
+            597
+          ],
+          "preview_only": true
+        }
+      },
+      "human_approved": false
+    },
+    {
+      "id": "A-B-B",
+      "parts": {
+        "character-aldric": {
+          "source_sha256": "84dc9cc393b566fef0be595333f75977545406d5462ffe72fe4e58657a5111ce",
+          "variant": "A-fit-target",
+          "scale": 0.9518519,
+          "offset_xy": [
+            -32,
+            42
+          ],
+          "preview_only": true
+        },
+        "character-guarda_esquerdo": {
+          "source_sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+          "variant": "B-90pct",
+          "scale": 0.4685127,
+          "offset_xy": [
+            -17,
+            609
+          ],
+          "preview_only": true
+        },
+        "character-guarda_direito": {
+          "source_sha256": "c3432ac075105f1a412fc634f09d15add6d8f096369b6a5aa412d50b083aee78",
+          "variant": "B-90pct",
+          "scale": 0.4582127,
+          "offset_xy": [
+            492,
+            597
+          ],
+          "preview_only": true
+        }
+      },
+      "human_approved": false
+    }
+  ],
+  "full_board": "QA-C01-P04-V3-RECOMPOSICAO-LIMPA.jpg",
+  "full_board_sha256": "e4c2554e714576b6ac65e092d4a5a6a36cd15344c246b9644bc484a07a154d05",
+  "preview_board": "QA-C01-P04-V3-RECOMPOSICAO-LIMPA-PREVIEW.jpg",
+  "preview_sha256": "5ad166bf14ee824b410e6882adda6e6b98897290508e1faf019f67313caf5285",
+  "spears_in_preview": false,
+  "parts_are_native_pixels_preserved": true,
+  "resample_applied_to_original_PNGs": false,
+  "image_provider_calls": 0,
+  "auto_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "next": "Compare orientation and costume; then solve exact pole-to-hand contacts with 2 independent spears"
+}
