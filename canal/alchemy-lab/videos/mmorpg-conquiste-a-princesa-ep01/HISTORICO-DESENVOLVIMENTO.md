@@ -1,3 +1,10 @@
+## 17/11/2026 — Geração de 7 novas tomadas visuais, total 20/39
+
+- Proxy produziu imagens-mãe candidatas em 941×1672: C06-P02 #44092962223, C04-P03 #44093679602, C05-P03 #44094221512, C07-P01 #44094654952, C07-P02 #44095149637, C07-P03 #44095398312 e C08-P01 #44095687671. SHA e path de cada imagem constam em `estado-atual.json` e no inventário automático. Nenhuma peça RGBA final gerada nesta etapa.
+- Para C06-P02 e C05-P03, os prompts foram refinados para deixar o HUD **fora da arte**, a ser adicionado no Remotion. C04-P03 manteve Kael casual no clarão azul; C07-P01 Elara encapuzada, C07-P02 dois mascarados distintos, C07-P03 pedido de ajuda.
+- Para C08-P01 e C08-P03, corrigida a lista de referências incluindo o carrinho-mestre SHA `04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36`. Inspecionadas referências de todas tomadas ainda faltantes: nenhuma referência-mestre ausente no registro.
+- Checkpoint [20/39, faltam 19](CHECKPOINT-IMAGENS-EP01-AUTO.json). Estilo aprovado em geral pelo criador; aprovação anatômica, individual por SHA e rig ainda pendentes. Nenhum MP4 nem publicação.
+
 ## 2026-11-17 — C06-P01 e QA Arken
 
 - Cena C06-P01 bolsa vazia produzida e arquivada com SHA `1f4f543b...`, run #44088754480, dimensões 941×1672. Inventário automático: 13/39 visual mothers, 26 faltantes.
