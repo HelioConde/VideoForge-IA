@@ -1,0 +1,28 @@
+{
+  "schema": "videoforge/shot-style-comparison/v1",
+  "status": "COMPARED_PIXELS_FOR_HUMAN_REVIEW_NOT_APPROVED",
+  "anchor_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+  "anchor_shot": "C01-P04",
+  "new_shot": "C01-P04",
+  "new_sha256": "0bb72ea525d81b6e935af49eb873d308a88ce8230a4a2b7d89c62d5d0e88a8dc",
+  "source_attached_to_generation": true,
+  "reference_sha_verified": true,
+  "comparison_sheet": "QA-C01-P04-V3-VS-V4-LANCAS.jpg",
+  "comparison_sheet_sha256": "d987ee21eb98bdea0c665e50abd34ec2a6bedf70674f45ee388702b284088cf6",
+  "anchor_size": [
+    941,
+    1672
+  ],
+  "new_size": [
+    941,
+    1672
+  ],
+  "image_pixels_unchanged": true,
+  "visual_character_continuity_approved": false,
+  "require_human_review": true,
+  "r2_masks_revalidated": false,
+  "youtube_uploaded": false,
+  "generation_calls": 0,
+  "physical_spear_grip_verified": false,
+  "owner_review_required": true
+}
