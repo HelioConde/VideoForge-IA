@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 43,
+  "total_arquivadas": 44,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -1322,6 +1322,34 @@
           "id": "biblia-broche-flor-completo-v1",
           "sha256": "53ac60fa45483e4ff5368f9d873207c2909cb71c6206799950bdc1f7fa04de27",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44010852169/biblia-broche-flor-completo-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "valid_png_noncanonical_dimensions_visual_review_pending",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:44011117376:biblia-capa-kael-base-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "biblia-capa-kael-base-v1",
+      "shot": null,
+      "tipo": "referencia_ou_camada",
+      "biblia_item_id": "capa-kael",
+      "biblia_categoria": "objetos",
+      "producer": "production-art-request",
+      "github_run_id": 44011117376,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011117376/biblia-capa-kael-base-v1.png",
+      "sha256": "16b3c0e5a20bd3048f719ab5bb704c91b6fea561015a286a42f6b942c5eb802a",
+      "bytes": 2340518,
+      "width": 941,
+      "height": 1670,
+      "referencias_usadas": [
+        {
+          "id": "biblia-kael-medieval-base-v1",
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
         }
       ],
       "status": "gerado",
