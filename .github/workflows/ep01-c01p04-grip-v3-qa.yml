@@ -34,6 +34,7 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/qa_ep01_c01p04_grip_v3.py
+          python scripts/qa_ep01_c01p04_grip_v3_contact.py
       - name: Arquivar apenas QA e preservar PNGs de origem
         shell: bash
         run: |
@@ -41,7 +42,7 @@ jobs:
           ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f "$ep"/QA-C01-P04-V3-ANATOMIA-PEGADA*.jpg "$ep/QA-C01-P04-V3-ANATOMIA-PEGADA.json"
+          git add -f "$ep"/QA-C01-P04-V3-ANATOMIA-PEGADA*.jpg "$ep/QA-C01-P04-V3-ANATOMIA-PEGADA.json" "$ep/QA-C01-P04-V3-PEGADA-CONTATO.jpg" "$ep/QA-C01-P04-V3-PEGADA-CONTATO.json"
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "qa(ep01): comparar anatomia V3 sem promover rig"
           git pull --rebase origin main
@@ -50,6 +51,8 @@ jobs:
         if: always()
         with:
           name: ep01-c01p04-v3-grip-layers-review
-          path: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-ANATOMIA-PEGADA*
+          path: |
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-ANATOMIA-PEGADA*
+            canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/QA-C01-P04-V3-PEGADA-CONTATO*
           if-no-files-found: warn
           retention-days: 30
