@@ -4,14 +4,19 @@
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "shot_id": "C01-P04",
   "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
-  "version": 1,
-  "source_run_id": 44186735696,
-  "role": "forearm-cuff",
-  "source_png_sha256": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
-  "purpose": "inspect quality and bbox, preserve art SHA; do not approve rig",
+  "version": 2,
+  "source_run_id": 44187678728,
+  "role": "all-three-and-spear",
+  "source_png_sha256": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305",
+  "purpose": "QA each of the 3 V3 pieces AND experimental palm spear front-finger overlap, no final source modifications",
   "one_paid_call_per_run": false,
   "model_calls": 0,
   "rig_ready": false,
   "human_visual_approval": false,
-  "youtube_upload": false
+  "youtube_upload": false,
+  "all_sources": {
+    "forearm-cuff": "1869fef70a97385d5a858319196d8906926043156aa4ac6041fd78f9084096fb",
+    "palm-rear": "f6ac09a8267ef32b9734f2f68f529e38e995f517c40b203998dcc8f23c3777be",
+    "fingers-front": "db0065fa381930dd4a18ca3225b1cc2b4101d6f7c5697e60a54de33671f65305"
+  }
 }
