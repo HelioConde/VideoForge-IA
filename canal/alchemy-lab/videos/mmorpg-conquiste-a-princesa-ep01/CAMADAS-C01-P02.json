@@ -1,0 +1,53 @@
+{
+  "schema": "videoforge/ep01-scene-mother-extracted-parts/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P02",
+  "mother_asset_id": "c01-p02-scene-mother",
+  "mother_run_id": 44036287313,
+  "mother_sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+  "mother_archive_png": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png",
+  "mother_dimensions": {
+    "width": 941,
+    "height": 1672
+  },
+  "visual_observation": "Frame único: carrasco tronco à direita, duas luvas pretas, punho da espada acima à esquerda, lâmina parcialmente desembainhada e bainha abaixo à direita, trono desfocado ao fundo.",
+  "source_policy": "all_layers_edits_of_exact_same_mother_png_sha_not_independent_poses",
+  "max_chargeable_calls_per_part_run": 1,
+  "no_retry_on_429": true,
+  "review_gate": "candidate_layers_not_approved_until_source_shape_alpha_recomposition_and_human_visual_qa",
+  "stage": "candidate_extraction",
+  "youtube_upload": false,
+  "mp4_generated": false,
+  "metadata_required": true,
+  "parts": [
+    {
+      "id": "background-clean",
+      "mode": "opaque",
+      "z_index": 0,
+      "source": "scene-mother",
+      "description": "RECONSTRUA SOMENTE O BACKGROUND ORIGINAL DO MESMO FRAME: salão do trono desfocado, escadaria, vitrais, piso e luz dourada/violeta na PERSPECTIVA exata. Remova COMPLETAMENTE toda figura humana (carrasco, braço, luvas, corpo) e todas as armas (espada, lâmina, pomo e bainha), reconstruindo naturalmente os pisos, vitrais, trono e paredes ocultos. Nenhuma nova pessoa, sem espada duplicada e sem alterar posição de trono, iluminação, perspectiva ou foco de câmera. Saída RGB/RGBA completamente OPACA até bordas; não criar uma nova composição."
+    },
+    {
+      "id": "character-carrasco",
+      "mode": "transparent",
+      "z_index": 20,
+      "source": "scene-mother",
+      "description": "ISELE SOMENTE O CARRASCO REAL VISTO NA CENA-MÃE: torso, túnica de couro escuro, braços protegidos e ambas as luvas pretas. PRESERVE AS COORDENADAS, ESCALA E SILHUETA EXATAS desse enquadramento; cabeça não está no quadro, NÃO inventar cabeça. NÃO incluir espada, lâmina, gema, guarda-mão, bainha, trono ou fundo. Manter os dedos exatamente onde aparecem ao agarrar cabo e bainha, sem criar dedos extras; áreas onde arma saiu precisam alfa transparente. Todo pixel exterior ao personagem transparente RGBA REAL. Não reposicionar mãos nem mudar anatomia."
+    },
+    {
+      "id": "object-espada",
+      "mode": "transparent",
+      "z_index": 30,
+      "source": "scene-mother",
+      "description": "ISELE EXCLUSIVAMENTE A ESPADA DESEnBAINHADA DO FRAME: pomo ornamentado rubi, cabo vermelho, guarda dourada rubi e lâmina metálica visível indo diagonalmente para o centro/inferior, exatamente os mesmos pixels, escala, luz, eixo e perspectiva. EXCLUIR corpo, luvas e bainha. NÃO completar nem inventar espada nova, não alongar lâmina além da parte visível, não alterar desenho do objeto. Imagem PNG RGBA com alfa zero real fora da espada, preservando posição no canvas original."
+    },
+    {
+      "id": "object-bainha",
+      "mode": "transparent",
+      "z_index": 35,
+      "source": "scene-mother",
+      "description": "ISELE SOMENTE A BAINHA DA ESPADA no canto inferior direito com detalhes de couro vermelho escuro, ponteira e bocal dourado/rubi, exatamente no MESMO lugar, escala, orientação e material da cena-mãe. Não mostrar lâmina, pomo/cabo da espada nem dedos/lúvas do carrasco, NÃO gerar pedestal, objeto novo ou uma bainha extra; alfa zero real fora da peça. Preservar geometria do encaixe no ponto onde a lâmina está sendo desembainhada."
+    }
+  ]
+}
