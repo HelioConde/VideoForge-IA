@@ -283,22 +283,20 @@
    },
    "editorial_beat": "Kael ajoelhado",
    "scene_status": "planned_pending_real_assets",
-   "visual_prompt": "Ângulo baixo atrás de Kael ajoelhado; trono imenso alto e severo, cabeça baixa, princesa fora do quadro.",
+   "visual_prompt": "Kael ajoelhado em primeiro plano, câmera em ângulo baixo; rei Aldric no meio do quadro diante do trono em perspectiva, menor por estar ao fundo. SOMENTE Kael e Aldric visíveis nesta tomada; NÃO incluir guardas, lanças ou espada. Os dois guardas com lanças cruzadas serão REVELADOS exclusivamente no plano geral C01-P04, não antecipar.",
    "images": {
     "required": [
      "scene-mother",
      "background-clean",
      "character-kael",
-     "character-aldric",
-     "object-lanca-guarda",
-     "object-espada-carrasco"
+     "character-aldric"
     ],
     "composite": {
      "id": "scene-mother",
      "role": "one_coherent_scene_with_everything",
      "reference": "visual_bible_sha_verified",
      "alpha": "opaque",
-     "approval": "pending",
+     "approval": "rejected_v1_needs_new_versioned_mother",
      "generation_method": "proxy_generated_full_frame",
      "source_policy": "use_Bible_SHA_references"
     },
@@ -331,27 +329,11 @@
     ],
     "objects": [
      {
-      "id": "lanca-guarda",
-      "source": "scene-mother",
-      "transparent_rgba": true,
-      "animation": "when_story_action_requires",
-      "generation_method": "proxy_generated_separate_image",
-      "source_policy": "scene_mother_and_object_bible_reference"
-     },
-     {
       "id": "trono",
       "source": "scene-mother",
       "transparent_rgba": false,
       "animation": "static_depth_layer",
       "generation_method": "static_background_layer_no_separate_sprite_required"
-     },
-     {
-      "id": "espada-carrasco",
-      "source": "scene-mother",
-      "transparent_rgba": true,
-      "animation": "when_story_action_requires",
-      "generation_method": "proxy_generated_separate_image",
-      "source_policy": "scene_mother_and_object_bible_reference"
      }
     ],
     "reference_reuse": "never_clone_discarded_v1_portraits_or_wrong_spear_grip",
@@ -375,22 +357,12 @@
       "role": "character",
       "method": "proxy_generated_separate_image",
       "background": "transparent"
-     },
-     {
-      "id": "object-lanca-guarda",
-      "role": "object",
-      "method": "proxy_generated_separate_image",
-      "background": "transparent"
-     },
-     {
-      "id": "object-espada-carrasco",
-      "role": "object",
-      "method": "proxy_generated_separate_image",
-      "background": "transparent"
      }
     ],
     "rig_parts_policy": "request_additional_transparent_png_per_actual_animated_part_from_proxy_no_pixel_cutout",
-    "local_segmentation_policy": "QA_only_never_final_source"
+    "local_segmentation_policy": "QA_only_never_final_source",
+    "mother_v1_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+    "mother_v1_assistant_visual_review": "rejected_unexpected_guards"
    },
    "camera": {
     "shot_type": "low_angle",
@@ -434,7 +406,14 @@
     "visual_approval_pending": true,
     "youtube_upload": false,
     "check_separated_asset_provenance": "proxy_generated_separate_image",
-    "reject_cutout_or_segmentation_final_sprites": true
+    "reject_cutout_or_segmentation_final_sprites": true,
+    "source_v1_visual_review": "rejected_2026-11-17",
+    "require_versioned_mother_v2_before_more_proxy_parts": true,
+    "review_file": "REVISAO-VISUAL-C01-P03-PROXY.md",
+    "explicitly_hidden_scene_props": [
+     "lanca-guarda",
+     "espada-carrasco"
+    ]
    }
   },
   {
