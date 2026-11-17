@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/ep01-c01p03-proxy-composition-request/v1",
+  "shot_id": "C01-P03",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "mother_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
+  "parts": [
+    "background-clean",
+    "character-aldric",
+    "character-kael"
+  ],
+  "parts_aligned_sha256": {
+    "background-clean": "efaf7d320a5635b658f7881453e2b298367536298689927fd0f888aea42c6c07",
+    "character-aldric": "0bcdbc8ef6263bef8c063f1ea696019998efa32a5a45789a9e3054b8b1544285",
+    "character-kael": "a962fad1494c296676879e5a2f1a98c5c68f3349999a75ab39704adec0670889"
+  },
+  "no_provider_calls": true,
+  "visual_approval": false,
+  "rig_render": false,
+  "youtube_upload": false,
+  "objective": "Montar somente prancha QA da mãe × fundo vazio gerado via proxy × Aldric PNG RGBA × Kael PNG RGBA. Detectar duplicação, transparência e oclusão sem cortar sprites da mãe. Separar QA técnico de aprovação visual."
+}
