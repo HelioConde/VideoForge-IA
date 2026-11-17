@@ -2,33 +2,33 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C02-P02",
+  "shot_id": "C03-P01",
   "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "Close cinematográfico lateral três quartos de Kael ajoelhado, rosto parcialmente ferido, cabeça ainda baixa, sobrancelhas tensas, olhos voltados ao chão e expressão de pânico contido; pele, cabelo escuro, tecido vermelho-vinho, armadura e cicatrizes exatamente como Bíblia Visual. Fundo do salão do trono em profundidade desfocada. NÃO colocar rei, guardas, lanças, espada ou objetos novos no quadro. O enquadramento é próprio para close, nunca ampliar crop de outra tomada.",
+  "objective": "MACRO cinematográfico dos olhos de Kael, especialmente uma pupila e parte da íris, com pequeno reflexo azul misterioso DENTRO da íris; cor natural dos olhos e características canônicas da Bíblia Visual; franja escura e pele do rosto OPACAS e coerentes, detalhes de cílios e sobrancelha sem deformação. Close próprio (não crop ampliado da cena C02), sem rei, guardas, armas, espada, mãos, texto ou elementos de interface. Um único quadro 9:16 que permita plano match cut seguinte.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
   "human_visual_approval_required": true,
   "approved_for_final_render": false,
   "next_steps_if_success": [
-    "arquivar_png_sha_da_mae_C02-P02",
-    "verificar_kael_facial_continuity_vs_bible_e_C01",
-    "examinar_armadura_cabelo_olhos_e_ferimento",
-    "se_mae_aprovada_pedir_background_e_kael_em_PNGs_novos_ao_proxy",
-    "manter_rig_bloqueado_ate_composicao_e_qa"
+    "arquivar_png_SHA_unico",
+    "conferir_continuidade_cor_olhos_frange_rosto_com_kael_biblia_e_C02-P02",
+    "revisar_reflexo_azul_dentro_da_iris",
+    "se_imagem_aprovada_gerar_novos_olhos_pele_cabelo_em_pecas_geradas_pelo_proxy",
+    "nao_autorizar_rig_ou_mp4_sem_qa"
   ],
   "max_chargeable_calls_per_run": 1,
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 6,
+  "request_sequence": 7,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "request_revision": 8,
+  "request_revision": 9,
   "last_shot_archived": {
-    "shot_id": "C02-P01",
-    "run_id": 44081215706,
-    "sha256": "0d1f8367c76cdf0c9b63f10071406a567b5a5a10cf799e1aa6c5d814019fa2a0"
+    "shot_id": "C02-P02",
+    "run_id": 44084059723,
+    "sha256": "a963b04237e6fdd0ff82474e792e15b3cc6bf6a4337e218d595f067593b78bf3"
   }
 }
