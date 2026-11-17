@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 139,
+  "total_arquivadas": 140,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -5039,6 +5039,44 @@
       ],
       "status": "gerado",
       "qa_tecnica": "candidate_pending_hand_contact_review",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-c01p04-v3-canonical-grip-guide-v1:44183662671:c01-p04-v3-left-grip-with-real-spear-reference-v1.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p04-v3-left-grip-with-real-spear-reference-v1",
+      "shot": "C01-P04",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-c01p04-v3-canonical-grip-guide-v1",
+      "github_run_id": 44183662671,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-v3-canonical-grip-guide-v1/44183662671/c01-p04-v3-left-grip-with-real-spear-reference-v1.png",
+      "sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+      "bytes": 1791354,
+      "width": 1024,
+      "height": 1536,
+      "referencias_usadas": [
+        {
+          "id": null,
+          "sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3-aligned/44156724769/c01-p04-scene-mother-facing-throne-v3-native-aligned.png"
+        },
+        {
+          "id": null,
+          "sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161430230/c01-p04-v3-object-lanca-esquerda.png"
+        },
+        {
+          "id": null,
+          "sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44160952746/c01-p04-v3-character-guarda_esquerdo.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "candidate_reference_only",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }

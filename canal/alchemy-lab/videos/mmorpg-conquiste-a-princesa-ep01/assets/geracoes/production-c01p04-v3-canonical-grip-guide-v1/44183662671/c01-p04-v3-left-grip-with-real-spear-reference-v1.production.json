@@ -1,0 +1,39 @@
+{
+  "schema": "videoforge/ep01-c01p04-grip-topology-guide/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "candidate_scene_shot_id": "C01-P04",
+  "asset_id": "c01-p04-v3-left-grip-with-real-spear-reference-v1",
+  "sha256": "eaeafebd244b9059006b7cfe74dcc4ebeeecf3471102283f883c52ad8032e16c",
+  "width": 1024,
+  "height": 1536,
+  "approved_grip_reference_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "source_image_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "source_originals_sha_verified": [
+    {
+      "asset_id": "mother_aligned",
+      "sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3-aligned/44156724769/c01-p04-scene-mother-facing-throne-v3-native-aligned.png"
+    },
+    {
+      "asset_id": "spear",
+      "sha256": "465284cb74df44f47b1df618fb00da34ed5105530720ffbe27d97f593267f799",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44161430230/c01-p04-v3-object-lanca-esquerda.png"
+    },
+    {
+      "asset_id": "guard_older",
+      "sha256": "77106f1d22117c82c388ecca0bb046b1ae47f85c040cf0424119e21d751d8b24",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44160952746/c01-p04-v3-character-guarda_esquerdo.png"
+    }
+  ],
+  "input_grip_crop_sha256": "6aa155da6f503193396702d621eeb26b8623dd683757683825fb5ba8eeb5b706",
+  "generation_method": "new_proxy_render_of_complete_hand_and_real_spear_for_reference_only",
+  "technical_qa": "candidate_reference_only",
+  "actual_finger_shaft_contact_human_approved": false,
+  "may_be_used_as_final_animation_asset": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "provider_image_calls": 1
+}
