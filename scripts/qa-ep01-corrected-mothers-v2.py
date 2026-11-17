@@ -46,16 +46,52 @@ def main()->None:
             report.get("source_image_sha256")!=old["sha256"] or
             report.get("generation_method")!="proxy_edited_versioned_scene_mother" or
             report.get("human_visual_approval") is not False or
-            report.get("technical_qa")!="candidate_valid_png_no_visual_approval"):
+            report.get("technical_qa") not in (
+                "candidate_valid_png_no_visual_approval","rejected_canvas_mismatch")):
             raise RuntimeError("EP01_V2_COMPARE_REPORT_INVALID")
+        raw_version_sha=row["sha256"]
+        raw_version_rel=rel.as_posix()
+        # The original V2 provider image is immutable. Only C01-P04
+        # required 1px bottom padding; the aligned candidate has its own SHA.
+        if shot=="C01-P04":
+            from videoforge.ep01_align_corrected_mother_v2 import (
+                ASSET as ALIGN_ASSET,PRODUCER as ALIGN_PRODUCER)
+            aligned=[x for x in registry.get("geracoes",[])
+                     if x.get("asset")==ALIGN_ASSET and
+                     f"/{ALIGN_PRODUCER}/" in str(x.get("arquivo",""))]
+            if len(aligned)!=1:
+                raise RuntimeError("EP01_V2_COMPARE_ALIGNED_P04_NOT_ARCHIVED")
+            row=aligned[0]
+            rel=Path(row["arquivo"])
+            if (rel.is_absolute() or ".." in rel.parts or
+                not rel.is_relative_to(REL/"assets"/"geracoes"/ALIGN_PRODUCER)):
+                raise RuntimeError("EP01_V2_COMPARE_ALIGNED_PATH_INVALID")
+            f=ROOT/rel;metadata=f.with_suffix(".production.json")
+            if f.is_symlink() or metadata.is_symlink() or not f.is_file() or not metadata.is_file():
+                raise RuntimeError("EP01_V2_COMPARE_ALIGNED_FILE_MISSING")
+            raw=f.read_bytes()
+            report=json.loads(metadata.read_text(encoding="utf-8"))
+            if (hashlib.sha256(raw).hexdigest()!=row["sha256"] or
+                report.get("sha256")!=row["sha256"] or
+                report.get("source_image_sha256")!=raw_version_sha or
+                report.get("source_mother_sha256")!=old["sha256"] or
+                report.get("source_pixels_unchanged") is not True or
+                report.get("technical_postprocess")!="pad_bottom_one_row_no_crop_no_resize" or
+                report.get("human_visual_approval") is not False):
+                raise RuntimeError("EP01_V2_COMPARE_ALIGNED_PROVENANCE_MISMATCH")
         with Image.open(io.BytesIO(oldraw)) as im: orig=im.convert("RGB")
         with Image.open(io.BytesIO(raw)) as im: fixed=im.convert("RGB")
         if orig.size!=(941,1672) or fixed.size!=orig.size:
             raise RuntimeError("EP01_V2_COMPARE_CANVAS_DIFFERENT")
         diff=ImageChops.difference(orig,fixed)
         rgbmean=round(sum(ImageStat.Stat(diff).mean)/3,4)
-        proof_rows.append({"shot":shot,"v1_sha256":old["sha256"],"v2_sha256":row["sha256"],
-                           "source_v2_png":str(rel),"source_v1_png":str(p.relative_to(ROOT)),
+        proof_rows.append({"shot":shot,"v1_sha256":old["sha256"],
+                           "v2_provider_raw_sha256":raw_version_sha,
+                           "v2_provider_raw_path":raw_version_rel,
+                           "v2_preview_sha256":row["sha256"],
+                           "v2_preview_path":str(rel),
+                           "v2_aligned_one_bottom_row":shot=="C01-P04",
+                           "source_v1_png":str(p.relative_to(ROOT)),
                            "global_mean_rgb_difference":rgbmean,
                            "human_visual_approval":False})
         view.extend([
