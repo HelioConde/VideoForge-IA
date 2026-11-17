@@ -32,5 +32,33 @@
   "rig_ready": false,
   "mp4_generated": false,
   "youtube_uploaded": false,
-  "provider_calls": 0
+  "provider_calls": 0,
+  "assistant_preliminary_visual_review": {
+    "date": "2026-11-17",
+    "report": "REVISAO-VISUAL-MAES-C01-P03-P04-V2.md",
+    "c01_p03": {
+      "source_v1_rejected": true,
+      "observations": [
+        "guards and crossed spears removed",
+        "foreground sword removed",
+        "kael remains kneeling before aldric",
+        "V1 RGBA parts invalid for new V2 scene"
+      ],
+      "status": "improved_not_human_approved"
+    },
+    "c01_p04": {
+      "source_v1_rejected": true,
+      "observations": [
+        "kael kneeling corrected",
+        "aldric seated",
+        "spear X high with apparent grips near lower portions",
+        "native source 1671 aligned to 1672 by adding bottom row, no scale change"
+      ],
+      "status": "improved_needs_close_grip_review"
+    },
+    "human_approval": false,
+    "rig_ready": false,
+    "mp4_generated": false,
+    "youtube_uploaded": false
+  }
 }
