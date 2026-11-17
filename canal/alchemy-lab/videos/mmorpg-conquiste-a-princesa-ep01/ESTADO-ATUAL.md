@@ -1,3 +1,12 @@
+### 17/11/2026 — Correção de arquitetura: cena-mãe, camadas e câmera (substitui poses)
+
+- Por decisão explícita do responsável: **não gerar 12 poses isoladas como pré-requisito**. O proxy gera uma **composição completa por tomada**, e **a mesma imagem** fornece background reconstruído, personagens isolados RGBA, props animáveis e máscaras/articulações. Remotion/rig compõe o movimento; mudanças de câmera, zoom, panorâmica, foco entre pessoas/objetos, planos alternados e profundidade fazem parte **do vídeo**, não de uma fila de poses.
+- [Novo contrato de 40 tomadas](PLANO-CAMADAS-CAMERA-EP01.json) criado: 39 planos precisam imagem-mãe, abertura C01-P01 é quadro preto sem imagem. Cada plano tem elenco, objetos, rig, QA e direção de câmera. Baseado em 37 planos da direção antiga, completados por 3 cortes de roteiro **C01-P05, C08-P04 e C12-P04**. Os timecodes agora são os **4.890 frames** da `roteiro.json`, corrigindo sobreposições antigas em **C01-P04, C08-P03 e C12-P03**.
+- [Manual operacional](MANUAL-CENA-MAE-CAMADAS-CAMERA.md) registra a ordem proxy → imagem-mãe → background limpo/PNG RGBA → rig/Remotion → foco/câmera → QA. Nenhum teto artístico fixo de imagens/cenas; SHA/proveniência e sem retry de requisição paga.
+- Os 12 registros de poses da Bíblia foram renomeados para `legacy_pose_request_deprecated`. O workflow antigo [visual-bible-interactions.yml](https://github.com/HelioConde/VideoForge-IA/blob/main/.github/workflows/visual-bible-interactions.yml) agora é **somente validador, sem proxy**, validado com sucesso em [Actions #44019584770](https://github.com/HelioConde/VideoForge-IA/actions/runs/44019584770).
+- Cenas complexas (lanças cruzadas, mão fechada na base da própria haste, espada desembainhada) serão verificadas na **composição e nas camadas/rig**, não por ilustrações isoladas de poses. Os 42 masters + 9 reparos V2 históricos estão preservados e serão usados como fontes de identidade e objeto.
+- **Estado real:** esta alteração criou **planejamento estruturado e testes**, não novas imagens do vídeo nem MP4; publicação/QA final não liberados automaticamente. Checkpoints anteriores sobre 12 poses obrigatórias são históricos e foram substituídos por esta regra.
+
 ## 17/11/2026 — 42 referências-mestre e 9 reparos V2 concluídos
 
 - **42/42** referências independentes e **9/9** reparos arquivados por manifesto e SHA256; **57 PNGs no registro histórico** com V1/V4 antigas preservadas.
