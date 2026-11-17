@@ -1,3 +1,5 @@
+**Atualização da produção — 16/11/2026:** [fila operacional de 42 variantes independentes + 12 interações bloqueadas](FILA-GERACAO-MESTRES.json), ligada a `.github/workflows/visual-bible-batch.yml`. Variantes de personagens, sala, quarto, lança e broche têm PNGs mestres anexados por SHA como referência de identidade e geometria (13 assets). As 12 poses/interações estão cadastradas com modo `approved_masters_only`, que só aceita fontes mestre aprovadas por revisor humano; exclui os frames V3/V4 com pegada incorreta. **Candidatos gerados não são automaticamente canônicos.** Os 37 planos de cenas novas seguem suspensos até validações. A contagem vigente fica no [REGISTRO-GERACOES.json](REGISTRO-GERACOES.json), nunca num número estático desta documentação.
+
 # Plano operacional de imagens-mestre — Conquiste a Princesa EP01
 
 ## Objetivo
