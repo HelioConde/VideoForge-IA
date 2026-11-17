@@ -1,0 +1,19 @@
+{
+  "schema": "videoforge/ep01-c01p04-v3-scale-audit-request/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "approved_mother_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+  "technical_reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+  "request_revision": 1,
+  "roles": [
+    "character-kael",
+    "character-aldric",
+    "character-guarda_esquerdo",
+    "character-guarda_direito"
+  ],
+  "bbox_guidance_is_provisional": true,
+  "no_provider_calls": true,
+  "rig_ready": false,
+  "youtube_upload": false
+}
