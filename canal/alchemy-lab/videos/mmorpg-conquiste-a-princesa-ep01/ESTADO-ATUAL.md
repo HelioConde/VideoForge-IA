@@ -988,3 +988,6 @@ PR https://github.com/HelioConde/VideoForge-IA/pull/65 integrado no commit 69e6d
 ## Skills de animação instaladas — 17/11/2026
 
 Adicionadas videoforge-animation-parts (peças independentes geradas pelo proxy, placement, geometria oculta e diagnóstico de torso cortado) e videoforge-character-acting (poses, intenção e timing). Complementadas rig-2d-three com contatos/deformação e qa-and-checkpoint com QA temporal. Recortes e máscaras permanecem exclusivos de QA conforme CONTRATO-CAMADAS-GERADAS-PELO-PROXY.md. Instalação de instruções; nenhuma geração, rig, render ou aprovação visual ocorreu nesta etapa. Próximo passo: aplicar preparação de peças à tomada selecionada, respeitando aprovação da mãe e proveniência.
+
+
+Instalação integrada: [PR #67](https://github.com/HelioConde/VideoForge-IA/pull/67), commit cbbb460c20795b3bdbdffe7d9f13b5b6e5df27f1. Quatro skills validadas estruturalmente e links relativos conferidos; não houve checks de CI reportados para esta mudança documental. Perfis pessoais de arte, rig, direção e QA apontam para as novas instruções, com backup local. Nenhuma inferência de validação ou render executado.

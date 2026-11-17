@@ -2143,7 +2143,7 @@
   },
   "animation_skills_installation": {
     "date": "2026-11-17",
-    "status": "installed_locally",
+    "status": "merged_main",
     "new": [
       "videoforge-animation-parts",
       "videoforge-character-acting"
@@ -2154,7 +2154,11 @@
     ],
     "art_source_policy": "proxy_generated_separate_image",
     "renders_executed": false,
-    "human_approval_changed": false
+    "human_approval_changed": false,
+    "pr": 67,
+    "merge_commit": "cbbb460c20795b3bdbdffe7d9f13b5b6e5df27f1",
+    "validation": "four_skills_valid_relative_links_valid",
+    "ci": "no_checks_reported_for_documentation_change"
   },
   "skill_routing_six_areas_20261117": {
     "date": "2026-11-17",
