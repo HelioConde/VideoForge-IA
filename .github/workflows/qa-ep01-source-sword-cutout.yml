@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/qa-ep01-source-sword-cutout.yml'
+      - 'tests/test_ep01_source_sword.py'
+      - 'videoforge/ep01_source_sword.py'
 permissions:
   contents: write
 jobs:
