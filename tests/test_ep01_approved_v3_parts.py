@@ -41,7 +41,7 @@ class ApprovedV3PartsTests(unittest.TestCase):
         frame.putpixel((600,600),(10,20,30,255))
         payload=BytesIO()
         frame.save(payload,format="PNG")
-        spec={"source":{"sha256":"a"*64},"reference_proofs":[]}
+        spec={"source":{"sha256":"a"*64,"path":"test-approved-frame.png"},"reference_proofs":[]}
         with tempfile.TemporaryDirectory() as tmp:
             report=ep.validate_and_save("character-guarda_esquerdo",
                                          payload.getvalue(),Path(tmp),spec)
