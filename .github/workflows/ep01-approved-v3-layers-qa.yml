@@ -42,6 +42,32 @@ jobs:
           set -euo pipefail
           ep='canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01'
           python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
+          qa=json.loads((root/"QA-C01-P04-V3-CAMADAS-INDEPENDENTES.json").read_text(encoding="utf-8"))
+          plan_path=root/"PLANO-PECAS-C01-P04-V3.json"
+          plan=json.loads(plan_path.read_text(encoding="utf-8"))
+          assert plan["schema"]=="videoforge/ep01-c01p04-approved-v3-layer-plan/v1"
+          index={p["part"]:p for p in qa["parts"]}
+          assert set(index)=={p["id"] for p in plan["parts"]}
+          for layer in plan["parts"]:
+              evidence=index[layer["id"]]
+              layer["status"]=("generated_native_pending_spatial_registration"
+                               if evidence["spatial_registration_pending"]
+                               else "generated_full_canvas_pending_visual_review")
+              layer["archived_png_sha256"]=evidence["sha256"]
+              layer["archived_png_path"]=evidence["file"]
+              layer["native_canvas_dimensions"]=evidence["native_canvas_dimensions"]
+              layer["technical_qa"]=evidence["technical_qa"]
+              layer["visual_approval"]=False
+              layer["rig_ready"]=False
+          plan["qa_report"]="QA-C01-P04-V3-CAMADAS-INDEPENDENTES.json"
+          plan["spatial_registration_pending"]=qa["spatial_registration_pending"]
+          plan["rig_ready"]=False
+          plan_path.write_text(json.dumps(plan,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+          PY
+          python - <<'PY'
           from pathlib import Path
           path=Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/ESTADO-ATUAL.md")
           original=path.read_text(encoding="utf-8")
@@ -58,7 +84,7 @@ jobs:
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f "$ep/QA-C01-P04-V3-CAMADAS-INDEPENDENTES.jpg" "$ep/QA-C01-P04-V3-CAMADAS-INDEPENDENTES.json" "$ep/ESTADO-ATUAL.md"
+          git add -f "$ep/QA-C01-P04-V3-CAMADAS-INDEPENDENTES.jpg" "$ep/QA-C01-P04-V3-CAMADAS-INDEPENDENTES.json" "$ep/PLANO-PECAS-C01-P04-V3.json" "$ep/ESTADO-ATUAL.md"
           if git diff --cached --quiet; then
             echo 'EP01_APPROVED_V3_PARTS_QA_ALREADY_ARCHIVED'
             exit 0
