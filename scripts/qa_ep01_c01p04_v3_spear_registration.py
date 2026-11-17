@@ -147,6 +147,24 @@ def main():
     preview=root/(BASE+"-PREVIEW.jpg")
     sm=ImageOps.contain(paper,(1024,550),Image.Resampling.LANCZOS)
     sm.save(preview,"JPEG",quality=73,optimize=True)
+    # Native scene-space closeups, QA ONLY: no sprite crops are exported.
+    grips=[("MAO ESQUERDA",[175,1115]),("MAO DIREITA",[764,1115])]
+    detail=Image.new("RGB",(4*338+20,2*476+60),"#ebe9e5")
+    p=ImageDraw.Draw(detail)
+    p.text((14,10),"C01-P04 / PEGADAS: CONFERIR FINGERS + HASTES",font=font(22),fill="#111111")
+    p.text((14,39),"AMPLIACOES PARA QA; nenhuma mascara/recorte serve como asset de rig.",font=font(13),fill="#a02b26")
+    for row,(name,xy) in enumerate(grips):
+        for col,(label,im) in enumerate(panels):
+            x=8+col*338;y=65+row*476
+            p.rounded_rectangle((x,y,x+328,y+458),radius=5,fill="#ffffff")
+            p.text((x+8,y+5),name+" | "+label,font=font(12),fill="#242424")
+            crop=im.crop((xy[0]-155,xy[1]-195,xy[0]+155,xy[1]+195))
+            crop=crop.resize((310,390),Image.Resampling.LANCZOS)
+            detail.paste(crop,(x+9,y+30))
+            cx=x+9+155;cy=y+30+195
+            p.ellipse((cx-9,cy-9,cx+9,cy+9),outline="#ff3d36",width=3)
+    detail_path=root/(BASE+"-PEGADAS-ZOOM.jpg")
+    detail.save(detail_path,"JPEG",quality=81,optimize=True)
     output={
       "schema":"videoforge/ep01-c01p04-v3-qa-spear-registration/v1",
       "channel":CHANNEL,"video_id":VIDEO,"shot_id":"C01-P04",
@@ -163,6 +181,9 @@ def main():
       "mp4_generated":False,"youtube_uploaded":False,
       "provider_calls":0,"board":dest.name,"board_sha256":sha256(dest.read_bytes()).hexdigest(),
       "preview":preview.name,"preview_sha256":sha256(preview.read_bytes()).hexdigest(),
+      "hand_grip_qa_board":detail_path.name,
+      "hand_grip_qa_board_sha256":sha256(detail_path.read_bytes()).hexdigest(),
+      "hand_grip_centers_provisional":{"left":[175,1115],"right":[764,1115]},
       "next":"Review whether spear bases align to real fingers and tips cross above Kael; if not, regenerate gripping hands or spears as independent parts",
     }
     (root/(BASE+".json")).write_text(json.dumps(output,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
