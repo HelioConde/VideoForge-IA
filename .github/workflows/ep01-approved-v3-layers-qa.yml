@@ -65,7 +65,7 @@ jobs:
           plan["qa_report"]="QA-C01-P04-V3-CAMADAS-INDEPENDENTES.json"
           plan["spatial_registration_pending"]=qa["spatial_registration_pending"]
           plan["rig_ready"]=False
-          plan_path.write_text(json.dumps(plan,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+          plan_path.write_text(json.dumps(plan,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
           PY
           python - <<'PY'
           from pathlib import Path
