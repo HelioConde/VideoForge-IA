@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**127 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**128 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -131,6 +131,7 @@
 | [c01-p04-v3-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44157781835/c01-p04-v3-background-clean.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`67806c296163…\` | [#44157781835](https://github.com/HelioConde/VideoForge-IA/actions/runs/44157781835) |
 | [c01-p04-v3-character-kael-provider-native.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44158487425/c01-p04-v3-character-kael-provider-native.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`84d081f0a83b…\` | [#44158487425](https://github.com/HelioConde/VideoForge-IA/actions/runs/44158487425) |
 | [c01-p04-v3-character-kael.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44158487425/c01-p04-v3-character-kael.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`591b07d9ac3e…\` | [#44158487425](https://github.com/HelioConde/VideoForge-IA/actions/runs/44158487425) |
+| [c01-p04-v3-character-aldric.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-c01p04-approved-v3-independent-parts/44158759629/c01-p04-v3-character-aldric.png) / C01-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`934e2129e0d4…\` | [#44158759629](https://github.com/HelioConde/VideoForge-IA/actions/runs/44158759629) |
 
 ## Regras de consulta
 

@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-c01p04-approved-v3-independent-parts",
+  "github_run_id": 44158759629,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c01-p04-v3-character-aldric.png",
+      "width": 1200,
+      "height": 1310,
+      "sha256": "934e2129e0d42db47610eff327d37d6b369d4a2258e53f7997edef4314a32828",
+      "bytes": 327163,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
