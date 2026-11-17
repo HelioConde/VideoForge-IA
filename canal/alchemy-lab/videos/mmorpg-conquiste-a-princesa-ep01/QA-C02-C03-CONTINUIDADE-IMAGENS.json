@@ -1,0 +1,89 @@
+{
+  "schema": "videoforge/ep01-c02-c03-visual-continuity-qa/v1",
+  "panel_count": 4,
+  "frames": [
+    {
+      "asset_id": "c01-p03-scene-mother-v2",
+      "sha256": "bfc1249dc1f83b004b620c333f5aa81689b0ba0c23a3e7573d57c09dcf3539e3",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-repair-v2/44080234599/c01-p03-scene-mother-v2.png",
+      "canvas": [
+        941,
+        1672
+      ],
+      "expected_canvas": [
+        941,
+        1672
+      ],
+      "canvas_compatible": true,
+      "human_approval": false,
+      "caption": "C01-P03 V2 | Kael ajoelhado e Aldric"
+    },
+    {
+      "asset_id": "c02-p01-scene-mother",
+      "sha256": "0d1f8367c76cdf0c9b63f10071406a567b5a5a10cf799e1aa6c5d814019fa2a0",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44081215706/c02-p01-scene-mother.png",
+      "canvas": [
+        941,
+        1672
+      ],
+      "expected_canvas": [
+        941,
+        1672
+      ],
+      "canvas_compatible": true,
+      "human_approval": false,
+      "caption": "C02-P01 | close do rei Aldric"
+    },
+    {
+      "asset_id": "c02-p02-scene-mother",
+      "sha256": "a963b04237e6fdd0ff82474e792e15b3cc6bf6a4337e218d595f067593b78bf3",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44084059723/c02-p02-scene-mother.png",
+      "canvas": [
+        941,
+        1672
+      ],
+      "expected_canvas": [
+        941,
+        1672
+      ],
+      "canvas_compatible": true,
+      "human_approval": false,
+      "caption": "C02-P02 | Kael em panico contido"
+    },
+    {
+      "asset_id": "c03-p01-scene-mother",
+      "sha256": "b0c416e3c0dd10883e2de37a5c2652ee02030d1f6925ec6f47d9a6d56ade09f3",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44084423826/c03-p01-scene-mother.png",
+      "canvas": [
+        941,
+        1672
+      ],
+      "expected_canvas": [
+        941,
+        1672
+      ],
+      "canvas_compatible": true,
+      "human_approval": false,
+      "caption": "C03-P01 | reflexo azul na iris"
+    }
+  ],
+  "board": "QA-C02-C03-CONTINUIDADE-IMAGENS.jpg",
+  "board_sha256": "e4759d560f02f601e5f9966b1c57fa3024dd956d8b9ccec22c883558886276af",
+  "checks_needing_visual_review": [
+    "identity_of_kael_between_near_and_extreme_close",
+    "aldric_crown_hair_beard_and_gold_burgundy_costume",
+    "kael_injury_eyes_hair_texture",
+    "light_and_throne_room_continuity",
+    "blue_iris_reflection_inside_eye",
+    "no_new_unplanned_character_or_object",
+    "framing_is_new_shot_not_enlarged_pixel_cutout"
+  ],
+  "no_image_provider_calls": true,
+  "comparison_uses_original_mothers": true,
+  "generated_separate_rig_images": false,
+  "assistant_visual_review": "pending",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false
+}
