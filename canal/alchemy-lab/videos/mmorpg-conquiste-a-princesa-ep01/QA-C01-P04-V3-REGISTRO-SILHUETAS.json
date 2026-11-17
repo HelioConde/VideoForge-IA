@@ -7,6 +7,8 @@
   "reference_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
   "board": "QA-C01-P04-V3-REGISTRO-SILHUETAS.jpg",
   "board_sha256": "d3a8f1cb57d540ae556bd4faf0dd34ef19d5ec68c5bf7daa1a98bc22e711e471",
+  "smaller_review_preview": "QA-C01-P04-V3-REGISTRO-SILHUETAS-PREVIEW.jpg",
+  "smaller_review_preview_sha256": "528e8e73d2604800842c0f550d16dc646cba36db558d2f12e8739da5094f64cf",
   "targets": [
     {
       "part": "character-aldric",
