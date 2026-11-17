@@ -2002,5 +2002,22 @@
     "official_video_created": false,
     "youtube_uploaded": false,
     "next_action": "Continue C02-P02 Kael using approved visual anchor plus SHA-verified original close reference of Kael; review character design in two new shots without rerunning legacy ROI QA."
+  },
+  "c01_p04_spear_hand_contact_20261116": {
+    "severity": "P0",
+    "source_shot": "C01-P04",
+    "source_asset": "c01-p04-imagem-inicial-v3",
+    "issue": "Os dois guardas não estão segurando nenhuma das lanças. Mãos unidas e armas flutuantes",
+    "source_visual_identity_preserved": true,
+    "source_physical_pose_rejected": true,
+    "correction_asset": "c01-p04-pegada-lancas-v4",
+    "source_original_sha256": "605ccd361ad9a867eb8b92948010fdbb7d87a031d8b3601c663d815917b1b6cc",
+    "owner_visual_review_required": true,
+    "correction_status": "requested_after_preflight",
+    "ep01_37_other_images_paused": true,
+    "official_video_blocked": true,
+    "youtube_uploaded": false,
+    "qa_preflight_run": 43990756383,
+    "qa_preflight_conclusion": "success"
   }
 }
