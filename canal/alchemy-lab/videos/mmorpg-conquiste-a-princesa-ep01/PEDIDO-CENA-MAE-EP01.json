@@ -2,10 +2,10 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C07-P03",
+  "shot_id": "C08-P01",
   "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "Plano de dois personagens no beco: Elara encapuzada estende a mão para pedir ajuda; Kael de armadura medieval vira-se surpreendido, seus olhos se cruzam. Preservar identidades de Elara disfarçada e Kael da Bíblia, dedos e mãos naturais sem extras, luz e arquitetura do beco iguais às duas tomadas anteriores. Nenhuma coroa nem texto ou UI. Arte manhwa fantasia 2D aprovada no geral.",
+  "objective": "Sobre o ombro de Kael medieval em beco Arken, avista CARRINHO DE MADEIRA canônico ao lado, mão indo em direção à lateral para empurrar; Elara encapuzada no fundo em posição coerente. Anexar também o novo mestre real do carrinho SHA 04f1ec..., presente no plano corrigido. Manter rodas, eixo, textura, escala e anatomia dos braços, sem inventar veículo diferente. Direção artística geral aprovada pelo criador.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
@@ -15,16 +15,17 @@
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 19,
-  "request_revision": 22,
+  "request_sequence": 20,
+  "request_revision": 23,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "style_approval": "visual_aesthetic_generally_approved_2026-11-17",
+  "visual_bible_cart_id": "biblia-carrinho-base-v1",
+  "visual_bible_cart_sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36",
   "next_steps_if_success": [
-    "archive_and_count",
-    "verify_hand_extension_and_eye_contact",
-    "check_C07-P01_P02_P03_continuity",
-    "continue_C08_P01_cart",
-    "do_not_use_pixel_cutouts_for_rig"
+    "archive_sha",
+    "inspect_cart_geometry_hand_position_and_elara",
+    "continue_C08-P02_action",
+    "generate_objects_as_new_independent_proxy_images_not_crops",
+    "QA_before_rig"
   ]
 }
