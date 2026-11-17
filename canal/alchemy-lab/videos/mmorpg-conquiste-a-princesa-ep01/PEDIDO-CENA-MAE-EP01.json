@@ -2,10 +2,10 @@
   "schema": "videoforge/ep01-scene-mother-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C07-P02",
+  "shot_id": "C07-P03",
   "status": "requested_visual_candidate",
   "requested_by": "owner_continue_2026-11-17",
-  "objective": "Plano baixo no beco da C07-P01 com dois perseguidores mascarados distintos e Elara encapuzada distante. Manter cada identidade de mascarado V2, roupas e capuz canônicos, sem atores duplicados, mãos/armas flutuantes, detalhes reais coerentes com estética aprovada.",
+  "objective": "Plano de dois personagens no beco: Elara encapuzada estende a mão para pedir ajuda; Kael de armadura medieval vira-se surpreendido, seus olhos se cruzam. Preservar identidades de Elara disfarçada e Kael da Bíblia, dedos e mãos naturais sem extras, luz e arquitetura do beco iguais às duas tomadas anteriores. Nenhuma coroa nem texto ou UI. Arte manhwa fantasia 2D aprovada no geral.",
   "source_reference_plan": "REFERENCIAS-CENAS-MAE-EP01.json",
   "source_camera_plan": "PLANO-CAMADAS-CAMERA-EP01.json",
   "result": "candidate_scene_mother_to_be_archived_with_sha",
@@ -15,15 +15,16 @@
   "retry_on_429": false,
   "youtube_upload": false,
   "mp4_uploaded": false,
-  "request_sequence": 18,
-  "request_revision": 21,
+  "request_sequence": 19,
+  "request_revision": 22,
   "generation_method": "scene_mother_from_sha_verified_visual_bible",
   "followup_asset_generation_method": "proxy_generated_separate_image",
-  "style_approval": "approved_overall_aesthetic_only_2026-11-17",
+  "style_approval": "visual_aesthetic_generally_approved_2026-11-17",
   "next_steps_if_success": [
-    "archive_sha_and_auto_inventory",
-    "inspect_two_distinct_masked_pursuers_and_Elara_hood",
-    "generate_next_two_shot_C07_P03",
-    "do_not_promote_to_rig_before_QA"
+    "archive_and_count",
+    "verify_hand_extension_and_eye_contact",
+    "check_C07-P01_P02_P03_continuity",
+    "continue_C08_P01_cart",
+    "do_not_use_pixel_cutouts_for_rig"
   ]
 }
