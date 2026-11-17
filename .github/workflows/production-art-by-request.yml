@@ -1,4 +1,5 @@
 name: "VideoForge - arte de referencia por pedido do canal"
+run-name: "Arte Bíblia ${{ inputs.asset || 'pedido' }} ${{ inputs.request_tag || github.run_id }}"
 on:
   workflow_dispatch:
     inputs:
@@ -18,6 +19,11 @@ on:
         required: true
         type: string
         default: character-bible
+      request_tag:
+        description: "Identificador único do lote; sem conteúdo sensível"
+        required: false
+        type: string
+        default: ""
   push:
     branches: [main]
     paths:
