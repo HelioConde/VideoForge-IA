@@ -269,14 +269,21 @@ def model_step(store, task, root, agent, payload, mode, limits):
             raise ProviderError('Live model/provider identity could not be verified')
         try:
             _validate_chain_stage(root, task, payload, agent, stage, data)
-        except ProviderError:
+        except ProviderError as validation_error:
             if call_id:
+                # Persist the structured response and the fixed validator reason BEFORE
+                # blocking the attempt. Previously only its SHA was kept, so a paid
+                # response could not be examined or revalidated without a new call.
+                # A rejected journal entry is never accepted as a replayable output.
                 store.settle(call_id, response.input_tokens, response.output_tokens,
                              float(response.cost_usd) if response.cost_usd is not None else None,
                              agent_id=agent, model=response.reported_model,
-                             response_id=getattr(response, 'response_id', None), report_sha256=fingerprint(data),
+                             response_id=getattr(response, 'response_id', None),
+                             report_sha256=fingerprint(data), response=data,
                              recipient=_stage_recipient(stage), runtime_stage=stage,
-                             request_sha256=request_sha256, instructions_sha256=digest)
+                             request_sha256=request_sha256, instructions_sha256=digest,
+                             provider_response_sha256=provider_response_sha256,
+                             validation_error=str(validation_error))
             raise
     if call_id:
         store.settle(call_id, response.input_tokens, response.output_tokens,
