@@ -265,6 +265,106 @@ class OfflineProxyContractTests(unittest.TestCase):
             finally:
                 store.close()
 
+    def test_rejected_final_is_journaled_and_reconciles_without_another_call(self):
+        from orchestrator.chain_recovery import reconcile
+        class InvalidConsolidation(FakeProxy):
+            def open(self, request, timeout):
+                response = super().open(request, timeout)
+                if "Runtime call stage: director_consolidation." in json.loads(request.data)["instructions"]:
+                    packet = json.loads(response.body)
+                    text_data = json.loads(packet["output"][0]["content"][0]["text"])
+                    text_data["findings"] = [{"status": "unsupported", "basis": "Text only",
+                                               "next_steps": []}]
+                    packet["output"][0]["content"][0]["text"] = json.dumps(text_data)
+                    return FakeHTTPResponse(packet)
+                return response
+        fake = InvalidConsolidation()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            PROXY_ENV, {"AI_MODEL": "gpt-6-astra"}
+        ), patch.dict(os.environ, {**PROXY_ENV, "AI_MODEL": "gpt-6-astra"}, clear=True), patch(
+            "orchestrator.providers.urllib.request.build_opener", return_value=fake
+        ):
+            store = Store(Path(directory) / "state.sqlite")
+            try:
+                runtime.seed(store, mode="codex_proxy", continuity_only=True)
+                limits = {"usd": 100, "tokens": 1000000, "calls": 4}
+                self.assertEqual(runtime.step(store, mode="codex_proxy", limits=limits)["status"], "needs_review")
+                blocked = runtime.step(store, mode="codex_proxy", limits=limits)
+                self.assertEqual(blocked["status"], "blocked")
+                self.assertEqual(blocked["blocked_reason"], "ProviderError")
+                self.assertEqual(len(fake.requests), 4)
+                events = runtime.report(store)["events"]
+                journal = [evt for evt in events if evt["type"] == "progress_update"
+                           and evt["content"].get("call_id")]
+                self.assertEqual(len(journal), 4)
+                last = journal[-1]["content"]
+                self.assertEqual(last["validation_status"], "rejected")
+                self.assertEqual(last["validation_error"], "Director consolidation decision schema rejected")
+                self.assertEqual(len(store.invocation_responses(blocked["task_id"])), 3)
+                preview = reconcile(store, blocked["task_id"])
+                self.assertEqual(preview["status"], "blocked")
+                self.assertEqual(preview["final_validation_reason"], last["validation_error"])
+                self.assertTrue(preview["final_output_journaled"])
+                self.assertEqual(len(runtime.report(store)["checkpoints"]), 0)
+                applied = reconcile(store, blocked["task_id"], apply=True)
+                self.assertEqual(applied, preview)
+                self.assertEqual(reconcile(store, blocked["task_id"], apply=True), applied)
+                self.assertEqual(len(runtime.report(store)["checkpoints"]), 1)
+                self.assertEqual(store.get(blocked["task_id"])["status"], "blocked")
+                self.assertEqual(len(fake.requests), 4)
+                copy = Store(Path(directory) / "reopened.sqlite")
+                try:
+                    copy.import_snapshot(store.export_snapshot())
+                    self.assertEqual(len(runtime.report(copy)["checkpoints"]), 1)
+                    self.assertEqual(copy.get(blocked["task_id"])["status"], "blocked")
+                finally:
+                    copy.close()
+            finally:
+                store.close()
+
+    def test_legacy_missing_final_body_creates_only_blocked_reconciliation(self):
+        from orchestrator.chain_recovery import reconcile
+        class InvalidConsolidation(FakeProxy):
+            def open(self, request, timeout):
+                response = super().open(request, timeout)
+                if "Runtime call stage: director_consolidation." in json.loads(request.data)["instructions"]:
+                    packet = json.loads(response.body)
+                    text_data = json.loads(packet["output"][0]["content"][0]["text"])
+                    text_data["findings"] = [{"status": "wrong", "basis": "not valid",
+                                               "next_steps": []}]
+                    packet["output"][0]["content"][0]["text"] = json.dumps(text_data)
+                    return FakeHTTPResponse(packet)
+                return response
+        fake = InvalidConsolidation()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            PROXY_ENV, {"AI_MODEL": "gpt-6-astra"}
+        ), patch.dict(os.environ, {**PROXY_ENV, "AI_MODEL": "gpt-6-astra"}, clear=True), patch(
+            "orchestrator.providers.urllib.request.build_opener", return_value=fake
+        ):
+            store = Store(Path(directory) / "legacy.sqlite")
+            try:
+                runtime.seed(store, mode="codex_proxy", continuity_only=True)
+                limits = {"usd": 100, "tokens": 1000000, "calls": 4}
+                runtime.step(store, mode="codex_proxy", limits=limits)
+                task = runtime.step(store, mode="codex_proxy", limits=limits)
+                self.assertEqual(task["status"], "blocked")
+                last = store.db.execute(
+                    "SELECT call_id FROM usage WHERE agent_id='01' ORDER BY rowid DESC LIMIT 1"
+                ).fetchone()["call_id"]
+                # Simulate the exact 2026-11-18 legacy bug: settled tokens and
+                # SHA, but no saved final response envelope.
+                for row in store.db.execute("SELECT event_id,envelope FROM events"):
+                    if json.loads(row["envelope"]).get("content", {}).get("call_id") == last:
+                        store.db.execute("DELETE FROM events WHERE event_id=?", (row["event_id"],))
+                checkpoint = reconcile(store, task["task_id"], apply=True)
+                self.assertFalse(checkpoint["final_output_journaled"])
+                self.assertEqual(checkpoint["final_validation_reason"], "unavailable_in_legacy_journal")
+                self.assertEqual(checkpoint["llm_calls_replayed"], 0)
+                self.assertFalse(checkpoint["technical_completion_approved"])
+                self.assertEqual(len(fake.requests), 4)
+            finally:
+                store.close()
+
     def test_real_chain_qa_rejection_blocks_without_replaying_calls(self):
         fake = FakeProxy(reject_qa_facet="cart_continuity")
         with tempfile.TemporaryDirectory() as directory:
