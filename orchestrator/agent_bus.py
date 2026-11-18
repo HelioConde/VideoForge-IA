@@ -55,8 +55,11 @@ def transition(task, new_status, actor):
         raise ValueError("Illegal state transition")
     if actor not in ROLES:
         raise ValueError("Unknown actor")
-    if old == "needs_review" and actor == task.get("owner"):
+    actor_role = ROLES[actor]
+    if old == "needs_review" and new_status in {"approved", "rejected"} and actor_role == task.get("owner"):
         raise ValueError("Owner cannot self-review")
+    if old == "needs_review" and new_status in {"approved", "rejected"} and task.get("reviewer") and actor_role != task["reviewer"]:
+        raise ValueError("Only assigned reviewer can decide")
     if new_status == "approved" and task.get("requires_human_approval", False):
         raise ValueError("Human approval cannot be automated")
     if new_status == "running" and task.get("blocked_by"):
