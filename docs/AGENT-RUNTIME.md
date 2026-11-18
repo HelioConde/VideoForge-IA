@@ -70,3 +70,15 @@ Issues são uma projeção opcional. `--github-state --publish-checkpoints --pub
 - Componentes anteriores reutilizados: `agent_bus.ROLES/fingerprint`, helpers de `task_leases`; `dispatch_plan`, `recovery_plan` e `state_transitions` permanecem exemplos/propostas puros, não substituem o Store transacional. Reconciliação e propostas de Issue antigas continuam separadas do outbox novo.
 
 EP01, Bíblia Visual, imagens e workflows de produção permanecem intactos. Continuidade física, anatomia, aprovação criativa e mídia final continuam dependendo de QA visual e decisão humana. Este runtime pode funcionar sem o chat aberto quando executado por CLI/Actions; nenhum serviço contínuo ou agendamento de produção foi ativado.
+
+
+## Codex proxy: verificação segura, sem inferência (18/11/2026)
+
+- A integração foi conferida com o cliente `HelioConde/codex/proxy_ai`: o formato de texto usa `POST /v1/responses` e `stream: false`; o adaptador do runtime agora declara explicitamente `stream: false`.
+- `orchestrator/proxy_preflight.py` faz **apenas** `GET /health` e `GET /v1/models`, com chave protegida, resposta limitada e redirects recusados. O relatório contém contagem de modelos e contas, nunca URLs, chaves ou prompts. **Não prova comunicação de IA**.
+- `tests/test_runtime_proxy_contract.py` testa offline o handshake do proxy e o fluxo 01→03→12→01 com respostas HTTP **falsas**, sem nenhum socket externo. O teste valida a transferência de resultados, QA e checkpoints; não representa uso real de modelo.
+- Workflow `.github/workflows/agent-proxy-preflight.yml`: execução **manual**, exige Secrets `CODEX_PROXY_BASE_URL` e `CODEX_PROXY_API_KEY` no próprio repositório VideoForge-IA; os Secrets no repositório `codex` **não são compartilhados automaticamente**. O job tem gates de IA e publicação explicitamente desligados. O workflow manual só é acionável após a definição existir na branch padrão; não fazer merge só para testá-lo.
+- Para execução local autorizada (somente GET): `python -m orchestrator.proxy_preflight --output output/agent-runtime/proxy-preflight.json`. Use somente URL HTTPS autorizada ou loopback local fixo; não envie credenciais ao repositório.
+- Se o proxy só atende em `127.0.0.1:18080` no computador do usuário, runners hospedados do GitHub não terão acesso. É necessário endpoint HTTPS autenticado autorizado ou runner auto-hospedado adequadamente protegido. **Não expor contas, cookies, tokens ou proxy sem TLS e autenticação**.
+- O serviço descrito em `HelioConde/codex/docs/08-proxy-ia-texto-codex.md` usa integração upstream não oficial: disponibilidade, permissões e cotas precisam ser confirmadas pelo responsável. Nunca presumir acesso gratuito ilimitado.
+- Próximo marco, **ainda pendente**: preflight real de rede autorizado, seguido de inferência real separadamente autorizada com teto de custo e relatório de usage. Nenhuma chamada de texto/imagem deve ser iniciada por esse preflight ou por CI de PR.
