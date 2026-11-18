@@ -372,8 +372,12 @@ def model_step(store, task, root, agent, payload, mode, limits):
 
 
 def _stage_recipient(stage):
+    # Text-only specialist findings must be durably addressed to independent
+    # reviewer 12, not silently routed back to coordinator 01.
     return {'director_dispatch': '03', 'scene_continuity_analysis': '12',
-            'independent_qa_review': '01', 'director_consolidation': '01'}.get(stage, '01')
+            'independent_qa_review': '01', 'director_consolidation': '01',
+            'roundtrip_assignment': '01', 'roundtrip_specialist': '12',
+            'roundtrip_independent_qa': '01', 'roundtrip_consolidation': '01'}.get(stage, '01')
 
 
 CHAIN_FACETS = ('escape_direction', 'relative_positions', 'pursuer_positions', 'cart_continuity',
