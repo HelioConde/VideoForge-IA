@@ -1,0 +1,228 @@
+name: "Agents - Codex proxy runtime (manual, gated)"
+
+# PR runs only offline tests. Real proxy sessions and inference are manual-only.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/agent-proxy-runtime.yml'
+      - 'orchestrator/providers.py'
+      - 'orchestrator/proxy_preflight.py'
+      - 'tests/test_runtime_proxy_contract.py'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Mock uses real proxy GET health/models; text inference is separate and may consume quota"
+        type: choice
+        options: [mock_with_proxy, codex_proxy]
+        default: mock_with_proxy
+        required: true
+      model:
+        description: "Exact model ID from GET /v1/models; required only for codex_proxy"
+        type: string
+        required: false
+        default: ''
+      confirm:
+        description: "For live text, type AUTHORIZE_TEXT_INFERENCE; default does not authorize"
+        type: string
+        required: true
+        default: NO_INFERENCE
+      budget_usd:
+        description: "Total conservative budget for one task (0.01 to 0.25 USD); text only"
+        type: string
+        required: true
+        default: '0'
+      input_usd_per_million:
+        description: "Explicit pricing for input tokens in USD per 1M; required only for text"
+        type: string
+        required: false
+        default: ''
+      output_usd_per_million:
+        description: "Explicit pricing for output tokens in USD per 1M; required only for text"
+        type: string
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  pr-offline-contract:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check proxy contract with fake HTTP only
+        run: |
+          python -m unittest discover -s tests -p 'test_runtime_proxy_contract.py' -v
+
+  manual-proxy-runtime:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    concurrency:
+      group: agent-codex-text-pilot-${{ github.repository }}
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      packages: read
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      CODEX_PROXY_BASE_URL: http://127.0.0.1:18080
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+      REQUEST_MODE: ${{ inputs.mode }}
+      REQUEST_MODEL: ${{ inputs.model }}
+      REQUEST_CONFIRM: ${{ inputs.confirm }}
+      REQUEST_BUDGET: ${{ inputs.budget_usd }}
+      REQUEST_INPUT_PRICE: ${{ inputs.input_usd_per_million }}
+      REQUEST_OUTPUT_PRICE: ${{ inputs.output_usd_per_million }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate explicit authorization and budgets before accessing proxy
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          from decimal import Decimal, InvalidOperation
+          mode=os.environ['REQUEST_MODE']
+          if mode not in ('mock_with_proxy','codex_proxy'):
+              raise SystemExit('Mode not permitted')
+          if not os.environ.get('CODEX_PROXY_API_KEY') or not os.environ.get('CODEX_PROXY_ACCOUNTS_JSON'):
+              raise SystemExit('Existing image proxy Secrets are required')
+          if mode == 'mock_with_proxy':
+              if os.environ['REQUEST_CONFIRM'] != 'NO_INFERENCE':
+                  raise SystemExit('Mock mode requires NO_INFERENCE')
+              print('Dry run: GET health/models and Python mock only. No model inference.')
+          else:
+              if os.environ['REQUEST_CONFIRM'] != 'AUTHORIZE_TEXT_INFERENCE':
+                  raise SystemExit('Live text inference was not explicitly authorized')
+              model=os.environ['REQUEST_MODEL']
+              if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{1,99}',model):
+                  raise SystemExit('A valid explicit model ID is required')
+              try:
+                  budget=Decimal(os.environ['REQUEST_BUDGET'])
+                  input_price=Decimal(os.environ['REQUEST_INPUT_PRICE'])
+                  output_price=Decimal(os.environ['REQUEST_OUTPUT_PRICE'])
+              except InvalidOperation:
+                  raise SystemExit('Explicit finite prices and budget are required')
+              if (not all(v.is_finite() for v in (budget,input_price,output_price))
+                      or not Decimal('0.01') <= budget <= Decimal('0.25')
+                      or not Decimal('0') < input_price <= Decimal('10000')
+                      or not Decimal('0') < output_price <= Decimal('10000')):
+                  raise SystemExit('Invalid price or budget bounds')
+              print('Live text expressly requested for one task (four calls maximum); no media tools.')
+          PY
+      - name: Restore authorized ephemeral session in isolated runner only
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-agent-runtime-proxy"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          try:
+              state=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+              records=state.get('records') if isinstance(state,dict) else None
+              if not isinstance(records,list) or not records or not all(
+                  isinstance(x,dict) and isinstance(x.get('token'),dict) for x in records):
+                  raise ValueError('Invalid')
+              file=Path(os.environ['RUNNER_TEMP'])/'vf-agent-runtime-proxy'/'accounts.json'
+              file.write_text(json.dumps(state),encoding='utf-8')
+              file.chmod(0o600)
+          except (TypeError,ValueError):
+              raise SystemExit('Invalid private session snapshot; no inference attempted')
+          PY
+      - name: Start the existing precompiled image proxy without inference
+        shell: bash
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-agent-runtime-proxy --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-agent-runtime-proxy:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl --noproxy '*' -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then
+              echo 'Ephemeral proxy ready.'
+              exit 0
+            fi
+            sleep 2
+          done
+          echo '::error::Ephemeral proxy readiness failed'
+          exit 2
+      - name: Authenticate and confirm model catalog with GET only
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--output "$RUNNER_TEMP/proxy-preflight.json")
+          if [[ "$REQUEST_MODE" == codex_proxy ]]; then
+            args+=(--require-model "$REQUEST_MODEL")
+          fi
+          python -m orchestrator.proxy_preflight "${args[@]}"
+      - name: Enable explicitly authorized text inference, never media
+        if: inputs.mode == 'codex_proxy'
+        run: |
+          set -euo pipefail
+          echo 'AI_ENABLED=true' >> "$GITHUB_ENV"
+          echo 'PAID_CALLS_ENABLED=true' >> "$GITHUB_ENV"
+          echo 'CODEX_PROXY_TEXT_AUTHORIZED=true' >> "$GITHUB_ENV"
+          echo "AI_MODEL=$REQUEST_MODEL" >> "$GITHUB_ENV"
+          echo "AI_INPUT_USD_PER_MILLION=$REQUEST_INPUT_PRICE" >> "$GITHUB_ENV"
+          echo "AI_OUTPUT_USD_PER_MILLION=$REQUEST_OUTPUT_PRICE" >> "$GITHUB_ENV"
+      - name: Run one audit through Agent 01, specialist and independent QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--db "$RUNNER_TEMP/vf-agent-runtime.sqlite" --output "$RUNNER_TEMP/agent-runtime-report.json" --max-tasks 1)
+          if [[ "$REQUEST_MODE" == 'mock_with_proxy' ]]; then
+            args+=(--mode mock)
+          else
+            args+=(--mode codex_proxy --budget-usd "$REQUEST_BUDGET" --max-tokens 40000 --max-calls 4)
+          fi
+          python -m orchestrator.runtime "${args[@]}"
+          python -m orchestrator.dashboard --report "$RUNNER_TEMP/agent-runtime-report.json" --output "$RUNNER_TEMP/index.html"
+      - name: Archive technical evidence (public repo, no Secrets)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-codex-runtime-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/proxy-preflight.json
+            ${{ runner.temp }}/agent-runtime-report.json
+            ${{ runner.temp }}/index.html
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Stop proxy and delete temporary authorized session
+        if: always()
+        run: |
+          docker rm -f vf-agent-runtime-proxy >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-agent-runtime-proxy"
