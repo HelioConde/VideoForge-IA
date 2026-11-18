@@ -102,6 +102,11 @@ def build_plan(root=ROOT):
             camera.update(mode='digital_establishing_reveal', start={'zoom': 1.075, 'x': 50, 'y': 50})
             light['warm_glow'] = 0.055
             limitations += ['Preserve integrated guard/spear grip; no R3/W3 pieces.']
+        elif sid == 'C01-P05':
+            camera.update(mode='digital_guard_contact_emphasis', start={'zoom': 1, 'x': 50, 'y': 80}, end={'zoom': 1.025, 'x': 50, 'y': 80})
+            limitations += ['Integrated hands and spears stay fixed relative to each other; no hand or weapon articulation.',
+                            'Empty throne differs from seated king in P04; this camera preview cannot repair source continuity.',
+                            'Small push preserves both grips and spear tips; no synthetic rack focus between flattened subjects.']
         shots.append({'id': sid, 'narrative_beat': entry['editorial_beat'], 'start_frame': start, 'duration_frames': end-start, 'fps': 30,
                       'source': source, 'approval_status': status, 'camera': camera, 'focus': focus, 'lighting': light,
                       'points_of_interest': [entry['camera']['primary_focus']],
@@ -109,7 +114,7 @@ def build_plan(root=ROOT):
                       'transitions': {'in': 'exposure_reveal' if sid == 'C01-P02' else 'cut', 'out': 'cut'},
                       'rig': {'enabled': False, 'independent_hands': False, 'required_components': needs},
                       'qa_required': ['source_sha', 'codec_frames_fps_duration', 'decode_every_frame', 'unexpected_black', 'representative_contact_sheet', 'human_anatomy_axis_continuity_review'],
-                      'limitations': limitations, 'direction_reviewed': sid in DEFAULT})
+                      'limitations': limitations, 'direction_reviewed': sid in DEFAULT + ['C01-P05']})
     if len(shots) != 40 or len(inventory) != 39 or previous_end != story['format']['duration_frames']:
         raise ValueError('Inventory/editorial/story mismatch')
     return {'schema': SCHEMA, 'technical_preview_only': True, 'official_episode_approved': False, 'youtube_upload': False,

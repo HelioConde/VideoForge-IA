@@ -1,0 +1,76 @@
+{
+  "id": "C01-P05",
+  "narrative_beat": "Punhos e lanças cruzadas",
+  "start_frame": 310,
+  "duration_frames": 50,
+  "fps": 30,
+  "source": {
+    "sha256": "6a599ab681994790b3e9b07bf573817781a448bcf9f77081bc03764448028553",
+    "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44079588294/c01-p05-scene-mother.png",
+    "dimensions": [
+      941,
+      1672
+    ],
+    "human_visual_approval": false,
+    "source_status": "archived_candidate_not_an_approved_scene"
+  },
+  "approval_status": "pending_human_review",
+  "camera": {
+    "mode": "digital_guard_contact_emphasis",
+    "start": {
+      "zoom": 1,
+      "x": 50,
+      "y": 80
+    },
+    "end": {
+      "zoom": 1.025,
+      "x": 50,
+      "y": 80
+    },
+    "dolly": 0,
+    "true_parallax": false
+  },
+  "focus": {
+    "mode": "original_painted_focus",
+    "blur_start_px": 0,
+    "blur_end_px": 0
+  },
+  "lighting": {
+    "exposure_start": 1,
+    "exposure_end": 1,
+    "warm_glow": 0
+  },
+  "points_of_interest": [
+    "punhos dos guardas na base das lanças"
+  ],
+  "allowed_motion": [
+    "digital_camera",
+    "global_light",
+    "global_focus"
+  ],
+  "transitions": {
+    "in": "cut",
+    "out": "cut"
+  },
+  "rig": {
+    "enabled": false,
+    "independent_hands": false,
+    "required_components": []
+  },
+  "qa_required": [
+    "source_sha",
+    "codec_frames_fps_duration",
+    "decode_every_frame",
+    "unexpected_black",
+    "representative_contact_sheet",
+    "human_anatomy_axis_continuity_review"
+  ],
+  "limitations": [
+    "No approved same-shot rig selected; all characters and contacts remain integrated.",
+    "Anatomy, continuity and cinematic approval require human review.",
+    "Integrated hands and spears stay fixed relative to each other; no hand or weapon articulation.",
+    "Empty throne differs from seated king in P04; this camera preview cannot repair source continuity.",
+    "Small push preserves both grips and spear tips; no synthetic rack focus between flattened subjects."
+  ],
+  "direction_reviewed": true
+}

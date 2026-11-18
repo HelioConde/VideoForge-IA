@@ -54,6 +54,17 @@ class CameraBatchTests(unittest.TestCase):
     def test_black_allowance_only_opening_and_sword_reveal(self):
         self.assertEqual(batch.black_ranges({'shots': self.plan['shots'][:4]}), [(0, 60), (60, 68)])
 
+    def test_p05_preserves_integrated_grip_and_closes_c01_at_12_seconds(self):
+        shot = self.plan['shots'][4]
+        self.assertEqual(shot['id'], 'C01-P05')
+        self.assertEqual(shot['start_frame'] + shot['duration_frames'], 360)
+        self.assertEqual(sum(s['duration_frames'] for s in self.plan['shots'][:5]), 360)
+        self.assertEqual(shot['camera']['end']['zoom'], 1.025)
+        self.assertFalse(shot['rig']['enabled'])
+        self.assertFalse(shot['rig']['independent_hands'])
+        self.assertEqual(shot['approval_status'], 'pending_human_review')
+        self.assertTrue(any('Empty throne' in warning for warning in shot['limitations']))
+
     def test_grown_historical_manifests_read_but_remain_bounded(self):
         from videoforge.cinematic_direction import load_active_remake_plan, _read
         from videoforge.production_art import read_plan
