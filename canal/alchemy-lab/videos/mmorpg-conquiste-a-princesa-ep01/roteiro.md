@@ -44,17 +44,22 @@ Kael, um jogador de MMORPG de 23 anos, desperta como aventureiro de nível 1 no 
 - **Bolsa vazia (58s–64s):** mercado medieval com bancas e figurantes em layers independentes; Kael abre bolsa com duas mãos, o interior deve estar reconstruído. KAEL (pensamento): Nível um, sem dinheiro e sem mapa...
 - **Sobreviva ao primeiro dia (64s–69s):** o sistema informa missão secundária, Kael reage com ironia silenciosa, sem saltar a imagem ou fazer zoom substituindo movimento. HUD: MISSÃO SECUNDÁRIA — SOBREVIVA AO PRIMEIRO DIA
 
-### C07 — Desconhecida (69s–82s)
+### C07 — Desconhecida (69s–82s) — revisão de continuidade V2
 
-- **Jovem corre no beco (69s–73s):** Elara disfarçada sob capuz azul aproxima-se pelo beco, olha para trás; cabelo e capa devem ser separados, mesma identidade posterior. SFX: passos apressados
-- **Dois perseguidores (73s–78s):** mascarados emergem de trás do muro, freiam à curva; corrida com perna e braço reais e contatos alternados sem deslizar. ELARA: Não me entregue a eles!
-- **Pedido a Kael (78s–82s):** Elara para junto a Kael; estende mão pedindo ajuda, não é apaixonada; ele olha para o carrinho atrás deles. KAEL: Fique atrás de mim.
+- **C07-P01 (69s–72s):** Elara corre sozinha, da esquerda para a direita da tela, olhando para trás. Perseguidores não aparecem nessa imagem.
+- **C07-P02 (72s–75s):** corte para EXATAMENTE dois mascarados correndo atrás dela no mesmo sentido, sem Elara no quadro; ficam na origem da fuga, à esquerda do percurso.
+- **C07-P03 (75s–78s):** novo plano de ligação: Elara chega a Kael no beco; à direita há um carrinho estacionado, os soldados ainda estão atrás, fora de quadro.
+- **C07-P04 (78s–82s):** tomada separada de conversa: Elara pede ajuda; Kael responde 'Fique atrás de mim'. Pode reaproveitar C07-P03 antiga apenas como candidata, pendente de QA.
 
-### C08 — Carrinho (82s–98s)
+### C08 — Carrinho e barricada (82s–98s) — revisão de continuidade V2
 
-- **Percebe o carrinho (82s–87s):** carrinho de madeira nas proximidades da banca; Kael firma os pés e alcança a lateral com braço articulado. KAEL: Não sei lutar... mas sei atrapalhar!
-- **Empurra e gira rodas (87s–93s):** carrinho inteiro como prop com partes independentes atravessa beco, rodas giram vinculadas ao deslocamento e sombra move; Kael empurra com contato persistente. SFX: madeira e pedra
-- **Bloqueia passagem (93s–98s):** carrinho atravessado obriga mascarados a pararem; Elara foge pelo corredor lateral; câmera completamente parada durante rig. KAEL: Corra!
+- **C08-P01 (82s–85s):** Kael percebe o carrinho encostado na parede direita do mesmo beco; Elara está do lado seguro, sem perseguidores tocando o objeto. KAEL: Não sei lutar... mas sei atrapalhar!
+- **C08-P02 (85s–89,33s):** Kael SOZINHO começa a empurrar e girar o mesmo carrinho para atravessar o beco. Nenhum soldado no enquadramento. SFX: rodas no chão molhado.
+- **C08-P03 (89,33s–93s):** carrinho atravessado torna-se barricada; dois mascarados precisam parar do lado esquerdo; Kael fica do lado direito. Não podem parecer ajudá-lo.
+- **C08-P04 (93s–96s):** Elara foge pela passagem lateral direita, com o carrinho bloqueando os perseguidores no fundo. KAEL: Corra!
+- **C08-P05 (96s–98s):** Kael alcança Elara na esquina segura, preparando a conversa de gratidão de C09. Sem teletransporte ou carrinho desaparecendo.
+
+> As 42 tomadas da revisão mantêm os 163 segundos originais. Até existirem as sete novas imagens-mãe V2, o MP4 antigo de 40 tomadas é apenas histórico, não versão corrigida. Fonte de verdade desta mudança: [CONTINUIDADE-C07-C08-V2.json](CONTINUIDADE-C07-C08-V2.json).
 
 ### C09 — Separação (98s–108s)
 
