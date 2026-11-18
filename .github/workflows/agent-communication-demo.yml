@@ -1,0 +1,71 @@
+name: "Agents - comunicacao 01 03 12 (teste seguro)"
+on:
+  workflow_dispatch:
+    inputs:
+      publish_issue:
+        description: "Criar GitHub Issue e comentários demonstrativos (sem IA)"
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: agent-communication-demo-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  demo:
+    if: github.repository == 'HelioConde/VideoForge-IA'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Simular protocolo deterministico, sem modelo nem proxy
+        run: |
+          python -m unittest discover -s tests -p 'test_agent_communication.py' -v
+          python orchestrator/agent_communication.py --output /tmp/agent-messages.json
+      - name: Criar issue e registrar troca 01 -> 03 -> 12 -> 01
+        if: inputs.publish_issue == true
+        uses: actions/github-script@v7
+        env:
+          MESSAGE_PATH: /tmp/agent-messages.json
+        with:
+          script: |
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync(process.env.MESSAGE_PATH, 'utf8'));
+            if (!data.simulation || !data.no_proxy_calls || !data.no_publication || data.events.length !== 3) {
+              core.setFailed('Safety protocol mismatch'); return;
+            }
+            const marker = '<!-- videoforge-agent-demo:' + context.runId + ' -->';
+            const title = '[DEMO] Comunicação 01/03/12 - run ' + context.runId;
+            const {data: existing} = await github.rest.issues.listForRepo({
+              ...context.repo, state: 'all', per_page: 100
+            });
+            let issue = existing.find(i => !i.pull_request && i.body?.includes(marker));
+            if (!issue) {
+              const created = await github.rest.issues.create({
+                ...context.repo, title,
+                body: marker + '\nTeste de mensagens simuladas; nenhuma IA executada, nenhuma imagem gerada e nenhuma aprovação do EP01.\nRun: ' + context.runId
+              });
+              issue = created.data;
+            }
+            const {data: comments} = await github.rest.issues.listComments({
+              ...context.repo, issue_number: issue.number, per_page: 100
+            });
+            for (const e of data.events) {
+              const token = '<!-- event:' + e.event_id + ' -->';
+              if (comments.some(c => c.body?.includes(token))) continue;
+              await github.rest.issues.createComment({
+                ...context.repo, issue_number: issue.number,
+                body: token + '\n**Agent ' + e.from + ' → Agent ' + e.to +
+                  '** | ' + e.kind + '\n\n' + e.message +
+                  '\n\n**Simulação**, não uma resposta real de um modelo.'
+              });
+            }
+            core.info('Issue: ' + issue.html_url);
+      - name: Arquivar mensagens e checkpoint da simulacao
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-communication-demo-${{ github.run_id }}
+          path: /tmp/agent-messages.json
+          retention-days: 14
