@@ -180,7 +180,11 @@ def generate(shot_id, url, root=ROOT):
     path.write_bytes(binary)
     sha = hashlib.sha256(binary).hexdigest()
     path.with_suffix(".production.json").write_text(json.dumps({
-        "schema": "videoforge/continuity-candidate/v2", "shot_id": shot_id,
+        "schema": "videoforge/continuity-candidate/v2",
+        "channel": "alchemy-lab", "video_id": "mmorpg-conquiste-a-princesa-ep01",
+        "asset_id": path.stem, "candidate_scene_shot_id": shot_id,
+        "source_originals_sha_verified": [{"id": x["asset_id"], "sha256": x["sha256"]} for x in refs],
+        "shot_id": shot_id,
         "sha256": sha, "source_references": refs,
         "human_visual_approval": False, "rig_ready": False,
         "official_mp4": False, "youtube_uploaded": False,
