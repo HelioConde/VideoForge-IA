@@ -1,5 +1,7 @@
 # Contratos do orquestrador
 
+**18/11/2026 — runtime transacional:** [guia de execução](../docs/AGENT-RUNTIME.md). `runtime.py`/`runtime_store.py` executam auditorias somente leitura com mensagens persistentes, leases, QA e checkpoints; `github_state.py` implementa CAS remoto. Os contratos puros e a fila original abaixo continuam preservados. Estado `completed` do runtime significa auditoria técnica entregue, nunca aprovação visual da tarefa original. Provedores reais permanecem desligados; nenhuma produção audiovisual automática foi habilitada.
+
 `tasks.json` é a fila declarativa inicial, não um executor ativo. `dependencies.json` declara gates; `checkpoints.json` registra estado de migração. Integração com GitHub Actions exige implementação e testes separados.
 
 ## Estados

@@ -1,3 +1,5 @@
+**Atualização 18/11/2026:** o [runtime](../docs/AGENT-RUNTIME.md) carrega integralmente os 12 AGENT.md e oferece execução de auditoria, roteamento e revisão persistentes. Mock não é IA; capacidades de mídia permanecem bloqueadas. Histórico arquitetural abaixo preservado.
+
 # Estúdio multiagente VideoForge-IA
 
 Esta arquitetura é **documental e de contratos**, não cria por si só 12 processos de IA em execução. O orquestrador/workflows existentes devem ser integrados e testados antes de automatizar dispatch paralelo.
