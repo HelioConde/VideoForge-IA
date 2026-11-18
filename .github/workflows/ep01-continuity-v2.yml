@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json'
+      - '.github/workflows/ep01-continuity-v2.yml'
   pull_request:
     paths:
       - 'videoforge/ep01_continuity_v2.py'
@@ -38,6 +39,7 @@ jobs:
     timeout-minutes: 360
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -58,6 +60,7 @@ jobs:
     timeout-minutes: 35
     env:
       SHOT_ID: ${{ inputs.shot_id }}
+      PYTHONPATH: ${{ github.workspace }}
       CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
       CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
       CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
