@@ -32,7 +32,11 @@ class Agent01PingTests(unittest.TestCase):
                              "message": "Teste recebido.", "human_visual_approval": False}),
             provider="codex_proxy", model="gpt-6-astra", reported_model="gpt-6-astra",
             input_tokens=10, output_tokens=11, simulated=False, cost_usd=Decimal("0.0001"))
-        with patch("orchestrator.agent_ping.make_provider", return_value=provider):
+        # Offline fake-provider test models a *first* invocation, even when
+        # CI itself was re-run. Real workflow replays remain forbidden.
+        with patch.dict(os.environ, {"GITHUB_RUN_ATTEMPT": "1"}), patch(
+            "orchestrator.agent_ping.make_provider", return_value=provider
+        ):
             result = agent_01_ping(mode="codex_proxy", budget_usd="0.05")
         self.assertTrue(result["llm_executed"])
         self.assertEqual(result["reply"]["message"], "Teste recebido.")
