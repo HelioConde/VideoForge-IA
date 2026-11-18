@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 148,
+  "total_arquivadas": 149,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -5259,6 +5259,49 @@
         {
           "id": "biblia-mascarado-2-base-v2",
           "sha256": "3f632cf2fd38ee4a83ab8f8de67413af897cade13b871b8a577af174c5260817",
+          "path": null
+        },
+        {
+          "id": "biblia-beco-base-v1",
+          "sha256": "83c10082fb1a808a3f118625d9aca8bcf1e22707d9af0b91d92440af61436939",
+          "path": null
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "não_informado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-continuity-v2-mother:44264707976:c07-p03-continuity-v2-scene-mother.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c07-p03-continuity-v2-scene-mother",
+      "shot": "C07-P03",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-continuity-v2-mother",
+      "github_run_id": 44264707976,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v2-mother/44264707976/c07-p03-continuity-v2-scene-mother.png",
+      "sha256": "5e7e890298bd692fc0aa3fa3c1473ce0d36fcefb3bb94c2be3cc9129f9ad2f9c",
+      "bytes": 2924800,
+      "width": 940,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "biblia-elara-encapuzada-v1",
+          "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31",
+          "path": null
+        },
+        {
+          "id": "biblia-kael-medieval-base-v1",
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": null
+        },
+        {
+          "id": "biblia-carrinho-base-v1",
+          "sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36",
           "path": null
         },
         {
