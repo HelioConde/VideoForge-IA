@@ -36,6 +36,8 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_issue_reconcile.py' -v
           python orchestrator/issue_reconcile.py --queue orchestrator/tasks.json --snapshot /tmp/agent-issues-snapshot.json --output /tmp/agent-issue-inbox.json --limit 10
+          python -m unittest discover -s tests -p 'test_issue_dispatch_preview.py' -v
+          python orchestrator/issue_dispatch_preview.py --queue orchestrator/tasks.json --snapshot /tmp/agent-issues-snapshot.json --output /tmp/agent-issue-dispatch.json --limit 2
       - name: Archive read-only inbox
         if: always()
         uses: actions/upload-artifact@v4
@@ -43,5 +45,6 @@ jobs:
           name: agent-issue-inbox-${{ github.run_id }}
           path: |
             /tmp/agent-issue-inbox.json
+            /tmp/agent-issue-dispatch.json
           if-no-files-found: ignore
           retention-days: 7
