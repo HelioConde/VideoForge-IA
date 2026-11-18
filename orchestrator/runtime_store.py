@@ -325,7 +325,8 @@ class Store:
                 return False
             content = event['content']
             response = content.get('response')
-            if (content.get('attempt_id') != usage['attempt_id']
+            if (content.get('validation_status') == 'rejected'
+                    or content.get('attempt_id') != usage['attempt_id']
                     or content.get('agent_id') != usage['agent_id']
                     or event.get('sender') != usage['agent_id']
                     or content.get('recipient') != event.get('recipient')
@@ -428,7 +429,8 @@ class Store:
     def settle(self, call_id, input_tokens=None, output_tokens=None, actual_usd=None,
                agent_id=None, model=None, response_id=None, report_sha256=None,
                response=None, recipient=None, runtime_stage=None, request_sha256=None,
-               instructions_sha256=None, provider_response_sha256=None, now=None):
+               instructions_sha256=None, provider_response_sha256=None,
+               validation_error=None, now=None):
         now = int(time.time()) if now is None else now
         for value in (input_tokens, output_tokens):
             if value is not None and (type(value) is not int or value < 0):
@@ -444,6 +446,11 @@ class Store:
         if report_sha256 is not None and (not isinstance(report_sha256, str) or len(report_sha256) != 64
                                           or any(c not in '0123456789abcdef' for c in report_sha256)):
             raise ValueError('Report provenance must be a lowercase SHA-256 digest')
+        if validation_error is not None:
+            if (response is None or not isinstance(validation_error, str)
+                    or not 1 <= len(validation_error) <= 160
+                    or any(c in validation_error for c in '\\r\\n')):
+                raise ValueError('Invalid model response rejection code')
         if response is not None:
             if not isinstance(response, dict) or agent_id not in ROLES or not model:
                 raise ValueError('Durable model response requires a structured object, agent ID and model')
@@ -494,7 +501,10 @@ class Store:
                            'request_sha256': request_sha256,
                            'instructions_sha256': instructions_sha256,
                            'provider_response_sha256': provider_response_sha256,
-                           'report_sha256': report_sha256, 'response': response}
+                           'report_sha256': report_sha256, 'response': response,
+                           'validation_status': 'rejected' if validation_error else 'accepted'}
+                if validation_error:
+                    content['validation_error'] = validation_error
                 self._event(task, sender, target, 'progress_update', content, call_id, now)
 
     def invocation_responses(self, task_id, attempt_ids=None):
@@ -508,6 +518,7 @@ class Store:
             content = event.get('content', {})
             if (event.get('task_id') == task_id and event['type'] == 'progress_update'
                     and isinstance(content, dict) and 'call_id' in content and 'response' in content
+                    and content.get('validation_status') != 'rejected'
                     and (allowed_attempts is None or content.get('attempt_id') in allowed_attempts)):
                 responses.append(event)
         return responses
