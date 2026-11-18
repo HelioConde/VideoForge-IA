@@ -1,8 +1,18 @@
 name: "Agents - Codex proxy preflight (health/models only)"
 
-# Manual only after successful one-time connectivity check (run #44308778166).
+# One read-only authenticated GET check after this workflow is merged into main.
+# Subsequent runs are manual, unless this workflow file itself changes again.
 # No text/image inference, publication, admin APIs or OAuth refresh.
 on:
+  pull_request:
+    paths:
+      - '.github/workflows/agent-proxy-preflight.yml'
+      - 'orchestrator/proxy_preflight.py'
+      - 'tests/test_astra_model_selection.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/agent-proxy-preflight.yml'
   workflow_dispatch:
 
 permissions:
@@ -14,7 +24,31 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  pr-offline-verify:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Testar GET-only, selecao Astra e ausencia de rede real
+        run: |
+          python -m unittest discover -s tests -p 'test_astra_model_selection.py' -v
+          python -m unittest discover -s tests -p 'test_agent_01_ping.py' -v
   connectivity-only:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -102,10 +136,32 @@ jobs:
           done
           echo '::error::Proxy temporario nao respondeu readiness.'
           exit 2
-      - name: Verificar GET health e models autenticados (nunca gera IA)
+      - name: Verificar GET health e modelo Astra autenticado (nunca gera IA)
         shell: bash
         run: |
-          python -m orchestrator.proxy_preflight --output "$RUNNER_TEMP/proxy-preflight.json" --list-models
+          set -euo pipefail
+          python -m orchestrator.proxy_preflight --output "$RUNNER_TEMP/proxy-preflight.json" \
+            --prefer-model gpt-6.2-astra --fallback-model gpt-6-astra
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          report = json.loads((Path(os.environ['RUNNER_TEMP']) / 'proxy-preflight.json').read_text(encoding='utf-8'))
+          model = report.get('selected_model')
+          reason = report.get('model_selection_reason')
+          assert model in ('gpt-6.2-astra', 'gpt-6-astra')
+          assert (model, reason) in (
+              ('gpt-6.2-astra', 'preferred_catalog_available'),
+              ('gpt-6-astra', 'fallback_primary_absent_from_catalog'),
+          )
+          assert report['authenticated'] is True
+          assert report['inference_requests'] == 0
+          assert report['image_requests'] == 0
+          assert report['youtube_publications'] == 0
+          assert report['paid_inference_authorized'] is False
+          assert report['agent_communication_proven'] is False
+          print('Autenticacao e modelo Astra verificados por GET: ' + model)
+          print('Nenhuma chamada de geracao executada; comunicacao real ainda pendente.')
+          PY
       - name: Smoke test Agent 01 and agent bus on the authenticated proxy runner (NO inference)
         shell: bash
         run: |
