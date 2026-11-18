@@ -144,9 +144,11 @@ class OfflineProxyContractTests(unittest.TestCase):
                 if request.full_url.endswith("/health"):
                     return FakeHTTPResponse({"status": "ok", "accounts": 1})
                 return FakeHTTPResponse({"data": [{"id": "valid"}, {"id": "bad\\nkey"}]})
-        with self.assertRaises(PreflightError):
-            probe("http://127.0.0.1:18080", "synthetic-unit-test-key-never-valid",
-                  opener=FakeBadCatalog(), list_models=True)
+        result = probe("http://127.0.0.1:18080", "synthetic-unit-test-key-never-valid",
+                       opener=FakeBadCatalog(), list_models=True)
+        self.assertEqual(result["model_ids"], ["valid"])
+        self.assertEqual(result["model_ids_omitted"], 1)
+        self.assertNotIn("bad\\nkey", json.dumps(result))
 
     def test_preflight_rejects_insecure_endpoint_and_sanitizes_errors(self):
         for invalid in ("http://external.example:18080", "http://localhost:18080",
