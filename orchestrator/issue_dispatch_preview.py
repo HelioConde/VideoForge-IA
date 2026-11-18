@@ -7,7 +7,9 @@ import argparse
 import json
 from pathlib import Path
 from issue_reconcile import reconcile
-from multi_task_pilot import SUPPORTED, run as execute
+from multi_task_pilot import SUPPORTED, art_audit, ART_ID, CONTINUITY_ID
+from autonomous_pilot import run as continuity_audit
+from dispatch_plan import plan
 
 def run(queue_path, snapshot_path, root, limit=2):
     if not 1 <= limit <= 2:
@@ -18,12 +20,24 @@ def run(queue_path, snapshot_path, root, limit=2):
     eligible = {item["task_id"] for item in inbox["already_present"]
                 if item["issue"]["state"] == "open"}
     # Existing Issues are an additional gate, not an instruction source.
-    # The canonical repository queue determines owner, dependencies and worker.
-    output = execute(queue_path, root, limit)
-    dispatched = [item for item in output["completed"] if item["task_id"] in eligible]
-    skipped = [item["task_id"] for item in output["completed"] if item["task_id"] not in eligible]
-    # Note: execute() is read-only and may audit unsupported-by-Issue tasks in
-    # memory before filtering. Never claim those were dispatched from Issues.
+    # Only execute tasks that are both open in Issues and ready in the queue.
+    candidates = plan(queue_path)["candidates"]
+    dispatched = []
+    skipped = []
+    for candidate in candidates:
+        task_id = candidate["task_id"]
+        if task_id not in SUPPORTED:
+            continue
+        if task_id not in eligible:
+            skipped.append(task_id)
+            continue
+        if len(dispatched) >= limit:
+            skipped.append(task_id)
+            continue
+        report = (continuity_audit(queue_path, root) if task_id == CONTINUITY_ID
+                  else art_audit(queue_path, root))
+        dispatched.append({"task_id": task_id, "agent_id": SUPPORTED[task_id],
+                           "result": report, "qa_passed": report["qa_12"]["passed"]})
     return {"schema_version": 1, "mode": "read_only_issue_gated_preview",
             "issue_dispatched": dispatched, "not_issue_eligible": skipped,
             "registered_workers": SUPPORTED, "issue_count": len(eligible),
