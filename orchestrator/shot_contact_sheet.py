@@ -33,9 +33,9 @@ SOURCES = [
     },
     {
         "shot_id": "C07-P04",
-        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v2-mother/44264707976/c07-p03-continuity-v2-scene-mother.png",
-        "sha256": "5e7e890298bd692fc0aa3fa3c1473ce0d36fcefb3bb94c2be3cc9129f9ad2f9c",
-        "type": "reuse_from_C07-P03"
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44095398312/c07-p03-scene-mother.png",
+        "sha256": "9f00c738d5abf9c9b3fc7314ffbb31a56b3d051b36ec753268f97bc5ce0a433e",
+        "type": "reuse_archived_original_C07-P03"
     },
     {
         "shot_id": "C08-P01",
@@ -85,9 +85,17 @@ def validate(root=ROOT) -> dict:
     shots = manifest["shots"]
     if [shot["id"] for shot in shots] != [row["shot_id"] for row in SOURCES]:
         raise ValueError("Pinned C07/C08 shot order no longer matches the contact sheet")
+    # Match the EXACT sources used by the official 42-shot Remotion preview.
+    # For C07-P04 this is the *original* C07-P03, not its V2 replacement.
+    from videoforge.ep01_camera_batch import build_plan
+    rendered = {shot["id"]: shot for shot in build_plan(root, "continuity-v2")["shots"]}
     rows = []
     prev = None
     for shot, row in zip(shots, SOURCES):
+        planned = rendered[row["shot_id"]]["source"]
+        if (not planned or planned["file"] != row["file"]
+                or planned["sha256"] != row["sha256"]):
+            raise ValueError(f"Visual QA source differs from Remotion plan: {row['shot_id']}")
         candidate = (root / row["file"]).resolve(strict=True)
         if not candidate.is_relative_to(root.resolve()):
             raise ValueError("Source outside repository")
@@ -112,8 +120,9 @@ def validate(root=ROOT) -> dict:
             "scene_mother_approved": False,
             "visual_review_status": "pending_human_or_independent_visual_qa",
         })
-    if rows[3]["asset_path"] != rows[2]["asset_path"]:
-        raise ValueError("C07-P04 must explicitly record its reused C07-P03 reference")
+    if (rows[3]["asset_path"] == rows[2]["asset_path"]
+            or rows[3]["asset_kind"] != "reuse_archived_original_C07-P03"):
+        raise ValueError("C07-P04 must reuse ORIGINAL C07-P03, distinct from C07-P03 V2")
     return {
         "schema_version": 1,
         "kind": "ep01_c07_c08_archived_image_contact_sheet",
@@ -121,6 +130,7 @@ def validate(root=ROOT) -> dict:
         "shots": rows,
         "unique_source_images": len({x["sha256"] for x in rows}),
         "reused_shots": ["C07-P04"],
+        "reuse_details": {"C07-P04": "archived ORIGINAL C07-P03; distinct from C07-P03 V2"},
         "contains_rendered_mp4_frames": False,
         "visual_qa_approved": False,
         "new_ai_requests": 0,
@@ -144,7 +154,7 @@ def render_sheet(root: Path, output_dir: Path, inventory: dict) -> None:
         font = ImageFont.load_default()
     for index, row in enumerate(inventory["shots"]):
         shot_id = row["shot_id"]
-        label = shot_id + (" [REUSO C07-P03]" if shot_id == "C07-P04" else "")
+        label = shot_id + (" [REUSO ORIGINAL]" if shot_id == "C07-P04" else "")
         src = (root / row["asset_path"]).resolve(strict=True)
         tile = Image.new("RGB", (width, tile_h), "#12161d")
         with Image.open(src) as im:
