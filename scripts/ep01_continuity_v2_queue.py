@@ -61,6 +61,8 @@ def main():
             raise RuntimeError(f"NO_ARCHIVE_AFTER_ACTION {sid} {rid}")
         print("ARCHIVED_PENDING_CREATOR_QA",sid,rid,flush=True)
     print("C07_C08_CONTINUITY_V2_SEVEN_MOTHERS_ARCHIVED_REVIEW_REQUIRED",flush=True)
+    command("gh", "workflow", "run", "ep01-continuity-v2-review.yml", "-R", REPO, "--ref", "main")
+    print("CONTINUITY_V2_42_SHOT_REVIEW_MP4_DISPATCHED",flush=True)
 
 if __name__ == "__main__":
     try:
