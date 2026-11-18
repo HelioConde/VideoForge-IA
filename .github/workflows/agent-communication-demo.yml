@@ -6,6 +6,7 @@ on:
       - 'agents/**'
       - 'tests/test_agent_*.py'
       - 'tests/test_queue_audit.py'
+      - 'tests/test_dispatch_plan.py'
       - '.github/workflows/agent-communication-demo.yml'
   workflow_dispatch:
     inputs:
@@ -32,6 +33,8 @@ jobs:
           python -m unittest discover -s tests -p 'test_agent_communication.py' -v
           python -m unittest discover -s tests -p 'test_agent_bus.py' -v
           python -m unittest discover -s tests -p 'test_queue_audit.py' -v
+          python -m unittest discover -s tests -p 'test_dispatch_plan.py' -v
+          python orchestrator/dispatch_plan.py --output /tmp/agent-dispatch-plan.json
           python orchestrator/queue_audit.py --output /tmp/agent-queue-checkpoint.json
           python orchestrator/agent_communication.py --output /tmp/agent-messages.json
       - name: Criar issue e registrar troca 01 -> 03 -> 12 -> 01
@@ -80,4 +83,5 @@ jobs:
           path: |
             /tmp/agent-messages.json
             /tmp/agent-queue-checkpoint.json
+            /tmp/agent-dispatch-plan.json
           retention-days: 14
