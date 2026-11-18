@@ -100,3 +100,12 @@ Novo workflow: `.github/workflows/agent-proxy-runtime.yml`. Diferentemente de `.
 A integração de rede `codex_proxy` agora desativa HTTP_PROXY/HTTPS_PROXY apenas para `127.0.0.1:18080`, impedindo que a autenticação de loopback seja desviada ao proxy da rede. O `proxy_preflight` aceita `--require-model` e verifica a existência do modelo somente por GET.
 
 **Estado:** o GET autenticado foi comprovado na [execução #44308778166](https://github.com/HelioConde/VideoForge-IA/actions/runs/44308778166) com 1 conta e 10 IDs de modelo. Isso **não valida o POST /v1/responses**. Nenhuma inferência real foi executada por este desenvolvimento. Um teste com POST necessita autorização específica de chamadas/cota e valor de orçamento.
+
+
+## Verificação integrada do Agente 01 no runner (18/11/2026)
+
+[Execução GitHub Actions #44315783184](https://github.com/HelioConde/VideoForge-IA/actions/runs/44315783184) **aprovada**. O diagnóstico usou o mesmo proxy efêmero das imagens, com Secrets já cadastrados, `/health/live`, `GET /health` e `GET /v1/models`. O servidor confirmou **uma conta autenticada e 14 identificadores no catálogo** nesse instante.
+
+No mesmo runner, `orchestrator.agent_ping --mode mock` produziu um ack sintético do Agente 01; o runtime `--mode mock` concluiu duas auditorias de metadados com **12 mensagens 01→03/04→12→01 e dois checkpoints**; a reabertura do SQLite preservou o SHA-256 de estado (idempotência). Resultado declarado: `inference_requests=0`, `image_requests=0`, `youtube_publications=0`. Artifact `proxy-preflight-44315783184` inclui relatórios sanitizados.
+
+**Escopo do sucesso:** conectividade real do proxy + execução **simulada** do Agente 01 e barramento. **Não foi enviado POST /v1/responses, não houve resposta gerada por IA nem validação de disponibilidade de inferência de texto.** O gatilho temporário de PR usado no diagnóstico foi retirado no commit `faf89dca`, restaurando o workflow de preflight para manual-only. O próximo passo exige permissão explícita para consumo de cota e uma única chamada com modelo/preços/orçamento configurados, por meio de `codex_proxy_ping`, sem merge automático ou publicação.
