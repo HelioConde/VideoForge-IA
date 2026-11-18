@@ -114,6 +114,23 @@ class OfflineProxyContractTests(unittest.TestCase):
             probe("http://127.0.0.1:18080", "synthetic-unit-test-key-never-valid", opener=FailedGet())
         self.assertNotIn("secret-message", str(caught.exception))
 
+    def test_ephemeral_proxy_bypasses_runner_http_proxy(self):
+        import urllib.request
+        from orchestrator.providers import GenerationRequest, _NoRedirectHandler
+        fake = FakeProxy()
+        with patch.dict(os.environ, {**PROXY_ENV, "HTTP_PROXY": "http://untrusted.proxy.invalid:8181",
+                                     "HTTPS_PROXY": "http://untrusted.proxy.invalid:8181"}, clear=True):
+            with patch("orchestrator.providers.urllib.request.build_opener", return_value=fake) as factory:
+                provider = from_environment("codex_proxy")
+                response = provider.generate_response(GenerationRequest(
+                    agent_id="01", instructions="Director instructions", input="health contract",
+                    input_token_limit=2048, max_output_tokens=100))
+        self.assertEqual(len(fake.requests), 1)
+        self.assertEqual(response.provider, "codex_proxy")
+        handlers = factory.call_args.args
+        self.assertTrue(any(isinstance(x, urllib.request.ProxyHandler) and x.proxies == {} for x in handlers))
+        self.assertTrue(any(isinstance(x, _NoRedirectHandler) for x in handlers))
+
     def test_agent_01_03_12_01_proxy_contract_without_inference(self):
         fake = FakeProxy()
         with tempfile.TemporaryDirectory() as directory:
