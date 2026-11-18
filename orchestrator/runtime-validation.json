@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "implementation_commit": "8dc547951df9c59cded628a700ad95c1e9c1b424",
+  "pr": "https://github.com/HelioConde/VideoForge-IA/pull/71",
+  "merged": false,
+  "runtime_workflow_run": 44296219366,
+  "artifact_id": 14423581894,
+  "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/44296219366/artifacts/14423581894",
+  "new_tests_linux_passed": 45,
+  "legacy_orchestrator_tests_local_passed": 37,
+  "local_symlink_test_skipped": true,
+  "linux_symlink_test_passed": true,
+  "remote_backend": "github_contents_sha_cas",
+  "remote_state_branch": "state/multi-agent-runtime",
+  "remote_independent_process_reopen_identical": true,
+  "state_sha256_before_cas_probe": "3ec52aae2a5513e1f74281d87b47f74cc520f6b5652f5f21fe05869492bc4b2b",
+  "remote_completed_technical_audits": 2,
+  "remote_events": 12,
+  "checkpoint_shas": [
+    "8ed6f9d32f8ad34c3da0e0039fcb6be5e955f4fa7b2e04670dc102f62c20b6f9",
+    "a5a93915bba6c15194ad4b3d89cac35aec4e949567a93149bff5a7fa52958c3f"
+  ],
+  "real_cas_probe": {
+    "real_github_cas_conflict_rejected": true,
+    "winner_blob_sha": "940b6c0f9f0904e43b3e0f2be1840ff130e2c9bb",
+    "checkpoints_preserved": 2,
+    "llm_calls": 0,
+    "state_branch": "state/multi-agent-runtime",
+    "main_merged": false
+  },
+  "llm_calls_executed": 0,
+  "model_mode": "mock",
+  "real_provider_network_test": "not_authorized_not_executed",
+  "production_actions": 0,
+  "ep01_changes_in_implementation": false,
+  "human_visual_approval": false,
+  "youtube_publications": 0,
+  "comment_publication": "implemented_and_tested_with_transport_double_not_executed_remotely",
+  "registered_agent_roles": 12,
+  "roles_mock_routing_tested": 12,
+  "domain_audits_executed": [
+    "03_manifest_continuity",
+    "04_reference_inventory"
+  ],
+  "technical_reviewer": "12",
+  "coordinator": "01"
+}

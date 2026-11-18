@@ -1,0 +1,149 @@
+"""Non-generative Codex proxy preflight: GET /health and /v1/models ONLY.
+
+Never sends inference or image requests. Requires an explicitly configured
+authorized proxy; credentials are never printed or written to the report.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+from pathlib import Path
+import urllib.error
+import urllib.parse
+import urllib.request
+
+
+class PreflightError(ValueError):
+    """A sanitized, actionable preflight failure."""
+
+
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def normalize_origin(value: str) -> tuple[str, str]:
+    if not value or not isinstance(value, str):
+        raise PreflightError("CODEX_PROXY_BASE_URL is not configured")
+    try:
+        url = urllib.parse.urlsplit(value.strip())
+        port = url.port
+    except ValueError:
+        raise PreflightError("Invalid proxy URL") from None
+    local = url.scheme == "http" and url.hostname == "127.0.0.1" and port == 18080
+    remote = url.scheme == "https" and bool(url.hostname) and url.hostname not in {"localhost", "127.0.0.1", "::1"}
+    if (not (local or remote) or url.username or url.password or url.query or url.fragment
+            or url.path.rstrip("/") not in {"", "/v1"}):
+        raise PreflightError("Expected an authorized HTTPS origin or http://127.0.0.1:18080")
+    return f"{url.scheme}://{url.netloc}", "local_loopback" if local else "remote_https"
+
+
+def probe(base_url: str, api_key: str, *, opener=None, require_model: str | None = None,
+          list_models: bool = False, prefer_model: str | None = None,
+          fallback_model: str | None = None) -> dict:
+    if (require_model is not None and (prefer_model is not None or fallback_model is not None)
+            or (prefer_model is None) != (fallback_model is None)):
+        raise PreflightError("Choose either an exact model or a preferred and fallback model")
+    for candidate in (require_model, prefer_model, fallback_model):
+        if candidate is not None and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,99}", candidate):
+            raise PreflightError("Invalid model identifier")
+    origin, kind = normalize_origin(base_url)
+    if not isinstance(api_key, str) or len(api_key) < 20 or "\r" in api_key or "\n" in api_key:
+        raise PreflightError("CODEX_PROXY_API_KEY is not configured or is invalid")
+    if opener is None:
+        # A runner can have HTTP_PROXY set; loopback must never be routed through it.
+        handlers = [NoRedirect()]
+        if kind == "local_loopback":
+            handlers.insert(0, urllib.request.ProxyHandler({}))
+        opener = urllib.request.build_opener(*handlers)
+    common = {"Authorization": f"Bearer {api_key}", "Accept": "application/json"}
+    results = {}
+    for route in ("/health", "/v1/models"):
+        request = urllib.request.Request(origin + route, headers=common, method="GET")
+        try:
+            with opener.open(request, timeout=8) as response:
+                raw = response.read(1_000_001)
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, OSError):
+            raise PreflightError("Proxy unreachable, unauthorized, rate limited, or unavailable") from None
+        if len(raw) > 1_000_000:
+            raise PreflightError("Proxy response exceeded size limit")
+        try:
+            data = json.loads(raw)
+        except (ValueError, UnicodeError):
+            raise PreflightError("Proxy returned invalid JSON") from None
+        if not isinstance(data, dict):
+            raise PreflightError("Proxy returned invalid response format")
+        results[route] = data
+    health = results["/health"]
+    if health.get("status") != "ok" or type(health.get("accounts")) is not int or health["accounts"] < 1:
+        raise PreflightError("Proxy health did not confirm an authenticated account")
+    models = results["/v1/models"].get("data")
+    if not isinstance(models, list):
+        raise PreflightError("Proxy did not return a model catalog")
+    ids = {m["id"] for m in models if isinstance(m, dict)
+           and isinstance(m.get("id"), str) and bool(m["id"])}
+    if require_model is not None and require_model not in ids:
+        raise PreflightError("Requested text model is absent from the authenticated proxy catalog")
+    selected = None
+    selected_reason = None
+    if prefer_model is not None:
+        if prefer_model in ids:
+            selected, selected_reason = prefer_model, "preferred_catalog_available"
+        elif fallback_model in ids:
+            selected, selected_reason = fallback_model, "fallback_primary_absent_from_catalog"
+        else:
+            raise PreflightError("Neither preferred nor fallback model is in the authenticated catalog")
+    elif require_model is not None:
+        selected, selected_reason = require_model, "explicit_model_verified"
+    count = len(ids)
+    report = {"schema_version": 1, "mode": "proxy_preflight_read_only",
+              "proxy_kind": kind, "authenticated": True, "accounts_configured": health["accounts"],
+              "model_count": count, "inference_requests": 0, "image_requests": 0,
+              "youtube_publications": 0, "paid_inference_authorized": False,
+              "agent_communication_proven": False}
+    if selected is not None:
+        report["selected_model"] = selected
+        report["model_selection_reason"] = selected_reason
+        report["fallback_before_inference_only"] = True
+        report["automatic_retry_after_unknown_inference_outcome"] = False
+    if list_models:
+        # IDs, not account identifiers or arbitrary provider metadata.
+        # Malformed/unexpected identifiers never reach public Actions artifacts.
+        safe_model_id = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,99}")
+        if count > 200:
+            raise PreflightError("Proxy catalog exceeds the maximum allowed identifier count")
+        sanitized = sorted(identifier for identifier in ids if safe_model_id.fullmatch(identifier))
+        report["model_ids"] = sanitized
+        report["model_ids_omitted"] = count - len(sanitized)
+        report["catalog_contains_text_capability_proof"] = False
+    return report
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--require-model", help="Validate an exact model in GET catalog")
+    parser.add_argument("--prefer-model", help="Preferred model; choose fallback only if absent in GET catalog")
+    parser.add_argument("--fallback-model", help="Alternative available model (never retry a POST)")
+    parser.add_argument("--list-models", action="store_true", help="Report sanitized model IDs, never invoke any model")
+    args = parser.parse_args()
+    try:
+        report = probe(os.environ.get("CODEX_PROXY_BASE_URL", ""),
+                       os.environ.get("CODEX_PROXY_API_KEY", ""), require_model=args.require_model,
+                       list_models=args.list_models, prefer_model=args.prefer_model,
+                       fallback_model=args.fallback_model)
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(json.dumps(report, ensure_ascii=False))
+    except PreflightError as error:
+        # No endpoint URL, request contents or credentials are printed.
+        print(json.dumps({"status": "blocked", "reason": str(error),
+                          "inference_requests": 0, "image_requests": 0,
+                          "youtube_publications": 0}))
+        raise SystemExit(2) from None
+
+
+if __name__ == "__main__":
+    main()

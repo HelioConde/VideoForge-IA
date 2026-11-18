@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "note": "Links de chats; sem integração automática entre conversas.",
+  "agents": [
+    {
+      "number": "01",
+      "role": "Diretor Geral",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81b9-4500-83e8-9f6e-393ce720c5be"
+    },
+    {
+      "number": "02",
+      "role": "Roteirista",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81c0-cb30-83e8-be4d-d5c3889a756c"
+    },
+    {
+      "number": "03",
+      "role": "Diretor de Cenas",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81c6-7500-83e9-b15f-c5eb4d5154d6"
+    },
+    {
+      "number": "04",
+      "role": "Diretor de Arte",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81cc-abb0-83ea-8cf0-504349d13302"
+    },
+    {
+      "number": "05",
+      "role": "Gerador Visual",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81d2-1810-83e9-91a2-9689740ec859"
+    },
+    {
+      "number": "06",
+      "role": "Separador de Camadas",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81d7-1f70-83e9-9ab4-cdabb87f958d"
+    },
+    {
+      "number": "07",
+      "role": "Especialista em Rig 2D",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81dc-cbb8-83e9-ac98-643d9adcff2e"
+    },
+    {
+      "number": "08",
+      "role": "Animador",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81e1-c178-83e9-a4d8-6b227c64ba0b"
+    },
+    {
+      "number": "09",
+      "role": "Diretor de Câmera",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81e7-0374-83e9-9633-fc46b98ac7f7"
+    },
+    {
+      "number": "10",
+      "role": "Especialista em Áudio",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81ec-2864-83e9-a0ad-4a9f97ac1d39"
+    },
+    {
+      "number": "11",
+      "role": "Montador e Renderizador",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81f1-39f8-83e8-a789-b0058164b32b"
+    },
+    {
+      "number": "12",
+      "role": "Supervisor de Qualidade",
+      "chat_url": "https://chatgpt.com/g/g-p-6afd8100f9e88191a1eab096793b66b1-agents/c/6afd81f7-5f98-83e9-bb04-0a816333d943"
+    }
+  ]
+}

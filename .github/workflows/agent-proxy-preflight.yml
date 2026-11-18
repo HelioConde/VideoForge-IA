@@ -1,0 +1,152 @@
+name: "Agents - Codex proxy preflight (health/models only)"
+
+# Manual only after successful one-time connectivity check (run #44308778166).
+# No text/image inference, publication, admin APIs or OAuth refresh.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: agents-proxy-preflight-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  connectivity-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: read
+    env:
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Selecionar a mesma origem usada pelas imagens, sem exibir Secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$CODEX_PROXY_API_KEY" ]]; then
+            echo '::error::Secret CODEX_PROXY_API_KEY ausente.'
+            exit 2
+          fi
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            echo 'PROXY_MODE=persistent' >> "$GITHUB_ENV"
+            echo 'Proxy persistente configurado (endereco oculto).'
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo 'PROXY_MODE=ephemeral' >> "$GITHUB_ENV"
+            echo 'CODEX_PROXY_BASE_URL=http://127.0.0.1:18080' >> "$GITHUB_ENV"
+            echo 'Reutilizando o proxy efemero do workflow de imagens.'
+          else
+            echo '::error::Faltam CODEX_PROXY_BASE_URL ou CODEX_PROXY_ACCOUNTS_JSON.'
+            exit 2
+          fi
+      - name: Preparar sessao efemera privada sem gravar no repositorio
+        if: env.PROXY_MODE == 'ephemeral'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-agent-proxy-state"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          try:
+              state = json.loads(os.environ["CODEX_PROXY_ACCOUNTS_JSON"])
+              records = state.get("records") if isinstance(state, dict) else None
+              if not isinstance(records, list) or not records:
+                  raise ValueError("Empty records")
+              if not all(isinstance(x, dict) and isinstance(x.get("token"), dict) for x in records):
+                  raise ValueError("Invalid records")
+              path = Path(os.environ["RUNNER_TEMP"]) / "vf-agent-proxy-state" / "accounts.json"
+              path.write_text(json.dumps(state, ensure_ascii=False), encoding="utf-8")
+              path.chmod(0o600)
+              print("Snapshot privado validado; nenhum token exibido.")
+          except (ValueError, TypeError, KeyError):
+              raise SystemExit("Snapshot efemero invalido; sem chamadas de inferencia.")
+          PY
+      - name: Iniciar o mesmo proxy precompilado das imagens (nenhuma geracao)
+        if: env.PROXY_MODE == 'ephemeral'
+        shell: bash
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-agent-proxy-preflight --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-agent-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl --noproxy '*' -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then
+              echo 'Proxy temporario respondeu readiness.'
+              exit 0
+            fi
+            sleep 2
+          done
+          echo '::error::Proxy temporario nao respondeu readiness.'
+          exit 2
+      - name: Verificar GET health e models autenticados (nunca gera IA)
+        shell: bash
+        run: |
+          python -m orchestrator.proxy_preflight --output "$RUNNER_TEMP/proxy-preflight.json" --list-models
+      - name: Smoke test Agent 01 and agent bus on the authenticated proxy runner (NO inference)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m orchestrator.agent_ping --mode mock --output "$RUNNER_TEMP/agent-01-ping.json"
+          python -m orchestrator.runtime --db "$RUNNER_TEMP/agents-smoke.sqlite" --output "$RUNNER_TEMP/agents-smoke.json" --mode mock --max-tasks 2
+          python -m orchestrator.runtime --db "$RUNNER_TEMP/agents-smoke.sqlite" --output "$RUNNER_TEMP/agents-smoke-reopened.json" --mode mock --max-tasks 2
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          temp=Path(os.environ["RUNNER_TEMP"])
+          ping=json.loads((temp/"agent-01-ping.json").read_text())
+          a=json.loads((temp/"agents-smoke.json").read_text())
+          b=json.loads((temp/"agents-smoke-reopened.json").read_text())
+          assert ping["simulated"] is True and ping["llm_executed"] is False
+          assert ping["agent_id"] == "01" and ping["reply"]["status"] == "received"
+          assert a["state_sha256"] == b["state_sha256"]
+          assert len(b["checkpoints"]) == 2
+          assert b["usage"] == []
+          assert {("01","03"),("03","12"),("12","01")} <= {
+              (e["sender"],e["recipient"]) for e in b["events"]}
+          assert b["safety"]["youtube_publications"] == 0
+          print(json.dumps({"agent_01_mock_received":True,"events":len(b["events"]),
+                            "checkpoints":len(b["checkpoints"]), "inference_requests":0,
+                            "image_requests":0,"youtube_publications":0, "idempotent":True}))
+          PY
+      - name: Arquivar somente evidencia sanitizada
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proxy-preflight-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/proxy-preflight.json
+            ${{ runner.temp }}/agent-01-ping.json
+            ${{ runner.temp }}/agents-smoke.json
+            ${{ runner.temp }}/agents-smoke-reopened.json
+          if-no-files-found: error
+          retention-days: 7
+      - name: Apagar o estado temporario e encerrar container
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-agent-proxy-preflight >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-agent-proxy-state"

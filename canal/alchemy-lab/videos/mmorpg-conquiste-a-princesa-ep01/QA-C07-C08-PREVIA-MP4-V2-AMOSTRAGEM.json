@@ -1,0 +1,158 @@
+{
+  "schema": "videoforge/ep01-c07c08-video-frame-sample-qa/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "source": {
+    "workflow_run_id": 44266014731,
+    "artifact_id": 14411045741,
+    "filename": "EP01-continuidade-V2-42-tomadas.mp4",
+    "sha256": "6ca502f74e024414dc452ce3d05c643d17ddb108995401853ecdc57ecf439048",
+    "duration_seconds": 163,
+    "fps": 30,
+    "frames": 4890,
+    "resolution": [
+      540,
+      960
+    ],
+    "has_audio": false,
+    "has_rig": false,
+    "technical_camera_preview": true
+  },
+  "inspection": {
+    "review_type": "visual_observation_of_sampled_mp4_frames",
+    "shots_inspected": 9,
+    "frames_sampled_per_shot": 3,
+    "total_sampled_frames": 27,
+    "technique": "one frame near shot start, midpoint and end, plus comparison to archived contact sheet",
+    "is_full_motion_review": false,
+    "asset_sha_verified_by_actions_run": 44390366374,
+    "asset_inventory_sources": 9,
+    "source_reuse": "C07-P04 uses archived original C07-P03, not C07-P03 continuity V2",
+    "human_visual_approval": false,
+    "official_episode_approved": false,
+    "publishing_authorized": false
+  },
+  "issues": [
+    {
+      "shot_id": "C07-P01",
+      "video_start_seconds": 69,
+      "video_end_seconds": 72,
+      "severity": "medium",
+      "observation": "Elara corre em direção à câmera/diagonal esquerda; deslocamento screen_right não é inequívoco numa prévia estática.",
+      "proposed_action": "Conferir eixo e indicar deslocamento contínuo para a direita sem alterar identidade ou figurino.",
+      "status": "review_required",
+      "verified_completed": false
+    },
+    {
+      "shot_id": "C07-P02",
+      "video_start_seconds": 72,
+      "video_end_seconds": 75,
+      "severity": "low",
+      "observation": "Dois perseguidores mascarados, sem Elara; perseguição presente, mas deslocamento lateral direito não fica inequívoco.",
+      "proposed_action": "Manter exatamente dois perseguidores; checar direção ao encadear C07-P01→C07-P02.",
+      "status": "review_required",
+      "verified_completed": false
+    },
+    {
+      "shot_id": "C07-P03",
+      "video_start_seconds": 75,
+      "video_end_seconds": 78,
+      "severity": "high",
+      "observation": "Elara aparece à esquerda do quadro em movimento para a esquerda enquanto Kael fica à direita junto ao carrinho; a aproximação/encontro não é clara.",
+      "proposed_action": "Rever blocking e orientação para mostrar Elara chegando até Kael, sem teletransporte ou inversão do eixo.",
+      "status": "review_required",
+      "verified_completed": false
+    },
+    {
+      "shot_id": "C07-P04",
+      "video_start_seconds": 78,
+      "video_end_seconds": 82,
+      "severity": "low",
+      "observation": "O MP4 mostra composição própria de duas pessoas conversando; utiliza a mãe original arquivada de C07-P03, distinta da mãe V2 de C07-P03.",
+      "proposed_action": "Preservar a composição de diálogo como tomada separada. Ainda falta atuação/áudio, sem criar imagem nova por padrão.",
+      "status": "review_required",
+      "verified_completed": false
+    },
+    {
+      "shot_id": "C08-P01",
+      "video_start_seconds": 82,
+      "video_end_seconds": 85,
+      "severity": "medium",
+      "observation": "Kael junto ao carrinho e Elara ao outro lado/atrás do volume de madeira; a posição de proteção dela em relação a Kael exige conferência.",
+      "proposed_action": "Rever profundidade e passagem da personagem para o lado seguro, sem atravessar visualmente o carrinho.",
+      "status": "review_required",
+      "verified_completed": false
+    },
+    {
+      "shot_id": "C08-P02",
+      "video_start_seconds": 85,
+      "video_end_seconds": 89.333333,
+      "severity": "high",
+      "observation": "Kael é o único a empurrar, sem perseguidores ao lado; a prévia usa imagem estática com movimento de câmera, sem giro articulado visível. Fonte 1053×1493 mais larga que o alvo 9:16.",
+      "proposed_action": "Planejar rig/rotação com contato mãos-carrinho, rodas apoiadas e progressão visível até posição perpendicular; verificar corte horizontal da fonte.",
+      "status": "review_required",
+      "verified_completed": false
+    },
+    {
+      "shot_id": "C08-P03",
+      "video_start_seconds": 89.333333,
+      "video_end_seconds": 93,
+      "severity": "high",
+      "observation": "Dois mascarados ficam no lado oposto do carrinho e Kael está do lado seguro. Entretanto, a barricada já aparece pronta após a imagem de empurrão, sem movimento intermediário.",
+      "proposed_action": "Garantir continuidade espacial e do mesmo carrinho com giro visível; não simular movimento com simples corte/zoom.",
+      "status": "review_required",
+      "verified_completed": false
+    },
+    {
+      "shot_id": "C08-P04",
+      "video_start_seconds": 93,
+      "video_end_seconds": 96,
+      "severity": "medium",
+      "observation": "Elara corre para a direita; mascarados permanecem ao fundo e a carroça fica entre regiões, mas a eficácia física da barreira não é totalmente legível.",
+      "proposed_action": "Validar eixo de bloqueio e distância; mostrar perseguidores realmente impedidos de avançar sem alterar número de personagens.",
+      "status": "review_required",
+      "verified_completed": false
+    },
+    {
+      "shot_id": "C08-P05",
+      "video_start_seconds": 96,
+      "video_end_seconds": 98,
+      "severity": "medium",
+      "observation": "Kael reencontra Elara no lado seguro; perseguidores fora do quadro. Fonte 1054×1493 possui proporção mais larga que o alvo e a personagem fica próxima à borda direita da montagem.",
+      "proposed_action": "Preservar reencontro, checar crop 9:16 e continuidade da posição de Kael/Elara em relação à barricada e ao C09-P01.",
+      "status": "review_required",
+      "verified_completed": false
+    }
+  ],
+  "priority_order": [
+    "C07-P03",
+    "C08-P02",
+    "C08-P03",
+    "C07-P01",
+    "C08-P04",
+    "C08-P05",
+    "C08-P01",
+    "C07-P02",
+    "C07-P04"
+  ],
+  "release_gates": {
+    "storyboard_text_sha_validated": true,
+    "independent_text_qa_completed": true,
+    "frame_by_frame_visual_qa_completed": false,
+    "rig_animation_validated": false,
+    "audio_present": false,
+    "creator_approval": false,
+    "publish": false
+  },
+  "side_effects": {
+    "new_model_calls": 0,
+    "new_generated_images": 0,
+    "source_png_overwrites": 0,
+    "youtube_publications": 0
+  },
+  "notes": [
+    "Sampled-frame observations are not proof of every frame or exact motion path.",
+    "No scene has been approved for rig, production or publication by this QA.",
+    "Original Astra continuity audit remains blocked; this report does not change checkpoint status."
+  ]
+}

@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "mode": "planning_only",
+  "updated_at": "2026-11-18",
+  "coordination_owner": "diretor-geral",
+  "dispatch_enabled": false,
+  "notes": "Responsável designado não significa agente executando. Tasks não aprovam conteúdo, não disparam Actions e não autorizam YouTube. Esta fila existe na branch do PR #71 até integração.",
+  "tasks": [
+    {
+      "task_id": "EP01-C07-C08-V2-CONTINUITY-AUDIT",
+      "project": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+      "priority": "P0",
+      "owner": "diretor-cenas",
+      "reviewer": "supervisor-qa",
+      "status": "ready",
+      "inputs": [
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json"
+      ],
+      "input_shas": {
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json": "24835e0f32f5e193c4beffa3ae5cff294c04faea"
+      },
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [
+        {
+          "type": "github_action",
+          "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/44266014731",
+          "run_id": 44266014731,
+          "conclusion": "success",
+          "scope": "technical_preview_only"
+        },
+        {
+          "type": "artifact",
+          "name": "EP01-42-tomadas-MP4-continuidade-V2-44266014731",
+          "sha256": "0bbf12cc921f4b584179afbf56a6b56317c35d4d1c16b4e2c7a7305be64b7e22",
+          "scope": "technical_preview_without_human_approval"
+        }
+      ],
+      "blocked_by": [],
+      "acceptance_criteria": [
+        "Verificar sentido de fuga, posições dos mascarados, posição do carrinho e encontro Elara/Kael nas 9 tomadas C07/C08",
+        "Entregar relatório por tomada e transição indicando timestamps e defeitos reproduzíveis, sem modificar arte aprovada"
+      ],
+      "notes": "Pode trabalhar em paralelo com QA independente e auditoria de arte. Não há execução automática disparada.",
+      "requires_human_approval": false
+    },
+    {
+      "task_id": "EP01-C07-C08-V2-ART-CONSISTENCY",
+      "project": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+      "priority": "P0",
+      "owner": "diretor-arte",
+      "reviewer": "supervisor-qa",
+      "status": "ready",
+      "inputs": [
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json"
+      ],
+      "input_shas": {
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json": "24835e0f32f5e193c4beffa3ae5cff294c04faea"
+      },
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [
+        {
+          "type": "github_action",
+          "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/44266014731",
+          "run_id": 44266014731,
+          "conclusion": "success",
+          "scope": "technical_preview_only"
+        },
+        {
+          "type": "artifact",
+          "name": "EP01-42-tomadas-MP4-continuidade-V2-44266014731",
+          "sha256": "0bbf12cc921f4b584179afbf56a6b56317c35d4d1c16b4e2c7a7305be64b7e22",
+          "scope": "technical_preview_without_human_approval"
+        }
+      ],
+      "blocked_by": [],
+      "acceptance_criteria": [
+        "Conferir identidade, figurino, cenário e referências da Bíblia Visual nas 9 tomadas C07/C08",
+        "Indicar fontes SHA incorretas e listar apenas correções necessárias, sem regeneração automática"
+      ],
+      "notes": "Auditoria somente leitura; preservar as imagens antigas e a estética geral aprovada.",
+      "requires_human_approval": false
+    },
+    {
+      "task_id": "EP01-C07-C08-V2-VISUAL-REVIEW",
+      "project": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+      "priority": "P0",
+      "owner": "supervisor-qa",
+      "reviewer": "diretor-geral",
+      "status": "needs_review",
+      "inputs": [
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json"
+      ],
+      "input_shas": {
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json": "24835e0f32f5e193c4beffa3ae5cff294c04faea"
+      },
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [
+        {
+          "type": "github_action",
+          "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/44266014731",
+          "run_id": 44266014731,
+          "conclusion": "success",
+          "scope": "technical_preview_only"
+        },
+        {
+          "type": "artifact",
+          "name": "EP01-42-tomadas-MP4-continuidade-V2-44266014731",
+          "sha256": "0bbf12cc921f4b584179afbf56a6b56317c35d4d1c16b4e2c7a7305be64b7e22",
+          "scope": "technical_preview_without_human_approval"
+        }
+      ],
+      "blocked_by": [],
+      "acceptance_criteria": [
+        "Inspecionar artifact real do MP4 de 42 tomadas e índice por shot, sem tratar success da Action como aprovação",
+        "Checar bordas, cortes, continuidade temporal e QA de vídeo em todos os frames; registrar achados com frame/shot e SHA",
+        "Emitir parecer independente, solicitando decisão do criador nas questões criativas"
+      ],
+      "notes": "Tarefa preexistente enriquecida, não duplicada. QA independente ainda não confirmado; aprovação visual humana = false.",
+      "requires_human_approval": true
+    },
+    {
+      "task_id": "EP01-42-SHOT-CREATOR-DECISION",
+      "project": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+      "priority": "P0",
+      "owner": "diretor-geral",
+      "reviewer": "supervisor-qa",
+      "status": "blocked",
+      "inputs": [
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json"
+      ],
+      "input_shas": {
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json": "24835e0f32f5e193c4beffa3ae5cff294c04faea"
+      },
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [
+        {
+          "type": "github_action",
+          "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/44266014731",
+          "run_id": 44266014731,
+          "conclusion": "success",
+          "scope": "technical_preview_only"
+        },
+        {
+          "type": "artifact",
+          "name": "EP01-42-tomadas-MP4-continuidade-V2-44266014731",
+          "sha256": "0bbf12cc921f4b584179afbf56a6b56317c35d4d1c16b4e2c7a7305be64b7e22",
+          "scope": "technical_preview_without_human_approval"
+        }
+      ],
+      "blocked_by": [
+        "EP01-C07-C08-V2-CONTINUITY-AUDIT",
+        "EP01-C07-C08-V2-ART-CONSISTENCY",
+        "EP01-C07-C08-V2-VISUAL-REVIEW"
+      ],
+      "acceptance_criteria": [
+        "Consolidar QA por tomada e enviar link do MP4 ao criador",
+        "Registrar somente aprovações/reprovações expressas; não liberar MP4 oficial por silêncio"
+      ],
+      "notes": "",
+      "requires_human_approval": true
+    },
+    {
+      "task_id": "EP01-V2-TARGETED-VISUAL-FIXES",
+      "project": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+      "priority": "P0",
+      "owner": "gerador-visual",
+      "reviewer": "supervisor-qa",
+      "status": "blocked",
+      "inputs": [
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json"
+      ],
+      "input_shas": {
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json": "24835e0f32f5e193c4beffa3ae5cff294c04faea"
+      },
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [],
+      "blocked_by": [
+        "EP01-42-SHOT-CREATOR-DECISION"
+      ],
+      "acceptance_criteria": [
+        "Corrigir exclusivamente tomadas reprovadas com prompt e referências versionados",
+        "Preservar versões e hashes anteriores; checar inventário antes de qualquer chamada",
+        "Enviar arte corrigida para QA independente, sem aprovação automática"
+      ],
+      "notes": "Não gerar novamente as 7 candidatas V2 apenas porque o plano JSON ainda indica pending. Só executar com achado concreto de QA.",
+      "requires_human_approval": false
+    },
+    {
+      "task_id": "EP01-42-AUDIO-PLAN",
+      "project": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+      "priority": "P1",
+      "owner": "especialista-audio",
+      "reviewer": "supervisor-qa",
+      "status": "ready",
+      "inputs": [
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json"
+      ],
+      "input_shas": {
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json": "24835e0f32f5e193c4beffa3ae5cff294c04faea"
+      },
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [],
+      "blocked_by": [],
+      "acceptance_criteria": [
+        "Preparar mapa de falas, música, efeitos, transições e sincronismo para EDL de 42 tomadas/163s",
+        "Não afirmar que há mixagem final ou áudio no MP4 técnico; revisão de conteúdo segue bloqueada por QA visual"
+      ],
+      "notes": "Planejamento independente em paralelo; não gerar áudio final de cenas ainda não aprovadas.",
+      "requires_human_approval": false
+    },
+    {
+      "task_id": "EP01-42-MOTION-READINESS-AUDIT",
+      "project": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+      "priority": "P1",
+      "owner": "especialista-rig",
+      "reviewer": "supervisor-qa",
+      "status": "ready",
+      "inputs": [
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json",
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json"
+      ],
+      "input_shas": {
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json": "24835e0f32f5e193c4beffa3ae5cff294c04faea",
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json": "d6264131d981bc1e4c4b60954019e134a3eb5fa2"
+      },
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [],
+      "blocked_by": [],
+      "acceptance_criteria": [
+        "Inventariar quais tomadas possuem camadas RGBA independentes e QA de recomposição suficientes para rig",
+        "Marcar como bloqueadas as partes sem arte validada e não separar mãos em C01-P04",
+        "Não chamar pan/zoom de rig; não renderizar animação final sem assets aprovados"
+      ],
+      "notes": "Somente auditoria de prontidão, não criação de rig.",
+      "requires_human_approval": false
+    },
+    {
+      "task_id": "EP01-42-FINAL-MP4-GATE",
+      "project": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+      "priority": "P1",
+      "owner": "montador",
+      "reviewer": "supervisor-qa",
+      "status": "blocked",
+      "inputs": [
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json"
+      ],
+      "input_shas": {
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json": "24835e0f32f5e193c4beffa3ae5cff294c04faea"
+      },
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [],
+      "blocked_by": [
+        "EP01-42-SHOT-CREATOR-DECISION",
+        "EP01-42-AUDIO-PLAN",
+        "EP01-42-MOTION-READINESS-AUDIT"
+      ],
+      "acceptance_criteria": [
+        "Só aceitar fontes criativamente aprovadas, áudio e rig devidamente validados",
+        "Renderizar MP4 oficial com QA de codec, quadros, duração, integridade e revisão independente",
+        "Não publicar nem agendar no YouTube sem autorização explícita"
+      ],
+      "notes": "O artifact existente é prévia técnica de câmera; não atende este gate.",
+      "requires_human_approval": false
+    },
+    {
+      "task_id": "EP01-ROI-SEMANTICS-R2-ISSUE-62",
+      "project": "alchemy-lab/mmorpg-conquiste-a-princesa-ep01",
+      "priority": "P2",
+      "owner": "diretor-arte",
+      "reviewer": "supervisor-qa",
+      "status": "ready",
+      "inputs": [
+        "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTRATO-ROI-SEMANTICAS-V2.json"
+      ],
+      "input_shas": {},
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [
+        {
+          "type": "issue",
+          "url": "https://github.com/HelioConde/VideoForge-IA/issues/62"
+        }
+      ],
+      "blocked_by": [],
+      "acceptance_criteria": [
+        "Verificar fontes/poses dos 4 pares e máscaras semânticas da issue #62",
+        "Manter R2 bloqueada sem QA e revisão do criador"
+      ],
+      "notes": "Fila independente e preexistente: não confundir ROI semântica V2 com continuidade C07/C08 V2.",
+      "requires_human_approval": false
+    },
+    {
+      "task_id": "VIDEOFORGE-FIVE-CHANNEL-PIPELINE-ISSUE-66",
+      "project": "5-canais/producao-diaria",
+      "priority": "P0",
+      "owner": "diretor-geral",
+      "reviewer": "supervisor-qa",
+      "status": "ready",
+      "inputs": [
+        "docs/REGRA-PRODUCAO-DIARIA.md"
+      ],
+      "input_shas": {},
+      "outputs": [],
+      "output_shas": {},
+      "evidence": [
+        {
+          "type": "issue",
+          "url": "https://github.com/HelioConde/VideoForge-IA/issues/66"
+        }
+      ],
+      "blocked_by": [],
+      "acceptance_criteria": [
+        "Quebrar a issue #66 em pacotes executáveis sem duplicar o EP01",
+        "Distinguir readiness de pipeline real, MP4 oficial, upload e publicação verificável",
+        "Delegar implementação a especialista adequado quando houver executor validado"
+      ],
+      "notes": "A arquitetura de 12 agentes é documental; não afirmar automação diária operacional.",
+      "requires_human_approval": false
+    }
+  ]
+}

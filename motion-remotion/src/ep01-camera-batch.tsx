@@ -5,7 +5,8 @@ type View = {zoom:number;x:number;y:number};
 type Shot = {id:string;duration_frames:number;source:unknown;sourceFile?:string;approval_status:string;
   camera:{mode:string;start:View;end:View;dolly:number;true_parallax:boolean};
   focus:{blur_start_px:number;blur_end_px:number};lighting:{exposure_start:number;exposure_end:number;warm_glow:number};
-  rig:{enabled:boolean;independent_hands:boolean}};
+  rig:{enabled:boolean;independent_hands:boolean};
+  continuity_gate?:{status:string;qa_notice:string;not_an_art_approval:boolean;animated_motion_verified:boolean}};
 type Props = {schema:string;technical_preview_only:boolean;official_episode_approved:boolean;youtube_upload:boolean;image_provider_calls:number;durationFrames:number;shots:Shot[]};
 
 const Picture:React.FC<{shot:Shot}> = ({shot}) => {
@@ -27,6 +28,12 @@ const Picture:React.FC<{shot:Shot}> = ({shot}) => {
       transform:`scale(${zoom})`,transformOrigin:`${lerp(shot.camera.start.x,shot.camera.end.x)}% ${lerp(shot.camera.start.y,shot.camera.end.y)}%`,
       filter:`brightness(${exposure}) blur(${lerp(shot.focus.blur_start_px,shot.focus.blur_end_px)}px)`}}/>
     <AbsoluteFill style={{background:'linear-gradient(120deg,transparent 35%,#ffc36b 65%,transparent 90%)',opacity:shot.lighting.warm_glow*exposure}}/>
+    {shot.continuity_gate?.status === 'blocked_pending_visual_rig' && <div style={{
+      position:'absolute',top:16,left:12,right:12,padding:10,
+      background:'rgba(14,19,28,0.88)',color:'#fff',fontFamily:'sans-serif',
+      fontSize:17,fontWeight:700,textAlign:'center',lineHeight:1.3}}>
+      QA PENDENTE — {shot.continuity_gate.qa_notice}
+    </div>}
     <div style={{position:'absolute',bottom:10,left:10,right:10,padding:7,background:'#000b',color:'white',fontFamily:'sans-serif',fontSize:13,textAlign:'center'}}>
       {shot.id} · PRÉVIA TÉCNICA · CÂMERA 2D / SEM RIG<br/>
       {shot.approval_status==='diagnostic_only_contact_rejected'?'CONTATO REJEITADO — SOMENTE DIAGNÓSTICO':shot.approval_status==='exact_sha_approval_record_exists'?'FONTE APROVADA · MOVIMENTO EM REVISÃO':'ARTE E MOVIMENTO EM REVISÃO'}

@@ -1,0 +1,115 @@
+name: "Agents - persistent safe task dispatcher (no AI or media)"
+
+# PR validates offline and uploads an artifact. Only the default branch
+# after merge can run the daily durable state job. No paid AI calls.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/agent-durable-dispatch.yml'
+      - 'orchestrator/durable_dispatch.py'
+      - 'tests/test_durable_dispatch.py'
+      - 'orchestrator/runtime_store.py'
+      - 'orchestrator/agent_bus.py'
+      - 'orchestrator/tasks.json'
+  workflow_dispatch:
+  schedule:
+    - cron: "15 11 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  pr-offline-safe-dispatch:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test dispatcher, independent QA and snapshot resume offline
+        run: python -m unittest discover -s tests -p 'test_durable_dispatch.py' -v
+      - name: Execute safe Agent 01 specialist dispatch in local DB
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m orchestrator.durable_dispatch --db "$RUNNER_TEMP/dispatch.sqlite" \
+            --output "$RUNNER_TEMP/dispatch-report.json" --max-tasks 4
+          python -m orchestrator.durable_dispatch --db "$RUNNER_TEMP/dispatch.sqlite" \
+            --output "$RUNNER_TEMP/dispatch-reopened.json" --max-tasks 4
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])
+          a=json.loads((root/'dispatch-report.json').read_text())
+          b=json.loads((root/'dispatch-reopened.json').read_text())
+          assert len(a['dispatch']['new_task_ids']) == 4
+          assert len(a['dispatch']['steps']) == 8
+          assert a['dispatch']['technical_completed'] == 4
+          assert a['state_sha256'] == b['state_sha256']
+          assert b['dispatch']['new_task_ids'] == []
+          assert b['dispatch']['steps'] == []
+          assert all(t['status'] == 'completed' for t in a['tasks'])
+          assert a['dispatch']['model_inference_requests'] == 0
+          assert a['dispatch']['image_requests'] == 0
+          assert a['dispatch']['youtube_publications'] == 0
+          assert a['dispatch']['visual_quality_approved'] is False
+          print('Four source audits persisted with independent QA; no inference or media.')
+          PY
+      - name: Archive audited state reports
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-safe-dispatch-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/dispatch-report.json
+            ${{ runner.temp }}/dispatch-reopened.json
+          if-no-files-found: error
+          retention-days: 14
+
+  daily-persistent-state:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    concurrency:
+      group: videoforge-agent-deterministic-dispatch-state
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Resume canonical GitHub CAS state; execute only four allowlisted audits
+        run: |
+          python -m orchestrator.durable_dispatch --github-state --initialize-store \
+            --output "$RUNNER_TEMP/agent-safe-state.json" --max-tasks 4
+      - name: Archive reconciled technical state
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-persistent-dispatch-${{ github.run_id }}
+          path: ${{ runner.temp }}/agent-safe-state.json
+          retention-days: 14
+          if-no-files-found: error

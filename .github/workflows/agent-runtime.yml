@@ -1,0 +1,194 @@
+name: "Agent runtime - safe pilot"
+
+on:
+  pull_request:
+    paths:
+      - 'orchestrator/**'
+      - 'tests/test_runtime_*.py'
+      - '.github/workflows/agent-runtime.yml'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Executor (paid and production capabilities remain disabled here)"
+        required: true
+        type: choice
+        options: [mock, deterministic, openai]
+        default: mock
+      max_tasks:
+        description: "Maximum task count (1-2)"
+        required: true
+        type: string
+        default: "2"
+      use_github_state:
+        description: "Persist snapshot to the dedicated state branch using Contents API CAS"
+        required: true
+        type: boolean
+        default: false
+      initialize_store:
+        description: "Explicitly create the state branch/file if absent"
+        required: true
+        type: boolean
+        default: false
+      publish_checkpoints:
+        description: "Explicitly publish technical checkpoints to an existing Issue"
+        required: true
+        type: boolean
+        default: false
+      issue_number:
+        description: "Existing Issue number required for checkpoint publication"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  pr-mock-runtime:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run runtime and dashboard unit tests
+        run: |
+          python -m unittest discover -s tests -p 'test_runtime*.py' -v
+      - name: Reopen the same SQLite database and produce a report
+        run: |
+          DB="$RUNNER_TEMP/multi-agent-runtime.sqlite"
+          REPORT="$RUNNER_TEMP/runtime-report.json"
+          python -m orchestrator.runtime --db "$DB" --mode mock --max-tasks 2 --output "$REPORT"
+          python -m orchestrator.runtime --db "$DB" --mode mock --max-tasks 2 --output "$REPORT"
+          python -m orchestrator.dashboard --report "$REPORT" --output "$RUNNER_TEMP/index.html"
+      - name: Archive mock runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-runtime-mock-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/runtime-report.json
+            ${{ runner.temp }}/index.html
+          if-no-files-found: ignore
+          retention-days: 14
+
+  manual-runtime:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_checkpoints == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    concurrency:
+      group: agent-runtime-state-${{ github.repository }}
+      cancel-in-progress: false
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+      MODE: ${{ inputs.mode }}
+      USE_GITHUB_STATE: ${{ inputs.use_github_state }}
+      INITIALIZE_STORE: ${{ inputs.initialize_store }}
+      MAX_TASKS: ${{ inputs.max_tasks }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate safe execution bounds
+        run: |
+          python - <<'PY'
+          import os
+          if int(os.environ["MAX_TASKS"]) not in (1, 2):
+              raise SystemExit("max_tasks must be 1 or 2")
+          if os.environ["MODE"] == "openai":
+              raise SystemExit("OpenAI execution is blocked: paid-call authorization is disabled in this workflow")
+          if os.environ["INITIALIZE_STORE"].lower() == "true" and os.environ["USE_GITHUB_STATE"].lower() != "true":
+              raise SystemExit("initialize_store requires use_github_state=true")
+          PY
+      - name: Run bounded deterministic runtime
+        run: |
+          args=(--db "$RUNNER_TEMP/multi-agent-runtime.sqlite" --mode "$MODE" --max-tasks "$MAX_TASKS" --output "$RUNNER_TEMP/runtime-report.json")
+          if [ "$USE_GITHUB_STATE" = "true" ]; then
+            args+=(--github-state)
+          fi
+          if [ "$INITIALIZE_STORE" = "true" ]; then
+            args+=(--initialize-store)
+          fi
+          python -m orchestrator.runtime "${args[@]}"
+          python -m orchestrator.dashboard --report "$RUNNER_TEMP/runtime-report.json" --output "$RUNNER_TEMP/index.html"
+      - name: Archive manual runtime report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-runtime-manual-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/runtime-report.json
+            ${{ runner.temp }}/index.html
+          if-no-files-found: ignore
+          retention-days: 14
+
+  manual-issue-checkpoint:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_checkpoints == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      issues: write
+    concurrency:
+      group: agent-runtime-state-${{ github.repository }}
+      cancel-in-progress: false
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+      MODE: ${{ inputs.mode }}
+      MAX_TASKS: ${{ inputs.max_tasks }}
+      ISSUE_NUMBER: ${{ inputs.issue_number }}
+      USE_GITHUB_STATE: ${{ inputs.use_github_state }}
+      INITIALIZE_STORE: ${{ inputs.initialize_store }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Require explicit valid publication target
+        run: |
+          python - <<'PY'
+          import os
+          if not os.environ["ISSUE_NUMBER"].isdigit():
+              raise SystemExit("issue_number is required when publishing a checkpoint")
+          if os.environ["MODE"] == "openai":
+              raise SystemExit("OpenAI execution is blocked: paid-call authorization is disabled in this workflow")
+          if int(os.environ["MAX_TASKS"]) not in (1, 2):
+              raise SystemExit("max_tasks must be 1 or 2")
+          if os.environ["USE_GITHUB_STATE"].lower() != "true":
+              raise SystemExit("Durable GitHub state is required before checkpoint publication")
+          if os.environ["INITIALIZE_STORE"].lower() == "true":
+              raise SystemExit("Publish-only requires an existing initialized state snapshot")
+          PY
+      - name: Run and explicitly publish technical checkpoint
+        run: |
+          python -m orchestrator.runtime --db "$RUNNER_TEMP/multi-agent-runtime.sqlite" --mode "$MODE" --max-tasks "$MAX_TASKS" --output "$RUNNER_TEMP/runtime-report.json" --github-state --publish-checkpoints --publish-only --issue-number "$ISSUE_NUMBER"
+          python -m orchestrator.dashboard --report "$RUNNER_TEMP/runtime-report.json" --output "$RUNNER_TEMP/index.html"
+      - name: Archive publication evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-runtime-checkpoint-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/runtime-report.json
+            ${{ runner.temp }}/index.html
+          if-no-files-found: ignore
+          retention-days: 14
