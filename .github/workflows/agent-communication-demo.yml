@@ -24,6 +24,8 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_agent_communication.py' -v
           python -m unittest discover -s tests -p 'test_agent_bus.py' -v
+          python -m unittest discover -s tests -p 'test_queue_audit.py' -v
+          python orchestrator/queue_audit.py --output /tmp/agent-queue-checkpoint.json
           python orchestrator/agent_communication.py --output /tmp/agent-messages.json
       - name: Criar issue e registrar troca 01 -> 03 -> 12 -> 01
         if: inputs.publish_issue == true
@@ -68,5 +70,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: agent-communication-demo-${{ github.run_id }}
-          path: /tmp/agent-messages.json
+          path: |
+            /tmp/agent-messages.json
+            /tmp/agent-queue-checkpoint.json
           retention-days: 14
