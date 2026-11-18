@@ -18,7 +18,7 @@ from .runtime import ROOT, instructions, write_report
 
 PING = ("Agente 01, confirme que recebeu esta mensagem do sistema VideoForge-IA. "
         "Não execute tarefas. Apenas identifique-se e confirme o recebimento.")
-ASTRA = "gpt-6-astra"
+ASTRA_MODELS = {"gpt-6.2-astra", "gpt-6-astra"}
 
 
 def agent_01_ping(*, mode: str, budget_usd: str = "0", root=ROOT) -> dict:
@@ -65,10 +65,10 @@ def agent_01_ping(*, mode: str, budget_usd: str = "0", root=ROOT) -> dict:
         expected = Decimal(str(estimate["upper_bound_usd"]))
         if expected <= 0 or expected > budget:
             raise ValueError("Estimated model cost exceeds the explicit budget")
-    if provider.model != ASTRA:
-        raise ValueError("Agent 01 ping requires gpt-6-astra")
+    if provider.model not in ASTRA_MODELS:
+        raise ValueError("Agent 01 ping requires an explicitly selected Astra model")
     response = provider.generate_response(request)
-    if response.simulated or response.provider != "codex_proxy" or response.reported_model != ASTRA:
+    if response.simulated or response.provider != "codex_proxy" or response.reported_model != provider.model:
         raise ValueError("Live response was not from the configured Codex provider")
     try:
         reply = json.loads(response.text)
