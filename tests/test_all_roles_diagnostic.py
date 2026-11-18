@@ -23,6 +23,13 @@ class AllRolesDiagnosticTests(unittest.TestCase):
                 self.assertEqual(info["blocked_task_ids"], [])
                 self.assertEqual(set(info["roles_covered"]), set(ROLES))
                 self.assertEqual(len(info["steps"]), 20)
+                self.assertEqual(len(info["readiness"]), 10)
+                self.assertEqual({r["agent_id"] for r in info["readiness"]}, set(SPECIALISTS))
+                self.assertTrue(all(r["diagnostic_status"] == "completed"
+                                    and r["production_ready"] is False
+                                    and r["llm_executed"] is False
+                                    and len(r["source_evidence_sha256"]) == 64
+                                    for r in info["readiness"]))
                 self.assertEqual(len(first["checkpoints"]), 10)
                 self.assertTrue(all(t["status"] == "completed" for t in first["tasks"]))
                 self.assertFalse(info["production_ready"])
