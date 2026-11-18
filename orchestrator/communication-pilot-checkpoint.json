@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "kind": "manual_connector_pilot",
+  "issue_url": "https://github.com/HelioConde/VideoForge-IA/issues/72",
+  "issue_number": 72,
+  "verified_comment_count": 3,
+  "verified_comment_ids": [
+    6976486710,
+    6976487353,
+    6976488003
+  ],
+  "sequence": [
+    "01->03",
+    "03->12",
+    "12->01"
+  ],
+  "status": "issue_messages_verified",
+  "github_actions_executed": false,
+  "autonomous_agents_executed": false,
+  "ai_calls": 0,
+  "proxy_calls": 0,
+  "youtube_publications": 0,
+  "ep01_visual_approval": false,
+  "notes": "Messages posted by assistant via GitHub connector as explicit simulations; this does not establish automatic agent-to-agent execution."
+}
