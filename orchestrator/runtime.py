@@ -613,8 +613,13 @@ def main():
             if not args.issue_number:
                 parser.error('Publishing requires an explicit issue-number')
             publish(store,args.issue_number)
-        print(json.dumps({'tasks':len(result['tasks']), 'completed':len(result['checkpoints']), 'events':len(result['events']),
-                          'llm_calls':len(result['usage']), 'state_sha256':result['state_sha256'], 'production_actions':0}))
+        # A blocked provenance checkpoint is evidence, not a completed task.
+        print(json.dumps({'tasks':len(result['tasks']),
+                          'completed':sum(t['status'] == 'completed' for t in result['tasks']),
+                          'blocked_checkpoints':sum(c.get('status') == 'blocked'
+                                                    for c in result['checkpoints']),
+                          'events':len(result['events']), 'llm_calls':len(result['usage']),
+                          'state_sha256':result['state_sha256'], 'production_actions':0}))
         if args.chain_audit and not args.inspect_state:
             # A well-grounded request for corrections is a valid end to the conversation.
             if (len(result['tasks']) != 1 or len(result['checkpoints']) != 1
