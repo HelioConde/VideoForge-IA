@@ -26,6 +26,16 @@
 - **Limite de evidência:** catálogo e credenciais válidos **não** provam uma resposta real do Astra. Só um `workflow_dispatch` autorizado e com orçamento, contendo respostas e logs reais dos 12 papéis, poderá comprovar essa etapa.
 - O preflight foi adicionado por meio da [PR #73](https://github.com/HelioConde/VideoForge-IA/pull/73), já integrada. Sua única execução automática adicional ocorre quando o próprio workflow de preflight for alterado na branch `main`; as demais execuções são manuais.
 
+## Resposta real do Agente 01 — 18/11/2026
+
+- [Execução #44412920056](https://github.com/HelioConde/VideoForge-IA/actions/runs/44412920056) — **success**; [PR #75](https://github.com/HelioConde/VideoForge-IA/pull/75) integrada.
+- O Agente 01 recebeu uma mensagem de conexão e respondeu pela API do proxy com **`gpt-6-astra` real**, `llm_executed=true`, `simulated=false`, `status=received`.
+- A resposta foi validada com o contrato do Agente 01, 844 tokens de entrada, 43 de saída; o artifact `authorized-agent-01-astra-ping-44412920056` guarda o relatório e o preflight sanitizados.
+- A execução foi única e limitada a 500 tokens máximos de saída, sem retry, geração de imagens, mídia, alterações no episódio ou publicação no YouTube.
+- **Não existe custo em USD confirmado**: o ping usou a opção do proxy sem tabela de tarifas, que não equivale a custo zero nem a limite monetário.
+- **Status de IA real por papel:** Agente 01 comprovado para uma resposta de conectividade. Agentes 02–11 e o QA real do Agente 12 ainda **não foram comprovados** nesta cadeia.
+- O ciclo de 13 chamadas só deve prosseguir com tarifa confiável e limite de gasto explícito (`budget_usd` e taxas de tokens), sem estimar preços inventados ou transformar uma chamada bem-sucedida em prova da produção audiovisual.
+
 ## Piloto de respostas reais do Astra
 
 O workflow já está na branch padrão; a execução real continua manual e usa Agents - Codex proxy runtime (manual, gated), com:
