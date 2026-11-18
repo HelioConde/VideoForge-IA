@@ -340,13 +340,22 @@ def step(store: Store, *, root=ROOT, limits=None) -> dict | None:
     return store.get(task["task_id"])
 
 
-def run(store: Store, *, root=ROOT, budget_usd: float) -> dict:
-    if type(budget_usd) not in (float, int) or not 0 < budget_usd <= 0.25:
-        raise ValueError("Explicit finite budget required (USD 0.01-0.25)")
+def run(store: Store, *, root=ROOT, budget_usd: float | None) -> dict:
+    if budget_usd is None:
+        if (os.getenv("VF_ALL_ROLES_AUTHORIZATION") != "AUTHORIZE_THIRTEEN_ASTRA_CALLS"
+                or os.getenv("GITHUB_RUN_ATTEMPT", "1") != "1"):
+            raise ValueError("Explicit first-attempt authorization required for unpriced proxy calls")
+        # Unknown USD cost. Reserve up to 250k conservative token units,
+        # never more than 13 calls, and do not invent a monetary price.
+        limits = {"usd": None, "tokens": 250_000, "calls": NUMBER_OF_CALLS}
+    else:
+        if (type(budget_usd) not in (float, int)
+                or not 0 < budget_usd <= 0.25):
+            raise ValueError("Finite priced pilot budget must be USD 0.01-0.25")
+        limits = {"usd": budget_usd, "tokens": 1_000_000, "calls": NUMBER_OF_CALLS}
     model = os.getenv("AI_MODEL", "")
     task_id = seed(store, root=root, model=model)
     store.recover()
-    limits = {"usd": budget_usd, "tokens": 1_000_000, "calls": NUMBER_OF_CALLS}
     steps = []
     for _ in range(2):
         result = step(store, root=root, limits=limits)
@@ -359,6 +368,8 @@ def run(store: Store, *, root=ROOT, budget_usd: float) -> dict:
         "task_id": task_id, "model": model,
         "steps": steps, "required_real_calls": NUMBER_OF_CALLS,
         "actual_calls": len(data["usage"]),
+        "billing_cap_usd": budget_usd, "billing_cap_verified": budget_usd is not None,
+        "conservative_token_limit": limits["tokens"], "call_limit": limits["calls"],
         "all_roles": list(ROLES), "specialists": list(SPECIALISTS),
         "production_ready": False, "visual_quality_approved": False,
         "media_created": 0, "youtube_publications": 0,
@@ -370,7 +381,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--budget-usd", type=float, required=True)
+    parser.add_argument("--budget-usd", required=True,
+                        help="USD 0.01-0.25 (priced), or 'unpriced' for explicitly authorized 13-call proxy run")
     parser.add_argument("--github-state", action="store_true")
     parser.add_argument("--initialize-store", action="store_true")
     args = parser.parse_args()
@@ -396,11 +408,19 @@ def main():
             parser.error("Database may not be within production sources")
         store = Store(db)
     try:
-        result = run(store, budget_usd=args.budget_usd)
+        if args.budget_usd == "unpriced":
+            budget = None
+        else:
+            try:
+                budget = float(args.budget_usd)
+            except ValueError:
+                parser.error("Invalid USD budget; use 0.01-0.25 or the explicit unpriced mode")
+        result = run(store, budget_usd=budget)
         write_report(args.output, result)
         records = result["live_roundtrip"]
         print(json.dumps({"actual_calls": records["actual_calls"],
                           "task_status": result["tasks"][0]["status"],
+                          "billing_cap_verified": records["billing_cap_verified"],
                           "production_ready": False}))
         try:
             validate_live_roundtrip_result(result, records["model"])
