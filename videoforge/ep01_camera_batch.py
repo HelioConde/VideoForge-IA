@@ -50,7 +50,13 @@ def checked_source(root, source):
     return path
 
 
-def build_plan(root=ROOT):
+def build_plan(root=ROOT, revision='legacy'):
+    if revision == 'continuity-v2':
+        from .ep01_continuity_v2 import revised_camera_plan
+        return revised_camera_plan(build_plan(root, 'legacy'), root, require_generated=True)
+    if revision != 'legacy':
+        raise ValueError('Invalid continuity revision')
+
     """Join the real inventory to editorial timecodes; old missing counts are ignored."""
     ep = root / EP
     inventory = read(ep / 'CHECKPOINT-IMAGENS-EP01-AUTO.json')['original_mothers']
@@ -119,13 +125,15 @@ def build_plan(root=ROOT):
 def fingerprint(root, props):
     deps = ['videoforge/ep01_camera_batch.py', 'motion-remotion/src/ep01-camera-batch.tsx', 'motion-remotion/package-lock.json']
     deps += [(EP / name).as_posix() for name in ['APROVACOES-VISUAIS-C01-V3.json', 'POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json', 'REVISAO-ERRO-PAINEIS-C01-P02.json']]
+    if props.get('revision') == 'continuity-v2':
+        deps += [(EP / 'CONTINUIDADE-C07-C08-V2.json').as_posix(), 'videoforge/ep01_continuity_v2.py']
     payload = {'props': props, 'code_and_policies': {p: sha(root / p) for p in deps}}
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
 
 
-def prepare(root=ROOT, selected=None):
-    plan = build_plan(root)
-    write(root / OUT / 'execution-plan-40.json', plan)
+def prepare(root=ROOT, selected=None, revision='legacy'):
+    plan = build_plan(root, revision)
+    write(root / OUT / ('execution-plan-42-continuity-v2.json' if revision == 'continuity-v2' else 'execution-plan-40.json'), plan)
     selected = DEFAULT if selected is None else selected
     known = {s['id'] for s in plan['shots']}
     if not selected or len(set(selected)) != len(selected) or not set(selected) <= known:
@@ -213,11 +221,11 @@ def render_one(root, name, props):
     return result
 
 
-def run(root=ROOT, selected=None):
-    props = prepare(root, selected)
+def run(root=ROOT, selected=None, revision='legacy'):
+    props = prepare(root, selected, revision)
     reports = {}
     # Preserve validated progress across different selections, not only this invocation.
-    plan = build_plan(root)
+    plan = build_plan(root, revision)
     for shot in plan['shots']:
         if shot['source']:
             shot['sourceFile'] = 'vf-ep01-camera-batch/' + shot['source']['sha256'] + '.png'
@@ -229,14 +237,14 @@ def run(root=ROOT, selected=None):
     for shot in props['shots']:
         one = dict(props, shots=[shot], durationFrames=shot['duration_frames'])
         reports[shot['id']] = render_one(root, shot['id'], one)
-        checkpoint['next_task'] = next((s['id'] for s in build_plan(root)['shots'] if s['id'] not in reports), 'review_contact_continuity_and_human_approval')
+        checkpoint['next_task'] = next((s['id'] for s in build_plan(root, revision)['shots'] if s['id'] not in reports), 'review_contact_continuity_and_human_approval')
         write(root / OUT / 'checkpoint.json', checkpoint)
     ids = '-'.join(s['id'] for s in props['shots'])
     montage_id = 'montage-' + (ids if len(props['shots']) <= 4 else hashlib.sha256(ids.encode()).hexdigest()[:16])
     checkpoint['montage'] = render_one(root, montage_id, props)
     checkpoint['selected_shots'] = [s['id'] for s in props['shots']]
     checkpoint['human_review_priority'] = ['C01-P02 rejected contact', 'C01-P03 standing/seated king continuity', 'C01-P04 camera motion']
-    checkpoint['visual_shots_pending_individual_approval'] = sum(s['source'] is not None and s['approval_status'] != 'exact_sha_approval_record_exists' for s in build_plan(root)['shots'])
+    checkpoint['visual_shots_pending_individual_approval'] = sum(s['source'] is not None and s['approval_status'] != 'exact_sha_approval_record_exists' for s in build_plan(root, revision)['shots'])
     write(root / OUT / 'checkpoint.json', checkpoint)
     print(json.dumps({'validated': list(reports), 'montage': montage_id, 'next_task': checkpoint['next_task']}))
 
@@ -245,14 +253,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=['prepare', 'render'])
     parser.add_argument('--shots', default=','.join(DEFAULT), help='Comma-separated shot IDs or all')
+    parser.add_argument('--revision', choices=['legacy', 'continuity-v2'], default='legacy')
     args = parser.parse_args()
-    selected = [s['id'] for s in build_plan()['shots']] if args.shots == 'all' else args.shots.split(',')
+    selected = [s['id'] for s in build_plan(revision=args.revision)['shots']] if args.shots == 'all' else args.shots.split(',')
     if args.action == 'prepare':
-        props = prepare(selected=selected)
+        props = prepare(selected=selected, revision=args.revision)
         write(ROOT / OUT / 'selected-props.json', props)
-        print(json.dumps({'shots_planned': 40, 'selected': selected, 'no_image_calls': True}))
+        print(json.dumps({'shots_planned': len(build_plan(revision=args.revision)['shots']), 'selected': selected, 'no_image_calls': True}))
     else:
-        run(selected=selected)
+        run(selected=selected, revision=args.revision)
 
 
 if __name__ == '__main__':
