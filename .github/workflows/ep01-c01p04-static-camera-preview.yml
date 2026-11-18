@@ -46,11 +46,6 @@ jobs:
           assert r['no_hand_parts'] is True and r['camera_only'] is True
           assert r['proxy_calls']==0 and r['official_episode_render'] is False and r['youtube_upload'] is False
           PY
-      - name: Instalar Pillow somente para verificação dos PNGs
-        shell: bash
-        run: |
-          set -euo pipefail
-          python -m pip install --quiet 'Pillow==11.3.0'
       - name: Verificar SHA de fonte aprovada e preservar o grip integrado
         shell: bash
         run: |
