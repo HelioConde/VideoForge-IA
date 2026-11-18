@@ -15,9 +15,20 @@
 - production_ready=false, model_calls=0, media_created=0, youtube_publications=0.
 - O relatório role_diagnostic.readiness lista bloqueios por especialidade e SHA-256 da evidência.
 
+## Preflight autenticado com o proxy real — 18/11/2026
+
+- [GitHub Actions: preflight autenticado #44411070070](https://github.com/HelioConde/VideoForge-IA/actions/runs/44411070070) — **success**.
+- O runner restaurou a sessão efêmera sem registrar tokens nos logs, iniciou o proxy e verificou autenticação por `GET /health` e o catálogo por `GET /v1/models`.
+- `authenticated=true`, `accounts_configured=1`, `model_count=10`.
+- **`gpt-6.2-astra` não apareceu nesse catálogo autenticado**. O modelo selecionado foi `gpt-6-astra`, motivo `fallback_primary_absent_from_catalog`. Essa disponibilidade pode mudar numa futura execução.
+- `inference_requests=0`, `image_requests=0`, `youtube_publications=0`, `paid_inference_authorized=false`, `agent_communication_proven=false`.
+- O smoke sem IA nesse mesmo runner confirmou: Agente 01 mock recebeu resposta, 12 mensagens, dois checkpoints e reabertura idempotente.
+- **Limite de evidência:** catálogo e credenciais válidos **não** provam uma resposta real do Astra. Só um `workflow_dispatch` autorizado e com orçamento, contendo respostas e logs reais dos 12 papéis, poderá comprovar essa etapa.
+- O preflight foi adicionado por meio da [PR #73](https://github.com/HelioConde/VideoForge-IA/pull/73), já integrada. Sua única execução automática adicional ocorre quando o próprio workflow de preflight for alterado na branch `main`; as demais execuções são manuais.
+
 ## Piloto de respostas reais do Astra
 
-Após a integração do workflow à branch padrão, a execução manual usa Agents - Codex proxy runtime (manual, gated), com:
+O workflow já está na branch padrão; a execução real continua manual e usa Agents - Codex proxy runtime (manual, gated), com:
 
 - mode: codex_proxy_all_roles
 - model: auto; priorizar gpt-6.2-astra e usar gpt-6-astra somente se o primeiro estiver ausente do catálogo autenticado.
@@ -31,4 +42,4 @@ O cálculo é uma reserva por preços configurados, não uma fatura. O runner re
 
 Antes de animar o carrinho são necessários: aprovação da Bíblia Visual, manifesto de camadas RGBA verdadeiro, rig com pivôs e contato mecânico validado, animação quadro a quadro e QA visual independente. O render final depende também do áudio e revisão humana.
 
-Não criar assets falsos para desbloquear gates. A PR #71 continua em rascunho; nenhum procedimento acima autoriza publicação no YouTube.
+Não criar assets falsos para desbloquear gates. A PR #71 foi integrada à `main` no commit `1265894`, mas nenhum procedimento acima autoriza publicação no YouTube ou comprova produção de mídia.
