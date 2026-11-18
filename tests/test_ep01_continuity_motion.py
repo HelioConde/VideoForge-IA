@@ -66,7 +66,9 @@ class ContinuityMotionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "NONMONOTONIC"):
             motion.validate_keyframes(broken)
         broken = copy.deepcopy(source)
-        broken["frames"][-1]["cart_yaw_degrees"] = 80
+        for frame in broken["frames"]:
+            if frame["cart_yaw_degrees"] == 90:
+                frame["cart_yaw_degrees"] = 80
         with self.assertRaisesRegex(ValueError, "INCOMPLETE_PIVOT"):
             motion.validate_keyframes(broken)
         broken = copy.deepcopy(source)
