@@ -1,0 +1,78 @@
+name: "EP01 C07-C08 - physical continuity rig readiness (no inference)"
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ep01-c07-c08-motion-readiness.yml'
+      - 'videoforge/ep01_continuity_motion.py'
+      - 'videoforge/ep01_continuity_v2.py'
+      - 'videoforge/ep01_camera_batch.py'
+      - 'motion-remotion/src/ep01-camera-batch.tsx'
+      - 'tests/test_ep01_continuity_motion.py'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PROPOSTA-MOVIMENTO-C07-C08-V1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rig-readiness-and-camera-contract:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate physical continuity, SHA and safety gates (offline)
+        run: |
+          python -m unittest tests.test_ep01_continuity_motion tests.test_ep01_continuity_v2 -v
+      - name: Generate source-verified, blocked rig-readiness report
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.ep01_continuity_motion \
+            --output "$RUNNER_TEMP/c07-c08-rig-readiness.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          doc=json.loads((Path(os.environ['RUNNER_TEMP'])/'c07-c08-rig-readiness.json').read_text())
+          assert doc['source_shas_verified'] is True
+          assert doc['shots'] == ['C07-P03', 'C08-P02', 'C08-P03']
+          assert doc['art_approved'] is False
+          assert doc['rig_approved'] is False
+          assert doc['animated_motion_verified'] is False
+          assert doc['physical_keyframes_proposed'] == 7
+          assert doc['cart_rotation_degrees_proposed'] == 90
+          assert 'approved_cart_layer_manifest' in doc['blocked_reasons']
+          assert doc['inference_requests'] == 0
+          assert doc['images_generated'] == 0
+          assert doc['youtube_publications'] == 0
+          print('Rig readiness correctly BLOCKED: physical plan exists but approved layers do not.')
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned Remotion TypeScript toolchain (no codegen/media)
+        run: npm ci --prefix motion-remotion --ignore-scripts --no-audit --no-fund
+      - name: Typecheck camera preview and C07/C08 QA notice
+        run: npm run --prefix motion-remotion typecheck
+      - name: Upload safely blocked pre-rig evidence
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-c07-c08-rig-readiness-${{ github.run_id }}
+          path: ${{ runner.temp }}/c07-c08-rig-readiness.json
+          retention-days: 14
+          if-no-files-found: error
