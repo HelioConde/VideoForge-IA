@@ -1,0 +1,49 @@
+{
+  "schema": "videoforge/continuity-candidate/v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c08-p01-continuity-v2-scene-mother",
+  "candidate_scene_shot_id": "C08-P01",
+  "source_originals_sha_verified": [
+    {
+      "id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc"
+    },
+    {
+      "id": "biblia-elara-encapuzada-v1",
+      "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31"
+    },
+    {
+      "id": "biblia-carrinho-base-v1",
+      "sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36"
+    },
+    {
+      "id": "biblia-beco-base-v1",
+      "sha256": "83c10082fb1a808a3f118625d9aca8bcf1e22707d9af0b91d92440af61436939"
+    }
+  ],
+  "shot_id": "C08-P01",
+  "sha256": "fbce36d3ed98224912e047d79f581c621ebfe65bf7d3e857aad61b53a94bf57a",
+  "source_references": [
+    {
+      "asset_id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc"
+    },
+    {
+      "asset_id": "biblia-elara-encapuzada-v1",
+      "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31"
+    },
+    {
+      "asset_id": "biblia-carrinho-base-v1",
+      "sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36"
+    },
+    {
+      "asset_id": "biblia-beco-base-v1",
+      "sha256": "83c10082fb1a808a3f118625d9aca8bcf1e22707d9af0b91d92440af61436939"
+    }
+  ],
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "official_mp4": false,
+  "youtube_uploaded": false
+}
