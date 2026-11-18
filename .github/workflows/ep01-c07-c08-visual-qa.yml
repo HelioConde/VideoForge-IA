@@ -1,0 +1,63 @@
+name: "EP01 C07-C08 - archived-image visual QA contact sheet"
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ep01-c07-c08-visual-qa.yml'
+      - 'orchestrator/shot_contact_sheet.py'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prepare-visual-qa:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify pinned archive SHA256 and generate 9-shot preview without inferencing
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -version | head -n 1
+          python -m orchestrator.shot_contact_sheet \
+            --output-dir "$RUNNER_TEMP/c07-c08-visual-qa" --render
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'c07-c08-visual-qa'
+          result=json.loads((root/'source-inventory.json').read_text())
+          assert len(result['shots']) == 9
+          assert result['unique_source_images'] == 8
+          assert result['reused_shots'] == ['C07-P04']
+          assert result['new_ai_requests'] == 0
+          assert result['visual_qa_approved'] is False
+          assert result['contains_rendered_mp4_frames'] is False
+          assert (root/'c07-c08-9-shots-contact.jpg').is_file()
+          assert len(list(root.glob('*-preview.jpg'))) == 9
+          print("Archive SHA256 verified: 8 source images across 9 shots; 1 explicit reuse; no approvals.")
+          PY
+      - name: Save contact sheet, 9 labeled previews and verified image inventory
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-c07-c08-contact-qa-${{ github.run_id }}
+          path: ${{ runner.temp }}/c07-c08-visual-qa/
+          retention-days: 14
+          if-no-files-found: error
