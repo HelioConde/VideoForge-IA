@@ -78,6 +78,16 @@ class CameraBatchTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Decoded frame count'):
                 batch.verify_video(Path('unused'), 2)
 
+    @unittest.skipUnless(batch.shutil.which('ffmpeg') and batch.shutil.which('ffprobe'), 'FFmpeg required')
+    def test_real_encoded_black_is_detected_after_yuv_conversion(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)/'black.mp4'
+            batch.subprocess.run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i', 'color=c=black:s=540x960:r=30', '-frames:v', '2', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', str(path)], check=True)
+            result = batch.verify_video(path, 2, [(0,2)])
+            self.assertEqual(result['black_frames'], [0,1])
+            with self.assertRaisesRegex(ValueError, 'Unexpected black'):
+                batch.verify_video(path, 2)
+
 
 if __name__ == '__main__':
     unittest.main()

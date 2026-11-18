@@ -160,7 +160,7 @@ def verify_video(path, frames, black_ranges=()):
     for f in range(frames):
         # Ignore bottom watermark region; assess picture rather than its label.
         picture = raw[f*1024:f*1024+28*32]
-        if max(picture) <= 12 and sum(picture) / len(picture) < 5:
+        if max(picture) <= 12 and sum(picture) / len(picture) < 10:
             black.append(f)
     unexpected = [f for f in black if not any(a <= f < b for a, b in black_ranges)]
     if unexpected:
