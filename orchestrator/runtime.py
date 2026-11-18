@@ -558,6 +558,54 @@ def write_report(path, data, root=ROOT):
     tmp.replace(path)
 
 
+
+def validate_chain_audit_result(result, expected_model):
+    """Fail closed unless the four-call chain produced a persisted QA decision.
+
+    A rejected QA is a legitimate completed *audit* (not approval of a video).
+    Provider failures and missing coordinator decisions must never be success.
+    """
+    tasks, checkpoints, ledger = (result.get('tasks', []),
+                                  result.get('checkpoints', []),
+                                  result.get('usage', []))
+    if (len(tasks) != 1 or len(checkpoints) != 1 or len(ledger) != 4
+            or not expected_model
+            or [call.get('agent_id') for call in ledger] != ['01', '03', '12', '01']
+            or any(call.get('state') != 'settled'
+                   or call.get('model') != expected_model
+                   or not call.get('report_sha256') for call in ledger)):
+        raise ValueError('Incomplete four-call audit provenance')
+    task, checkpoint = tasks[0], checkpoints[0]
+    review = checkpoint.get('review')
+    if (task.get('status') not in {'completed', 'blocked'}
+            or task.get('blocked_reason') == 'ProviderError'
+            or checkpoint.get('task_id') != task.get('task_id')
+            or checkpoint.get('result_sha256') != task.get('result_sha256')
+            or checkpoint.get('human_visual_approval') is not False
+            or checkpoint.get('youtube_publication') is not False
+            or not isinstance(review, dict)
+            or review.get('agent_id') != '12'
+            or type(review.get('technical_passed')) is not bool
+            or review.get('reviewed_result_sha256') != task.get('result_sha256')):
+        raise ValueError('Four-call audit is missing persisted independent QA')
+    coordinator = review.get('coordinator', {})
+    decision = coordinator.get('response', {}).get('findings', [])
+    if (coordinator.get('agent_id') != '01' or len(decision) != 1
+            or not isinstance(decision[0], dict)):
+        raise ValueError('Final Director decision was not accepted')
+    expected_status = 'needs_human_review' if review['technical_passed'] else 'blocked'
+    if decision[0].get('status') != expected_status:
+        raise ValueError('Final Director decision does not match independent QA')
+    if review['technical_passed']:
+        if task['status'] != 'completed' or checkpoint.get('status') == 'blocked':
+            raise ValueError('Passing audit lacks completed technical checkpoint')
+    elif (task['status'] != 'blocked'
+          or task.get('blocked_reason') != 'independent_review_rejected'
+          or checkpoint.get('status') != 'blocked'):
+        raise ValueError('Rejected QA lacks blocked checkpoint')
+    return expected_status
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--db', required=True)
@@ -641,13 +689,10 @@ def main():
                           'events':len(result['events']), 'llm_calls':len(result['usage']),
                           'state_sha256':result['state_sha256'], 'production_actions':0}))
         if args.chain_audit and not args.inspect_state:
-            # A well-grounded request for corrections is a valid end to the conversation.
-            if (len(result['tasks']) != 1 or len(result['checkpoints']) != 1
-                    or len(result['usage']) != 4
-                    or [call['agent_id'] for call in result['usage']] != ['01', '03', '12', '01']
-                    or any(call['state'] != 'settled' or call['model'] != os.getenv('AI_MODEL')
-                           or not call['report_sha256'] for call in result['usage'])):
-                raise SystemExit('Incomplete four-call audit; inspect saved evidence before any further action')
+            # Four settled API responses are NOT sufficient evidence of a valid
+            # final decision. A QA rejection is a valid, persistent terminal
+            # audit outcome, but a provider/schema failure is not.
+            validate_chain_audit_result(result, os.getenv('AI_MODEL'))
         elif not args.inspect_state and any(task['status'] in {'blocked','dead_letter'} for task in result['tasks']):
             raise SystemExit(2)
     finally:
