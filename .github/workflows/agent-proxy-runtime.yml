@@ -217,7 +217,7 @@ jobs:
           if model not in ('gpt-6.2-astra','gpt-6-astra'):
               raise SystemExit('Only the two explicitly authorized Astra models may execute')
           with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as stream:
-              stream.write('AI_MODEL='+model+'\\n')
+              print('AI_MODEL='+model, file=stream)
           print('Model verified before inference: '+model+' ('+document['model_selection_reason']+')')
           PY
           fi
