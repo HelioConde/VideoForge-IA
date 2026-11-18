@@ -120,6 +120,34 @@ class OfflineProxyContractTests(unittest.TestCase):
                   "synthetic-unit-test-key-never-valid",
                   opener=FakeGet(), require_model="model-absent")
 
+    def test_get_only_model_catalog_lists_ids_without_generation(self):
+        paths = []
+        class FakeCatalog:
+            def open(self, request, timeout):
+                paths.append((request.full_url, request.get_method()))
+                if request.full_url.endswith("/health"):
+                    return FakeHTTPResponse({"status": "ok", "accounts": 1})
+                return FakeHTTPResponse({"data": [{"id": "gpt-6.1-sol"}, {"id": "gpt-6.1-sol"},
+                                                    {"id": "gpt-image-2"}]})
+        result = probe("http://127.0.0.1:18080",
+                       "synthetic-unit-test-key-never-valid",
+                       opener=FakeCatalog(), list_models=True)
+        self.assertEqual(result["model_ids"], ["gpt-6.1-sol", "gpt-image-2"])
+        self.assertEqual(result["model_count"], 2)
+        self.assertFalse(result["catalog_contains_text_capability_proof"])
+        self.assertEqual([method for _, method in paths], ["GET", "GET"])
+        self.assertEqual(result["inference_requests"], 0)
+
+    def test_malformed_catalog_ids_cannot_appear_in_artifact(self):
+        class FakeBadCatalog:
+            def open(self, request, timeout):
+                if request.full_url.endswith("/health"):
+                    return FakeHTTPResponse({"status": "ok", "accounts": 1})
+                return FakeHTTPResponse({"data": [{"id": "valid"}, {"id": "bad\\nkey"}]})
+        with self.assertRaises(PreflightError):
+            probe("http://127.0.0.1:18080", "synthetic-unit-test-key-never-valid",
+                  opener=FakeBadCatalog(), list_models=True)
+
     def test_preflight_rejects_insecure_endpoint_and_sanitizes_errors(self):
         for invalid in ("http://external.example:18080", "http://localhost:18080",
                         "https://user:secret@example.com", "https://example.com/proxy"):
