@@ -1,3 +1,4 @@
+# Resume after C07-P02 SHA recovery, no duplicate provider call.
 name: "EP01 - corrigir C07 C08 continuidade V2"
 run-name: "EP01 C07-C08 V2 ${{ inputs.shot_id || 'fila' }}"
 on:
