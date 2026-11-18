@@ -222,9 +222,13 @@ def model_step(store, task, root, agent, payload, mode, limits):
     # A separate, manual all-role text pilot uses only source-bound, read-only
     # reports. Its outputs cannot grant visual, media, or publishing approval.
     if stage == 'roundtrip_assignment':
-        contract += (' You are coordinator 01. Acknowledge the ten named specialist '
-                     'assignments in a concise analysis; findings may be empty. '
-                     'Do not claim specialist work or visual approval is complete.')
+        contract += (' You are coordinator 01. Explicitly delegate ten read-only '
+                     'specialist tasks. Return exactly ten findings, one per '
+                     'specialist in the specialists input. Each has exactly: '
+                     'recipient, focus, source_sha256, tools. Copy recipient, '
+                     'focus and source_sha256 from the input and set tools to '
+                     '[\"read_only_text_analysis\"]. No shell, images, rig, animation, '
+                     'audio, render, visual approval or publication.')
     elif stage == 'roundtrip_specialist':
         contract += (' You are the single specialist named by role_id. Return exactly '
                      'one finding with exactly these keys: role_id, focus, '
