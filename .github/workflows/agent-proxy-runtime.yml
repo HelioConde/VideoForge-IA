@@ -18,10 +18,10 @@ on:
         default: mock_with_proxy
         required: true
       model:
-        description: "Exact model ID from GET /v1/models; candidate gpt-6-astra, availability may vary"
+        description: "auto prefers gpt-6.2-astra; uses gpt-6-astra only if primary is absent from authenticated GET catalog"
         type: string
         required: false
-        default: 'gpt-6-astra'
+        default: 'auto'
       confirm:
         description: "For unpriced chain type AUTHORIZE_FOUR_ASTRA_CALLS; other live text AUTHORIZE_TEXT_INFERENCE"
         type: string
@@ -121,17 +121,17 @@ jobs:
           else:
               if mode == 'codex_proxy' and os.environ['REQUEST_BUDGET'] == 'uncapped':
                   if (os.environ['REQUEST_CONFIRM'] != 'AUTHORIZE_FOUR_ASTRA_CALLS'
-                          or os.environ['REQUEST_MODEL'] != 'gpt-6-astra'
+                          or os.environ['REQUEST_MODEL'] not in ('auto','gpt-6.2-astra','gpt-6-astra')
                           or os.environ['GITHUB_RUN_ATTEMPT'] != '1'):
                       raise SystemExit('Fresh explicit four-call Astra authorization required')
                   raise SystemExit(0)
               if os.environ['REQUEST_CONFIRM'] != 'AUTHORIZE_TEXT_INFERENCE':
                   raise SystemExit('Live text inference was not explicitly authorized')
               model=os.environ['REQUEST_MODEL']
-              if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{1,99}',model):
+              if model != 'auto' and not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{1,99}',model):
                   raise SystemExit('A valid explicit model ID is required')
               if mode == 'codex_proxy_ping' and os.environ['REQUEST_BUDGET'] == 'uncapped':
-                  if model != 'gpt-6-astra':
+                  if model not in ('auto','gpt-6.2-astra','gpt-6-astra'):
                       raise SystemExit('Uncapped ping requires Astra')
                   print('One authorized Agent 01 request without a monetary ceiling.')
                   raise SystemExit(0)
@@ -199,9 +199,28 @@ jobs:
           set -euo pipefail
           args=(--output "$RUNNER_TEMP/proxy-preflight.json")
           if [[ "$REQUEST_MODE" != mock_with_proxy ]]; then
-            args+=(--require-model "$REQUEST_MODEL")
+            if [[ "$REQUEST_MODEL" == auto ]]; then
+              args+=(--prefer-model gpt-6.2-astra --fallback-model gpt-6-astra)
+            else
+              args+=(--require-model "$REQUEST_MODEL")
+            fi
           fi
           python -m orchestrator.proxy_preflight "${args[@]}"
+          if [[ "$REQUEST_MODE" != mock_with_proxy ]]; then
+            # Selection happens exclusively on GET catalog, before a single POST.
+            # Never retry on 429/timeout or after any uncertain provider outcome.
+            python - <<'PY'
+          import json, os
+          from pathlib import Path
+          document=json.loads((Path(os.environ['RUNNER_TEMP'])/'proxy-preflight.json').read_text())
+          model=document.get('selected_model')
+          if model not in ('gpt-6.2-astra','gpt-6-astra'):
+              raise SystemExit('Only the two explicitly authorized Astra models may execute')
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as stream:
+              stream.write('AI_MODEL='+model+'\\n')
+          print('Model verified before inference: '+model+' ('+document['model_selection_reason']+')')
+          PY
+          fi
       - name: Enable explicitly authorized text inference, never media
         if: inputs.mode != 'mock_with_proxy'
         run: |
@@ -209,7 +228,7 @@ jobs:
           echo 'AI_ENABLED=true' >> "$GITHUB_ENV"
           echo 'PAID_CALLS_ENABLED=true' >> "$GITHUB_ENV"
           echo 'CODEX_PROXY_TEXT_AUTHORIZED=true' >> "$GITHUB_ENV"
-          echo "AI_MODEL=$REQUEST_MODEL" >> "$GITHUB_ENV"
+          # AI_MODEL was selected from the authenticated GET catalog above.
           echo "AI_INPUT_USD_PER_MILLION=$REQUEST_INPUT_PRICE" >> "$GITHUB_ENV"
           echo "AI_OUTPUT_USD_PER_MILLION=$REQUEST_OUTPUT_PRICE" >> "$GITHUB_ENV"
       - name: Run one audit through Agent 01, specialist and independent QA
