@@ -132,6 +132,110 @@ def _validate_director(response: dict, qa_passed: bool) -> None:
         raise ProviderError("Director consolidation must match independent QA")
 
 
+def validate_live_roundtrip_result(data: dict, expected_model: str) -> str:
+    """Require complete durable evidence before calling 12-role Astra a success.
+
+    Check both the role sequence and each matching accepted response journal.
+    This distinguishes ten *textual* specialist calls from production execution.
+    """
+    tasks = data.get("tasks", [])
+    ledger = data.get("usage", [])
+    checkpoints = data.get("checkpoints", [])
+    expected_roles = ["01", *SPECIALISTS, "12", "01"]
+    expected_stages = (["roundtrip_assignment"]
+                       + ["roundtrip_specialist"] * len(SPECIALISTS)
+                       + ["roundtrip_independent_qa", "roundtrip_consolidation"])
+    if (expected_model not in {"gpt-6.2-astra", "gpt-6-astra"}
+            or len(tasks) != 1 or len(ledger) != NUMBER_OF_CALLS
+            or len(checkpoints) != 1):
+        raise ValueError("Missing thirteen-call audit provenance")
+    task = tasks[0]
+    checkpoint = checkpoints[0]
+    if (task.get("scope") != CONTRACT or task.get("mode") != "codex_proxy"
+            or task.get("model") != expected_model
+            or task.get("owner") != "01" or task.get("reviewer") != "12"
+            or task.get("status") not in {"completed", "blocked"}
+            or checkpoint.get("task_id") != task.get("task_id")
+            or checkpoint.get("result_sha256") != task.get("result_sha256")
+            or checkpoint.get("input_refs") != task.get("input_refs")
+            or checkpoint.get("human_visual_approval") is not False
+            or checkpoint.get("youtube_publication") is not False
+            or data.get("safety", {}).get("production_tools_enabled") is not False
+            or data.get("safety", {}).get("youtube_publications") != 0):
+        raise ValueError("Role audit checkpoint violates source or production gate")
+
+    events = [event for event in data.get("events", [])
+              if event.get("task_id") == task["task_id"]
+              and event.get("type") == "progress_update"
+              and isinstance(event.get("content"), dict)
+              and isinstance(event["content"].get("call_id"), str)]
+    if len(events) != NUMBER_OF_CALLS or len({e["content"]["call_id"] for e in events}) != NUMBER_OF_CALLS:
+        raise ValueError("Missing or duplicate accepted invocation journals")
+
+    specialist_outputs = {}
+    for index, (role, stage, usage, event) in enumerate(zip(expected_roles, expected_stages, ledger, events)):
+        body = event["content"]
+        response = body.get("response")
+        if (usage.get("call_id") != body["call_id"]
+                or usage.get("agent_id") != role
+                or usage.get("model") != expected_model
+                or usage.get("provider") != "codex_proxy"
+                or usage.get("state") != "settled"
+                or not usage.get("response_id")
+                or usage.get("response_id") != body.get("response_id")
+                or not isinstance(response, dict)
+                or usage.get("report_sha256") != fingerprint(response)
+                or body.get("report_sha256") != usage["report_sha256"]
+                or body.get("validation_status") != "accepted"
+                or body.get("agent_id") != role
+                or body.get("model") != expected_model
+                or body.get("runtime_stage") != stage
+                or event.get("sender") != role
+                or event.get("recipient") != body.get("recipient")):
+            raise ValueError(f"Invocation {index+1} has inconsistent journal provenance")
+        ensure_response({
+            "agent_id": role, "provider": "codex_proxy", "model": expected_model,
+            "reported_model": expected_model, "llm_executed": True,
+            "simulated": False, "response_id": usage["response_id"],
+            "response_sha256": usage["report_sha256"], "response": response,
+        }, role)
+        if stage == "roundtrip_assignment":
+            _validate_assignment(response, task["input_refs"][MANIFEST.as_posix()])
+        elif stage == "roundtrip_specialist":
+            finding = response["findings"][0] if response["findings"] else {}
+            sha = finding.get("evidence_sha256") if isinstance(finding, dict) else None
+            if (not isinstance(sha, str) or len(sha) != 64
+                    or any(c not in "0123456789abcdef" for c in sha)):
+                raise ValueError("Specialist evidence hash is missing")
+            _validate_specialist(response, role, sha)
+            specialist_outputs[role] = {"evidence_sha256": sha}
+        elif stage == "roundtrip_independent_qa":
+            qa_passed = _validate_qa(response, specialist_outputs)
+            if checkpoint.get("review", {}).get("qa_response", {}).get("response") != response:
+                raise ValueError("Independent QA checkpoint differs from journaled response")
+        elif stage == "roundtrip_consolidation":
+            _validate_director(response, qa_passed)
+            if checkpoint.get("review", {}).get("coordinator", {}).get("response") != response:
+                raise ValueError("Director checkpoint differs from journaled response")
+
+    review = checkpoint.get("review", {})
+    if (review.get("agent_id") != "12"
+            or type(review.get("technical_passed")) is not bool
+            or review["technical_passed"] != qa_passed
+            or review.get("reviewed_result_sha256") != task["result_sha256"]
+            or review.get("human_visual_approval") is not False
+            or review.get("production_ready") is not False):
+        raise ValueError("Independent QA verdict was not durably preserved")
+    if qa_passed:
+        if task["status"] != "completed" or checkpoint.get("status") == "blocked":
+            raise ValueError("Passing text QA is missing its technical checkpoint")
+    elif (task["status"] != "blocked"
+          or task.get("blocked_reason") != "independent_review_rejected"
+          or checkpoint.get("status") != "blocked"):
+        raise ValueError("Rejected QA must produce a blocked checkpoint")
+    return "needs_human_review" if qa_passed else "blocked"
+
+
 def step(store: Store, *, root=ROOT, limits=None) -> dict | None:
     if limits is None:
         raise ValueError("Explicit priced call/token budgets required")
@@ -295,11 +399,12 @@ def main():
         print(json.dumps({"actual_calls": records["actual_calls"],
                           "task_status": result["tasks"][0]["status"],
                           "production_ready": False}))
-        if (records["actual_calls"] != NUMBER_OF_CALLS
-                or len(result["checkpoints"]) != 1
-                or result["tasks"][0]["status"] not in ("completed", "blocked")
-                or result["tasks"][0].get("blocked_reason") in ("ProviderError", "BudgetBlocked")):
-            raise SystemExit("Incomplete text-only agent roundtrip; inspect journal without replay")
+        try:
+            validate_live_roundtrip_result(result, records["model"])
+        except (ValueError, ProviderError) as exc:
+            raise SystemExit(
+                "Incomplete or unverified Astra role roundtrip; inspect saved evidence without replay"
+            ) from exc
     finally:
         store.close()
         if temporary:
