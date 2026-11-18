@@ -11,7 +11,7 @@
   "official_episode_render": false,
   "youtube_upload": false,
   "auto_visual_approval": false,
-  "request_revision": 4,
-  "previous_run_id": 44210744577,
-  "retry_reason": "correct exact no-hand policy field in stdlib SHA preflight"
+  "request_revision": 5,
+  "previous_run_id": 44211037861,
+  "retry_reason": "isolate TypeScript static-camera code from unrelated Three.js components absent in legacy runner"
 }
