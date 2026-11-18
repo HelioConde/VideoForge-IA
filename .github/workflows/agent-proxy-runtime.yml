@@ -14,7 +14,7 @@ on:
       mode:
         description: "Mock uses real proxy GET health/models; text inference is separate and may consume quota"
         type: choice
-        options: [mock_with_proxy, codex_proxy_ping, codex_proxy]
+        options: [mock_with_proxy, reconcile_only, codex_proxy_ping, codex_proxy]
         default: mock_with_proxy
         required: true
       model:
@@ -72,7 +72,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_agent_01_ping.py' -v
 
   manual-proxy-runtime:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && inputs.mode != 'reconcile_only'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     concurrency:
@@ -272,3 +272,42 @@ jobs:
         run: |
           docker rm -f vf-agent-runtime-proxy >/dev/null 2>&1 || true
           rm -rf "$RUNNER_TEMP/vf-agent-runtime-proxy"
+
+  manual-reconcile-existing:
+    # A separate no-proxy job: no image, no model, no paid calls, no retry.
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'reconcile_only'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: agent-codex-text-pilot-${{ github.repository }}
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reconcile existing settled calls to a BLOCKED checkpoint (NO AI)
+        shell: bash
+        run: |
+          python -m orchestrator.chain_recovery \
+            --apply --confirm RECONCILE_WITHOUT_INFERENCE \
+            --output "$RUNNER_TEMP/blocked-chain-reconciliation.json"
+      - name: Archive sanitized reconciliation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blocked-chain-reconciliation-${{ github.run_id }}
+          path: ${{ runner.temp }}/blocked-chain-reconciliation.json
+          if-no-files-found: ignore
+          retention-days: 7
