@@ -118,3 +118,12 @@ Em [GitHub Actions #44318392194](https://github.com/HelioConde/VideoForge-IA/act
 `orchestrator.proxy_preflight --list-models` inclui exclusivamente IDs curtos com caracteres seguros na evidência, contabiliza eventuais IDs omitidos e não faz POST, geração, OAuth refresh ou chamada de inferência. A PR também passou nos testes offline do contrato e no teste mock 01→03→12→01, mantendo **12 mensagens, 2 checkpoints, 0 solicitações de inferência**. O gatilho temporário de PR foi retirado no commit `3d308706`; o preflight voltou a exigir execução manual.
 
 **Próximo passo:** selecionar explicitamente um ID existente no catálogo e, caso o usuário autorize consumo de cota e valores de orçamento, iniciar o `codex_proxy_ping` com uma única chamada. Sem autorização de inferência, permanecer em mock/GET-only. A primeira resposta real do Agente 01 ainda não foi comprovada.
+
+
+## Astra como candidato para o Agente 01 (18/11/2026)
+
+Teste de disponibilidade via GitHub Actions [#44353722401](https://github.com/HelioConde/VideoForge-IA/actions/runs/44353722401): o mesmo contêiner efêmero das imagens foi iniciado e autenticado com os Secrets existentes. `GET /v1/models --require-model gpt-6-astra` **passou**, e o smoke test com Agente 01 e barramento no modo mock passou no mesmo runner: 12 eventos, 2 checkpoints, 0 chamadas de inferência/imagem, 0 publicações. O workflow de diagnóstico foi restaurado para manual-only.
+
+O catálogo variou entre as verificações: [#44353333914](https://github.com/HelioConde/VideoForge-IA/actions/runs/44353333914) bloqueou `gpt-6.2-astra` ausente; [#44353516602](https://github.com/HelioConde/VideoForge-IA/actions/runs/44353516602) listou `gpt-6-astra` entre dez IDs; [#44353722401](https://github.com/HelioConde/VideoForge-IA/actions/runs/44353722401) incluiu `gpt-6-astra` e `gpt-6.2-astra` entre 14 IDs. Por isso, usar `gpt-6-astra` como candidato com preflight obrigatório a cada execução, sem fallback silencioso.
+
+`.github/workflows/agent-proxy-runtime.yml` agora apresenta `gpt-6-astra` como modelo padrão no formulário manual, mas mantém `mode=mock_with_proxy`, `confirm=NO_INFERENCE` e orçamento zero por padrão. O modelo aparecer no catálogo **não comprova resposta em `POST /v1/responses` nem ausência de cobrança/cota**. Nenhuma inferência real foi realizada; qualquer teste de texto exige autorização separada e limite de custo explícito.
