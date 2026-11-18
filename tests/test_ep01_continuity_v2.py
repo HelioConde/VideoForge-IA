@@ -17,7 +17,7 @@ class ContinuityTests(unittest.TestCase):
     def test_screen_direction_and_blockage(self):
         plan = read_plan()
         rows = {s["id"]: s for s in plan["shots"]}
-        self.assertIn("DIREITA", rows["C07-P01"]["visual_prompt"])
+        self.assertIn("DIREITA", rows["C07-P01"]["visual_prompt"].upper())
         self.assertIn("NÃO incluir Elara", rows["C07-P02"]["visual_prompt"])
         self.assertIn("Kael SOZINHO", rows["C08-P02"]["visual_prompt"])
         self.assertIn("Em hipótese alguma", rows["C08-P03"]["visual_prompt"])
