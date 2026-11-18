@@ -39,6 +39,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_dispatch_plan.py' -v
           python -m unittest discover -s tests -p 'test_issue_proposals.py' -v
           python -m unittest discover -s tests -p 'test_task_leases.py' -v
+          python -m unittest discover -s tests -p 'test_lease_fencing.py' -v
           python -m unittest discover -s tests -p 'test_issue_reconcile.py' -v
           python orchestrator/issue_proposals.py --output /tmp/agent-issue-proposals.json
           python orchestrator/dispatch_plan.py --output /tmp/agent-dispatch-plan.json
