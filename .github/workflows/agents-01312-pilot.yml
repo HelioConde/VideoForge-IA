@@ -1,0 +1,34 @@
+name: "Agents 01 03 12 - auditoria automatica real (sem IA)"
+on:
+  pull_request:
+    paths:
+      - 'orchestrator/**'
+      - 'tests/test_autonomous_pilot.py'
+      - '.github/workflows/agents-01312-pilot.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: agents-01312-pilot-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  execute:
+    if: github.repository == 'HelioConde/VideoForge-IA'
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Testar execucao deterministica 01 03 12
+        run: |
+          python -m unittest discover -s tests -p 'test_autonomous_pilot.py' -v
+      - name: Executar diretor geral, auditor de cenas e QA independente
+        run: |
+          python orchestrator/autonomous_pilot.py --root . --queue orchestrator/tasks.json --output /tmp/agents-01312-checkpoint.json
+      - name: Arquivar relatorios e mensagens
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agents-01312-checkpoint-${{ github.run_id }}
+          path: /tmp/agents-01312-checkpoint.json
+          if-no-files-found: ignore
+          retention-days: 14
