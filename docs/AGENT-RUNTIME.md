@@ -109,3 +109,12 @@ A integração de rede `codex_proxy` agora desativa HTTP_PROXY/HTTPS_PROXY apena
 No mesmo runner, `orchestrator.agent_ping --mode mock` produziu um ack sintético do Agente 01; o runtime `--mode mock` concluiu duas auditorias de metadados com **12 mensagens 01→03/04→12→01 e dois checkpoints**; a reabertura do SQLite preservou o SHA-256 de estado (idempotência). Resultado declarado: `inference_requests=0`, `image_requests=0`, `youtube_publications=0`. Artifact `proxy-preflight-44315783184` inclui relatórios sanitizados.
 
 **Escopo do sucesso:** conectividade real do proxy + execução **simulada** do Agente 01 e barramento. **Não foi enviado POST /v1/responses, não houve resposta gerada por IA nem validação de disponibilidade de inferência de texto.** O gatilho temporário de PR usado no diagnóstico foi retirado no commit `faf89dca`, restaurando o workflow de preflight para manual-only. O próximo passo exige permissão explícita para consumo de cota e uma única chamada com modelo/preços/orçamento configurados, por meio de `codex_proxy_ping`, sem merge automático ou publicação.
+
+
+## Catálogo de modelos comprovado sem inferência (18/11/2026)
+
+Em [GitHub Actions #44318392194](https://github.com/HelioConde/VideoForge-IA/actions/runs/44318392194), o mesmo contêiner efêmero utilizado nas imagens foi iniciado com os Secrets existentes; `GET /health` confirmou **1 conta** e `GET /v1/models` retornou **14 identificadores de modelo** sem caracteres inesperados. Entre eles: `gpt-6.1-sol`, `gpt-6.1-terra`, `gpt-6-sol`, `gpt-6.2-sol`, `gpt-6.2-astra`, `gpt-image-2`. A presença no catálogo não garante que o modelo de texto esteja habilitado para gerar, nem ausência de custos.
+
+`orchestrator.proxy_preflight --list-models` inclui exclusivamente IDs curtos com caracteres seguros na evidência, contabiliza eventuais IDs omitidos e não faz POST, geração, OAuth refresh ou chamada de inferência. A PR também passou nos testes offline do contrato e no teste mock 01→03→12→01, mantendo **12 mensagens, 2 checkpoints, 0 solicitações de inferência**. O gatilho temporário de PR foi retirado no commit `3d308706`; o preflight voltou a exigir execução manual.
+
+**Próximo passo:** selecionar explicitamente um ID existente no catálogo e, caso o usuário autorize consumo de cota e valores de orçamento, iniciar o `codex_proxy_ping` com uma única chamada. Sem autorização de inferência, permanecer em mock/GET-only. A primeira resposta real do Agente 01 ainda não foi comprovada.
