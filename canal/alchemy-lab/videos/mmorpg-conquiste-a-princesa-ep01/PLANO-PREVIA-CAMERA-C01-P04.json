@@ -1,0 +1,55 @@
+{
+  "schema": "videoforge/ep01-c01p04-static-camera-preview/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "source_approved_original": {
+    "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png",
+    "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+    "native_size": [
+      941,
+      1671
+    ]
+  },
+  "source_technical_aligned": {
+    "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3-aligned/44156724769/c01-p04-scene-mother-facing-throne-v3-native-aligned.png",
+    "sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+    "native_size": [
+      941,
+      1672
+    ]
+  },
+  "timeline": {
+    "source": "remake-v2-cinematic-edl.json",
+    "start_frame": 240,
+    "end_frame_exclusive": 310,
+    "duration_frames": 70,
+    "fps": 30
+  },
+  "camera": {
+    "type": "slow_dolly_out_single_layer_simulation",
+    "zoom_start": 1.075,
+    "zoom_end": 1,
+    "translation_px_end": [
+      0,
+      0
+    ],
+    "real_parallax": false,
+    "preserve_whole_guard_spear_and_hand_pixels": true,
+    "no_articulated_movement": true
+  },
+  "user_decision_policy": "POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json",
+  "render": {
+    "preview_only": true,
+    "width": 540,
+    "height": 960,
+    "codec": "h264",
+    "no_audio_claim": true,
+    "watermark": "PREVIA TECNICA - CAMERA ESTATICA - SEM RIG",
+    "no_youtube_upload": true
+  },
+  "requires_visual_approval_of_camera_preview": true,
+  "official_episode_render_authorized": false,
+  "rig_ready": false,
+  "hand_parts_required": false
+}
