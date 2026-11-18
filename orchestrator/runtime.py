@@ -625,7 +625,7 @@ def main():
             if (len(result['tasks']) != 1 or len(result['checkpoints']) != 1
                     or len(result['usage']) != 4
                     or [call['agent_id'] for call in result['usage']] != ['01', '03', '12', '01']
-                    or any(call['state'] != 'settled' or call['model'] != 'gpt-6-astra'
+                    or any(call['state'] != 'settled' or call['model'] != os.getenv('AI_MODEL')
                            or not call['report_sha256'] for call in result['usage'])):
                 raise SystemExit('Incomplete four-call audit; inspect saved evidence before any further action')
         elif not args.inspect_state and any(task['status'] in {'blocked','dead_letter'} for task in result['tasks']):
