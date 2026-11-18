@@ -1,0 +1,47 @@
+{
+  "schema": "videoforge/ep01-c01p04-camera-preview-verified/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "shot_id": "C01-P04",
+  "technical_preview": {
+    "run_id": 44211299311,
+    "artifact_id": 14387020119,
+    "artifact_name": "ep01-c01p04-approved-mother-camera-preview-44211299311",
+    "github_run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/44211299311",
+    "video_file_inside_artifact": "camera-preview.mp4",
+    "video_sha256": "f4ee6c4c9c1f18432c9ba7d9b7d41c85bbc63a9d9cd6949a4fd09340e017bf38",
+    "video_size_bytes": 1367779,
+    "verified_frames": 70,
+    "fps": 30,
+    "width": 540,
+    "height": 960,
+    "codec": "h264",
+    "artifact_uploaded": true,
+    "artifact_not_expired": true
+  },
+  "source": {
+    "approved_original_sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+    "technical_aligned_sha256": "b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d",
+    "hand_spear_integrated_in_original": true,
+    "source_approved_image_preserved": true
+  },
+  "workflow_report": {
+    "run_conclusion": "failure",
+    "reason": "Renderer and codec QA passed; Git archival command failed because prebuilt container lacks git (exit 127).",
+    "corrective_commit": "f1d6fe188bdc4152ddbdbb78935de7bf0f84320f",
+    "corrected_to_artifact_only": true
+  },
+  "render_permissions": {
+    "image_provider_calls": 0,
+    "separate_hands": false,
+    "character_rig": false,
+    "static_camera_only": true,
+    "real_parallax": false,
+    "technical_preview_only": true,
+    "human_approved_camera_motion": false,
+    "official_episode_rendered": false,
+    "youtube_uploaded": false,
+    "rig_ready": false
+  },
+  "next": "Review technical MP4 and frame screenshots before approving camera timing; continue other shots with 39 archived mothers."
+}
