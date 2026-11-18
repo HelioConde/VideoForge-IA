@@ -41,7 +41,14 @@ def normalize_origin(value: str) -> tuple[str, str]:
 
 
 def probe(base_url: str, api_key: str, *, opener=None, require_model: str | None = None,
-          list_models: bool = False) -> dict:
+          list_models: bool = False, prefer_model: str | None = None,
+          fallback_model: str | None = None) -> dict:
+    if (require_model is not None and (prefer_model is not None or fallback_model is not None)
+            or (prefer_model is None) != (fallback_model is None)):
+        raise PreflightError("Choose either an exact model or a preferred and fallback model")
+    for candidate in (require_model, prefer_model, fallback_model):
+        if candidate is not None and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,99}", candidate):
+            raise PreflightError("Invalid model identifier")
     origin, kind = normalize_origin(base_url)
     if not isinstance(api_key, str) or len(api_key) < 20 or "\r" in api_key or "\n" in api_key:
         raise PreflightError("CODEX_PROXY_API_KEY is not configured or is invalid")
@@ -79,12 +86,28 @@ def probe(base_url: str, api_key: str, *, opener=None, require_model: str | None
            and isinstance(m.get("id"), str) and bool(m["id"])}
     if require_model is not None and require_model not in ids:
         raise PreflightError("Requested text model is absent from the authenticated proxy catalog")
+    selected = None
+    selected_reason = None
+    if prefer_model is not None:
+        if prefer_model in ids:
+            selected, selected_reason = prefer_model, "preferred_catalog_available"
+        elif fallback_model in ids:
+            selected, selected_reason = fallback_model, "fallback_primary_absent_from_catalog"
+        else:
+            raise PreflightError("Neither preferred nor fallback model is in the authenticated catalog")
+    elif require_model is not None:
+        selected, selected_reason = require_model, "explicit_model_verified"
     count = len(ids)
     report = {"schema_version": 1, "mode": "proxy_preflight_read_only",
               "proxy_kind": kind, "authenticated": True, "accounts_configured": health["accounts"],
               "model_count": count, "inference_requests": 0, "image_requests": 0,
               "youtube_publications": 0, "paid_inference_authorized": False,
               "agent_communication_proven": False}
+    if selected is not None:
+        report["selected_model"] = selected
+        report["model_selection_reason"] = selected_reason
+        report["fallback_before_inference_only"] = True
+        report["automatic_retry_after_unknown_inference_outcome"] = False
     if list_models:
         # IDs, not account identifiers or arbitrary provider metadata.
         # Malformed/unexpected identifiers never reach public Actions artifacts.
@@ -101,13 +124,16 @@ def probe(base_url: str, api_key: str, *, opener=None, require_model: str | None
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--require-model", help="Validate a model ID in GET catalog, never invoke it")
+    parser.add_argument("--require-model", help="Validate an exact model in GET catalog")
+    parser.add_argument("--prefer-model", help="Preferred model; choose fallback only if absent in GET catalog")
+    parser.add_argument("--fallback-model", help="Alternative available model (never retry a POST)")
     parser.add_argument("--list-models", action="store_true", help="Report sanitized model IDs, never invoke any model")
     args = parser.parse_args()
     try:
         report = probe(os.environ.get("CODEX_PROXY_BASE_URL", ""),
                        os.environ.get("CODEX_PROXY_API_KEY", ""), require_model=args.require_model,
-                       list_models=args.list_models)
+                       list_models=args.list_models, prefer_model=args.prefer_model,
+                       fallback_model=args.fallback_model)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(json.dumps(report, ensure_ascii=False))
