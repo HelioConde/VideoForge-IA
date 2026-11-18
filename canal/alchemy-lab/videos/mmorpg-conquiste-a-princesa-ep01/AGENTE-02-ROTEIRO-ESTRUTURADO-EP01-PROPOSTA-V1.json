@@ -1,0 +1,907 @@
+{
+  "schema": "videoforge/agent02-narrative-review/v1",
+  "metadata": {
+    "agent": "AGENTE 02 — ROTEIRISTA",
+    "data": "2026-11-18",
+    "canal": "alchemy-lab",
+    "video_id": "mmorpg-conquiste-a-princesa-ep01",
+    "episodio": "A Missão Impossível — Episódio 1: O Julgamento",
+    "estado": "proposta_editorial_sem_aprovacao_para_substituir_roteiro",
+    "cenas": 14,
+    "tomadas": 42,
+    "duracao_segundos": 163,
+    "fps": 30
+  },
+  "fontes_preservadas": [
+    {
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/roteiro.json",
+      "sha_git": "cf7827433e7ad9266bff70a5d34b67c2cc7795d3",
+      "funcao": "roteiro original e falas"
+    },
+    {
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json",
+      "sha_git": "24835e0f32f5e193c4beffa3ae5cff294c04faea",
+      "funcao": "ordem e eixo revisados de C07/C08"
+    },
+    {
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/roteiro.md",
+      "funcao": "encadeamento e contexto narrativo"
+    }
+  ],
+  "regras_de_uso": [
+    "Este arquivo é documento de trabalho do roteirista; não substitui roteiro.json nem aprova mudanças criativas.",
+    "A sequência C07/C08 segue a revisão V2 existente, sem gerar cenas ou imagens.",
+    "Toda mudança em história, personagens, falas ou cronologia exige proposta e aprovação prévias.",
+    "Não gerar arte, rig, animação, vídeo nem publicação.",
+    "Se o usuário aprovar revisão, sincronizar no roteiro canônico e comunicar direção e QA."
+  ],
+  "sinopse": "Kael é transportado de um MMORPG para Arken como aventureiro nível 1. Salva uma fugitiva misteriosa usando um carrinho como barricada, encontra seu broche e tenta devolvê-lo. Guardas o confundem com suspeito do desaparecimento da princesa e o levam a julgamento. A fugitiva era Elara, a própria princesa. Quando o sistema ordena conquistar seu coração, ela declara ao rei que Kael é seu noivo.",
+  "cenas": [
+    {
+      "id": "C01",
+      "titulo": "Prólogo: lâmina e julgamento",
+      "local": "sala-do-trono",
+      "inicio_frame": 0,
+      "fim_exclusivo": 360,
+      "duracao_segundos": 12,
+      "personagens": [
+        "kael",
+        "aldric",
+        "dois_guardas",
+        "carrasco"
+      ],
+      "objetivo_dramatico": "Estabelecer perigo real: Kael está ajoelhado perante o rei e pode ser condenado.",
+      "acoes": [
+        "A lâmina do carrasco é retirada da bainha, sem que Kael a empunhe.",
+        "Kael permanece ajoelhado, voltado ao trono.",
+        "Dois guardas fazem o cerco com lanças cruzadas, e Aldric domina a cena."
+      ],
+      "emocoes": {
+        "inicio": "ameaça e mistério",
+        "fim": "tensão e impotência"
+      },
+      "falas_aprovadas": "",
+      "ligacoes_causais": {
+        "anterior": "Abertura do episódio, situada depois dos eventos do flashback.",
+        "proxima": "O rei transforma a tensão visual em acusação explícita."
+      },
+      "restricoes_continuidade": [
+        "A espada não pertence a Kael.",
+        "Elara não aparece neste momento.",
+        "Kael está orientado para o trono, nunca de costas para o rei."
+      ],
+      "tomadas": [
+        {
+          "id": "C01-P01",
+          "inicio_frame": 0,
+          "fim_exclusivo": 60,
+          "acao": "Preto absoluto",
+          "fala_ou_som": "SFX: fricção de bainha distante"
+        },
+        {
+          "id": "C01-P02",
+          "inicio_frame": 60,
+          "fim_exclusivo": 150,
+          "acao": "Lâmina desembainhada",
+          "fala_ou_som": "SFX: desembainhar, lâmina separada, sem sangue"
+        },
+        {
+          "id": "C01-P03",
+          "inicio_frame": 150,
+          "fim_exclusivo": 240,
+          "acao": "Kael ajoelhado",
+          "fala_ou_som": "SFX: joelho no piso de pedra"
+        },
+        {
+          "id": "C01-P04",
+          "inicio_frame": 240,
+          "fim_exclusivo": 310,
+          "acao": "Revelar guardas e lanças cruzadas",
+          "fala_ou_som": "SFX: metal contra metal ao cruzar lanças"
+        },
+        {
+          "id": "C01-P05",
+          "inicio_frame": 310,
+          "fim_exclusivo": 360,
+          "acao": "Punhos e lanças cruzadas",
+          "fala_ou_som": "SFX: luvas tensionam lanças, leve ressonância metálica"
+        }
+      ]
+    },
+    {
+      "id": "C02",
+      "titulo": "Acusação",
+      "local": "sala-do-trono",
+      "inicio_frame": 360,
+      "fim_exclusivo": 720,
+      "duracao_segundos": 12,
+      "personagens": [
+        "aldric",
+        "kael"
+      ],
+      "objetivo_dramatico": "Criar o conflito central e suscitar a pergunta: por que Kael foi acusado?",
+      "acoes": [
+        "Aldric acusa Kael de sequestrar a princesa.",
+        "Kael não compreende a acusação e teme a execução."
+      ],
+      "emocoes": {
+        "inicio": "autoridade e indignação",
+        "fim": "pânico contido"
+      },
+      "falas_aprovadas": "REI: Kael! Você é acusado de sequestrar a princesa deste reino!",
+      "ligacoes_causais": {
+        "anterior": "A intimidação da sala do trono prepara a fala do rei.",
+        "proxima": "O choque da acusação leva Kael a recordar a chegada a Arken."
+      },
+      "restricoes_continuidade": [
+        "Kael não reage com agressividade nem se levanta.",
+        "A acusação vem de uma suspeita ainda não esclarecida."
+      ],
+      "tomadas": [
+        {
+          "id": "C02-P01",
+          "inicio_frame": 360,
+          "fim_exclusivo": 570,
+          "acao": "O rei acusa",
+          "fala_ou_som": "REI: Kael! Você é acusado de sequestrar a princesa deste reino!"
+        },
+        {
+          "id": "C02-P02",
+          "inicio_frame": 570,
+          "fim_exclusivo": 720,
+          "acao": "Pânico contido",
+          "fala_ou_som": "KAEL (pensamento): Ontem eu era só um jogador. Agora posso ser executado?"
+        }
+      ]
+    },
+    {
+      "id": "C03",
+      "titulo": "Memória",
+      "local": "sala-do-trono",
+      "inicio_frame": 720,
+      "fim_exclusivo": 930,
+      "duracao_segundos": 7,
+      "personagens": [
+        "kael"
+      ],
+      "objetivo_dramatico": "Abrir o flashback de forma inequívoca.",
+      "acoes": [
+        "Kael tenta entender como chegou ao tribunal.",
+        "A lembrança do monitor o leva ao mundo anterior."
+      ],
+      "emocoes": {
+        "inicio": "perplexidade",
+        "fim": "recordação angustiada"
+      },
+      "falas_aprovadas": "",
+      "ligacoes_causais": {
+        "anterior": "A pergunta interior de Kael motiva a memória.",
+        "proxima": "O brilho do monitor conduz ao último login no quarto."
+      },
+      "restricoes_continuidade": [
+        "Sinalizar visualmente que se trata de passado.",
+        "Não introduzir outros personagens no flashback."
+      ],
+      "tomadas": [
+        {
+          "id": "C03-P01",
+          "inicio_frame": 720,
+          "fim_exclusivo": 810,
+          "acao": "Reflexo azul na pupila",
+          "fala_ou_som": "KAEL (pensamento): Como foi que cheguei até aqui?"
+        },
+        {
+          "id": "C03-P02",
+          "inicio_frame": 810,
+          "fim_exclusivo": 930,
+          "acao": "Passagem ao quarto",
+          "fala_ou_som": "SFX: transição digital abafada"
+        }
+      ]
+    },
+    {
+      "id": "C04",
+      "titulo": "Último login",
+      "local": "quarto-moderno",
+      "inicio_frame": 930,
+      "fim_exclusivo": 1320,
+      "duracao_segundos": 13,
+      "personagens": [
+        "kael"
+      ],
+      "objetivo_dramatico": "Mostrar a origem humana de Kael e o incidente que o transporta.",
+      "acoes": [
+        "Kael joga em seu computador antes de dormir.",
+        "Uma mensagem de transferência surge na tela.",
+        "A luz azul interrompe sua rotina."
+      ],
+      "emocoes": {
+        "inicio": "tranquilidade",
+        "fim": "assombro"
+      },
+      "falas_aprovadas": "KAEL: Só mais uma missão antes de dormir... KAEL: O quê?!",
+      "ligacoes_causais": {
+        "anterior": "O reflexo no olho se conecta ao monitor.",
+        "proxima": "O fenômeno antecede o despertar em Arken."
+      },
+      "restricoes_continuidade": [
+        "Kael veste roupa moderna.",
+        "A mensagem do sistema é o gatilho do transporte."
+      ],
+      "tomadas": [
+        {
+          "id": "C04-P01",
+          "inicio_frame": 930,
+          "fim_exclusivo": 1050,
+          "acao": "Último login",
+          "fala_ou_som": "KAEL: Só mais uma missão antes de dormir..."
+        },
+        {
+          "id": "C04-P02",
+          "inicio_frame": 1050,
+          "fim_exclusivo": 1170,
+          "acao": "Conexão interrompida",
+          "fala_ou_som": "HUD: ERRO DE CONEXÃO — TRANSFERÊNCIA INICIADA"
+        },
+        {
+          "id": "C04-P03",
+          "inicio_frame": 1170,
+          "fim_exclusivo": 1320,
+          "acao": "Luz no quarto",
+          "fala_ou_som": "KAEL: O quê?!"
+        }
+      ]
+    },
+    {
+      "id": "C05",
+      "titulo": "Nível um",
+      "local": "estrada-arken",
+      "inicio_frame": 1320,
+      "fim_exclusivo": 1740,
+      "duracao_segundos": 14,
+      "personagens": [
+        "kael"
+      ],
+      "objetivo_dramatico": "Apresentar Arken como um mundo de MMORPG e a vulnerabilidade de Kael.",
+      "acoes": [
+        "Kael desperta na estrada medieval.",
+        "Vê muralhas de Arken e percebe que não está mais em casa.",
+        "Uma interface o identifica como aventureiro de nível 1."
+      ],
+      "emocoes": {
+        "inicio": "desorientação",
+        "fim": "fascínio e apreensão"
+      },
+      "falas_aprovadas": "KAEL: Espera... eu entrei no jogo?!",
+      "ligacoes_causais": {
+        "anterior": "A luz do quarto termina no despertar.",
+        "proxima": "A necessidade de sobreviver leva Kael até o mercado."
+      },
+      "restricoes_continuidade": [
+        "Não atribuir poderes de combate a Kael.",
+        "Sua roupa muda para a versão medieval conforme a chegada ao jogo."
+      ],
+      "tomadas": [
+        {
+          "id": "C05-P01",
+          "inicio_frame": 1320,
+          "fim_exclusivo": 1470,
+          "acao": "Despertar na estrada",
+          "fala_ou_som": "SFX: grama e vento"
+        },
+        {
+          "id": "C05-P02",
+          "inicio_frame": 1470,
+          "fim_exclusivo": 1590,
+          "acao": "Muralhas de Arken",
+          "fala_ou_som": "KAEL: Espera... eu entrei no jogo?!"
+        },
+        {
+          "id": "C05-P03",
+          "inicio_frame": 1590,
+          "fim_exclusivo": 1740,
+          "acao": "Interface nível um",
+          "fala_ou_som": "HUD: MUNDO ARKEN / CLASSE AVENTUREIRO / NÍVEL 1"
+        }
+      ]
+    },
+    {
+      "id": "C06",
+      "titulo": "Mercado",
+      "local": "mercado-arken",
+      "inicio_frame": 1740,
+      "fim_exclusivo": 2070,
+      "duracao_segundos": 11,
+      "personagens": [
+        "kael",
+        "figurantes"
+      ],
+      "objetivo_dramatico": "Dar motivação prática para Kael circular pela cidade e reagir ao perigo.",
+      "acoes": [
+        "Kael chega ao mercado sem dinheiro nem mapa.",
+        "O sistema apresenta a missão de sobreviver ao primeiro dia."
+      ],
+      "emocoes": {
+        "inicio": "curiosidade",
+        "fim": "insegurança com ironia"
+      },
+      "falas_aprovadas": "",
+      "ligacoes_causais": {
+        "anterior": "As muralhas indicam a cidade que Kael procura.",
+        "proxima": "Enquanto explora os arredores, ele encontra a fugitiva."
+      },
+      "restricoes_continuidade": [
+        "Não pressupor que Kael conhece a cidade.",
+        "A missão secundária não resolve seus problemas."
+      ],
+      "tomadas": [
+        {
+          "id": "C06-P01",
+          "inicio_frame": 1740,
+          "fim_exclusivo": 1920,
+          "acao": "Bolsa vazia",
+          "fala_ou_som": "KAEL (pensamento): Nível um, sem dinheiro e sem mapa..."
+        },
+        {
+          "id": "C06-P02",
+          "inicio_frame": 1920,
+          "fim_exclusivo": 2070,
+          "acao": "Sobreviva ao primeiro dia",
+          "fala_ou_som": "HUD: MISSÃO SECUNDÁRIA — SOBREVIVA AO PRIMEIRO DIA"
+        }
+      ]
+    },
+    {
+      "id": "C07",
+      "titulo": "Desconhecida",
+      "local": "beco-arken",
+      "inicio_frame": 2070,
+      "fim_exclusivo": 2460,
+      "duracao_segundos": 13,
+      "personagens": [
+        "elara",
+        "kael",
+        "dois_perseguidores_mascarados"
+      ],
+      "objetivo_dramatico": "Apresentar Elara como desconhecida ameaçada e fazer Kael escolher ajudá-la.",
+      "acoes": [
+        "Elara corre da esquerda para a direita, à frente dos perseguidores.",
+        "Os dois mascarados avançam no mesmo sentido, atrás dela, sem entrar no plano de encontro.",
+        "Elara encontra Kael perto de um carrinho parado à direita do beco.",
+        "Só depois do encontro ela pede ajuda; Kael a protege."
+      ],
+      "emocoes": {
+        "inicio": "medo e urgência",
+        "fim": "confiança cautelosa"
+      },
+      "falas_aprovadas": "ELARA: Não me entregue a eles! KAEL: Fique atrás de mim.",
+      "ligacoes_causais": {
+        "anterior": "Kael está nas proximidades do mercado quando Elara surge correndo.",
+        "proxima": "A ausência de habilidades de combate leva Kael a usar o carrinho."
+      },
+      "restricoes_continuidade": [
+        "Encontro e diálogo são tomadas distintas.",
+        "Direção da fuga sempre screen-right.",
+        "Perseguidores ficam atrás e nunca parecem aliados.",
+        "C07-P04 é adição oficial da revisão de continuidade V2."
+      ],
+      "tomadas": [
+        {
+          "id": "C07-P01",
+          "inicio_frame": 2070,
+          "fim_exclusivo": 2160,
+          "acao": "Elara foge sozinha",
+          "fala": [],
+          "restricao_espacial": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+        },
+        {
+          "id": "C07-P02",
+          "inicio_frame": 2160,
+          "fim_exclusivo": 2250,
+          "acao": "Perseguidores atrás de Elara",
+          "fala": [],
+          "restricao_espacial": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+        },
+        {
+          "id": "C07-P03",
+          "inicio_frame": 2250,
+          "fim_exclusivo": 2340,
+          "acao": "Elara encontra Kael perto do carrinho",
+          "fala": [],
+          "restricao_espacial": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+        },
+        {
+          "id": "C07-P04",
+          "inicio_frame": 2340,
+          "fim_exclusivo": 2460,
+          "acao": "Elara pede ajuda; Kael responde",
+          "fala": [
+            {
+              "personagem": "elara",
+              "texto": "Não me entregue a eles!"
+            },
+            {
+              "personagem": "kael",
+              "texto": "Fique atrás de mim."
+            }
+          ],
+          "restricao_espacial": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+        }
+      ]
+    },
+    {
+      "id": "C08",
+      "titulo": "Carrinho",
+      "local": "beco-arken",
+      "inicio_frame": 2460,
+      "fim_exclusivo": 2940,
+      "duracao_segundos": 16,
+      "personagens": [
+        "kael",
+        "elara",
+        "dois_perseguidores_mascarados"
+      ],
+      "objetivo_dramatico": "Demonstrar que Kael é corajoso e engenhoso sem transformá-lo em guerreiro.",
+      "acoes": [
+        "Kael observa um carrinho estacionado junto à parede direita.",
+        "Kael, sem ajuda, empurra e gira o carrinho para atravessar o beco.",
+        "O carrinho interrompe a passagem dos mascarados, que permanecem do lado esquerdo.",
+        "Elara escapa pela passagem lateral direita.",
+        "Kael segue pelo lado seguro e alcança Elara na esquina."
+      ],
+      "emocoes": {
+        "inicio": "improviso sob risco",
+        "fim": "alívio provisório"
+      },
+      "falas_aprovadas": "KAEL: Não sei lutar... mas sei atrapalhar! KAEL: Corra!",
+      "ligacoes_causais": {
+        "anterior": "Kael reage ao pedido de Elara com um plano possível para nível 1.",
+        "proxima": "O reencontro em local seguro torna plausível a conversa e o agradecimento."
+      },
+      "restricoes_continuidade": [
+        "Mesmo carrinho, mesma rua e mesmas posições entre tomadas.",
+        "Nenhum perseguidor toca ou empurra o carrinho.",
+        "Kael fica do lado seguro da barricada.",
+        "Elara jamais reaparece atrás de seus perseguidores.",
+        "C08-P05 é adição oficial da revisão de continuidade V2."
+      ],
+      "tomadas": [
+        {
+          "id": "C08-P01",
+          "inicio_frame": 2460,
+          "fim_exclusivo": 2550,
+          "acao": "Kael percebe o carrinho",
+          "fala": [
+            {
+              "personagem": "kael",
+              "texto": "Não sei lutar... mas sei atrapalhar!"
+            }
+          ],
+          "restricao_espacial": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+        },
+        {
+          "id": "C08-P02",
+          "inicio_frame": 2550,
+          "fim_exclusivo": 2680,
+          "acao": "Kael empurra e gira o carrinho sozinho",
+          "fala": [],
+          "restricao_espacial": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+        },
+        {
+          "id": "C08-P03",
+          "inicio_frame": 2680,
+          "fim_exclusivo": 2790,
+          "acao": "Barricada separa Kael dos perseguidores",
+          "fala": [],
+          "restricao_espacial": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+        },
+        {
+          "id": "C08-P04",
+          "inicio_frame": 2790,
+          "fim_exclusivo": 2880,
+          "acao": "Elara escapa pela passagem lateral",
+          "fala": [
+            {
+              "personagem": "kael",
+              "texto": "Corra!"
+            }
+          ],
+          "restricao_espacial": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+        },
+        {
+          "id": "C08-P05",
+          "inicio_frame": 2880,
+          "fim_exclusivo": 2940,
+          "acao": "Kael alcança Elara além da barricada",
+          "fala": [],
+          "restricao_espacial": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+        }
+      ]
+    },
+    {
+      "id": "C09",
+      "titulo": "Separação",
+      "local": "beco-arken",
+      "inicio_frame": 2940,
+      "fim_exclusivo": 3240,
+      "duracao_segundos": 10,
+      "personagens": [
+        "elara",
+        "kael"
+      ],
+      "objetivo_dramatico": "Criar vínculo de gratidão sem romance repentino e preparar o objeto revelador.",
+      "acoes": [
+        "Após o reencontro, os dois param em segurança e recuperam o fôlego.",
+        "Elara agradece sem revelar quem é.",
+        "Ela parte pela esquina em direção ao palácio; Kael pergunta seu nome, mas não recebe resposta."
+      ],
+      "emocoes": {
+        "inicio": "alívio e gratidão",
+        "fim": "curiosidade e separação"
+      },
+      "falas_aprovadas": "ELARA: Você me salvou. Não vou esquecer. KAEL: Espere! Qual o seu nome?",
+      "ligacoes_causais": {
+        "anterior": "Kael alcançou Elara além da barricada.",
+        "proxima": "A saída apressada de Elara permite que o broche se desprenda de seu manto."
+      },
+      "restricoes_continuidade": [
+        "Não antecipar romance consumado.",
+        "Conservar direção de saída e figurino de Elara."
+      ],
+      "ponto_de_atencao": "O broche deve estar preso ao manto antes da separação e deixar de estar preso quando cair; não inventar objeto novo.",
+      "tomadas": [
+        {
+          "id": "C09-P01",
+          "inicio_frame": 2940,
+          "fim_exclusivo": 3090,
+          "acao": "Agradecimento",
+          "fala_ou_som": "ELARA: Você me salvou. Não vou esquecer."
+        },
+        {
+          "id": "C09-P02",
+          "inicio_frame": 3090,
+          "fim_exclusivo": 3240,
+          "acao": "Ela desaparece",
+          "fala_ou_som": "KAEL: Espere! Qual o seu nome?"
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "titulo": "Broche",
+      "local": "beco-arken",
+      "inicio_frame": 3240,
+      "fim_exclusivo": 3600,
+      "duracao_segundos": 12,
+      "personagens": [
+        "kael",
+        "elara"
+      ],
+      "objetivo_dramatico": "Estabelecer a prova material que conectará Kael ao tribunal.",
+      "acoes": [
+        "O broche em forma de flor prateada cai do manto de Elara durante sua partida.",
+        "Kael percebe o objeto, se abaixa e o recolhe.",
+        "Ele decide devolver o broche, sem saber que pertence à princesa."
+      ],
+      "emocoes": {
+        "inicio": "surpresa",
+        "fim": "decisão bem-intencionada"
+      },
+      "falas_aprovadas": "KAEL: Ela deixou isso cair...",
+      "ligacoes_causais": {
+        "anterior": "Elara se afasta rapidamente e deixa um objeto para trás.",
+        "proxima": "Kael leva o broche até os guardas do palácio."
+      },
+      "restricoes_continuidade": [
+        "Broche sempre com mesmo desenho e tamanho.",
+        "A queda acontece em continuidade com a partida, não por teletransporte.",
+        "Kael não sabe o valor político do objeto."
+      ],
+      "tomadas": [
+        {
+          "id": "C10-P01",
+          "inicio_frame": 3240,
+          "fim_exclusivo": 3390,
+          "acao": "Broche cai",
+          "fala_ou_som": "SFX: pequeno tilintar"
+        },
+        {
+          "id": "C10-P02",
+          "inicio_frame": 3390,
+          "fim_exclusivo": 3600,
+          "acao": "Kael recolhe",
+          "fala_ou_som": "KAEL: Ela deixou isso cair..."
+        }
+      ]
+    },
+    {
+      "id": "C11",
+      "titulo": "Prisão",
+      "local": "portao-palacio",
+      "inicio_frame": 3600,
+      "fim_exclusivo": 3990,
+      "duracao_segundos": 13,
+      "personagens": [
+        "kael",
+        "dois_guardas_reais"
+      ],
+      "objetivo_dramatico": "Transformar o gesto de ajudar em consequência injusta mas plausível.",
+      "acoes": [
+        "Kael mostra espontaneamente o broche à guarda do palácio.",
+        "Guardas, alertados sobre o desaparecimento da princesa, reconhecem o emblema.",
+        "A posse do objeto leva à suspeita; Kael é detido apesar de tentar explicar."
+      ],
+      "emocoes": {
+        "inicio": "boa-fé",
+        "fim": "medo e indignação"
+      },
+      "falas_aprovadas": "KAEL: Encontrei isto... GUARDA: O broche da princesa! Então está envolvido no desaparecimento! KAEL: Eu só estava devolvendo!",
+      "ligacoes_causais": {
+        "anterior": "O broche encontrado motiva a ida ao portão.",
+        "proxima": "Os guardas conduzem Kael para o julgamento visto na abertura."
+      },
+      "restricoes_continuidade": [
+        "A suspeita depende também do alerta prévio sobre a princesa.",
+        "Kael não rouba o broche nem tenta fugir.",
+        "As falas dos guardas não devem pressupor prova definitiva de sequestro."
+      ],
+      "tomadas": [
+        {
+          "id": "C11-P01",
+          "inicio_frame": 3600,
+          "fim_exclusivo": 3720,
+          "acao": "Mostra broche no portão",
+          "fala_ou_som": "KAEL: Encontrei isto..."
+        },
+        {
+          "id": "C11-P02",
+          "inicio_frame": 3720,
+          "fim_exclusivo": 3870,
+          "acao": "Acusam Kael",
+          "fala_ou_som": "GUARDA: O broche da princesa! Então está envolvido no desaparecimento!"
+        },
+        {
+          "id": "C11-P03",
+          "inicio_frame": 3870,
+          "fim_exclusivo": 3990,
+          "acao": "Detenção",
+          "fala_ou_som": "KAEL: Eu só estava devolvendo!"
+        }
+      ]
+    },
+    {
+      "id": "C12",
+      "titulo": "Olhar de lado",
+      "local": "sala-do-trono",
+      "inicio_frame": 3990,
+      "fim_exclusivo": 4350,
+      "duracao_segundos": 12,
+      "personagens": [
+        "kael",
+        "elara",
+        "aldric"
+      ],
+      "objetivo_dramatico": "Revelar para Kael e o público que a jovem salva era a princesa.",
+      "acoes": [
+        "A narrativa retorna à sala do trono do prólogo.",
+        "Kael mantém a cabeça baixa e desvia discretamente os olhos.",
+        "A garota encapuzada é reconhecida como Elara, a princesa, junto ao trono."
+      ],
+      "emocoes": {
+        "inicio": "terror silencioso",
+        "fim": "choque e reconhecimento"
+      },
+      "falas_aprovadas": "",
+      "ligacoes_causais": {
+        "anterior": "A detenção culmina na acusação já mostrada.",
+        "proxima": "O reconhecimento habilita a missão principal do sistema."
+      },
+      "restricoes_continuidade": [
+        "Não alterar a identidade de Elara.",
+        "O reconhecimento é pelo olhar e detalhes visuais, não por monólogo explicativo.",
+        "A chegada/presença de Elara no tribunal carece de esclarecimento cênico sem reescrever a história."
+      ],
+      "ponto_de_atencao": "Se o rei já via Elara antes da acusação, a lógica da acusação se torna frágil; sugerir entrada discreta após a fala do rei como proposta ainda não aprovada.",
+      "tomadas": [
+        {
+          "id": "C12-P01",
+          "inicio_frame": 3990,
+          "fim_exclusivo": 4110,
+          "acao": "Rabo de olho",
+          "fala_ou_som": "SFX: silêncio tenso"
+        },
+        {
+          "id": "C12-P02",
+          "inicio_frame": 4110,
+          "fim_exclusivo": 4230,
+          "acao": "Revelação da princesa",
+          "fala_ou_som": "SFX: nota de reconhecimento"
+        },
+        {
+          "id": "C12-P03",
+          "inicio_frame": 4230,
+          "fim_exclusivo": 4290,
+          "acao": "Reconhecimento",
+          "fala_ou_som": "KAEL (pensamento): Não pode ser... ela é a princesa?!"
+        },
+        {
+          "id": "C12-P04",
+          "inicio_frame": 4290,
+          "fim_exclusivo": 4350,
+          "acao": "Flor prateada revela a ligação",
+          "fala_ou_som": "SFX: delicado toque do metal e silêncio da descoberta"
+        }
+      ]
+    },
+    {
+      "id": "C13",
+      "titulo": "Conquiste a princesa",
+      "local": "sala-do-trono",
+      "inicio_frame": 4350,
+      "fim_exclusivo": 4650,
+      "duracao_segundos": 10,
+      "personagens": [
+        "kael",
+        "elara"
+      ],
+      "objetivo_dramatico": "Reformular a sobrevivência de Kael como missão central de longo prazo.",
+      "acoes": [
+        "O sistema revela a missão principal: conquistar o coração da princesa.",
+        "Kael entende que a tarefa pode determinar o retorno ao mundo real e sua sobrevivência.",
+        "Ele reage com incredulidade, sem tratar Elara como objeto de posse."
+      ],
+      "emocoes": {
+        "inicio": "surpresa",
+        "fim": "ansiedade e incredulidade"
+      },
+      "falas_aprovadas": "",
+      "ligacoes_causais": {
+        "anterior": "Identificar Elara como princesa torna inteligível a nova missão.",
+        "proxima": "Antes que Kael compreenda como agir, Elara interfere no julgamento."
+      },
+      "restricoes_continuidade": [
+        "A interface só é visível a Kael.",
+        "Vínculo do sistema não representa consentimento ou controle sobre Elara."
+      ],
+      "tomadas": [
+        {
+          "id": "C13-P01",
+          "inicio_frame": 4350,
+          "fim_exclusivo": 4500,
+          "acao": "Missão desbloqueada",
+          "fala_ou_som": "HUD: MISSÃO PRINCIPAL — CONQUISTE O CORAÇÃO DA PRINCESA"
+        },
+        {
+          "id": "C13-P02",
+          "inicio_frame": 4500,
+          "fim_exclusivo": 4650,
+          "acao": "Recompensa e risco",
+          "fala_ou_som": "KAEL (pensamento): CONQUISTAR A PRINCESA?! Eu nem vou sobreviver!"
+        }
+      ]
+    },
+    {
+      "id": "C14",
+      "titulo": "Noivado falso",
+      "local": "sala-do-trono",
+      "inicio_frame": 4650,
+      "fim_exclusivo": 4890,
+      "duracao_segundos": 8,
+      "personagens": [
+        "elara",
+        "kael",
+        "aldric"
+      ],
+      "objetivo_dramatico": "Encerrar o episódio com a escolha inesperada de Elara e um gancho.",
+      "acoes": [
+        "Elara pede ao pai para não executar Kael.",
+        "Ela anuncia à corte que Kael é seu noivo.",
+        "Kael fica atônito; a consequência desse anúncio permanece para o próximo episódio."
+      ],
+      "emocoes": {
+        "inicio": "desespero",
+        "fim": "surpresa máxima"
+      },
+      "falas_aprovadas": "ELARA: Pai, não o execute. ELARA: Esse homem... é meu noivo!",
+      "ligacoes_causais": {
+        "anterior": "A acusação e a nova missão atingem o clímax quando Elara intervém.",
+        "proxima": "O EP02 precisará explicar o interesse político de Elara e a reação de Aldric."
+      },
+      "restricoes_continuidade": [
+        "Elara toma a decisão por interesse próprio, não por amor instantâneo.",
+        "Não revelar totalmente a estratégia do falso noivado.",
+        "Não confirmar casamento ou vínculo romântico como fato."
+      ],
+      "tomadas": [
+        {
+          "id": "C14-P01",
+          "inicio_frame": 4650,
+          "fim_exclusivo": 4740,
+          "acao": "Elara avança",
+          "fala_ou_som": "ELARA: Pai, não o execute."
+        },
+        {
+          "id": "C14-P02",
+          "inicio_frame": 4740,
+          "fim_exclusivo": 4830,
+          "acao": "O falso noivado",
+          "fala_ou_som": "ELARA: Esse homem... é meu noivo!"
+        },
+        {
+          "id": "C14-P03",
+          "inicio_frame": 4830,
+          "fim_exclusivo": 4890,
+          "acao": "Choque e corte",
+          "fala_ou_som": "KAEL (pensamento): SEU O QUÊ?!"
+        }
+      ]
+    }
+  ],
+  "propostas_nao_aplicadas": [
+    {
+      "id": "PROP-02-01",
+      "prioridade": "alta",
+      "cenas": [
+        "C02",
+        "C12"
+      ],
+      "problema": "Aldric acusa Kael enquanto a revelação visual pode sugerir que Elara já estava visível junto ao trono.",
+      "proposta": "Deixar estabelecido em imagem ou ação que Elara chegou discretamente pela entrada lateral após a acusação e só então se revelou, preservando o reconhecimento de Kael em C12 e o falso noivado em C14.",
+      "motivo": "A acusação do rei permanece compreensível e Elara conserva iniciativa dramática.",
+      "impacto": "Enquadramento e ligação temporal C02-C12; sem reescrever falas.",
+      "aprovada": false
+    },
+    {
+      "id": "PROP-02-02",
+      "prioridade": "media",
+      "cenas": [
+        "C09",
+        "C10"
+      ],
+      "problema": "O broche pode parecer surgir do nada se Elara já desapareceu.",
+      "proposta": "Fazer o broche se desprender durante sua partida, com queda e som claramente conectados ao plano seguinte, sem alterar os 163 segundos.",
+      "motivo": "Preservar continuidade de objeto e causalidade que inicia a prisão.",
+      "aprovada": false
+    },
+    {
+      "id": "PROP-02-03",
+      "prioridade": "media",
+      "cenas": [
+        "C11"
+      ],
+      "problema": "Reconhecer apenas o broche pode parecer prova insuficiente para prender Kael.",
+      "proposta": "Estabelecer no contexto já previsto que os guardas receberam alerta do desaparecimento de Elara antes de Kael chegar ao portão.",
+      "motivo": "O mal-entendido torna-se plausível sem alterar caráter e inocência de Kael.",
+      "aprovada": false
+    }
+  ],
+  "verificacoes_roteirista": {
+    "sequencia_em_ordem_cronologica": [
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C10",
+      "C11",
+      "C01",
+      "C02",
+      "C12",
+      "C13",
+      "C14"
+    ],
+    "nota": "C01-C02 são prólogo antecipado; C03 abre o flashback; C12 retoma o julgamento.",
+    "validacao_temporal": "As tomadas substituídas em C07/C08 ocupam os mesmos 870 frames da versão original, preservando 4890 frames no total.",
+    "travas": [
+      "Elara foge para a direita",
+      "mascarados vêm atrás à esquerda",
+      "carrinho começa junto à parede direita",
+      "só Kael empurra",
+      "barreira separa perseguidores dos fugitivos",
+      "Kael alcança Elara antes do agradecimento",
+      "princesa e fugitiva são a mesma personagem",
+      "nenhuma mudança aprovada automaticamente"
+    ]
+  }
+}
