@@ -13,7 +13,7 @@ import os
 import uuid
 from pathlib import Path
 
-from .providers import GenerationRequest, make_provider
+from .providers import CodexProxyResponsesProvider, GenerationRequest, make_provider
 from .runtime import ROOT, instructions, write_report
 
 PING = ("Agente 01, confirme que recebeu esta mensagem do sistema VideoForge-IA. "
@@ -35,8 +35,8 @@ def agent_01_ping(*, mode: str, budget_usd: str = "0", root=ROOT) -> dict:
     request = GenerationRequest(agent_id="01", instructions=agent_text + contract,
                                 input=PING, max_output_tokens=500,
                                 input_token_limit=25000, timeout_seconds=60)
-    provider = make_provider(mode)
     if mode == "mock":
+        provider = make_provider(mode)
         simulated = provider.generate_response(request)
         reply = {"agent_id": "01", "status": "received",
                  "message": "Synthetic ping; no model invoked.",
@@ -47,18 +47,26 @@ def agent_01_ping(*, mode: str, budget_usd: str = "0", root=ROOT) -> dict:
                 "usage": simulated.usage, "estimated_cost_usd": "0",
                 "human_visual_approval": False, "youtube_publication": False,
                 "production_actions": 0}
-    try:
-        budget = Decimal(budget_usd)
-    except (InvalidOperation, TypeError):
-        raise ValueError("Explicit positive finite budget is required") from None
-    if not budget.is_finite() or not Decimal("0.01") <= budget <= Decimal("0.25"):
-        raise ValueError("Pilot budget must be between 0.01 and 0.25 USD")
+    if budget_usd == "uncapped":
+        provider = CodexProxyResponsesProvider(
+            api_key=os.getenv("CODEX_PROXY_API_KEY", ""), model=os.getenv("AI_MODEL", ""),
+            input_price_per_million=None, output_price_per_million=None,
+            base_url="http://127.0.0.1:18080")
+        expected = None
+    else:
+        provider = make_provider(mode)
+        try:
+            budget = Decimal(budget_usd)
+        except (InvalidOperation, TypeError):
+            raise ValueError("Explicit positive finite budget is required") from None
+        if not budget.is_finite() or not Decimal("0.01") <= budget <= Decimal("0.25"):
+            raise ValueError("Pilot budget must be between 0.01 and 0.25 USD")
+        estimate = provider.estimate_cost(request)
+        expected = Decimal(str(estimate["upper_bound_usd"]))
+        if expected <= 0 or expected > budget:
+            raise ValueError("Estimated model cost exceeds the explicit budget")
     if provider.model != ASTRA:
         raise ValueError("Agent 01 ping requires gpt-6-astra")
-    estimate = provider.estimate_cost(request)
-    expected = Decimal(str(estimate["upper_bound_usd"]))
-    if expected <= 0 or expected > budget:
-        raise ValueError("Estimated model cost exceeds the explicit budget")
     response = provider.generate_response(request)
     if response.simulated or response.provider != "codex_proxy" or response.reported_model != ASTRA:
         raise ValueError("Live response was not from the configured Codex provider")
@@ -77,7 +85,7 @@ def agent_01_ping(*, mode: str, budget_usd: str = "0", root=ROOT) -> dict:
             "agent_id": "01", "model": response.model, "simulated": False,
             "llm_executed": True, "instructions_sha256": sha, "reply": reply,
             "usage": response.usage,
-            "estimated_cost_usd": str(expected),
+            "estimated_cost_usd": str(expected) if expected is not None else None,
             "observed_cost_configured_price_usd": str(response.cost_usd) if response.cost_usd is not None else None,
             "human_visual_approval": False, "youtube_publication": False,
             "production_actions": 0}

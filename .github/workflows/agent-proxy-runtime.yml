@@ -29,7 +29,7 @@ on:
         required: true
         default: NO_INFERENCE
       budget_usd:
-        description: "Total conservative budget for one task (0.01 to 0.25 USD); text only"
+        description: "0.01 to 0.25 USD, or uncapped for a single Agent 01 ping"
         type: string
         required: true
         default: '0'
@@ -124,6 +124,11 @@ jobs:
               model=os.environ['REQUEST_MODEL']
               if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{1,99}',model):
                   raise SystemExit('A valid explicit model ID is required')
+              if mode == 'codex_proxy_ping' and os.environ['REQUEST_BUDGET'] == 'uncapped':
+                  if model != 'gpt-6-astra':
+                      raise SystemExit('Uncapped ping requires Astra')
+                  print('One authorized Agent 01 request without a monetary ceiling.')
+                  raise SystemExit(0)
               try:
                   budget=Decimal(os.environ['REQUEST_BUDGET'])
                   input_price=Decimal(os.environ['REQUEST_INPUT_PRICE'])

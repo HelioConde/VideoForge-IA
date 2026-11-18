@@ -254,7 +254,8 @@ class OpenAIResponsesProvider:
         if not isinstance(output_tokens, int) or isinstance(output_tokens, bool) or output_tokens < 0:
             output_tokens = None
         actual_cost = None
-        if input_tokens is not None and output_tokens is not None:
+        if (input_tokens is not None and output_tokens is not None
+                and self._input_price is not None and self._output_price is not None):
             actual_cost = ((Decimal(input_tokens) * self._input_price
                             + Decimal(output_tokens) * self._output_price) / Decimal(1_000_000))
         return ProviderResponse(text=text, provider=self.name, model=self.model, reported_model=data.get("model"),
@@ -271,7 +272,9 @@ class OpenAIResponsesProvider:
             raise ProviderBlockedError("API credential is required for the real provider")
         if not isinstance(self.model, str) or not self.model.strip():
             raise ProviderBlockedError("model must be explicitly configured for the real provider")
-        if not _valid_price(self._input_price) or not _valid_price(self._output_price):
+        unpriced_proxy = (self.name == "codex_proxy" and self._input_price is None
+                          and self._output_price is None)
+        if not unpriced_proxy and (not _valid_price(self._input_price) or not _valid_price(self._output_price)):
             raise ProviderBlockedError("finite non-negative input and output prices are required")
         if self.name == "openai":
             if self._endpoint != OFFICIAL_RESPONSES_URL:
