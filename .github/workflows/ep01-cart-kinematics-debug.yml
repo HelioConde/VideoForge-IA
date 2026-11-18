@@ -40,6 +40,12 @@ jobs:
           python-version: '3.12'
       - name: Install pinned Pillow for clearly labelled engineering wireframe
         run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Install FFmpeg and FFprobe for diagnostic MP4 verification
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
       - name: Verify original continuity and 240-frame mechanical contact
         run: |
           python -m unittest discover -s tests -p 'test_ep01_cart_kinematics.py' -v
