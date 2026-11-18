@@ -69,6 +69,18 @@ jobs:
           python -m orchestrator.runtime --db "$DB" --mode mock --max-tasks 2 --output "$REPORT"
           python -m orchestrator.runtime --db "$DB" --mode mock --max-tasks 2 --output "$REPORT"
           python -m orchestrator.dashboard --report "$REPORT" --output "$RUNNER_TEMP/index.html"
+      - name: Check Codex proxy health and models (GET only, no inference)
+        if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'architecture/multi-agent-studio-v1'
+        env:
+          CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+          CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+          AI_ENABLED: 'false'
+          PAID_CALLS_ENABLED: 'false'
+          CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+          IMAGE_GENERATION_ENABLED: 'false'
+          YOUTUBE_PUBLICATION_ENABLED: 'false'
+        run: |
+          python -m orchestrator.proxy_preflight --output "$RUNNER_TEMP/proxy-preflight.json"
       - name: Archive mock runtime evidence
         if: always()
         uses: actions/upload-artifact@v4
