@@ -12,12 +12,13 @@ on:
       - 'tests/test_chain_completion_gate.py'
       - 'tests/test_agent_01_ping.py'
       - 'tests/test_astra_model_selection.py'
+      - 'tests/test_agent_live_roundtrip.py'
   workflow_dispatch:
     inputs:
       mode:
         description: "Mock uses real proxy GET health/models; text inference is separate and may consume quota"
         type: choice
-        options: [mock_with_proxy, reconcile_only, codex_proxy_ping, codex_proxy]
+        options: [mock_with_proxy, reconcile_only, codex_proxy_ping, codex_proxy, codex_proxy_all_roles]
         default: mock_with_proxy
         required: true
       model:
@@ -26,7 +27,7 @@ on:
         required: false
         default: 'auto'
       confirm:
-        description: "For unpriced chain type AUTHORIZE_FOUR_ASTRA_CALLS; other live text AUTHORIZE_TEXT_INFERENCE"
+        description: "For 13 role calls use AUTHORIZE_THIRTEEN_ASTRA_CALLS; 4 unpriced calls require AUTHORIZE_FOUR_ASTRA_CALLS"
         type: string
         required: true
         default: NO_INFERENCE
@@ -76,11 +77,12 @@ jobs:
           python -m unittest discover -s tests -p 'test_chain_completion_gate.py' -v
           python -m unittest discover -s tests -p 'test_agent_01_ping.py' -v
           python -m unittest discover -s tests -p 'test_astra_model_selection.py' -v
+          python -m unittest discover -s tests -p 'test_agent_live_roundtrip.py' -v
 
   manual-proxy-runtime:
     if: github.event_name == 'workflow_dispatch' && inputs.mode != 'reconcile_only'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 45
     concurrency:
       group: agent-codex-text-pilot-${{ github.repository }}
       cancel-in-progress: false
@@ -116,7 +118,7 @@ jobs:
           import re
           from decimal import Decimal, InvalidOperation
           mode=os.environ['REQUEST_MODE']
-          if mode not in ('mock_with_proxy','codex_proxy_ping','codex_proxy'):
+          if mode not in ('mock_with_proxy','codex_proxy_ping','codex_proxy','codex_proxy_all_roles'):
               raise SystemExit('Mode not permitted')
           if not os.environ.get('CODEX_PROXY_API_KEY') or not os.environ.get('CODEX_PROXY_ACCOUNTS_JSON'):
               raise SystemExit('Existing image proxy Secrets are required')
@@ -131,8 +133,12 @@ jobs:
                           or os.environ['GITHUB_RUN_ATTEMPT'] != '1'):
                       raise SystemExit('Fresh explicit four-call Astra authorization required')
                   raise SystemExit(0)
-              if os.environ['REQUEST_CONFIRM'] != 'AUTHORIZE_TEXT_INFERENCE':
+              expected = ('AUTHORIZE_THIRTEEN_ASTRA_CALLS' if mode == 'codex_proxy_all_roles'
+                          else 'AUTHORIZE_TEXT_INFERENCE')
+              if os.environ['REQUEST_CONFIRM'] != expected:
                   raise SystemExit('Live text inference was not explicitly authorized')
+              if mode == 'codex_proxy_all_roles' and os.environ['GITHUB_RUN_ATTEMPT'] != '1':
+                  raise SystemExit('Do not retry a thirteen-call pilot automatically')
               model=os.environ['REQUEST_MODEL']
               if model != 'auto' and not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{1,99}',model):
                   raise SystemExit('A valid explicit model ID is required')
@@ -152,7 +158,7 @@ jobs:
                       or not Decimal('0') < input_price <= Decimal('10000')
                       or not Decimal('0') < output_price <= Decimal('10000')):
                   raise SystemExit('Invalid price or budget bounds')
-              print('Live text expressly requested: one call to Agent 01 for ping, or four for one audit; no media tools.')
+              print('Live text explicitly requested; thirteen calls only with a budget and specific confirmation; no media tools.')
           PY
       - name: Restore authorized ephemeral session in isolated runner only
         shell: bash
@@ -249,6 +255,12 @@ jobs:
             # A single bounded request to Agent 01; no task, image, render or publication.
             python -m orchestrator.agent_ping --mode codex_proxy \
               --budget-usd "$REQUEST_BUDGET" --output "$RUNNER_TEMP/agent-01-ping.json"
+          elif [[ "$REQUEST_MODE" == 'codex_proxy_all_roles' ]]; then
+            export VF_ALL_ROLES_AUTHORIZATION="$REQUEST_CONFIRM"
+            python -m orchestrator.agent_live_roundtrip \
+              --db "$RUNNER_TEMP/vf-all-roles.sqlite" \
+              --output "$RUNNER_TEMP/all-roles-live-report.json" \
+              --github-state --initialize-store --budget-usd "$REQUEST_BUDGET"
           else
             if [[ "$REQUEST_MODE" == 'mock_with_proxy' ]]; then
               args+=(--mode mock)
@@ -288,6 +300,7 @@ jobs:
             ${{ runner.temp }}/proxy-preflight.json
             ${{ runner.temp }}/agent-runtime-report.json
             ${{ runner.temp }}/agent-01-ping.json
+            ${{ runner.temp }}/all-roles-live-report.json
             ${{ runner.temp }}/index.html
             ${{ runner.temp }}/reopened.json
           retention-days: 7
