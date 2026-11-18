@@ -106,7 +106,11 @@ class FakeProxy:
                              "reviewed_finding_ids": [row["id"] for row in producer if row["facet"] == facet],
                              "evidence": [citations[facet]]} for facet in runtime.CHAIN_FACETS]
         elif stage == "director_consolidation":
-            findings = [{"status": "needs_human_review", "basis": "Text audit only", "next_steps": ["Review production visuals"]}]
+            # Mirror the QA-gated contract in the synthetic provider: rejection
+            # must be reported as blocked, not mislabeled as human review.
+            gate = payload["consolidation_template"]
+            findings = [{"status": gate["status"], "basis": gate["basis"],
+                         "next_steps": gate["next_steps"]}]
         response = {
             "model": PROXY_ENV["AI_MODEL"],
             "output": [{"type": "message", "content": [{"type": "output_text",
