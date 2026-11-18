@@ -153,3 +153,24 @@ A execução [#44359549902](https://github.com/HelioConde/VideoForge-IA/actions/
 
 
 **Relatório de continuidade preservado:** [EP01 C07/C08 — Auditoria Astra de continuidade](EP01-C07-C08-CONTINUIDADE-AUDITORIA-ASTRA.md). Gerado e verificado em [Actions #44380156316](https://github.com/HelioConde/VideoForge-IA/actions/runs/44380156316), exclusivamente por consulta ao estado existente e ao manifesto pinado. Mantém 7 achados documentais revisados, 9 tomadas, 0 chamadas novas e decisão final `blocked`.
+
+
+## Padrão Astra e fallback seguro (18/11/2026)
+
+**Modelo primário para novas chamadas:** `gpt-6.2-astra`. **Alternativa:** `gpt-6-astra`.
+
+O formulário manual de `.github/workflows/agent-proxy-runtime.yml` usa `model=auto`. Com inferência *explicitamente autorizada*, inicia o proxy efêmero e consulta `GET /health` e `GET /v1/models` **antes de realizar qualquer chamada de texto**. Caso `gpt-6.2-astra` apareça no catálogo autenticado, seleciona-o. Se ele **não aparecer**, mas `gpt-6-astra` estiver disponível, seleciona a alternativa e documenta o motivo no relatório de preflight. Se ambos estiverem ausentes, a execução é bloqueada. Uma seleção explícita diferente de `auto` **não troca silenciosamente de modelo**.
+
+O workflow exporta o ID efetivamente selecionado como `AI_MODEL`, e o Agente 01 e a cadeia 01→03→12→01 validam que a resposta veio exatamente do modelo escolhido. Não misturar modelos numa mesma auditoria sem uma nova autorização. **Não há fallback por retry após POST**, HTTP 429, timeout, resposta malformada ou resultado de inferência incerto: isso poderia cobrar duas vezes. A ausência no catálogo é detectada antes do POST e permite fallback sem gastar tokens. A mera presença no catálogo não garante sucesso em geração. O modelo `gpt-6-astra` utilizado na auditoria histórica permanece registrado sem alterar ou reclassificar os quatro resultados anteriores.
+
+Os gates `AI_ENABLED=false`, `PAID_CALLS_ENABLED=false`, `CODEX_PROXY_TEXT_AUTHORIZED=false`, geração de imagens e publicação continuam desligados por padrão. **Escolher um modelo não autoriza consumo de cota.** Testes offline: `tests/test_astra_model_selection.py`.
+
+## Despacho durável de auditorias técnicas (18/11/2026)
+
+O módulo `orchestrator/durable_dispatch.py` reutiliza `runtime_store.Store` (fila, lease, histórico, revisão independente, checkpoints e CAS GitHub). O Agente 01 encaminha quatro tarefas declaradas **somente para leitura**: continuidade C07/C08 ao Agente 03, inventário visual ao 04, prontidão do rig ao 07 e mapa temporal de áudio ao 10. O Agente 12 **recalcula e compara as fontes e os hashes** antes de aceitar a auditoria técnica; o Agente 01 recebe o checkpoint. Conclusão de auditoria técnica **não aprova** imagens, rigs, som, MP4 ou publicação.
+
+O código não usa proxy, IA, ferramentas de geração, shell remoto, renderização ou YouTube. Rejeita tarefas fora da allowlist e mantém a fila original `orchestrator/tasks.json` intocada e com `planning_only`/`dispatch_enabled=false`. A nova execução controlada é um despachante separado, não habilitação geral de trabalhos de produção.
+
+- No PR, `.github/workflows/agent-durable-dispatch.yml` executa **cinco testes offline**, as quatro tarefas técnicas, revisão pelo 12 e uma segunda execução para confirmar idempotência; sem Secrets, sem mutar o estado remoto. Evidência: [Actions #44397430817](https://github.com/HelioConde/VideoForge-IA/actions/runs/44397430817), artifact `agent-safe-dispatch-44397430817`. Resultado: **quatro tarefas tecnicamente concluídas, oito fases executadas, zero inferências e nenhuma tarefa repetida na reabertura**.
+- Após integrar a PR à branch padrão, o mesmo workflow terá execução diária e manual com `contents:write`, registrando estado CAS em `state/multi-agent-runtime`, arquivo `runtime/agent-deterministic-dispatch-v1.json`. Esse modo ainda **não foi comprovado em execução agendada na branch padrão**; o job de persistência remota permanece `skipped` na PR por segurança.
+- O despachante processa somente atividades pré-aprovadas de metadados. Novos agentes e trabalhos reais de mídia precisam de executores especializados, aprovações e testes independentes antes de inclusão; não afirmar que os 12 já produzem vídeos autonomamente.
