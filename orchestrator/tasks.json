@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "mode": "planning_only",
+  "tasks": [
+    {
+      "task_id": "EP01-C07-C08-V2-VISUAL-REVIEW",
+      "owner": "supervisor-qa",
+      "status": "needs_review",
+      "input": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json",
+      "requires_human_approval": true,
+      "notes": "Prévia técnica não equivale a aprovação visual; não regenerar imagens por padrão."
+    }
+  ]
+}
