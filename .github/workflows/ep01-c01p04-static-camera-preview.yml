@@ -1,0 +1,105 @@
+name: "VideoForge - EP01 C01-P04 previa camera sem maos separadas"
+run-name: "EP01 C01-P04 / previa tecnica da mae aprovada (70 frames)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PREVIA-CAMERA-C01-P04.json'
+permissions:
+  contents: write
+  packages: read
+concurrency:
+  group: ep01-c01p04-static-camera-qa
+  cancel-in-progress: false
+jobs:
+  preview:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Conferir solicitação limitada a uma prévia não oficial
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PREVIA-CAMERA-C01-P04.json')
+          r=json.loads(p.read_text(encoding='utf-8'))
+          assert r['schema']=='videoforge/ep01-c01p04-camera-preview-request/v1'
+          assert r['channel']=='alchemy-lab' and r['video_id']=='mmorpg-conquiste-a-princesa-ep01'
+          assert r['shot_id']=='C01-P04' and r['preview_only'] is True
+          assert r['source_approved_mother_sha256']=='a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd'
+          assert r['no_hand_parts'] is True and r['camera_only'] is True
+          assert r['proxy_calls']==0 and r['official_episode_render'] is False and r['youtube_upload'] is False
+          PY
+      - name: Verificar SHA de fonte aprovada e preservar o grip integrado
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.ep01_c01p04_camera_preview preflight
+      - name: Preparar PNG real e props de prévia, sem IA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.ep01_c01p04_camera_preview prepare
+      - name: Verificar TypeScript usando runner Remotion pré-compilado
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit
+      - name: Gerar somente o preview técnico de câmera (sem bone rig)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd motion-remotion
+          ./node_modules/.bin/remotion render src/ep01-c01p04-camera-preview-index.ts \
+            C01P04CameraOnlyTechnicalPreview \
+            ../output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/previews/c01-p04-camera-only-v1/camera-preview.mp4 \
+            --props=../output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/previews/c01-p04-camera-only-v1/props.json \
+            --codec=h264 --concurrency=2 --log=error
+      - name: Verificar frames, duração e fonte original
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.ep01_c01p04_camera_preview verify
+          p=output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/previews/c01-p04-camera-only-v1
+          ffmpeg -nostdin -hide_banner -loglevel error -y -ss 0.08 -i "$p/camera-preview.mp4" -frames:v 1 "$p/frame-inicio.jpg"
+          ffmpeg -nostdin -hide_banner -loglevel error -y -ss 1.10 -i "$p/camera-preview.mp4" -frames:v 1 "$p/frame-meio.jpg"
+          ffmpeg -nostdin -hide_banner -loglevel error -y -ss 2.18 -i "$p/camera-preview.mp4" -frames:v 1 "$p/frame-final.jpg"
+      - name: Gravar somente provas técnicas no canal
+        shell: bash
+        run: |
+          set -euo pipefail
+          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
+          p=output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/previews/c01-p04-camera-only-v1
+          cp "$p/preview.qa.json" "$ep/QA-C01-P04-CAMERA-SEM-MAOS-V1.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$ep/QA-C01-P04-CAMERA-SEM-MAOS-V1.json"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "qa(ep01): SHA/frames da prévia C01-P04 sem separar mãos"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-c01p04-approved-mother-camera-preview-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/previews/c01-p04-camera-only-v1/
+          retention-days: 30
+          if-no-files-found: warn
