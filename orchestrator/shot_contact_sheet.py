@@ -158,6 +158,9 @@ def render_sheet(root: Path, output_dir: Path, inventory: dict) -> None:
         src = (root / row["asset_path"]).resolve(strict=True)
         tile = Image.new("RGB", (width, tile_h), "#12161d")
         with Image.open(src) as im:
+            w, h = im.size
+            row["source_dimensions"] = [w, h]
+            row["aspect_ratio_mismatch_to_9_16"] = abs((w / h) - (9 / 16)) > 0.03
             image = im.convert("RGB")
             image.thumbnail((width, height), Image.Resampling.LANCZOS)
             x = (width - image.width) // 2
