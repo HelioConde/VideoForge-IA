@@ -219,6 +219,34 @@ def model_step(store, task, root, agent, payload, mode, limits):
                          'Use consolidation_template as the exact structure and safe default. '
                          'Do not use completed: source-only QA never grants human visual approval. '
                          'Return pure JSON without markdown fences or commentary.')
+    # A separate, manual all-role text pilot uses only source-bound, read-only
+    # reports. Its outputs cannot grant visual, media, or publishing approval.
+    if stage == 'roundtrip_assignment':
+        contract += (' You are coordinator 01. Acknowledge the ten named specialist '
+                     'assignments in a concise analysis; findings may be empty. '
+                     'Do not claim specialist work or visual approval is complete.')
+    elif stage == 'roundtrip_specialist':
+        contract += (' You are the single specialist named by role_id. Return exactly '
+                     'one finding with exactly these keys: role_id, focus, '
+                     'evidence_sha256, production_ready, blockers, recommendation. '
+                     'Copy role_id, focus and evidence_sha256 exactly from the input. '
+                     'Set production_ready to false. blockers must be a nonempty '
+                     'array of concrete strings based on supplied source_evidence; '
+                     'recommendation must be a nonempty string. No images, renders, '
+                     'audio or other work was executed in this text pilot.')
+    elif stage == 'roundtrip_independent_qa':
+        contract += (' You are independent reviewer 12. Return exactly ten findings, '
+                     'one for each specialist 02 to 11; each finding has exactly '
+                     'role_id, decision, evidence_sha256, reason. Copy each hash from '
+                     'expected_source_evidence. decision must be supported, '
+                     'correction_requested or insufficient_evidence. Only support '
+                     'source-bound text fidelity, never art/media/visual approval.')
+    elif stage == 'roundtrip_consolidation':
+        contract += (' You are director 01. Return exactly one finding with exactly '
+                     'status, basis, next_steps. Copy safe_status from the input: '
+                     'needs_human_review if QA passed, otherwise blocked. Do not '
+                     'ever return completed. basis must be nonempty; next_steps '
+                     'must be a nonempty string array. Never approve production.')
     request = GenerationRequest(agent_id=agent, instructions=text+contract, input=encode(model_payload),
                                 input_token_limit=100_000, max_output_tokens=4500, timeout_seconds=120)
     request_sha256 = fingerprint({'agent_id': agent, 'instructions_sha256': digest,
