@@ -9,6 +9,7 @@ on:
       - 'tests/test_runtime*.py'
       - 'tests/test_chain*.py'
       - 'tests/test_director_consolidation_gate.py'
+      - 'tests/test_chain_completion_gate.py'
       - 'tests/test_agent_01_ping.py'
       - 'tests/test_astra_model_selection.py'
   workflow_dispatch:
@@ -72,6 +73,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_runtime*.py' -v
           python -m unittest discover -s tests -p 'test_chain*.py' -v
           python -m unittest discover -s tests -p 'test_director_consolidation_gate.py' -v
+          python -m unittest discover -s tests -p 'test_chain_completion_gate.py' -v
           python -m unittest discover -s tests -p 'test_agent_01_ping.py' -v
           python -m unittest discover -s tests -p 'test_astra_model_selection.py' -v
 
