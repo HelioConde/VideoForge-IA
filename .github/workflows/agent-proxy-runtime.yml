@@ -19,10 +19,10 @@ on:
         default: mock_with_proxy
         required: true
       model:
-        description: "Exact model ID from GET /v1/models; required only for codex_proxy"
+        description: "Exact model ID from GET /v1/models; candidate gpt-6-astra, availability may vary"
         type: string
         required: false
-        default: ''
+        default: 'gpt-6-astra'
       confirm:
         description: "For live text, type AUTHORIZE_TEXT_INFERENCE; default does not authorize"
         type: string
