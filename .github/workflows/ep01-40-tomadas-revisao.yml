@@ -1,0 +1,100 @@
+name: "EP01 - MP4 unico para revisao das 40 tomadas"
+
+on:
+  push:
+    branches: [codex/ep01-c01p05-camera]
+    paths:
+      - ".github/workflows/ep01-40-tomadas-revisao.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: ep01-40-review-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  render-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Conferir fontes e regras de revisao sem novas imagens
+        run: python -m unittest tests.test_ep01_camera_batch -v
+      - name: Preparar Remotion e validar TypeScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit --skipLibCheck --esModuleInterop --jsx react-jsx --target es2020 --module esnext --moduleResolution node --lib es2020,dom src/ep01-camera-batch.tsx
+      - name: Renderizar e validar todas as 40 tomadas e montagem unica
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m videoforge.ep01_camera_batch render --shots all
+      - name: Exportar um unico MP4 e indice de horarios por tomada
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, shutil, hashlib
+          from pathlib import Path
+          from videoforge.ep01_camera_batch import ROOT, OUT, build_plan
+          output = ROOT / OUT
+          checkpoint = json.loads((output / 'checkpoint.json').read_text(encoding='utf-8'))
+          candidates = sorted(output.glob('montage-*/preview.mp4'))
+          if len(candidates) != 1:
+              raise RuntimeError(f'Expected exactly one montage; found {len(candidates)}')
+          source = candidates[0]
+          report = json.loads((source.parent / 'qa.json').read_text(encoding='utf-8'))
+          shots = build_plan()['shots']
+          expected_ids = [s['id'] for s in shots]
+          if checkpoint.get('selected_shots') != expected_ids:
+              raise RuntimeError('Montage does not contain all 40 shots in order')
+          if len(shots) != 40 or report.get('frames_verified') != sum(s['duration_frames'] for s in shots) or not report.get('technical_qa_passed') or not report.get('all_frames_decoded') or report.get('official_episode_approved') or report.get('youtube_upload'):
+              raise RuntimeError('Review video did not satisfy technical QA')
+          digest = hashlib.sha256(source.read_bytes()).hexdigest()
+          if report.get('mp4_sha256') != digest:
+              raise RuntimeError('SHA mismatch on verified montage')
+          review = output / 'entrega-revisao-40-tomadas'
+          review.mkdir(exist_ok=True)
+          name = 'EP01-40-tomadas-previa-camera.mp4'
+          shutil.copyfile(source, review / name)
+          def timecode(frames):
+              secs = frames/30
+              return f'{int(secs//60):02d}:{secs%60:06.3f}'
+          lines = ['EP01 - 40 tomadas / PREVIA TECNICA DE CAMERA (NAO E ANIMACAO FINAL)', 'Sem audio, sem rig articulado, sem publicacao no YouTube.', 'Informe o ID da tomada e a correcao desejada.', '']
+          for s in shots:
+              a = s['start_frame']
+              b = a + s['duration_frames']
+              lines.append(f"{s['id']} | {timecode(a)} a {timecode(b)} | {s['duration_frames']} frames | {s['approval_status']}")
+          (review/'INDICE-TOMADAS.txt').write_text('\n'.join(lines)+'\n', encoding='utf-8')
+          (review/'QA-REVISAO.json').write_text(json.dumps({
+              'kind':'technical-camera-only-review','official_episode_approved':False,'youtube_uploaded':False,
+              'audio_included':False,'character_rig':False,
+              'frames_verified':report['frames_verified'],'fps':30,'resolution':[540,960],
+              'mp4_sha256':digest,'video_file':name,
+              'shot_ids':expected_ids,'shot_count':len(expected_ids),
+              'human_approval_pending':True,'known_issues':['C01-P02 contact rejected','C01-P03/P04 king continuity','C01-P05 throne continuity']
+          },ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps({'file':str(review/name),'shots':len(shots),'frames':report['frames_verified'],'sha256':digest,'bytes':(review/name).stat().st_size}))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EP01-40-tomadas-MP4-revisao-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/previews/camera-batch-v1/entrega-revisao-40-tomadas/
+          retention-days: 30
+          if-no-files-found: error
