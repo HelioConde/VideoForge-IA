@@ -4,12 +4,6 @@ name: "Agents - Codex proxy preflight (health/models only)"
 # No text/image inference, publication, admin APIs or OAuth refresh.
 on:
   workflow_dispatch:
-  # One-shot same-repository GET-only model catalog validation. Remove after run.
-  pull_request:
-    paths:
-      - '.github/workflows/agent-proxy-preflight.yml'
-      - 'orchestrator/proxy_preflight.py'
-      - 'tests/test_runtime_proxy_contract.py'
 
 permissions:
   contents: read
@@ -21,7 +15,6 @@ concurrency:
 
 jobs:
   connectivity-only:
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'architecture/multi-agent-studio-v1')
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
