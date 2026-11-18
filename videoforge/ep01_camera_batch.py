@@ -126,7 +126,10 @@ def fingerprint(root, props):
     deps = ['videoforge/ep01_camera_batch.py', 'motion-remotion/src/ep01-camera-batch.tsx', 'motion-remotion/package-lock.json']
     deps += [(EP / name).as_posix() for name in ['APROVACOES-VISUAIS-C01-V3.json', 'POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json', 'REVISAO-ERRO-PAINEIS-C01-P02.json']]
     if props.get('revision') == 'continuity-v2':
-        deps += [(EP / 'CONTINUIDADE-C07-C08-V2.json').as_posix(), 'videoforge/ep01_continuity_v2.py']
+        deps += [(EP / 'CONTINUIDADE-C07-C08-V2.json').as_posix(),
+                 (EP / 'PROPOSTA-MOVIMENTO-C07-C08-V1.json').as_posix(),
+                 'videoforge/ep01_continuity_v2.py',
+                 'videoforge/ep01_continuity_motion.py']
     payload = {'props': props, 'code_and_policies': {p: sha(root / p) for p in deps}}
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
 
