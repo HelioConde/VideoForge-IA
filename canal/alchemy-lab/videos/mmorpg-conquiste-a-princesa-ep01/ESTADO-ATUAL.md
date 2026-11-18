@@ -1,3 +1,11 @@
+## 17/11/2026 — MP4 técnico da câmera C01-P04, sem mãos separadas, disponível no Actions
+
+- **Render Remotion concluído e verificado:** [Action #44211299311](https://github.com/HelioConde/VideoForge-IA/actions/runs/44211299311), artifact `ep01-c01p04-approved-mother-camera-preview-44211299311` (`camera-preview.mp4`, 1.367.779 bytes, SHA `f4ee6c4c9c1f18432c9ba7d9b7d41c85bbc63a9d9cd6949a4fd09340e017bf38`). QA técnico confirma **70 quadros, 30fps, 540×960, codec H.264, 0 chamadas ao proxy**, com mãe aprovada SHA `a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd` e fonte alinhada SHA `b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d`.
+- O job aparece `failure` **após o render/QA**, porque o runner precompilado não inclui `git` e falhou só ao tentar salvar `preview.qa.json` no repositório. Os 6 arquivos do pacote **foram enviados ao artifact**. Workflow foi corrigido para **arquivar por artifact sem comando git** no commit `f1d6fe188bdc4152ddbdbb78935de7bf0f84320f`. [Manifesto QA no GitHub](QA-C01-P04-CAMERA-SEM-MAOS-V1.json).
+- Esta prévia é **câmera simulando dolly-out sobre quadro achatado**, não parallax real nem animação de personagem. Nenhuma mão, lança, Kael ou guarda foi articulado separadamente. A cena-mãe e a regra de ignorar mãos permanecem intactas.
+- **Aguardando avaliação visual do vídeo técnico** para decidir se câmera e ritmo funcionam. Não declarar este preview como aprovação de rig, MP4 final do episódio ou YouTube publicado.
+- **Estado global permanece:** 39/39 imagens-mãe originais arquivadas, 1 variante aprovada individualmente (C01-P04 V3), demais QA/rig e montagem do EP01 pendentes.
+
 ## 17/11/2026 — Retomada após abandono das mãos: 39/39 imagens-mãe no inventário
 
 - **Fonte de verdade atual:** [CHECKPOINT-IMAGENS-EP01-AUTO.json](CHECKPOINT-IMAGENS-EP01-AUTO.json) produzido a partir do registro SHA da Bíblia Visual. **39/39 tomadas visuais possuem imagem-mãe original arquivada** e `C01-P01` é preto, sem arte. **Nenhuma imagem-mãe nova é necessária para completar a fila original**. Os campos `missing_image_assets` e `images_to_generate=37` em `EP01-40-TOMADAS-PRODUCAO.json` são o **planejamento inicial HISTÓRICO**: nunca usá-los para disparar geração em duplicata.
