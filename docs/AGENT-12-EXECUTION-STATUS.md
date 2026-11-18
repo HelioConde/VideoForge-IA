@@ -4,7 +4,7 @@
 
 1. **Registro (12/12):** arquivos de instrução e IDs presentes.
 2. **Diagnóstico de fontes (12 papéis):** o Agente 01 despacha dez auditorias específicas dos agentes 02–11; o Agente 12 revisa as fontes e as entregas. Cada auditoria tem checkpoint transacional e hash, sem usar IA ou produzir mídia.
-3. **Piloto Astra textual (implementado, ainda não executado com o modelo real):** o modo manual codex_proxy_all_roles oferece 13 inferências reais: 01 delega dez tarefas; 02–11 respondem; 12 faz QA; 01 consolida. Requer autorização explícita, orçamento configurado e secrets.
+3. **Piloto Astra textual real (13/13 executadas e verificadas):** no run #44414591676, 01 delegou, 02–11 responderam com Astra real, 12 revisou e 01 consolidou. Checkpoint transacional de QA concluído, sem produção audiovisual.
 4. **Produção audiovisual (pendente):** geração de imagens, camadas RGBA, rig, animação, áudio e renderização não são habilitados por esse piloto textual.
 
 ## Diagnóstico com execução comprovada
@@ -23,7 +23,7 @@
 - **`gpt-6.2-astra` não apareceu nesse catálogo autenticado**. O modelo selecionado foi `gpt-6-astra`, motivo `fallback_primary_absent_from_catalog`. Essa disponibilidade pode mudar numa futura execução.
 - `inference_requests=0`, `image_requests=0`, `youtube_publications=0`, `paid_inference_authorized=false`, `agent_communication_proven=false`.
 - O smoke sem IA nesse mesmo runner confirmou: Agente 01 mock recebeu resposta, 12 mensagens, dois checkpoints e reabertura idempotente.
-- **Limite de evidência:** catálogo e credenciais válidos **não** provam uma resposta real do Astra. Só um `workflow_dispatch` autorizado e com orçamento, contendo respostas e logs reais dos 12 papéis, poderá comprovar essa etapa.
+- **Limite do preflight isolado:** o catálogo autenticado não provava uma resposta real. Esse limite foi superado posteriormente pelo run real #44414591676, descrito abaixo.
 - O preflight foi adicionado por meio da [PR #73](https://github.com/HelioConde/VideoForge-IA/pull/73), já integrada. Sua única execução automática adicional ocorre quando o próprio workflow de preflight for alterado na branch `main`; as demais execuções são manuais.
 
 ## Resposta real do Agente 01 — 18/11/2026
@@ -33,8 +33,20 @@
 - A resposta foi validada com o contrato do Agente 01, 844 tokens de entrada, 43 de saída; o artifact `authorized-agent-01-astra-ping-44412920056` guarda o relatório e o preflight sanitizados.
 - A execução foi única e limitada a 500 tokens máximos de saída, sem retry, geração de imagens, mídia, alterações no episódio ou publicação no YouTube.
 - **Não existe custo em USD confirmado**: o ping usou a opção do proxy sem tabela de tarifas, que não equivale a custo zero nem a limite monetário.
-- **Status de IA real por papel:** Agente 01 comprovado para uma resposta de conectividade. Agentes 02–11 e o QA real do Agente 12 ainda **não foram comprovados** nesta cadeia.
-- O ciclo de 13 chamadas só deve prosseguir com tarifa confiável e limite de gasto explícito (`budget_usd` e taxas de tokens), sem estimar preços inventados ou transformar uma chamada bem-sucedida em prova da produção audiovisual.
+- **Status da época deste ping:** esta execução isolada comprovou somente o Agente 01. A posterior execução #44414591676 comprovou a cadeia textual real completa dos 12 papéis.
+- O ciclo de 13 chamadas foi posteriormente autorizado e realizado com limites de chamadas/tokens, sem uma afirmação de teto financeiro em USD. Não confundir a prova do texto com a produção de mídia.
+
+## Prova real dos 12 agentes com Astra — 18/11/2026
+
+- [Execução GitHub Actions #44414591676](https://github.com/HelioConde/VideoForge-IA/actions/runs/44414591676) — **success**. [PR #77](https://github.com/HelioConde/VideoForge-IA/pull/77) integrada à `main`.
+- **Modelo de execução: `gpt-6.2-astra`**, selecionado por GET autenticado nesse run. Diferentemente do preflight anterior, o modelo preferencial já estava disponível.
+- **13 chamadas reais liquidadas (`settled`) de 13**, na ordem `01 → 02 → 03 → 04 → 05 → 06 → 07 → 08 → 09 → 10 → 11 → 12 → 01`.
+- **12/12 papéis participaram.** Os dez especialistas 02–11 retornaram análises textuais individuais. O Agente 12 devolveu dez decisões `supported`, marcou `technical_passed=true`, e o Agente 01 consolidou `needs_human_review`.
+- **Evidência persistida:** `state/multi-agent-runtime`, arquivo `runtime/agent-12-text-roundtrip-v1.json`. Um checkpoint, tarefa `completed`, hashes por resposta e origem. Entrada: **13.443 tokens**; saída: **5.373 tokens** (total informado pelo proxy).
+- O limite desse workflow foi de **13 chamadas** e **250.000 unidades conservadoras de reserva de tokens**, sem retry. Por falta de tabela tarifária do proxy, **nenhum teto ou custo em USD foi comprovado**; não equiparar isso a custo zero.
+- `human_visual_approval=false`, `production_ready=false`, `youtube_publication=false`. Os dados textuais não demonstram camadas RGBA aprovadas, rig ou renderização do EP01.
+- Próximos bloqueios citados pelo Diretor: continuidade espacial C07/C08 e direção de fuga; conferir referências e hashes de imagens; validação do rig/carrinho, animação temporal, áudio e MP4 único.
+- Este sucesso comprova a **comunicação textual real entre os doze papéis**, não execução autônoma de suas ferramentas de produção audiovisual.
 
 ## Piloto de respostas reais do Astra
 
