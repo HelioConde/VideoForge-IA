@@ -4,6 +4,10 @@ name: "Agents - Codex proxy preflight (health/models only)"
 # No text/image inference, publication, admin APIs or OAuth refresh.
 on:
   workflow_dispatch:
+  # One-time same-repository Astra availability test. Revert after results.
+  pull_request:
+    paths:
+      - '.github/workflows/agent-proxy-preflight.yml'
 
 permissions:
   contents: read
@@ -15,6 +19,7 @@ concurrency:
 
 jobs:
   connectivity-only:
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'architecture/multi-agent-studio-v1')
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -105,7 +110,7 @@ jobs:
       - name: Verificar GET health e models autenticados (nunca gera IA)
         shell: bash
         run: |
-          python -m orchestrator.proxy_preflight --output "$RUNNER_TEMP/proxy-preflight.json" --list-models
+          python -m orchestrator.proxy_preflight --output "$RUNNER_TEMP/proxy-preflight.json" --list-models --require-model gpt-6.2-astra
       - name: Smoke test Agent 01 and agent bus on the authenticated proxy runner (NO inference)
         shell: bash
         run: |
