@@ -365,6 +365,48 @@ class OfflineProxyContractTests(unittest.TestCase):
             finally:
                 store.close()
 
+    def test_invalid_final_json_shape_is_accounted_and_never_replayed(self):
+        from orchestrator.chain_recovery import reconcile
+        class InvalidShape(FakeProxy):
+            def open(self, request, timeout):
+                response = super().open(request, timeout)
+                packet = json.loads(response.body)
+                packet["id"] = f"resp_synthetic_{len(self.requests):04d}"
+                if "Runtime call stage: director_consolidation." in json.loads(request.data)["instructions"]:
+                    # Deliberately omit required analysis and return four valid transport envelopes.
+                    payload = {"agent_id": "01", "mode": "codex_proxy",
+                               "findings": [], "human_visual_approval": False}
+                    packet["output"][0]["content"][0]["text"] = json.dumps(payload)
+                return FakeHTTPResponse(packet)
+        fake = InvalidShape()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            PROXY_ENV, {"AI_MODEL": "gpt-6-astra"}
+        ), patch.dict(os.environ, {**PROXY_ENV, "AI_MODEL": "gpt-6-astra"}, clear=True), patch(
+            "orchestrator.providers.urllib.request.build_opener", return_value=fake
+        ):
+            store = Store(Path(directory) / "state.sqlite")
+            try:
+                runtime.seed(store, mode="codex_proxy", continuity_only=True)
+                limits = {"usd": 100, "tokens": 1000000, "calls": 4}
+                runtime.step(store, mode="codex_proxy", limits=limits)
+                task = runtime.step(store, mode="codex_proxy", limits=limits)
+                self.assertEqual(task["status"], "blocked")
+                self.assertEqual(len(fake.requests), 4)
+                usage = runtime.report(store)["usage"]
+                self.assertTrue(all(row["state"] == "settled" for row in usage))
+                last = [evt["content"] for evt in runtime.report(store)["events"]
+                        if evt["type"] == "progress_update"][-1]
+                self.assertEqual(last["validation_status"], "rejected")
+                self.assertEqual(last["validation_error"], "Model report schema rejected")
+                self.assertNotIn("response", last)
+                self.assertEqual(len(store.invocation_responses(task["task_id"])), 3)
+                checkpoint = reconcile(store, task["task_id"], apply=True)
+                self.assertFalse(checkpoint["final_output_journaled"])
+                self.assertEqual(checkpoint["final_validation_reason"], "Model report schema rejected")
+                self.assertEqual(store.get(task["task_id"])["status"], "blocked")
+            finally:
+                store.close()
+
     def test_real_chain_qa_rejection_blocks_without_replaying_calls(self):
         fake = FakeProxy(reject_qa_facet="cart_continuity")
         with tempfile.TemporaryDirectory() as directory:
