@@ -447,7 +447,7 @@ class Store:
                                           or any(c not in '0123456789abcdef' for c in report_sha256)):
             raise ValueError('Report provenance must be a lowercase SHA-256 digest')
         if validation_error is not None:
-            if (response is None or not isinstance(validation_error, str)
+            if (not isinstance(validation_error, str)
                     or not 1 <= len(validation_error) <= 160
                     or any(ord(c) in (10, 13) for c in validation_error)):
                 raise ValueError('Invalid model response rejection code')
@@ -487,7 +487,7 @@ class Store:
                                WHERE call_id=?''',
                             ('settled' if input_tokens is not None and output_tokens is not None else 'unknown',
                              input_tokens, output_tokens, actual_usd, agent_id, model, response_id, report_sha256, call_id))
-            if response is not None:
+            if response is not None or validation_error is not None:
                 attempt = self.db.execute('SELECT task_id,worker FROM attempts WHERE id=?', (row['attempt_id'],)).fetchone()
                 task = self.get(attempt['task_id'])
                 sender = agent_id or row['agent_id'] or attempt['worker']
@@ -501,8 +501,10 @@ class Store:
                            'request_sha256': request_sha256,
                            'instructions_sha256': instructions_sha256,
                            'provider_response_sha256': provider_response_sha256,
-                           'report_sha256': report_sha256, 'response': response,
+                           'report_sha256': report_sha256,
                            'validation_status': 'rejected' if validation_error else 'accepted'}
+                if response is not None:
+                    content['response'] = response
                 if validation_error:
                     content['validation_error'] = validation_error
                 self._event(task, sender, target, 'progress_update', content, call_id, now)
