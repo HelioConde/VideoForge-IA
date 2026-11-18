@@ -39,7 +39,7 @@ def normalize_origin(value: str) -> tuple[str, str]:
     return f"{url.scheme}://{url.netloc}", "local_loopback" if local else "remote_https"
 
 
-def probe(base_url: str, api_key: str, *, opener=None) -> dict:
+def probe(base_url: str, api_key: str, *, opener=None, require_model: str | None = None) -> dict:
     origin, kind = normalize_origin(base_url)
     if not isinstance(api_key, str) or len(api_key) < 20 or "\r" in api_key or "\n" in api_key:
         raise PreflightError("CODEX_PROXY_API_KEY is not configured or is invalid")
@@ -73,7 +73,11 @@ def probe(base_url: str, api_key: str, *, opener=None) -> dict:
     models = results["/v1/models"].get("data")
     if not isinstance(models, list):
         raise PreflightError("Proxy did not return a model catalog")
-    count = sum(isinstance(m, dict) and isinstance(m.get("id"), str) and bool(m["id"]) for m in models)
+    ids = {m["id"] for m in models if isinstance(m, dict)
+           and isinstance(m.get("id"), str) and bool(m["id"])}
+    if require_model is not None and require_model not in ids:
+        raise PreflightError("Requested text model is absent from the authenticated proxy catalog")
+    count = len(ids)
     return {"schema_version": 1, "mode": "proxy_preflight_read_only",
             "proxy_kind": kind, "authenticated": True, "accounts_configured": health["accounts"],
             "model_count": count, "inference_requests": 0, "image_requests": 0,
@@ -84,10 +88,11 @@ def probe(base_url: str, api_key: str, *, opener=None) -> dict:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--require-model", help="Validate a model ID in GET catalog, never invoke it")
     args = parser.parse_args()
     try:
         report = probe(os.environ.get("CODEX_PROXY_BASE_URL", ""),
-                       os.environ.get("CODEX_PROXY_API_KEY", ""))
+                       os.environ.get("CODEX_PROXY_API_KEY", ""), require_model=args.require_model)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(json.dumps(report, ensure_ascii=False))
