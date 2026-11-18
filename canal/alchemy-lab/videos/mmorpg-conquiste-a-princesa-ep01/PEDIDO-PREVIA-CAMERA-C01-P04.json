@@ -11,7 +11,7 @@
   "official_episode_render": false,
   "youtube_upload": false,
   "auto_visual_approval": false,
-  "request_revision": 3,
-  "previous_run_id": 44210385282,
-  "retry_reason": "legacy Remotion runner has no pip; changed PNG preflight to standard-library checksum and preapproved alignment metadata"
+  "request_revision": 4,
+  "previous_run_id": 44210744577,
+  "retry_reason": "correct exact no-hand policy field in stdlib SHA preflight"
 }
