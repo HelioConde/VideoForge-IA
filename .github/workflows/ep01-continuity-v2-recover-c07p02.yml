@@ -1,0 +1,72 @@
+name: "EP01 recuperar C07-P02 V2 gerada sem nova chamada"
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ep01-continuity-v2-recover-c07p02.yml'
+permissions:
+  contents: write
+  actions: read
+jobs:
+  restore:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: continuity-v2-C07-P02-44264179761
+          run-id: 44264179761
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/
+      - name: Conferir SHA real e reparar apenas os metadados ausentes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          root=Path("output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens")
+          img=root/"c07-p02-continuity-v2-scene-mother.png"
+          meta=img.with_suffix(".production.json")
+          if not img.is_file() or not meta.is_file():
+              raise SystemExit("RECOVERY_ARTIFACT_INCOMPLETE")
+          digest=hashlib.sha256(img.read_bytes()).hexdigest()
+          expected="c575af1ef7487370e1b0beba84e09809d3c16723d649fa9113119a8abc859899"
+          if digest != expected:
+              raise SystemExit("RECOVERY_SHA_MISMATCH")
+          m=json.loads(meta.read_text(encoding="utf-8"))
+          if m["sha256"]!=digest or m["shot_id"]!="C07-P02":
+              raise SystemExit("RECOVERY_METADATA_MISMATCH")
+          m.update(channel="alchemy-lab",video_id="mmorpg-conquiste-a-princesa-ep01",
+                   asset_id=img.stem,candidate_scene_shot_id="C07-P02",
+                   source_originals_sha_verified=[
+                     {"id":x["asset_id"],"sha256":x["sha256"]}
+                     for x in m.get("source_references",[])
+                   ])
+          meta.write_text(json.dumps(m,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("RECOVERY_ORIGINAL_IMAGE_PRESERVED_SHA",digest)
+          PY
+      - name: Arquivar PNG original existente sem gerar novamente
+        shell: bash
+        run: |
+          bash scripts/arquivar-pngs-se-existirem.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
+            output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
+            44264179761 production-continuity-v2-mother success
+      - name: Confirmar arquivo recuperado
+        shell: bash
+        run: |
+          python - <<'PY'
+          from videoforge.ep01_continuity_v2 import archived
+          m=archived("C07-P02")
+          assert m and m["sha256"]=="c575af1ef7487370e1b0beba84e09809d3c16723d649fa9113119a8abc859899"
+          print("RECOVERY_COMPLETE_C07_P02",m["sha256"])
+          PY
