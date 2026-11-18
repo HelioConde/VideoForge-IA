@@ -72,7 +72,7 @@ def preflight(root:Path=ROOT)->dict:
     if approval.get("approval_scope")!="individual_exact_sha_only" or len(allowed)!=1:
         raise VideoForgeError("CAMERA_PREVIEW_CREATOR_APPROVAL_NOT_FOUND")
     if (policy.get("status")!="active" or
-        policy.get("scope",{}).get("skip_independent_fingers") is not True or
+        policy.get("scope",{}).get("skip_creation_of_independent_fingers") is not True or
         policy.get("animation_approach",{}).get("guards_in_c01_p04")!="static_approved_integrated_character_and_weapon_visual"):
         raise VideoForgeError("CAMERA_PREVIEW_HAND_SPLIT_POLICY_NOT_APPLIED")
     a=plan["source_approved_original"]
