@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "stages": [
+    [
+      "roteirista"
+    ],
+    [
+      "diretor-cenas"
+    ],
+    [
+      "diretor-arte"
+    ],
+    [
+      "gerador-visual"
+    ],
+    [
+      "separador-camadas"
+    ],
+    [
+      "especialista-rig",
+      "diretor-camera",
+      "especialista-audio"
+    ],
+    [
+      "animador"
+    ],
+    [
+      "montador"
+    ],
+    [
+      "supervisor-qa"
+    ]
+  ],
+  "gates": {
+    "visual": "human_review_required",
+    "proxy": "sha_inventory_and_lock_required",
+    "youtube": "disabled_until_explicit_authorization"
+  }
+}
