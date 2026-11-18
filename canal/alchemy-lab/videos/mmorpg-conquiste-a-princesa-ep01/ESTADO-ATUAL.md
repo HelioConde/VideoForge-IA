@@ -1,3 +1,12 @@
+## 17/11/2026 — Retomada após abandono das mãos: 39/39 imagens-mãe no inventário
+
+- **Fonte de verdade atual:** [CHECKPOINT-IMAGENS-EP01-AUTO.json](CHECKPOINT-IMAGENS-EP01-AUTO.json) produzido a partir do registro SHA da Bíblia Visual. **39/39 tomadas visuais possuem imagem-mãe original arquivada** e `C01-P01` é preto, sem arte. **Nenhuma imagem-mãe nova é necessária para completar a fila original**. Os campos `missing_image_assets` e `images_to_generate=37` em `EP01-40-TOMADAS-PRODUCAO.json` são o **planejamento inicial HISTÓRICO**: nunca usá-los para disparar geração em duplicata.
+- **Aprovação humana estrita:** somente o PNG de **C01-P04 V3** está explicitamente aprovado por SHA em [APROVACOES-VISUAIS-C01-V3.json](APROVACOES-VISUAIS-C01-V3.json). A aprovação estética geral das demais imagens não corresponde a aprovação individual. Articulação e vídeo oficial continuam pendentes.
+- **Decisão do criador:** [não separar mãos](POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json). Guardas com lanças na C01-P04 devem conservar a pegada integrada da mãe aprovada; R3/W3 e demais recortes de mãos foram rejeitados e ficaram arquivados somente para histórico.
+- **Etapa técnica atual:** [PLANO-PREVIA-CAMERA-C01-P04.json](PLANO-PREVIA-CAMERA-C01-P04.json) usa o original aprovado + alinhamento de 1 linha comprovado por SHA para um **preview Remotion de 70 frames, 540×960, câmera somente**, com marca de revisão, sem rig de mãos, chamadas de IA ou publicação. Workflow [ep01-c01p04-static-camera-preview.yml](https://github.com/HelioConde/VideoForge-IA/actions/workflows/ep01-c01p04-static-camera-preview.yml); a execução deve ser verificada antes de qualquer declaração de MP4 concluído.
+- **Próximas prioridades:** QA visual da prévia; C01-P02 (espada), C01-P03 (Kael), depois sequenciar tomadas seguintes com o sistema de câmera/rig para partes realmente móveis. Não liberar o render oficial de 40 tomadas por causa da prévia isolada.
+- Resumo operacional: [ESTADO-RETOMADA-PRODUCAO-EP01.json](ESTADO-RETOMADA-PRODUCAO-EP01.json). Atualizar esse resumo pelo inventário real antes de pedir nova geração.
+
 ## 17/11/2026 — DECISÃO DO CRIADOR: IGNORAR MÃOS SEPARADAS, RETOMAR DORAMA
 
 **Estado vigente / substitui todas as instruções abaixo que exigem separar ou corrigir mãos da C01-P04.**
