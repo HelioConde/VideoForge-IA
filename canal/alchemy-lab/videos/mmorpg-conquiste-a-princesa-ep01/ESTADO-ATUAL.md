@@ -1,3 +1,7 @@
+## 18/11/2026 — Correção narrativa C07/C08 V2 do criador
+
+Revisão originada no MP4 único de 40 tomadas: Elara muda de lado, conversa sem ponte, soldados aparentam ajudar Kael, carrinho troca de posição. [Plano aprovado para desenvolvimento V2](CONTINUIDADE-C07-C08-V2.json) e [guia](CONTINUIDADE-C07-C08-V2.md) corrigem o eixo com 9 tomadas C07/C08 dentro dos mesmos 29s. Adicionadas C07-P04 e C08-P05, total editorial revisado = 42 (antes 40); requer sete novas imagens-mãe versionadas e preserva duas fontes candidatas antigas. **Implementação de código/plano ≠ imagens geradas ou revisão visual aprovada.** Workflow de geração por SHA (uma chamada por Action) e opção de render V2 que bloqueia fontes faltantes. 39/39 mães do inventário histórico permanecem arquivadas; não declarar o EP01 corrigido ou publicar até QA real e MP4 novo.
+
 ## Câmera EP01 — resultado verificado em 17/11/2026
 
 [PR #68](https://github.com/HelioConde/VideoForge-IA/pull/68) integrado. [Action #44215462090](https://github.com/HelioConde/VideoForge-IA/actions/runs/44215462090) passou: quatro prévias (três visuais + preto) e montagem de 310 frames/10,33 s, 540×960, H.264, 30 FPS, sem áudio. [Baixar os cinco MP4s e QA](https://github.com/HelioConde/VideoForge-IA/actions/runs/44215462090/artifacts/14388741017). Decodificação de todos os quadros e SHA conferidos após download; cinco SKIP_VALIDATED na retomada. Evidência: [QA-CAMERA-BATCH-V1.json](QA-CAMERA-BATCH-V1.json); [prancha da abertura](QA-CAMERA-ABERTURA-V1.jpg). Testes: 36 Python, três Node e TypeScript passaram.
