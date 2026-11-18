@@ -4,6 +4,7 @@ on:
     paths:
       - 'orchestrator/**'
       - 'tests/test_autonomous_pilot.py'
+      - 'tests/test_multi_task_pilot.py'
       - '.github/workflows/agents-01312-pilot.yml'
   workflow_dispatch:
 permissions:
@@ -21,14 +22,18 @@ jobs:
       - name: Testar execucao deterministica 01 03 12
         run: |
           python -m unittest discover -s tests -p 'test_autonomous_pilot.py' -v
+          python -m unittest discover -s tests -p 'test_multi_task_pilot.py' -v
       - name: Executar diretor geral, auditor de cenas e QA independente
         run: |
           python orchestrator/autonomous_pilot.py --root . --queue orchestrator/tasks.json --output /tmp/agents-01312-checkpoint.json
+          python orchestrator/multi_task_pilot.py --root . --queue orchestrator/tasks.json --output /tmp/agents-multitask-checkpoint.json
       - name: Arquivar relatorios e mensagens
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: agents-01312-checkpoint-${{ github.run_id }}
-          path: /tmp/agents-01312-checkpoint.json
+          path: |
+            /tmp/agents-01312-checkpoint.json
+            /tmp/agents-multitask-checkpoint.json
           if-no-files-found: ignore
           retention-days: 14
