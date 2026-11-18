@@ -54,9 +54,11 @@ def ensure_response(result: dict, role: str, *, real=True) -> dict:
     if real and (result.get("llm_executed") is not True
                  or result.get("simulated") is not False
                  or result.get("provider") != "codex_proxy"
+                 or result.get("model") not in {"gpt-6.2-astra", "gpt-6-astra"}
+                 or result.get("reported_model") != result.get("model")
                  or not result.get("response_id")
-                 or not result.get("response_sha256")):
-        raise ProviderError("A real, journaled Astra response is required")
+                 or result.get("response_sha256") != fingerprint(result["response"])):
+        raise ProviderError("The real Astra model or journaled response identity was not verified")
     return result["response"]
 
 
@@ -157,6 +159,8 @@ def step(store: Store, *, root=ROOT, limits=None) -> dict | None:
                 "specialists": {r: item["focus"] for r, item in role_evidence.items()},
                 "instructions": "Delegate read-only textual analysis only; no production tools.",
             }, "codex_proxy", limits)
+            if coordinator.get("model") != task["model"]:
+                raise ProviderError("Director response model differs from pinned task model")
             _validate_assignment(ensure_response(coordinator, "01"), source_hash)
             results = {}
             for role in SPECIALISTS:
@@ -168,6 +172,8 @@ def step(store: Store, *, root=ROOT, limits=None) -> dict | None:
                     "evidence_sha256": evidence["evidence_sha256"],
                     "restriction": "Only text and metadata; no visual inspection claims or media operations.",
                 }, "codex_proxy", limits)
+                if result.get("model") != task["model"]:
+                    raise ProviderError("Specialist response model differs from pinned task model")
                 _validate_specialist(ensure_response(result, role), role, evidence["evidence_sha256"])
                 results[role] = {
                     "response": result["response"],
@@ -200,6 +206,8 @@ def step(store: Store, *, root=ROOT, limits=None) -> dict | None:
                 "expected_source_evidence": {r: v["evidence_sha256"] for r, v in role_evidence.items()},
                 "restriction": "Review metadata only; do not grant visual/art/production approval.",
             }, "codex_proxy", limits)
+            if qa.get("model") != task["model"]:
+                raise ProviderError("QA response model differs from pinned task model")
             qa_passed = _validate_qa(ensure_response(qa, "12"), results)
             director = model_step(store, task, root, "01", {
                 "runtime_stage": "roundtrip_consolidation",
@@ -207,6 +215,8 @@ def step(store: Store, *, root=ROOT, limits=None) -> dict | None:
                 "safe_status": "needs_human_review" if qa_passed else "blocked",
                 "restriction": "Never mark all agents production-ready or authorize YouTube.",
             }, "codex_proxy", limits)
+            if director.get("model") != task["model"]:
+                raise ProviderError("Consolidation response model differs from pinned task model")
             _validate_director(ensure_response(director, "01"), qa_passed)
             store.review(task["task_id"], task["attempt_id"], task["revision"], {
                 "agent_id": "12", "technical_passed": qa_passed,
