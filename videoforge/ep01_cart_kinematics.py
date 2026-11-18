@@ -127,7 +127,7 @@ def build_poses(plan: dict) -> list[Pose]:
         diff_yaw=rad-prev_rad
         ds=TRAVEL_M*(progress-prev_progress)
         # Integrate differential-wheel nonholonomic chassis motion.
-        midpoint=prev_rad+diff_y*.5
+        midpoint=prev_rad+diff_yaw*.5
         center=add(center,mult(forward(midpoint),ds))
         # Wheel-travel differential compensates pivot rotation.
         left_ds=ds+HALF_WHEEL_TRACK_M*diff_yaw
