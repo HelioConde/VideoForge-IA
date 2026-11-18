@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 151,
+  "total_arquivadas": 152,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -5378,6 +5378,54 @@
         {
           "id": "biblia-kael-medieval-base-v1",
           "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": null
+        },
+        {
+          "id": "biblia-carrinho-base-v1",
+          "sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36",
+          "path": null
+        },
+        {
+          "id": "biblia-beco-base-v1",
+          "sha256": "83c10082fb1a808a3f118625d9aca8bcf1e22707d9af0b91d92440af61436939",
+          "path": null
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "não_informado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-continuity-v2-mother:44265340634:c08-p03-continuity-v2-scene-mother.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c08-p03-continuity-v2-scene-mother",
+      "shot": "C08-P03",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-continuity-v2-mother",
+      "github_run_id": 44265340634,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v2-mother/44265340634/c08-p03-continuity-v2-scene-mother.png",
+      "sha256": "8462678d0a8d8e9ddb748981c32951a7037ab70f7b596490de1ad4e9b1aa4299",
+      "bytes": 2941162,
+      "width": 941,
+      "height": 1671,
+      "referencias_usadas": [
+        {
+          "id": "biblia-kael-medieval-base-v1",
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": null
+        },
+        {
+          "id": "biblia-mascarado-1-base-v2",
+          "sha256": "fa149cf971273a6416fb2a6e12f81d63bbf33466366a8481bae3b5955c86dda8",
+          "path": null
+        },
+        {
+          "id": "biblia-mascarado-2-base-v2",
+          "sha256": "3f632cf2fd38ee4a83ab8f8de67413af897cade13b871b8a577af174c5260817",
           "path": null
         },
         {
