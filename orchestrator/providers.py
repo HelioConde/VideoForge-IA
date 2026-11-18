@@ -215,7 +215,13 @@ class OpenAIResponsesProvider:
                      "Content-Type": "application/json", "Accept": "application/json"},
             method="POST")
         try:
-            opener = urllib.request.build_opener(_NoRedirectHandler())
+            # The ephemeral image proxy is local to the runner. Bypass HTTP_PROXY
+            # for loopback only so authorization never leaves the runner.
+            handlers = [_NoRedirectHandler()]
+            parsed = urllib.parse.urlsplit(self._endpoint)
+            if parsed.scheme == "http" and parsed.hostname == "127.0.0.1" and parsed.port == 18080:
+                handlers.insert(0, urllib.request.ProxyHandler({}))
+            opener = urllib.request.build_opener(*handlers)
             with opener.open(http_request, timeout=float(request.timeout_seconds)) as response:
                 raw = response.read(4 * 1024 * 1024 + 1)
         except urllib.error.HTTPError as exc:
