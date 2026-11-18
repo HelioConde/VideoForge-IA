@@ -1,6 +1,7 @@
 """Astra model priority is selected only by GET, before any inference."""
 import json
 import unittest
+from dataclasses import replace
 from decimal import Decimal
 from pathlib import Path
 from unittest.mock import Mock, patch
@@ -89,7 +90,8 @@ class AstraModelSelectionTests(unittest.TestCase):
         self.assertEqual(report["model"], "gpt-6.2-astra")
         self.assertTrue(report["llm_executed"])
         provider.generate_response.assert_called_once()
-        provider.generate_response.return_value.reported_model = "gpt-6-astra"
+        provider.generate_response.return_value = replace(
+            provider.generate_response.return_value, reported_model="gpt-6-astra")
         with patch("orchestrator.agent_ping.make_provider", return_value=provider):
             with self.assertRaisesRegex(ValueError, "not from the configured"):
                 agent_01_ping(mode="codex_proxy", budget_usd="0.05")
