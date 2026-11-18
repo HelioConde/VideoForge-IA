@@ -227,9 +227,33 @@ def run(store: Store, root=ROOT) -> dict:
         steps.append({"task_id": task["task_id"], "phase": task["phase"],
                       "status": task["status"]})
     data = report(store, root=root)
+    readiness = []
+    for row in sorted(data["tasks"], key=lambda item: item["owner"]):
+        if row["status"] == "completed":
+            result = store.result(row["task_id"])
+            evidence = result["evidence"]
+            readiness.append({
+                "agent_id": row["owner"], "role": ROLES[row["owner"]],
+                "diagnostic_status": "completed", "scope": evidence["focus"],
+                "source_evidence_sha256": result["evidence_sha256"],
+                "production_ready": False,
+                "production_blockers": evidence["production_blockers"],
+                "llm_executed": False,
+            })
+        else:
+            readiness.append({
+                "agent_id": row["owner"], "role": ROLES[row["owner"]],
+                "diagnostic_status": row["status"], "scope": FOCUS[row["owner"]],
+                "source_evidence_sha256": None, "production_ready": False,
+                "production_blockers": ["source_diagnostic_unavailable"],
+                "llm_executed": False,
+            })
     data["role_diagnostic"] = {
         "contract": CONTRACT, "coordinator": "01", "independent_qa": "12",
         "specialists": list(SPECIALISTS), "roles_covered": list(ROLES),
+        "readiness": readiness,
+        "coordinator_scope": "durable_task_dispatch_no_model_or_media",
+        "reviewer_scope": "independent_recomputation_not_visual_QA",
         "created": created, "recovered": recovered, "steps": steps,
         "diagnostic_completed_count": sum(t["status"] == "completed" for t in data["tasks"]),
         "blocked_task_ids": [t["task_id"] for t in data["tasks"] if t["status"] != "completed"],
