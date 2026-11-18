@@ -93,14 +93,18 @@ def assess(store: Store, task_id: str) -> dict:
     last = usage[3]
     final_evt = progress.get(last["call_id"])
     reason = "unavailable_in_legacy_journal"
+    final_content_saved = False
     if final_evt:
         body = final_evt["content"]
         if (body.get("runtime_stage") != STAGES[3] or
                 body.get("validation_status") != "rejected" or
                 body.get("response_id") != last["response_id"] or
-                not isinstance(body.get("response"), dict) or
-                fingerprint(body["response"]) != last["report_sha256"]):
+                body.get("report_sha256") != last["report_sha256"]):
             raise ValueError("Final output has contradictory provenance")
+        if "response" in body:
+            if not isinstance(body["response"], dict) or fingerprint(body["response"]) != last["report_sha256"]:
+                raise ValueError("Rejected final response hash differs from the ledger")
+            final_content_saved = True
         reason = body.get("validation_error") or "unclassified_validator_rejection"
 
     return {
@@ -121,7 +125,7 @@ def assess(store: Store, task_id: str) -> dict:
             for i, u in enumerate(usage)
         ],
         "qa_supported_facets": sorted(f["facet"] for f in qa if f["decision"] == "supported"),
-        "final_output_journaled": final_evt is not None,
+        "final_output_journaled": final_content_saved,
         "final_validation_reason": reason,
         "final_director_decision_accepted": False,
         "llm_calls_replayed": 0,
