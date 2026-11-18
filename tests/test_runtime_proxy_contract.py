@@ -101,6 +101,25 @@ class OfflineProxyContractTests(unittest.TestCase):
         self.assertEqual(result["inference_requests"], 0)
         self.assertFalse(result["agent_communication_proven"])
 
+    def test_preflight_required_model_uses_get_catalog_only(self):
+        requests = []
+        class FakeGet:
+            def open(self, request, timeout):
+                requests.append((request.get_method(), request.full_url))
+                if request.full_url.endswith("/health"):
+                    return FakeHTTPResponse({"status": "ok", "accounts": 1})
+                return FakeHTTPResponse({"data": [{"id": "model-present"}]})
+        options = {"opener": FakeGet(), "require_model": "model-present"}
+        result = probe("http://127.0.0.1:18080",
+                       "synthetic-unit-test-key-never-valid", **options)
+        self.assertEqual(result["model_count"], 1)
+        self.assertEqual(len(requests), 2)
+        self.assertTrue(all(method == "GET" for method, _ in requests))
+        with self.assertRaises(PreflightError):
+            probe("http://127.0.0.1:18080",
+                  "synthetic-unit-test-key-never-valid",
+                  opener=FakeGet(), require_model="model-absent")
+
     def test_preflight_rejects_insecure_endpoint_and_sanitizes_errors(self):
         for invalid in ("http://external.example:18080", "http://localhost:18080",
                         "https://user:secret@example.com", "https://example.com/proxy"):
