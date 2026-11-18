@@ -200,8 +200,25 @@ def model_step(store, task, root, agent, payload, mode, limits):
                          'reviewed_finding_ids, and evidence. Cite the pinned manifest using allowed_citations. '
                          'Do not claim visual approval.')
         elif stage == 'director_consolidation':
-            contract += (' Consolidate the specialist report and independent QA into findings containing a status '
-                         '(completed, blocked, or needs_human_review), basis, and next_steps. Never override a QA rejection.')
+            # The fourth model call previously had an underspecified output contract.
+            # Supply an explicit shape and a QA-derived safe default; the model still
+            # must return its own response, which is validated and journaled.
+            qa = model_payload.get('review', {})
+            passed = qa.get('technical_passed') is True
+            model_payload['consolidation_template'] = {
+                'status': 'needs_human_review' if passed else 'blocked',
+                'basis': ('Revisao tecnica independente aprovada; revisao visual humana pendente.'
+                          if passed else 'Revisao tecnica independente nao aprovada; corrigir bloqueios.'),
+                'next_steps': (['Solicitar revisao visual humana sem liberar publicacao.']
+                               if passed else ['Devolver achados ao especialista e repetir QA independente.']),
+            }
+            contract += (' Return exactly one finding with exactly three fields: status, basis, next_steps. '
+                         'The status must be \"blocked\" when review.technical_passed is not true; '
+                         'otherwise use \"needs_human_review\". '
+                         'basis must be a nonempty string and next_steps a nonempty array of strings. '
+                         'Use consolidation_template as the exact structure and safe default. '
+                         'Do not use completed: source-only QA never grants human visual approval. '
+                         'Return pure JSON without markdown fences or commentary.')
     request = GenerationRequest(agent_id=agent, instructions=text+contract, input=encode(model_payload),
                                 input_token_limit=100_000, max_output_tokens=4500, timeout_seconds=120)
     request_sha256 = fingerprint({'agent_id': agent, 'instructions_sha256': digest,
@@ -449,12 +466,15 @@ def _validate_chain_stage(root, task, payload, agent, stage, data):
             raise ProviderError('Director consolidation schema rejected')
         decision = findings[0]
         if (not isinstance(decision, dict) or set(decision) != {'status', 'basis', 'next_steps'}
-                or decision['status'] not in {'completed', 'blocked', 'needs_human_review'}
-                or not isinstance(decision['basis'], str) or not isinstance(decision['next_steps'], list)):
+                or decision['status'] not in {'blocked', 'needs_human_review'}
+                or not isinstance(decision['basis'], str) or not decision['basis'].strip()
+                or not isinstance(decision['next_steps'], list) or not decision['next_steps']
+                or any(not isinstance(s, str) or not s.strip() for s in decision['next_steps'])):
             raise ProviderError('Director consolidation decision schema rejected')
         review = payload.get('review', {})
-        if review.get('technical_passed') is False and decision['status'] == 'completed':
-            raise ProviderError('Director may not override a failed independent review')
+        expected_status = 'needs_human_review' if review.get('technical_passed') is True else 'blocked'
+        if decision['status'] != expected_status:
+            raise ProviderError('Director consolidation conflicts with independent QA gate')
 
 
 def step(store, root=ROOT, mode='mock', limits=None):
