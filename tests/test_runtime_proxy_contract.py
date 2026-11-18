@@ -270,14 +270,14 @@ class OfflineProxyContractTests(unittest.TestCase):
         class InvalidConsolidation(FakeProxy):
             def open(self, request, timeout):
                 response = super().open(request, timeout)
+                packet = json.loads(response.body)
+                packet["id"] = f"resp_synthetic_{len(self.requests):04d}"
                 if "Runtime call stage: director_consolidation." in json.loads(request.data)["instructions"]:
-                    packet = json.loads(response.body)
                     text_data = json.loads(packet["output"][0]["content"][0]["text"])
                     text_data["findings"] = [{"status": "unsupported", "basis": "Text only",
                                                "next_steps": []}]
                     packet["output"][0]["content"][0]["text"] = json.dumps(text_data)
-                    return FakeHTTPResponse(packet)
-                return response
+                return FakeHTTPResponse(packet)
         fake = InvalidConsolidation()
         with tempfile.TemporaryDirectory() as directory, patch.dict(
             PROXY_ENV, {"AI_MODEL": "gpt-6-astra"}
@@ -327,14 +327,14 @@ class OfflineProxyContractTests(unittest.TestCase):
         class InvalidConsolidation(FakeProxy):
             def open(self, request, timeout):
                 response = super().open(request, timeout)
+                packet = json.loads(response.body)
+                packet["id"] = f"resp_synthetic_{len(self.requests):04d}"
                 if "Runtime call stage: director_consolidation." in json.loads(request.data)["instructions"]:
-                    packet = json.loads(response.body)
                     text_data = json.loads(packet["output"][0]["content"][0]["text"])
                     text_data["findings"] = [{"status": "wrong", "basis": "not valid",
                                                "next_steps": []}]
                     packet["output"][0]["content"][0]["text"] = json.dumps(text_data)
-                    return FakeHTTPResponse(packet)
-                return response
+                return FakeHTTPResponse(packet)
         fake = InvalidConsolidation()
         with tempfile.TemporaryDirectory() as directory, patch.dict(
             PROXY_ENV, {"AI_MODEL": "gpt-6-astra"}
