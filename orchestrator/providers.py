@@ -207,7 +207,7 @@ class OpenAIResponsesProvider:
             raise ProviderBlockedError("request model must match the explicitly configured AI_MODEL")
         payload = {"model": self.model, "instructions": request.instructions,
                    "input": request.input, "max_output_tokens": request.max_output_tokens,
-                   "store": False}
+                   "stream": False, "store": False}
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         http_request = urllib.request.Request(
             self._endpoint, data=body,
