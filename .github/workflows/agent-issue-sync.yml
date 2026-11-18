@@ -1,0 +1,91 @@
+name: "Agents - sincronizar propostas em Issues (manual)"
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Digite SYNC_PROPOSALS para criar Issues de propostas (sem executar agentes)"
+        required: true
+        type: string
+      limit:
+        description: "Maximo de novas Issues por execucao (1 a 10)"
+        required: true
+        default: "3"
+        type: string
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: agent-issue-proposals-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    if: github.repository == 'HelioConde/VideoForge-IA' && inputs.confirm == 'SYNC_PROPOSALS'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar fila e gerar propostas sem executar agentes
+        env:
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          python -m unittest discover -s tests -p 'test_issue_proposals.py' -v
+          python -m unittest discover -s tests -p 'test_queue_audit.py' -v
+          python - <<'PY'
+          import os
+          limit = int(os.environ["LIMIT"])
+          if not 1 <= limit <= 10:
+              raise SystemExit("Limit must be 1..10")
+          PY
+          python orchestrator/issue_proposals.py --limit "$LIMIT" --output /tmp/agent-issue-proposals.json
+      - name: Criar apenas Issues ausentes (idempotencia)
+        uses: actions/github-script@v7
+        env:
+          PROPOSALS_PATH: /tmp/agent-issue-proposals.json
+        with:
+          script: |
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync(process.env.PROPOSALS_PATH, 'utf8'));
+            if (data.mode !== 'proposal_only' || data.github_writes !== 0 ||
+                data.ai_calls !== 0 || data.proxy_calls !== 0 ||
+                data.youtube_publications !== 0 || data.ep01_visual_approval !== false) {
+              core.setFailed('Safety policy mismatch'); return;
+            }
+            const existing = new Set();
+            for await (const response of github.paginate.iterator(github.rest.issues.listForRepo, {
+              ...context.repo, state: 'all', per_page: 100
+            })) {
+              for (const issue of response.data) {
+                if (issue.pull_request) continue;
+                const matches = (issue.body || '').match(/<!-- videoforge-task:([^>]+) -->/g) || [];
+                for (const marker of matches) existing.add(marker);
+              }
+            }
+            const created = [];
+            const skipped = [];
+            for (const proposal of data.issues) {
+              const marker = '<!-- ' + proposal.marker + ' -->';
+              if (!proposal.execute && existing.has(marker)) {
+                skipped.push(proposal.task_id); continue;
+              }
+              if (proposal.execute || !proposal.body.startsWith(marker) ||
+                  !proposal.title.startsWith('[AGENT TASK] ')) {
+                core.setFailed('Invalid proposal'); return;
+              }
+              const response = await github.rest.issues.create({
+                ...context.repo, title: proposal.title, body: proposal.body
+              });
+              existing.add(marker);
+              created.push({task_id: proposal.task_id, issue_number: response.data.number,
+                            url: response.data.html_url});
+            }
+            core.summary.addHeading('Sincronizacao de propostas - sem IA');
+            core.summary.addRaw(JSON.stringify({created, skipped}, null, 2));
+            await core.summary.write();
+      - name: Arquivar checkpoint de propostas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-issue-proposals-sync-${{ github.run_id }}
+          path: /tmp/agent-issue-proposals.json
+          if-no-files-found: ignore
+          retention-days: 14
