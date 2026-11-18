@@ -2607,5 +2607,21 @@
     "rig_ready": false,
     "mp4_generated": false,
     "youtube_uploaded": false
+  },
+  "camera_batch_20261117": {
+    "status": "implemented_local_previews_github_run_pending",
+    "entrypoint": "videoforge.ep01_camera_batch",
+    "shots_prepared": 40,
+    "selected_shots": [
+      "C01-P01",
+      "C01-P02",
+      "C01-P03",
+      "C01-P04"
+    ],
+    "individual_visual_approvals": 1,
+    "visual_shots_pending_approval": 38,
+    "next_technical_shot": "C01-P05",
+    "official_episode_approved": false,
+    "youtube_upload": false
   }
 }

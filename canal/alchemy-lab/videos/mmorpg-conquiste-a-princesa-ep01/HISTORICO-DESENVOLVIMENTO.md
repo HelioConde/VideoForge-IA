@@ -685,3 +685,7 @@ Adicionadas videoforge-animation-parts (peças independentes geradas pelo proxy,
 
 
 Instalação integrada: [PR #67](https://github.com/HelioConde/VideoForge-IA/pull/67), commit cbbb460c20795b3bdbdffe7d9f13b5b6e5df27f1. Quatro skills validadas estruturalmente e links relativos conferidos; não houve checks de CI reportados para esta mudança documental. Perfis pessoais de arte, rig, direção e QA apontam para as novas instruções, com backup local. Nenhuma inferência de validação ou render executado.
+
+## Continuação técnica de câmera — 17/11/2026
+
+Nova Action C01-P04 [44213509153](https://github.com/HelioConde/VideoForge-IA/actions/runs/44213509153) concluída com sucesso; MP4 70 frames, 30 FPS, 540×960, todos os quadros decodificados. Evidências em `QA-C01-P04-CAMERA-SEM-MAOS-V2.json`. Pipeline `videoforge.ep01_camera_batch` prepara 40 tomadas e monta prévias de câmera com QA e retomada; workflow de lote ainda pendente de execução. P02 continua com contato rejeitado; P03 V3 sem aprovação e rei em pé; P04 é a única fonte aprovada por SHA. Sem novas imagens, mãos independentes, rig liberado ou publicação. Detalhes em [guia técnico](../../../../docs/EP01-CAMERA-BATCH-PREVIEWS.md).
