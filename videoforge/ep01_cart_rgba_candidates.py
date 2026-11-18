@@ -34,27 +34,29 @@ ALL_LAYERS = ("alley_reconstructed_rgba", *PIECES)
 # Loose artist-facing seed regions, NOT approved silhouettes/semantic masks.
 POLYGONS = {
     "kael_connected_body_rgba": (
-        (0, 174), (35, 200), (84, 188), (118, 170), (147, 168),
-        (169, 190), (173, 224), (147, 246), (165, 285),
-        (146, 336), (125, 394), (96, 399), (76, 379),
-        (54, 345), (23, 319), (0, 295),
+        (0, 174), (40, 198), (83, 188), (114, 174), (130, 160),
+        (147, 168), (165, 193), (161, 212), (147, 231),
+        (159, 252), (145, 270), (143, 305), (129, 341),
+        (126, 392), (88, 394), (80, 370), (100, 325),
+        (100, 302), (70, 304), (43, 340), (0, 364),
     ),
     "cart_chassis_rgba": (
-        (175, 183), (319, 180), (319, 309), (277, 322),
-        (235, 302), (214, 286), (185, 267),
+        (160, 194), (250, 190), (319, 205), (319, 290),
+        (258, 318), (224, 305), (207, 294), (179, 257),
+        (158, 235),
     ),
     "kael_grip_integrated_rgba": (
-        (151, 192), (184, 191), (205, 204), (213, 249),
-        (186, 268), (160, 252), (147, 225),
+        ((164, 183), (192, 186), (194, 217), (174, 222), (164, 210)),
+        ((162, 223), (193, 223), (191, 260), (166, 254)),
     ),
     "cart_front_occlusion_rgba": (
-        (241, 279), (319, 294), (319, 445), (286, 388),
-        (262, 330),
+        (228, 297), (245, 299), (313, 386), (319, 405),
+        (300, 407), (282, 386), (248, 330),
     ),
 }
 ELLIPSES = {
-    "wheel_left_rgba": ((188, 319), (34, 82)),
-    "wheel_right_rgba": ((291, 325), (27, 50)),
+    "wheel_left_rgba": ((181, 320), (29, 70)),
+    "wheel_right_rgba": ((296, 326), (21, 38)),
 }
 # Disjoint pixel ownership; the body can never overwrite the connected grip.
 PRIORITY = (
@@ -96,7 +98,9 @@ def pinned_source(root: Path = ROOT) -> tuple[Path, str]:
 def seed_mask(name: str) -> np.ndarray:
     canvas = np.zeros((TEMPLATE[1], TEMPLATE[0]), dtype=np.uint8)
     if name in POLYGONS:
-        cv2.fillPoly(canvas, [np.array(POLYGONS[name], dtype=np.int32)], 255)
+        polys = (POLYGONS[name] if name == "kael_grip_integrated_rgba"
+                 else (POLYGONS[name],))
+        cv2.fillPoly(canvas, [np.array(p, dtype=np.int32) for p in polys], 255)
     elif name in ELLIPSES:
         center, axes = ELLIPSES[name]
         cv2.ellipse(canvas, center, axes, 0, 0, 360, 255, -1)
@@ -112,8 +116,8 @@ def refine_candidate(small_bgr: np.ndarray, seed: np.ndarray) -> tuple[np.ndarra
 
     A fallback is always reported for review, never silently approved.
     """
-    fg_core = cv2.erode(seed, np.ones((9, 9), np.uint8), iterations=1)
-    near = cv2.dilate(seed, np.ones((23, 23), np.uint8), iterations=1)
+    fg_core = cv2.erode(seed, np.ones((7, 7), np.uint8), iterations=1)
+    near = cv2.dilate(seed, np.ones((15, 15), np.uint8), iterations=1)
     mask = np.full(seed.shape, cv2.GC_BGD, dtype=np.uint8)
     mask[near != 0] = cv2.GC_PR_BGD
     mask[seed != 0] = cv2.GC_PR_FGD
@@ -122,6 +126,9 @@ def refine_candidate(small_bgr: np.ndarray, seed: np.ndarray) -> tuple[np.ndarra
     try:
         cv2.grabCut(small_bgr, mask, None, bg_model, fg_model, 3, cv2.GC_INIT_WITH_MASK)
         refined = np.isin(mask, [cv2.GC_FGD, cv2.GC_PR_FGD]).astype(np.uint8) * 255
+        # Keep semantic extraction within a tightly pinned 3px outline band:
+        # GrabCut cannot silently annex sky, alley, or other scene regions.
+        refined = cv2.bitwise_and(refined, cv2.dilate(seed, np.ones((3, 3), np.uint8)))
         if np.count_nonzero(refined) >= 250:
             return refined, "grabcut_seed_refinement_unreviewed"
     except cv2.error:
