@@ -1,0 +1,67 @@
+name: "Agents - C07 C08 documentary QA (read-only evidence)"
+
+# Reads authenticated GitHub Contents snapshot only. No Codex proxy or paid AI.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/agent-chain-evidence.yml'
+      - 'orchestrator/continuity_evidence.py'
+      - 'orchestrator/chain_recovery.py'
+      - 'tests/test_continuity_evidence.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-verified-evidence:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate documentary evidence formatter offline
+        run: python -m unittest discover -s tests -p 'test_continuity_evidence.py' -v
+      - name: Inspect existing four-call state and pinned manifest (GET only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m orchestrator.continuity_evidence \
+            --github-state --output "$RUNNER_TEMP/continuity-evidence.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          report=json.loads((Path(os.environ['RUNNER_TEMP'])/'continuity-evidence.json').read_text())
+          assert report['task_status'] == 'blocked'
+          assert report['live_calls_previously_recorded'] == 4
+          assert report['additional_inference_requests'] == 0
+          assert report['final_director_consolidation_accepted'] is False
+          assert report['human_visual_approval'] is False
+          assert report['visual_frames_inspected'] == 0
+          assert report['youtube_publications'] == 0
+          assert len(report['facets']) == 7
+          assert report['documentary_qa_all_supported'] is True
+          print('Source-pinned Astra documentary QA evidence verified: 7 facets, 0 new inference')
+          PY
+      - name: Archive the read-only, source-verified C07/C08 report
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c07-c08-documentary-qa-${{ github.run_id }}
+          path: ${{ runner.temp }}/continuity-evidence.json
+          retention-days: 14
+          if-no-files-found: error
