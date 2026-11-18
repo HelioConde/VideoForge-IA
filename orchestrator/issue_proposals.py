@@ -22,11 +22,11 @@ def proposals(queue_path, limit=10):
         body = (
             "<!-- videoforge-task:" + task["task_id"] + " -->\n"
             "## Proposta de tarefa (não executada)\n"
-            f"- **task_id:** \`{task['task_id']}\`\n"
+            f"- **task_id:** `{task['task_id']}`\n"
             f"- **Agente responsável:** {candidate['agent_id']} / {candidate['owner']}\n"
             f"- **Revisor independente:** {candidate.get('reviewer') or 'a definir'}\n"
             f"- **Prioridade:** {candidate.get('priority') or 'não definida'}\n"
-            f"- **Checkpoint:** \`{key}\`\n"
+            f"- **Checkpoint:** `{key}`\n"
             "- **Status:** proposta; nenhuma IA executada\n"
             "- **EP01:** nenhuma aprovação automática; não modificar assets aprovados\n"
             "- **Restrições:** sem proxy, sem YouTube, sem publicação\n\n"
