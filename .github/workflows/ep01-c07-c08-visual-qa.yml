@@ -45,14 +45,14 @@ jobs:
           root=Path(os.environ['RUNNER_TEMP'])/'c07-c08-visual-qa'
           result=json.loads((root/'source-inventory.json').read_text())
           assert len(result['shots']) == 9
-          assert result['unique_source_images'] == 8
+          assert result['unique_source_images'] == 9
           assert result['reused_shots'] == ['C07-P04']
           assert result['new_ai_requests'] == 0
           assert result['visual_qa_approved'] is False
           assert result['contains_rendered_mp4_frames'] is False
           assert (root/'c07-c08-9-shots-contact.jpg').is_file()
           assert len(list(root.glob('*-preview.jpg'))) == 9
-          print("Archive SHA256 verified: 8 source images across 9 shots; 1 explicit reuse; no approvals.")
+          print("Archive SHA256 verified: 9 distinct source images, including original C07-P03 reused for dialogue; no approvals.")
           PY
       - name: Save contact sheet, 9 labeled previews and verified image inventory
         if: success()
