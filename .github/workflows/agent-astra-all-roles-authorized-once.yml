@@ -1,0 +1,206 @@
+name: "Agents - 12 real Astra roles, user-authorized one-shot"
+
+# User explicitly authorized the real 12-role proxy test on 18 Nov 2026.
+# New workflow makes exactly one attempt on main after this particular merge.
+# No automatic retry; no images, media actions or YouTube publication.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/agent-astra-all-roles-authorized-once.yml'
+      - 'orchestrator/agent_live_roundtrip.py'
+      - 'orchestrator/providers.py'
+      - 'orchestrator/runtime.py'
+      - 'tests/test_agent_live_store_integration.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/agent-astra-all-roles-authorized-once.yml'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  validate-safe-offline:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check all thirteen role contracts and actual Store behavior offline
+        run: |
+          python -m unittest discover -s tests -p 'test_agent_live_roundtrip.py' -v
+          python -m unittest discover -s tests -p 'test_agent_live_evidence_gate.py' -v
+          python -m unittest discover -s tests -p 'test_agent_live_store_integration.py' -v
+          python -m unittest discover -s tests -p 'test_astra_model_selection.py' -v
+
+  execute-real-roles-once:
+    if: >-
+      github.event_name == 'push'
+      && github.repository == 'HelioConde/VideoForge-IA'
+      && github.ref == 'refs/heads/main'
+      && startsWith(github.event.head_commit.message, 'ci(agents): user-authorized one-shot 12-role Astra proxy run')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    concurrency:
+      group: agent-codex-text-pilot-${{ github.repository }}
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      packages: read
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      CODEX_PROXY_BASE_URL: http://127.0.0.1:18080
+      VF_ALL_ROLES_AUTHORIZATION: AUTHORIZE_THIRTEEN_ASTRA_CALLS
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - name: Enforce user authorization, single attempt and proxy secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_RUN_ATTEMPT:-0}" != "1" ]]; then
+            echo '::error::The 12-role live inference may not be rerun.'
+            exit 2
+          fi
+          if [[ -z "$CODEX_PROXY_API_KEY" || -z "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo '::error::Authorized proxy credentials unavailable. No inference sent.'
+            exit 2
+          fi
+          echo '13-call text-only proxy permission verified; conservative token cap 250000.'
+          echo 'No USD billing guarantee for unpriced mode. Media and publishing disabled.'
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore private session without exposing token data
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-astra-12-roles"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          try:
+              state=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+              records=state.get('records') if isinstance(state,dict) else None
+              if not isinstance(records,list) or not records or not all(
+                  isinstance(x,dict) and isinstance(x.get('token'),dict) for x in records):
+                  raise ValueError('Invalid account session')
+              p=Path(os.environ['RUNNER_TEMP'])/'vf-astra-12-roles'/'accounts.json'
+              p.write_text(json.dumps(state,ensure_ascii=False),encoding='utf-8')
+              p.chmod(0o600)
+              print('Private proxy session restored.')
+          except (KeyError,ValueError,TypeError):
+              raise SystemExit('Account session invalid; zero inference requests.')
+          PY
+      - name: Start existing precompiled proxy with loopback-only access
+        shell: bash
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-astra-12-roles-once --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-astra-12-roles:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl --noproxy '*' -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then
+              echo 'Authenticated proxy runner is ready.'
+              exit 0
+            fi
+            sleep 2
+          done
+          echo '::error::Proxy health failed; no model inference attempted.'
+          exit 2
+      - name: Pin authenticated Astra model using GET before first inference
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m orchestrator.proxy_preflight \
+            --output "$RUNNER_TEMP/astra-all-roles-preflight.json" \
+            --prefer-model gpt-6.2-astra --fallback-model gpt-6-astra
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=json.loads((Path(os.environ['RUNNER_TEMP'])/'astra-all-roles-preflight.json').read_text())
+          model=p.get('selected_model')
+          if (not p.get('authenticated') or p.get('inference_requests') != 0
+                  or model not in ('gpt-6.2-astra', 'gpt-6-astra')):
+              raise SystemExit('Authenticated GET catalog did not select Astra.')
+          with open(os.environ['GITHUB_ENV'],'a',encoding='utf-8') as env:
+              print('AI_MODEL='+model,file=env)
+          print('Astra catalog-selected model: '+model)
+          PY
+      - name: Execute real 01 to 02-11 to 12 to 01 with persistent evidence
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          AI_ENABLED: 'true'
+          PAID_CALLS_ENABLED: 'true'
+          CODEX_PROXY_TEXT_AUTHORIZED: 'true'
+          IMAGE_GENERATION_ENABLED: 'false'
+          YOUTUBE_PUBLICATION_ENABLED: 'false'
+        run: |
+          set -euo pipefail
+          # No USD cap is claimed. Hard limits: 13 model calls and
+          # 250000 conservative reserved input/output token units.
+          # One attempt; never repeat paid responses after uncertain outcomes.
+          python -m orchestrator.agent_live_roundtrip \
+            --db "$RUNNER_TEMP/all-roles-unused.sqlite" \
+            --output "$RUNNER_TEMP/astra-all-roles-real-report.json" \
+            --github-state --initialize-store --budget-usd unpriced
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path(os.environ['RUNNER_TEMP'])/'astra-all-roles-real-report.json'
+          report=json.loads(p.read_text())
+          proof=report['live_roundtrip']
+          if not (proof['actual_calls']==13 and proof['call_limit']==13
+                  and proof['conservative_token_limit']==250000
+                  and proof['billing_cap_verified'] is False
+                  and proof['production_ready'] is False
+                  and report['safety']['youtube_publications']==0):
+              raise SystemExit('Real 12-role evidence did not satisfy required gates')
+          print('13 journaled real Astra calls verified with independent Agent 12 QA.')
+          print('No visual or media approval was claimed.')
+          PY
+      - name: Archive sanitized role evidence even on a blocked or failed run
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: user-authorized-astra-12-roles-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/astra-all-roles-preflight.json
+            ${{ runner.temp }}/astra-all-roles-real-report.json
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Stop proxy and erase private session
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f vf-astra-12-roles-once >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-astra-12-roles"
