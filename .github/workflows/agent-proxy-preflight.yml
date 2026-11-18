@@ -110,7 +110,7 @@ jobs:
       - name: Verificar GET health e models autenticados (nunca gera IA)
         shell: bash
         run: |
-          python -m orchestrator.proxy_preflight --output "$RUNNER_TEMP/proxy-preflight.json" --list-models
+          python -m orchestrator.proxy_preflight --output "$RUNNER_TEMP/proxy-preflight.json" --list-models --require-model gpt-6-astra
       - name: Smoke test Agent 01 and agent bus on the authenticated proxy runner (NO inference)
         shell: bash
         run: |
