@@ -39,7 +39,7 @@ def image_sha(root:Path,path:str,expect:str,dimensions:list[int])->bytes:
     blob=file.read_bytes()
     if sha256(blob).hexdigest()!=expect:
         raise VideoForgeError("CAMERA_PREVIEW_SOURCE_SHA_MISMATCH")
-    if (len(blob)<24 or blob[:8]!=b"\x89PNG\\r\\n\x1a\\n"
+    if (len(blob)<24 or blob[:8]!=bytes.fromhex("89504e470d0a1a0a")
         or blob[12:16]!=b"IHDR"):
         raise VideoForgeError("CAMERA_PREVIEW_SOURCE_NOT_PNG")
     w,h=struct.unpack(">II",blob[16:24])
