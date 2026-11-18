@@ -89,9 +89,11 @@ def probe(base_url: str, api_key: str, *, opener=None, require_model: str | None
         # IDs, not account identifiers or arbitrary provider metadata.
         # Malformed/unexpected identifiers never reach public Actions artifacts.
         safe_model_id = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,99}\\Z")
-        if count > 200 or not all(safe_model_id.fullmatch(identifier) for identifier in ids):
-            raise PreflightError("Proxy catalog includes invalid or excessive model identifiers")
-        report["model_ids"] = sorted(ids)
+        if count > 200:
+            raise PreflightError("Proxy catalog exceeds the maximum allowed identifier count")
+        sanitized = sorted(identifier for identifier in ids if safe_model_id.fullmatch(identifier))
+        report["model_ids"] = sanitized
+        report["model_ids_omitted"] = count - len(sanitized)
         report["catalog_contains_text_capability_proof"] = False
     return report
 
