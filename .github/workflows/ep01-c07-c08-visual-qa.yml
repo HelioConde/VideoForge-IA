@@ -31,11 +31,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install image preview dependency (offline rendering, no generative model)
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
       - name: Verify pinned archive SHA256 and generate 9-shot preview without inferencing
         shell: bash
         run: |
           set -euo pipefail
-          ffmpeg -version | head -n 1
           python -m orchestrator.shot_contact_sheet \
             --output-dir "$RUNNER_TEMP/c07-c08-visual-qa" --render
           python - <<'PY'
