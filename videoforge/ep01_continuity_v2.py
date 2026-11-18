@@ -213,6 +213,14 @@ def revised_camera_plan(old_plan, root=ROOT, require_generated=True):
             "focus": {"mode": "original_painted_focus", "blur_start_px": 0, "blur_end_px": 0},
             "direction_reviewed": False, "revision": "continuity-v2",
         })
+        # A camera-only preview must disclose unsolved blocking/physical motion.
+        # These labels are not rig or visual approvals and never move entire PNGs.
+        from .ep01_continuity_motion import preview_gate
+        gate = preview_gate(shot["id"], root)
+        if gate:
+            row["continuity_gate"] = gate
+            row["qa_required"] = list(dict.fromkeys(
+                row.get("qa_required", []) + ["independent_C07_C08_temporal_rig_and_axis_review"]))
         if shot["source_policy"].startswith("reuse:"):
             old_id = shot["source_policy"].split(":", 1)[1]
             row["source"] = original[old_id]["source"]
