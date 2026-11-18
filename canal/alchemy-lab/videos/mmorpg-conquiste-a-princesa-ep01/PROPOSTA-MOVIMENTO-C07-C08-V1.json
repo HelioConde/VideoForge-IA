@@ -1,0 +1,198 @@
+{
+  "schema": "videoforge/ep01-c07c08-motion-readiness/v1",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "status": "proposal_only_not_rig_approved",
+  "revision": "c07c08-motion-qa-v1",
+  "source_document": "CONTINUIDADE-C07-C08-V2.json",
+  "source_reference_shas": {
+    "C07-P03": {
+      "asset": "assets/geracoes/production-continuity-v2-mother/44264707976/c07-p03-continuity-v2-scene-mother.png",
+      "sha256": "5e7e890298bd692fc0aa3fa3c1473ce0d36fcefb3bb94c2be3cc9129f9ad2f9c"
+    },
+    "C08-P02": {
+      "asset": "assets/geracoes/production-continuity-v2-mother/44265114014/c08-p02-continuity-v2-scene-mother.png",
+      "sha256": "3c21b7d82d69b1445b45cb1a23582e556c910530b568c26ae0d48b4873c38721"
+    },
+    "C08-P03": {
+      "asset": "assets/geracoes/production-continuity-v2-mother/44265340634/c08-p03-continuity-v2-scene-mother.png",
+      "sha256": "8462678d0a8d8e9ddb748981c32951a7037ab70f7b596490de1ad4e9b1aa4299"
+    }
+  },
+  "cart_bible": {
+    "asset": "assets/geracoes/production-art-request/44011721667/biblia-carrinho-base-v1.png",
+    "sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36",
+    "master_approved": false
+  },
+  "rules": {
+    "never_use_full_png_as_rig": true,
+    "independent_hands": false,
+    "never_modify_original_png": true,
+    "require_art_approval_before_rig": true,
+    "require_human_visual_approval_before_release": true,
+    "allow_paid_inference": false,
+    "allow_publish": false,
+    "allow_image_generation": false
+  },
+  "missing_layer_manifest": "assets/rig/c07-c08-cart-v1/layers-manifest.json",
+  "required_layer_ids": [
+    "alley_reconstructed_rgba",
+    "kael_connected_body_rgba",
+    "cart_chassis_rgba",
+    "wheel_left_rgba",
+    "wheel_right_rgba",
+    "kael_grip_integrated_rgba",
+    "cart_front_occlusion_rgba"
+  ],
+  "shots": [
+    {
+      "id": "C07-P03",
+      "mode": "spatial_axis_and_blocking_review",
+      "start_frame": 2250,
+      "end_exclusive": 2340,
+      "action": "Elara entra da esquerda e alcanca Kael e o carrinho na direita. Não iniciar dialogo nesta tomada.",
+      "current_visual_issue": "A mae V2 mostra Elara com leitura de deslocamento para a esquerda; camera-only nao resolve orientacao corporal.",
+      "desired_screen_direction": "left_to_right",
+      "hero_starts_screen_side": "left",
+      "hero_ends_screen_side": "near_kael_right",
+      "kael_screen_side": "right",
+      "cart_state": "parked_right_wall",
+      "required_checks": [
+        "clear_meeting_before_dialogue",
+        "same_alley_axis",
+        "elara_no_teleport",
+        "no_soldiers_helping_kael",
+        "no_image_flip_that_changes_space"
+      ],
+      "allowed_fix_without_art_change": [
+        "edit_blocking_notes",
+        "review_camera_crop_only"
+      ],
+      "requires_updated_art_or_approved_alternative_for_true_motion": true
+    },
+    {
+      "id": "C08-P02",
+      "mode": "cart_physical_push_pivot",
+      "start_frame": 2550,
+      "end_exclusive": 2680,
+      "action": "Kael sozinho empurra o carrinho saindo da parede direita, gira para obstruir o beco; maos permanecem conectadas ao contato e rodas no chao.",
+      "cast_present": [
+        "kael"
+      ],
+      "cast_forbidden": [
+        "elara",
+        "pursuer_1",
+        "pursuer_2"
+      ],
+      "cart_identity": "biblia-carrinho-base-v1",
+      "target_yaw_degrees": 90,
+      "coord_space": "proposed_world_space_not_screen_plane_pixels",
+      "initial_cart_state": "parked_near_right_wall",
+      "final_cart_state": "perpendicular_barricade",
+      "frames": [
+        {
+          "frame": 0,
+          "phase": "establish_push_contact",
+          "cart_yaw_degrees": 0,
+          "push_progress": 0
+        },
+        {
+          "frame": 18,
+          "phase": "weight_shift_contact",
+          "cart_yaw_degrees": 0,
+          "push_progress": 0.08
+        },
+        {
+          "frame": 43,
+          "phase": "push_cart_out",
+          "cart_yaw_degrees": 7,
+          "push_progress": 0.3
+        },
+        {
+          "frame": 67,
+          "phase": "start_pivot",
+          "cart_yaw_degrees": 34,
+          "push_progress": 0.53
+        },
+        {
+          "frame": 93,
+          "phase": "finish_pivot",
+          "cart_yaw_degrees": 68,
+          "push_progress": 0.81
+        },
+        {
+          "frame": 115,
+          "phase": "settle_cart",
+          "cart_yaw_degrees": 90,
+          "push_progress": 1
+        },
+        {
+          "frame": 129,
+          "phase": "hold_final_barricade",
+          "cart_yaw_degrees": 90,
+          "push_progress": 1
+        }
+      ],
+      "physical_invariants": [
+        "kael_grip_contact_locked_to_handle",
+        "both_wheels_ground_contact",
+        "cart_chassis_is_one_rigid_object",
+        "no_wheel_sliding_without_rotation",
+        "no_soldiers_touch_cart",
+        "no_character_or_cart_teleport",
+        "no_full_image_transform_for_faking_rig"
+      ],
+      "note": "Frames sao instrucoes para o futuro rig com assets aprovados, nao movimento implementado."
+    },
+    {
+      "id": "C08-P03",
+      "mode": "cart_barricade_hold_and_pursuer_stop",
+      "start_frame": 2680,
+      "end_exclusive": 2790,
+      "action": "O mesmo carrinho permanece atravessado. Kael seguro na direita, dois perseguidores param à esquerda sem tocar a barricada; Elara nao aparece.",
+      "cast_present": [
+        "kael",
+        "pursuer_1",
+        "pursuer_2"
+      ],
+      "cast_forbidden": [
+        "elara"
+      ],
+      "cart_identity": "biblia-carrinho-base-v1",
+      "cart_yaw_degrees": 90,
+      "cart_start_state": "perpendicular_barricade",
+      "cart_end_state": "perpendicular_barricade",
+      "screen_safe_side": "right",
+      "pursuers_side": "left",
+      "physical_invariants": [
+        "same_cart_identity_as_C08_P02",
+        "cart_no_snap_between_shots",
+        "two_pursuers_behind_barricade",
+        "kael_not_beside_pursuers",
+        "cart_not_touched_by_pursuers"
+      ],
+      "frame_hold": {
+        "start_frame": 0,
+        "end_inclusive": 109,
+        "yaw_degrees": 90
+      },
+      "note": "C08-P03 mostra o resultado do giro. Nao simular o giro com um corte entre imagens integradas."
+    }
+  ],
+  "QA": {
+    "text_review_passed": true,
+    "visual_review_passed": false,
+    "layer_split_verified": false,
+    "rig_ready": false,
+    "art_approval": false,
+    "animation_qa_passed": false
+  },
+  "pending_actions_by_agent": {
+    "12": "QA independente em frames intermediários e início/fim das transições",
+    "03": "validar eixo Elara/Kael em C07-P03",
+    "04": "conferir referencia do carrinho e identidade visual",
+    "06": "produzir apenas camadas aprovadas RGBA com reconstrução do fundo",
+    "07": "rig de pivô, chassis e rodas com teste de contato",
+    "08": "animação por frame com preparacao/ação/recuperação",
+    "09": "câmera sem ocultar defeitos ou inverter eixo"
+  }
+}
