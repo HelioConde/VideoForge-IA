@@ -2,6 +2,7 @@ import copy
 import json
 import multiprocessing
 from pathlib import Path
+import sqlite3
 import tempfile
 import unittest
 
@@ -109,6 +110,156 @@ class StoreTests(unittest.TestCase):
         self.store.recover(now=61)
         self.assertEqual(self.store.get('audit')['status'],'blocked')
         self.assertIsNone(self.store.claim(now=999))
+
+    def test_uncapped_money_still_enforces_durable_token_and_call_limits(self):
+        self.store.enqueue(task(), now=0)
+        claim = self.store.claim(now=1, ttl=120)
+        call_id = self.store.reserve(
+            'audit', claim['attempt_id'], claim['revision'], 'codex_proxy', 500,
+            None, {'usd': None, 'tokens': 1000, 'calls': 4}, now=2,
+            agent_id='03', model='gpt-6-astra')
+        response = {'agent_id': '03', 'status': 'complete',
+                    'human_visual_approval': False, 'findings': []}
+        request_digest = 'a' * 64
+        instructions_digest = 'c' * 64
+        provider_digest = 'd' * 64
+        self.store.settle(call_id, 70, 12, None, agent_id='03',
+                          model='gpt-6-astra', response_id='resp_test',
+                          report_sha256=fingerprint(response), response=response,
+                          recipient='12', runtime_stage='specialist',
+                          request_sha256=request_digest,
+                          instructions_sha256=instructions_digest,
+                          provider_response_sha256=provider_digest, now=3)
+        row = self.store.export_snapshot()['tables']['usage'][0]
+        self.assertEqual(row['call_id'], call_id)
+        self.assertEqual(row['agent_id'], '03')
+        self.assertEqual(row['model'], 'gpt-6-astra')
+        self.assertEqual(row['response_id'], 'resp_test')
+        self.assertEqual(row['report_sha256'], fingerprint(response))
+        self.assertIsNone(row['reserved_usd'])
+        self.assertIsNone(row['actual_usd'])
+        self.assertEqual((row['actual_input'], row['actual_output']), (70, 12))
+        messages = self.store.invocation_responses('audit')
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(messages[0]['sender'], '03')
+        self.assertEqual(messages[0]['recipient'], '12')
+        self.assertEqual(messages[0]['content']['call_id'], call_id)
+        self.assertEqual(messages[0]['content']['runtime_stage'], 'specialist')
+        self.assertEqual(messages[0]['content']['request_sha256'], request_digest)
+        self.assertEqual(messages[0]['content']['instructions_sha256'], instructions_digest)
+        self.assertEqual(messages[0]['content']['provider_response_sha256'], provider_digest)
+        self.assertEqual(messages[0]['content']['response'], response)
+
+    def test_expired_worker_resumes_only_from_persisted_response_without_replay(self):
+        strict = task()
+        strict['max_attempts'] = 1
+        self.store.enqueue(strict, now=0)
+        first = self.store.claim(now=1, ttl=60)
+        call_id = self.store.reserve(
+            'audit', first['attempt_id'], first['revision'], 'codex_proxy', 500,
+            None, {'usd': None, 'tokens': 2000, 'calls': 4}, now=2,
+            agent_id='01', model='gpt-6-astra')
+        response = {'agent_id': '01', 'target_agent': '03',
+                    'human_visual_approval': False}
+        self.store.settle(
+            call_id, 40, 10, None, agent_id='01', model='gpt-6-astra',
+            response_id='resp_first', response=response, recipient='03',
+            runtime_stage='dispatch', request_sha256='a' * 64,
+            instructions_sha256='b' * 64, provider_response_sha256='c' * 64,
+            now=3)
+        first_attempt = first['attempt_id']
+        remote_snapshot = self.store.export_snapshot()
+        self.store.close()
+        self.store = Store(Path(self.tmp.name) / 'reopened-cas-snapshot.sqlite')
+        self.store.import_snapshot(remote_snapshot)
+        self.assertEqual(self.store.recover(now=61), ['audit'])
+        resumed_task = self.store.get('audit')
+        self.assertEqual(resumed_task['status'], 'ready')
+        self.assertEqual(resumed_task['resume_from_attempts'], [first_attempt])
+        resumed = self.store.claim(now=72)
+        self.assertNotEqual(resumed['attempt_id'], first_attempt)
+        journal = self.store.invocation_responses(
+            'audit', attempt_ids=resumed['resume_from_attempts'])
+        self.assertEqual(len(journal), 1)
+        self.assertEqual(journal[0]['content']['call_id'], call_id)
+        self.assertEqual(len(self.store.export_snapshot()['tables']['usage']), 1)
+
+    def test_expired_worker_with_unknown_call_outcome_stays_blocked(self):
+        strict = task()
+        strict['max_attempts'] = 1
+        self.store.enqueue(strict, now=0)
+        first = self.store.claim(now=1, ttl=60)
+        self.store.reserve('audit', first['attempt_id'], first['revision'],
+                           'codex_proxy', 500, None,
+                           {'usd': None, 'tokens': 2000, 'calls': 4}, now=2,
+                           agent_id='01', model='gpt-6-astra')
+        self.store.close()
+        self.store = Store(self.path)
+        self.store.recover(now=61)
+        self.assertEqual(self.store.get('audit')['status'], 'blocked')
+        self.assertIsNone(self.store.claim(now=62))
+        self.assertEqual(self.store.export_snapshot()['tables']['usage'][0]['state'], 'unknown')
+
+    def test_unknown_cost_cannot_use_finite_usd_budget(self):
+        self.store.enqueue(task(), now=0)
+        claim = self.store.claim(now=1)
+        with self.assertRaises(BudgetBlocked):
+            self.store.reserve('audit', claim['attempt_id'], claim['revision'],
+                               'codex_proxy', 500, None,
+                               {'usd': 1.0, 'tokens': 1000, 'calls': 4}, now=2)
+
+    def test_old_snapshot_usage_rows_load_with_empty_provenance(self):
+        self.store.enqueue(task(), now=0)
+        claim = self.store.claim(now=1)
+        self.store.reserve('audit', claim['attempt_id'], claim['revision'],
+                           'openai', 100, .01,
+                           {'usd': 1, 'tokens': 1000, 'calls': 3}, now=2)
+        snapshot = self.store.export_snapshot()
+        for row in snapshot['tables']['usage']:
+            for key in ('agent_id', 'model', 'response_id', 'report_sha256'):
+                row.pop(key)
+        other = Store(Path(self.tmp.name) / 'legacy-remote-state.sqlite')
+        other.import_snapshot(snapshot)
+        loaded = other.export_snapshot()['tables']['usage'][0]
+        self.assertIsNone(loaded['agent_id'])
+        self.assertIsNone(loaded['model'])
+        other.close()
+
+    def test_old_sqlite_usage_table_is_rebuilt_with_nullable_reservation(self):
+        legacy_path = Path(self.tmp.name) / 'legacy.sqlite'
+        connection = sqlite3.connect(legacy_path)
+        connection.execute('CREATE TABLE attempts(id TEXT PRIMARY KEY)')
+        connection.execute('''CREATE TABLE usage(call_id TEXT PRIMARY KEY,
+            attempt_id TEXT NOT NULL REFERENCES attempts(id), provider TEXT NOT NULL,
+            reserved_tokens INTEGER NOT NULL, reserved_usd REAL NOT NULL,
+            state TEXT NOT NULL, actual_input INTEGER, actual_output INTEGER, actual_usd REAL)''')
+        connection.commit()
+        connection.close()
+        legacy = Store(legacy_path)
+        reserved_usd = next(row[3] for row in legacy.db.execute('PRAGMA table_info(usage)')
+                            if row[1] == 'reserved_usd')
+        self.assertEqual(reserved_usd, 0)
+        legacy.close()
+
+    def test_review_rejection_can_block_without_automatic_retry(self):
+        strict = task()
+        strict.update(stop_on_review_rejection=True, max_attempts=1)
+        self.store.enqueue(strict, now=0)
+        producer = self.store.claim(now=1)
+        self.store.deliver('audit', producer['attempt_id'], producer['revision'],
+                           delivery(producer), now=2)
+        reviewer = self.store.claim(now=3)
+        decision = {'agent_id': '12', 'technical_passed': False,
+                    'human_visual_approval': False,
+                    'reviewed_result_sha256': self.store.get('audit')['result_sha256'],
+                    'findings': []}
+        self.store.review('audit', reviewer['attempt_id'], reviewer['revision'],
+                          decision, now=4)
+        self.assertEqual(self.store.get('audit')['status'], 'blocked')
+        self.assertIsNone(self.store.claim(now=100))
+        self.assertEqual(len(self.store.export_snapshot()['tables']['checkpoints']), 1)
+        events = [json.loads(row['envelope']) for row in self.store.export_snapshot()['tables']['events']]
+        self.assertIn('task_blocked', [event['type'] for event in events])
 
     def test_non_finite_budget_and_completed_snapshot_without_evidence_rejected(self):
         self.store.enqueue(task(),now=0)

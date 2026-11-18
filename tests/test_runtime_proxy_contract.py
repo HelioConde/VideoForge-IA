@@ -44,9 +44,10 @@ class FakeHTTPResponse:
 
 class FakeProxy:
     """Only in-memory responses; never creates a network socket."""
-    def __init__(self):
+    def __init__(self, reject_qa_facet=None):
         self.requests = []
         self.agents = iter(["01", "03", "12", "01"])
+        self.reject_qa_facet = reject_qa_facet
 
     def open(self, request, timeout):
         self.requests.append(request)
@@ -60,11 +61,58 @@ class FakeProxy:
         if not isinstance(body.get("instructions"), str) or not body["instructions"]:
             raise AssertionError("Agent instructions were omitted")
         agent = next(self.agents)
+        try:
+            payload = json.loads(body["input"])
+        except (ValueError, TypeError):
+            payload = {}
+        instructions = body["instructions"]
+        stage = next((candidate for candidate in (
+            "director_dispatch", "scene_continuity_analysis", "independent_qa_review", "director_consolidation"
+        ) if f"Runtime call stage: {candidate}." in instructions), None)
+        findings = []
+        if stage == "director_dispatch":
+            findings = [{"kind": "task_assignment", "recipient": "03", "task_id": payload["selected_task"],
+                         "objective": "Analyze the pinned C07/C08 continuity manifest in read-only mode.",
+                         "input_refs": payload["input_refs"],
+                         "acceptance_criteria": list(runtime.CHAIN_FACETS),
+                         "restrictions": ["manifest text only", "no visual inspection claims", "no production edits"]}]
+        elif stage in {"scene_continuity_analysis", "independent_qa_review"}:
+            source_map = payload.get("context") or payload.get("source_context") or {}
+            source_ref = runtime.MANIFEST.as_posix()
+            document = json.loads(source_map[source_ref])
+            pointers = {
+                "escape_direction": "/rules/screen_flee_direction",
+                "relative_positions": "/shots/2/required_axis",
+                "pursuer_positions": "/rules/pursuers_origin",
+                "cart_continuity": "/rules/cart_initial",
+                "shot_order": "/shots/0/id",
+                "narrative_consistency": "/creator_feedback",
+                "transition_requirements": "/editorial_v2/adds",
+            }
+            citations = {}
+            for facet, pointer in pointers.items():
+                value = runtime._json_pointer(document, pointer)
+                citations[facet] = {"source_ref": source_ref, "json_pointer": pointer}
+            if stage == "scene_continuity_analysis":
+                findings = [{"id": f"finding-{index}", "facet": facet,
+                             "claim": f"Source-backed review of {facet}", "recommendation": "Check stated continuity",
+                             "evidence": [citations[facet]]}
+                            for index, facet in enumerate(runtime.CHAIN_FACETS, 1)]
+            else:
+                producer = payload["producer_report"]["analysis"]["response"]["findings"]
+                findings = [{"facet": facet,
+                             "decision": "correction_requested" if facet == self.reject_qa_facet else "supported",
+                             "rationale": "Citation resolves to the pinned manifest value." if facet != self.reject_qa_facet else "The cited source does not support the reported relationship.",
+                             "reviewed_finding_ids": [row["id"] for row in producer if row["facet"] == facet],
+                             "evidence": [citations[facet]]} for facet in runtime.CHAIN_FACETS]
+        elif stage == "director_consolidation":
+            findings = [{"status": "needs_human_review", "basis": "Text audit only", "next_steps": ["Review production visuals"]}]
         response = {
+            "model": PROXY_ENV["AI_MODEL"],
             "output": [{"type": "message", "content": [{"type": "output_text",
                        "text": json.dumps({"agent_id": agent, "mode": "proxy-contract-test",
                                            "analysis": "Synthetic response, no actual AI.",
-                                           "findings": [], "human_visual_approval": False})}]}],
+                                           "findings": findings, "human_visual_approval": False})}]}],
             "usage": {"input_tokens": 10, "output_tokens": 15}
         }
         return FakeHTTPResponse(response)
@@ -188,7 +236,7 @@ class OfflineProxyContractTests(unittest.TestCase):
                 with patch.dict(os.environ, PROXY_ENV, clear=True), patch(
                     "orchestrator.providers.urllib.request.build_opener", return_value=fake
                 ):
-                    runtime.seed(store, mode="codex_proxy")
+                    runtime.seed(store, mode="codex_proxy", continuity_only=True)
                     limits = {"usd": 100, "tokens": 1_000_000, "calls": 8}
                     first = runtime.step(store, mode="codex_proxy", limits=limits)
                     second = runtime.step(store, mode="codex_proxy", limits=limits)
@@ -198,10 +246,44 @@ class OfflineProxyContractTests(unittest.TestCase):
                 self.assertEqual(len(fake.requests), 4)
                 self.assertEqual(len(snapshot["checkpoints"]), 1)
                 self.assertEqual(len(snapshot["usage"]), 4)
+                self.assertEqual([row["agent_id"] for row in snapshot["usage"]], ["01", "03", "12", "01"])
+                self.assertTrue(all(row["state"] == "settled" and row["model"] == PROXY_ENV["AI_MODEL"]
+                                    for row in snapshot["usage"]))
+                calls = [event["content"] for event in snapshot["events"]
+                         if event["type"] == "progress_update"]
+                self.assertEqual([row["runtime_stage"] for row in calls], [
+                    "director_dispatch", "scene_continuity_analysis",
+                    "independent_qa_review", "director_consolidation"])
+                self.assertTrue(all(row["report_sha256"] and row["request_sha256"] for row in calls))
+                qa_findings = calls[2]["response"]["findings"]
+                self.assertEqual({row["facet"] for row in qa_findings}, set(runtime.CHAIN_FACETS))
+                self.assertTrue(all(row["reviewed_finding_ids"] and row["evidence"] for row in qa_findings))
                 self.assertEqual(snapshot["safety"]["youtube_publications"], 0)
                 self.assertFalse(snapshot["checkpoints"][0]["human_visual_approval"])
                 routes = {(event["sender"], event["recipient"]) for event in snapshot["events"]}
                 self.assertTrue({("01", "03"), ("03", "12"), ("12", "01")} <= routes)
+            finally:
+                store.close()
+
+    def test_real_chain_qa_rejection_blocks_without_replaying_calls(self):
+        fake = FakeProxy(reject_qa_facet="cart_continuity")
+        with tempfile.TemporaryDirectory() as directory:
+            store = Store(Path(directory) / "state.sqlite")
+            try:
+                with patch.dict(os.environ, PROXY_ENV, clear=True), patch(
+                    "orchestrator.providers.urllib.request.build_opener", return_value=fake
+                ):
+                    runtime.seed(store, mode="codex_proxy", continuity_only=True)
+                    limits = {"usd": 100, "tokens": 1_000_000, "calls": 8}
+                    runtime.step(store, mode="codex_proxy", limits=limits)
+                    rejected = runtime.step(store, mode="codex_proxy", limits=limits)
+                    self.assertEqual(rejected["status"], "blocked")
+                    self.assertIsNone(runtime.step(store, mode="codex_proxy", limits=limits))
+                self.assertEqual(len(fake.requests), 4)
+                state = runtime.report(store)
+                rejection = next(event for event in state["events"] if event["type"] == "review_rejected")
+                self.assertIn("cart_continuity", json.dumps(rejection["content"], ensure_ascii=False))
+                self.assertIn("does not support", json.dumps(rejection["content"], ensure_ascii=False))
             finally:
                 store.close()
 

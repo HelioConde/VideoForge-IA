@@ -2,7 +2,7 @@
 
 The deterministic provider is free and is not an LLM. Real providers are
 fail-closed: callers must explicitly enable AI and paid calls, configure a
-model, and provide a conservative price ceiling before any request is sent.
+model, and provide pricing or an explicitly authorized unpriced proxy pilot.
 """
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -61,6 +62,7 @@ class ProviderResponse:
     cost_usd: Decimal | None = None
     reported_model: str | None = None
     cost_is_configured_price_estimate: bool = False
+    response_id: str | None = None
 
     @property
     def usage(self) -> dict[str, int | None]:
@@ -160,8 +162,8 @@ class OpenAIResponsesProvider:
 
     name = "openai"
 
-    def __init__(self, *, api_key: str, model: str, input_price_per_million: Decimal,
-                 output_price_per_million: Decimal, endpoint: str = OFFICIAL_RESPONSES_URL):
+    def __init__(self, *, api_key: str, model: str, input_price_per_million: Decimal | None,
+                 output_price_per_million: Decimal | None, endpoint: str = OFFICIAL_RESPONSES_URL):
         self._api_key = api_key
         self.model = model
         self._input_price = input_price_per_million
@@ -183,6 +185,10 @@ class OpenAIResponsesProvider:
         _, input_upper = _validate_request(request)
         output_upper = request.max_output_tokens
         billable_input_upper = input_upper + REQUEST_OVERHEAD_TOKEN_BUDGET
+        if self._input_price is None and self._output_price is None:
+            return {"input_tokens_upper_bound": billable_input_upper,
+                    "output_tokens_upper_bound": output_upper, "upper_bound_usd": None,
+                    "pricing_source": "unknown"}
         estimate = (Decimal(billable_input_upper) * self._input_price
                     + Decimal(output_upper) * self._output_price) / Decimal(1_000_000)
         # Round upward to a micro-dollar so a displayed budget ceiling never
@@ -260,6 +266,8 @@ class OpenAIResponsesProvider:
                             + Decimal(output_tokens) * self._output_price) / Decimal(1_000_000))
         return ProviderResponse(text=text, provider=self.name, model=self.model, reported_model=data.get("model"),
                                 input_tokens=input_tokens, output_tokens=output_tokens,
+                                response_id=data.get("id") if isinstance(data.get("id"), str)
+                                and re.fullmatch(r"[A-Za-z0-9_.:-]{1,200}", data["id"]) else None,
                                 simulated=False, cost_usd=actual_cost,
                                 cost_is_configured_price_estimate=actual_cost is not None)
 
@@ -317,8 +325,8 @@ class CodexProxyResponsesProvider(OpenAIResponsesProvider):
 
     name = "codex_proxy"
 
-    def __init__(self, *, api_key: str, model: str, input_price_per_million: Decimal,
-                 output_price_per_million: Decimal, base_url: str):
+    def __init__(self, *, api_key: str, model: str, input_price_per_million: Decimal | None,
+                 output_price_per_million: Decimal | None, base_url: str):
         parsed = urllib.parse.urlsplit(base_url.strip())
         is_loopback = parsed.scheme == "http" and parsed.hostname == "127.0.0.1" and parsed.port == 18080
         is_https = parsed.scheme == "https" and bool(parsed.hostname)
@@ -388,3 +396,17 @@ def from_environment(provider_name: str | None = None) -> TextProvider:
 def make_provider(mode: str | None = None) -> TextProvider:
     """Compatibility alias for the runtime factory."""
     return from_environment(mode)
+
+
+def make_chain_provider() -> CodexProxyResponsesProvider:
+    """Unpriced, manual C07/C08 audit using the existing loopback proxy."""
+    if (os.getenv("VF_CHAIN_AUTHORIZATION") != "AUTHORIZE_FOUR_ASTRA_CALLS"
+            or os.getenv("AI_MODEL") != "gpt-6-astra"
+            or os.getenv("GITHUB_RUN_ATTEMPT", "1") != "1"):
+        raise ProviderBlockedError("A fresh explicitly authorized Astra audit is required")
+    provider = CodexProxyResponsesProvider(
+        api_key=os.getenv("CODEX_PROXY_API_KEY", ""), model="gpt-6-astra",
+        input_price_per_million=None, output_price_per_million=None,
+        base_url="http://127.0.0.1:18080")
+    provider._assert_network_call_allowed()
+    return provider
