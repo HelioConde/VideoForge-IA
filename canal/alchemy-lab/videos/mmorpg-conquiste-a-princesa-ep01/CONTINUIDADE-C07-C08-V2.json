@@ -1,0 +1,184 @@
+{
+  "schema": "videoforge/ep01-c07c08-continuity-v2",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "status": "v2_preproduction_new_mothers_pending",
+  "editorial_original": {
+    "shots": 40,
+    "seconds": 163,
+    "frames": 4890
+  },
+  "editorial_v2": {
+    "shots": 42,
+    "seconds": 163,
+    "frames": 4890,
+    "adds": [
+      "C07-P04",
+      "C08-P05"
+    ],
+    "replaces_region_start": 2070,
+    "replaces_region_end": 2940
+  },
+  "creator_feedback": "C07-C08: Elara teleporta, soldados confundidos com ajudantes, carrinho muda de posição e conversa sem encontro.",
+  "rules": {
+    "screen_flee_direction": "left_to_right",
+    "pursuers_origin": "left_behind_elara",
+    "cart_initial": "right_wall",
+    "cart_action": "only_kael_pushes",
+    "cart_final": "perpendicular_barricade",
+    "escape": "right_side_passage",
+    "regroup_before_C09": true,
+    "independent_hands": false,
+    "do_not_overwrite_original_pngs": true,
+    "seven_versioned_new_images_pending": true,
+    "human_visual_approval_required": true,
+    "auto_youtube_upload": false,
+    "maximum_paid_calls_per_child_run": 1,
+    "retry_on_429": false
+  },
+  "shots": [
+    {
+      "id": "C07-P01",
+      "start_frame": 2070,
+      "end_exclusive": 2160,
+      "beat": "Elara foge sozinha",
+      "source_policy": "reuse:C07-P01",
+      "visual_prompt": "Elara corre para a direita da tela em direção a uma esquina; está sozinha, perseguidores atrás fora de quadro; cenário Arken contínuo.",
+      "reference_asset_ids": [],
+      "scene_mother_approved": false,
+      "rig_approved": false,
+      "required_axis": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+    },
+    {
+      "id": "C07-P02",
+      "start_frame": 2160,
+      "end_exclusive": 2250,
+      "beat": "Perseguidores atrás de Elara",
+      "source_policy": "generate",
+      "visual_prompt": "Exatamente dois perseguidores mascarados V2 correm pelo MESMO beco PARA A DIREITA da tela, vindo do ponto de origem da fuga na esquerda. Elara está muito à frente, FORA DO QUADRO. NÃO incluir Elara, Kael ou carrinho. Não colocar terceiro soldado. Plano de perseguição, não de colaboração.",
+      "reference_asset_ids": [
+        "biblia-mascarado-1-base-v2",
+        "biblia-mascarado-2-base-v2",
+        "biblia-beco-base-v1"
+      ],
+      "scene_mother_approved": false,
+      "rig_approved": false,
+      "required_axis": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+    },
+    {
+      "id": "C07-P03",
+      "start_frame": 2250,
+      "end_exclusive": 2340,
+      "beat": "Elara encontra Kael perto do carrinho",
+      "source_policy": "generate",
+      "visual_prompt": "Elara encapuzada entra da ESQUERDA em fuga para a DIREITA e encontra Kael parado perto de um carrinho de madeira estacionado junto à parede direita do beco. Ambos surpreendidos, nenhum soldado perto; Elara olha para trás. Não iniciar diálogo ainda. Carrinho ainda imóvel.",
+      "reference_asset_ids": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-kael-medieval-base-v1",
+        "biblia-carrinho-base-v1",
+        "biblia-beco-base-v1"
+      ],
+      "scene_mother_approved": false,
+      "rig_approved": false,
+      "required_axis": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+    },
+    {
+      "id": "C07-P04",
+      "start_frame": 2340,
+      "end_exclusive": 2460,
+      "beat": "Elara pede ajuda; Kael responde",
+      "source_policy": "reuse:C07-P03",
+      "visual_prompt": "Elara pede ajuda a Kael em dois-shot após chegar; Kael diz para ficar atrás dele. Reutilizar a mãe arquivada C07-P03 como candidata visual, agora em tomada distinta do encontro.",
+      "reference_asset_ids": [],
+      "scene_mother_approved": false,
+      "rig_approved": false,
+      "required_axis": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+    },
+    {
+      "id": "C08-P01",
+      "start_frame": 2460,
+      "end_exclusive": 2550,
+      "beat": "Kael percebe o carrinho",
+      "source_policy": "generate",
+      "visual_prompt": "Kael ao lado do carrinho de madeira que permanece junto à parede DIREITA do beco. Elara já está protegida atrás dele, rumo à saída direita. Kael observa carroça e decide usá-la. Dois perseguidores ficam LONGE atrás, fora do quadro; nunca tocam o carrinho. Sem movimento físico ainda.",
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-encapuzada-v1",
+        "biblia-carrinho-base-v1",
+        "biblia-beco-base-v1"
+      ],
+      "scene_mother_approved": false,
+      "rig_approved": false,
+      "required_axis": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+    },
+    {
+      "id": "C08-P02",
+      "start_frame": 2550,
+      "end_exclusive": 2680,
+      "beat": "Kael empurra e gira o carrinho sozinho",
+      "source_policy": "generate",
+      "visual_prompt": "Kael SOZINHO empurra o carrinho, deslocando-o da parede DIREITA e iniciando um giro para atravessar o beco; suas mãos e braços ficam integrados ao carrinho no quadro, rodas assentadas no chão. NÃO incluir nenhum soldado, princesa ou ajudante. A carroça continua a mesma peça da Bíblia Visual.",
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-carrinho-base-v1",
+        "biblia-beco-base-v1"
+      ],
+      "scene_mother_approved": false,
+      "rig_approved": false,
+      "required_axis": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+    },
+    {
+      "id": "C08-P03",
+      "start_frame": 2680,
+      "end_exclusive": 2790,
+      "beat": "Barricada separa Kael dos perseguidores",
+      "source_policy": "generate",
+      "visual_prompt": "O MESMO carrinho encontra-se atravessado PERPENDICULARMENTE ao beco formando barricada. Kael permanece do lado SEGURO, no lado DIREITO da tela. Dois perseguidores mascarados se aproximam pelo lado ESQUERDO, atrás do carrinho, e precisam parar. Em hipótese alguma tocando carroça nem ajudando Kael. Elara já avançou para a passagem lateral e não aparece.",
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-mascarado-1-base-v2",
+        "biblia-mascarado-2-base-v2",
+        "biblia-carrinho-base-v1",
+        "biblia-beco-base-v1"
+      ],
+      "scene_mother_approved": false,
+      "rig_approved": false,
+      "required_axis": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+    },
+    {
+      "id": "C08-P04",
+      "start_frame": 2790,
+      "end_exclusive": 2880,
+      "beat": "Elara escapa pela passagem lateral",
+      "source_policy": "generate",
+      "visual_prompt": "Elara corre para a DIREITA da tela em direção à passagem lateral segura, ao fundo carrinho parado como barreira e perseguidores do lado oposto. Kael pode surgir mais distante no lado seguro, sem contato com perseguidores. Não criar duas Elara. Roda e carrinho no mesmo local da cena anterior.",
+      "reference_asset_ids": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-kael-medieval-base-v1",
+        "biblia-mascarado-1-base-v2",
+        "biblia-mascarado-2-base-v2",
+        "biblia-carrinho-base-v1",
+        "biblia-beco-base-v1"
+      ],
+      "scene_mother_approved": false,
+      "rig_approved": false,
+      "required_axis": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+    },
+    {
+      "id": "C08-P05",
+      "start_frame": 2880,
+      "end_exclusive": 2940,
+      "beat": "Kael alcança Elara além da barricada",
+      "source_policy": "generate",
+      "visual_prompt": "No corredor lateral seguro, além do carrinho bloqueando o beco ao fundo, Elara espera na esquina e Kael a alcança. Os perseguidores estão bloqueados, fora do quadro. Plano final de reencontro que prepara o agradecimento C09-P01. Não haverá teletransporte nem mudança de roupa.",
+      "reference_asset_ids": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-encapuzada-v1",
+        "biblia-beco-base-v1"
+      ],
+      "scene_mother_approved": false,
+      "rig_approved": false,
+      "required_axis": "fuga screen_right; perseguidores atrás screen_left; carrinho na parede direita até Kael girar transversal; perseguidor nunca ajuda Kael"
+    }
+  ]
+}

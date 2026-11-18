@@ -1,0 +1,155 @@
+name: "EP01 - corrigir C07 C08 continuidade V2"
+run-name: "EP01 C07-C08 V2 ${{ inputs.shot_id || 'fila' }}"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json'
+  pull_request:
+    paths:
+      - 'videoforge/ep01_continuity_v2.py'
+      - 'videoforge/ep01_camera_batch.py'
+      - 'tests/test_ep01_continuity_v2.py'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json'
+  workflow_dispatch:
+    inputs:
+      shot_id:
+        required: true
+        type: choice
+        options: [C07-P02, C07-P03, C08-P01, C08-P02, C08-P03, C08-P04, C08-P05]
+permissions:
+  contents: write
+  packages: read
+  actions: write
+jobs:
+  preflight:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar continuidade e regressao de camera
+        run: python -m unittest tests.test_ep01_continuity_v2 tests.test_ep01_camera_batch -v
+  queue:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar o plano e o bloqueio de publicação
+        run: |
+          python -m unittest tests.test_ep01_continuity_v2 tests.test_ep01_camera_batch -v
+          python -m videoforge.ep01_continuity_v2 --check
+      - name: Gerar candidatas uma por execução filha
+        run: python scripts/ep01_continuity_v2_queue.py
+  generate:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      SHOT_ID: ${{ inputs.shot_id }}
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_BASE_URL: ${{ secrets.CODEX_PROXY_BASE_URL }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar refs SHA e evitar duplicação
+        id: preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          from videoforge.ep01_continuity_v2 import archived, prepare
+          from videoforge.image_generation_policy import assert_image_generation_allowed
+          sid = os.environ["SHOT_ID"]
+          assert_image_generation_allowed("alchemy-lab", "mmorpg-conquiste-a-princesa-ep01")
+          previous = archived(sid)
+          if not previous:
+              shot, blobs, refs, prompt = prepare(sid)
+              print("PREPARED", sid, "REFERENCES", len(refs))
+          else:
+              print("SKIP_ALREADY_ARCHIVED", sid, previous["sha256"])
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write("execute=" + ("false" if previous else "true") + "\n")
+          PY
+      - name: Configurar proxy
+        if: steps.preflight.outputs.execute == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$CODEX_PROXY_API_KEY"
+          if [[ -n "$CODEX_PROXY_BASE_URL" ]]; then
+            echo "PROXY_ENDPOINT=$CODEX_PROXY_BASE_URL" >> "$GITHUB_ENV"
+          elif [[ -n "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo "PROXY_ENDPOINT=http://127.0.0.1:18080" >> "$GITHUB_ENV"
+            echo "USE_EPHEMERAL=1" >> "$GITHUB_ENV"
+          else
+            exit 1
+          fi
+      - name: Subir proxy efemero
+        if: steps.preflight.outputs.execute == 'true' && env.USE_EPHEMERAL == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-proxy-state"
+          python - <<'PY'
+          import os, json
+          from pathlib import Path
+          data=json.loads(os.environ["CODEX_PROXY_ACCOUNTS_JSON"])
+          assert isinstance(data, dict) and data.get("records")
+          path=Path(os.environ["RUNNER_TEMP"])/"vf-proxy-state"/"accounts.json"
+          path.write_text(json.dumps(data), encoding="utf-8")
+          path.chmod(0o600)
+          PY
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-continuity-v2-proxy --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data \
+            -e DEBUG_LOG_PAYLOADS=false -v "$RUNNER_TEMP/vf-proxy-state:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          exit 1
+      - name: Gerar uma imagem-mãe candidate versionada
+        if: steps.preflight.outputs.execute == 'true'
+        run: python -m videoforge.ep01_continuity_v2 --shot-id "$SHOT_ID" --url "$PROXY_ENDPOINT"
+      - name: Arquivar PNG e proveniencia
+        if: always() && steps.preflight.outputs.execute == 'true'
+        shell: bash
+        run: |
+          bash scripts/arquivar-pngs-se-existirem.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
+            output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
+            "${{ github.run_id }}" production-continuity-v2-mother "${{ job.status }}"
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.preflight.outputs.execute == 'true'
+        with:
+          name: continuity-v2-${{ inputs.shot_id }}-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens/
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Limpar tokens efemeros
+        if: always()
+        run: |
+          docker rm -f vf-continuity-v2-proxy >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-proxy-state"

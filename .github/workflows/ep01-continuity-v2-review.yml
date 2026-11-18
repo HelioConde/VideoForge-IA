@@ -1,0 +1,86 @@
+name: "EP01 42 tomadas - MP4 unico continuidade V2"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: read
+jobs:
+  preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 110
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verificar 42 tomadas, todas as fontes e sem aprovação automática
+        run: |
+          python -m unittest tests.test_ep01_continuity_v2 tests.test_ep01_camera_batch -v
+          python -m videoforge.ep01_continuity_v2 --check
+          python -m videoforge.ep01_camera_batch prepare --shots all --revision continuity-v2
+      - name: Validar Remotion TypeScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit --skipLibCheck --esModuleInterop --jsx react-jsx \
+            --target es2020 --module esnext --moduleResolution node --lib es2020,dom src/ep01-camera-batch.tsx
+      - name: Renderizar V2 com todas as 42 tomadas e QA de frames
+        run: python -m videoforge.ep01_camera_batch render --shots all --revision continuity-v2
+      - name: Empacotar exclusivamente MP4 unico e indice de tomada
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,shutil
+          from pathlib import Path
+          from videoforge.ep01_camera_batch import ROOT,OUT,build_plan
+          out=ROOT/OUT
+          data=json.loads((out/'checkpoint.json').read_text(encoding='utf-8'))
+          selected=[s['id'] for s in build_plan(revision='continuity-v2')['shots']]
+          if data.get('selected_shots')!=selected or len(selected)!=42:
+              raise RuntimeError('V2 montage did not use 42 ordered shots')
+          candidates=list(out.glob('montage-*/preview.mp4'))
+          if len(candidates)!=1:
+              raise RuntimeError('No unique v2 montage')
+          original=candidates[0]
+          qa=json.loads((original.parent/'qa.json').read_text(encoding='utf-8'))
+          digest=hashlib.sha256(original.read_bytes()).hexdigest()
+          if (qa.get('mp4_sha256')!=digest or qa.get('frames_verified')!=4890
+              or qa.get('technical_qa_passed') is not True
+              or qa.get('all_frames_decoded') is not True
+              or qa.get('official_episode_approved') is not False
+              or qa.get('youtube_upload') is not False):
+              raise RuntimeError('V2 MP4 failed technical QA')
+          folder=out/'entrega-revisao-42-tomadas-v2'
+          folder.mkdir(parents=True,exist_ok=True)
+          filename='EP01-continuidade-V2-42-tomadas.mp4'
+          shutil.copyfile(original,folder/filename)
+          plan=build_plan(revision='continuity-v2')['shots']
+          lines=['EP01 V2 — 42 TOMADAS — CAMERA 2D, SEM AUDIO/SEM RIG, AINDA EM REVISAO','']
+          for s in plan:
+              start=s['start_frame']/30
+              end=(s['start_frame']+s['duration_frames'])/30
+              lines.append(f"{s['id']} | {start:.2f}s a {end:.2f}s | {s['approval_status']}")
+          (folder/'INDICE-TOMADAS.txt').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+          (folder/'QA-REVISAO.json').write_text(json.dumps({
+              'source':'continuity-v2','shot_count':42,'duration_frames':4890,'fps':30,
+              'sha256':digest,'human_visual_approval':False,'official_episode_approved':False,
+              'youtube_uploaded':False,'audio':False,'rig':False
+          },ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('EP01_V2_REVIEW_READY',digest,original.stat().st_size)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EP01-42-tomadas-MP4-continuidade-V2-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/previews/camera-batch-v1/entrega-revisao-42-tomadas-v2/
+          retention-days: 30
+          if-no-files-found: error

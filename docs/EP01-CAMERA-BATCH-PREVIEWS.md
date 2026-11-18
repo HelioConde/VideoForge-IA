@@ -1,3 +1,5 @@
+> **REVISÃO V2 C07/C08 (18/11/2026):** este documento descreve o lote histórico de 40 tomadas, cujas C07/C08 tiveram problemas de continuidade rejeitados pelo criador. A nova revisão de 42 tomadas preserva 163s; exige 7 novas imagens-mãe candidatas. [Especificação](../canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.md). Render: `python -m videoforge.ep01_camera_batch render --shots all --revision continuity-v2` **somente após as fontes existirem**. Antes disso o comando falhará deliberadamente.
+
 # EP01 — prévias de câmera retomáveis (17/11/2026)
 
 Implementação técnica autorizada pelo pedido de continuação EP01. Fontes: inventário `CHECKPOINT-IMAGENS-EP01-AUTO.json`, roteiro, plano de 40 tomadas, aprovações individuais e política sem mãos. Nada aqui autoriza publicação, rig ou nova geração.
