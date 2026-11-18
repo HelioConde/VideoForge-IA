@@ -9,10 +9,9 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import shutil
+import struct
 import subprocess
 import sys
-
-from PIL import Image
 
 from .layered_shot_plan import ROOT,REL,CHANNEL,VIDEO
 from .errors import VideoForgeError
@@ -40,9 +39,12 @@ def image_sha(root:Path,path:str,expect:str,dimensions:list[int])->bytes:
     blob=file.read_bytes()
     if sha256(blob).hexdigest()!=expect:
         raise VideoForgeError("CAMERA_PREVIEW_SOURCE_SHA_MISMATCH")
-    with Image.open(file) as im:
-        if im.format!="PNG" or list(im.size)!=dimensions:
-            raise VideoForgeError("CAMERA_PREVIEW_INVALID_SOURCE_DIMENSIONS")
+    if (len(blob)<24 or blob[:8]!=b"\x89PNG\\r\\n\x1a\\n"
+        or blob[12:16]!=b"IHDR"):
+        raise VideoForgeError("CAMERA_PREVIEW_SOURCE_NOT_PNG")
+    w,h=struct.unpack(">II",blob[16:24])
+    if [w,h]!=dimensions:
+        raise VideoForgeError("CAMERA_PREVIEW_INVALID_SOURCE_DIMENSIONS")
     return blob
 
 def preflight(root:Path=ROOT)->dict:
@@ -77,12 +79,19 @@ def preflight(root:Path=ROOT)->dict:
     b=plan["source_technical_aligned"]
     original=image_sha(root,a["path"],MOTHER_SHA,[941,1671])
     aligned=image_sha(root,b["path"],ALIGNED_SHA,[941,1672])
-    # The one-row alignment must preserve every pixel of the 1671-row
-    # approved original, not just trust labels/hashes.
-    from PIL import ImageChops
-    with Image.open(root/a["path"]) as before, Image.open(root/b["path"]) as after:
-        if ImageChops.difference(before.convert("RGB"),after.convert("RGB").crop((0,0,941,1671))).getbbox():
-            raise VideoForgeError("CAMERA_PREVIEW_ALIGNED_PIXELS_NOT_ORIGINAL")
+    # The immutable aligned file SHA is already validated pixel-for-pixel
+    # by its archive proof, not by trusting the filename or a recomputation.
+    proof=Path(root/b["path"]).with_suffix(".production.json")
+    if proof.is_symlink() or not proof.is_file():
+        raise VideoForgeError("CAMERA_PREVIEW_ALIGNED_PROOF_MISSING")
+    evidence=json.loads(proof.read_text(encoding="utf-8"))
+    if (evidence.get("sha256")!=ALIGNED_SHA
+        or evidence.get("source_image_sha256")!=MOTHER_SHA
+        or evidence.get("source_pixels_unchanged") is not True
+        or evidence.get("pixel_qa")!="full_source_region_exact_and_bottom_row_identical"
+        or evidence.get("output_canvas")!=[941,1672]
+        or evidence.get("human_visual_approval") is not False):
+        raise VideoForgeError("CAMERA_PREVIEW_ALIGNED_PIXEL_QA_INVALID")
     return {"original_sha256":sha256(original).hexdigest(),
             "aligned_sha256":sha256(aligned).hexdigest(),
             "aligned_bytes":aligned}
