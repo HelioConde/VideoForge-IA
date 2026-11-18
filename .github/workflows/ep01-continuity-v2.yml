@@ -5,6 +5,12 @@ on:
     branches: [main]
     paths:
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json'
+  pull_request:
+    paths:
+      - 'videoforge/ep01_continuity_v2.py'
+      - 'videoforge/ep01_camera_batch.py'
+      - 'tests/test_ep01_continuity_v2.py'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json'
   workflow_dispatch:
     inputs:
       shot_id:
@@ -16,6 +22,16 @@ permissions:
   packages: read
   actions: write
 jobs:
+  preflight:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar continuidade e regressao de camera
+        run: python -m unittest tests.test_ep01_continuity_v2 tests.test_ep01_camera_batch -v
   queue:
     if: github.event_name == 'push'
     runs-on: ubuntu-24.04
