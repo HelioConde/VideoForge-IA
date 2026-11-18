@@ -1,0 +1,112 @@
+name: "Agents 01-12 - durable source diagnostics (no AI/media)"
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/agents-all-roles-diagnostic.yml"
+      - "orchestrator/all_roles_diagnostic.py"
+      - "orchestrator/runtime_store.py"
+      - "tests/test_all_roles_diagnostic.py"
+      - "agents/**/AGENT.md"
+      - "videoforge/ep01_continuity_motion.py"
+      - "videoforge/ep01_continuity_v2.py"
+      - "videoforge/ep01_camera_batch.py"
+  workflow_dispatch:
+  schedule:
+    - cron: "30 11 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  pr-audit:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify ten specialist audits, independent QA and no false production claims
+        run: python -m unittest discover -s tests -p 'test_all_roles_diagnostic.py' -v
+      - name: Execute and reopen durable local audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m orchestrator.all_roles_diagnostic --db "$RUNNER_TEMP/all-roles.sqlite" --output "$RUNNER_TEMP/all-roles-first.json"
+          python -m orchestrator.all_roles_diagnostic --db "$RUNNER_TEMP/all-roles.sqlite" --output "$RUNNER_TEMP/all-roles-reopened.json"
+          python - <<'PY'
+          import os, json
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP'])
+          first = json.loads((root / 'all-roles-first.json').read_text())
+          next_run = json.loads((root / 'all-roles-reopened.json').read_text())
+          info = first['role_diagnostic']
+          assert info['diagnostic_completed_count'] == 10
+          assert info['roles_covered'] == [f'{x:02}' for x in range(1, 13)]
+          assert len(first['checkpoints']) == 10
+          assert len(info['steps']) == 20
+          assert all(t['status'] == 'completed' for t in first['tasks'])
+          assert first['state_sha256'] == next_run['state_sha256']
+          assert next_run['role_diagnostic']['steps'] == []
+          assert info['model_calls'] == 0 and info['media_created'] == 0
+          assert info['production_ready'] is False and info['visual_quality_approved'] is False
+          assert info['youtube_publications'] == 0
+          print('All roles participated in source diagnostics only; no real AI/media approval.')
+          PY
+      - name: Archive real source audit without secrets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-01-12-source-diagnostics-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/all-roles-first.json
+            ${{ runner.temp }}/all-roles-reopened.json
+          retention-days: 14
+          if-no-files-found: ignore
+
+  daily-durable-diagnostic:
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    concurrency:
+      group: videoforge-12-role-diagnostic-state
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Persist role diagnostics to dedicated CAS state branch
+        run: |
+          python -m orchestrator.all_roles_diagnostic --github-state --initialize-store \
+            --output "$RUNNER_TEMP/all-roles-persistent.json"
+      - name: Archive technical evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-01-12-durable-diagnostics-${{ github.run_id }}
+          path: ${{ runner.temp }}/all-roles-persistent.json
+          if-no-files-found: ignore
+          retention-days: 14
