@@ -42,6 +42,11 @@ class FakeModel:
                 "basis": "Text review only, no production approval.",
                 "next_steps": ["Keep visual approval and publishing gated."],
             }]
+        elif stage == "roundtrip_assignment":
+            findings = [{"recipient": role, "focus": focus,
+                         "source_sha256": payload["source_sha256"],
+                         "tools": ["read_only_text_analysis"]}
+                        for role, focus in payload["specialists"].items()]
         else:
             findings = []
         response = {"agent_id": role, "mode": mode,
