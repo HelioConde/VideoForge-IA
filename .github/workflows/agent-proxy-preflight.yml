@@ -8,6 +8,8 @@ on:
   pull_request:
     paths:
       - '.github/workflows/agent-proxy-preflight.yml'
+      - 'orchestrator/proxy_preflight.py'
+      - 'tests/test_runtime_proxy_contract.py'
 
 permissions:
   contents: read
