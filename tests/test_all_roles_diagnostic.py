@@ -1,4 +1,5 @@
 """Real EP01 source reads; diagnostic completion never implies media production."""
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -62,7 +63,9 @@ class AllRolesDiagnosticTests(unittest.TestCase):
                     review = worker_step(store)
                 self.assertEqual(review["status"], "blocked")
                 self.assertEqual(review["blocked_reason"], "independent_review_rejected")
-                self.assertFalse(store.checkpoint(review["task_id"])["review"]["technical_passed"])
+                checkpoint = json.loads(store.db.execute("SELECT content FROM checkpoints WHERE task_id=?",
+                                                        (review["task_id"],)).fetchone()[0])
+                self.assertFalse(checkpoint["review"]["technical_passed"])
             finally:
                 store.close()
 
