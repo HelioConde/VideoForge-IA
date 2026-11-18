@@ -1,5 +1,8 @@
 """No-inference physical continuity gate tests for the nine C07/C08 shots."""
 import copy
+import json
+import tempfile
+from pathlib import Path
 import unittest
 from unittest.mock import patch
 
@@ -34,12 +37,12 @@ class ContinuityMotionTests(unittest.TestCase):
         ]:
             changed = copy.deepcopy(original)
             changed["rules"][key] = value
-            with self.subTest(key=key):
-                with patch.object(motion, "read", return_value=changed):
-                    with self.assertRaisesRegex(ValueError, "MOTION_SAFETY_POLICY_INVALID"):
-                        # The original parser checks the altered file; the actual
-                        # runtime guard is exercised with a temporary file below.
-                        motion.validate()
+            with self.subTest(key=key), tempfile.TemporaryDirectory() as tmp:
+                proposal = Path(tmp) / motion.PROPOSAL
+                proposal.parent.mkdir(parents=True)
+                proposal.write_text(json.dumps(changed), encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "MOTION_SAFETY_POLICY_INVALID"):
+                    motion.read(tmp)
         self.assertFalse(original["rules"]["allow_publish"])
 
     def test_cart_yaw_is_monotone_world_space_and_has_no_fake_png_motion(self):
