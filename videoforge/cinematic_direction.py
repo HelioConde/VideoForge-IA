@@ -128,7 +128,7 @@ def load_active_remake_plan(channel:str,video_id:str,root:Path=ROOT)->dict|None:
     if (channel,video_id)!=(REMAKE_CHANNEL,REMAKE_EPISODE):
         return None
     base=Path(root)/"canal"/channel/"videos"/video_id
-    state=_read(base/"estado-atual.json",100_000)
+    state=_read(base/"estado-atual.json",300_000)
     if state.get("active_production_version")!=REMAKE_VERSION:
         return None
     if state.get("active_production_manifest")!="remake-ep01-planos.json":
@@ -153,7 +153,7 @@ def validate_active_remake_plan(channel:str,video_id:str,manifest:dict,root:Path
             or authorization.get("unapproved_youtube_upload_forbidden") is not True):
         raise VideoForgeError("REMAKE_SHOT_AUTHORIZATION_INVALID")
     base=Path(root)/"canal"/channel/"videos"/video_id
-    state=_read(base/"estado-atual.json",100_000)
+    state=_read(base/"estado-atual.json",300_000)
     if (state.get("active_production_version")!=REMAKE_VERSION
             or state.get("remake_v2",{}).get("generation_editorially_authorized") is not True
             or state.get("locks",{}).get("no_youtube_upload") is not True):

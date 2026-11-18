@@ -29,7 +29,7 @@ def read_plan(channel:str, video_id:str, root:Path=ROOT)->tuple[dict,dict]:
     base=root/"canal"/channel/"videos"/video_id
     p=base/"production-art.json"
     s=base/"roteiro.json"
-    if any(f.is_symlink() or not f.is_file() or f.stat().st_size>200_000 for f in (p,s)):
+    if any(f.is_symlink() or not f.is_file() or f.stat().st_size>300_000 for f in (p,s)):
         raise VideoForgeError("PRODUCTION_ART_PLAN_MISSING")
     try:
         plan=json.loads(p.read_text(encoding="utf-8"))

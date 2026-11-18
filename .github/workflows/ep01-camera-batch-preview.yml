@@ -1,0 +1,52 @@
+name: VideoForge - EP01 camera batch experimental
+on:
+  workflow_dispatch:
+    inputs:
+      shots:
+        description: 'Shot IDs separated by commas, or all (technical camera only)'
+        default: C01-P01,C01-P02,C01-P03,C01-P04
+        required: true
+permissions:
+  contents: read
+  packages: read
+concurrency:
+  group: ep01-camera-batch-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: ghcr.io/helioconde/videoforge-remotion-runner:legacy-ec85db5-v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      SHOTS: ${{ inputs.shots }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate sources and regression tests without image providers
+        run: python -m unittest tests.test_ep01_camera_batch -v
+      - name: Reuse installed renderer and check TypeScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
+          cd motion-remotion
+          ./node_modules/.bin/tsc --noEmit --skipLibCheck --esModuleInterop --jsx react-jsx --target es2020 --module esnext --moduleResolution node --lib es2020,dom src/ep01-camera-batch.tsx
+      - name: Render selected shots and experimental montage, decode every frame
+        shell: bash
+        run: python -m videoforge.ep01_camera_batch render --shots "$SHOTS"
+      - name: Verify idempotent resume uses validated outputs
+        shell: bash
+        run: python -m videoforge.ep01_camera_batch render --shots "$SHOTS"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-camera-batch-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/previews/camera-batch-v1/
+          retention-days: 30
+          if-no-files-found: error

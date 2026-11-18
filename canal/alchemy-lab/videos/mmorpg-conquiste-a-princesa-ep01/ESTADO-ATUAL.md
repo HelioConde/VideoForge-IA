@@ -1,3 +1,7 @@
+
+## Continuação técnica de câmera — 17/11/2026
+
+Nova Action C01-P04 [44213509153](https://github.com/HelioConde/VideoForge-IA/actions/runs/44213509153) concluída com sucesso; MP4 70 frames, 30 FPS, 540×960, todos os quadros decodificados. Evidências em `QA-C01-P04-CAMERA-SEM-MAOS-V2.json`. Pipeline `videoforge.ep01_camera_batch` prepara 40 tomadas e monta prévias de câmera com QA e retomada; workflow de lote ainda pendente de execução. P02 continua com contato rejeitado; P03 V3 sem aprovação e rei em pé; P04 é a única fonte aprovada por SHA. Sem novas imagens, mãos independentes, rig liberado ou publicação. Detalhes em [guia técnico](../../../../docs/EP01-CAMERA-BATCH-PREVIEWS.md).
 ## 17/11/2026 — MP4 técnico da câmera C01-P04, sem mãos separadas, disponível no Actions
 
 - **Render Remotion concluído e verificado:** [Action #44211299311](https://github.com/HelioConde/VideoForge-IA/actions/runs/44211299311), artifact `ep01-c01p04-approved-mother-camera-preview-44211299311` (`camera-preview.mp4`, 1.367.779 bytes, SHA `f4ee6c4c9c1f18432c9ba7d9b7d41c85bbc63a9d9cd6949a4fd09340e017bf38`). QA técnico confirma **70 quadros, 30fps, 540×960, codec H.264, 0 chamadas ao proxy**, com mãe aprovada SHA `a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd` e fonte alinhada SHA `b439b45f3dcf789534b2787dc648ca521e8327d639f2b928bd42b932b1b20c7d`.

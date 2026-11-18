@@ -1,0 +1,234 @@
+{
+  "schema": "videoforge/ep01-camera-batch/v1",
+  "technical_preview_only": true,
+  "official_episode_approved": false,
+  "youtube_upload": false,
+  "image_provider_calls": 0,
+  "audio_status": "not_included_not_approved",
+  "shots": [
+    {
+      "id": "C01-P02",
+      "narrative_beat": "Lâmina desembainhada",
+      "start_frame": 60,
+      "duration_frames": 90,
+      "fps": 30,
+      "source": {
+        "sha256": "b055b93e2174625adb4b7f5eb4f5a40f88f9353bce0fe50e0ac193d6eb002a5e",
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44036287313/c01-p02-scene-mother.png",
+        "dimensions": [
+          941,
+          1672
+        ],
+        "human_visual_approval": false,
+        "source_status": "archived_candidate_not_an_approved_scene"
+      },
+      "approval_status": "diagnostic_only_contact_rejected",
+      "camera": {
+        "mode": "digital_detail_reveal",
+        "start": {
+          "zoom": 1.06,
+          "x": 47,
+          "y": 47
+        },
+        "end": {
+          "zoom": 1.015,
+          "x": 50,
+          "y": 50
+        },
+        "dolly": 0,
+        "true_parallax": false
+      },
+      "focus": {
+        "mode": "original_painted_focus",
+        "blur_start_px": 0,
+        "blur_end_px": 0
+      },
+      "lighting": {
+        "exposure_start": 0,
+        "exposure_end": 1,
+        "warm_glow": 0.06
+      },
+      "points_of_interest": [
+        "espada"
+      ],
+      "allowed_motion": [
+        "digital_camera",
+        "global_light",
+        "global_focus"
+      ],
+      "transitions": {
+        "in": "exposure_reveal",
+        "out": "cut"
+      },
+      "rig": {
+        "enabled": false,
+        "independent_hands": false,
+        "required_components": [
+          "Approved integrated arm/grip/sword assembly, scabbard and reconstructed background; no standalone hands."
+        ]
+      },
+      "qa_required": [
+        "source_sha",
+        "codec_frames_fps_duration",
+        "decode_every_frame",
+        "unexpected_black",
+        "representative_contact_sheet",
+        "human_anatomy_axis_continuity_review"
+      ],
+      "limitations": [
+        "No approved same-shot rig selected; all characters and contacts remain integrated.",
+        "Anatomy, continuity and cinematic approval require human review.",
+        "No physical unsheathing: sword and scabbard are one painted image.",
+        "Original lower glove/scabbard contact rejected in REVISAO-ERRO-PAINEIS-C01-P02.json; diagnostic preview only, not repaired."
+      ],
+      "direction_reviewed": true
+    },
+    {
+      "id": "C01-P03",
+      "narrative_beat": "Kael ajoelhado",
+      "start_frame": 150,
+      "duration_frames": 90,
+      "fps": 30,
+      "source": {
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44151964491/c01-p03-scene-mother-facing-throne-v3.png",
+        "sha256": "e668f713456dd5a41e312885f66c10e2cc033c3aed69ffb7bb577a7d62f79b3d",
+        "dimensions": [
+          941,
+          1672
+        ]
+      },
+      "approval_status": "pending_human_review",
+      "camera": {
+        "mode": "digital_reveal_kael_to_throne",
+        "start": {
+          "zoom": 1.12,
+          "x": 40,
+          "y": 66
+        },
+        "end": {
+          "zoom": 1,
+          "x": 50,
+          "y": 50
+        },
+        "dolly": 0,
+        "true_parallax": false
+      },
+      "focus": {
+        "mode": "global_optical_simulation_not_depth_focus",
+        "blur_start_px": 0.7,
+        "blur_end_px": 0
+      },
+      "lighting": {
+        "exposure_start": 1,
+        "exposure_end": 1,
+        "warm_glow": 0
+      },
+      "points_of_interest": [
+        "kael"
+      ],
+      "allowed_motion": [
+        "digital_camera",
+        "global_light",
+        "global_focus"
+      ],
+      "transitions": {
+        "in": "cut",
+        "out": "cut"
+      },
+      "rig": {
+        "enabled": false,
+        "independent_hands": false,
+        "required_components": [
+          "Same-V3 approved hair/cape with reconstructed underlays before any mesh rig."
+        ]
+      },
+      "qa_required": [
+        "source_sha",
+        "codec_frames_fps_duration",
+        "decode_every_frame",
+        "unexpected_black",
+        "representative_contact_sheet",
+        "human_anatomy_axis_continuity_review"
+      ],
+      "limitations": [
+        "No approved same-shot rig selected; all characters and contacts remain integrated.",
+        "Anatomy, continuity and cinematic approval require human review.",
+        "V3 candidate faces the king; king standing differs from seated-king continuity in P04. Camera cannot fix that staging.",
+        "No reflection or axis reversal applied; V3 is not individually approved."
+      ],
+      "direction_reviewed": true
+    },
+    {
+      "id": "C01-P04",
+      "narrative_beat": "Revelar guardas e lanças cruzadas",
+      "start_frame": 240,
+      "duration_frames": 70,
+      "fps": 30,
+      "source": {
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png",
+        "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+        "dimensions": [
+          941,
+          1671
+        ]
+      },
+      "approval_status": "exact_sha_approval_record_exists",
+      "camera": {
+        "mode": "digital_establishing_reveal",
+        "start": {
+          "zoom": 1.075,
+          "x": 50,
+          "y": 50
+        },
+        "end": {
+          "zoom": 1,
+          "x": 50,
+          "y": 50
+        },
+        "dolly": 0,
+        "true_parallax": false
+      },
+      "focus": {
+        "mode": "original_painted_focus",
+        "blur_start_px": 0,
+        "blur_end_px": 0
+      },
+      "lighting": {
+        "exposure_start": 1,
+        "exposure_end": 1,
+        "warm_glow": 0.055
+      },
+      "points_of_interest": [
+        "kael"
+      ],
+      "allowed_motion": [
+        "digital_camera",
+        "global_light",
+        "global_focus"
+      ],
+      "transitions": {
+        "in": "cut",
+        "out": "cut"
+      },
+      "rig": {
+        "enabled": false,
+        "independent_hands": false,
+        "required_components": []
+      },
+      "qa_required": [
+        "source_sha",
+        "codec_frames_fps_duration",
+        "decode_every_frame",
+        "unexpected_black",
+        "representative_contact_sheet",
+        "human_anatomy_axis_continuity_review"
+      ],
+      "limitations": [
+        "No approved same-shot rig selected; all characters and contacts remain integrated.",
+        "Anatomy, continuity and cinematic approval require human review.",
+        "Preserve integrated guard/spear grip; no R3/W3 pieces."
+      ],
+      "direction_reviewed": true
+    }
+  ]
+}

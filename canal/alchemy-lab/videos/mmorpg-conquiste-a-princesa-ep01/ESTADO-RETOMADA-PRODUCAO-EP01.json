@@ -30,17 +30,20 @@
   "current_work": {
     "shot": "C01-P04",
     "task": "isolated_camera_only_preview_remotion_70_frames",
-    "workflow_run_id": 44211299311,
+    "workflow_run_id": 44213509153,
     "source": "PLANO-PREVIA-CAMERA-C01-P04.json",
     "effect": "subtle_zoom_out_without_character_rig",
     "preview_human_review": "pending",
     "no_new_images": true,
     "status": "camera_preview_mp4_generated_h264_verified_70frames",
-    "qa_manifest": "QA-C01-P04-CAMERA-SEM-MAOS-V1.json",
-    "artifact_id": 14387020119,
-    "mp4_sha256": "f4ee6c4c9c1f18432c9ba7d9b7d41c85bbc63a9d9cd6949a4fd09340e017bf38",
-    "workflow_overall_status": "failure_due_to_git_not_installed_but_mp4_artifact_uploaded",
-    "workflow_fix": "f1d6fe188bdc4152ddbdbb78935de7bf0f84320f"
+    "qa_manifest": "QA-C01-P04-CAMERA-SEM-MAOS-V2.json",
+    "artifact_id": 14387161860,
+    "mp4_sha256": "aea8e7447507e33e8f638ea4a1079e089adb938c773b8f80afafd2ad1bbfe20b",
+    "workflow_overall_status": "success",
+    "workflow_fix": "f1d6fe188bdc4152ddbdbb78935de7bf0f84320f",
+    "run_id": 44213509153,
+    "workflow_status": "success",
+    "qa_report": "QA-C01-P04-CAMERA-SEM-MAOS-V2.json"
   },
   "upcoming_after_preview": [
     "inspect camera QA and source hash",
@@ -54,5 +57,21 @@
     "audio_ready_unverified": true,
     "official_mp4_generated": false,
     "youtube_uploaded": false
+  },
+  "camera_batch": {
+    "status": "implemented_local_previews_github_run_pending",
+    "entrypoint": "videoforge.ep01_camera_batch",
+    "shots_prepared": 40,
+    "selected_shots": [
+      "C01-P01",
+      "C01-P02",
+      "C01-P03",
+      "C01-P04"
+    ],
+    "individual_visual_approvals": 1,
+    "visual_shots_pending_approval": 38,
+    "next_technical_shot": "C01-P05",
+    "official_episode_approved": false,
+    "youtube_upload": false
   }
 }
