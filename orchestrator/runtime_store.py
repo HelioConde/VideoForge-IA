@@ -449,7 +449,7 @@ class Store:
         if validation_error is not None:
             if (response is None or not isinstance(validation_error, str)
                     or not 1 <= len(validation_error) <= 160
-                    or any(c in validation_error for c in '\\r\\n')):
+                    or any(ord(c) in (10, 13) for c in validation_error)):
                 raise ValueError('Invalid model response rejection code')
         if response is not None:
             if not isinstance(response, dict) or agent_id not in ROLES or not model:
