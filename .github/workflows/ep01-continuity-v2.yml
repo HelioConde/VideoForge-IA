@@ -1,4 +1,5 @@
 name: "EP01 - corrigir C07 C08 continuidade V2"
+run-name: "EP01 C07-C08 V2 ${{ inputs.shot_id || 'fila' }}"
 on:
   push:
     branches: [main]
