@@ -1,5 +1,5 @@
 import unittest
-from videoforge.ep01_continuity_v2 import read_plan, revised_camera_plan
+from videoforge.ep01_continuity_v2 import read_plan, revised_camera_plan, archived
 from videoforge.ep01_camera_batch import build_plan
 
 
@@ -36,10 +36,15 @@ class ContinuityTests(unittest.TestCase):
         self.assertEqual([s["id"] for s in shots if s["id"].startswith("C08-")],
                          ["C08-P01", "C08-P02", "C08-P03", "C08-P04", "C08-P05"])
         self.assertEqual(shots[-1]["start_frame"] + shots[-1]["duration_frames"], 4890)
-        self.assertIsNone(next(s for s in shots if s["id"] == "C07-P02")["source"])
+        source = next(s for s in shots if s["id"] == "C07-P02")["source"]
+        self.assertEqual(source is not None, archived("C07-P02") is not None)
         self.assertFalse(any(s["rig"]["enabled"] for s in shots if s["id"].startswith(("C07-", "C08-"))))
-        with self.assertRaisesRegex(ValueError, "CONTINUITY_V2_MOTHER_PENDING"):
-            revised_camera_plan(old, require_generated=True)
+        missing = [s["id"] for s in read_plan()["shots"] if s["source_policy"] == "generate" and archived(s["id"]) is None]
+        if missing:
+            with self.assertRaisesRegex(ValueError, "CONTINUITY_V2_MOTHER_PENDING"):
+                revised_camera_plan(old, require_generated=True)
+        else:
+            self.assertEqual(len(revised_camera_plan(old, require_generated=True)["shots"]), 42)
 
 
 if __name__ == "__main__":
