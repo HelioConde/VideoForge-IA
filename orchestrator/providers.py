@@ -398,6 +398,26 @@ def make_provider(mode: str | None = None) -> TextProvider:
     return from_environment(mode)
 
 
+def make_all_roles_unpriced_provider() -> CodexProxyResponsesProvider:
+    """Authorized 13-call text-only pilot with fixed token/call caps, no USD claim.
+
+    This mode is deliberately separate from the priced pilot and the legacy
+    four-call chain. It cannot run unless the exact user authorization and
+    first-attempt guards are present on the GitHub Actions runner.
+    """
+    model = os.getenv("AI_MODEL", "")
+    if (os.getenv("VF_ALL_ROLES_AUTHORIZATION") != "AUTHORIZE_THIRTEEN_ASTRA_CALLS"
+            or os.getenv("GITHUB_RUN_ATTEMPT", "1") != "1"
+            or model not in {"gpt-6.2-astra", "gpt-6-astra"}):
+        raise ProviderBlockedError("One-time authorization required for unpriced 13-call Astra text pilot")
+    provider = CodexProxyResponsesProvider(
+        api_key=os.getenv("CODEX_PROXY_API_KEY", ""), model=model,
+        input_price_per_million=None, output_price_per_million=None,
+        base_url="http://127.0.0.1:18080")
+    provider._assert_network_call_allowed()
+    return provider
+
+
 def make_chain_provider() -> CodexProxyResponsesProvider:
     """Unpriced, manual C07/C08 audit using the existing loopback proxy."""
     selected_model = os.getenv("AI_MODEL", "")

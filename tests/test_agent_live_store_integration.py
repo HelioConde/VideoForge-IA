@@ -120,6 +120,56 @@ class DurableIntegrationTests(unittest.TestCase):
             finally:
                 store.close()
 
+    def test_user_authorized_unpriced_proxy_enforces_13_calls_and_tokens(self):
+        provider = TextOnlyFakeAstra()
+        def unpriced_estimate(request):
+            return {
+                "upper_bound_usd": None,
+                "input_tokens_upper_bound": 1200,
+                "output_tokens_upper_bound": request.max_output_tokens,
+            }
+        provider.estimate_cost = unpriced_estimate
+        with tempfile.TemporaryDirectory() as tmp:
+            store = Store(Path(tmp) / "unpriced.sqlite")
+            try:
+                env = {"AI_MODEL": provider.model,
+                       "VF_ALL_ROLES_AUTHORIZATION": "AUTHORIZE_THIRTEEN_ASTRA_CALLS",
+                       "GITHUB_RUN_ATTEMPT": "1"}
+                with patch.dict(os.environ, env), patch(
+                    "orchestrator.providers.make_all_roles_unpriced_provider",
+                    return_value=provider
+                ), patch("orchestrator.providers.urllib.request.build_opener") as network:
+                    data = run(store, budget_usd=None)
+                network.assert_not_called()
+                self.assertEqual(len(provider.calls), 13)
+                self.assertIsNone(data["live_roundtrip"]["billing_cap_usd"])
+                self.assertFalse(data["live_roundtrip"]["billing_cap_verified"])
+                self.assertEqual(data["live_roundtrip"]["conservative_token_limit"], 250_000)
+                self.assertEqual(data["live_roundtrip"]["call_limit"], 13)
+                self.assertTrue(all(u["reserved_usd"] is None for u in data["usage"]))
+                self.assertEqual(validate_live_roundtrip_result(data, provider.model),
+                                 "needs_human_review")
+            finally:
+                store.close()
+
+    def test_unpriced_all_roles_requires_explicit_first_attempt_authorization(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = Store(Path(tmp) / "unpriced-denied.sqlite")
+            try:
+                for environment in (
+                    {"VF_ALL_ROLES_AUTHORIZATION": "NO_INFERENCE",
+                     "GITHUB_RUN_ATTEMPT": "1"},
+                    {"VF_ALL_ROLES_AUTHORIZATION": "AUTHORIZE_THIRTEEN_ASTRA_CALLS",
+                     "GITHUB_RUN_ATTEMPT": "2"},
+                ):
+                    with self.subTest(environment=environment), patch.dict(
+                        os.environ, environment
+                    ), self.assertRaises(ValueError):
+                        run(store, budget_usd=None)
+                self.assertEqual(len(store.export_snapshot()["tables"]["usage"]), 0)
+            finally:
+                store.close()
+
     def test_full_thirteen_stage_journal_with_independent_qa(self):
         self.exercise(rejected=False)
 
