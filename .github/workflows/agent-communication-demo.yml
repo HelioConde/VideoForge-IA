@@ -9,6 +9,7 @@ on:
       - 'tests/test_dispatch_plan.py'
       - 'tests/test_issue_proposals.py'
       - 'tests/test_task_leases.py'
+      - 'tests/test_issue_reconcile.py'
       - '.github/workflows/agent-communication-demo.yml'
   workflow_dispatch:
     inputs:
@@ -38,6 +39,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_dispatch_plan.py' -v
           python -m unittest discover -s tests -p 'test_issue_proposals.py' -v
           python -m unittest discover -s tests -p 'test_task_leases.py' -v
+          python -m unittest discover -s tests -p 'test_issue_reconcile.py' -v
           python orchestrator/issue_proposals.py --output /tmp/agent-issue-proposals.json
           python orchestrator/dispatch_plan.py --output /tmp/agent-dispatch-plan.json
           python orchestrator/queue_audit.py --output /tmp/agent-queue-checkpoint.json
