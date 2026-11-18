@@ -60,6 +60,25 @@ def ensure_response(result: dict, role: str, *, real=True) -> dict:
     return result["response"]
 
 
+def _validate_assignment(response: dict, source_hash: str) -> None:
+    findings = response["findings"]
+    if len(findings) != len(SPECIALISTS):
+        raise ProviderError("Director must explicitly delegate ten specialist tasks")
+    seen = set()
+    for item in findings:
+        if (not isinstance(item, dict)
+                or set(item) != {"recipient", "focus", "source_sha256", "tools"}
+                or item.get("recipient") not in SPECIALISTS
+                or item["recipient"] in seen
+                or item.get("focus") != FOCUS[item["recipient"]]
+                or item.get("source_sha256") != source_hash
+                or item.get("tools") != ["read_only_text_analysis"]):
+            raise ProviderError("Director source-pinned assignment contract rejected")
+        seen.add(item["recipient"])
+    if seen != set(SPECIALISTS):
+        raise ProviderError("Director omitted or duplicated a specialist")
+
+
 def _validate_specialist(response: dict, role: str, evidence_sha: str) -> None:
     findings = response["findings"]
     if len(findings) != 1 or not isinstance(findings[0], dict):
@@ -138,7 +157,7 @@ def step(store: Store, *, root=ROOT, limits=None) -> dict | None:
                 "specialists": {r: item["focus"] for r, item in role_evidence.items()},
                 "instructions": "Delegate read-only textual analysis only; no production tools.",
             }, "codex_proxy", limits)
-            ensure_response(coordinator, "01")
+            _validate_assignment(ensure_response(coordinator, "01"), source_hash)
             results = {}
             for role in SPECIALISTS:
                 evidence = role_evidence[role]
