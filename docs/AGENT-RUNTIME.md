@@ -2,6 +2,8 @@
 
 Continuação da PR #71, sem merge e sem chamadas pagas. O EP01 é fonte somente leitura. Os chats em `agents/chat-directory.json` continuam sendo referências, nunca endpoints de API.
 
+**Verificado:** [Action #44296219366](https://github.com/HelioConde/VideoForge-IA/actions/runs/44296219366) passou nos 45 testes novos em Linux, incluindo symlinks e concorrência. Os 37 testes anteriores do orquestrador passaram localmente. [Artifact com relatório e painel](https://github.com/HelioConde/VideoForge-IA/actions/runs/44296219366/artifacts/14423581894). O backend GitHub foi exercitado separadamente em dois processos: dois checkpoints, 12 mensagens, mesmo SHA ao reabrir, zero chamadas LLM. Um segundo escritor com revisão antiga foi rejeitado pela API real sem perder checkpoints. [Evidências versionadas](../orchestrator/runtime-validation.json) e [estado remoto](https://github.com/HelioConde/VideoForge-IA/blob/state/multi-agent-runtime/runtime/state.json). A prova CAS adicionou apenas metadado de teste na branch de estado; não alterou o EP01.
+
 ## O que existe de fato
 
 `orchestrator/runtime.py` seleciona automaticamente duas auditorias derivadas da fila existente, carrega as instruções completas de `agents/<role>/AGENT.md`, executa o especialista, encaminha resultado ao revisor e registra checkpoint pelo coordenador. A seleção e as ferramentas são controladas por código; respostas de modelo não executam shell nem escolhem APIs arbitrárias.

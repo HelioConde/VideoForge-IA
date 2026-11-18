@@ -59,6 +59,7 @@ class ProviderResponse:
     output_tokens: int | None
     simulated: bool
     cost_usd: Decimal | None = None
+    reported_model: str | None = None
     cost_is_configured_price_estimate: bool = False
 
     @property
@@ -256,7 +257,7 @@ class OpenAIResponsesProvider:
         if input_tokens is not None and output_tokens is not None:
             actual_cost = ((Decimal(input_tokens) * self._input_price
                             + Decimal(output_tokens) * self._output_price) / Decimal(1_000_000))
-        return ProviderResponse(text=text, provider=self.name, model=self.model,
+        return ProviderResponse(text=text, provider=self.name, model=self.model, reported_model=data.get("model"),
                                 input_tokens=input_tokens, output_tokens=output_tokens,
                                 simulated=False, cost_usd=actual_cost,
                                 cost_is_configured_price_estimate=actual_cost is not None)

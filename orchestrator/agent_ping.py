@@ -9,19 +9,24 @@ from __future__ import annotations
 import argparse
 from decimal import Decimal, InvalidOperation
 import json
+import os
+import uuid
 from pathlib import Path
 
 from .providers import GenerationRequest, make_provider
 from .runtime import ROOT, instructions, write_report
 
-PING = ("Teste de comunicação VideoForge-IA. Você é o Agente 01, Diretor Geral. "
-        "Não execute tarefas, não faça alterações. Confirme apenas que recebeu "
-        "uma mensagem de teste da coordenação. Responda exclusivamente em JSON.")
+PING = ("Agente 01, confirme que recebeu esta mensagem do sistema VideoForge-IA. "
+        "Não execute tarefas. Apenas identifique-se e confirme o recebimento.")
+ASTRA = "gpt-6-astra"
 
 
 def agent_01_ping(*, mode: str, budget_usd: str = "0", root=ROOT) -> dict:
     if mode not in {"mock", "codex_proxy"}:
         raise ValueError("Only mock or explicitly authorized Codex text is accepted")
+    execution_id = os.environ.get("GITHUB_RUN_ID") or uuid.uuid4().hex
+    if mode == "codex_proxy" and os.environ.get("GITHUB_RUN_ATTEMPT", "1") != "1":
+        raise ValueError("A live ping cannot be replayed by rerunning the workflow")
     agent_text, sha = instructions(root, "01")
     contract = ('\nIMPORTANT: Read-only connection test. Never claim to call another agent. '
                 'No tools and no media. Reply strictly as one JSON object with exactly '
@@ -36,7 +41,7 @@ def agent_01_ping(*, mode: str, budget_usd: str = "0", root=ROOT) -> dict:
         reply = {"agent_id": "01", "status": "received",
                  "message": "Synthetic ping; no model invoked.",
                  "human_visual_approval": False}
-        return {"schema_version": 1, "mode": "mock", "agent_id": "01",
+        return {"schema_version": 1, "execution_id": execution_id, "request_message": PING, "mode": "mock", "agent_id": "01",
                 "model": simulated.model, "simulated": True, "llm_executed": False,
                 "instructions_sha256": sha, "reply": reply,
                 "usage": simulated.usage, "estimated_cost_usd": "0",
@@ -48,12 +53,14 @@ def agent_01_ping(*, mode: str, budget_usd: str = "0", root=ROOT) -> dict:
         raise ValueError("Explicit positive finite budget is required") from None
     if not budget.is_finite() or not Decimal("0.01") <= budget <= Decimal("0.25"):
         raise ValueError("Pilot budget must be between 0.01 and 0.25 USD")
+    if provider.model != ASTRA:
+        raise ValueError("Agent 01 ping requires gpt-6-astra")
     estimate = provider.estimate_cost(request)
     expected = Decimal(str(estimate["upper_bound_usd"]))
     if expected <= 0 or expected > budget:
         raise ValueError("Estimated model cost exceeds the explicit budget")
     response = provider.generate_response(request)
-    if response.simulated or response.provider != "codex_proxy":
+    if response.simulated or response.provider != "codex_proxy" or response.reported_model != ASTRA:
         raise ValueError("Live response was not from the configured Codex provider")
     try:
         reply = json.loads(response.text)
@@ -66,7 +73,7 @@ def agent_01_ping(*, mode: str, budget_usd: str = "0", root=ROOT) -> dict:
             or not isinstance(reply["message"], str)
             or not 1 <= len(reply["message"]) <= 300):
         raise ValueError("Agent 01 returned an invalid message contract")
-    return {"schema_version": 1, "mode": "codex_proxy_text_one_call",
+    return {"schema_version": 1, "execution_id": execution_id, "request_message": PING, "mode": "codex_proxy_text_one_call",
             "agent_id": "01", "model": response.model, "simulated": False,
             "llm_executed": True, "instructions_sha256": sha, "reply": reply,
             "usage": response.usage,
