@@ -2,7 +2,79 @@
   "schema_version": 1,
   "architecture": "multi-agent-studio-v1",
   "implementation": "documentation_only",
+  "dispatch_enabled": false,
   "production_workflows_changed": false,
-  "ep01_visual_approval": false,
-  "ep01_youtube_publication": false
+  "last_coordinator_review_date": "2026-11-18",
+  "source_of_truth": {
+    "main_branch": "main",
+    "coordination_branch": "architecture/multi-agent-studio-v1",
+    "architecture_pr": "https://github.com/HelioConde/VideoForge-IA/pull/71",
+    "orchestrator_queue": "orchestrator/tasks.json"
+  },
+  "ep01": {
+    "project": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01",
+    "revision": "C07/C08 continuity V2",
+    "editorial_shots": 42,
+    "editorial_duration_seconds": 163,
+    "historical_mother_inventory": {
+      "archived": 39,
+      "total": 39,
+      "scope": "original 40-shot version; do not infer 42 new shots are approved"
+    },
+    "technical_preview": {
+      "status": "rendered",
+      "workflow_run_id": 44266014731,
+      "workflow_conclusion": "success",
+      "url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/44266014731",
+      "artifact_name": "EP01-42-tomadas-MP4-continuidade-V2-44266014731",
+      "artifact_id": 14411045741,
+      "artifact_sha256": "0bbf12cc921f4b584179afbf56a6b56317c35d4d1c16b4e2c7a7305be64b7e22",
+      "scope": "technical preview, not creative approval or official final"
+    },
+    "human_visual_approval": false,
+    "rig_ready": false,
+    "official_mp4_approved": false,
+    "youtube_publication": false,
+    "open_gates": [
+      "Continuity and blocking review of C07/C08",
+      "Independent frame-by-frame QA of 42-shot preview",
+      "Human visual approval of changed shots",
+      "Rig/audio/assembly validation before official MP4",
+      "Explicit creator authorization before YouTube publication"
+    ],
+    "consistency_warnings": [
+      "CONTINUIDADE-C07-C08-V2.json continues to identify new mother images as pending, while later GitHub Actions generated a 42-shot preview; reconcile the file status and evidence before treating the manifest as current.",
+      "Historical 39/39 original-mother inventory must not be used as approval of the additional V2 revision."
+    ],
+    "protected_decisions": [
+      "C01-P04 V3 approved mother is preserved",
+      "No independent hand rig C01-P04",
+      "No automatic visual approval",
+      "No YouTube publication without creator authorization"
+    ]
+  },
+  "parallel_work": {
+    "ready_to_delegate": [
+      "EP01-C07-C08-V2-CONTINUITY-AUDIT",
+      "EP01-C07-C08-V2-ART-CONSISTENCY",
+      "EP01-42-AUDIO-PLAN",
+      "EP01-42-MOTION-READINESS-AUDIT",
+      "EP01-ROI-SEMANTICS-R2-ISSUE-62",
+      "VIDEOFORGE-FIVE-CHANNEL-PIPELINE-ISSUE-66"
+    ],
+    "needs_review": [
+      "EP01-C07-C08-V2-VISUAL-REVIEW"
+    ],
+    "blocked": [
+      "EP01-42-SHOT-CREATOR-DECISION",
+      "EP01-V2-TARGETED-VISUAL-FIXES",
+      "EP01-42-FINAL-MP4-GATE"
+    ],
+    "running": []
+  },
+  "open_work_items": [
+    "https://github.com/HelioConde/VideoForge-IA/issues/62",
+    "https://github.com/HelioConde/VideoForge-IA/issues/66"
+  ],
+  "disclaimer": "Designated tasks are not active workers. Only verified executions can be marked running or completed."
 }
