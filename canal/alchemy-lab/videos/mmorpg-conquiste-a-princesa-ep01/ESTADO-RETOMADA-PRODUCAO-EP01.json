@@ -59,7 +59,7 @@
     "youtube_uploaded": false
   },
   "camera_batch": {
-    "status": "implemented_local_previews_github_run_pending",
+    "status": "github_render_and_decode_verified",
     "entrypoint": "videoforge.ep01_camera_batch",
     "shots_prepared": 40,
     "selected_shots": [
@@ -72,6 +72,21 @@
     "visual_shots_pending_approval": 38,
     "next_technical_shot": "C01-P05",
     "official_episode_approved": false,
-    "youtube_upload": false
+    "youtube_upload": false,
+    "workflow_run_id": 44215462090,
+    "artifact_id": 14388741017,
+    "qa_report": "QA-CAMERA-BATCH-V1.json",
+    "technical_previews_count": 4,
+    "visual_previews_count": 3,
+    "black_opening_previews_count": 1,
+    "montage_frames": 310,
+    "montage_seconds": 10.333333,
+    "idempotent_skip_count": 5,
+    "rigs_approved": 0,
+    "human_review_priority": [
+      "C01-P02 rejected contact",
+      "C01-P03 standing/seated king continuity",
+      "C01-P04 camera motion"
+    ]
   }
 }
