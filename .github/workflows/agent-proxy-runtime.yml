@@ -7,13 +7,15 @@ on:
       - '.github/workflows/agent-proxy-runtime.yml'
       - 'orchestrator/providers.py'
       - 'orchestrator/proxy_preflight.py'
+      - 'orchestrator/agent_ping.py'
       - 'tests/test_runtime_proxy_contract.py'
+      - 'tests/test_agent_01_ping.py'
   workflow_dispatch:
     inputs:
       mode:
         description: "Mock uses real proxy GET health/models; text inference is separate and may consume quota"
         type: choice
-        options: [mock_with_proxy, codex_proxy]
+        options: [mock_with_proxy, codex_proxy_ping, codex_proxy]
         default: mock_with_proxy
         required: true
       model:
@@ -67,6 +69,7 @@ jobs:
       - name: Check proxy contract with fake HTTP only
         run: |
           python -m unittest discover -s tests -p 'test_runtime_proxy_contract.py' -v
+          python -m unittest discover -s tests -p 'test_agent_01_ping.py' -v
 
   manual-proxy-runtime:
     if: github.event_name == 'workflow_dispatch'
@@ -107,7 +110,7 @@ jobs:
           import re
           from decimal import Decimal, InvalidOperation
           mode=os.environ['REQUEST_MODE']
-          if mode not in ('mock_with_proxy','codex_proxy'):
+          if mode not in ('mock_with_proxy','codex_proxy_ping','codex_proxy'):
               raise SystemExit('Mode not permitted')
           if not os.environ.get('CODEX_PROXY_API_KEY') or not os.environ.get('CODEX_PROXY_ACCOUNTS_JSON'):
               raise SystemExit('Existing image proxy Secrets are required')
@@ -132,7 +135,7 @@ jobs:
                       or not Decimal('0') < input_price <= Decimal('10000')
                       or not Decimal('0') < output_price <= Decimal('10000')):
                   raise SystemExit('Invalid price or budget bounds')
-              print('Live text expressly requested for one task (four calls maximum); no media tools.')
+              print('Live text expressly requested: one call to Agent 01 for ping, or four for one audit; no media tools.')
           PY
       - name: Restore authorized ephemeral session in isolated runner only
         shell: bash
@@ -184,12 +187,12 @@ jobs:
         run: |
           set -euo pipefail
           args=(--output "$RUNNER_TEMP/proxy-preflight.json")
-          if [[ "$REQUEST_MODE" == codex_proxy ]]; then
+          if [[ "$REQUEST_MODE" != mock_with_proxy ]]; then
             args+=(--require-model "$REQUEST_MODEL")
           fi
           python -m orchestrator.proxy_preflight "${args[@]}"
       - name: Enable explicitly authorized text inference, never media
-        if: inputs.mode == 'codex_proxy'
+        if: inputs.mode != 'mock_with_proxy'
         run: |
           set -euo pipefail
           echo 'AI_ENABLED=true' >> "$GITHUB_ENV"
@@ -203,13 +206,19 @@ jobs:
         run: |
           set -euo pipefail
           args=(--db "$RUNNER_TEMP/vf-agent-runtime.sqlite" --output "$RUNNER_TEMP/agent-runtime-report.json" --max-tasks 1)
-          if [[ "$REQUEST_MODE" == 'mock_with_proxy' ]]; then
-            args+=(--mode mock)
+          if [[ "$REQUEST_MODE" == 'codex_proxy_ping' ]]; then
+            # A single bounded request to Agent 01; no task, image, render or publication.
+            python -m orchestrator.agent_ping --mode codex_proxy \
+              --budget-usd "$REQUEST_BUDGET" --output "$RUNNER_TEMP/agent-01-ping.json"
           else
-            args+=(--mode codex_proxy --budget-usd "$REQUEST_BUDGET" --max-tokens 40000 --max-calls 4)
+            if [[ "$REQUEST_MODE" == 'mock_with_proxy' ]]; then
+              args+=(--mode mock)
+            else
+              args+=(--mode codex_proxy --budget-usd "$REQUEST_BUDGET" --max-tokens 40000 --max-calls 4)
+            fi
+            python -m orchestrator.runtime "${args[@]}"
+            python -m orchestrator.dashboard --report "$RUNNER_TEMP/agent-runtime-report.json" --output "$RUNNER_TEMP/index.html"
           fi
-          python -m orchestrator.runtime "${args[@]}"
-          python -m orchestrator.dashboard --report "$RUNNER_TEMP/agent-runtime-report.json" --output "$RUNNER_TEMP/index.html"
       - name: Archive technical evidence (public repo, no Secrets)
         if: always()
         uses: actions/upload-artifact@v4
@@ -218,6 +227,7 @@ jobs:
           path: |
             ${{ runner.temp }}/proxy-preflight.json
             ${{ runner.temp }}/agent-runtime-report.json
+            ${{ runner.temp }}/agent-01-ping.json
             ${{ runner.temp }}/index.html
           retention-days: 7
           if-no-files-found: ignore
