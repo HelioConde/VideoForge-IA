@@ -9,7 +9,6 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import subprocess
 
 from .runtime import ROOT, MANIFEST
 
@@ -131,39 +130,35 @@ def validate(root=ROOT) -> dict:
 
 
 def render_sheet(root: Path, output_dir: Path, inventory: dict) -> None:
-    """Create labeled downscaled JPGs and a 3x3 preview using local ffmpeg."""
+    """Render labeled preview JPGs and a 3x3 sheet with Pillow, offline."""
+    from PIL import Image, ImageDraw, ImageFont
+
     output_dir.mkdir(parents=True, exist_ok=True)
-    thumbnails = []
-    for row in inventory["shots"]:
+    width, height = DIMENSIONS
+    label_height = 52
+    tile_h = height + label_height
+    board = Image.new("RGB", (width * 3, tile_h * 3), "#12161d")
+    try:
+        font = ImageFont.truetype("DejaVuSans.ttf", 20)
+    except OSError:
+        font = ImageFont.load_default()
+    for index, row in enumerate(inventory["shots"]):
         shot_id = row["shot_id"]
-        preview = output_dir / f"{shot_id}-preview.jpg"
-        label = shot_id + (" REUSE C07-P03" if shot_id == "C07-P04" else "")
-        vf = (
-            f"scale={DIMENSIONS[0]}:{DIMENSIONS[1]}:flags=lanczos,setsar=1,"
-            f"drawtext=text='{label}':x=10:y=14:fontsize=22:"
-            "fontcolor=white:box=1:boxcolor=black@0.7"
-        )
-        subprocess.run([
-            "ffmpeg", "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
-            "-i", str(root / row["asset_path"]),
-            "-vf", vf, "-frames:v", "1", "-q:v", "3", str(preview),
-        ], check=True, timeout=60)
-        thumbnails.append(preview)
-    inputs = []
-    for thumb in thumbnails:
-        inputs += ["-i", str(thumb)]
-    layout = "|".join(
-        f"{(i % 3) * DIMENSIONS[0]}_{(i // 3) * DIMENSIONS[1]}"
-        for i in range(len(thumbnails))
-    )
-    combined = "".join(f"[{i}:v]" for i in range(len(thumbnails)))
-    subprocess.run([
-        "ffmpeg", "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
-        *inputs, "-filter_complex",
-        f"{combined}xstack=inputs=9:layout={layout}:fill=black[v]",
-        "-map", "[v]", "-frames:v", "1", "-q:v", "3",
-        str(output_dir / "c07-c08-9-shots-contact.jpg"),
-    ], check=True, timeout=90)
+        label = shot_id + (" [REUSO C07-P03]" if shot_id == "C07-P04" else "")
+        src = (root / row["asset_path"]).resolve(strict=True)
+        tile = Image.new("RGB", (width, tile_h), "#12161d")
+        with Image.open(src) as im:
+            image = im.convert("RGB")
+            image.thumbnail((width, height), Image.Resampling.LANCZOS)
+            x = (width - image.width) // 2
+            y = label_height + (height - image.height) // 2
+            tile.paste(image, (x, y))
+        draw = ImageDraw.Draw(tile)
+        draw.rectangle((0, 0, width, label_height - 1), fill="#17212d")
+        draw.text((8, 14), label, fill="white", font=font)
+        tile.save(output_dir / f"{shot_id}-preview.jpg", quality=90, optimize=True)
+        board.paste(tile, ((index % 3) * width, (index // 3) * tile_h))
+    board.save(output_dir / "c07-c08-9-shots-contact.jpg", quality=91, optimize=True)
 
 
 def main() -> None:
