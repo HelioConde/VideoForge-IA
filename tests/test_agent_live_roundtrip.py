@@ -7,7 +7,7 @@ from unittest.mock import patch
 from orchestrator.agent_bus import fingerprint
 from orchestrator.agent_live_roundtrip import (
     SPECIALISTS, NUMBER_OF_CALLS, seed, step,
-    _validate_director, _validate_specialist, _validate_qa,
+    _validate_director, _validate_specialist, _validate_qa, ensure_response,
 )
 from orchestrator.providers import ProviderError
 from orchestrator.runtime_store import Store
@@ -53,6 +53,7 @@ class FakeModel:
                     "analysis": "Synthetic test result (no actual model/network).",
                     "findings": findings, "human_visual_approval": False}
         return {"agent_id": role, "model": "gpt-6.2-astra",
+                "reported_model": "gpt-6.2-astra",
                 "provider": "codex_proxy", "llm_executed": True,
                 "simulated": False, "response_id": "fake-response-" + str(len(self.calls)),
                 "response_sha256": fingerprint(response), "response": response}
@@ -99,6 +100,46 @@ class LiveRoundtripContractTests(unittest.TestCase):
                 self.assertEqual(result["blocked_reason"], "independent_review_rejected")
                 self.assertEqual(len(fake.calls), NUMBER_OF_CALLS)
                 self.assertEqual(len(store.export_snapshot()["tables"]["checkpoints"]), 1)
+            finally:
+                store.close()
+
+    def test_astra_model_mismatch_and_tampered_journal_are_rejected(self):
+        fake = FakeModel()
+        payload = {"runtime_stage": "roundtrip_assignment",
+                   "source_sha256": "a" * 64,
+                   "specialists": {role: "read_only" for role in SPECIALISTS}}
+        envelope = fake(None, None, None, "01", payload, "codex_proxy", {})
+        self.assertIs(ensure_response(envelope, "01")["human_visual_approval"], False)
+        for field, incorrect in (
+            ("reported_model", "gpt-6-astra"),
+            ("model", "unknown-model"),
+            ("provider", "mock"),
+            ("response_sha256", "0" * 64),
+            ("simulated", True),
+        ):
+            with self.subTest(field=field):
+                changed = dict(envelope, **{field: incorrect})
+                with self.assertRaises(ProviderError):
+                    ensure_response(changed, "01")
+
+    def test_roundtrip_rejects_different_model_even_if_it_reports_itself_consistently(self):
+        fake = FakeModel()
+        def alternative_model(*args, **kwargs):
+            result = fake(*args, **kwargs)
+            result["model"] = "gpt-6-astra"
+            result["reported_model"] = "gpt-6-astra"
+            return result
+        with tempfile.TemporaryDirectory() as temp, patch(
+            "orchestrator.agent_live_roundtrip.model_step", side_effect=alternative_model
+        ):
+            store = Store(Path(temp) / "pilot.sqlite")
+            try:
+                seed(store, model="gpt-6.2-astra")
+                result = step(store, limits={"usd": 0.25, "tokens": 1000000,
+                                             "calls": NUMBER_OF_CALLS})
+                self.assertEqual(result["status"], "blocked")
+                self.assertEqual(result["blocked_reason"], "ProviderError")
+                self.assertEqual(len(store.export_snapshot()["tables"]["checkpoints"]), 0)
             finally:
                 store.close()
 
