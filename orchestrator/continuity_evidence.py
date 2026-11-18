@@ -19,6 +19,32 @@ from .runtime import (
 from .runtime_store import Store
 
 
+def validated_shot_timeline(shots: object) -> list[dict]:
+    """Reject overlaps, missing frames, duplicate IDs and malformed shot records."""
+    if not isinstance(shots, list) or not shots:
+        raise ValueError("Missing pinned shot list")
+    timeline = []
+    prev = None
+    seen = set()
+    for shot in shots:
+        if not isinstance(shot, dict):
+            raise ValueError("Invalid shot record")
+        start, end = shot.get('start_frame'), shot.get('end_exclusive')
+        shot_id, beat = shot.get('id'), shot.get('beat')
+        if (type(start) is not int or type(end) is not int or start >= end
+                or (prev is not None and start != prev)
+                or not isinstance(shot_id, str) or not shot_id or shot_id in seen
+                or not isinstance(beat, str) or not beat):
+            raise ValueError("Pinned manifest shot timeline has overlap, gap or duplicate")
+        seen.add(shot_id)
+        timeline.append({
+            'id': shot_id, 'beat': beat,
+            'start_frame': start, 'end_exclusive': end,
+        })
+        prev = end
+    return timeline
+
+
 def build_evidence(store: Store, root=ROOT) -> dict:
     tasks = [row['task_id'] for row in store.db.execute("SELECT task_id FROM tasks")]
     if len(tasks) != 1:
@@ -92,24 +118,7 @@ def build_evidence(store: Store, root=ROOT) -> dict:
             'review_scope': 'documentary_manifest_only',
         })
 
-    shots = manifest.get('shots')
-    if not isinstance(shots, list) or not shots:
-        raise ValueError("Missing pinned shot list")
-    timeline = []
-    prev = None
-    seen = set()
-    for shot in shots:
-        start, end = shot['start_frame'], shot['end_exclusive']
-        if (not isinstance(start, int) or not isinstance(end, int)
-                or start >= end or (prev is not None and start != prev)
-                or shot['id'] in seen):
-            raise ValueError("Pinned manifest shot timeline has overlap, gap or duplicate")
-        seen.add(shot['id'])
-        timeline.append({
-            'id': shot['id'], 'beat': shot['beat'],
-            'start_frame': start, 'end_exclusive': end,
-        })
-        prev = end
+    timeline = validated_shot_timeline(manifest.get('shots'))
 
     usage = [dict(row) for row in store.db.execute(
         """SELECT usage.* FROM usage JOIN attempts ON usage.attempt_id = attempts.id
