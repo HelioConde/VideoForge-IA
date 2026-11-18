@@ -30,11 +30,17 @@
   "current_work": {
     "shot": "C01-P04",
     "task": "isolated_camera_only_preview_remotion_70_frames",
-    "workflow_run_id": 44210137396,
+    "workflow_run_id": 44211299311,
     "source": "PLANO-PREVIA-CAMERA-C01-P04.json",
     "effect": "subtle_zoom_out_without_character_rig",
     "preview_human_review": "pending",
-    "no_new_images": true
+    "no_new_images": true,
+    "status": "camera_preview_mp4_generated_h264_verified_70frames",
+    "qa_manifest": "QA-C01-P04-CAMERA-SEM-MAOS-V1.json",
+    "artifact_id": 14387020119,
+    "mp4_sha256": "f4ee6c4c9c1f18432c9ba7d9b7d41c85bbc63a9d9cd6949a4fd09340e017bf38",
+    "workflow_overall_status": "failure_due_to_git_not_installed_but_mp4_artifact_uploaded",
+    "workflow_fix": "f1d6fe188bdc4152ddbdbb78935de7bf0f84320f"
   },
   "upcoming_after_preview": [
     "inspect camera QA and source hash",
