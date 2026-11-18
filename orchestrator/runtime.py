@@ -249,23 +249,43 @@ def model_step(store, task, root, agent, payload, mode, limits):
                          float(response.cost_usd) if response.cost_usd is not None else None,
                          agent_id=agent, model=response.reported_model,
                          response_id=getattr(response, 'response_id', None),
-                         report_sha256=hashlib.sha256(response.text.encode('utf-8')).hexdigest(),
+                         report_sha256=provider_response_sha256,
                          recipient=_stage_recipient(stage), runtime_stage=stage,
-                         request_sha256=request_sha256, instructions_sha256=digest)
+                         request_sha256=request_sha256, instructions_sha256=digest,
+                         provider_response_sha256=provider_response_sha256,
+                         validation_error='Model did not return the required structured report')
         raise ProviderError('Model did not return the required structured report') from None
     if not isinstance(data, dict) or set(data) != {'agent_id','mode','analysis','findings','human_visual_approval'} or data['agent_id'] != agent or data['human_visual_approval'] is not False or not isinstance(data['analysis'],str) or not isinstance(data['findings'],list):
+        if call_id:
+            store.settle(call_id, response.input_tokens, response.output_tokens,
+                         float(response.cost_usd) if response.cost_usd is not None else None,
+                         agent_id=agent, model=provider.model, response_id=getattr(response, 'response_id', None),
+                         report_sha256=provider_response_sha256, recipient=_stage_recipient(stage),
+                         runtime_stage=stage, request_sha256=request_sha256, instructions_sha256=digest,
+                         provider_response_sha256=provider_response_sha256,
+                         validation_error='Model report schema rejected')
         raise ProviderError('Model report schema rejected')
     if len(data['analysis']) > 12000 or len(data['findings']) > 50:
+        if call_id:
+            store.settle(call_id, response.input_tokens, response.output_tokens,
+                         float(response.cost_usd) if response.cost_usd is not None else None,
+                         agent_id=agent, model=provider.model, response_id=getattr(response, 'response_id', None),
+                         report_sha256=provider_response_sha256, recipient=_stage_recipient(stage),
+                         runtime_stage=stage, request_sha256=request_sha256, instructions_sha256=digest,
+                         provider_response_sha256=provider_response_sha256,
+                         validation_error='Model report exceeds structured limits')
         raise ProviderError('Model report exceeds structured limits')
     if strict_chain:
         if response.simulated or response.provider != mode or not response.reported_model or response.reported_model != response.model:
             if call_id:
                 store.settle(call_id, response.input_tokens, response.output_tokens,
                              float(response.cost_usd) if response.cost_usd is not None else None,
-                             agent_id=agent, model=response.reported_model,
-                             response_id=getattr(response, 'response_id', None), report_sha256=fingerprint(data),
+                             agent_id=agent, model=provider.model,
+                             response_id=getattr(response, 'response_id', None), report_sha256=provider_response_sha256,
                              recipient=_stage_recipient(stage), runtime_stage=stage,
-                             request_sha256=request_sha256, instructions_sha256=digest)
+                             request_sha256=request_sha256, instructions_sha256=digest,
+                             provider_response_sha256=provider_response_sha256,
+                             validation_error='Live model/provider identity could not be verified')
             raise ProviderError('Live model/provider identity could not be verified')
         try:
             _validate_chain_stage(root, task, payload, agent, stage, data)
