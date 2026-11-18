@@ -400,12 +400,13 @@ def make_provider(mode: str | None = None) -> TextProvider:
 
 def make_chain_provider() -> CodexProxyResponsesProvider:
     """Unpriced, manual C07/C08 audit using the existing loopback proxy."""
+    selected_model = os.getenv("AI_MODEL", "")
     if (os.getenv("VF_CHAIN_AUTHORIZATION") != "AUTHORIZE_FOUR_ASTRA_CALLS"
-            or os.getenv("AI_MODEL") != "gpt-6-astra"
+            or selected_model not in {"gpt-6.2-astra", "gpt-6-astra"}
             or os.getenv("GITHUB_RUN_ATTEMPT", "1") != "1"):
         raise ProviderBlockedError("A fresh explicitly authorized Astra audit is required")
     provider = CodexProxyResponsesProvider(
-        api_key=os.getenv("CODEX_PROXY_API_KEY", ""), model="gpt-6-astra",
+        api_key=os.getenv("CODEX_PROXY_API_KEY", ""), model=selected_model,
         input_price_per_million=None, output_price_per_million=None,
         base_url="http://127.0.0.1:18080")
     provider._assert_network_call_allowed()
