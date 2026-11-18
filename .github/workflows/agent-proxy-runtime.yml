@@ -14,6 +14,7 @@ on:
       - 'tests/test_astra_model_selection.py'
       - 'tests/test_agent_live_roundtrip.py'
       - 'tests/test_agent_live_evidence_gate.py'
+      - 'tests/test_agent_live_store_integration.py'
   workflow_dispatch:
     inputs:
       mode:
@@ -80,6 +81,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_astra_model_selection.py' -v
           python -m unittest discover -s tests -p 'test_agent_live_roundtrip.py' -v
           python -m unittest discover -s tests -p 'test_agent_live_evidence_gate.py' -v
+          python -m unittest discover -s tests -p 'test_agent_live_store_integration.py' -v
 
   manual-proxy-runtime:
     if: github.event_name == 'workflow_dispatch' && inputs.mode != 'reconcile_only'
