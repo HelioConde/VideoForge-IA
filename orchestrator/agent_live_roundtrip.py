@@ -16,7 +16,7 @@ from pathlib import Path
 from .agent_bus import ROLES, fingerprint
 from .all_roles_diagnostic import CONTRACT as DIAGNOSTIC_CONTRACT, FOCUS, SPECIALISTS, diagnostic
 from .providers import ProviderError
-from .runtime import MANIFEST, ROOT, instructions, model_step, report, source, write_report
+from .runtime import MANIFEST, ROOT, _stage_recipient, instructions, model_step, report, source, write_report
 from .runtime_store import BudgetBlocked, Conflict, Store
 
 CONTRACT = "all-12-text-roundtrip-v1"
@@ -48,6 +48,7 @@ def ensure_response(result: dict, role: str, *, real=True) -> dict:
     if (not isinstance(result, dict) or result.get("agent_id") != role
             or not isinstance(result.get("response"), dict)
             or result["response"].get("agent_id") != role
+            or result["response"].get("mode") != "codex_proxy"
             or result["response"].get("human_visual_approval") is not False
             or not isinstance(result["response"].get("findings"), list)):
         raise ProviderError("Agent response missing structured role provenance")
@@ -191,7 +192,8 @@ def validate_live_roundtrip_result(data: dict, expected_model: str) -> str:
                 or body.get("model") != expected_model
                 or body.get("runtime_stage") != stage
                 or event.get("sender") != role
-                or event.get("recipient") != body.get("recipient")):
+                or event.get("recipient") != body.get("recipient")
+                or event.get("recipient") != _stage_recipient(stage)):
             raise ValueError(f"Invocation {index+1} has inconsistent journal provenance")
         ensure_response({
             "agent_id": role, "provider": "codex_proxy", "model": expected_model,
@@ -227,8 +229,9 @@ def validate_live_roundtrip_result(data: dict, expected_model: str) -> str:
             or review.get("production_ready") is not False):
         raise ValueError("Independent QA verdict was not durably preserved")
     if qa_passed:
-        if task["status"] != "completed" or checkpoint.get("status") == "blocked":
-            raise ValueError("Passing text QA is missing its technical checkpoint")
+        if (task["status"] != "completed" or checkpoint.get("status") == "blocked"
+                or task.get("blocked_reason")):
+            raise ValueError("Passing text QA cannot carry an earlier provider failure")
     elif (task["status"] != "blocked"
           or task.get("blocked_reason") != "independent_review_rejected"
           or checkpoint.get("status") != "blocked"):
