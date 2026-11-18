@@ -11,7 +11,7 @@
   "official_episode_render": false,
   "youtube_upload": false,
   "auto_visual_approval": false,
-  "request_revision": 2,
-  "previous_run_id": 44210137396,
-  "retry_reason": "Pillow missing on prebuilt runner: installed dependency in new workflow; no image provider calls"
+  "request_revision": 3,
+  "previous_run_id": 44210385282,
+  "retry_reason": "legacy Remotion runner has no pip; changed PNG preflight to standard-library checksum and preapproved alignment metadata"
 }
