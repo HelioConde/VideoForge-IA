@@ -7,7 +7,7 @@ on:
     paths:
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PREVIA-CAMERA-C01-P04.json'
 permissions:
-  contents: write
+  contents: read
   packages: read
 concurrency:
   group: ep01-c01p04-static-camera-qa
@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-          persist-credentials: true
+          persist-credentials: false
           fetch-depth: 0
       - name: Conferir solicitação limitada a uma prévia não oficial
         shell: bash
@@ -87,20 +87,14 @@ jobs:
           ffmpeg -nostdin -hide_banner -loglevel error -y -ss 0.08 -i "$p/camera-preview.mp4" -frames:v 1 "$p/frame-inicio.jpg"
           ffmpeg -nostdin -hide_banner -loglevel error -y -ss 1.10 -i "$p/camera-preview.mp4" -frames:v 1 "$p/frame-meio.jpg"
           ffmpeg -nostdin -hide_banner -loglevel error -y -ss 2.18 -i "$p/camera-preview.mp4" -frames:v 1 "$p/frame-final.jpg"
-      - name: Gravar somente provas técnicas no canal
+      - name: Confirmar relatorio no pacote de artefatos (runner sem git)
         shell: bash
         run: |
           set -euo pipefail
-          ep=canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01
           p=output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/previews/c01-p04-camera-only-v1
-          cp "$p/preview.qa.json" "$ep/QA-C01-P04-CAMERA-SEM-MAOS-V1.json"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "$ep/QA-C01-P04-CAMERA-SEM-MAOS-V1.json"
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "qa(ep01): SHA/frames da prévia C01-P04 sem separar mãos"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          test -s "$p/preview.qa.json"
+          test -s "$p/camera-preview.mp4"
+          echo "PREVIEW_QA_ARTIFACT_READY; video only, no official render, no YouTube"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
