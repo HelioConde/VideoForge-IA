@@ -1,0 +1,52 @@
+{
+  "schema": "videoforge/ep01-production-resume-status/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "status": "image_mothers_archived_proceed_to_camera_and_animation_qas",
+  "source_of_truth_inventory": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CHECKPOINT-IMAGENS-EP01-AUTO.json",
+  "source_of_truth_approval": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/APROVACOES-VISUAIS-C01-V3.json",
+  "totals": {
+    "shots": 40,
+    "black_without_image": 1,
+    "visual_shots": 39,
+    "visual_shots_with_original_mother": 39,
+    "visual_shots_missing_mother": 0,
+    "individual_exact_sha_approved_mother_variants": 1
+  },
+  "source_registry": "canal/alchemy-lab/biblia-visual/REGISTRO-GERACOES.json",
+  "warning": "EP01-40-TOMADAS-PRODUCAO.json missing_image_assets is an old initial production queue, NOT the live inventory; do not regenerate these 37 assets.",
+  "approved_variant": {
+    "shot_id": "C01-P04",
+    "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+    "asset_id": "c01-p04-scene-mother-facing-throne-v3"
+  },
+  "forbidden": [
+    "separate_palm_hand_finger_parts",
+    "revisit_rejected_R3_or_W3_grip",
+    "count_generated_mothers_as_individually_approved",
+    "render_unapproved_official_episode",
+    "upload_to_youtube"
+  ],
+  "current_work": {
+    "shot": "C01-P04",
+    "task": "isolated_camera_only_preview_remotion_70_frames",
+    "workflow_run_id": 44210137396,
+    "source": "PLANO-PREVIA-CAMERA-C01-P04.json",
+    "effect": "subtle_zoom_out_without_character_rig",
+    "preview_human_review": "pending",
+    "no_new_images": true
+  },
+  "upcoming_after_preview": [
+    "inspect camera QA and source hash",
+    "review C01-P02 existing sword close-up/rig without redoing mother",
+    "review C01-P03 Kael expression and camera",
+    "proceed to next shot in official 40-shot EDL"
+  ],
+  "full_episode": {
+    "rigs_all_verified": false,
+    "motion_qa_complete": false,
+    "audio_ready_unverified": true,
+    "official_mp4_generated": false,
+    "youtube_uploaded": false
+  }
+}
