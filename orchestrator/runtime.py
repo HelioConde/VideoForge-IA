@@ -157,8 +157,14 @@ def independently_verify(root, task, report):
 def model_step(store, task, root, agent, payload, mode, limits):
     if mode == 'deterministic':
         return {'mode': 'deterministic_python', 'agent_id': agent, 'llm_executed': False}
-    provider = (make_chain_provider() if mode == 'codex_proxy' and limits.get('usd') is None
-                else make_provider(mode))
+    if (mode == 'codex_proxy' and limits.get('usd') is None
+            and task.get('scope') == 'all-12-text-roundtrip-v1'
+            and task.get('limit_calls') == 13):
+        from .providers import make_all_roles_unpriced_provider
+        provider = make_all_roles_unpriced_provider()
+    else:
+        provider = (make_chain_provider() if mode == 'codex_proxy' and limits.get('usd') is None
+                    else make_provider(mode))
     text, digest = instructions(root, agent)
     if task.get('instructions_shas', {}).get(agent) != digest:
         raise Conflict('Agent instructions changed after task creation')
