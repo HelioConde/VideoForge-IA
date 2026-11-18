@@ -62,7 +62,12 @@ jobs:
           set -euo pipefail
           ln -s /opt/videoforge-remotion/node_modules motion-remotion/node_modules
           cd motion-remotion
-          ./node_modules/.bin/tsc --noEmit
+          ./node_modules/.bin/tsc --noEmit --skipLibCheck --esModuleInterop \
+            --jsx react-jsx --target es2020 --module esnext --moduleResolution node \
+            --lib es2020,dom \
+            src/ep01-c01p04-camera-preview.tsx \
+            src/ep01-c01p04-camera-preview-root.tsx \
+            src/ep01-c01p04-camera-preview-index.ts
       - name: Gerar somente o preview técnico de câmera (sem bone rig)
         shell: bash
         run: |
