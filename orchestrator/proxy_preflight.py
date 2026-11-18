@@ -44,7 +44,11 @@ def probe(base_url: str, api_key: str, *, opener=None) -> dict:
     if not isinstance(api_key, str) or len(api_key) < 20 or "\r" in api_key or "\n" in api_key:
         raise PreflightError("CODEX_PROXY_API_KEY is not configured or is invalid")
     if opener is None:
-        opener = urllib.request.build_opener(NoRedirect())
+        # A runner can have HTTP_PROXY set; loopback must never be routed through it.
+        handlers = [NoRedirect()]
+        if kind == "local_loopback":
+            handlers.insert(0, urllib.request.ProxyHandler({}))
+        opener = urllib.request.build_opener(*handlers)
     common = {"Authorization": f"Bearer {api_key}", "Accept": "application/json"}
     results = {}
     for route in ("/health", "/v1/models"):
