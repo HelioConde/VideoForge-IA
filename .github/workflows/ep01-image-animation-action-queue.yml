@@ -16,6 +16,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/ep01-image-animation-action-queue.yml'
+      - 'scripts/ep01_action_production_queue.py'
   workflow_dispatch:
     inputs:
       mode:
