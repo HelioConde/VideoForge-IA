@@ -418,6 +418,26 @@ def make_all_roles_unpriced_provider() -> CodexProxyResponsesProvider:
     return provider
 
 
+
+def make_ep01_supervisor_unpriced_provider() -> CodexProxyResponsesProvider:
+    """One authorized, first-attempt, THREE-call read-only EP01 handoff.
+
+    Financial billing remains unknown. Every request reserves conservative
+    token units in the durable Store; this is not a perpetual agent daemon.
+    """
+    model = os.getenv("AI_MODEL", "")
+    if (os.getenv("VF_EP01_SUPERVISOR_AUTHORIZATION") != "AUTHORIZE_THREE_ASTRA_HANDOFF_CALLS"
+            or os.getenv("GITHUB_RUN_ATTEMPT", "0") != "1"
+            or model not in {"gpt-6.2-astra", "gpt-6-astra"}):
+        raise ProviderBlockedError("Authorized first-attempt three-call EP01 Astra handoff required")
+    provider = CodexProxyResponsesProvider(
+        api_key=os.getenv("CODEX_PROXY_API_KEY", ""), model=model,
+        input_price_per_million=None, output_price_per_million=None,
+        base_url="http://127.0.0.1:18080")
+    provider._assert_network_call_allowed()
+    return provider
+
+
 def make_chain_provider() -> CodexProxyResponsesProvider:
     """Unpriced, manual C07/C08 audit using the existing loopback proxy."""
     selected_model = os.getenv("AI_MODEL", "")

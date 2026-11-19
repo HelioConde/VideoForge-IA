@@ -1,0 +1,237 @@
+name: "Agents - real Astra EP01 supervision of six technical outputs (one shot)"
+
+# Owner's previously authorized continuation. EXACTLY THREE text-only calls:
+# 01 source-grounded assignments -> 12 independent QA -> 01 final decision.
+# Triggered once by uniquely named main merge; reruns and schedules FORBIDDEN.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/agent-ep01-astra-supervisor-once.yml'
+      - 'orchestrator/ep01_astra_supervisor.py'
+      - 'orchestrator/providers.py'
+      - 'orchestrator/runtime.py'
+      - 'tests/test_ep01_astra_supervisor.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/agent-ep01-astra-supervisor-once.yml'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  check-offline-only:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install local source QA dependencies without proxy/network inference
+        run: python -m pip install --quiet Pillow==11.3.0 imageio-ffmpeg==0.6.0
+      - name: Test source-repinned Astra supervisor and fail-closed JSON contracts
+        run: |
+          python -m unittest discover -s tests -p 'test_ep01_astra_supervisor.py' -v
+          python -m unittest discover -s tests -p 'test_agent_live_store_integration.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_specialist_dispatch.py' -v
+
+  run-authorized-real-supervision-once:
+    if: >-
+      github.event_name == 'push'
+      && github.repository == 'HelioConde/VideoForge-IA'
+      && github.ref == 'refs/heads/main'
+      && startsWith(github.event.head_commit.message, 'feat(agents): authorized single three-call Astra EP01 supervisor handoff')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    concurrency:
+      group: agent-codex-text-pilot-${{ github.repository }}
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      packages: read
+      issues: write
+    env:
+      CODEX_PROXY_API_KEY: ${{ secrets.CODEX_PROXY_API_KEY }}
+      CODEX_PROXY_ACCOUNTS_JSON: ${{ secrets.CODEX_PROXY_ACCOUNTS_JSON }}
+      CODEX_PROXY_BASE_URL: http://127.0.0.1:18080
+      VF_EP01_SUPERVISOR_AUTHORIZATION: AUTHORIZE_THREE_ASTRA_HANDOFF_CALLS
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - name: Enforce explicit three-call gate and single attempt
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_RUN_ATTEMPT:-0}" != "1" ]]; then
+            echo '::error::Never rerun an uncertain paid model operation.'
+            exit 2
+          fi
+          if [[ -z "$CODEX_PROXY_API_KEY" || -z "$CODEX_PROXY_ACCOUNTS_JSON" ]]; then
+            echo '::error::Existing authorized proxy secrets missing. Zero inference calls.'
+            exit 2
+          fi
+          echo 'Three Astra text calls maximum, 100000 conservative token units.'
+          echo 'Unknown USD pricing: no USD spending limit is claimed.'
+          echo 'Image generation, rig, final MP4 and YouTube remain forbidden.'
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore existing authenticated session without printing secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/vf-ep01-supervisor"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          try:
+              snapshot=json.loads(os.environ['CODEX_PROXY_ACCOUNTS_JSON'])
+              rows=snapshot.get('records') if isinstance(snapshot,dict) else None
+              if not isinstance(rows,list) or not rows or not all(
+                      isinstance(r,dict) and isinstance(r.get('token'),dict) for r in rows):
+                  raise ValueError('Invalid stored account session')
+              f=Path(os.environ['RUNNER_TEMP'])/'vf-ep01-supervisor'/'accounts.json'
+              f.write_text(json.dumps(snapshot,ensure_ascii=False),encoding='utf-8')
+              f.chmod(0o600)
+              print('Authenticated account session restored to private temp.')
+          except (KeyError,ValueError,TypeError):
+              raise SystemExit('Account session invalid. No model calls attempted.')
+          PY
+      - name: Boot existing prebuilt loopback proxy, read-only container
+        shell: bash
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+          docker pull ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1
+          docker run -d --name vf-ep01-supervisor-once --user "$(id -u):$(id -g)" \
+            --read-only --tmpfs /tmp:rw,nosuid,size=32m \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18080:8080 \
+            -e PROXY_API_KEY="$CODEX_PROXY_API_KEY" -e DATA_DIR=/app/data -e DEBUG_LOG_PAYLOADS=false \
+            -v "$RUNNER_TEMP/vf-ep01-supervisor:/app/data:rw" \
+            ghcr.io/helioconde/videoforge-codex-proxy:upstream-02f8ce3581c1 >/dev/null
+          for i in {1..30}; do
+            if curl --noproxy '*' -fsS --max-time 2 http://127.0.0.1:18080/health/live >/dev/null; then
+              echo 'Local proxy health ready; no inference yet.'
+              exit 0
+            fi
+            sleep 2
+          done
+          echo '::error::Local proxy health failed; no inference sent.'
+          exit 2
+      - name: Authenticate GET /v1/models and select Astra
+        run: |
+          set -euo pipefail
+          python -m orchestrator.proxy_preflight \
+            --output "$RUNNER_TEMP/ep01-supervisor-preflight.json" \
+            --prefer-model gpt-6.2-astra --fallback-model gpt-6-astra
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          p=json.loads((Path(os.environ['RUNNER_TEMP'])/'ep01-supervisor-preflight.json').read_text())
+          model=p.get('selected_model')
+          if (p.get('authenticated') is not True or p.get('inference_requests') != 0
+                  or model not in ('gpt-6.2-astra','gpt-6-astra')):
+              raise SystemExit('Authenticated model selector blocked inference.')
+          with open(os.environ['GITHUB_ENV'],'a',encoding='utf-8') as env:
+              print('AI_MODEL='+model,file=env)
+          print('Selected authenticated model:',model)
+          PY
+      - name: Execute 01 -> 12 -> 01 on six REAL specialist checkpoints
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          AI_ENABLED: 'true'
+          PAID_CALLS_ENABLED: 'true'
+          CODEX_PROXY_TEXT_AUTHORIZED: 'true'
+          IMAGE_GENERATION_ENABLED: 'false'
+          YOUTUBE_PUBLICATION_ENABLED: 'false'
+        run: |
+          set -euo pipefail
+          python -m orchestrator.ep01_astra_supervisor \
+            --db "$RUNNER_TEMP/supervisor-unused.sqlite" \
+            --output "$RUNNER_TEMP/ep01-astra-supervisor-real-report.json" \
+            --github-state --initialize-store
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          d=json.loads((Path(os.environ['RUNNER_TEMP'])/'ep01-astra-supervisor-real-report.json').read_text())
+          p=d['astra_tool_supervision']
+          assert p['actual_calls']==3 and p['call_limit']==3
+          assert p['conservative_token_limit']==100000
+          assert p['technical_sources_verified']==6
+          assert p['billing_cap_verified'] is False
+          assert p['image_generation_calls']==0 and p['media_production_calls']==0
+          assert p['visual_approval'] is False and p['rig_approval'] is False
+          assert d['safety']['youtube_publications']==0
+          print('REAL three-call source-bound supervisor journal verified.')
+          PY
+      - name: Post verified AI supervision receipt to agent activity issue
+        if: success()
+        uses: actions/github-script@v7
+        env:
+          REPORT_PATH: ${{ runner.temp }}/ep01-astra-supervisor-real-report.json
+        with:
+          script: |
+            const fs=require('fs');
+            const d=JSON.parse(fs.readFileSync(process.env.REPORT_PATH,'utf8'));
+            const p=d.astra_tool_supervision;
+            if(p.actual_calls!==3 || p.technical_sources_verified!==6 ||
+               p.visual_approval!==false || p.rig_approval!==false ||
+               p.youtube_publications!==0 || d.checkpoints.length!==1 ||
+               d.usage.map(x=>x.agent_id).join(',')!=='01,12,01')
+              throw new Error('Unsafe supervisor proof; refuse publication.');
+            const runUrl=`https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const review=d.checkpoints[0].review;
+            const decision=review.coordinator.response.findings[0];
+            const body=[
+              '## Astra real — supervisão técnica do EP01 (01 → 12 → 01)',
+              '',
+              `- **Origem:** [execução ${context.runId}](${runUrl})`,
+              `- **Modelo:** ${p.model || d.usage[0].model}`,
+              '- **3/3 chamadas reais** com IDs de resposta e comprovantes persistidos.',
+              '- **6 entregas técnicas** do EP01 reabertas e verificadas por SHA.',
+              `- **QA textual independente do agente 12:** ${review.technical_passed ? 'aprovou fidelidade da proposta' : 'solicitou correções'}.`,
+              `- **Decisão 01:** ${decision.status}.`,
+              '',
+              '**Limitações:** não houve visão direta de frames, novas imagens, rig, render de episódio final, publicação ou garantia de teto USD.',
+              '',
+              'As recomendações detalhadas estão no artifact JSON e no estado persistente; tarefas bloqueadas não foram aprovadas automaticamente.'
+            ].join('\n');
+            await github.rest.issues.createComment({
+              ...context.repo,issue_number:91,body
+            });
+      - name: Archive sanitized provider preflight and all accepted journals
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-astra-three-call-supervision-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/ep01-supervisor-preflight.json
+            ${{ runner.temp }}/ep01-astra-supervisor-real-report.json
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Shut down ephemeral proxy and erase account session
+        if: always()
+        run: |
+          docker rm -f vf-ep01-supervisor-once >/dev/null 2>&1 || true
+          rm -rf "$RUNNER_TEMP/vf-ep01-supervisor"

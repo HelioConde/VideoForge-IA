@@ -162,6 +162,11 @@ def model_step(store, task, root, agent, payload, mode, limits):
             and task.get('limit_calls') == 13):
         from .providers import make_all_roles_unpriced_provider
         provider = make_all_roles_unpriced_provider()
+    elif (mode == 'codex_proxy' and limits.get('usd') is None
+            and task.get('scope') == 'ep01-six-tool-astra-supervision-v1'
+            and task.get('limit_calls') == 3):
+        from .providers import make_ep01_supervisor_unpriced_provider
+        provider = make_ep01_supervisor_unpriced_provider()
     else:
         provider = (make_chain_provider() if mode == 'codex_proxy' and limits.get('usd') is None
                     else make_provider(mode))
@@ -257,6 +262,38 @@ def model_step(store, task, root, agent, payload, mode, limits):
                      'needs_human_review if QA passed, otherwise blocked. Do not '
                      'ever return completed. basis must be nonempty; next_steps '
                      'must be a nonempty string array. Never approve production.')
+    elif stage == 'ep01_tool_supervisor_assignment':
+        contract += (' You are director 01. Look at six VERIFIED earlier tool outputs, '
+                     'which are NOT six new Astra responses. Propose next steps '
+                     'without executing tools. Return exactly SIX findings in '
+                     'the order supplied by specialist_evidence. Each finding '
+                     'must use exactly role_id, evidence_sha256, next_action, '
+                     'blockers, production_ready. Copy role_id and evidence_sha256 '
+                     'exactly from specialist_evidence. next_action is an '
+                     'actionable Portuguese sentence, blockers a NONEMPTY array '
+                     'of concrete strings, production_ready MUST be false. '
+                     'Block any unapproved rig, hands, cart contact, image '
+                     'generation, final MP4 and YouTube. Do not claim visual '
+                     'inspection. Only source metadata and tool checkpoints exist.')
+    elif stage == 'ep01_tool_supervisor_independent_qa':
+        contract += (' You are agent 12 reviewing the six textual proposals '
+                     'against separately pinned specialist evidence. Return SIX '
+                     'findings, one per role, in the order of specialist_evidence. '
+                     'Each finding must have exactly role_id, evidence_sha256, '
+                     'decision, reason. Copy role_id and evidence_sha256. '
+                     'decision must be one of supported, correction_requested, '
+                     'insufficient_evidence. A finding is supported ONLY if '
+                     'the next_action and blockers do not assert visual/rig '
+                     'or final media approval. Provide a nonempty Portuguese '
+                     'reason. You have NOT inspected frames.')
+    elif stage == 'ep01_tool_supervisor_consolidation':
+        contract += (' You are director 01. Return exactly ONE finding with '
+                     'exactly status, basis, next_steps. Copy safe_status from '
+                     'the input: needs_human_review if all QA decisions are '
+                     'supported, otherwise blocked. basis must be nonempty, '
+                     'next_steps nonempty strings. This is a source-only '
+                     'handoff, NOT approval of visual art or publication. '
+                     'Never claim the episode is complete.')
     request = GenerationRequest(agent_id=agent, instructions=text+contract, input=encode(model_payload),
                                 input_token_limit=100_000, max_output_tokens=4500, timeout_seconds=120)
     request_sha256 = fingerprint({'agent_id': agent, 'instructions_sha256': digest,
@@ -383,7 +420,10 @@ def _stage_recipient(stage):
     return {'director_dispatch': '03', 'scene_continuity_analysis': '12',
             'independent_qa_review': '01', 'director_consolidation': '01',
             'roundtrip_assignment': '01', 'roundtrip_specialist': '12',
-            'roundtrip_independent_qa': '01', 'roundtrip_consolidation': '01'}.get(stage, '01')
+            'roundtrip_independent_qa': '01', 'roundtrip_consolidation': '01',
+            'ep01_tool_supervisor_assignment': '12',
+            'ep01_tool_supervisor_independent_qa': '01',
+            'ep01_tool_supervisor_consolidation': '01'}.get(stage, '01')
 
 
 CHAIN_FACETS = ('escape_direction', 'relative_positions', 'pursuer_positions', 'cart_continuity',
