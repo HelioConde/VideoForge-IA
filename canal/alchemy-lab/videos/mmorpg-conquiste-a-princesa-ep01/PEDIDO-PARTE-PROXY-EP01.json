@@ -3,13 +3,13 @@
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "shot_id": "C08-P02",
-  "part": "character-kael-v2",
+  "part": "object-carrinho-v2",
   "generation_method": "proxy_generated_separate_image",
   "parent_mother_asset": "c08-p02-scene-mother-continuity-v2",
   "parent_mother_sha256": "3c21b7d82d69b1445b45cb1a23582e556c910530b568c26ae0d48b4873c38721",
   "parent_generation_run_id": 44265114014,
-  "status": "requested_new_kael_only_v2_after_visual_rejection",
-  "reason": "Nova candidata versionada após avaliação visual da execução 44430373725: o PNG chamado character-kael continha personagem MAIS carroça inteira, o que é proibido para rig articulado. Refazer como IMAGEM NOVA apenas de Kael, usando SOMENTE a imagem-mãe C08-P02 V2 e a Bíblia Visual do próprio Kael (sem anexar a Bíblia do carrinho). Deixar TODO o carrinho, chassis, rodas, madeira, suportes e qualquer cenário com canal alfa zero. Desenhar o corpo inteiro e completar mãos/antebraços ocultos, com pose original de empurrar, mantendo identidade, armadura, capa vermelha, escala, iluminação e posição à ESQUERDA do enquadramento. Não recortar pixels da mãe e não centralizar o herói; manter grandes espaços transparentes onde o carrinho ocupava antes. A nova V2 NÃO substitui o arquivo V1 original; é candidata sujeita a detector de contaminação de carrinho, QA de alinhamento e aprovação visual independente.",
+  "status": "requested_new_cart_portrait_v2_after_landscape_rejection",
+  "reason": "Nova geração versionada após verificar que o carrinho V1 (#44429108576, 1512x1040) veio como apresentação de produto horizontal, não com as coordenadas da mãe vertical 1053x1493 C08-P02. Usar EXATAMENTE a imagem-mãe V2 como primeira referência e SOMENTE a imagem canônica da Bíblia Visual do carrinho como segunda. Criar um novo PNG RGBA em canvas vertical, preservar perspectiva e manter o carrinho no LADO DIREITO, parte inferior da cena, com enorme região transparente acima/à esquerda. Não recentralizar, mudar câmera, aumentar o carrinho, gerar horizontal, trazer Kael ou cenário, nem reutilizar recorte OpenCV. Rodas, estrutura, ouro, madeira e alças devem conservar identidade da mãe. Gerar partes ocultas coerentes. O carrinho V1 anterior permanece no arquivo histórico; saída V2 continua candidata dependente de QA de posicionamento, camadas, rig e revisão independente.",
   "allow_local_crop_or_segmentation_for_final_asset": false,
   "human_visual_approval": false,
   "rig_ready": false,
@@ -18,5 +18,5 @@
   "youtube_upload": false,
   "mp4_generated": false,
   "process": "one_new_independent_png_per_workflow",
-  "request_revision": 10
+  "request_revision": 11
 }
