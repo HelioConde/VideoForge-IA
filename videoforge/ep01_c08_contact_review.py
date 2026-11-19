@@ -96,7 +96,7 @@ def narrative_handoff(root:Path)->dict:
     if ([s["id"] for s in shots]!=list(EXPECTED_SHOT_IDS)
             or len(coverage["shots"])!=42 or len(indexed)!=42
             or not set(EXPECTED_SHOT_IDS).issubset(indexed)
-            or coverage["fps"]!=30
+            or any(indexed[sid].get("fps")!=30 for sid in EXPECTED_SHOT_IDS)
             or len(poses)!=240 or kinematics["frames_checked"]!=240
             or kinematics["continuous_cut"] is not True
             or kinematics["rig_with_real_assets_approved"] is not False):
