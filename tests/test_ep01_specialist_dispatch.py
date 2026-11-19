@@ -110,6 +110,39 @@ class SixSpecialistsTests(unittest.TestCase):
             d.pinned_file(d.ROOT,ref,expected="0"*64)
         self.assertEqual(d.pinned_file(d.ROOT,ref),original)
 
+    def test_six_verified_roles_appear_on_public_twelve_agent_dashboard(self):
+        from orchestrator import agent_activity, durable_dispatch, runtime
+        with tempfile.TemporaryDirectory(prefix="vf-old-four-") as tmp:
+            earlier=Store(Path(tmp)/"four.sqlite")
+            try:
+                old=durable_dispatch.run(earlier,max_tasks=4)
+            finally:
+                earlier.close()
+        queue=json.loads((runtime.ROOT/"orchestrator/tasks.json").read_text())
+        status=agent_activity.make_status(
+            old,queue,None,run_id=9999,now="2026-11-19T12:00:00+00:00",
+            specialists=self.first)
+        self.assertEqual(len(status["agents"]),12)
+        self.assertEqual(status["six_role_technical_execution"]["technical_completed"],6)
+        self.assertEqual(status["technical_dispatch"]["source_audits_completed"],4)
+        self.assertTrue(status["agents"][10]["technical_preview_created"])
+        self.assertFalse(status["mp4_final_ready"])
+        self.assertEqual(status["youtube_publications"],0)
+        self.assertTrue(all(status["agents"][int(role)-1]["checkpoint_sha256"]
+                            for role in d.RUN_SEQUENCE))
+        body=agent_activity.render_markdown(status)
+        self.assertIn("**6/6**",body)
+        self.assertIn("MP4 TECNICO",body)
+        self.assertIn("nao equivalem a novos pedidos Astra",body)
+        forged=deepcopy(self.first)
+        item=next(t for t in forged["tasks"] if t["owner"]=="11")
+        item["status"]="completed"
+        cp=next(c for c in forged["checkpoints"] if c["task_id"]==item["task_id"])
+        cp["review"]["technical_passed"]=False
+        with self.assertRaises(ValueError):
+            agent_activity.make_status(old,queue,None,run_id=9999,now="test",
+                                       specialists=forged)
+
     def test_run_only_claims_allowed_roles_and_stores_no_credentials(self):
         all_roles={x["owner"] for x in self.first["tasks"]}
         self.assertEqual(all_roles,set(d.RUN_SEQUENCE))
