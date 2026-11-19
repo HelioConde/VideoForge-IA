@@ -99,6 +99,20 @@ class SeparatePartsTests(unittest.TestCase):
         self.assertTrue(cart["transparent"])
         self.assertFalse(background["transparent"])
 
+    def test_c08_cart_uses_only_direct_canon_refs_no_unrelated_pursuers(self):
+        with patch.object(p,"existing_part",return_value=None),patch.object(p.proxy_images,"call_proxy") as charged:
+            spec=p.prepare("C08-P02","object-carrinho")
+            charged.assert_not_called()
+        self.assertEqual(len(spec["refs"]),2)
+        self.assertEqual([x["asset_id"] for x in spec["ref_proofs"]],
+                         ["biblia-carrinho-base-v1","biblia-kael-medieval-base-v1"])
+        self.assertEqual(len(spec["refs"])+1,3)
+        self.assertTrue(spec["transparent"])
+        self.assertEqual(spec["source_dimensions"],(1053,1493))
+        self.assertIn("SAME",spec["prompt"].upper())
+        self.assertIn("ONLY movable object 'carrinho'",spec["prompt"])
+        self.assertIn("NO pursuers",spec["prompt"])
+
     def test_c08_p02_mother_sha_drift_denies_before_any_provider_call(self):
         from copy import deepcopy
         from videoforge.ep01_continuity_motion import read as motion
