@@ -225,23 +225,31 @@ def render_markdown(data):
         f"**Atualizado:** {data['updated_utc']} UTC. "
         f"[GitHub Actions #{data['github_run_id']}]({link}).",
         "",
-        "**O que esta funcionando:** auditorias de fonte e seis executores "
-        "tecnicos do EP01 com checkpoints persistidos e QA independente. "
-        "**O que nao esta funcionando ainda:** delegacao continua via Astra, "
-        "rig de arte real, audio final e renderizacao do episodio completo.",
+        ("**O que esta funcionando:** auditorias de fonte e seis executores "
+         "tecnicos do EP01 com checkpoints persistidos e QA independente. "
+         if data.get("six_role_technical_execution",{}).get("technical_completed")==6
+         else "**O que esta funcionando:** auditorias de fontes com QA tecnico. "
+              "As seis tarefas tecnicas adicionais nao foram verificadas neste relatorio. ")
+        + "**O que nao esta funcionando ainda:** delegacao continua via Astra, "
+          "rig de arte real, audio final e renderizacao do episodio completo.",
         "",
-        f"- Astra real: **{data['historical_astra']['calls']}/13 respostas** "
-        f"na [execucao historica #{OLD_ASTRA_RUN}]"
-        f"(https://github.com/{REPO}/actions/runs/{OLD_ASTRA_RUN}); "
-        "**nao sao novas respostas deste ciclo**.",
+        (f"- Astra real: **{data['historical_astra']['calls']}/13 respostas** "
+         f"na [execucao historica #{OLD_ASTRA_RUN}]"
+         f"(https://github.com/{REPO}/actions/runs/{OLD_ASTRA_RUN}); "
+         "**nao sao novas respostas deste ciclo**."
+         if data['historical_astra']['validated'] else
+         "- Historico Astra nao validado neste relatorio; nao foi consultado ou "
+         "nao passou na prova de origem."),
         f"- Auditorias de fonte realmente executadas com QA independente: "
         f"**{data['technical_dispatch']['source_audits_completed']}/4**.",
         f"- Fila principal: {q}planning_only{q} e {q}dispatch_enabled=false{q}; "
         "o despachante tecnico limitado e separado.",
-        "- Modelo chamado neste ciclo: **0 vezes**. **Uma previa MP4 tecnica** "
-        "foi criada pelo Agente 11 quando seis execucoes foram verificadas; "
-        "nenhum MP4 final, animacao com rig aprovado ou publicacao. "
-        "Aprovacoes visuais automaticas: **0**.",
+        ("- Modelo chamado neste ciclo: **0 vezes**. "
+         + ("**Uma previa MP4 tecnica** foi criada pelo Agente 11; "
+            if data.get("six_role_technical_execution",{}).get("technical_preview_verified") else
+            "Nenhuma previa tecnica de video verificada neste relatorio; ")
+         + "nenhum MP4 final, animacao com rig aprovado ou publicacao. "
+           "Aprovacoes visuais automaticas: **0**."),
         "",
         f"- Especialistas 02, 05, 06, 08, 09 e 11: "
         f"**{data.get('six_role_technical_execution',{}).get('technical_completed',0)}/6** "
