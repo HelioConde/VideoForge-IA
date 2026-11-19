@@ -44,12 +44,13 @@ jobs:
           fn=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PARTE-PROXY-EP01.json')
           req=json.loads(fn.read_text(encoding='utf-8'))
           part=p.prepare(req['shot_id'],req['part'])
-          assert req['shot_id']=='C08-P02' and req['part']=='background-clean'
+          assert req['shot_id']=='C08-P02'
+          assert req['part'] in ('background-clean','character-kael','object-carrinho')
           assert req['generation_method']=='proxy_generated_separate_image'
           assert req['parent_mother_sha256']==part['mother_proof']['sha256']
           assert req['parent_mother_asset']==part['mother_proof']['asset_id']
           assert part['source_dimensions']==(1053,1493)
-          assert part['transparent'] is False
+          assert part['transparent'] is (req['part']!='background-clean')
           assert len(part['ref_proofs'])>=1
           assert req['max_chargeable_calls_per_run']==1
           assert req['allow_local_crop_or_segmentation_for_final_asset'] is False
