@@ -52,7 +52,7 @@ jobs:
         run: python -m videoforge.ep01_camera_batch render --shots "$SHOTS" --revision "$REVISION"
       - name: Verify idempotent resume uses validated outputs
         shell: bash
-        run: python -m videoforge.ep01_camera_batch render --shots "$SHOTS"
+        run: python -m videoforge.ep01_camera_batch render --shots "$SHOTS" --revision "$REVISION"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

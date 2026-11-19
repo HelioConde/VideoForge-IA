@@ -1,0 +1,44 @@
+name: EP01 - montagem parcial das previas verificadas
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/ep01_review_cut.py'
+      - 'tests/test_ep01_review_cut.py'
+      - '.github/workflows/ep01-review-cut.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: python -m pip install Pillow==11.3.0
+      - run: python -m unittest tests.test_ep01_review_cut -v
+  montage:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: python -m pip install Pillow==11.3.0
+      - run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y ffmpeg
+          fi
+      - run: python -m scripts.ep01_review_cut "$RUNNER_TEMP/review"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ep01-previa-parcial-camera-${{ github.run_id }}
+          path: ${{ runner.temp }}/review/
+          if-no-files-found: error
+          retention-days: 30
