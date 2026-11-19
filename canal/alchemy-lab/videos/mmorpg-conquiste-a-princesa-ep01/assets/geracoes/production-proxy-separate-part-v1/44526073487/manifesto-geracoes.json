@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-proxy-separate-part-v1",
+  "github_run_id": 44526073487,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c01-p05-object-espada-carrasco.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "a623dea389f0be99e1bbd370abe212d61b49cb940c154eeddd0405f673520937",
+      "bytes": 531572,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
