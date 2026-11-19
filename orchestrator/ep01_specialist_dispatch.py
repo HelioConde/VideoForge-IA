@@ -74,7 +74,8 @@ def seed(store: Store, *, root=ROOT) -> list[str]:
         # Version key changes only when source or specialist instructions change.
         ins={a:instructions(root,a)[1] for a in ("01",role,"12")}
         version=fingerprint({"contract":CONTRACT,"role":role,
-                             "references":input_refs,"instructions":ins})[:16]
+                             "references":input_refs,"instructions":ins,
+                             "dispatcher_code_sha256":sha(Path(__file__))})[:16]
         task={
             "task_id":f"EP01-REAL-TECH-AG{role}-{version}",
             "source_task_id":f"EP01-TECH-AG{role}",
@@ -364,8 +365,13 @@ def run(store: Store, output_dir: Path, *, root=ROOT) -> dict:
                       "status":row.get("status")})
     result=runtime_report(store,root=root)
     role_state={t["owner"]:t["status"] for t in result["tasks"]}
+    original_run_ids={}
+    for t in result["tasks"]:
+        if t["status"]=="completed":
+            original_run_ids[t["owner"]]=store.result(t["task_id"]).get("origin_run_id")
     result["specialist_dispatch"]={
         "contract":CONTRACT,"new_task_ids":created,"steps":steps,
+        "source_execution_run_ids":original_run_ids,
         "recovered":recovered,"safe_roles":list(RUN_SEQUENCE),
         "technical_completed":sum(t["status"]=="completed" for t in result["tasks"]),
         "completed_roles":sorted(r for r,s in role_state.items() if s=="completed"),
