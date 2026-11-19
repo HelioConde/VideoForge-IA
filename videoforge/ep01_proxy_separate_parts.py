@@ -130,6 +130,19 @@ def _reference_bible(shot_id: str, component: str, root:Path) -> tuple[list[byte
         1 if component=="background-clean" and any(z in row[1] for z in ("sala","quarto","floresta","palacio","cenari")) else 2,
         row[0]))
     selected=[x[1] for x in scored[:MAX_REFERENCE_PNGS_PER_REQUEST-1]]
+    if shot_id=="C08-P02":
+        # Keep the same mother V2 but send only subject-relevant references.
+        # The image proxy failed with HTTP 500 on the five-input Kael
+        # transparency request, so do not amplify unrelated image inputs.
+        priority={
+            "background-clean": ("biblia-beco-base-v1","biblia-carrinho-base-v1"),
+            "character-kael": ("biblia-kael-medieval-base-v1","biblia-carrinho-base-v1"),
+            "object-carrinho": ("biblia-carrinho-base-v1","biblia-kael-medieval-base-v1"),
+        }
+        if component in priority:
+            selected=[name for name in priority[component] if name in ids]
+            if len(selected)!=2:
+                raise VideoForgeError("EP01_C08_MISSING_REQUIRED_CANONICAL_REFERENCE")
     data=[]
     proofs=[]
     for ident in selected:
