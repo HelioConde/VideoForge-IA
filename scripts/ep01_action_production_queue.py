@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 import time
+import tempfile
 
 from orchestrator.github_state import GitHubState
 from videoforge import ep01_camera_batch as camera
@@ -357,6 +358,29 @@ def reconcile_rejected_archives(plan:dict,remote:QueueRemote,ledger:dict)->list[
     return changed
 
 
+def publish_active_child(task:dict, child_id:int) -> None:
+    """Display the reserved child on the dashboard; status publishing cannot replay a child."""
+    if os.environ.get("EP01_SHOW_ACTIVE_CHILD") != "true":
+        return
+    try:
+        dashboard=gh("api","repos/HelioConde/VideoForge-IA/issues/98",json_out=True)
+        body=dashboard["body"]
+        marker="<!-- videoforge-ep01-production-queue:v1 -->"
+        active_marker="<!-- ep01-active-child -->"
+        if dashboard["state"]!="open" or not body.startswith(marker):
+            return
+        lines=[line for line in body.splitlines() if not line.startswith(active_marker)]
+        lines.insert(2, f"{active_marker} **Em processamento:** Agente {task['owner']} · "
+                     f"{task['shot_id']} · {task.get('part') or task['kind']} · "
+                     f"[Action {child_id}](https://github.com/HelioConde/VideoForge-IA/actions/runs/{child_id})")
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/"panel.md"
+            path.write_text("\n".join(lines)+"\n",encoding="utf-8")
+            gh("issue","edit","98","--body-file",str(path))
+    except (subprocess.SubprocessError,OSError,ValueError,KeyError,TypeError):
+        print("EP01_DASHBOARD_UPDATE_UNAVAILABLE",flush=True)
+
+
 def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
     if (not os.getenv("GH_TOKEN") or not os.getenv("GITHUB_TOKEN")
             or os.getenv("GITHUB_REPOSITORY")!="HelioConde/VideoForge-IA"
@@ -426,6 +450,7 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
             attempts[key]["status"]="dispatched"
             attempts[key]["child_run_id"]=child_id
             remote.save(ledger)
+            publish_active_child(task,child_id)
             gh("run","watch",str(child_id),"--exit-status","--interval","15")
             proven=verify_child(task,child_id)
             attempts[key]["elapsed_seconds"]=int(time.monotonic()-started)

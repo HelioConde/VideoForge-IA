@@ -29,6 +29,19 @@ class GalleryTests(unittest.TestCase):
             receipt["sha256"] = "0"*64
             self.assertNotIn("data:image/png", gallery([task], {"one":receipt}, root))
 
+    def test_public_dashboard_replaces_previous_active_child(self):
+        body="<!-- videoforge-ep01-production-queue:v1 -->\n# EP01\n<!-- ep01-active-child -->old"
+        observed=[]
+        def fake_gh(*args, **kwargs):
+            if args[0]=="api":
+                return {"body":body,"state":"open"}
+            observed.append(Path(args[-1]).read_text(encoding="utf8"))
+        with patch.dict("os.environ", EP01_SHOW_ACTIVE_CHILD="true"), patch.object(q,"gh",side_effect=fake_gh):
+            q.publish_active_child({"owner":"05","shot_id":"C01-P05","part":"guard"},123)
+        self.assertEqual(observed[0].count("<!-- ep01-active-child -->"),1)
+        self.assertIn("Agente 05",observed[0])
+        self.assertIn("/actions/runs/123",observed[0])
+
     def test_success_cannot_credit_another_child_or_mother(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
