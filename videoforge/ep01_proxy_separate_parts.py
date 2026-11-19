@@ -45,6 +45,7 @@ def read_shot(shot_id: str, part_id: str, root: Path = ROOT) -> tuple[dict,dict]
     canonical_part=(
         "character-kael" if shot_id=="C08-P02" and part_id in {"character-kael-v2","character-kael-v3"}
         else "object-carrinho" if (shot_id,part_id)==("C08-P02","object-carrinho-v2")
+        else "object-coroa-aldric" if (shot_id,part_id)==("C02-P01","object-coroa-aldric-v2")
         else part_id)
     requests=[x for x in shot["images"]["proxy_generation_requests"]
               if x["id"]==canonical_part]
@@ -157,6 +158,12 @@ def _reference_bible(shot_id: str, component: str, root:Path) -> tuple[list[byte
             expected_ref_count=1 if component in ("character-kael-v2","character-kael-v3","object-carrinho-v2") else 2
             if len(selected)!=expected_ref_count:
                 raise VideoForgeError("EP01_C08_MISSING_REQUIRED_CANONICAL_REFERENCE")
+    if (shot_id,component)==("C02-P01","object-coroa-aldric-v2"):
+        # V2 uses only the direct king/crown identity reference. The failed
+        # V1 landscape sprite is never attached to a regeneration request.
+        selected=["biblia-aldric-tribunal-v1"]
+        if selected[0] not in ids:
+            raise VideoForgeError("EP01_CROWN_V2_MISSING_CANONICAL_REFERENCE")
     data=[]
     proofs=[]
     for ident in selected:
@@ -199,6 +206,11 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
         if (not rejected or rejected["sha256"] !=
                 "bf78eae46f5d6836a7834fff8714c6e3072f23e523d6fbe73ac8b9b5accb47ab"):
             raise VideoForgeError("EP01_CART_V2_PREDECESSOR_NOT_VERIFIED")
+    if (shot_id,part_id)==("C02-P01","object-coroa-aldric-v2"):
+        rejected=existing_part("C02-P01","object-coroa-aldric",root)
+        if not rejected or rejected["sha256"]!=(
+                "acf47957dfc7cc92a443b065cb348014a2132ab742bc0040391dc4bc76282b9f"):
+            raise VideoForgeError("EP01_CROWN_V2_REJECTED_PREDECESSOR_NOT_VERIFIED")
     enforce_source_qa(shot)
     mother,proof=mother_source(shot_id,root)
     refs,proofs=_reference_bible(shot_id,part_id,root)
@@ -357,12 +369,37 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
             "layer placed behind the character appears firmly grasped. No hanging fingers, detached hands, "
             "baked-in wood, wheels, background, guards or passers-by. Do not move the cart or alter Kael's "
             "stance to fake contact. Full drawing to original frame edges, native transparent canvas.")
+    if (shot_id,part_id)==("C02-P01","object-coroa-aldric-v2"):
+        instruction=(
+            "Create a fresh independent transparent RGBA crown asset for "
+            "Aldric using the first image as its exact portrait frame and the "
+            "second image only as the canonical crown/king identity reference. "
+            "This is version 2 after the rejected crown V1 was generated as a "
+            "1774x887 landscape. Do NOT attach, copy, resize, crop, or use the "
+            "rejected V1 pixels. The required native canvas is exactly "
+            "941x1672 portrait, matching the scene mother. Keep the crown at "
+            "the top of Aldric's head in the close frontal C02-P01 frame, at "
+            "the same small on-screen scale, perspective and x/y placement as "
+            "the crown visible on the mother; do not center or enlarge it. "
+            "Only the complete crown, including hidden band behind hair, may "
+            "be opaque; every other pixel is true alpha=0. No head, hair, "
+            "skin, beard, throne, background, extra crown, title, or fake "
+            "checkerboard. Preserve the gold filigree and red gems from the "
+            "canonical Aldric Bible. Candidate only; placement, composition, "
+            "visual identity, rig readiness and approval remain unverified."
+        )
     prompt=common+instruction
     if len(prompt)>5000:
         raise VideoForgeError("EP01_PROXY_PARTS_PROMPT_TOO_LONG")
+    versioned_predecessor=(
+        {"asset_id":"c02-p01-object-coroa-aldric",
+         "sha256":"acf47957dfc7cc92a443b065cb348014a2132ab742bc0040391dc4bc76282b9f",
+         "attached_to_generation_request":False}
+        if (shot_id,part_id)==("C02-P01","object-coroa-aldric-v2") else None)
     return {"shot_id":shot_id,"part_id":part_id,"role":typ,
             "mother":mother,"mother_proof":proof,
             "refs":refs,"ref_proofs":proofs,"prompt":prompt,
+            "versioned_from_rejected_predecessor":versioned_predecessor,
             "source_dimensions":(png_info(mother)["width"],png_info(mother)["height"]),
             "transparent":typ!="background"}
 
@@ -472,6 +509,8 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
         "mp4_generated":False,"youtube_uploaded":False,
         "model":model,"provider_image_calls":1
     }
+    if spec.get("versioned_from_rejected_predecessor"):
+        report["versioned_from_rejected_predecessor"] = spec["versioned_from_rejected_predecessor"]
     meta.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("EP01_PROXY_SEPARATE_PART",json.dumps({
         "asset_id":asset_id,"sha256":digest,"qa":qa,

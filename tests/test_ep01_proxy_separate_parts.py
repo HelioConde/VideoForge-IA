@@ -23,6 +23,70 @@ class SeparatePartsTests(unittest.TestCase):
                          "df5371baa402fb437e8671ffb6b11a21e640ec0ac5e589073d89850de1add65b")
         self.assertIn("x560-635",spec["prompt"])
         self.assertTrue(spec["transparent"])
+    def test_crown_v2_uses_portrait_mother_canonical_bible_and_exact_failed_v1_fence(self):
+        original=p.existing_part
+        def only_missing_crown_v2(shot_id,part_id,root=p.ROOT):
+            if (shot_id,part_id)==("C02-P01","object-coroa-aldric-v2"):
+                return None
+            return original(shot_id,part_id,root)
+        with patch.object(p,"existing_part",side_effect=only_missing_crown_v2):
+            with patch.object(p.proxy_images,"call_proxy") as charged:
+                spec=p.prepare("C02-P01","object-coroa-aldric-v2")
+                charged.assert_not_called()
+        self.assertEqual(spec["source_dimensions"],(941,1672))
+        self.assertEqual(spec["mother_proof"]["sha256"],
+                         "0d1f8367c76cdf0c9b63f10071406a567b5a5a10cf799e1aa6c5d814019fa2a0")
+        self.assertEqual([x["asset_id"] for x in spec["ref_proofs"]],
+                         ["biblia-aldric-tribunal-v1"])
+        self.assertIn("1774x887 landscape",spec["prompt"])
+        self.assertIn("941x1672 portrait",spec["prompt"])
+        self.assertIn("Do NOT attach, copy, resize, crop",spec["prompt"])
+        self.assertIn("every other pixel is true alpha=0",spec["prompt"])
+
+    def test_crown_v2_fails_closed_if_archived_v1_differs(self):
+        original=p.existing_part
+        def wrong_predecessor(shot_id,part_id,root=p.ROOT):
+            if (shot_id,part_id)==("C02-P01","object-coroa-aldric-v2"):
+                return None
+            if (shot_id,part_id)==("C02-P01","object-coroa-aldric"):
+                return {"sha256":"0"*64}
+            return original(shot_id,part_id,root)
+        with patch.object(p,"existing_part",side_effect=wrong_predecessor):
+            with patch.object(p.proxy_images,"call_proxy") as charged:
+                with self.assertRaisesRegex(VideoForgeError,
+                        "EP01_CROWN_V2_REJECTED_PREDECESSOR_NOT_VERIFIED"):
+                    p.prepare("C02-P01","object-coroa-aldric-v2")
+                charged.assert_not_called()
+
+    def test_crown_v2_replay_stops_when_its_own_version_is_archived(self):
+        original=p.existing_part
+        def v2_already_archived(shot_id,part_id,root=p.ROOT):
+            if (shot_id,part_id)==("C02-P01","object-coroa-aldric-v2"):
+                return {"sha256":"1"*64}
+            return original(shot_id,part_id,root)
+        with patch.object(p,"existing_part",side_effect=v2_already_archived):
+            with patch.object(p.proxy_images,"call_proxy") as charged:
+                with self.assertRaisesRegex(VideoForgeError,
+                        "EP01_PROXY_PARTS_ALREADY_ARCHIVED_NO_REPEAT"):
+                    p.prepare("C02-P01","object-coroa-aldric-v2")
+                charged.assert_not_called()
+
+    def test_guard_alignment_request_is_exact_no_ai_one_row_padding(self):
+        from videoforge import ep01_align_proxy_part as align
+        import json
+        from pathlib import Path
+        from videoforge.layered_shot_plan import REL
+        request=json.loads((p.ROOT/REL/"PEDIDO-ALINHAMENTO-PROXY-EP01.json").read_text(encoding="utf-8"))
+        self.assertEqual((request["shot_id"],request["part"]),
+                         ("C01-P05","character-guarda_direito"))
+        self.assertEqual(request["source_sha256"],
+                         "7091af3214d3c04dc174d55941f525ab543f055b024632315195b97b4af24afd")
+        self.assertTrue(request["no_provider_calls"])
+        self.assertFalse(request["allow_crop_or_resize"])
+        self.assertEqual(request["max_bottom_rows_to_add"],2)
+        spec=align.prepare("C01-P05","character-guarda_direito")
+        self.assertEqual(spec["padding"],1)
+        self.assertEqual(spec["expected_canvas"],(941,1672))
 
     def test_new_shot_background_has_sha_verified_mother_and_reference(self):
         # The real background may already be archived by subsequent runs.
