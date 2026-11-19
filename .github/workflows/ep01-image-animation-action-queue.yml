@@ -1,0 +1,237 @@
+name: "EP01 - fila automatica de imagens e animacoes por Actions"
+run-name: "EP01 fila de imagens e previas | ${{ github.event_name }}"
+
+# Small sequential batches; one image = one existing, isolated child Action.
+# Full articulated animations remain BLOCKED until real RGBA + rig QA.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ep01-image-animation-action-queue.yml'
+      - '.github/workflows/ep01-camera-batch-preview.yml'
+      - 'scripts/ep01_action_production_queue.py'
+      - 'tests/test_ep01_action_production_queue.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ep01-image-animation-action-queue.yml'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "plan = no child dispatch; run = bounded image/preview children"
+        type: choice
+        options: [plan, run]
+        required: true
+        default: run
+      max_images:
+        description: "Maximum PAID image-generation children for this batch (0-20)"
+        type: number
+        required: true
+        default: 2
+      max_previews:
+        description: "Maximum UNPAID camera-only review children for this batch (0-12)"
+        type: number
+        required: true
+        default: 2
+  schedule:
+    - cron: "37 5 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ep01-versioned-image-and-preview-queue-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate-queue-pr:
+    if: >-
+      github.event_name == 'pull_request'
+      && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Pillow for SHA-pinned original images
+        run: python -m pip install --quiet Pillow==11.3.0
+      - name: Verify all 42 shots, old image parts, no-replay and rig gates
+        run: |
+          python -m unittest discover -s tests -p 'test_ep01_action_production_queue.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
+      - name: Generate complete offline 42-shot image/animation work order
+        run: |
+          python -m scripts.ep01_action_production_queue --mode plan \
+            --output "$RUNNER_TEMP/ep01-production-queue-plan.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-production-queue-plan-PR-${{ github.run_id }}
+          path: ${{ runner.temp }}/ep01-production-queue-plan.json
+          if-no-files-found: ignore
+          retention-days: 14
+
+  run-action-queue:
+    if: >-
+      github.repository == 'HelioConde/VideoForge-IA'
+      && github.ref == 'refs/heads/main'
+      && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    permissions:
+      contents: write
+      actions: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      GITHUB_TOKEN: ${{ github.token }}
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+      MAX_IMAGES: ${{ inputs.max_images }}
+      MAX_PREVIEWS: ${{ inputs.max_previews }}
+      QUEUE_MODE: ${{ inputs.mode || 'run' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install source-only image validation tools
+        run: python -m pip install --quiet Pillow==11.3.0
+      - name: Validate actual queue and anti-replay state contracts before any paid work
+        run: |
+          python -m unittest discover -s tests -p 'test_ep01_action_production_queue.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
+          gh auth status
+      - name: Write a complete reusable queue plan FIRST (no provider calls)
+        run: |
+          set -euo pipefail
+          python -m scripts.ep01_action_production_queue --mode plan \
+            --output "$RUNNER_TEMP/ep01-production-queue-plan.json"
+      - name: Dispatch at most 2 image child Actions and 2 camera previews by default
+        if: env.QUEUE_MODE == 'run'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$MAX_IMAGES" ]]; then MAX_IMAGES=2; fi
+          if [[ -z "$MAX_PREVIEWS" ]]; then MAX_PREVIEWS=2; fi
+          python -m scripts.ep01_action_production_queue --mode run \
+            --max-images "$MAX_IMAGES" --max-previews "$MAX_PREVIEWS" \
+            --output "$RUNNER_TEMP/ep01-production-queue-execution.json"
+      - name: Update the public queue panel using actual children and state
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          PLAN_FILE: ${{ runner.temp }}/ep01-production-queue-plan.json
+          RUN_FILE: ${{ runner.temp }}/ep01-production-queue-execution.json
+        with:
+          script: |
+            const fs=require('fs');
+            if(!fs.existsSync(process.env.PLAN_FILE)){
+              core.warning('Queue planning itself failed. No progress may be claimed.');
+              return;
+            }
+            const input=JSON.parse(fs.readFileSync(process.env.PLAN_FILE,'utf8'));
+            const data=input.queue;
+            if(data.schema!=='videoforge/ep01-production-action-queue/v1' ||
+               data.shots!==42 || data.original_image_requests!==146 ||
+               data.total_tasks!==276 || data.per_child_paid_image_cap!==1 ||
+               data.youtube_publication!==false || data.rig_approval_automatic!==false)
+              throw new Error('Queue planner did not pass immutable EP01 source contract');
+            const count=(kind,status)=>data.tasks.filter(x=>x.kind===kind &&
+              (!status || x.status===status)).length;
+            const old=count('image');
+            const ready=count('image','ready_for_preflight');
+            const blocked=data.tasks.filter(x=>x.kind==='image' &&
+              x.status.startsWith('blocked')).length;
+            let ledger={schema_version:1,schema:'videoforge/ep01-production-action-queue-state/v1',attempts:{}};
+            try{
+              const {data:state}=await github.rest.repos.getContent({
+                ...context.repo,path:'runtime/ep01-production-action-queue-v1.json',
+                ref:'state/multi-agent-runtime'
+              });
+              const remote=JSON.parse(Buffer.from(state.content,'base64').toString('utf8'));
+              if(remote.schema!==ledger.schema || remote.schema_version!==1 ||
+                 typeof remote.attempts!=='object')
+                throw new Error('Queue remote state schema changed');
+              ledger=remote;
+            }catch(error){
+              if(error.status!==404)throw error;
+              core.warning('Queue CAS not initialized: no child is claimed completed.');
+            }
+            const attempts=Object.entries(ledger.attempts);
+            const completed=attempts.filter(([,x])=>
+              x.status==='archived'||x.status==='preview_complete');
+            const pending=attempts.filter(([,x])=>
+              !['archived','preview_complete','blocked_preflight'].includes(x.status));
+            let result=null;
+            if(fs.existsSync(process.env.RUN_FILE)){
+              result=JSON.parse(fs.readFileSync(process.env.RUN_FILE,'utf8')).execution;
+              if(result?.youtube_publications!==0||result?.human_visual_approval!==false)
+                throw new Error('Unexpected approval or publishing in execution');
+            }
+            const runUrl=`https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const rows=attempts.slice(-25).reverse().map(([id,item])=>{
+              const child=item.child_run_id
+                ?`[Action ${item.child_run_id}](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${item.child_run_id})`
+                :'sem run verificado';
+              return `| \`${id}\` | ${item.status} | ${child} |`;
+            });
+            const text=[
+              '<!-- videoforge-ep01-production-queue:v1 -->',
+              '# Fila de imagens e animacoes — EP01 (42 tomadas)',
+              '',
+              `**Ultima atualizacao:** [Action ${context.runId}](${runUrl}) — resultado: ${context.job || 'run'}.`,
+              '',
+              `- **Imagens-mae:** 42 slots, incluindo C01-P01 preto sem PNG; fontes reutilizadas por SHA.`,
+              `- **Pecas da fila original:** ${old} solicitacoes, ${ready} candidatas a preflight, ${blocked} com referencias bloqueadas.`,
+              `- **Correcoes C08 novas:** 4 bloqueadas ate prompts/fonte/QA oficiais (Kael V3, rodas, identidade C08-P03).`,
+              '- **Previas de camera:** 42 tarefas tecnicas; NAO sao rigs ou animacoes de personagens.',
+              '- **Animacoes articuladas:** 42 tarefas bloqueadas ate ter camadas RGBA autenticas e QA visual.',
+              `- **Execucoes-filhas com evidencia persistente:** ${completed.length}; reservas/falhas nao resolvidas: ${pending.length}.`,
+              `- **Ultimo lote:** ${result ? result.processed_images+' imagens e '+result.processed_camera_previews+' previas' : 'nenhum resultado de dispatch declarado'}.`,
+              '',
+              '**Regras:** cada imagem custa no maximo uma chamada no workflow filho; nunca reexecutar uma chamada com estado incerto. Nem imagem-mãe, figurino, pegada, rig ou episodio ficam aprovados por uma Action verde. Nao publica YouTube.',
+              '',
+              '## Historico de tarefas enviadas',
+              '',
+              '| Tarefa | Estado verificavel | Action filha |',
+              '|---|---|---|',
+              ...rows,
+              '',
+              `**Plano completo:** baixar o artifact [`ep01-production-queue-*`](${runUrl}) com as 276 tarefas, seus bloqueios e SHAs.`,
+              '',
+            ].join('\n');
+            const {data:issue}=await github.rest.issues.get({
+              ...context.repo,issue_number:98
+            });
+            if(issue.state!=='open' ||
+               !issue.body?.startsWith('<!-- videoforge-ep01-production-queue:v1 -->'))
+              throw new Error('Public queue issue was closed or replaced');
+            await github.rest.issues.update({
+              ...context.repo,issue_number:98,body:text
+            });
+            await core.summary.addRaw(text).write();
+      - name: Archive complete planned tasks and real child run results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-image-animation-action-queue-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/ep01-production-queue-plan.json
+            ${{ runner.temp }}/ep01-production-queue-execution.json
+          retention-days: 30
+          if-no-files-found: ignore

@@ -1,10 +1,19 @@
 name: VideoForge - EP01 camera batch experimental
+run-name: "EP01 camera preview ${{ inputs.shots }} / ${{ inputs.revision || 'legacy' }}"
 on:
   workflow_dispatch:
     inputs:
       shots:
         description: 'Shot IDs separated by commas, or all (technical camera only)'
         default: C01-P01,C01-P02,C01-P03,C01-P04
+        required: true
+      revision:
+        description: 'Exact editorial plan to preview; never a rig'
+        type: choice
+        options:
+          - legacy
+          - continuity-v2
+        default: legacy
         required: true
 permissions:
   contents: read
@@ -24,6 +33,7 @@ jobs:
     env:
       PYTHONPATH: ${{ github.workspace }}
       SHOTS: ${{ inputs.shots }}
+      REVISION: ${{ inputs.revision || 'legacy' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,7 +49,7 @@ jobs:
           ./node_modules/.bin/tsc --noEmit --skipLibCheck --esModuleInterop --jsx react-jsx --target es2020 --module esnext --moduleResolution node --lib es2020,dom src/ep01-camera-batch.tsx
       - name: Render selected shots and experimental montage, decode every frame
         shell: bash
-        run: python -m videoforge.ep01_camera_batch render --shots "$SHOTS"
+        run: python -m videoforge.ep01_camera_batch render --shots "$SHOTS" --revision "$REVISION"
       - name: Verify idempotent resume uses validated outputs
         shell: bash
         run: python -m videoforge.ep01_camera_batch render --shots "$SHOTS"
