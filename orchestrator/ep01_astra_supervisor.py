@@ -9,8 +9,11 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 from pathlib import Path
 import tempfile
+
+from videoforge.ep01_cart_kinematics import HOLD_FRAME_COUNT, HOLD_SHOT, SOURCE_FRAME_COUNT, TURN_SHOT
 
 from .agent_bus import fingerprint
 from .agent_live_roundtrip import ensure_response
@@ -147,16 +150,39 @@ def validate_qa(data:dict,evidence:dict) -> bool:
     return all(row["decision"]=="supported" for row in data["findings"])
 
 
+MOTION_TOTAL = SOURCE_FRAME_COUNT + HOLD_FRAME_COUNT
+FRAME_CLAIM = re.compile(
+    rf"\b(?:{MOTION_TOTAL}[\s-]+(?:quadros?|frames?|poses?|fotogramas?)|"
+    rf"(?:quadros?|frames?|poses?|fotogramas?)\s*[:=]\s*{MOTION_TOTAL})\b", re.I)
+SHOT_ID = re.compile(r"\b(C\d+)-(P\d+)(?:\s*/\s*(P\d+))?\b", re.I)
+
+
+def validate_motion_attribution(text: str) -> None:
+    """Require an explicit shot pair whenever the director cites the combined frame count."""
+    for sentence in re.split(r"[.!?;\n]+", text):
+        if not FRAME_CLAIM.search(sentence):
+            continue
+        shots = set()
+        for scene, first, second in SHOT_ID.findall(sentence.upper()):
+            shots.add(f"{scene}-{first}")
+            if second:
+                shots.add(f"{scene}-{second}")
+        if shots != {TURN_SHOT, HOLD_SHOT}:
+            raise ProviderError(f"The combined {MOTION_TOTAL}-frame evidence requires {TURN_SHOT} and {HOLD_SHOT}")
+
+
 def validate_consolidation(data:dict,approved:bool) -> None:
     rows=data.get("findings",[])
     expected="needs_human_review" if approved else "blocked"
-    if (len(rows)!=1 or not isinstance(rows[0],dict)
+    if (not isinstance(rows,list) or len(rows)!=1 or not isinstance(rows[0],dict)
             or set(rows[0])!={"status","basis","next_steps"}
             or rows[0]["status"]!=expected
             or not isinstance(rows[0]["basis"],str) or not rows[0]["basis"].strip()
             or not isinstance(rows[0]["next_steps"],list) or not rows[0]["next_steps"]
             or any(not isinstance(x,str) or not x.strip() for x in rows[0]["next_steps"])):
         raise ProviderError("Supervisor consolidation contradicts independent QA")
+    for text in (data.get("analysis", ""), rows[0]["basis"], *rows[0]["next_steps"]):
+        validate_motion_attribution(text)
 
 
 def step(store:Store,evidence:dict,*,root=ROOT,limits:dict):
@@ -210,6 +236,8 @@ def step(store:Store,evidence:dict,*,root=ROOT,limits:dict):
             final=model_step(store,task,root,"01",{
                 "runtime_stage":"ep01_tool_supervisor_consolidation",
                 "qa_findings":qa["response"]["findings"],
+                "combined_motion_evidence": {"total_frames": MOTION_TOTAL,
+                                             "frames_by_shot": {TURN_SHOT: SOURCE_FRAME_COUNT, HOLD_SHOT: HOLD_FRAME_COUNT}},
                 "safe_status":"needs_human_review" if passed else "blocked",
                 "await_human_approval":True,
             },"codex_proxy",limits)
