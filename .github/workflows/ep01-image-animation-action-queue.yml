@@ -69,7 +69,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
       - name: Generate complete offline 42-shot image/animation work order
         run: |
-          python scripts/ep01_action_production_queue.py --mode plan \
+          python -m scripts.ep01_action_production_queue --mode plan \
             --output "$RUNNER_TEMP/ep01-production-queue-plan.json"
       - uses: actions/upload-artifact@v4
         if: always()
@@ -119,7 +119,7 @@ jobs:
       - name: Write a complete reusable queue plan FIRST (no provider calls)
         run: |
           set -euo pipefail
-          python scripts/ep01_action_production_queue.py --mode plan \
+          python -m scripts.ep01_action_production_queue --mode plan \
             --output "$RUNNER_TEMP/ep01-production-queue-plan.json"
       - name: Dispatch at most 2 image child Actions and 2 camera previews by default
         if: env.QUEUE_MODE == 'run'
@@ -128,7 +128,7 @@ jobs:
           set -euo pipefail
           if [[ -z "$MAX_IMAGES" ]]; then MAX_IMAGES=2; fi
           if [[ -z "$MAX_PREVIEWS" ]]; then MAX_PREVIEWS=2; fi
-          python scripts/ep01_action_production_queue.py --mode run \
+          python -m scripts.ep01_action_production_queue --mode run \
             --max-images "$MAX_IMAGES" --max-previews "$MAX_PREVIEWS" \
             --output "$RUNNER_TEMP/ep01-production-queue-execution.json"
       - name: Update the public queue panel using actual children and state
