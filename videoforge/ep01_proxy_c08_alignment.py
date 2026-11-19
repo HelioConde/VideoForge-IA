@@ -66,9 +66,8 @@ def align(root: Path, output_dir: Path) -> dict:
         mode="RGBA" if "A" in img.getbands() else "RGB"
         native=img.convert(mode)
         aligned=native.crop((0,0,*OUTPUT_SIZE))
-        # Explicit pixel-exact content test: no scaling, re-drawing, or shifting.
-        if ImageChops.difference(aligned,native.crop((0,0,*OUTPUT_SIZE))).getbbox():
-            raise ValueError("Edge alignment modified more than the extra column")
+        # The serialized PNG is compared pixel-for-pixel with native provider
+        # pixels after saving below; no resizing, re-drawing or shifting.
         source_right=native.crop((OUTPUT_SIZE[0],0,PROVIDER_SIZE[0],PROVIDER_SIZE[1]))
         removed_pixels=PROVIDER_SIZE[1]
         if source_right.size!=(1,PROVIDER_SIZE[1]):
@@ -76,8 +75,11 @@ def align(root: Path, output_dir: Path) -> dict:
         target.mkdir(parents=True,exist_ok=True)
         result=target/(STEM+"-one-column-aligned-UNAPPROVED.png")
         aligned.save(result,optimize=True)
-        if Image.open(result).size!=OUTPUT_SIZE:
-            raise ValueError("Aligned image not mother-sized")
+        with Image.open(result) as saved:
+            saved.load()
+            if (saved.size!=OUTPUT_SIZE or
+                    ImageChops.difference(saved.convert(mode),native.crop((0,0,*OUTPUT_SIZE))).getbbox()):
+                raise ValueError("Serialized aligned image changed more than the extra column")
     qa={
       "schema":"videoforge/ep01-c08-candidate-alignment/v1",
       "shot_id":"C08-P02","part":"background-clean",
