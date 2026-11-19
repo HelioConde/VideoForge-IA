@@ -46,7 +46,7 @@ class AgentActivityTests(unittest.TestCase):
                          "sem execucao recente comprovada")
         body=agent_activity.render_markdown(data)
         self.assertIn("Agente",body)
-        self.assertIn("Astra real",body)
+        self.assertIn("Historico Astra nao validado",body)
         self.assertIn("**0/6**",body)
         self.assertIn("nenhum MP4 final",body)
         self.assertIn("8888",body)
