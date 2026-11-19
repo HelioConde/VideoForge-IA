@@ -139,8 +139,20 @@ def build(root:Path=ROOT) -> dict:
                     or not re.fullmatch(r"(background-clean|character-[a-z0-9_-]+|object-[a-z0-9_-]+)",name)):
                 raise ValueError("Unsafe or unsupported image request")
             previous=parts.existing_part(sid,name,root)
-            status="archived" if previous else "ready_for_preflight"
-            reason="SHA-verified independently generated part already archived" if previous else "source-bound one-image child workflow"
+            if previous:
+                metadata=load_json(root/Path(previous["file"]).with_suffix(".production.json"))
+                if (metadata.get("sha256")!=previous["sha256"]
+                        or metadata.get("source_mother_sha256") is None
+                        or metadata.get("human_visual_approval") is not False):
+                    raise ValueError("Unverified archived image source or approval state")
+                rejected=str(metadata.get("technical_qa","")).startswith("rejected_")
+                status="archived_rejected_needs_review" if rejected else "archived"
+                reason=("Existing provider image rejected by technical QA; "
+                        "never repeat payment automatically" if rejected else
+                        "SHA-verified independently generated candidate already archived")
+            else:
+                status="ready_for_preflight"
+                reason="source-bound one-image child workflow"
             if sid in SHOTS_BLOCKED_FROM_LEGACY_PARTS:
                 status="archived_version_check_needed" if previous else "blocked_reference_revision"
                 reason=(
@@ -202,7 +214,7 @@ class QueueRemote(GitHubState):
                     or not isinstance(value,dict)
                     or value.get("status") not in {
                         "reserved","dispatched","archived","preview_complete",
-                        "blocked_uncertain","blocked_failed","blocked_preflight"}
+                        "blocked_uncertain","blocked_failed","blocked_preflight","rejected_archived"}
                     or not isinstance(value.get("workflow"),str)):
                 raise ValueError("Invalid queue attempt state")
 
@@ -273,6 +285,58 @@ def verify_child(task:dict,run_id:int):
     raise ValueError("Unsupported production task kind")
 
 
+def reconcile_rejected_archives(plan:dict,remote:QueueRemote,ledger:dict)->list[str]:
+    """Repair only proven REJECTED archived results, without replaying a call.
+
+    Unlike a network-unknown reservation, a failed child with an archived PNG
+    and rejected technical QA is known to have billed/produced an image.
+    Mark it as terminal/rejected, not completed or retried. Refuse to
+    reconcile if the archival source SHA, run ID or actual child status differ.
+    """
+    changed=[]
+    items={task["task_id"]:task for task in plan["tasks"]}
+    for key,entry in ledger["attempts"].items():
+        if (entry.get("status")!="blocked_failed"
+                or entry.get("workflow")!=IMAGE_WORKFLOW):
+            continue
+        item=items.get(key)
+        child=entry.get("child_run_id")
+        if (not item or item["kind"]!="image" or type(child) is not int
+                or child<1 or entry.get("source_sha256")!=item["source_sha256"]):
+            continue
+        archived=parts.existing_part(item["shot_id"],item["part"])
+        if not archived:
+            continue
+        meta=load_json(ROOT/Path(archived["file"]).with_suffix(".production.json"))
+        if (meta.get("sha256")!=archived["sha256"]
+                or meta.get("source_mother_sha256")!=item["source_sha256"]
+                or meta.get("asset_id")!=item["shot_id"].lower()+"-"+item["part"]
+                or not str(meta.get("technical_qa","")).startswith("rejected_")
+                or meta.get("human_visual_approval") is not False
+                or meta.get("rig_ready") is not False
+                or meta.get("youtube_uploaded") is not False
+                or f"/{child}/" not in "/"+archived["file"]):
+            continue
+        repository=os.environ.get("GH_REPO","HelioConde/VideoForge-IA")
+        child_report=gh("api",f"repos/{repository}/actions/runs/{child}",json_out=True)
+        if (child_report.get("conclusion")!="failure"
+                or child_report.get("event")!="workflow_dispatch"
+                or child_report.get("head_branch")!="main"):
+            continue
+        entry.update({
+            "status":"rejected_archived",
+            "sha256":archived["sha256"],
+            "source_file":archived["file"],
+            "technical_qa":meta["technical_qa"],
+            "needs_human_visual_review":True,
+            "cannot_be_used_as_approved_rig":True,
+            "youtube_publication":False,
+        })
+        remote.save(ledger)
+        changed.append(key)
+    return changed
+
+
 def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
     if (not os.getenv("GH_TOKEN") or not os.getenv("GITHUB_TOKEN")
             or os.getenv("GITHUB_REPOSITORY")!="HelioConde/VideoForge-IA"
@@ -287,6 +351,10 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
     if ledger is None:
         ledger={"schema_version":1,"schema":STATE_SCHEMA,"attempts":{}}
     attempts=ledger["attempts"]
+    reconciled=reconcile_rejected_archives(plan,remote,ledger)
+    if reconciled:
+        print("EP01_REJECTED_SOURCE_ARCHIVED_NO_REBILL",
+              json.dumps(reconciled,ensure_ascii=False),flush=True)
     # Explicit freeze on any unresolved previous external side effect. Never
     # rerun an uncertain billed call just because the current job restarted.
     uncertain=[k for k,v in attempts.items() if v["status"] in
