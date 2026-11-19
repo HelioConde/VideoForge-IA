@@ -54,7 +54,10 @@ class ActionQueueTests(unittest.TestCase):
 
     def test_existing_generated_parts_reused_and_rejected_originals_never_generated(self):
         items=self.plan["tasks"]
-        self.assertTrue(any(x["kind"]=="image" and x["status"]=="archived"
+        # C01-P03 V1 generated PNGs exist, but their mother was rejected.
+        # They are not canonical: the queue MUST block reusing this version.
+        self.assertTrue(any(x["kind"]=="image" and
+                            x["status"]=="blocked_reference_revision"
                             for x in items if x["shot_id"]=="C01-P03"))
         for item in items:
             if item["kind"]!="image":
