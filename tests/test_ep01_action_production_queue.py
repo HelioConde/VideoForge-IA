@@ -206,6 +206,67 @@ class ActionQueueTests(unittest.TestCase):
         self.assertEqual(FakeRemote.shared["attempts"][images[0]["task_id"]]["status"],
                          "rejected_archived")
 
+    def test_proven_preflight_failure_is_terminal_block_without_provider_replay(self):
+        task=next(t for t in self.plan["tasks"]
+                  if t["kind"]=="image" and t["status"]=="ready_for_preflight")
+        key=task["task_id"]
+        record={"status":"blocked_failed","workflow":q.IMAGE_WORKFLOW,
+                "source_sha256":task["source_sha256"],"child_run_id":44535994724}
+        ledger={"schema_version":1,"schema":q.STATE_SCHEMA,
+                "attempts":{key:record}}
+        class Remote:
+            def save(self, data):
+                q.QueueRemote._validate_snapshot(data)
+        steps=[
+            {"name":"Validar 39 planos, PNG-mãe e componente sem pagar proxy",
+             "conclusion":"failure"},
+            {"name":"Gerar uma imagem NOVA pelo proxy sem recortar a mae",
+             "conclusion":"skipped"},
+        ]
+        def api(*args,**kwargs):
+            route=args[1]
+            if route.endswith("/jobs"):
+                return {"jobs":[{"name":"gerar-imagem-separada","steps":steps}]}
+            if route.endswith("/artifacts"):
+                return {"total_count":0,"artifacts":[]}
+            return {"conclusion":"failure","event":"workflow_dispatch",
+                    "head_branch":"main",
+                    "path":".github/workflows/"+q.IMAGE_WORKFLOW}
+        with patch.object(q.parts,"existing_part",return_value=None):
+            with patch.object(q,"gh",side_effect=api) as http:
+                changed=q.reconcile_failed_preflight(
+                    {"tasks":[task]},Remote(),ledger)
+        self.assertEqual(changed,[key])
+        self.assertEqual(record["status"],"blocked_preflight")
+        self.assertEqual(record["provider_calls_confirmed"],0)
+        self.assertFalse(record["retry_original_task"])
+        self.assertEqual(http.call_count,3)
+
+    def test_uncertain_failed_child_cannot_be_marked_preflight(self):
+        task=next(t for t in self.plan["tasks"]
+                  if t["kind"]=="image" and t["status"]=="ready_for_preflight")
+        entry={"status":"blocked_failed","workflow":q.IMAGE_WORKFLOW,
+               "source_sha256":task["source_sha256"],"child_run_id":44535994724}
+        ledger={"schema_version":1,"schema":q.STATE_SCHEMA,
+                "attempts":{task["task_id"]:entry}}
+        class Remote:
+            def save(self, data):
+                raise AssertionError("Uncertain failure must not be reconciled")
+        def api(*args,**kwargs):
+            route=args[1]
+            if route.endswith("/jobs"):
+                return {"jobs":[{"name":"gerar-imagem-separada","steps":[
+                    {"name":"Validar 39 planos, PNG-mãe e componente sem pagar proxy",
+                     "conclusion":"success"},
+                    {"name":"Gerar uma imagem NOVA pelo proxy sem recortar a mae",
+                     "conclusion":"failure"}]}]}
+            return {"conclusion":"failure","event":"workflow_dispatch",
+                    "head_branch":"main","path":".github/workflows/"+q.IMAGE_WORKFLOW}
+        with patch.object(q.parts,"existing_part",return_value=None),patch.object(q,"gh",side_effect=api):
+            self.assertEqual(q.reconcile_failed_preflight(
+                {"tasks":[task]},Remote(),ledger),[])
+        self.assertEqual(entry["status"],"blocked_failed")
+
     def test_fail_closed_policy_and_invalid_ref(self):
         with tempfile.TemporaryDirectory() as p:
             with self.assertRaises(Exception):

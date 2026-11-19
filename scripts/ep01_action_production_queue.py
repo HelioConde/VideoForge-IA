@@ -358,6 +358,52 @@ def reconcile_rejected_archives(plan:dict,remote:QueueRemote,ledger:dict)->list[
     return changed
 
 
+
+def reconcile_failed_preflight(plan:dict,remote:QueueRemote,ledger:dict)->list[str]:
+    """Fence verified child failures BEFORE proxy invocation, without replay.
+
+    A failed workflow run by itself is insufficient evidence. Require the
+    exact child, pinned task, a failed validation step, and a skipped provider
+    step; otherwise leave the hard stop in place.
+    """
+    changed=[]
+    by_id={task["task_id"]:task for task in plan["tasks"]}
+    repository=os.environ.get("GH_REPO","HelioConde/VideoForge-IA")
+    for key,entry in ledger["attempts"].items():
+        if entry.get("status")!="blocked_failed" or entry.get("workflow")!=IMAGE_WORKFLOW:
+            continue
+        task=by_id.get(key)
+        child=entry.get("child_run_id")
+        if (not task or task["kind"]!="image" or type(child) is not int or child<1
+                or entry.get("source_sha256")!=task["source_sha256"]):
+            continue
+        # No artifact or existing generated part may be present.
+        if parts.existing_part(task["shot_id"],task["part"]):
+            continue
+        run=gh("api",f"repos/{repository}/actions/runs/{child}",json_out=True)
+        if (run.get("conclusion")!="failure" or run.get("event")!="workflow_dispatch"
+                or run.get("head_branch")!="main"
+                or not str(run.get("path","")).endswith("/"+IMAGE_WORKFLOW)):
+            continue
+        jobs=gh("api",f"repos/{repository}/actions/runs/{child}/jobs",json_out=True).get("jobs",[])
+        if len(jobs)!=1 or jobs[0].get("name")!="gerar-imagem-separada":
+            continue
+        steps={step.get("name"):step.get("conclusion") for step in jobs[0].get("steps",[])}
+        if (steps.get("Validar 39 planos, PNG-mãe e componente sem pagar proxy")!="failure"
+                or steps.get("Gerar uma imagem NOVA pelo proxy sem recortar a mae")!="skipped"):
+            continue
+        artifact=gh("api",f"repos/{repository}/actions/runs/{child}/artifacts",json_out=True)
+        if artifact.get("total_count",0)!=0 or artifact.get("artifacts"):
+            continue
+        entry.update({"status":"blocked_preflight",
+                      "reason":"child_validation_failed_before_provider",
+                      "provider_step":"skipped","provider_calls_confirmed":0,
+                      "review_required":True,"retry_original_task":False})
+        remote.save(ledger)
+        changed.append(key)
+    return changed
+
+
 def publish_active_child(task:dict, child_id:int) -> None:
     """Display the reserved child on the dashboard; status publishing cannot replay a child."""
     if os.environ.get("EP01_SHOW_ACTIVE_CHILD") != "true":
@@ -399,6 +445,10 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
     if reconciled:
         print("EP01_REJECTED_SOURCE_ARCHIVED_NO_REBILL",
               json.dumps(reconciled,ensure_ascii=False),flush=True)
+    preflight_reconciled=reconcile_failed_preflight(plan,remote,ledger)
+    if preflight_reconciled:
+        print("EP01_PROVEN_PREFLIGHT_FAILURE_NO_PROVIDER_NO_REPLAY",
+              json.dumps(preflight_reconciled,ensure_ascii=False),flush=True)
     # Explicit freeze on any unresolved previous external side effect. Never
     # rerun an uncertain billed call just because the current job restarted.
     uncertain=[k for k,v in attempts.items() if v["status"] in
