@@ -1,0 +1,81 @@
+name: "EP01 C08-P02 - compose 3 real proxy images, no rig approval"
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ep01-c08-real-generated-composite.yml'
+      - 'videoforge/ep01_c08_proxy_composite.py'
+      - 'tests/test_ep01_c08_proxy_composite.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ep01-c08-real-generated-composite.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  real-independent-art-source-QA:
+    if: >-
+      github.repository == 'HelioConde/VideoForge-IA'
+      && (github.event_name != 'pull_request'
+          || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned image decoder for offline SHA and alignment QA
+        run: python -m pip install --quiet Pillow==11.3.0
+      - name: Verify 3 archived source PNG SHA hashes and no-loss placement
+        run: |
+          python -m unittest discover -s tests -p 'test_ep01_c08_proxy_composite.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
+      - name: Assemble actual separately generated mother-first image layers
+        run: |
+          set -euo pipefail
+          python -m videoforge.ep01_c08_proxy_composite \
+            --output-dir "$RUNNER_TEMP/ep01-c08-three-real-generated-layers"
+          python - <<'PY'
+          import json,os,hashlib
+          from pathlib import Path
+          from PIL import Image
+          folder=Path(os.environ['RUNNER_TEMP'])/'ep01-c08-three-real-generated-layers'
+          data=json.loads((folder/'composite-qa.json').read_text())
+          assert data['source_pngs_SHA_verified']==3
+          assert data['generation_method']=='proxy_generated_separate_image'
+          assert data['new_proxy_calls']==0 and data['new_image_generations']==0
+          assert data['image_scaling'] is False and data['image_warping'] is False
+          assert data['original_images_overwritten']==0
+          assert data['qa_cart_zone_opacity_kael']<=0.02
+          assert data['human_visual_approval'] is False
+          assert data['recomposition_approved_against_mother'] is False
+          assert data['kael_upper_hand_to_cart_contact_approved'] is False
+          assert data['cart_independent_wheel_layers_generated'] is False
+          assert data['rig_ready'] is False and data['final_mp4_ready'] is False
+          for role,source in data['native_source_QA'].items():
+              path=folder/source['aligned_artifact']
+              with Image.open(path) as im:
+                  assert im.size==(1053,1493)
+              assert hashlib.sha256(path.read_bytes()).hexdigest()==source['sha256_aligned']
+          assert (folder/data['composite_preview']).is_file()
+          print('Three REAL independent proxy images composed without resizing. Contact and rig approval remain blocked.')
+          PY
+      - name: Archive actual background, cart and Kael layers and composite preview
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-c08-three-real-proxy-generated-layers-${{ github.run_id }}
+          path: ${{ runner.temp }}/ep01-c08-three-real-generated-layers/
+          retention-days: 14
+          if-no-files-found: error
