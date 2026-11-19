@@ -69,7 +69,9 @@ class ActionQueueTests(unittest.TestCase):
         must=[t for t in items if t["kind"]=="image_correction"]
         self.assertTrue(any(t["part"]=="character-kael-v3" for t in must))
         self.assertTrue(all(t["status"]=="blocked_needs_shot_specific_prompt_and_art_qa"
-                            for t in must))
+                            for t in must if t["part"]!="character-kael-v3"))
+        kael=next(t for t in must if t["part"]=="character-kael-v3")
+        self.assertIn(kael["status"], {"ready_for_preflight","archived","archived_rejected_needs_review"})
 
     def test_all_42_actual_rig_animations_blocked_and_camera_previews_separate(self):
         tasks=self.plan["tasks"]

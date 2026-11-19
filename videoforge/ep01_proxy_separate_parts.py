@@ -43,7 +43,7 @@ def read_shot(shot_id: str, part_id: str, root: Path = ROOT) -> tuple[dict,dict]
     # V2 deliberately reuses the canon "character-kael" role, while the
     # versioned logical ID avoids rewriting or rebilling the archived V1.
     canonical_part=(
-        "character-kael" if (shot_id,part_id)==("C08-P02","character-kael-v2")
+        "character-kael" if shot_id=="C08-P02" and part_id in {"character-kael-v2","character-kael-v3"}
         else "object-carrinho" if (shot_id,part_id)==("C08-P02","object-carrinho-v2")
         else part_id)
     requests=[x for x in shot["images"]["proxy_generation_requests"]
@@ -148,12 +148,13 @@ def _reference_bible(shot_id: str, component: str, root:Path) -> tuple[list[byte
             # Do not include the separate cart Bible image in character V2:
             # V1 fused the cart and Kael into a single alpha object.
             "character-kael-v2": ("biblia-kael-medieval-base-v1",),
+            "character-kael-v3": ("biblia-kael-medieval-base-v1",),
             "object-carrinho": ("biblia-carrinho-base-v1","biblia-kael-medieval-base-v1"),
             "object-carrinho-v2": ("biblia-carrinho-base-v1",),
         }
         if component in priority:
             selected=[name for name in priority[component] if name in ids]
-            expected_ref_count=1 if component in ("character-kael-v2","object-carrinho-v2") else 2
+            expected_ref_count=1 if component in ("character-kael-v2","character-kael-v3","object-carrinho-v2") else 2
             if len(selected)!=expected_ref_count:
                 raise VideoForgeError("EP01_C08_MISSING_REQUIRED_CANONICAL_REFERENCE")
     data=[]
@@ -201,6 +202,17 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
     enforce_source_qa(shot)
     mother,proof=mother_source(shot_id,root)
     refs,proofs=_reference_bible(shot_id,part_id,root)
+    if (shot_id,part_id)==("C08-P02","character-kael-v3"):
+        from .ep01_c08_proxy_composite import RECORDS, MOTHER_SHA
+        if proof["sha256"] != MOTHER_SHA:
+            raise VideoForgeError("EP01_KAEL_V3_MOTHER_CHANGED")
+        for role, component in (("kael","character-kael-v2"), ("cart","object-carrinho-v2")):
+            item=existing_part(shot_id,component,root)
+            if not item or item["sha256"] != RECORDS[role]["sha256"]:
+                raise VideoForgeError("EP01_KAEL_V3_CONTACT_SOURCE_CHANGED")
+            if role=="cart":
+                refs.append((root/item["file"]).read_bytes())
+                proofs.append({"asset_id":item["asset_id"],"sha256":item["sha256"],"path":item["file"]})
     typ=request["role"]
     common=(
         "Use the ATTACHED first image as fixed visual reference of ONE cinematic "
@@ -333,6 +345,18 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
             "landscape object from the first proxy run. "
             "This new cart is a QA candidate, NOT a rig-ready production asset."
         )
+    if (shot_id,part_id)==("C08-P02","character-kael-v3"):
+        instruction=(
+            "Generate a new independent RGBA layer of Kael ONLY. Image 1 is the 1053x1493 mother: "
+            "keep its portrait framing, full torso, feet, scale and position. Image 2 specifies Kael's identity. "
+            "Image 3 is the actual cart layer, for hand placement only: align its upper left corner to the "
+            "mother. Leave all cart pixels TRANSPARENT in your output. Kael alone pushes from the left. "
+            "Draw both hands anatomically joined to his forearms. The upper hand must close firmly around "
+            "the gold corner fixture in the box x560-635 y615-713. The lower palm and curled fingers "
+            "grip the side rail within x555-650 y740-830. Preserve plausible finger occlusion so a cart "
+            "layer placed behind the character appears firmly grasped. No hanging fingers, detached hands, "
+            "baked-in wood, wheels, background, guards or passers-by. Do not move the cart or alter Kael's "
+            "stance to fake contact. Full drawing to original frame edges, native transparent canvas.")
     prompt=common+instruction
     if len(prompt)>5000:
         raise VideoForgeError("EP01_PROXY_PARTS_PROMPT_TOO_LONG")
@@ -414,7 +438,7 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
         else:
             qa="candidate_proxy_generated_separate_image"
         cart_alpha_fraction=(right_side_prop_coverage(im)
-                             if (shot_id,part_id)==("C08-P02","character-kael-v2")
+                             if shot_id=="C08-P02" and part_id in {"character-kael-v2","character-kael-v3"}
                              else None)
         if (cart_alpha_fraction is not None and cart_alpha_fraction>0.02
                 and not qa.startswith("rejected")):

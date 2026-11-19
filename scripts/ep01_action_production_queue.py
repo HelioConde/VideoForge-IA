@@ -41,7 +41,7 @@ SPECIAL_C08 = (
     ("C08-P02", "object-wheel-right-v1", "requires approved cart wheel geometry/transparent part prompt"),
     ("C08-P03", "object-carrinho-v2", "requires the SAME physical identity and 90-degree pose as C08-P02"),
 )
-CHILD = {"image": IMAGE_WORKFLOW, "camera_preview": PREVIEW_WORKFLOW}
+CHILD = {"image": IMAGE_WORKFLOW, "image_correction": IMAGE_WORKFLOW, "camera_preview": PREVIEW_WORKFLOW}
 
 
 def digest(path: Path) -> str:
@@ -103,7 +103,7 @@ def build(root:Path=ROOT) -> dict:
                       "part":part,"source_sha256":source_sha,
                       "status":status,"reason":why,"owner":agent,
                       "reviewer":"12","priority":priority,
-                      "paid_image_requests_per_child":1 if kind=="image" else 0,
+                      "paid_image_requests_per_child":1 if kind in ("image","image_correction") else 0,
                       "human_visual_approval":False,"rig_ready":False,
                       "youtube_publication":False})
     # Every image mother is already archived for this current 42-shot plan.
@@ -175,8 +175,16 @@ def build(root:Path=ROOT) -> dict:
     c08_sha=indexed["C08-P02"]["source"]["sha256"]
     c08p03_sha=indexed["C08-P03"]["source"]["sha256"]
     for sid,part,reason in SPECIAL_C08:
+        state="blocked_needs_shot_specific_prompt_and_art_qa"
+        if (sid,part)==("C08-P02","character-kael-v3"):
+            version=parts.existing_part(sid,part,root)
+            if version:
+                meta=load_json(root/Path(version["file"]).with_suffix(".production.json"))
+                state="archived_rejected_needs_review" if meta["technical_qa"].startswith("rejected") else "archived"
+            else:
+                state="ready_for_preflight"
         add("image_correction",sid,part,c08_sha if sid=="C08-P02" else c08p03_sha,
-            "blocked_needs_shot_specific_prompt_and_art_qa",reason,"05",1)
+            state,reason,"05",1)
     # Technical camera previews are ALLOWED, not character animation.
     for i,shot in enumerate(camera_plan["shots"]):
         sid=shot["id"]
@@ -241,7 +249,7 @@ def child_runs(workflow:str):
 def dispatch_child(task:dict)->int:
     workflow=CHILD[task["kind"]]
     before={int(row["databaseId"]) for row in child_runs(workflow)}
-    if task["kind"]=="image":
+    if task["kind"] in ("image","image_correction"):
         gh("workflow","run",workflow,"--ref","main",
            "-f","shot_id="+task["shot_id"],
            "-f","part="+task["part"])
@@ -269,7 +277,7 @@ def reload_main():
 
 
 def verify_child(task:dict,run_id:int):
-    if task["kind"]=="image":
+    if task["kind"] in ("image","image_correction"):
         reload_main()
         item=parts.existing_part(task["shot_id"],task["part"])
         if not item or not re.fullmatch(r"[a-f0-9]{64}",item["sha256"]):
@@ -279,7 +287,8 @@ def verify_child(task:dict,run_id:int):
         if (path.parent.name!=str(run_id) or digest(path)!=item["sha256"]
                 or metadata.get("source_mother_sha256")!=task["source_sha256"]
                 or metadata.get("technical_qa") not in {"candidate_proxy_generated_separate_image",
-                                                     "candidate_minor_edge_delta_requires_alignment_qa"}):
+                                                     "candidate_minor_edge_delta_requires_alignment_qa",
+                                                     "candidate_native_model_canvas_requires_placement_qa"}):
             raise ValueError("Archived candidate differs from child, pinned mother or expected technical QA")
         return {"status":"archived","technical_qa":metadata["technical_qa"],"sha256":item["sha256"],
                 "source_file":item["file"]}
@@ -312,7 +321,7 @@ def reconcile_rejected_archives(plan:dict,remote:QueueRemote,ledger:dict)->list[
             continue
         item=items.get(key)
         child=entry.get("child_run_id")
-        if (not item or item["kind"]!="image" or type(child) is not int
+        if (not item or item["kind"] not in ("image","image_correction") or type(child) is not int
                 or child<1 or entry.get("source_sha256")!=item["source_sha256"]):
             continue
         archived=parts.existing_part(item["shot_id"],item["part"])
@@ -375,7 +384,7 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
     results=[]
     counters={"image":0,"camera_preview":0}
     for task in sorted(plan["tasks"],key=lambda t:(t["priority"],t["task_id"])):
-        kind=task["kind"]
+        kind="image" if task["kind"]=="image_correction" else task["kind"]
         if kind not in CHILD or task["status"]!="ready_for_preflight":
             continue
         limit=max_images if kind=="image" else max_previews

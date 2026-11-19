@@ -8,6 +8,22 @@ from videoforge.errors import VideoForgeError
 
 
 class SeparatePartsTests(unittest.TestCase):
+    def test_contact_revision_pins_actual_cart_and_never_sends_previous_kael(self):
+        from unittest.mock import patch
+        from videoforge import ep01_proxy_separate_parts as engine
+        lookup=engine.existing_part
+        def existing(shot,part,root):
+            return None if part=="character-kael-v3" else lookup(shot,part,root)
+        with patch.object(engine,"existing_part",side_effect=existing):
+            spec=engine.prepare("C08-P02","character-kael-v3")
+        self.assertEqual(spec["source_dimensions"],(1053,1493))
+        self.assertEqual([p["asset_id"] for p in spec["ref_proofs"]],
+                         ["biblia-kael-medieval-base-v1","c08-p02-object-carrinho-v2"])
+        self.assertEqual(spec["ref_proofs"][-1]["sha256"],
+                         "df5371baa402fb437e8671ffb6b11a21e640ec0ac5e589073d89850de1add65b")
+        self.assertIn("x560-635",spec["prompt"])
+        self.assertTrue(spec["transparent"])
+
     def test_new_shot_background_has_sha_verified_mother_and_reference(self):
         # The real background may already be archived by subsequent runs.
         # These prompt/provenance tests never bypass the production no-repeat gate.
