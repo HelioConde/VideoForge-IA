@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**171 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**172 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -175,6 +175,7 @@
 | [c02-p02-character-kael.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44532308984/c02-p02-character-kael.png) / C02-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`66cae106b9da…\` | [#44532308984](https://github.com/HelioConde/VideoForge-IA/actions/runs/44532308984) |
 | [c02-p02-object-coroa-aldric.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44533371745/c02-p02-object-coroa-aldric.png) / C02-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`eca2a237be81…\` | [#44533371745](https://github.com/HelioConde/VideoForge-IA/actions/runs/44533371745) |
 | [c03-p01-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44533599036/c03-p01-background-clean.png) / C03-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`e8ee5d8f90d5…\` | [#44533599036](https://github.com/HelioConde/VideoForge-IA/actions/runs/44533599036) |
+| [c03-p01-character-kael.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44534583045/c03-p01-character-kael.png) / C03-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`90c1b94a62b8…\` | [#44534583045](https://github.com/HelioConde/VideoForge-IA/actions/runs/44534583045) |
 
 ## Regras de consulta
 
