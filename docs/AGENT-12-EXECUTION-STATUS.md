@@ -1,5 +1,18 @@
 # 12 agentes — execução comprovada e limites (18/11/2026)
 
+## Painel operacional verificavel (19/11/2026)
+
+O painel unico e publico dos 12 agentes esta na [issue #91](https://github.com/HelioConde/VideoForge-IA/issues/91), atualizado pelo workflow [agent-operational-status.yml](../.github/workflows/agent-operational-status.yml) a cada 6 horas, no merge do novo workflow e por acionamento manual.
+
+- A Action executa/retoma **quatro auditorias de fontes reais e deterministicas** dos especialistas 03, 04, 07 e 10, com revisor 12 e orquestrador tecnico 01. Cada entrega tem checksum, estado CAS persistente e relatorio no artifact. Nao envia modelos, nao gera midia e nao modifica imagens-mãe.
+- O painel verifica separadamente o historico de 13 respostas **reais** Astra dos 12 agentes no run #44414591676. O historico nao equivale a chamadas recentes.
+- Mostra **todos os 12 papeis**. Para os demais, registra expressamente ausencia de executor operacional comprovado; atribuicao na fila nao e trabalho executado.
+- A fila de producao principal **continua** `mode=planning_only`, `dispatch_enabled=false`, para nao desbloquear a geracao ou publicacao automaticamente. O dispatcher tecnico e separado, com allowlist e limites.
+- O painel da issue, o resumo da Action e os artifacts mostram links de execucao, estado de cada tarefa, aprovacao tecnica independente e bloqueios. Nenhum `success` do GitHub aprova por si so imagens, rigs, audio, MP4 ou YouTube.
+
+Este painel resolve **transparencia e execucao limitada de auditorias**, nao a autonomia completa dos 12 agentes de producao. A segunda etapa sera ligar executores especificos a suas tarefas com provas, revisao e limites.
+
+
 ## Camadas de funcionamento
 
 1. **Registro (12/12):** arquivos de instrução e IDs presentes.
