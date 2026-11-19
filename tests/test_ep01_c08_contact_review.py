@@ -97,16 +97,13 @@ class C08ContactReviewTests(unittest.TestCase):
     def test_only_source_alphas_not_anatomical_classification(self):
         k=Image.new("RGBA",q.source_comp.CANVAS,(0,0,0,0))
         c=Image.new("RGBA",q.source_comp.CANVAS,(0,0,0,0))
-        with ImageDraw.Draw(k) as draw:
-            draw.rectangle((565,620,572,637),fill=(100,100,100,255))
-        with ImageDraw.Draw(c) as draw:
-            draw.rectangle((578,620,585,637),fill=(100,100,100,255))
+        ImageDraw.Draw(k).rectangle((565,620,572,637),fill=(100,100,100,255))
+        ImageDraw.Draw(c).rectangle((578,620,585,637),fill=(100,100,100,255))
         row=q.mask_stats(k,c,q.ROIS["upper_hand"])
         self.assertEqual(row["opaque_intersection_px"],0)
         self.assertGreaterEqual(row["chebyshev_proximity_radius_px"],1)
         self.assertFalse(row["can_prove_correct_grip"])
-        with ImageDraw.Draw(c) as draw:
-            draw.rectangle((570,620,578,637),fill=(100,100,100,255))
+        ImageDraw.Draw(c).rectangle((570,620,578,637),fill=(100,100,100,255))
         row=q.mask_stats(k,c,q.ROIS["upper_hand"])
         self.assertGreater(row["opaque_intersection_px"],0)
         self.assertFalse(row["can_prove_correct_grip"])
