@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**155 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**156 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -159,6 +159,7 @@
 | [c08-p04-continuity-v2-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v2-mother/44265573380/c08-p04-continuity-v2-scene-mother.png) / C08-P04 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`3b4eb375bec3…\` | [#44265573380](https://github.com/HelioConde/VideoForge-IA/actions/runs/44265573380) |
 | [c08-p05-continuity-v2-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v2-mother/44265834974/c08-p05-continuity-v2-scene-mother.png) / C08-P05 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`151061b3bb69…\` | [#44265834974](https://github.com/HelioConde/VideoForge-IA/actions/runs/44265834974) |
 | [c08-p02-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44427271895/c08-p02-background-clean.png) / C08-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`d1c40c69b65d…\` | [#44427271895](https://github.com/HelioConde/VideoForge-IA/actions/runs/44427271895) |
+| [c08-p02-object-carrinho.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44429108576/c08-p02-object-carrinho.png) / C08-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`bf78eae46f5d…\` | [#44429108576](https://github.com/HelioConde/VideoForge-IA/actions/runs/44429108576) |
 
 ## Regras de consulta
 
