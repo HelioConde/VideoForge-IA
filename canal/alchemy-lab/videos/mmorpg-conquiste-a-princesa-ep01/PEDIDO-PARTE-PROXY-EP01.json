@@ -2,14 +2,14 @@
   "schema": "videoforge/ep01-separate-proxy-part-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C01-P03",
-  "part": "character-aldric",
+  "shot_id": "C08-P02",
+  "part": "background-clean",
   "generation_method": "proxy_generated_separate_image",
-  "parent_mother_asset": "c01-p03-scene-mother",
-  "parent_mother_sha256": "89bc3b1b214fe5286a196171c0dc498041cd29edcf622520ecc25c24b3805765",
-  "parent_generation_run_id": 44073592014,
+  "parent_mother_asset": "c08-p02-scene-mother-continuity-v2",
+  "parent_mother_sha256": "3c21b7d82d69b1445b45cb1a23582e556c910530b568c26ae0d48b4873c38721",
+  "parent_generation_run_id": 44265114014,
   "status": "requested_visual_candidate",
-  "reason": "Gerar nova imagem isolada do rei Aldric em PNG RGBA transparente, preservando exatamente figurino, barba, coroa, expressão, luz, ponto de vista e posicionamento da C01-P03 e da Bíblia; não redesenhar outra roupa nem misturar Kael, trono, espada ou cenário; material candidato para QA humano",
+  "reason": "Gerar pelo proxy UM NOVO cenário opaco e vazio, a partir da imagem-mãe de continuidade V2 C08-P02 e das referências canônicas SHA-256. Reconstruir rua, parede, pavimentação e fundo atrás de Kael e do carrinho, mantendo perspectiva, luz e posição do enquadramento original. Não desenhar personagens, carroça, rodas, guardas ou perseguidores. O PNG-mãe não pode ser modificado nem recortado para formar o asset final. A saída permanece candidata, exige QA de alinhamento e revisão visual.",
   "allow_local_crop_or_segmentation_for_final_asset": false,
   "human_visual_approval": false,
   "rig_ready": false,
@@ -18,5 +18,5 @@
   "youtube_upload": false,
   "mp4_generated": false,
   "process": "one_new_independent_png_per_workflow",
-  "request_revision": 5
+  "request_revision": 6
 }
