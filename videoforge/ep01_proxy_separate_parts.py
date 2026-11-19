@@ -400,13 +400,11 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
             qa="rejected_empty_transparent_asset"
         elif (im.width,im.height)!=spec["source_dimensions"]:
             source_w, source_h=spec["source_dimensions"]
-            if (shot_id in ("C08-P02","C08-P03","C07-P03")
-                    and abs(im.width-source_w)<=2
-                    and abs(im.height-source_h)<=2):
-                # We observed C08-P02 background from the real proxy as
-                # 1054x1493 versus the 1053x1493 mother. Archive all ORIGINAL
-                # provider pixels. A separate, SHA-backed edge alignment may
-                # make a candidate copy, but the raw never gets overwritten.
+            if (abs(im.width-source_w)<=2 and abs(im.height-source_h)<=2):
+                # Minor native output canvas differences also occur outside
+                # C07/C08: C01-P05 guard-right was 941x1671 vs mother 941x1672.
+                # Archive every original provider pixel and REQUIRE independent
+                # edge/alpha + visual QA. Never stretch/resize the source here.
                 qa="candidate_minor_edge_delta_requires_alignment_qa"
             elif (shot_id in ("C08-P02","C08-P03","C07-P03")
                     and (im.width,im.height)==(1024,1536)):
