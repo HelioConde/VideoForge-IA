@@ -250,6 +250,8 @@ def run(store:Store,evidence:dict,*,root=ROOT)->dict:
         "contract":CONTRACT,"task_id":task_id,"steps":steps,
         "technical_sources_verified":6,
         "technical_snapshot_sha256":evidence["source_snapshot_sha256"],
+        "role_source_evidence_sha256":{
+            r:row["evidence_sha256"] for r,row in evidence["specialist_evidence"].items()},
         "actual_calls":len(data["usage"]),"call_limit":N_CALLS,
         "conservative_token_limit":limits["tokens"],
         "billing_cap_verified":False,"billing_cap_usd":None,
@@ -280,13 +282,48 @@ def validate_real(data:dict,model:str)->str:
             or info.get("billing_cap_verified") is not False
             or data["safety"]["youtube_publications"]!=0):
         raise ValueError("Incomplete real Astra 01-12-01 supervisory checkpoint")
-    director=cp[0]["review"]["coordinator"]["response"]
-    qa=cp[0]["review"]["qa_response"]["response"]
-    passed=validate_qa(qa,{
-        "specialist_evidence":{
-            x["role_id"]:{"evidence_sha256":x["evidence_sha256"]}
-            for x in qa["findings"]}})
+    expected_stages=["ep01_tool_supervisor_assignment",
+                     "ep01_tool_supervisor_independent_qa",
+                     "ep01_tool_supervisor_consolidation"]
+    events=[e for e in data.get("events",[])
+            if e.get("type")=="progress_update"
+            and isinstance(e.get("content"),dict)
+            and isinstance(e["content"].get("call_id"),str)]
+    if len(events)!=N_CALLS or len({e["content"]["call_id"] for e in events})!=N_CALLS:
+        raise ValueError("Three individual Astra response journals are required")
+    for agent,stage,usage_row,event in zip(EXPECTED,expected_stages,usage,events):
+        detail=event["content"]
+        resp=detail.get("response")
+        if (usage_row.get("call_id")!=detail.get("call_id")
+                or usage_row.get("agent_id")!=agent
+                or event.get("sender")!=agent
+                or detail.get("runtime_stage")!=stage
+                or detail.get("model")!=model
+                or detail.get("validation_status")!="accepted"
+                or not detail.get("response_id")
+                or detail["response_id"]!=usage_row.get("response_id")
+                or not isinstance(resp,dict)
+                or set(resp)!={"agent_id","mode","analysis","findings","human_visual_approval"}
+                or resp["agent_id"]!=agent or resp["mode"]!="codex_proxy"
+                or resp["human_visual_approval"] is not False
+                or fingerprint(resp)!=usage_row.get("report_sha256")
+                or fingerprint(resp)!=detail.get("report_sha256")):
+            raise ValueError("Reported supervisor response is not a real accepted model journal")
+    hashes=info.get("role_source_evidence_sha256")
+    if (not isinstance(hashes,dict) or set(hashes)!=set(RUN_SEQUENCE)
+            or any(not isinstance(v,str) or len(v)!=64 for v in hashes.values())):
+        raise ValueError("Six specialist technical reference hashes missing")
+    evidence={"specialist_evidence":{
+        role:{"evidence_sha256":digest} for role,digest in hashes.items()}}
+    proposal=events[0]["content"]["response"]
+    qa=events[1]["content"]["response"]
+    director=events[2]["content"]["response"]
+    validate_proposals(proposal,evidence)
+    passed=validate_qa(qa,evidence)
     validate_consolidation(director,passed)
+    if (cp[0]["review"]["qa_response"]["response"]!=qa
+            or cp[0]["review"]["coordinator"]["response"]!=director):
+        raise ValueError("Independent QA checkpoint differs from real model journals")
     if cp[0]["review"]["technical_passed"] is not passed:
         raise ValueError("QA decision has changed")
     expected="needs_human_review" if passed else "blocked"
