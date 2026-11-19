@@ -39,7 +39,13 @@ def read_shot(shot_id: str, part_id: str, root: Path = ROOT) -> tuple[dict,dict]
     shot=next((x for x in plan["shots"] if x["id"]==shot_id),None)
     if not shot:
         raise VideoForgeError("EP01_PROXY_PARTS_SHOT_NOT_FOUND")
-    requests=[x for x in shot["images"]["proxy_generation_requests"] if x["id"]==part_id]
+    # The first generated C08-P02 Kael candidate contains the whole cart.
+    # V2 deliberately reuses the canon "character-kael" role, while the
+    # versioned logical ID avoids rewriting or rebilling the archived V1.
+    canonical_part = ("character-kael" if (shot_id, part_id)==
+                      ("C08-P02","character-kael-v2") else part_id)
+    requests=[x for x in shot["images"]["proxy_generation_requests"]
+              if x["id"]==canonical_part]
     if len(requests)!=1 or requests[0].get("method")!="proxy_generated_separate_image":
         raise VideoForgeError("EP01_PROXY_PARTS_NOT_IN_SHOT_PLAN")
     return shot,requests[0]
@@ -137,11 +143,15 @@ def _reference_bible(shot_id: str, component: str, root:Path) -> tuple[list[byte
         priority={
             "background-clean": ("biblia-beco-base-v1","biblia-carrinho-base-v1"),
             "character-kael": ("biblia-kael-medieval-base-v1","biblia-carrinho-base-v1"),
+            # Do not include the separate cart Bible image in character V2:
+            # V1 fused the cart and Kael into a single alpha object.
+            "character-kael-v2": ("biblia-kael-medieval-base-v1",),
             "object-carrinho": ("biblia-carrinho-base-v1","biblia-kael-medieval-base-v1"),
         }
         if component in priority:
             selected=[name for name in priority[component] if name in ids]
-            if len(selected)!=2:
+            expected_ref_count=1 if component=="character-kael-v2" else 2
+            if len(selected)!=expected_ref_count:
                 raise VideoForgeError("EP01_C08_MISSING_REQUIRED_CANONICAL_REFERENCE")
     data=[]
     proofs=[]
@@ -175,6 +185,11 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
         raise VideoForgeError("EP01_PROXY_PARTS_C01_P02_MOTHER_NOT_CANONICAL")
     if existing_part(shot_id,part_id,root):
         raise VideoForgeError("EP01_PROXY_PARTS_ALREADY_ARCHIVED_NO_REPEAT")
+    if (shot_id,part_id)==("C08-P02","character-kael-v2"):
+        rejected=existing_part("C08-P02","character-kael",root)
+        if not rejected or rejected["sha256"]!=(
+                "2579d5786f89957ea776c8c17b76371027fffd2ce43a4e3fba6505201db029d1"):
+            raise VideoForgeError("EP01_KAEL_V2_REJECTED_PREDECESSOR_NOT_VERIFIED")
     enforce_source_qa(shot)
     mother,proof=mother_source(shot_id,root)
     refs,proofs=_reference_bible(shot_id,part_id,root)
@@ -251,6 +266,37 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
             "or character skin baked in. Sword/bainha: respect physical "
             "alignment and actual scabbard opening; spears: wooden SHAFT BASE "
             "is where the guard grips, never the tip or floating shaft.")
+    if (shot_id,part_id)==("C08-P02","character-kael-v2"):
+        # The first version visibly incorporated the CART itself.
+        # Remove any cart reference from the image inputs and require a
+        # character-only redraw, with hands completed where cart occluded them.
+        instruction=(
+            "Draw ONLY the single person KAEL from the mother frame, as an "
+            "INDEPENDENT character sprite with authentic transparent RGBA "
+            "outside the person. NOT a crop of the mother image. "
+            "IMPORTANT ERROR TO CORRECT: the previous character candidate "
+            "included the ENTIRE wooden cart, wheels, handles, and planks. "
+            "THIS OUTPUT MUST CONTAIN ZERO CART PIXELS. "
+            "NO wheels, no wooden vehicle, no gold-rimmed cart corners, "
+            "NO wooden box, handles, axle, floor, alley, or shadow cutout. "
+            "The FULL RIGHT-HAND SIDE from 72 percent of the image width to "
+            "the far right, across the lower middle, MUST remain transparent. "
+            "Generate ONLY Kael's body, hair, face, red cape, leather armour, "
+            "boots, forearms, fingers and both hands as fully drawn anatomy. "
+            "The hands may extend toward the right where the cart was, "
+            "but no cart or wooden handle may be rendered. "
+            "Keep his actual original size and frame location on the LEFT, "
+            "leaning forward from his original pushing pose, both feet "
+            "grounded. Fill in the previously occluded limb contours. "
+            "Preserve original identity, anatomy, lighting, costume, colours "
+            "and perspective. DO NOT enlarge or center Kael. "
+            "The first image is the scene-mother as a positional reference "
+            "and the second is ONLY the canonical KAEL identity reference. "
+            "The final pixels must be freshly generated, and the background "
+            "fully alpha=0, not black opaque or a fake checkerboard. "
+            "If you cannot eliminate the cart, do not replace the body "
+            "with a new pose: visual QA will reject the result."
+        )
     prompt=common+instruction
     if len(prompt)>5000:
         raise VideoForgeError("EP01_PROXY_PARTS_PROMPT_TOO_LONG")
@@ -259,6 +305,23 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
             "refs":refs,"ref_proofs":proofs,"prompt":prompt,
             "source_dimensions":(png_info(mother)["width"],png_info(mother)["height"]),
             "transparent":typ!="background"}
+
+
+def right_side_prop_coverage(image) -> float:
+    """QA-only high-alpha share in a C08 Kael zone reserved for the cart.
+
+    This is not a segmentation algorithm and must never produce rig sprites.
+    The person remains on the left side of the approved shot. The original
+    V1 Kael output erroneously occupied this whole right-hand cart region.
+    """
+    if "A" not in image.getbands():
+        return 1.0
+    from PIL import ImageStat
+    w,h=image.size
+    region=image.getchannel("A").crop(
+        (int(w*.72),int(h*.42),w,int(h*.90)))
+    binary=region.point(lambda x: 255 if x>=128 else 0)
+    return round(ImageStat.Stat(binary).mean[0]/255,6)
 
 
 def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image-2")->dict:
@@ -316,6 +379,12 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
                 qa="rejected_canvas_mismatch_no_pixel_resizing"
         else:
             qa="candidate_proxy_generated_separate_image"
+        cart_alpha_fraction=(right_side_prop_coverage(im)
+                             if (shot_id,part_id)==("C08-P02","character-kael-v2")
+                             else None)
+        if (cart_alpha_fraction is not None and cart_alpha_fraction>0.02
+                and not qa.startswith("rejected")):
+            qa="rejected_character_contains_cart_or_wrong_canvas_placement"
         dims=(im.width,im.height)
     base.mkdir(parents=True,exist_ok=True)
     image.write_bytes(raw)
@@ -336,7 +405,10 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
         "coordinate_alignment_required": dims != spec["source_dimensions"],
         "source_visual_approval":False,
         "transparent_alpha_required":spec["transparent"],
-        "technical_qa":qa,"placement_verified":False,
+        "technical_qa":qa,
+        "qa_only_cart_zone_high_alpha_fraction":cart_alpha_fraction,
+        "qa_only_cart_zone_maximum_for_character_v2":0.02 if cart_alpha_fraction is not None else None,
+        "placement_verified":False,
         "visual_recomposition_approved":False,
         "human_visual_approval":False,"rig_ready":False,
         "mp4_generated":False,"youtube_uploaded":False,
