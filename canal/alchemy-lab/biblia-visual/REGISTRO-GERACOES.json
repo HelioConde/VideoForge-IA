@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 169,
+  "total_arquivadas": 170,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -6131,6 +6131,44 @@
       "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44532308984/c02-p02-character-kael.png",
       "sha256": "66cae106b9dac7f839acaf9ce62c795f7a50b76e73fc48d949f0e7171f87b9c0",
       "bytes": 2424379,
+      "width": 941,
+      "height": 1671,
+      "referencias_usadas": [
+        {
+          "id": null,
+          "sha256": "a963b04237e6fdd0ff82474e792e15b3cc6bf6a4337e218d595f067593b78bf3",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44084059723/c02-p02-scene-mother.png"
+        },
+        {
+          "id": null,
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+        },
+        {
+          "id": null,
+          "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44002126578/biblia-sala-do-trono-vazio-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "candidate_minor_edge_delta_requires_alignment_qa",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-proxy-separate-part-v1:44533371745:c02-p02-object-coroa-aldric.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c02-p02-object-coroa-aldric",
+      "shot": "C02-P02",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-proxy-separate-part-v1",
+      "github_run_id": 44533371745,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44533371745/c02-p02-object-coroa-aldric.png",
+      "sha256": "eca2a237be81ba3da0be667ab6088ff51d53c6b9d740332c7677499a4b5ebd5b",
+      "bytes": 841538,
       "width": 941,
       "height": 1671,
       "referencias_usadas": [

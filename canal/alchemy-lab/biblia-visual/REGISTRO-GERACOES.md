@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**169 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**170 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -173,6 +173,7 @@
 | [c02-p01-object-coroa-aldric.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44530692682/c02-p01-object-coroa-aldric.png) / C02-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`acf47957dfc7…\` | [#44530692682](https://github.com/HelioConde/VideoForge-IA/actions/runs/44530692682) |
 | [c02-p02-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44532096853/c02-p02-background-clean.png) / C02-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`fd9e6ebd7d67…\` | [#44532096853](https://github.com/HelioConde/VideoForge-IA/actions/runs/44532096853) |
 | [c02-p02-character-kael.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44532308984/c02-p02-character-kael.png) / C02-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`66cae106b9da…\` | [#44532308984](https://github.com/HelioConde/VideoForge-IA/actions/runs/44532308984) |
+| [c02-p02-object-coroa-aldric.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44533371745/c02-p02-object-coroa-aldric.png) / C02-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`eca2a237be81…\` | [#44533371745](https://github.com/HelioConde/VideoForge-IA/actions/runs/44533371745) |
 
 ## Regras de consulta
 
