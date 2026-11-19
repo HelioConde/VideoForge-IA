@@ -128,9 +128,15 @@ class SeparatePartsTests(unittest.TestCase):
     def test_v2_redraw_is_true_kael_only_with_single_identity_reference(self):
         from videoforge.ep01_proxy_separate_parts import right_side_prop_coverage
         from PIL import Image, ImageDraw
-        with patch.object(p.proxy_images, "call_proxy") as charged:
-            spec=p.prepare("C08-P02","character-kael-v2")
-            charged.assert_not_called()
+        original=p.existing_part
+        def only_missing_v2(shot_id,part_id,root=p.ROOT):
+            if part_id=="character-kael-v2":
+                return None
+            return original(shot_id,part_id,root)
+        with patch.object(p,"existing_part",side_effect=only_missing_v2):
+            with patch.object(p.proxy_images, "call_proxy") as charged:
+                spec=p.prepare("C08-P02","character-kael-v2")
+                charged.assert_not_called()
         self.assertEqual(spec["role"],"character")
         self.assertTrue(spec["transparent"])
         self.assertEqual(len(spec["refs"]),1)
@@ -159,6 +165,16 @@ class SeparatePartsTests(unittest.TestCase):
         # The original source must remain archived and SHA-verifiable.
         self.assertEqual(p.existing_part("C08-P02","character-kael")["sha256"],
                          old["sha256"])
+
+    def test_successfully_archived_kael_v2_must_never_be_rebilled(self):
+        archived=p.existing_part("C08-P02","character-kael-v2")
+        self.assertIsNotNone(archived)
+        self.assertEqual(archived["sha256"],
+                         "cbf8dc00f81788dd26675f1a16df2c971b44e287665ccf4ecbc59d698a6bec4d")
+        with patch.object(p.proxy_images,"call_proxy") as charged:
+            with self.assertRaisesRegex(VideoForgeError,"ALREADY_ARCHIVED_NO_REPEAT"):
+                p.prepare("C08-P02","character-kael-v2")
+            charged.assert_not_called()
 
     def test_cart_v2_is_new_portrait_source_anchored_image_not_v1_landscape(self):
         with patch.object(p.proxy_images,"call_proxy") as charged:
@@ -197,6 +213,8 @@ class SeparatePartsTests(unittest.TestCase):
         def corrupted(shot_id,part_id,root=p.ROOT):
             if part_id=="character-kael":
                 return {"sha256":"0"*64}
+            if part_id=="character-kael-v2":
+                return None
             return original(shot_id,part_id,root)
         with patch.object(p,"existing_part",side_effect=corrupted),patch.object(
                 p.proxy_images,"call_proxy") as charged:
