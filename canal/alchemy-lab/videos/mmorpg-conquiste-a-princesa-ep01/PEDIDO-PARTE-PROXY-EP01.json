@@ -3,13 +3,13 @@
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
   "shot_id": "C08-P02",
-  "part": "object-carrinho",
+  "part": "character-kael",
   "generation_method": "proxy_generated_separate_image",
   "parent_mother_asset": "c08-p02-scene-mother-continuity-v2",
   "parent_mother_sha256": "3c21b7d82d69b1445b45cb1a23582e556c910530b568c26ae0d48b4873c38721",
   "parent_generation_run_id": 44265114014,
-  "status": "requested_visual_candidate",
-  "reason": "Gerar UMA nova imagem independente do carrinho de madeira da C08-P02 usando a imagem-mãe V2 como primeira referência e somente a Bíblia Visual do carrinho e de Kael como referências adicionais verificadas. O objeto isolado deve reproduzir exatamente o mesmo chassi, duas rodas, aro/raios, madeiramento, detalhes dourados, alças e perspectiva, em coordenadas e escala de tomada. Completar a geometria da traseira e do interior oculta pelo corpo de Kael. SEM renderizar Kael, mãos, cenário, perseguidores ou outros personagens. Todo o fundo deve possuir alfa zero real. NÃO recortar pixels, não usar OpenCV como sprite, não inventar nova carroça. A imagem nova é candidata RGBA sem aprovação de rig, e deve ser conferida em recomposição posterior.",
+  "status": "requested_c08_kael_reference_reduced_v2",
+  "reason": "Uma NOVA candidata de Kael da tomada C08-P02, usando exatamente três imagens: PRIMEIRO a cena-mãe de continuidade V2 SHA-256 e depois apenas Bíblia Visual do próprio Kael e do carrinho. A tentativa anterior de Kael anexou cinco imagens e obteve erro técnico HTTP 500 sem criar PNG; esta versão reduz referências e mantém fonte/identidade. Produzir novo desenho independente RGBA verdadeiro do personagem com sua capa e armadura originais, inclinado empurrando a alça, braços integrados naturalmente e mãos posicionadas de forma coerente, SEM desenhar o carrinho, rodas, perseguidores, cenário ou rosto diferente. Preservar o enquadramento vertical, a escala pequena do personagem e a posição à esquerda do carrinho na imagem-mãe; não recortar pixels antigos e não criar personagem centralizado em retrato. Se a API retornar dimensão diferente, arquivar a candidata, marcar pendência de alinhamento e não aprovar rig.",
   "allow_local_crop_or_segmentation_for_final_asset": false,
   "human_visual_approval": false,
   "rig_ready": false,
@@ -18,5 +18,5 @@
   "youtube_upload": false,
   "mp4_generated": false,
   "process": "one_new_independent_png_per_workflow",
-  "request_revision": 8
+  "request_revision": 9
 }
