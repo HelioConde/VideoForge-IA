@@ -125,6 +125,54 @@ class SeparatePartsTests(unittest.TestCase):
                     p.mother_source("C08-P02")
                 charged.assert_not_called()
 
+    def test_v2_redraw_is_true_kael_only_with_single_identity_reference(self):
+        from videoforge.ep01_proxy_separate_parts import right_side_prop_coverage
+        from PIL import Image, ImageDraw
+        with patch.object(p.proxy_images, "call_proxy") as charged:
+            spec=p.prepare("C08-P02","character-kael-v2")
+            charged.assert_not_called()
+        self.assertEqual(spec["role"],"character")
+        self.assertTrue(spec["transparent"])
+        self.assertEqual(len(spec["refs"]),1)
+        self.assertEqual([r["asset_id"] for r in spec["ref_proofs"]],
+                         ["biblia-kael-medieval-base-v1"])
+        self.assertIn("ZERO CART PIXELS",spec["prompt"])
+        self.assertIn("NO wheels",spec["prompt"])
+        self.assertIn("second is ONLY the canonical KAEL",spec["prompt"])
+        self.assertEqual(spec["mother_proof"]["sha256"],
+                         "3c21b7d82d69b1445b45cb1a23582e556c910530b568c26ae0d48b4873c38721")
+        # Entirely independent left-hand sprite passes right-side cart gate.
+        canvas=Image.new("RGBA",(1054,1493),(0,0,0,0))
+        ImageDraw.Draw(canvas).ellipse((50,550,590,1300),fill=(100,50,80,255))
+        self.assertEqual(right_side_prop_coverage(canvas),0.0)
+        # Cart painted into the far right is not silently treated as a sprite.
+        ImageDraw.Draw(canvas).rectangle((800,680,1053,1200),fill=(110,80,40,255))
+        self.assertGreater(right_side_prop_coverage(canvas),0.2)
+
+    def test_archived_v1_kael_has_cart_embedded_and_is_not_reused_for_rig(self):
+        from PIL import Image
+        old=p.existing_part("C08-P02","character-kael")
+        self.assertEqual(old["sha256"],
+                         "2579d5786f89957ea776c8c17b76371027fffd2ce43a4e3fba6505201db029d1")
+        with Image.open(p.ROOT / old["file"]) as im:
+            self.assertGreater(p.right_side_prop_coverage(im),0.3)
+        # The original source must remain archived and SHA-verifiable.
+        self.assertEqual(p.existing_part("C08-P02","character-kael")["sha256"],
+                         old["sha256"])
+
+    def test_kael_v2_denied_when_predecessor_provenance_does_not_match(self):
+        original=p.existing_part
+        def corrupted(shot_id,part_id,root=p.ROOT):
+            if part_id=="character-kael":
+                return {"sha256":"0"*64}
+            return original(shot_id,part_id,root)
+        with patch.object(p,"existing_part",side_effect=corrupted),patch.object(
+                p.proxy_images,"call_proxy") as charged:
+            with self.assertRaisesRegex(VideoForgeError,
+                    "REJECTED_PREDECESSOR_NOT_VERIFIED"):
+                p.prepare("C08-P02","character-kael-v2")
+            charged.assert_not_called()
+
     def test_wrong_asset_or_model_fail_before_proxy(self):
         with patch.object(p.proxy_images, "call_proxy") as charged:
             with self.assertRaisesRegex(VideoForgeError,"NOT_IN_SHOT_PLAN"):
