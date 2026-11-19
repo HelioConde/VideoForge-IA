@@ -177,9 +177,15 @@ class SeparatePartsTests(unittest.TestCase):
             charged.assert_not_called()
 
     def test_cart_v2_is_new_portrait_source_anchored_image_not_v1_landscape(self):
-        with patch.object(p.proxy_images,"call_proxy") as charged:
-            spec=p.prepare("C08-P02","object-carrinho-v2")
-            charged.assert_not_called()
+        original=p.existing_part
+        def only_missing_cart_v2(shot_id,part_id,root=p.ROOT):
+            if part_id=="object-carrinho-v2":
+                return None
+            return original(shot_id,part_id,root)
+        with patch.object(p,"existing_part",side_effect=only_missing_cart_v2):
+            with patch.object(p.proxy_images,"call_proxy") as charged:
+                spec=p.prepare("C08-P02","object-carrinho-v2")
+                charged.assert_not_called()
         self.assertEqual(spec["role"],"object")
         self.assertTrue(spec["transparent"])
         self.assertEqual(spec["source_dimensions"],(1053,1493))
@@ -193,6 +199,15 @@ class SeparatePartsTests(unittest.TestCase):
         self.assertIn("NO Kael",spec["prompt"])
         self.assertIn("alpha=0",spec["prompt"])
 
+    def test_successfully_archived_cart_v2_must_never_be_regenerated(self):
+        archived=p.existing_part("C08-P02","object-carrinho-v2")
+        self.assertEqual(archived["sha256"],
+                         "df5371baa402fb437e8671ffb6b11a21e640ec0ac5e589073d89850de1add65b")
+        with patch.object(p.proxy_images,"call_proxy") as charged:
+            with self.assertRaisesRegex(VideoForgeError,"ALREADY_ARCHIVED_NO_REPEAT"):
+                p.prepare("C08-P02","object-carrinho-v2")
+            charged.assert_not_called()
+
     def test_cart_v2_requires_exact_archived_failed_predecessor(self):
         prior=p.existing_part("C08-P02","object-carrinho")
         self.assertEqual(prior["sha256"],
@@ -201,6 +216,8 @@ class SeparatePartsTests(unittest.TestCase):
         def wrong(shot_id,part_id,root=p.ROOT):
             if part_id=="object-carrinho":
                 return {"sha256":"0"*64}
+            if part_id=="object-carrinho-v2":
+                return None
             return original(shot_id,part_id,root)
         with patch.object(p,"existing_part",side_effect=wrong):
             with patch.object(p.proxy_images,"call_proxy") as charged:
