@@ -147,6 +147,8 @@ jobs:
           python -m scripts.ep01_action_production_queue --mode plan \
             --output "$RUNNER_TEMP/ep01-production-queue-plan.json"
       - name: Dispatch at most 2 image child Actions and 2 camera previews by default
+        env:
+          EP01_SHOW_ACTIVE_CHILD: "true"
         if: env.QUEUE_MODE == 'run'
         shell: bash
         run: |
@@ -270,6 +272,17 @@ jobs:
                 return `| ${t.shot_id} / ${t.part||'-'} | ${state} | ${brief} | ${childLink(t)} |`;
               });
             const active=data.tasks.filter(t=>['reserved','dispatched'].includes(ledgerStatus(t)));
+            let cut=null;
+            try {
+              const {data:cuts}=await github.rest.actions.listWorkflowRuns({...context.repo,workflow_id:'ep01-review-cut.yml',
+                event:'workflow_dispatch',branch:'main',status:'success',per_page:1});
+              const run=cuts.workflow_runs[0];
+              if(run){
+                const {data:files}=await github.rest.actions.listWorkflowRunArtifacts({...context.repo,run_id:run.id});
+                const file=files.artifacts.find(a=>!a.expired && a.size_in_bytes>0 && a.name==='ep01-previa-parcial-camera-'+run.id);
+                if(file)cut=run.html_url+'/artifacts/'+file.id;
+              }
+            }catch(error){core.warning('Consulta à montagem parcial indisponível');}
             const feedbackLines=[
               '## Feedback de produção — imagens, prévias e animações',
               '',
@@ -284,6 +297,7 @@ jobs:
               '**Status:** arquivada = PNG salvo com evidência, não arte aprovada; rejeitada = resultado preservado, sem repetição automática; bloqueada = exige correção; prévia = só câmera; animação = exige camadas e rig verdadeiros.',
               '',
               'Em processamento no último registro: '+(active.map(t=>t.task_id+' (Agente '+t.owner+')').join(', ')||'nenhuma reserva ativa')+'.',
+              ...(cut?['[Baixar montagem parcial em MP4]('+cut+') · câmera sem rig ou áudio final.']:[]),
               'Galeria de todas as tomadas: abrir **ep01-camadas.html** no [artifact do controlador]('+runUrl+'). Inclui miniaturas, PNGs, fontes, responsáveis e arquivos das prévias.',
               'QA visual do Agente 12: requer parecer específico por tomada. Rig, QA temporal e render final aguardam material liberado.',
               '',
