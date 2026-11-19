@@ -42,7 +42,7 @@ def historical_proof(data):
         raise ValueError("Historical Astra QA was not completed")
     return {"validated":True, "calls":13, "model":model}
 
-def make_status(dispatch,queue,historical=None,*,run_id,now):
+def make_status(dispatch,queue,historical=None,*,run_id,now,specialists=None):
     if not isinstance(run_id,int) or run_id<1 or not isinstance(now,str) or not now:
         raise ValueError("Real run ID/time required")
     safe=dispatch.get("dispatch",{})
@@ -92,6 +92,54 @@ def make_status(dispatch,queue,historical=None,*,run_id,now):
         role_executions[owner]={
             "source_task_id":source_id, "result":desc,
             "status":task.get("status"), "checkpoint_sha256":proof}
+    # A separate dedicated CAS journal now contains six actual tool-based
+    # technical specialist executions. Validate every checkpoint before a role
+    # can be described as having run. This is NOT six Astra model calls.
+    six_completed={}
+    six_counts={"technical_completed":0,"completed_roles":[],"technical_preview_verified":False,
+                "run_url":None,"state_sha256":None}
+    if specialists is not None:
+        six=specialists.get("specialist_dispatch",{})
+        six_tasks=specialists.get("tasks",[])
+        six_checkpoints=specialists.get("checkpoints",[])
+        from .ep01_specialist_dispatch import CONTRACT as SIX_CONTRACT, RUN_SEQUENCE
+        if (six.get("contract")!=SIX_CONTRACT or len(six_tasks)!=6
+                or six.get("model_calls")!=0 or six.get("new_images")!=0
+                or six.get("youtube_publications")!=0
+                or six.get("human_visual_approval") is not False
+                or specialists.get("safety",{}).get("human_visual_approval") is not False):
+            raise ValueError("Invalid six-role source executor report")
+        checkpoints={cp["task_id"]:cp for cp in six_checkpoints}
+        if len(checkpoints)!=len(six_checkpoints):
+            raise ValueError("Duplicate six-role QA checkpoints")
+        for t in six_tasks:
+            role=t.get("owner")
+            cp=checkpoints.get(t.get("task_id"))
+            if (role not in RUN_SEQUENCE or role in six_completed
+                    or t.get("source_scope")!=SIX_CONTRACT
+                    or t.get("reviewer")!="12"
+                    or t.get("status")!="completed"
+                    or not cp or cp.get("result_sha256")!=t.get("result_sha256")
+                    or cp.get("scope")!="read_only_technical_audit"
+                    or cp.get("human_visual_approval") is not False
+                    or cp.get("review",{}).get("agent_id")!="12"
+                    or cp.get("review",{}).get("technical_passed") is not True):
+                raise ValueError("Six-role work cannot be claimed without Agent 12 QA")
+            six_completed[role]={"task_id":t["task_id"],"sha":cp["sha256"]}
+        if set(six_completed)!=set(RUN_SEQUENCE):
+            raise ValueError("Missing role from six executable specialists")
+        source_run_ids=six.get("source_execution_run_ids",{})
+        if any(str(source_run_ids.get(role,"")) and
+               not str(source_run_ids[role]).isdigit() for role in RUN_SEQUENCE):
+            raise ValueError("Unverifiable original specialist execution run")
+        six_counts={
+            "technical_completed":len(six_completed),
+            "completed_roles":sorted(six_completed),
+            "technical_preview_verified":True,  # 11 independently checks a 90-frame MP4
+            "original_execution_run_ids":source_run_ids,
+            "run_url":f"https://github.com/{REPO}/actions/runs/{run_id}",
+            "state_sha256":specialists["state_sha256"],
+        }
     past=historical_proof(historical)
     roles=[]
     for role_id in sorted(ROLES):
@@ -119,6 +167,29 @@ def make_status(dispatch,queue,historical=None,*,run_id,now):
         elif role_id=="12" and completed:
             row["mode"]="QA tecnico deterministico, nao visual"
             row["current_activity"]=f"Revisou {len(completed)} resultados tecnicos"
+        if role_id in six_completed:
+            proof=six_completed[role_id]
+            descriptors={
+                "02":"Leu e validou roteiro e 9 batidas da continuidade V2",
+                "05":"Verificou 3 artes novas ja geradas pelo proxy e seus SHA",
+                "06":"Recompos as 3 camadas independentes e salvou preview",
+                "08":"Executou QA de 240 poses cinematicas do carrinho (nao rig)",
+                "09":"Gerou EDL de camera com 42 tomadas e 163 segundos",
+                "11":"Renderizou e validou MP4 TECNICO de 90 quadros (nao episodio)",
+            }
+            row["mode"]="executor tecnico real por codigo, sem Astra novo"
+            row["current_activity"]=descriptors[role_id]
+            row["source_task_id"]=proof["task_id"]
+            row["checkpoint_sha256"]=proof["sha"]
+            row["technical_preview_created"]=(role_id=="11")
+            saved=six_counts.get("original_execution_run_ids",{}).get(role_id)
+            row["last_execution_run_url"]=(
+                f"https://github.com/{REPO}/actions/runs/{saved}" if saved else
+                six_counts["run_url"])
+        elif role_id=="01" and six_completed:
+            row["current_activity"]="Coordenou 10 tarefas tecnicas, com QA independente"
+        elif role_id=="12" and six_completed:
+            row["current_activity"]="Revisou 10 entregas tecnicas; nenhuma QA visual"
         roles.append(row)
     counts={}
     for q in qtasks:
@@ -139,6 +210,7 @@ def make_status(dispatch,queue,historical=None,*,run_id,now):
         "queue":{"mode":"planning_only","dispatch_enabled":False,
                  "size":len(qtasks),"statuses":counts},
         "agents":roles,
+        "six_role_technical_execution":six_counts,
         "human_visual_approval":False,"rig_ready":False,
         "mp4_final_ready":False,"youtube_publications":0,
     }
@@ -168,6 +240,11 @@ def render_markdown(data):
         "- Modelo chamado neste ciclo: **0 vezes**. Operacoes de producao de midia "
         "pelos agentes: **0 verificadas**. Aprovacoes visuais automaticas: **0**.",
         "",
+        f"- Especialistas 02, 05, 06, 08, 09 e 11: "
+        f"**{data.get('six_role_technical_execution',{}).get('technical_completed',0)}/6** "
+        "entregas tecnicas auditadas por SHA; nao equivalem a novos pedidos Astra. "
+        "O Agente 11 produziu apenas MP4 de diagnostico de 3 segundos, nunca o EP01 final.",
+        "",
         "## Atividade individual (evidencias, nao simulacao)",
         "",
         "| Agente | Funcao | Trabalho comprovado | Tarefa / checkpoint |",
@@ -176,8 +253,10 @@ def render_markdown(data):
     for a in data["agents"]:
         ref=a["source_task_id"] or "Nenhuma nesta esteira"
         suffix= f" ({q}{a['checkpoint_sha256'][:12]}{q})" if a["checkpoint_sha256"] else ""
+        evidence_url=a.get("last_execution_run_url")
+        evidence=f" [Action]({evidence_url})" if evidence_url else ""
         result.append(f"| **{a['id']}** | {a['name']} | "
-                      f"{a['current_activity']} | {ref}{suffix} |")
+                      f"{a['current_activity']}{evidence} | {ref}{suffix} |")
     result.extend(["", "## Fila real de trabalho e bloqueios", "",
                    "| Tarefa | Responsavel | Estado original | Dependencias |",
                    "|---|---|---|---|"])
@@ -213,6 +292,7 @@ def main():
     p.add_argument("--output-dir",type=Path,required=True)
     p.add_argument("--run-id",type=int,required=True)
     p.add_argument("--read-astra-history",action="store_true")
+    p.add_argument("--specialist-report",type=Path)
     args=p.parse_args()
     dispatch=json.loads(args.dispatch_report.read_text(encoding="utf-8"))
     queue=json.loads(args.queue.read_text(encoding="utf-8"))
@@ -230,8 +310,11 @@ def main():
                 historical=runtime_report(store)
             finally:
                 store.close()
+    specialists=(json.loads(args.specialist_report.read_text(encoding="utf-8"))
+                 if args.specialist_report else None)
     status=make_status(dispatch,queue,historical,
-          run_id=args.run_id,now=datetime.now(timezone.utc).isoformat(timespec="seconds"))
+          run_id=args.run_id,now=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+          specialists=specialists)
     out=args.output_dir
     out.mkdir(parents=True,exist_ok=True)
     (out/"agent-status.json").write_text(
