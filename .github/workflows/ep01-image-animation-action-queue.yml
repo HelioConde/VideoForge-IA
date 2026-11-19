@@ -10,6 +10,8 @@ on:
       - '.github/workflows/ep01-camera-batch-preview.yml'
       - 'scripts/ep01_action_production_queue.py'
       - 'tests/test_ep01_action_production_queue.py'
+      - 'tests/test_ep01_queue_canvas_recovery.py'
+      - 'videoforge/ep01_proxy_separate_parts.py'
   push:
     branches: [main]
     paths:
@@ -66,7 +68,23 @@ jobs:
       - name: Verify all 42 shots, old image parts, no-replay and rig gates
         run: |
           python -m unittest discover -s tests -p 'test_ep01_action_production_queue.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_queue_canvas_recovery.py' -v
           python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
+      - name: Syntax-check GitHub issue updater JavaScript, not only Python
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          workflow=Path('.github/workflows/ep01-image-animation-action-queue.yml').read_text()
+          js=workflow.split('          script: |',1)[1].split('\n      - name:',1)[0]
+          lines=js.splitlines()
+          source='\n'.join(line[12:] if line.startswith('            ') else line for line in lines)
+          target=Path('/tmp/ep01-queue-issue-check.cjs')
+          target.write_text('(async function () {\n'+source+'\n})()\n',encoding='utf-8')
+          subprocess.run(['node','--check',str(target)],check=True)
+          print('GITHUB_ISSUE_SCRIPT_JS_PARSE_OK')
+          PY
       - name: Generate complete offline 42-shot image/animation work order
         run: |
           python -m scripts.ep01_action_production_queue --mode plan \
@@ -114,6 +132,7 @@ jobs:
       - name: Validate actual queue and anti-replay state contracts before any paid work
         run: |
           python -m unittest discover -s tests -p 'test_ep01_action_production_queue.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_queue_canvas_recovery.py' -v
           python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
           gh auth status
       - name: Write a complete reusable queue plan FIRST (no provider calls)
