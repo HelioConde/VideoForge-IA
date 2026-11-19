@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 158,
+  "total_arquivadas": 159,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -5689,6 +5689,39 @@
       ],
       "status": "gerado",
       "qa_tecnica": "candidate_minor_edge_delta_requires_alignment_qa",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-proxy-separate-part-v1:44445488354:c08-p02-object-carrinho-v2.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c08-p02-object-carrinho-v2",
+      "shot": "C08-P02",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-proxy-separate-part-v1",
+      "github_run_id": 44445488354,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44445488354/c08-p02-object-carrinho-v2.png",
+      "sha256": "df5371baa402fb437e8671ffb6b11a21e640ec0ac5e589073d89850de1add65b",
+      "bytes": 705494,
+      "width": 1039,
+      "height": 1514,
+      "referencias_usadas": [
+        {
+          "id": null,
+          "sha256": "3c21b7d82d69b1445b45cb1a23582e556c910530b568c26ae0d48b4873c38721",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v2-mother/44265114014/c08-p02-continuity-v2-scene-mother.png"
+        },
+        {
+          "id": null,
+          "sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011721667/biblia-carrinho-base-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "rejected_canvas_mismatch_no_pixel_resizing",
       "aprovacao_automatica": false,
       "youtube_uploaded": false
     }
