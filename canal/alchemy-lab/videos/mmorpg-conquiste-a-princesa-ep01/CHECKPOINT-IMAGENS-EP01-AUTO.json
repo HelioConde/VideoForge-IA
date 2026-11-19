@@ -467,7 +467,7 @@
       "human_visual_approval": false
     }
   ],
-  "separate_proxy_generated_asset_count": 14,
+  "separate_proxy_generated_asset_count": 15,
   "separate_proxy_generated_assets": [
     {
       "asset": "c01-p03-background-clean",
@@ -551,6 +551,12 @@
       "asset": "c02-p01-background-clean",
       "sha256": "65949ea4c3d4a5a2e66acfabed82a13f2731fbe78c65ec518d0640a1d231b3cb",
       "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44528493191/c02-p01-background-clean.png",
+      "human_visual_approval": false
+    },
+    {
+      "asset": "c02-p01-character-aldric",
+      "sha256": "a5c5ccbae488ce860f836238215e307e8b693b3ee6bbda526342a2978596cbd8",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44530478423/c02-p01-character-aldric.png",
       "human_visual_approval": false
     }
   ],
