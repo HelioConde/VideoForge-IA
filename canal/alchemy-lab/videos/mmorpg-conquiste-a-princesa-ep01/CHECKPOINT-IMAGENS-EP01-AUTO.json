@@ -467,7 +467,7 @@
       "human_visual_approval": false
     }
   ],
-  "separate_proxy_generated_asset_count": 9,
+  "separate_proxy_generated_asset_count": 10,
   "separate_proxy_generated_assets": [
     {
       "asset": "c01-p03-background-clean",
@@ -521,6 +521,12 @@
       "asset": "c01-p05-background-clean",
       "sha256": "c3485487e17eb07266c063002bb8fec9b32be10f60097871e2c354d555d82938",
       "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44523762906/c01-p05-background-clean.png",
+      "human_visual_approval": false
+    },
+    {
+      "asset": "c01-p05-character-guarda_direito",
+      "sha256": "7091af3214d3c04dc174d55941f525ab543f055b024632315195b97b4af24afd",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44524006117/c01-p05-character-guarda_direito.png",
       "human_visual_approval": false
     }
   ],
