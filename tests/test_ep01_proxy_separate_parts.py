@@ -160,6 +160,38 @@ class SeparatePartsTests(unittest.TestCase):
         self.assertEqual(p.existing_part("C08-P02","character-kael")["sha256"],
                          old["sha256"])
 
+    def test_cart_v2_is_new_portrait_source_anchored_image_not_v1_landscape(self):
+        with patch.object(p.proxy_images,"call_proxy") as charged:
+            spec=p.prepare("C08-P02","object-carrinho-v2")
+            charged.assert_not_called()
+        self.assertEqual(spec["role"],"object")
+        self.assertTrue(spec["transparent"])
+        self.assertEqual(spec["source_dimensions"],(1053,1493))
+        self.assertEqual(spec["mother_proof"]["sha256"],
+                         "3c21b7d82d69b1445b45cb1a23582e556c910530b568c26ae0d48b4873c38721")
+        self.assertEqual(len(spec["refs"]),1)
+        self.assertEqual(spec["ref_proofs"][0]["asset_id"],"biblia-carrinho-base-v1")
+        self.assertIn("VERTICAL portrait",spec["prompt"])
+        self.assertIn("RIGHT side",spec["prompt"])
+        self.assertIn("NEVER make a landscape",spec["prompt"])
+        self.assertIn("NO Kael",spec["prompt"])
+        self.assertIn("alpha=0",spec["prompt"])
+
+    def test_cart_v2_requires_exact_archived_failed_predecessor(self):
+        prior=p.existing_part("C08-P02","object-carrinho")
+        self.assertEqual(prior["sha256"],
+                         "bf78eae46f5d6836a7834fff8714c6e3072f23e523d6fbe73ac8b9b5accb47ab")
+        original=p.existing_part
+        def wrong(shot_id,part_id,root=p.ROOT):
+            if part_id=="object-carrinho":
+                return {"sha256":"0"*64}
+            return original(shot_id,part_id,root)
+        with patch.object(p,"existing_part",side_effect=wrong):
+            with patch.object(p.proxy_images,"call_proxy") as charged:
+                with self.assertRaisesRegex(VideoForgeError,"CART_V2_PREDECESSOR_NOT_VERIFIED"):
+                    p.prepare("C08-P02","object-carrinho-v2")
+                charged.assert_not_called()
+
     def test_kael_v2_denied_when_predecessor_provenance_does_not_match(self):
         original=p.existing_part
         def corrupted(shot_id,part_id,root=p.ROOT):
