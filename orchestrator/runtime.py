@@ -291,7 +291,9 @@ def model_step(store, task, root, agent, payload, mode, limits):
                      'exactly status, basis, next_steps. Copy safe_status from '
                      'the input: needs_human_review if all QA decisions are '
                      'supported, otherwise blocked. basis must be nonempty, '
-                     'next_steps nonempty strings. This is a source-only '
+                     'next_steps must be a JSON array of nonempty strings, even for one step. '
+                     'Whenever citing the combined frame count, name both shots from combined_motion_evidence '
+                     'in the same sentence. Describe unrelated shots separately. This is a source-only '
                      'handoff, NOT approval of visual art or publication. '
                      'Never claim the episode is complete.')
     request = GenerationRequest(agent_id=agent, instructions=text+contract, input=encode(model_payload),

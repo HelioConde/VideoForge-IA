@@ -34,6 +34,8 @@ CART_INITIAL_X = 2.35
 CART_INITIAL_Z = -0.55
 MAX_CENTER_STEP_M = 0.11
 MAX_YAW_STEP_DEG = 6.0
+TURN_SHOT = "C08-P02"
+HOLD_SHOT = "C08-P03"
 SOURCE_FRAME_COUNT = 130
 HOLD_FRAME_COUNT = 110
 
@@ -95,9 +97,9 @@ def build_poses(plan: dict) -> list[Pose]:
             or plan.get("QA",{}).get("animation_qa_passed") is not False):
         raise ValueError("Cannot turn unapproved art into an apparent production rig")
     shots={row["id"]:row for row in plan["shots"]}
-    if set(shots) != {"C07-P03","C08-P02","C08-P03"}:
+    if set(shots) != {"C07-P03",TURN_SHOT,HOLD_SHOT}:
         raise ValueError("Unexpected C07/C08 motion scope")
-    turn,hold=shots["C08-P02"],shots["C08-P03"]
+    turn,hold=shots[TURN_SHOT],shots[HOLD_SHOT]
     validate_keyframes(turn)
     if (turn["end_exclusive"]-turn["start_frame"]!=SOURCE_FRAME_COUNT
             or hold["end_exclusive"]-hold["start_frame"]!=HOLD_FRAME_COUNT
@@ -120,7 +122,7 @@ def build_poses(plan: dict) -> list[Pose]:
     for frame in range(SOURCE_FRAME_COUNT+HOLD_FRAME_COUNT):
         in_turn=frame<SOURCE_FRAME_COUNT
         shot_frame=frame if in_turn else frame-SOURCE_FRAME_COUNT
-        shot="C08-P02" if in_turn else "C08-P03"
+        shot=TURN_SHOT if in_turn else HOLD_SHOT
         yaw,progress=interpolate_keys(keys,frame) if in_turn else (90.,1.)
         rad=math.radians(yaw)
         prev_rad=math.radians(prev_yaw)
@@ -165,7 +167,7 @@ def validate_poses(poses: list[Pose]) -> dict:
     if (len(poses)!=SOURCE_FRAME_COUNT+HOLD_FRAME_COUNT
             or [x.frame for x in poses] != list(range(len(poses)))
             or [x.shot_id for x in poses] !=
-                ["C08-P02"]*SOURCE_FRAME_COUNT+["C08-P03"]*HOLD_FRAME_COUNT):
+                [TURN_SHOT]*SOURCE_FRAME_COUNT+[HOLD_SHOT]*HOLD_FRAME_COUNT):
         raise ValueError("Missing, duplicated or out-of-order kinematic frame")
     if (poses[0].yaw_degrees!=0 or poses[0].push_progress!=0
             or poses[SOURCE_FRAME_COUNT-1].yaw_degrees!=90
@@ -179,9 +181,9 @@ def validate_poses(poses: list[Pose]) -> dict:
                 and p.grip_connection_error_m<=1e-8
                 and p.wheel_contact_slip_m<=1e-8):
             raise ValueError(f"Invalid contact/pose frame {i}")
-        if p.shot_id=="C08-P02" and p.chasers:
+        if p.shot_id==TURN_SHOT and p.chasers:
             raise ValueError("Pursuers must never assist Kael")
-        if p.shot_id=="C08-P03" and len(p.chasers)!=2:
+        if p.shot_id==HOLD_SHOT and len(p.chasers)!=2:
             raise ValueError("Exactly two pursuers must remain behind cart")
         if i:
             prev=poses[i-1]

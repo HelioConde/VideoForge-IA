@@ -52,6 +52,24 @@ class SupervisorTests(unittest.TestCase):
                    "basis":"Apenas relatorios tecnicos; revisao visual pendente.",
                    "next_steps":["Conferir mao/carrinho e QA de continuidade C08-P03."]}]
 
+    def test_cart_frame_evidence_is_scoped_to_both_shots(self):
+        wrong = "C01-P04 contém os 240 quadros de movimento do carrinho."
+        for field in ("analysis", "basis", "next_steps"):
+            data = {"analysis": "", "findings": deepcopy(self.end)}
+            if field == "analysis":
+                data[field] = wrong
+            else:
+                data["findings"][0][field] = [wrong] if field == "next_steps" else wrong
+            with self.subTest(field=field), self.assertRaises(s.ProviderError):
+                s.validate_consolidation(data, True)
+        for basis in ("C08-P02 e C08-P03 somam 240 quadros. C01-P04 requer revisão.",
+                      "C08-P02/P03: 240 frames."):
+            data = {"findings": [dict(self.end[0], basis=basis)]}
+            s.validate_consolidation(data, True)
+        for basis in ("240 quadros em C08-P02.", "240 frames em C08-P02/P03 e C01-P04."):
+            with self.subTest(basis=basis), self.assertRaises(s.ProviderError):
+                s.validate_consolidation({"findings": [dict(self.end[0], basis=basis)]}, True)
+
     def test_real_six_technical_snapshots_remain_source_grounded(self):
         with tempfile.TemporaryDirectory() as name:
             database=Store(Path(name)/"technical.sqlite")
