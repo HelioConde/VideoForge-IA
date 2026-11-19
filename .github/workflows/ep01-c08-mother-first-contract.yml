@@ -1,0 +1,59 @@
+name: "EP01 C08 V2 - contract for mother-first independent image generation"
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ep01-c08-mother-first-contract.yml'
+      - 'videoforge/ep01_proxy_separate_parts.py'
+      - 'tests/test_ep01_proxy_separate_parts.py'
+      - '.github/workflows/ep01-proxy-separate-part-by-request.yml'
+      - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PARTE-PROXY-EP01.json'
+
+permissions:
+  contents: read
+
+jobs:
+  no-network-provenance:
+    if: >-
+      github.event_name == 'pull_request'
+      && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: SHA-pinned C08 shot, mother and Bible references (no proxy)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
+          python -m unittest discover -s tests -p 'test_layered_shot_plan.py' -v
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from videoforge import ep01_proxy_separate_parts as p
+          fn=Path('canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PARTE-PROXY-EP01.json')
+          req=json.loads(fn.read_text(encoding='utf-8'))
+          part=p.prepare(req['shot_id'],req['part'])
+          assert req['shot_id']=='C08-P02' and req['part']=='background-clean'
+          assert req['generation_method']=='proxy_generated_separate_image'
+          assert req['parent_mother_sha256']==part['mother_proof']['sha256']
+          assert req['parent_mother_asset']==part['mother_proof']['asset_id']
+          assert part['source_dimensions']==(1053,1493)
+          assert part['transparent'] is False
+          assert len(part['ref_proofs'])>=1
+          assert req['max_chargeable_calls_per_run']==1
+          assert req['allow_local_crop_or_segmentation_for_final_asset'] is False
+          assert req['human_visual_approval'] is False and req['rig_ready'] is False
+          assert req['retry_on_429'] is False and req['youtube_upload'] is False
+          print('Mother-first C08-P02 source and 1-image request validated, no provider calls.')
+          PY

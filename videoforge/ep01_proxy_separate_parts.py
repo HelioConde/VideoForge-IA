@@ -76,6 +76,30 @@ def mother_source(shot_id: str, root: Path = ROOT) -> tuple[bytes,dict]:
     # mother or the unapproved V3/V4 local patches as a source for rig parts.
     if shot_id=="C01-P02":
         raise VideoForgeError("EP01_PROXY_PARTS_C01_P02_MOTHER_NOT_CANONICAL")
+    # The C07/C08 continuity pass introduced distinct, SHA-pinned V2 scene
+    # mothers. They are the authoritative source for these exact shots.
+    # Do not silently fall back to the older original mother or to OpenCV PNGs.
+    if shot_id in ("C07-P03", "C08-P02", "C08-P03"):
+        from .ep01_continuity_motion import read as read_motion, EP as episode
+        motion = read_motion(root)
+        src = motion["source_reference_shas"][shot_id]
+        relative = episode / src["asset"]
+        file = Path(root) / relative
+        if (file.is_symlink() or not file.is_file()
+                or not file.resolve().is_relative_to((Path(root)/episode).resolve())):
+            raise VideoForgeError("EP01_PROXY_PARTS_V2_SOURCE_MISSING")
+        blob = file.read_bytes()
+        digest = hashlib.sha256(blob).hexdigest()
+        if (digest != src["sha256"]
+                or motion["QA"]["art_approval"] is not False
+                or motion["QA"]["rig_ready"] is not False
+                or motion["rules"]["never_modify_original_png"] is not True):
+            raise VideoForgeError("EP01_PROXY_PARTS_V2_MOTHER_SHA_OR_POLICY_CHANGED")
+        return blob, {
+            "asset_id": shot_id.lower()+"-scene-mother-continuity-v2",
+            "sha256": digest, "path": relative.as_posix(),
+            "status": "unapproved_versioned_mother_reference_only"
+        }
     item=existing_mother(shot_id,root)
     if not item:
         raise VideoForgeError("EP01_PROXY_PARTS_MOTHER_NOT_GENERATED")
@@ -166,6 +190,24 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
         f"Shot {shot_id}. Beat: {shot['editorial_beat']}. "
         f"Visible frame intention: {shot['visual_prompt']}. "
     )
+    if shot_id == "C08-P02":
+        common += (
+            "The authoritative continuity V2 frame shows ONLY Kael pushing "
+            "the same wooden handcart near the RIGHT alley wall. NO pursuers, "
+            "guards, Elara or bystanders belong to this shot, even if an older "
+            "story prompt refers to masked pursuers reacting. The entire frame "
+            "must maintain the exact camera angle and perspective of continuity V2. "
+            "For the cart, preserve the wooden chassis, two wheels, spokes, "
+            "wheel hubs, handle and contact position of Kael with the handle. "
+            "This is candidate art; no source image has visual or rig approval. "
+        )
+    elif shot_id == "C08-P03":
+        common += (
+            "Use the same physical cart and identity from C08-P02: now rotated "
+            "across the alley as a 90-degree barricade, Kael on the SAFE right "
+            "side and exactly two masked pursuers on the opposite left side. "
+            "Do not hallucinate a different cart and do not draw Elara here. "
+        )
     if typ=="background":
         instruction=(
             "Generate ONLY the EMPTY CLEAN BACKGROUND of this same shot, OPAQUE "
@@ -245,7 +287,14 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
         elif spec["transparent"] and im.getchannel("A").getextrema()[1]<128:
             qa="rejected_empty_transparent_asset"
         elif (im.width,im.height)!=spec["source_dimensions"]:
-            qa="rejected_canvas_mismatch_no_pixel_resizing"
+            if (shot_id in ("C08-P02","C08-P03","C07-P03")
+                    and (im.width,im.height)==(1024,1536)):
+                # The model's fixed 2:3 canvas differs from the continuity
+                # mother. Preserve native provider pixels without resizing.
+                # Spatial placement is BLOCKED until independently aligned.
+                qa="candidate_native_model_canvas_requires_placement_qa"
+            else:
+                qa="rejected_canvas_mismatch_no_pixel_resizing"
         else:
             qa="candidate_proxy_generated_separate_image"
         dims=(im.width,im.height)
@@ -264,6 +313,9 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
         "source_images_attached_to_request":len(inputs),
         "width":dims[0],"height":dims[1],
         "source_canvas":list(spec["source_dimensions"]),
+        "provider_canvas":list(dims),
+        "coordinate_alignment_required": dims != spec["source_dimensions"],
+        "source_visual_approval":False,
         "transparent_alpha_required":spec["transparent"],
         "technical_qa":qa,"placement_verified":False,
         "visual_recomposition_approved":False,
