@@ -212,6 +212,72 @@ jobs:
                 :'sem run verificado';
               return '| ' + id + ' | ' + item.status + ' | ' + child + ' |';
             });
+            // Derive per-shot feedback from both the immutable plan and the durable CAS ledger.
+            const byId=new Map(data.tasks.map(t=>[t.task_id,t]));
+            const ledgerStatus=t=>ledger.attempts[t.task_id]?.status || t.status;
+            const items=kind=>data.tasks.filter(t=>t.kind===kind);
+            const imageTasks=items('image');
+            const isArchived=t=>['archived'].includes(ledgerStatus(t));
+            const isRejected=t=>['rejected_archived','archived_rejected_needs_review'].includes(ledgerStatus(t));
+            const isBlocked=t=>ledgerStatus(t).startsWith('blocked') || ledgerStatus(t)==='archived_version_check_needed';
+            const imageArchived=imageTasks.filter(isArchived).length;
+            const imageRejected=imageTasks.filter(isRejected).length;
+            const imageBlocked=imageTasks.filter(isBlocked).length;
+            const imageReady=imageTasks.filter(t=>ledgerStatus(t)==='ready_for_preflight').length;
+            const previewDone=items('camera_preview').filter(t=>ledgerStatus(t)==='preview_complete').length;
+            const rigDone=items('rig_animation').filter(t=>ledgerStatus(t)==='animation_complete_and_qa_approved').length;
+            const childLink=t=>{
+              const id=ledger.attempts[t.task_id]?.child_run_id;
+              return id?`[Action ${id}](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${id})`:'—';
+            };
+            const shotIds=[...new Set(data.tasks.filter(t=>t.kind==='mother').map(t=>t.shot_id))];
+            const shotRows=shotIds.map(shot=>{
+              const img=imageTasks.filter(t=>t.shot_id===shot);
+              const ready=img.filter(t=>ledgerStatus(t)==='ready_for_preflight').length;
+              const archived=img.filter(isArchived).length;
+              const rejected=img.filter(isRejected).length;
+              const blocked=img.filter(isBlocked).length;
+              const prev=items('camera_preview').find(t=>t.shot_id===shot);
+              const anim=items('rig_animation').find(t=>t.shot_id===shot);
+              const previewText=prev && ledgerStatus(prev)==='preview_complete'?`Prévia pronta (${childLink(prev)})`:'Aguardando prévia';
+              const animationText=anim && ledgerStatus(anim)==='animation_complete_and_qa_approved'?'QA aprovado':'Bloqueada: camadas/rig/QA';
+              return `| ${shot} | ${archived}/${img.length} arquivadas; ${ready} prontas; ${blocked} bloqueadas; ${rejected} rejeitadas | ${previewText} | ${animationText} |`;
+            });
+            const problemRows=data.tasks.filter(t=>['image','image_correction'].includes(t.kind))
+              .filter(t=>isRejected(t)||isBlocked(t)).slice(0,15).map(t=>{
+                const state=ledgerStatus(t);
+                const reason=ledger.attempts[t.task_id]?.technical_qa || ledger.attempts[t.task_id]?.reason || t.reason;
+                const brief=String(reason||'não informado').replace(/[\r\n|]/g,' ').slice(0,130);
+                return `| ${t.shot_id} / ${t.part||'-'} | ${state} | ${brief} | ${childLink(t)} |`;
+              });
+            const feedbackLines=[
+              '## Feedback de produção — imagens, prévias e animações',
+              '',
+              '**Atualização automática a cada execução do controlador** (não é transmissão em tempo real). Todos os números abaixo são baseados no plano versionado e no ledger CAS persistente.',
+              '',
+              `- **Imagens separadas:** ${imageArchived} arquivadas entre ${imageTasks.length} solicitações originais; ${imageReady} prontas para pré-verificação; ${imageBlocked} bloqueadas; ${imageRejected} rejeitadas para revisão. Arquivo não é aprovação visual.`,
+              `- **Prévia de câmera:** ${previewDone}/42 concluídas; apenas camera-only, sem rig.`,
+              `- **Animação articulada real:** ${rigDone}/42 com conclusão e QA registrados; demais aguardam RGBA, rig, animação e aprovação visual.`,
+              `- **Correções especiais C08:** ${items('image_correction').length} tarefas planejadas; não gerar com referências antigas.`,
+              `- **Estado do último lote:** ${result ? result.processed_images+' imagens e '+result.processed_camera_previews+' prévias despachadas' : 'sem execução confirmada neste ciclo'}.`,
+              '',
+              '**Status:** arquivada = PNG salvo com evidência, não arte aprovada; rejeitada = resultado preservado, sem repetição automática; bloqueada = exige correção; prévia = só câmera; animação = exige camadas e rig verdadeiros.',
+              '',
+              '### Progresso por tomada',
+              '',
+              '| Tomada | Imagens separadas | Prévia de câmera | Animação articulada |',
+              '|---|---|---|---|',
+              ...shotRows,
+              '',
+              '### Problemas que precisam de ação (primeiros 15)',
+              '',
+              '| Tomada / componente | Situação | Motivo | Evidência |',
+              '|---|---|---|---|',
+              ...(problemRows.length?problemRows:['| — | Nenhum bloqueio no plano | — | — |']),
+              '',
+              '**Revisão visual humana:** pendente enquanto a imagem não for explicitamente aprovada. Nunca inferir aprovação de um workflow verde.',
+              ''
+            ];
             const text=[
               '<!-- videoforge-ep01-production-queue:v1 -->',
               '# Fila de imagens e animacoes — EP01 (42 tomadas)',
@@ -228,6 +294,7 @@ jobs:
               '',
               '**Regras:** cada imagem custa no maximo uma chamada no workflow filho; nunca reexecutar uma chamada com estado incerto. Nem imagem-mãe, figurino, pegada, rig ou episodio ficam aprovados por uma Action verde. Nao publica YouTube.',
               '',
+              ...feedbackLines,
               '## Historico de tarefas enviadas',
               '',
               '| Tarefa | Estado verificavel | Action filha |',
