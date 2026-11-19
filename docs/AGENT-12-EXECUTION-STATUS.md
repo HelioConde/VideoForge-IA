@@ -1,5 +1,18 @@
 # 12 agentes — execução comprovada e limites (18/11/2026)
 
+## Agentes 02/05/06/08/09/11 — executores reais com QA (19/11/2026)
+
+O workflow [agent-operational-status.yml](../.github/workflows/agent-operational-status.yml) agora executa um segundo despachante `ep01_specialist_dispatch.py` com CAS separado: `runtime/ep01-six-specialist-technical-v1.json`. Cada papel tem tarefa versionada, arquivo resultado, SHA-256, bloqueio em falha, e QA independente do Agente 12. Nenhuma fonte original e sobrescrita, nenhum proxy e cobrado, nenhuma imagem nova por IA e gerada e nenhum video e publicado.
+
+- **02:** le e valida nove beats C07/C08 e a regra de fuga (nao reescreve criativamente roteiro).
+- **05:** confere as 3 imagens reais anteriormente geradas pelo proxy e sua proveniencia SHA (nao gera nova imagem).
+- **06:** recompoe o fundo, Kael e carrinho em PNGs independentes mais JPG de preview com QA, sem uso de OpenCV para sprites finais.
+- **08:** calcula e armazena **240 quadros** geometricos de giro e contato do carrinho, ainda sem rig de camadas aprovado.
+- **09:** valida e exporta EDL de **42 tomadas/163s** com cameras e fontes; direcao visual criativa continua pendente.
+- **11:** renderiza com FFmpeg **MP4 tecnico de 90 quadros/3 segundos**, sem audio/rig e explicitamente nao final, com verificador de codec/quadros/hash.
+
+O sistema diferencia **o que os seis executores de codigo realmente realizaram** do teste historico de respostas textuais Astra. Os registros sao adicionados ao painel [#91](https://github.com/HelioConde/VideoForge-IA/issues/91). A fila principal permanece `planning_only` porque arte, rig, episodio completo e publicacao ainda precisam de aprovacoes. Falha ou arte sem QA nao pode virar tarefa concluida.
+
 ## Painel operacional verificavel (19/11/2026)
 
 O painel unico e publico dos 12 agentes esta na [issue #91](https://github.com/HelioConde/VideoForge-IA/issues/91), atualizado pelo workflow [agent-operational-status.yml](../.github/workflows/agent-operational-status.yml) a cada 6 horas, no merge do novo workflow e por acionamento manual.

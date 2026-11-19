@@ -12,6 +12,11 @@ on:
       - 'orchestrator/tasks.json'
       - 'tests/test_agent_activity.py'
       - 'tests/test_durable_dispatch.py'
+      - 'orchestrator/ep01_specialist_dispatch.py'
+      - 'tests/test_ep01_specialist_dispatch.py'
+      - 'videoforge/ep01_c08_proxy_composite.py'
+      - 'videoforge/ep01_cart_kinematics.py'
+      - 'videoforge/ep01_camera_batch.py'
   push:
     branches: [main]
     paths:
@@ -24,8 +29,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: videoforge-agent-deterministic-dispatch-state
-  cancel-in-progress: false
+  # PR tests have no remote writes, so they need not wait on a hung
+  # old main-state concurrency lock; main still serializes CAS mutations.
+  group: ${{ github.event_name == 'pull_request' && format('vf-agent-PR-{0}', github.event.pull_request.number) || 'videoforge-agent-deterministic-dispatch-state' }}
+  # Superseded PR tests do not block the latest revision; main CAS is serial.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   verify-offline:
@@ -47,10 +55,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install pinned Pillow and bundled FFmpeg binary without apt
+        run: |
+          python -m pip install --quiet Pillow==11.3.0 imageio-ffmpeg==0.6.0
+          python - <<'PY'
+          import imageio_ffmpeg,subprocess
+          binary=imageio_ffmpeg.get_ffmpeg_exe()
+          print('Bundled FFmpeg:',binary)
+          subprocess.run([binary,'-version'],check=True,stdout=subprocess.DEVNULL)
+          PY
       - name: Verify independently reviewed, source-bound dispatch and real role activity model
         run: |
           python -m unittest discover -s tests -p 'test_agent_activity.py' -v
           python -m unittest discover -s tests -p 'test_durable_dispatch.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_specialist_dispatch.py' -v
+      - name: Execute 6 real EP01 technical specialists and QA 12 in offline database
+        run: |
+          python -m orchestrator.ep01_specialist_dispatch \
+            --db "$RUNNER_TEMP/specialists.sqlite" \
+            --output "$RUNNER_TEMP/specialists.json" \
+            --output-dir "$RUNNER_TEMP/six-specialist-artifacts"
       - name: Produce a real offline dry-run report with all twelve role rows
         shell: bash
         run: |
@@ -59,6 +83,7 @@ jobs:
             --output "$RUNNER_TEMP/dispatch.json" --max-tasks 4
           python -m orchestrator.agent_activity \
             --dispatch-report "$RUNNER_TEMP/dispatch.json" \
+            --specialist-report "$RUNNER_TEMP/specialists.json" \
             --output-dir "$RUNNER_TEMP/agent-status" --run-id "$GITHUB_RUN_ID"
           python - <<'PY'
           import json,os
@@ -67,6 +92,8 @@ jobs:
           data=json.loads((folder/'agent-status.json').read_text(encoding='utf-8'))
           assert len(data['agents'])==12
           assert data['technical_dispatch']['source_audits_completed']==4
+          assert data['six_role_technical_execution']['technical_completed']==6
+          assert data['six_role_technical_execution']['technical_preview_verified'] is True
           assert data['historical_astra']['calls']==0  # offline PR never reads private branch
           assert data['technical_dispatch']['new_model_calls']==0
           assert not data['technical_dispatch']['media_tools_executed']
@@ -82,6 +109,8 @@ jobs:
           name: agent-status-offline-${{ github.run_id }}
           path: |
             ${{ runner.temp }}/dispatch.json
+            ${{ runner.temp }}/specialists.json
+            ${{ runner.temp }}/six-specialist-artifacts/
             ${{ runner.temp }}/agent-status/
           retention-days: 14
           if-no-files-found: ignore
@@ -110,6 +139,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install pinned Pillow and bundled FFmpeg binary without apt
+        run: |
+          python -m pip install --quiet Pillow==11.3.0 imageio-ffmpeg==0.6.0
+          python - <<'PY'
+          import imageio_ffmpeg,subprocess
+          binary=imageio_ffmpeg.get_ffmpeg_exe()
+          print('Bundled FFmpeg:',binary)
+          subprocess.run([binary,'-version'],check=True,stdout=subprocess.DEVNULL)
+          PY
       - name: Recheck safe dispatch and status contracts
         run: |
           python -m unittest discover -s tests -p 'test_agent_activity.py' -v
@@ -118,10 +156,16 @@ jobs:
         run: |
           python -m orchestrator.durable_dispatch --github-state --initialize-store \
             --output "$RUNNER_TEMP/real-dispatch.json" --max-tasks 4
+      - name: Execute six additional EP01 specialist tools with independent QA and durable CAS
+        run: |
+          python -m orchestrator.ep01_specialist_dispatch --github-state --initialize-store \
+            --output "$RUNNER_TEMP/real-specialists.json" \
+            --output-dir "$RUNNER_TEMP/six-specialist-artifacts"
       - name: Verify historical REAL Astra roles and render twelve current statuses
         run: |
           python -m orchestrator.agent_activity \
             --dispatch-report "$RUNNER_TEMP/real-dispatch.json" \
+            --specialist-report "$RUNNER_TEMP/real-specialists.json" \
             --read-astra-history \
             --output-dir "$RUNNER_TEMP/agent-operational-status" \
             --run-id "$GITHUB_RUN_ID"
@@ -133,6 +177,9 @@ jobs:
           assert d['historical_astra']['calls']==13
           assert len(d['agents'])==12
           assert d['technical_dispatch']['source_audits_completed']==4
+          assert d['six_role_technical_execution']['technical_completed']==6
+          assert d['six_role_technical_execution']['technical_preview_verified'] is True
+          assert d['agents'][10]['technical_preview_created'] is True
           assert d['technical_dispatch']['new_model_calls']==0
           assert d['human_visual_approval'] is False and d['rig_ready'] is False
           assert d['mp4_final_ready'] is False and d['youtube_publications']==0
@@ -154,6 +201,8 @@ jobs:
                 || report.agents.length !== 12
                 || report.historical_astra.calls !== 13
                 || report.technical_dispatch.source_audits_completed !== 4
+                || report.six_role_technical_execution.technical_completed !== 6
+                || report.six_role_technical_execution.technical_preview_verified !== true
                 || report.technical_dispatch.new_model_calls !== 0
                 || report.technical_dispatch.media_tools_executed !== false
                 || report.human_visual_approval !== false
@@ -193,6 +242,8 @@ jobs:
           name: agent-12-role-operational-status-${{ github.run_id }}
           path: |
             ${{ runner.temp }}/real-dispatch.json
+            ${{ runner.temp }}/real-specialists.json
+            ${{ runner.temp }}/six-specialist-artifacts/
             ${{ runner.temp }}/agent-operational-status/
           if-no-files-found: ignore
           retention-days: 14
