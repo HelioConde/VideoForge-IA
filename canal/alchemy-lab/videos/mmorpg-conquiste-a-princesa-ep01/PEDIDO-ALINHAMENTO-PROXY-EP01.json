@@ -2,10 +2,10 @@
   "schema": "videoforge/ep01-proxy-part-alignment-request/v1",
   "channel": "alchemy-lab",
   "video_id": "mmorpg-conquiste-a-princesa-ep01",
-  "shot_id": "C01-P03",
-  "part": "character-aldric",
-  "source_sha256": "a6eb021cb6c2788530a6fc541831f14d8f99e0392c21de02510f2fdf2312a0f0",
-  "source_run_id": 44076356345,
+  "shot_id": "C01-P05",
+  "part": "character-guarda_direito",
+  "source_sha256": "7091af3214d3c04dc174d55941f525ab543f055b024632315195b97b4af24afd",
+  "source_run_id": 44524006117,
   "source_native_dimensions": [
     941,
     1671
@@ -23,5 +23,5 @@
   "human_visual_approval": false,
   "youtube_upload": false,
   "rig_ready": false,
-  "request_revision": 3
+  "request_revision": 4
 }

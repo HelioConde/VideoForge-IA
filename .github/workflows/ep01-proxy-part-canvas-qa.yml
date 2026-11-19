@@ -1,0 +1,50 @@
+name: "VideoForge - EP01 QA canvas e recomposição de parte (sem IA)"
+on:
+  workflow_dispatch:
+    inputs:
+      asset:
+        description: "Selecione um asset já arquivado"
+        type: choice
+        required: true
+        options: [C01-P05-guard-aligned-v1, C02-P01-crown-v2]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ep01-part-canvas-qa-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  offline-canvas-qa:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Pillow fixado para QA de pixels
+        run: python -m pip install --disable-pip-version-check --quiet Pillow==11.3.0
+      - name: Executar validações e gerar prancha sem chamadas de imagem
+        env:
+          INPUT_ASSET: ${{ inputs.asset }}
+        run: |
+          set -euo pipefail
+          case "$INPUT_ASSET" in
+            C01-P05-guard-aligned-v1) shot=C01-P05; part=character-guarda_direito ;;
+            C02-P01-crown-v2) shot=C02-P01; part=object-coroa-aldric-v2 ;;
+            *) echo 'Unsupported asset'; exit 2 ;;
+          esac
+          python -m videoforge.ep01_proxy_part_canvas_qa --shot-id "$shot" --part "$part"
+      - name: Guardar prancha e JSON para revisão humana
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-part-canvas-qa-${{ inputs.asset }}-${{ github.run_id }}
+          path: output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/qa/
+          retention-days: 14
+          if-no-files-found: error
