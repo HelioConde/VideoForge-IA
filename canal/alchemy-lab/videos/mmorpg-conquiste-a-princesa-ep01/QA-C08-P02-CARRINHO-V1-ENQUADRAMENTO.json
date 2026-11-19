@@ -1,0 +1,32 @@
+{
+  "schema": "videoforge/c08-p02-generated-cart-placement-review/v1",
+  "shot_id": "C08-P02",
+  "asset_id": "c08-p02-object-carrinho",
+  "archived_run_id": 44429108576,
+  "archived_png": "assets/geracoes/production-proxy-separate-part-v1/44429108576/c08-p02-object-carrinho.png",
+  "archived_sha256": "bf78eae46f5d6836a7834fff8714c6e3072f23e523d6fbe73ac8b9b5accb47ab",
+  "source_mother_sha256": "3c21b7d82d69b1445b45cb1a23582e556c910530b568c26ae0d48b4873c38721",
+  "source_mother_dimensions": [
+    1053,
+    1493
+  ],
+  "first_generated_object_dimensions": [
+    1512,
+    1040
+  ],
+  "generated_independently_by_proxy": true,
+  "technical_qa": "rejected_canvas_mismatch_no_pixel_resizing",
+  "visual_qa": "needs_correct_source_relative_scale_and_placement",
+  "observations": [
+    "The first cart was drawn as a large landscape-framed isolated object, not the right-aligned object in the vertical shot.",
+    "Wood, wheels and gilded detail are readable, but the camera framing, bounding box and original cart placement were not preserved.",
+    "Must not stretch this object onto the mother as a substitute for source-correct generation."
+  ],
+  "decision": "reject_as_direct_sprite_for_C08_P02",
+  "versioned_corrective_request": "object-carrinho-v2",
+  "source_archive_preserved": true,
+  "rig_ready": false,
+  "media_ready": false,
+  "human_visual_approval": false,
+  "youtube_uploaded": false
+}

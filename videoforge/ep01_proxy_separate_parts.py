@@ -42,8 +42,10 @@ def read_shot(shot_id: str, part_id: str, root: Path = ROOT) -> tuple[dict,dict]
     # The first generated C08-P02 Kael candidate contains the whole cart.
     # V2 deliberately reuses the canon "character-kael" role, while the
     # versioned logical ID avoids rewriting or rebilling the archived V1.
-    canonical_part = ("character-kael" if (shot_id, part_id)==
-                      ("C08-P02","character-kael-v2") else part_id)
+    canonical_part=(
+        "character-kael" if (shot_id,part_id)==("C08-P02","character-kael-v2")
+        else "object-carrinho" if (shot_id,part_id)==("C08-P02","object-carrinho-v2")
+        else part_id)
     requests=[x for x in shot["images"]["proxy_generation_requests"]
               if x["id"]==canonical_part]
     if len(requests)!=1 or requests[0].get("method")!="proxy_generated_separate_image":
@@ -147,10 +149,11 @@ def _reference_bible(shot_id: str, component: str, root:Path) -> tuple[list[byte
             # V1 fused the cart and Kael into a single alpha object.
             "character-kael-v2": ("biblia-kael-medieval-base-v1",),
             "object-carrinho": ("biblia-carrinho-base-v1","biblia-kael-medieval-base-v1"),
+            "object-carrinho-v2": ("biblia-carrinho-base-v1",),
         }
         if component in priority:
             selected=[name for name in priority[component] if name in ids]
-            expected_ref_count=1 if component=="character-kael-v2" else 2
+            expected_ref_count=1 if component in ("character-kael-v2","object-carrinho-v2") else 2
             if len(selected)!=expected_ref_count:
                 raise VideoForgeError("EP01_C08_MISSING_REQUIRED_CANONICAL_REFERENCE")
     data=[]
@@ -190,6 +193,11 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
         if not rejected or rejected["sha256"]!=(
                 "2579d5786f89957ea776c8c17b76371027fffd2ce43a4e3fba6505201db029d1"):
             raise VideoForgeError("EP01_KAEL_V2_REJECTED_PREDECESSOR_NOT_VERIFIED")
+    if (shot_id,part_id)==("C08-P02","object-carrinho-v2"):
+        rejected=existing_part("C08-P02","object-carrinho",root)
+        if (not rejected or rejected["sha256"] !=
+                "bf78eae46f5d6836a7834fff8714c6e3072f23e523d6fbe73ac8b9b5accb47ab"):
+            raise VideoForgeError("EP01_CART_V2_PREDECESSOR_NOT_VERIFIED")
     enforce_source_qa(shot)
     mother,proof=mother_source(shot_id,root)
     refs,proofs=_reference_bible(shot_id,part_id,root)
@@ -296,6 +304,34 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
             "fully alpha=0, not black opaque or a fake checkerboard. "
             "If you cannot eliminate the cart, do not replace the body "
             "with a new pose: visual QA will reject the result."
+        )
+    if (shot_id,part_id)==("C08-P02","object-carrinho-v2"):
+        instruction=(
+            "Create a COMPLETELY NEW independently drawn transparent RGBA PNG "
+            "of ONLY the original wooden handcart, not a segmented/cropped copy. "
+            "You must preserve the VERTICAL portrait composition from IMAGE ONE, "
+            "which is the C08-P02 continuity mother, native 1053x1493. "
+            "The cart occupies the RIGHT side and lower-middle of the SOURCE "
+            "portrait, while empty transparent space remains at the top and "
+            "LEFT. NEVER make a landscape 1512x1040 object render, a catalog "
+            "product photo or an enlarged/recentered handcart. "
+            "Do NOT change the viewpoint, shape, length of handles, physical "
+            "perspective, material, size, or cart orientation from the mother. "
+            "Match the EXACT on-screen bounding rectangle and camera angle "
+            "of the partly offscreen cart at the right side of source shot. "
+            "Do NOT center a complete newly exposed cart: generate its hidden "
+            "construction only where needed, preserving source framing. "
+            "The cart has ONE rigid wooden chassis, TWO fully circular wheels, "
+            "coherent axle, spokes, wooden beams and the canonical fleur-de-lys "
+            "gold ornament. Use IMAGE TWO solely for visual identity. "
+            "NO Kael, no hands, no red cape, no guards, no other characters, "
+            "NO alley, bricks, pavement, painted background, cast landscape "
+            "or fake checkerboard. Everything outside cart is alpha=0. "
+            "Do NOT flatten wheel sprites into the character. Future wheel "
+            "articulation is separate and not automatically approved. "
+            "Never regenerate the C08 scene mother or overwrite the rejected "
+            "landscape object from the first proxy run. "
+            "This new cart is a QA candidate, NOT a rig-ready production asset."
         )
     prompt=common+instruction
     if len(prompt)>5000:
