@@ -29,7 +29,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: videoforge-agent-deterministic-dispatch-state
+  # PR tests have no remote writes, so they need not wait on a hung
+  # old main-state concurrency lock; main still serializes CAS mutations.
+  group: ${{ github.event_name == 'pull_request' && format('vf-agent-PR-{0}', github.event.pull_request.number) || 'videoforge-agent-deterministic-dispatch-state' }}
   # Superseded PR tests do not block the latest revision; main CAS is serial.
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
