@@ -251,10 +251,12 @@ def render_markdown(data):
          + "nenhum MP4 final, animacao com rig aprovado ou publicacao. "
            "Aprovacoes visuais automaticas: **0**."),
         "",
-        f"- Especialistas 02, 05, 06, 08, 09 e 11: "
-        f"**{data.get('six_role_technical_execution',{}).get('technical_completed',0)}/6** "
-        "entregas tecnicas auditadas por SHA; nao equivalem a novos pedidos Astra. "
-        "O Agente 11 produziu apenas MP4 de diagnostico de 3 segundos, nunca o EP01 final.",
+        (f"- Especialistas 02, 05, 06, 08, 09 e 11: "
+         f"**{data.get('six_role_technical_execution',{}).get('technical_completed',0)}/6** "
+         "entregas tecnicas auditadas por SHA; nao equivalem a novos pedidos Astra. "
+         + ("Agente 11 produziu MP4 tecnico de 3 segundos, nunca o EP01 final."
+            if data.get('six_role_technical_execution',{}).get('technical_preview_verified')
+            else "Nenhum MP4 de diagnostico foi verificado neste relatorio.")),
         "",
         "## Atividade individual (evidencias, nao simulacao)",
         "",
