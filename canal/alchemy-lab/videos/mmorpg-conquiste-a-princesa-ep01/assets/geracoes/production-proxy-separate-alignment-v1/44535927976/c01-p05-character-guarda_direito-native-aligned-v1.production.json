@@ -1,0 +1,30 @@
+{
+  "schema": "videoforge/proxy-separate-canvas-alignment/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "candidate_scene_shot_id": "C01-P05",
+  "asset_id": "c01-p05-character-guarda_direito-native-aligned-v1",
+  "source_mother_sha256": "6a599ab681994790b3e9b07bf573817781a448bcf9f77081bc03764448028553",
+  "source_image_sha256": "7091af3214d3c04dc174d55941f525ab543f055b024632315195b97b4af24afd",
+  "source_originals_sha_verified": [
+    {
+      "id": "c01-p05-character-guarda_direito",
+      "sha256": "7091af3214d3c04dc174d55941f525ab543f055b024632315195b97b4af24afd",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44524006117/c01-p05-character-guarda_direito.png"
+    }
+  ],
+  "generation_method": "proxy_generated_separate_image",
+  "technical_postprocess": "pad_bottom_only_no_crop_or_rescale",
+  "source_pixels_unchanged": true,
+  "bottom_rows_added": 1,
+  "padding_method": "add_transparent_rows",
+  "width": 941,
+  "height": 1672,
+  "sha256": "ab71533b88b2b1a587cce34322b3131fa072b4271383315c80877540a290794a",
+  "technical_qa": "candidate_canvas_aligned_needs_visual_recomposition_qa",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_uploaded": false,
+  "mp4_generated": false,
+  "provider_image_calls": 0
+}
