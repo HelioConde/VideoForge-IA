@@ -175,8 +175,9 @@ jobs:
             const attempts=Object.entries(ledger.attempts);
             const completed=attempts.filter(([,x])=>
               x.status==='archived'||x.status==='preview_complete');
+            const rejected=attempts.filter(([,x])=>x.status==='rejected_archived');
             const pending=attempts.filter(([,x])=>
-              !['archived','preview_complete','blocked_preflight'].includes(x.status));
+              !['archived','preview_complete','blocked_preflight','rejected_archived'].includes(x.status));
             let result=null;
             if(fs.existsSync(process.env.RUN_FILE)){
               result=JSON.parse(fs.readFileSync(process.env.RUN_FILE,'utf8')).execution;
@@ -188,7 +189,7 @@ jobs:
               const child=item.child_run_id
                 ?`[Action ${item.child_run_id}](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${item.child_run_id})`
                 :'sem run verificado';
-              return `| \`${id}\` | ${item.status} | ${child} |`;
+              return '| ' + id + ' | ' + item.status + ' | ' + child + ' |';
             });
             const text=[
               '<!-- videoforge-ep01-production-queue:v1 -->',
@@ -201,7 +202,7 @@ jobs:
               `- **Correcoes C08 novas:** 4 bloqueadas ate prompts/fonte/QA oficiais (Kael V3, rodas, identidade C08-P03).`,
               '- **Previas de camera:** 42 tarefas tecnicas; NAO sao rigs ou animacoes de personagens.',
               '- **Animacoes articuladas:** 42 tarefas bloqueadas ate ter camadas RGBA autenticas e QA visual.',
-              `- **Execucoes-filhas com evidencia persistente:** ${completed.length}; reservas/falhas nao resolvidas: ${pending.length}.`,
+              `- **Execucoes-filhas com evidencia persistente:** ${completed.length}; rejeitadas/arquivadas sem replay: ${rejected.length}; reservas/falhas nao resolvidas: ${pending.length}.`,
               `- **Ultimo lote:** ${result ? result.processed_images+' imagens e '+result.processed_camera_previews+' previas' : 'nenhum resultado de dispatch declarado'}.`,
               '',
               '**Regras:** cada imagem custa no maximo uma chamada no workflow filho; nunca reexecutar uma chamada com estado incerto. Nem imagem-mãe, figurino, pegada, rig ou episodio ficam aprovados por uma Action verde. Nao publica YouTube.',
@@ -212,7 +213,7 @@ jobs:
               '|---|---|---|',
               ...rows,
               '',
-              `**Plano completo:** baixar o artifact [`ep01-production-queue-*`](${runUrl}) com as 276 tarefas, seus bloqueios e SHAs.`,
+              '**Plano completo:** consultar o artifact da Action acima com as 276 tarefas, bloqueios e SHA.',
               '',
             ].join('\n');
             const {data:issue}=await github.rest.issues.get({
