@@ -84,9 +84,11 @@ class SeparatePartsTests(unittest.TestCase):
         self.assertTrue(request["no_provider_calls"])
         self.assertFalse(request["allow_crop_or_resize"])
         self.assertEqual(request["max_bottom_rows_to_add"],2)
-        spec=align.prepare("C01-P05","character-guarda_direito")
-        self.assertEqual(spec["padding"],1)
-        self.assertEqual(spec["expected_canvas"],(941,1672))
+        # The one-row alignment candidate is already archived. The contract
+        # must refuse a second attempt, not fail unrelated queue preflights.
+        with self.assertRaisesRegex(VideoForgeError,
+                                    "EP01_ALIGN_ALREADY_ARCHIVED_NO_REPEAT"):
+            align.prepare("C01-P05","character-guarda_direito")
 
     def test_new_shot_background_has_sha_verified_mother_and_reference(self):
         # The real background may already be archived by subsequent runs.
