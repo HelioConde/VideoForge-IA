@@ -48,6 +48,20 @@ def sha(path: Path) -> str:
     return h.hexdigest()
 
 
+def pinned_file(root: Path, relative: str, expected: str | None = None) -> str:
+    """Verified local source, including code and binary PNGs; no outside paths."""
+    root=Path(root).resolve()
+    path=root / relative
+    if (path.is_symlink() or not path.is_file()
+            or not path.resolve().is_relative_to(root)
+            or path.stat().st_size > 20_000_000):
+        raise ValueError("Unsafe specialist source input")
+    digest=sha(path)
+    if expected is not None and digest!=expected:
+        raise Conflict("Pinned specialist input changed")
+    return digest
+
+
 def seed(store: Store, *, root=ROOT) -> list[str]:
     root = Path(root)
     created=[]
@@ -56,8 +70,7 @@ def seed(store: Store, *, root=ROOT) -> list[str]:
         input_refs={}
         for ref in inputs:
             label=ref.as_posix()
-            _bytes,digest=source(root,label)
-            input_refs[label]=digest
+            input_refs[label]=pinned_file(root,label)
         # Version key changes only when source or specialist instructions change.
         ins={a:instructions(root,a)[1] for a in ("01",role,"12")}
         version=fingerprint({"contract":CONTRACT,"role":role,
@@ -197,7 +210,8 @@ def produce(role: str, output: Path, *, root=ROOT) -> dict:
         subprocess.run([
             "ffmpeg","-hide_banner","-loglevel","error","-y",
             "-loop","1","-framerate","30","-i",str(picture),
-            "-t","3","-an","-c:v","libx264","-pix_fmt","yuv420p",
+            "-t","3","-an","-vf","pad=ceil(iw/2)*2:ceil(ih/2)*2",
+            "-c:v","libx264","-pix_fmt","yuv420p",
             "-r","30","-frames:v","90",str(target)
         ],check=True,timeout=120)
         check=subprocess.check_output([
@@ -298,7 +312,7 @@ def worker_step(store: Store, output_dir: Path, *, root=ROOT):
                 or task["reviewer"]!="12"):
             raise ValueError("Unrecognized specialist assignment")
         for src,digest in task["input_refs"].items():
-            source(root,src,digest)
+            pinned_file(root,src,digest)
         if task["phase"]=="produce":
             needed=REQUIRES.get(role)
             if needed:
