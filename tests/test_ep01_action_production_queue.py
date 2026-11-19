@@ -160,6 +160,50 @@ class ActionQueueTests(unittest.TestCase):
                             q.run_remote(portion,1,0)
                         self.assertEqual(send.call_count,1)
 
+    def test_verified_rejected_child_is_not_retried_and_does_not_stop_next_task(self):
+        images=[t for t in self.plan["tasks"]
+                if t["kind"]=="image" and t["status"]=="ready_for_preflight"][:2]
+        self.assertEqual(len(images),2)
+        env={"GH_TOKEN":"offline-test","GITHUB_TOKEN":"offline-test",
+             "GITHUB_REPOSITORY":"HelioConde/VideoForge-IA",
+             "GITHUB_REF":"refs/heads/main","GITHUB_RUN_ID":"999"}
+        called=[]
+        def send(task):
+            called.append(task["task_id"])
+            return 2001 if len(called)==1 else 2002
+        def fake_reconcile(plan,remote,ledger):
+            task=images[0]["task_id"]
+            if ledger["attempts"].get(task,{}).get("status")=="blocked_failed":
+                ledger["attempts"][task].update(
+                    status="rejected_archived",
+                    technical_qa="rejected_canvas_mismatch_no_pixel_resizing")
+                remote.save(ledger)
+                return [task]
+            return []
+        def watcher(*args,**kwargs):
+            if args[:2]==("run","watch") and args[2]=="2001":
+                raise RuntimeError("verified rejected PNG child")
+            return ""
+        with patch.dict("os.environ",env),patch.object(q,"QueueRemote",FakeRemote):
+            with patch.object(q.parts,"existing_part",return_value=None):
+                with patch.object(q.parts,"prepare",side_effect=lambda shot,part:{
+                    "mother_proof":{"sha256":next(t["source_sha256"] for t in images
+                        if t["shot_id"]==shot and t["part"]==part)}}):
+                    with patch.object(q,"dispatch_child",side_effect=send):
+                        with patch.object(q,"reconcile_rejected_archives",side_effect=fake_reconcile):
+                            with patch.object(q,"reload_main"):
+                                with patch.object(q,"gh",side_effect=watcher):
+                                    with patch.object(q,"verify_child",return_value={
+                                        "status":"archived","sha256":"a"*64,
+                                        "source_file":"verified.png"}):
+                                        result=q.run_remote({"tasks":images},2,0)
+        self.assertEqual(len(called),2)
+        self.assertEqual(result["processed_images"],2)
+        self.assertEqual([x["status"] for x in result["executed"]],
+                         ["rejected_archived","archived"])
+        self.assertEqual(FakeRemote.shared["attempts"][images[0]["task_id"]]["status"],
+                         "rejected_archived")
+
     def test_fail_closed_policy_and_invalid_ref(self):
         with tempfile.TemporaryDirectory() as p:
             with self.assertRaises(Exception):
