@@ -9,6 +9,8 @@ from unittest.mock import patch
 
 from scripts import ep01_action_production_queue as q
 
+REAL_REMOTE_CLASS=q.QueueRemote
+
 
 class FakeRemote:
     shared=None
@@ -18,7 +20,7 @@ class FakeRemote:
     def load(self):
         return deepcopy(FakeRemote.shared)
     def save(self,data):
-        q.QueueRemote._validate_snapshot(data)
+        REAL_REMOTE_CLASS._validate_snapshot(data)
         FakeRemote.shared=deepcopy(data)
         FakeRemote.writes.append(deepcopy(data))
         return "remote-test-sha"
