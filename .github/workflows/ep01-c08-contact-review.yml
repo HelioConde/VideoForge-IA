@@ -1,0 +1,166 @@
+name: "EP01 - C08-P02 contact and C08-P03 continuity QA"
+
+# Source-only contact QA: three existing generated images, no proxy, no model,
+# no segmentation of mother into final sprites, no animation or publication.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ep01-c08-contact-review.yml'
+      - 'videoforge/ep01_c08_contact_review.py'
+      - 'tests/test_ep01_c08_contact_review.py'
+      - 'videoforge/ep01_c08_proxy_composite.py'
+      - 'videoforge/ep01_cart_kinematics.py'
+      - 'videoforge/ep01_camera_batch.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ep01-c08-contact-review.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ep01-contact-original-pixels-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  offline-pr-qa:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pillow pinned for native PNG/alpha analysis
+        run: python -m pip install --quiet Pillow==11.3.0
+      - name: Test independent C08 image contact and motion source gates
+        run: |
+          python -m unittest discover -s tests -p 'test_ep01_c08_contact_review.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_c08_proxy_composite.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_cart_kinematics.py' -v
+      - name: Render non-destructive visual review packet for PR
+        run: |
+          python -m videoforge.ep01_c08_contact_review \
+            --output-dir "$RUNNER_TEMP/c08-contact-review"
+      - name: Keep review board, original SHA evidence, and contact QA JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-c08-contact-qa-pr-${{ github.run_id }}
+          path: ${{ runner.temp }}/c08-contact-review/
+          retention-days: 14
+          if-no-files-found: ignore
+
+  render-evidence-on-main:
+    if: >-
+      github.event_name == 'push'
+      && github.repository == 'HelioConde/VideoForge-IA'
+      && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: read
+      issues: write
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install visual QA dependency (no inference)
+        run: python -m pip install --quiet Pillow==11.3.0
+      - name: Verify sources, compose untouched PNGs, and inspect alpha grips
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_ep01_c08_contact_review.py' -v
+          python -m videoforge.ep01_c08_contact_review \
+            --output-dir "$RUNNER_TEMP/c08-contact-review"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          f=Path(os.environ['RUNNER_TEMP'])/'c08-contact-review'/'c08-p02-contact-review.json'
+          doc=json.loads(f.read_text(encoding='utf-8'))
+          assert doc['geometry_alpha']['upper_hand']['opaque_intersection_px']==0
+          assert doc['geometry_alpha']['lower_hand']['opaque_intersection_px']>100
+          assert doc['narrative_42_shot_handoff']['regional_shots_matched']==9
+          assert doc['narrative_42_shot_handoff']['kinematic_frames']==240
+          assert doc['human_visual_approval'] is False
+          assert doc['rig_ready'] is False
+          assert doc['wheel_sprites_independently_generated'] is False
+          assert doc['new_paid_proxy_calls']==0
+          assert doc['youtube_published'] is False
+          print('C08 grip NOT approved. Review board and blocked rig report archived.')
+          PY
+      - name: Publish C08 blocker in the six-agent work queue without claiming visual approval
+        uses: actions/github-script@v7
+        env:
+          REPORT_FILE: ${{ runner.temp }}/c08-contact-review/c08-p02-contact-review.json
+        with:
+          script: |
+            const fs=require('fs');
+            const d=JSON.parse(fs.readFileSync(process.env.REPORT_FILE,'utf8'));
+            const top=d.geometry_alpha.upper_hand;
+            const low=d.geometry_alpha.lower_hand;
+            if (d.schema!=='videoforge/ep01-c08-p02-grip-review-packet/v1' ||
+                d.status!=='blocked_pending_contact_art_and_human_visual_qa' ||
+                d.new_paid_proxy_calls!==0 ||
+                d.human_visual_approval!==false ||
+                d.rig_ready!==false ||
+                d.youtube_published!==false ||
+                top.opaque_intersection_px!==0 ||
+                low.opaque_intersection_px<=100 ||
+                d.narrative_42_shot_handoff.kinematic_frames!==240)
+              throw new Error('Contact QA provenance or safety gates invalid');
+            const run=`https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body=[
+              '## AG05/06/08/09 — QA de C08-P02 e corte C08-P03',
+              '',
+              `[Action com prancha visual, PNGs independentes e JSON](${run})`,
+              `- **Agente 05 / proveniência:** três fontes geradas anteriormente pelo proxy, com SHA verificado; zero novas chamadas.`,
+              `- **Agente 06 / mão superior:** 0 pixels opacos de intersecção na ROI; raio de proximidade ${top.chebyshev_proximity_radius_px} px. Visualmente, a pegada precisa de correção; QA NÃO aprovado.`,
+              `- **Agente 06 / mão inferior:** ${low.opaque_intersection_px} pixels opacos se sobrepõem, mas overlap não comprova pegada anatômica.`,
+              '- **Agente 08 / movimento:** 240 quadros geométricos (130 giro + 110 barricada), sem rig de personagem ou rodas RGBA independentes.',
+              '- **Agente 09 / continuidade:** 9/9 IDs e intervalos C07/C08 conferem na EDL de 42 tomadas; direção visual e transição de sprites seguem pendentes.',
+              '',
+              '**Status:** bloqueado para rig e MP4 final até revisão visual e correção da mão superior. Não gerar peças de mãos C01-P04 (regra distinta).',
+              'Nenhum arquivo de arte foi alterado, nenhum vídeo publicado.',
+            ].join('\n');
+            const {data:issue}=await github.rest.issues.get({
+              ...context.repo,issue_number:95
+            });
+            if(issue.state!=='open')throw new Error('Work-queue issue was closed');
+            await github.rest.issues.createComment({
+              ...context.repo,issue_number:95,body
+            });
+      - name: Display QA summary in GitHub Actions
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/c08-contact-review/c08-p02-contact-review.json" ]; then
+            echo '### C08-P02: upper-hand grip and C08-P03 cut remain UNAPPROVED' >> "$GITHUB_STEP_SUMMARY"
+            echo 'Three source PNGs verified. Check visual board in artifact; no rig, no generation, no publication.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Archive actual source-composition, zoom board, alpha QA and motion EDL
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ep01-c08-contact-visual-qa-${{ github.run_id }}
+          path: ${{ runner.temp }}/c08-contact-review/
+          retention-days: 14
+          if-no-files-found: ignore
