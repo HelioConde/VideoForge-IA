@@ -77,7 +77,7 @@ jobs:
           from pathlib import Path
           import subprocess
           workflow=Path('.github/workflows/ep01-image-animation-action-queue.yml').read_text()
-          js=workflow.split('          script: |',1)[1].split('\n      - name:',1)[0]
+          js=workflow.rsplit('          script: |',1)[1].split('\n      - name:',1)[0]
           lines=js.splitlines()
           source='\n'.join(line[12:] if line.startswith('            ') else line for line in lines)
           target=Path('/tmp/ep01-queue-issue-check.cjs')
