@@ -11,6 +11,7 @@ on:
       - 'scripts/ep01_action_production_queue.py'
       - 'tests/test_ep01_action_production_queue.py'
       - 'tests/test_ep01_queue_canvas_recovery.py'
+      - 'tests/test_ep01_proxy_separate_parts.py'
       - 'scripts/ep01_layer_gallery.py'
       - 'tests/test_ep01_layer_gallery.py'
       - 'videoforge/ep01_proxy_separate_parts.py'
