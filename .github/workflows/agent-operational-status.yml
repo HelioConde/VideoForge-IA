@@ -1,0 +1,198 @@
+name: "Agents - observable bounded dispatch and 12-role status"
+
+# PR: offline evidence only. On main: bounded real source audits,
+# independently reviewed technical checkpoints, then public status in Issue #91.
+# No inference calls, generation, animation, audio, video or publishing.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/agent-operational-status.yml'
+      - 'orchestrator/agent_activity.py'
+      - 'orchestrator/durable_dispatch.py'
+      - 'orchestrator/tasks.json'
+      - 'tests/test_agent_activity.py'
+      - 'tests/test_durable_dispatch.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/agent-operational-status.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '21 */6 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: videoforge-agent-deterministic-dispatch-state
+  cancel-in-progress: false
+
+jobs:
+  verify-offline:
+    if: >-
+      github.event_name == 'pull_request'
+      && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify independently reviewed, source-bound dispatch and real role activity model
+        run: |
+          python -m unittest discover -s tests -p 'test_agent_activity.py' -v
+          python -m unittest discover -s tests -p 'test_durable_dispatch.py' -v
+      - name: Produce a real offline dry-run report with all twelve role rows
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m orchestrator.durable_dispatch --db "$RUNNER_TEMP/dispatch.sqlite" \
+            --output "$RUNNER_TEMP/dispatch.json" --max-tasks 4
+          python -m orchestrator.agent_activity \
+            --dispatch-report "$RUNNER_TEMP/dispatch.json" \
+            --output-dir "$RUNNER_TEMP/agent-status" --run-id "$GITHUB_RUN_ID"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          folder=Path(os.environ['RUNNER_TEMP'])/'agent-status'
+          data=json.loads((folder/'agent-status.json').read_text(encoding='utf-8'))
+          assert len(data['agents'])==12
+          assert data['technical_dispatch']['source_audits_completed']==4
+          assert data['historical_astra']['calls']==0  # offline PR never reads private branch
+          assert data['technical_dispatch']['new_model_calls']==0
+          assert not data['technical_dispatch']['media_tools_executed']
+          assert data['human_visual_approval'] is False
+          assert data['mp4_final_ready'] is False
+          assert data['youtube_publications']==0
+          print('Twelve role reports rendered without inventing model or media work.')
+          PY
+      - name: Archive offline QA and example dashboard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-status-offline-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/dispatch.json
+            ${{ runner.temp }}/agent-status/
+          retention-days: 14
+          if-no-files-found: ignore
+
+  publish-real-status:
+    if: >-
+      github.repository == 'HelioConde/VideoForge-IA'
+      && github.ref == 'refs/heads/main'
+      && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      issues: write
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recheck safe dispatch and status contracts
+        run: |
+          python -m unittest discover -s tests -p 'test_agent_activity.py' -v
+          python -m unittest discover -s tests -p 'test_durable_dispatch.py' -v
+      - name: Execute or resume four allowed technical source audits in GitHub CAS
+        run: |
+          python -m orchestrator.durable_dispatch --github-state --initialize-store \
+            --output "$RUNNER_TEMP/real-dispatch.json" --max-tasks 4
+      - name: Verify historical REAL Astra roles and render twelve current statuses
+        run: |
+          python -m orchestrator.agent_activity \
+            --dispatch-report "$RUNNER_TEMP/real-dispatch.json" \
+            --read-astra-history \
+            --output-dir "$RUNNER_TEMP/agent-operational-status" \
+            --run-id "$GITHUB_RUN_ID"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads((Path(os.environ['RUNNER_TEMP'])/'agent-operational-status'/'agent-status.json').read_text(encoding='utf-8'))
+          assert d['historical_astra']['validated'] is True
+          assert d['historical_astra']['calls']==13
+          assert len(d['agents'])==12
+          assert d['technical_dispatch']['source_audits_completed']==4
+          assert d['technical_dispatch']['new_model_calls']==0
+          assert d['human_visual_approval'] is False and d['rig_ready'] is False
+          assert d['mp4_final_ready'] is False and d['youtube_publications']==0
+          print('Verified 4 real source audits and 13 prior Astra text calls separately.')
+          PY
+      - name: Publish evidenced status into existing dedicated Issue 91
+        uses: actions/github-script@v7
+        env:
+          BODY_PATH: ${{ runner.temp }}/agent-operational-status/issue-body.md
+          REPORT_PATH: ${{ runner.temp }}/agent-operational-status/agent-status.json
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync(process.env.REPORT_PATH, 'utf8'));
+            const body = fs.readFileSync(process.env.BODY_PATH, 'utf8');
+            const marker='<!-- videoforge-agent-dashboard:v1 -->';
+            if (report.repository !== 'HelioConde/VideoForge-IA'
+                || report.issue_number !== 91
+                || report.agents.length !== 12
+                || report.historical_astra.calls !== 13
+                || report.technical_dispatch.source_audits_completed !== 4
+                || report.technical_dispatch.new_model_calls !== 0
+                || report.technical_dispatch.media_tools_executed !== false
+                || report.human_visual_approval !== false
+                || report.youtube_publications !== 0
+                || !body.startsWith(marker)) {
+              core.setFailed('Agent status provenance / safety validation failed');
+              return;
+            }
+            const {data: issue} = await github.rest.issues.get({
+              ...context.repo, issue_number: 91
+            });
+            if (issue.state !== 'open' || !issue.body?.startsWith(marker)) {
+              core.setFailed('Agent dashboard issue changed or closed; no write');
+              return;
+            }
+            if (issue.body !== body) {
+              await github.rest.issues.update({
+                ...context.repo, issue_number: 91, body
+              });
+              core.info('Updated public twelve-agent dashboard with verified evidence');
+            } else {
+              core.info('Dashboard unchanged: no duplicate update');
+            }
+      - name: Show live dashboard directly in GitHub Actions summary
+        if: always()
+        shell: bash
+        run: |
+          if [ -f "$RUNNER_TEMP/agent-operational-status/agent-status.md" ]; then
+            cat "$RUNNER_TEMP/agent-operational-status/agent-status.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Status incomplete; see job logs. No agent may be claimed as completed.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Archive source journal, per-role evidence, and public report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-12-role-operational-status-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/real-dispatch.json
+            ${{ runner.temp }}/agent-operational-status/
+          if-no-files-found: ignore
+          retention-days: 14
