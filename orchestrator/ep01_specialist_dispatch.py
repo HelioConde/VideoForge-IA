@@ -208,20 +208,22 @@ def produce(role: str, output: Path, *, root=ROOT) -> dict:
         result=build(root,existing)
         picture=existing/result["composite_preview"]
         target=dest/"11-c08-p02-tech-preview-NOT-FINAL.mp4"
+        import imageio_ffmpeg
+        ffmpeg_binary=imageio_ffmpeg.get_ffmpeg_exe()
         subprocess.run([
-            "ffmpeg","-hide_banner","-loglevel","error","-y",
+            ffmpeg_binary,"-hide_banner","-loglevel","error","-y",
             "-loop","1","-framerate","30","-i",str(picture),
             "-t","3","-an","-vf","pad=ceil(iw/2)*2:ceil(ih/2)*2",
             "-c:v","libx264","-pix_fmt","yuv420p",
             "-r","30","-frames:v","90",str(target)
         ],check=True,timeout=120)
-        check=subprocess.check_output([
-            "ffprobe","-v","error","-select_streams","v:0",
-            "-show_entries","stream=nb_frames,codec_name,avg_frame_rate",
-            "-of","json",str(target)],text=True,timeout=20)
-        stream=json.loads(check)["streams"][0]
-        if (stream["codec_name"]!="h264" or int(stream["nb_frames"])!=90
-                or stream["avg_frame_rate"]!="30/1"):
+        frames,seconds=imageio_ffmpeg.count_frames_and_secs(str(target))
+        probe=subprocess.run([ffmpeg_binary,"-hide_banner","-i",str(target),
+                              "-f","null","-"],capture_output=True,text=True,
+                             timeout=45)
+        if (frames!=90 or not (2.9<=seconds<=3.1)
+                or probe.returncode!=0
+                or "Video: h264" not in probe.stderr):
             raise ValueError("Technical preview MP4 integrity failure")
         safe_json(dest/"11-media-technical-preview-QA.json",{
             "fps":30,"frames":90,"duration_seconds":3,
