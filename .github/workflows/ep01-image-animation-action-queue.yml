@@ -34,8 +34,10 @@ on:
         type: number
         required: true
         default: 2
+  # Four UTC slots daily; each remains capped to 2 images + 2 camera previews.
+  # Ledger reservations and per-child no-replay rules remain unchanged.
   schedule:
-    - cron: "37 5 * * *"
+    - cron: "37 2,8,14,20 * * *"
 
 permissions:
   contents: read
