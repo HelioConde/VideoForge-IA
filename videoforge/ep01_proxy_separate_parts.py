@@ -287,11 +287,17 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
         elif spec["transparent"] and im.getchannel("A").getextrema()[1]<128:
             qa="rejected_empty_transparent_asset"
         elif (im.width,im.height)!=spec["source_dimensions"]:
+            source_w, source_h=spec["source_dimensions"]
             if (shot_id in ("C08-P02","C08-P03","C07-P03")
+                    and abs(im.width-source_w)<=2
+                    and abs(im.height-source_h)<=2):
+                # We observed C08-P02 background from the real proxy as
+                # 1054x1493 versus the 1053x1493 mother. Archive all ORIGINAL
+                # provider pixels. A separate, SHA-backed edge alignment may
+                # make a candidate copy, but the raw never gets overwritten.
+                qa="candidate_minor_edge_delta_requires_alignment_qa"
+            elif (shot_id in ("C08-P02","C08-P03","C07-P03")
                     and (im.width,im.height)==(1024,1536)):
-                # The model's fixed 2:3 canvas differs from the continuity
-                # mother. Preserve native provider pixels without resizing.
-                # Spatial placement is BLOCKED until independently aligned.
                 qa="candidate_native_model_canvas_requires_placement_qa"
             else:
                 qa="rejected_canvas_mismatch_no_pixel_resizing"

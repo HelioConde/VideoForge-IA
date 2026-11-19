@@ -1,0 +1,56 @@
+name: "EP01 C08 - verify real proxy image edge alignment without regeneration"
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/ep01-c08-proxy-alignment.yml"
+      - "videoforge/ep01_proxy_c08_alignment.py"
+      - "tests/test_ep01_proxy_c08_alignment.py"
+      - "videoforge/ep01_proxy_separate_parts.py"
+      - "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/PEDIDO-PARTE-PROXY-EP01.json"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ep01-c08-proxy-alignment.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  archived-generated-image-qa:
+    if: >-
+      github.repository == 'HelioConde/VideoForge-IA'
+      && (github.event_name != 'pull_request'
+          || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install minimal image QA dependency
+        run: python -m pip install --quiet Pillow==11.3.0
+      - name: Run archived-image SHA and native-canvas edge tests
+        run: |
+          python -m unittest discover -s tests -p 'test_ep01_proxy_c08_alignment.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
+      - name: Save separate one-column correction of real generated background
+        run: |
+          python -m videoforge.ep01_proxy_c08_alignment \
+            --output-dir "$RUNNER_TEMP/c08-background-proxy-aligned"
+      - name: Preserve corrected canvas and approval-disabled evidence
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c08-mother-first-background-aligned-${{ github.run_id }}
+          path: ${{ runner.temp }}/c08-background-proxy-aligned/
+          retention-days: 14
+          if-no-files-found: error
