@@ -119,6 +119,8 @@ def build(root:Path=ROOT) -> dict:
             origin=digest(root/PLAN)
         add("mother",sid,None,origin,"archived" if mother else "not_required",
             "V2 source remains a visual candidate, not a rig approval", "05",0)
+        if mother:
+            tasks[-1].update(source_file=mother["file"], file_sha256=origin)
     # All 146 requests in the original planning document remain represented.
     for shot in legacy["shots"]:
         sid=shot["id"]
@@ -166,6 +168,8 @@ def build(root:Path=ROOT) -> dict:
                 status="blocked_reference_revision"
                 reason="shot-specific QA forbids reusing the old mother"
             add("image",sid,name,mother["sha256"],status,reason,"05",10)
+            if previous:
+                tasks[-1].update(source_file=previous["file"], file_sha256=previous["sha256"])
     # These are explicit NEW V2 revision requirements; they do NOT silently
     # route through the older image prompts, nor inherit past art approval.
     c08_sha=indexed["C08-P02"]["source"]["sha256"]
@@ -270,7 +274,14 @@ def verify_child(task:dict,run_id:int):
         item=parts.existing_part(task["shot_id"],task["part"])
         if not item or not re.fullmatch(r"[a-f0-9]{64}",item["sha256"]):
             raise ValueError("Child returned but independently generated PNG was not archived by SHA")
-        return {"status":"archived","sha256":item["sha256"],
+        path=ROOT/item["file"]
+        metadata=load_json(path.with_suffix(".production.json"))
+        if (path.parent.name!=str(run_id) or digest(path)!=item["sha256"]
+                or metadata.get("source_mother_sha256")!=task["source_sha256"]
+                or metadata.get("technical_qa") not in {"candidate_proxy_generated_separate_image",
+                                                     "candidate_minor_edge_delta_requires_alignment_qa"}):
+            raise ValueError("Archived candidate differs from child, pinned mother or expected technical QA")
+        return {"status":"archived","technical_qa":metadata["technical_qa"],"sha256":item["sha256"],
                 "source_file":item["file"]}
     if task["kind"]=="camera_preview":
         repo=os.getenv("GH_REPO","HelioConde/VideoForge-IA")
@@ -399,6 +410,7 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
                        "source_sha256":task["source_sha256"],
                        "reserved_by_run":os.getenv("GITHUB_RUN_ID","")}
         remote.save(ledger)
+        started=time.monotonic()
         child_id=None
         try:
             child_id=dispatch_child(task)
@@ -407,6 +419,7 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
             remote.save(ledger)
             gh("run","watch",str(child_id),"--exit-status","--interval","15")
             proven=verify_child(task,child_id)
+            attempts[key]["elapsed_seconds"]=int(time.monotonic()-started)
             attempts[key].update(proven)
             remote.save(ledger)
             results.append({"task_id":key,"child_run_id":child_id,**proven})
@@ -414,6 +427,7 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
         except (subprocess.CalledProcessError,subprocess.TimeoutExpired,
                 ValueError,RuntimeError,OSError) as exc:
             attempts[key]["status"]="blocked_failed" if child_id else "blocked_uncertain"
+            attempts[key]["elapsed_seconds"]=int(time.monotonic()-started)
             attempts[key]["failure_type"]=type(exc).__name__
             remote.save(ledger)
             # If the failed child generated a real PNG and archived it with

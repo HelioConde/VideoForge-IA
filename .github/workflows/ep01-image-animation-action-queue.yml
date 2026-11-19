@@ -11,6 +11,8 @@ on:
       - 'scripts/ep01_action_production_queue.py'
       - 'tests/test_ep01_action_production_queue.py'
       - 'tests/test_ep01_queue_canvas_recovery.py'
+      - 'scripts/ep01_layer_gallery.py'
+      - 'tests/test_ep01_layer_gallery.py'
       - 'videoforge/ep01_proxy_separate_parts.py'
   push:
     branches: [main]
@@ -70,6 +72,7 @@ jobs:
         run: python -m pip install --quiet Pillow==11.3.0
       - name: Verify all 42 shots, old image parts, no-replay and rig gates
         run: |
+          python -m unittest discover -s tests -p 'test_ep01_layer_gallery.py' -v
           python -m unittest discover -s tests -p 'test_ep01_action_production_queue.py' -v
           python -m unittest discover -s tests -p 'test_ep01_queue_canvas_recovery.py' -v
           python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
@@ -194,6 +197,11 @@ jobs:
               if(error.status!==404)throw error;
               core.warning('Queue CAS not initialized: no child is claimed completed.');
             }
+            const path=require('path');
+            const ledgerFile=path.join(process.env.RUNNER_TEMP,'ep01-gallery-ledger.json');
+            fs.writeFileSync(ledgerFile,JSON.stringify(ledger));
+            require('child_process').execFileSync('python',['-m','scripts.ep01_layer_gallery',
+              process.env.PLAN_FILE,ledgerFile,path.join(process.env.RUNNER_TEMP,'ep01-camadas.html')]);
             const attempts=Object.entries(ledger.attempts);
             const completed=attempts.filter(([,x])=>
               x.status==='archived'||x.status==='preview_complete');
@@ -211,7 +219,10 @@ jobs:
               const child=item.child_run_id
                 ?`[Action ${item.child_run_id}](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${item.child_run_id})`
                 :'sem run verificado';
-              return '| ' + id + ' | ' + item.status + ' | ' + child + ' |';
+              const png=item.source_file && item.sha256
+                ? '[PNG](https://github.com/'+context.repo.owner+'/'+context.repo.repo+'/blob/main/'+encodeURI(item.source_file)+')' : '—';
+              const seconds=Number.isInteger(item.elapsed_seconds)?item.elapsed_seconds+' s':'—';
+              return '| ' + id + ' | ' + item.status + ' | ' + child + ' | '+png+' | '+seconds+' |';
             });
             // Derive per-shot feedback from both the immutable plan and the durable CAS ledger.
             const byId=new Map(data.tasks.map(t=>[t.task_id,t]));
@@ -242,7 +253,14 @@ jobs:
               const anim=items('rig_animation').find(t=>t.shot_id===shot);
               const previewText=prev && ledgerStatus(prev)==='preview_complete'?`Prévia pronta (${childLink(prev)})`:'Aguardando prévia';
               const animationText=anim && ledgerStatus(anim)==='animation_complete_and_qa_approved'?'QA aprovado':'Bloqueada: camadas/rig/QA';
-              return `| ${shot} | ${archived}/${img.length} arquivadas; ${ready} prontas; ${blocked} bloqueadas; ${rejected} rejeitadas | ${previewText} | ${animationText} |`;
+              const mother=items('mother').find(t=>t.shot_id===shot);
+              const source=mother?.source_file?`[PNG](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/${encodeURI(mother.source_file)})`:'quadro preto';
+              const previewReceipt=prev && ledger.attempts[prev.task_id];
+              const previewArtifact=previewReceipt?.artifact_id && previewReceipt.child_run_id
+                ? ` · [MP4 no artifact](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${previewReceipt.child_run_id}/artifacts/${previewReceipt.artifact_id})`:'';
+              const animated=anim && ledgerStatus(anim)==='animation_complete_and_qa_approved';
+              const downstream=animated?'QA temporal concluída · render final aguarda montagem':'QA temporal e render aguardam animação';
+              return `| ${shot} | ${source} | ${archived}/${img.length} arquivadas; ${ready} prontas; ${blocked} bloqueadas; ${rejected} rejeitadas | ${previewText}${previewArtifact} | ${animationText} | ${downstream} |`;
             });
             const problemRows=data.tasks.filter(t=>['image','image_correction'].includes(t.kind))
               .filter(t=>isRejected(t)||isBlocked(t)).slice(0,15).map(t=>{
@@ -251,12 +269,13 @@ jobs:
                 const brief=String(reason||'não informado').replace(/[\r\n|]/g,' ').slice(0,130);
                 return `| ${t.shot_id} / ${t.part||'-'} | ${state} | ${brief} | ${childLink(t)} |`;
               });
+            const active=data.tasks.filter(t=>['reserved','dispatched'].includes(ledgerStatus(t)));
             const feedbackLines=[
               '## Feedback de produção — imagens, prévias e animações',
               '',
               '**Atualização automática a cada execução do controlador** (não é transmissão em tempo real). Todos os números abaixo são baseados no plano versionado e no ledger CAS persistente.',
               '',
-              `- **Imagens separadas:** ${imageArchived} arquivadas entre ${imageTasks.length} solicitações originais; ${imageReady} prontas para pré-verificação; ${imageBlocked} bloqueadas; ${imageRejected} rejeitadas para revisão. Arquivo não é aprovação visual.`,
+              `- **Imagens separadas:** ${imageArchived} arquivadas entre ${imageTasks.length} solicitações originais; ${imageReady} prontas para pré-verificação; ${imageBlocked} bloqueadas; ${imageRejected} rejeitadas para revisão. Incluindo as rejeitadas preservadas: ${imageArchived+imageRejected} registros de arquivo nessas duas categorias. Aprovações visuais individuais da fila: ${imageTasks.filter(t=>ledger.attempts[t.task_id]?.human_visual_approval===true).length}.`,
               `- **Prévia de câmera:** ${previewDone}/42 concluídas; apenas camera-only, sem rig.`,
               `- **Animação articulada real:** ${rigDone}/42 com conclusão e QA registrados; demais aguardam RGBA, rig, animação e aprovação visual.`,
               `- **Correções especiais C08:** ${items('image_correction').length} tarefas planejadas; não gerar com referências antigas.`,
@@ -264,10 +283,14 @@ jobs:
               '',
               '**Status:** arquivada = PNG salvo com evidência, não arte aprovada; rejeitada = resultado preservado, sem repetição automática; bloqueada = exige correção; prévia = só câmera; animação = exige camadas e rig verdadeiros.',
               '',
+              'Em processamento no último registro: '+(active.map(t=>t.task_id+' (Agente '+t.owner+')').join(', ')||'nenhuma reserva ativa')+'.',
+              'Galeria de todas as tomadas: abrir **ep01-camadas.html** no [artifact do controlador]('+runUrl+'). Inclui miniaturas, PNGs, fontes, responsáveis e arquivos das prévias.',
+              'QA visual do Agente 12: requer parecer específico por tomada. Rig, QA temporal e render final aguardam material liberado.',
+              '',
               '### Progresso por tomada',
               '',
-              '| Tomada | Imagens separadas | Prévia de câmera | Animação articulada |',
-              '|---|---|---|---|',
+              '| Tomada | Imagem-mãe | Camadas | Prévia de câmera | Animação articulada | QA temporal e render |',
+              '|---|---|---|---|---|---|',
               ...shotRows,
               '',
               '### Problemas que precisam de ação (primeiros 15)',
@@ -298,8 +321,8 @@ jobs:
               ...feedbackLines,
               '## Historico de tarefas enviadas',
               '',
-              '| Tarefa | Estado verificavel | Action filha |',
-              '|---|---|---|',
+              '| Tarefa | Estado verificavel | Action filha | Imagem | Tempo observado |',
+              '|---|---|---|---|---|',
               ...rows,
               '',
               '**Plano completo:** consultar o artifact da Action acima com as 276 tarefas, bloqueios e SHA.',
@@ -323,5 +346,6 @@ jobs:
           path: |
             ${{ runner.temp }}/ep01-production-queue-plan.json
             ${{ runner.temp }}/ep01-production-queue-execution.json
+            ${{ runner.temp }}/ep01-camadas.html
           retention-days: 30
           if-no-files-found: ignore
