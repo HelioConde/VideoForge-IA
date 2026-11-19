@@ -1,0 +1,36 @@
+{
+  "schema": "videoforge/c08-p02-kael-separation-review/v1",
+  "shot_id": "C08-P02",
+  "asset_id": "c08-p02-character-kael",
+  "source_run_id": 44430373725,
+  "source_artifact": "vf-ep01-part-C08-P02-character-kael-44430373725",
+  "source_sha256": "2579d5786f89957ea776c8c17b76371027fffd2ce43a4e3fba6505201db029d1",
+  "source_mother_sha256": "3c21b7d82d69b1445b45cb1a23582e556c910530b568c26ae0d48b4873c38721",
+  "source": "assets/geracoes/production-proxy-separate-part-v1/44430373725/c08-p02-character-kael.png",
+  "generated_independently_by_proxy": true,
+  "source_pixels_cut_out_for_rig": false,
+  "native_canvas": [
+    1054,
+    1493
+  ],
+  "mother_canvas": [
+    1053,
+    1493
+  ],
+  "actual_alpha_channel": true,
+  "qa_decision": "rejected_for_character_rig",
+  "evidence": [
+    "Visual inspection confirms Kael and the nearly entire cart are fused in the same RGBA PNG.",
+    "The cart occupies substantial right-side alpha coverage, making independent cart rotation impossible.",
+    "One-pixel source canvas discrepancy additionally requires independent technical alignment QA."
+  ],
+  "required_separation": "Kael must be the sole nontransparent subject. No wooden cart, spokes, axles, cart handles, vehicle corners, alley background or other characters.",
+  "fixed_source_proposal": "C08-P02-character-kael-v2 generated as a new image using archived V2 mother and only Kael visual-bible image.",
+  "approved_for_rig": false,
+  "approved_for_animation": false,
+  "human_visual_approval": false,
+  "keep_original_png": true,
+  "replacement_not_overwrite": true,
+  "do_not_reuse_in_final_composition": true,
+  "youtube_uploaded": false
+}
