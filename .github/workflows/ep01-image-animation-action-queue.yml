@@ -97,8 +97,8 @@ jobs:
       AI_ENABLED: 'false'
       PAID_CALLS_ENABLED: 'false'
       YOUTUBE_PUBLICATION_ENABLED: 'false'
-      MAX_IMAGES: ${{ inputs.max_images || 2 }}
-      MAX_PREVIEWS: ${{ inputs.max_previews || 2 }}
+      MAX_IMAGES: ${{ inputs.max_images }}
+      MAX_PREVIEWS: ${{ inputs.max_previews }}
       QUEUE_MODE: ${{ inputs.mode || 'run' }}
     steps:
       - uses: actions/checkout@v4
@@ -126,6 +126,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ -z "$MAX_IMAGES" ]]; then MAX_IMAGES=2; fi
+          if [[ -z "$MAX_PREVIEWS" ]]; then MAX_PREVIEWS=2; fi
           python scripts/ep01_action_production_queue.py --mode run \
             --max-images "$MAX_IMAGES" --max-previews "$MAX_PREVIEWS" \
             --output "$RUNNER_TEMP/ep01-production-queue-execution.json"
@@ -222,7 +224,7 @@ jobs:
             await github.rest.issues.update({
               ...context.repo,issue_number:98,body:text
             });
-            core.summary.addRaw(text).write();
+            await core.summary.addRaw(text).write();
       - name: Archive complete planned tasks and real child run results
         if: always()
         uses: actions/upload-artifact@v4
