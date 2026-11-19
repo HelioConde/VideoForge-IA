@@ -1,0 +1,142 @@
+name: "Agents - recover genuine Astra 01 12 01 proposals without replay"
+
+# This recovery NEVER calls proxy, OpenAI, image generation, rigs or YouTube.
+# It only reads two SHA-verified state journals and posts a BLOCKED work-order
+# report for a one-time failed model consolidation. Existing answers stay intact.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/agent-ep01-astra-journal-recovery.yml'
+      - 'orchestrator/ep01_astra_journal_recovery.py'
+      - 'tests/test_ep01_astra_journal_recovery.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/agent-ep01-astra-journal-recovery.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  offline-recovery-tests:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install read-only image QA dependencies for existing six-role regression test
+        run: python -m pip install --quiet Pillow==11.3.0 imageio-ffmpeg==0.6.0
+      - name: Validate blocked journal and guarantee no replay
+        run: |
+          python -m unittest discover -s tests -p 'test_ep01_astra_journal_recovery.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_astra_supervisor.py' -v
+
+  recover-original-journal-on-main:
+    if: >-
+      github.event_name == 'push'
+      && github.repository == 'HelioConde/VideoForge-IA'
+      && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      AI_ENABLED: 'false'
+      PAID_CALLS_ENABLED: 'false'
+      CODEX_PROXY_TEXT_AUTHORIZED: 'false'
+      IMAGE_GENERATION_ENABLED: 'false'
+      YOUTUBE_PUBLICATION_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Revalidate recovery locally before touching issues
+        run: python -m unittest discover -s tests -p 'test_ep01_astra_journal_recovery.py' -v
+      - name: Recover real immutable model outputs and six advisory work orders
+        run: |
+          set -euo pipefail
+          python -m orchestrator.ep01_astra_journal_recovery \
+            --output-dir "$RUNNER_TEMP/recovered-ep01-astra-work-orders"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          target=Path(os.environ['RUNNER_TEMP'])/'recovered-ep01-astra-work-orders'
+          d=json.loads((target/'recovered-six-agent-work-orders.json').read_text(encoding='utf-8'))
+          assert d['original_task_status']=='blocked'
+          assert d['original_checkpoints']==0
+          assert d['original_final_schema_valid'] is False
+          assert d['original_final_misattributes_240_frames_to_c01p04'] is True
+          assert d['real_model_calls_observed']==3
+          assert d['additional_model_calls']==0
+          assert d['proposals_accepted_by_text_qa']==6
+          assert d['verified_previous_specialist_outputs']==6
+          assert len(d['advisory_work_orders'])==6
+          assert d['human_visual_approval'] is False
+          assert d['final_mp4_approved'] is False
+          assert d['youtube_publication'] is False
+          print('Three genuine Astra replies preserved; six proposals triaged without rerun.')
+          PY
+      - name: Publish accurate blocked status to Issues 91 and 95
+        uses: actions/github-script@v7
+        env:
+          RECOVERY_FILE: ${{ runner.temp }}/recovered-ep01-astra-work-orders/recovered-six-agent-work-orders.json
+        with:
+          script: |
+            const fs=require('fs');
+            const r=JSON.parse(fs.readFileSync(process.env.RECOVERY_FILE,'utf8'));
+            if(r.original_run_id!==44454660648 ||
+               r.original_task_status!=='blocked' ||
+               r.original_checkpoints!==0 ||
+               r.real_model_calls_observed!==3 ||
+               r.additional_model_calls!==0 ||
+               r.proposals_accepted_by_text_qa!==6 ||
+               r.original_final_schema_valid!==false ||
+               r.original_final_misattributes_240_frames_to_c01p04!==true ||
+               r.human_visual_approval!==false ||
+               r.youtube_publication!==false)
+              throw new Error('Unsafe state report: no issue changes permitted');
+            const run=`https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const previous=`https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/44454660648`;
+            const content=[
+              '## Recuperação sem novas chamadas Astra',
+              '',
+              `[Verificação offline da Action ${context.runId}](${run})`,
+              `[Três respostas originais do Astra](${previous})`,
+              '',
+              '**3/3 chamadas reais preservadas; 6 propostas de Agentes 01/12 extraídas e verificadas.**',
+              '**Estado da tarefa original: BLOQUEADA.** Nenhum checkpoint final foi criado.',
+              'A consolidação de 01 falhou porque next_steps era string e confundiu C01-P04 com os 240 quadros de C08-P02/P03.',
+              'As propostas permanecem pendentes de execução, QA visual e revisão do criador.',
+              '',
+              'Não foram feitas chamadas novas ao Astra, imagens, rigs, episódios finais ou YouTube.',
+              'Inventário das tarefas: https://github.com/HelioConde/VideoForge-IA/issues/95'
+            ].join('\n');
+            for (const issue_number of [91,95]) {
+              const {data:issue}=await github.rest.issues.get({...context.repo,issue_number});
+              if(issue.state!=='open') throw new Error('Target issue is closed: '+issue_number);
+              await github.rest.issues.createComment({...context.repo,issue_number,body:content});
+            }
+      - name: Preserve complete read-only recovery evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recovered-ep01-astra-original-3-calls-${{ github.run_id }}
+          path: ${{ runner.temp }}/recovered-ep01-astra-work-orders/
+          retention-days: 14
+          if-no-files-found: ignore
