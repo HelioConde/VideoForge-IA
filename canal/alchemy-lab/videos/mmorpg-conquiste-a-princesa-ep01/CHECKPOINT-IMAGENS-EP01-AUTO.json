@@ -467,7 +467,7 @@
       "human_visual_approval": false
     }
   ],
-  "separate_proxy_generated_asset_count": 24,
+  "separate_proxy_generated_asset_count": 25,
   "separate_proxy_generated_assets": [
     {
       "asset": "c01-p03-background-clean",
@@ -611,6 +611,12 @@
       "asset": "c03-p02-character-kael",
       "sha256": "ac9ac7e8b4db1004fa19a087442acdbfb7ae663f7e9419a998e22aa822d2a182",
       "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44539188254/c03-p02-character-kael.png",
+      "human_visual_approval": false
+    },
+    {
+      "asset": "c03-p02-object-monitor",
+      "sha256": "11070b7132608bffc1176fbe4b142a2a222ed4c69c11f7f2c97824599edd94c0",
+      "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44539532922/c03-p02-object-monitor.png",
       "human_visual_approval": false
     }
   ],
