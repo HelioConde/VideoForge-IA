@@ -47,17 +47,21 @@ jobs:
           req=json.loads(fn.read_text(encoding='utf-8'))
           part=p.prepare(req['shot_id'],req['part'])
           assert req['shot_id']=='C08-P02'
-          assert req['part'] in ('background-clean','character-kael','character-kael-v2','object-carrinho')
+          assert req['part'] in ('background-clean','character-kael','character-kael-v2','object-carrinho','object-carrinho-v2')
           assert req['generation_method']=='proxy_generated_separate_image'
           assert req['parent_mother_sha256']==part['mother_proof']['sha256']
           assert req['parent_mother_asset']==part['mother_proof']['asset_id']
           assert part['source_dimensions']==(1053,1493)
           assert part['transparent'] is (req['part']!='background-clean')
           assert len(part['ref_proofs'])>=1
-          assert len(part['ref_proofs']) == (1 if req['part']=='character-kael-v2' else 2)
+          assert len(part['ref_proofs']) == (1 if req['part'] in ('character-kael-v2','object-carrinho-v2') else 2)
           if req['part']=='character-kael-v2':
               assert part['ref_proofs'][0]['asset_id']=='biblia-kael-medieval-base-v1'
               assert 'ZERO CART PIXELS' in part['prompt']
+          if req['part']=='object-carrinho-v2':
+              assert part['ref_proofs'][0]['asset_id']=='biblia-carrinho-base-v1'
+              assert 'VERTICAL portrait' in part['prompt']
+              assert 'NO Kael' in part['prompt']
           assert req['max_chargeable_calls_per_run']==1
           assert req['allow_local_crop_or_segmentation_for_final_asset'] is False
           assert req['human_visual_approval'] is False and req['rig_ready'] is False
