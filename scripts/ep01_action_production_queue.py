@@ -416,6 +416,20 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
             attempts[key]["status"]="blocked_failed" if child_id else "blocked_uncertain"
             attempts[key]["failure_type"]=type(exc).__name__
             remote.save(ledger)
+            # If the failed child generated a real PNG and archived it with
+            # rejected technical QA, reconcile that exact billed attempt.
+            # Never retry it. Preserve failures with unknown side effects.
+            if child_id and kind=="image":
+                reload_main()
+                rejected=reconcile_rejected_archives(plan,remote,ledger)
+                if key in rejected:
+                    results.append({"task_id":key,"child_run_id":child_id,
+                                    "status":"rejected_archived",
+                                    "technical_qa":attempts[key]["technical_qa"]})
+                    counters[kind]+=1
+                    print("EP01_REJECTED_CHILD_RECONCILED_NO_REPLAY",
+                          key,child_id,flush=True)
+                    continue
             raise RuntimeError("EP01_QUEUE_CHILD_FAILED_NO_RETRY "+
                                key+" run="+str(child_id or "unknown")) from None
     return {"executed":results,"processed_images":counters["image"],
