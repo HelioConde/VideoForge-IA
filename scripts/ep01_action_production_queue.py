@@ -35,7 +35,12 @@ IMAGE_WORKFLOW = "ep01-proxy-separate-part-by-request.yml"
 PREVIEW_WORKFLOW = "ep01-camera-batch-preview.yml"
 CONTINUITY_SHOTS = {"C07-P01", "C07-P02", "C07-P03", "C07-P04",
                     "C08-P01", "C08-P02", "C08-P03", "C08-P04", "C08-P05"}
-SHOTS_BLOCKED_FROM_LEGACY_PARTS = CONTINUITY_SHOTS | {"C01-P02", "C01-P04"}
+# V3 supersedes these exact same shot IDs with NEW backgrounds and throne art.
+# Keep 276 historical tasks/ledger intact, but never pay for V2-based parts here.
+V3_REPLACED_SHOTS = {"C01-P03", "C01-P05", "C07-P03", "C07-P04",
+                     "C08-P01", "C08-P02", "C08-P03", "C08-P04",
+                     "C08-P05", "C09-P01", "C09-P02"}
+SHOTS_BLOCKED_FROM_LEGACY_PARTS = CONTINUITY_SHOTS | {"C01-P02", "C01-P04"} | V3_REPLACED_SHOTS
 SPECIAL_C08 = (
     ("C08-P02", "character-kael-v3", "new version must integrate both grip hands to the SAME archived V2 cart"),
     ("C08-P02", "object-wheel-left-v1", "requires approved cart wheel geometry/transparent part prompt"),
@@ -159,6 +164,8 @@ def build(root:Path=ROOT) -> dict:
             if sid in SHOTS_BLOCKED_FROM_LEGACY_PARTS:
                 status="archived_version_check_needed" if previous else "blocked_reference_revision"
                 reason=(
+                    "EP01 V3 replaced this shot mother; old V2 layer prompts are source-incompatible and must not trigger paid generation"
+                    if sid in V3_REPLACED_SHOTS else
                     "C07/C08 continuity V2: old image-part plan cannot be used as a proxy for the approved framing"
                     if sid in CONTINUITY_SHOTS else
                     "C01-P02 source mother rejected; build corrected mother first"
@@ -460,6 +467,11 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
     for task in sorted(plan["tasks"],key=lambda t:(t["priority"],t["task_id"])):
         kind="image" if task["kind"]=="image_correction" else task["kind"]
         if kind not in CHILD or task["status"]!="ready_for_preflight":
+            continue
+        # V3 is generating genuinely new shot mothers and backgrounds; the
+        # historical V2 camera Action must not be re-dispatched for those IDs.
+        # Existing V2 preview_complete entries stay auditable in the ledger.
+        if task["kind"]=="camera_preview" and task["shot_id"] in V3_REPLACED_SHOTS:
             continue
         limit=max_images if kind=="image" else max_previews
         if counters[kind]>=limit:
