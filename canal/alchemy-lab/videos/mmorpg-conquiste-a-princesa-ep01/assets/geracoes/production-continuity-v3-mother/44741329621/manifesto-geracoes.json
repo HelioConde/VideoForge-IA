@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-continuity-v3-mother",
+  "github_run_id": 44741329621,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c09-p02-continuity-v3-scene-mother.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "62598361322dc6dc8d5650d26c0c30bf30e31b74df1b78ad9036e818a1efd2d3",
+      "bytes": 3164969,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
