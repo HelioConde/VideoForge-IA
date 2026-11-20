@@ -15,6 +15,7 @@
   "youtube_upload": false,
   "source_of_truth": "direcao-rig-remotion.json",
   "notes": [
+    "20/11/2026: continuidade visual V3 sobrepoe prompts antigos de C01-P03/C01-P05/C07-P03 a C09-P02: novos ambientes Largo do Mercado, portao de servico e escadaria, carroca sozinha na C08-P03; Aldric permanece sentado na C01-P03 ate C02. Consultar CORRECAO-CENARIOS-TRONO-V3.json, sem substituir mae aprovada C01-P04 nem publicar.",
     "O roteiro anterior de 13 cenas/134s fica como histórico editorial; aqui está a versão 14 cenas/163s.",
     "A abertura da espada pertence ao carrasco/tribunal, NÃO a Kael.",
     "Antes de animar cada plano, imagem-mãe e PNGs RGBA reais da mesma origem são obrigatórios.",
@@ -693,5 +694,35 @@
       ],
       "cast_rule": "Somente personagens listados em reference_cast; a prancha tem elenco completo mas os demais NÃO podem aparecer na imagem."
     }
-  ]
+  ],
+  "continuity_revision_v3": {
+    "status": "creator_feedback_applied_to_editorial_direction_sources_pending",
+    "source_of_truth": "CORRECAO-CENARIOS-TRONO-V3.json",
+    "original_episode_seconds_preserved": 163,
+    "v3_replaced_shots": [
+      "C01-P03",
+      "C01-P05",
+      "C07-P03",
+      "C07-P04",
+      "C08-P01",
+      "C08-P02",
+      "C08-P03",
+      "C08-P04",
+      "C08-P05",
+      "C09-P01",
+      "C09-P02"
+    ],
+    "v2_approved_anchor_unchanged": "C01-P04",
+    "aldric_posture_C01_C02": "seated_on_throne_without_change",
+    "geography": [
+      "initial_flower_alley",
+      "market_square",
+      "warehouse_service_chokepoint",
+      "upper_stairs_and_courtyard"
+    ],
+    "requirement_cart_single_frame": "C08-P03 contains ONLY cart and background, NO masked pursuers, guards, Kael or Elara",
+    "no_visual_auto_approval": true,
+    "no_rig_auto_approval": true,
+    "no_youtube": true
+  }
 }
