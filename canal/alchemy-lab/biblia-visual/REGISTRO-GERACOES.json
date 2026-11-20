@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 206,
+  "total_arquivadas": 207,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -7593,6 +7593,44 @@
         {
           "id": "approved-scene-C01-P04",
           "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+          "path": null
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "não_informado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-continuity-v3-mother:44739522385:c07-p03-continuity-v3-scene-mother.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c07-p03-continuity-v3-scene-mother",
+      "shot": "C07-P03",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-continuity-v3-mother",
+      "github_run_id": 44739522385,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v3-mother/44739522385/c07-p03-continuity-v3-scene-mother.png",
+      "sha256": "a19dbaf2432594edac0b0753e0136aa84421d48b1b3549db941abcac49926959",
+      "bytes": 3375628,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "biblia-elara-encapuzada-v1",
+          "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31",
+          "path": null
+        },
+        {
+          "id": "biblia-kael-medieval-base-v1",
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": null
+        },
+        {
+          "id": "biblia-largo-encontro-arken-v3",
+          "sha256": "2d2e10b7e1c67f9e3ae40bf4e221619f05e957eaedac5e049898e70fabba137a",
           "path": null
         }
       ],
