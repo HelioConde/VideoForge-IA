@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-proxy-separate-part-v1",
+  "github_run_id": 44668114435,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c05-p02-character-kael.png",
+      "width": 941,
+      "height": 1671,
+      "sha256": "eb876701cea65635bfd31ffc0652b8b59f857b41630f6ab60268bd980db4e2eb",
+      "bytes": 108136,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
