@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 205,
+  "total_arquivadas": 206,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -7530,6 +7530,59 @@
         {
           "id": "biblia-aldric-tribunal-v1",
           "sha256": "37c48afcaa240f03406c280af1af4ca49304ead552f0dd89f0bbb25d0080e417",
+          "path": null
+        },
+        {
+          "id": "biblia-sala-do-trono-vazio-v1",
+          "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee",
+          "path": null
+        },
+        {
+          "id": "approved-scene-C01-P04",
+          "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd",
+          "path": null
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "não_informado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-continuity-v3-mother:44739311088:c01-p05-continuity-v3-scene-mother.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c01-p05-continuity-v3-scene-mother",
+      "shot": "C01-P05",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-continuity-v3-mother",
+      "github_run_id": 44739311088,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v3-mother/44739311088/c01-p05-continuity-v3-scene-mother.png",
+      "sha256": "a0b313f35abd166e7694b39571f7bbfcb75b1cc74950a8f65aecc20b6c6f62dc",
+      "bytes": 2649367,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "biblia-aldric-tribunal-v1",
+          "sha256": "37c48afcaa240f03406c280af1af4ca49304ead552f0dd89f0bbb25d0080e417",
+          "path": null
+        },
+        {
+          "id": "biblia-guarda-esquerdo-cerimonial-v1",
+          "sha256": "cfa01b0f4781a67ffda243a97c640909f30755f246bc82dde14b8274272d1679",
+          "path": null
+        },
+        {
+          "id": "biblia-guarda-direito-cerimonial-v1",
+          "sha256": "3fcdaa067b55d3d75599dab6253ec4605f44453e7ecbc469581f67783bfbb5fb",
+          "path": null
+        },
+        {
+          "id": "biblia-lanca-guarda-completa-v2",
+          "sha256": "b6fb64fe457b6b87415176110d5169fa2afef4e61d859bc56ece858d8727d072",
           "path": null
         },
         {
