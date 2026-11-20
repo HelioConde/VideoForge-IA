@@ -4,6 +4,8 @@
 
 > Esta versão cinematográfica de 14 cenas substitui a pré-produção antiga de 13 cenas/134 segundos. Toda direção de 37 planos, movimentos de rig, câmera e camadas está em [direcao-rig-remotion.json](direcao-rig-remotion.json). O manifesto estruturado para o gerador é [roteiro.json](roteiro.json). **Não declarar MP4 concluído sem imagens-mãe, sprites, QA e render comprovados.**
 
+> **Atualização de continuidade V3 (20/11/2026):** [CORRECAO-CENARIOS-TRONO-V3.json](CORRECAO-CENARIOS-TRONO-V3.json) prevalece para C01-P03, C01-P05 e C07-P03 a C09-P02. Cenários novos são referências independentes, não crop/zoom do beco anterior. O MP4 V2 permanece arquivado e reprovado nestes cortes. C01-P04 já aprovada permanece intacta; Aldric sentado em todos os cortes do trono.
+
 ## Premissa
 
 Kael, um jogador de MMORPG de 23 anos, desperta como aventureiro de nível 1 no reino de Arken. Depois de salvar uma desconhecida encapuzada, tenta devolver o broche que ela deixou cair. Guardas reais — já alertados sobre o desaparecimento da princesa — o consideram suspeito e o levam diante do rei Aldric. A jovem salva estava o tempo todo junto do trono: era a princesa Elara. Enquanto Kael abaixa a cabeça em sinal de respeito e apenas desvia os olhos para reconhecê-la, surge uma missão absurda: **conquistar o coração da princesa** para voltar ao seu mundo. Em vez de condená-lo, ela declara à corte que ele é seu noivo.
@@ -14,12 +16,12 @@ Kael, um jogador de MMORPG de 23 anos, desperta como aventureiro de nível 1 no 
 
 - **Preto absoluto (0s–2s):** frame 0-59: tela totalmente preta, nenhuma arte visível. O som de aço começa no silêncio. SFX: fricção de bainha distante
 - **Lâmina desembainhada (2s–5s):** frame 60-149: mostrar exclusivamente a mão enluvada, punho, guarda, bainha e lâmina. A máscara da bainha revela somente o metal que sai; brilho percorre lâmina e desaparece. SFX: desembainhar, lâmina separada, sem sangue
-- **Kael ajoelhado (5s–8s):** frame 150-239: corte seco ao Kael ajoelhado diante de um trono imenso; manter cabeça baixa; nada de princesa no enquadramento. SFX: joelho no piso de pedra
+- **Kael ajoelhado (5s–8s):** frame 150-239: corte seco ao Kael ajoelhado diante do MESMO trono aprovado C01-P04; rei Aldric SENTADO no fundo, não de pé nem fora do trono. Manter cabeça baixa; nada de princesa no enquadramento. SFX: joelho no piso de pedra
 - **Revelar guardas e lanças cruzadas (8s–12s):** frame 240-359: câmera perspectiva recua do rosto de Kael até mostrar dois guardas ATRÁS dele; cada guarda move braços e mãos, lanças distintas se cruzam em X acima do réu; trono domina fundo. SFX: metal contra metal ao cruzar lanças
 
 ### C02 — Acusação (12s–24s)
 
-- **O rei acusa (12s–19s):** plano frontal de Aldric com coroa, barba e manto bordô; ele se inclina minimamente para declarar acusação; boca exige sincronização fonética real. REI: Kael! Você é acusado de sequestrar a princesa deste reino!
+- **O rei acusa (12s–19s):** plano frontal de Aldric SENTADO no mesmo trono de C01-P04, com coroa, barba e manto bordô; apenas inclina o torso minimamente SEM LEVANTAR, para declarar acusação; boca exige sincronização fonética real. REI: Kael! Você é acusado de sequestrar a princesa deste reino!
 - **Pânico contido (19s–24s):** pupilas de Kael fixas no chão; testa contrai; não ergue cabeça por respeito; duas mãos tensas no campo. KAEL (pensamento): Ontem eu era só um jogador. Agora posso ser executado?
 
 ### C03 — Memória (24s–31s)
@@ -44,27 +46,27 @@ Kael, um jogador de MMORPG de 23 anos, desperta como aventureiro de nível 1 no 
 - **Bolsa vazia (58s–64s):** mercado medieval com bancas e figurantes em layers independentes; Kael abre bolsa com duas mãos, o interior deve estar reconstruído. KAEL (pensamento): Nível um, sem dinheiro e sem mapa...
 - **Sobreviva ao primeiro dia (64s–69s):** o sistema informa missão secundária, Kael reage com ironia silenciosa, sem saltar a imagem ou fazer zoom substituindo movimento. HUD: MISSÃO SECUNDÁRIA — SOBREVIVA AO PRIMEIRO DIA
 
-### C07 — Desconhecida (69s–82s) — revisão de continuidade V2
+### C07 — Fuga e encontro: duas ruas distintas (69s–82s) — revisão V3
 
-- **C07-P01 (69s–72s):** Elara corre sozinha, da esquerda para a direita da tela, olhando para trás. Perseguidores não aparecem nessa imagem.
-- **C07-P02 (72s–75s):** corte para EXATAMENTE dois mascarados correndo atrás dela no mesmo sentido, sem Elara no quadro; ficam na origem da fuga, à esquerda do percurso.
-- **C07-P03 (75s–78s):** novo plano de ligação: Elara chega a Kael no beco; à direita há um carrinho estacionado, os soldados ainda estão atrás, fora de quadro.
-- **C07-P04 (78s–82s):** tomada separada de conversa: Elara pede ajuda; Kael responde 'Fique atrás de mim'. Pode reaproveitar C07-P03 antiga apenas como candidata, pendente de QA.
+- **C07-P01 (69s–72s):** Elara corre no BECO ORIGINAL com lampião e flores, da esquerda para a direita. Preservar fonte candidata já existente.
+- **C07-P02 (72s–75s):** dois perseguidores correm atrás dela no MESMO beco inicial; Elara está fora de quadro. Não mostrar praça, carroça ou Kael ainda.
+- **C07-P03 (75s–78s):** Elara VIRA A ESQUINA e entra no **Largo do Mercado**: praça aberta com poço de pedra, toldos verdes e azuis. Kael está ali, ainda sem carroça no quadro. Esta é uma nova imagem-mãe, não reaproveitar o mesmo arco e poste do beco da fuga.
+- **C07-P04 (78s–82s):** Elara PARA e pede ajuda a Kael no mesmo Largo do Mercado; cortar para um plano de conversa. Nenhum soldado ou carroça visível. KAEL: Fique atrás de mim.
 
-### C08 — Carrinho e barricada (82s–98s) — revisão de continuidade V2
+### C08 — Serviço, carroça e saída (82s–98s) — revisão V3
 
-- **C08-P01 (82s–85s):** Kael percebe o carrinho encostado na parede direita do mesmo beco; Elara está do lado seguro, sem perseguidores tocando o objeto. KAEL: Não sei lutar... mas sei atrapalhar!
-- **C08-P02 (85s–89,33s):** Kael SOZINHO começa a empurrar e girar o mesmo carrinho para atravessar o beco. Nenhum soldado no enquadramento. SFX: rodas no chão molhado.
-- **C08-P03 (89,33s–93s):** carrinho atravessado torna-se barricada; dois mascarados precisam parar do lado esquerdo; Kael fica do lado direito. Não podem parecer ajudá-lo.
-- **C08-P04 (93s–96s):** Elara foge pela passagem lateral direita, com o carrinho bloqueando os perseguidores no fundo. KAEL: Corra!
-- **C08-P05 (96s–98s):** Kael alcança Elara na esquina segura, preparando a conversa de gratidão de C09. Sem teletransporte ou carrinho desaparecendo.
+- **C08-P01 (82s–85s):** Kael avança à saída leste do largo e encontra uma carroça estacionada contra a parede direita do **portão de serviço entre armazéns**. Primeiro estabelecer o objeto e o novo cenário, sem soldados. KAEL: Não sei lutar... mas sei atrapalhar!
+- **C08-P02 (85s–89,33s):** Kael SOZINHO começa a empurrar e girar a mesma carroça. Braços e contato integrados, sem guardas, sem Elara. O deslocamento parte da posição visível na C08-P01.
+- **C08-P03 (89,33s–93s):** plano exclusivo da CARROÇA SOZINHA atravessada perpendicularmente ao gargalo, bloqueando fisicamente a passagem. NENHUMA pessoa no quadro, especialmente guardas. A arquitetura do portão de serviço permanece a mesma da C08-P02.
+- **C08-P04 (93s–96s):** Elara já está do outro lado e corre em **uma escadaria curva de pedra clara rumo ao pátio superior**, com heras azuis e muro elevado. É outra localização; jamais reutilizar o fundo com ponte/lampião do beco inicial. KAEL (fora de quadro): Corra!
+- **C08-P05 (96s–98s):** Kael alcança Elara no patamar da escadaria, ambos param para recuperar o fôlego, sem agarrar o braço dela. O mesmo fundo da saída prepara C09. Não mostrar carroça nem soldados.
 
-> As 42 tomadas da revisão mantêm os 163 segundos originais. Até existirem as sete novas imagens-mãe V2, o MP4 antigo de 40 tomadas é apenas histórico, não versão corrigida. Fonte de verdade desta mudança: [CONTINUIDADE-C07-C08-V2.json](CONTINUIDADE-C07-C08-V2.json).
+### C09 — Despedida no pátio superior (98s–108s) — revisão V3
 
-### C09 — Separação (98s–108s)
+- **C09-P01 (98s–103s):** no patamar do pátio superior, heras azuis, muros claros e jardim, Elara agradece a Kael com delicadeza. ELARA: Você me salvou. Não vou esquecer. Ninguém aparece no beco original.
+- **C09-P02 (103s–108s):** Elara se afasta pela saída leste/superior do mesmo patamar, Kael fica e a vê partir. KAEL: Espere! Qual é seu nome? Prossegue depois para o broche, sem mudança instantânea de cenário.
 
-- **Agradecimento (98s–103s):** Kael e Elara respiram no final do beco; ela encosta a mão na dele brevemente, gratidão, não romance imediato. ELARA: Você me salvou. Não vou esquecer.
-- **Ela desaparece (103s–108s):** Elara solta a mão, segura capuz e desaparece pela esquina na direção que liga ao palácio; Kael fica parado. KAEL: Espere! Qual o seu nome?
+**Eixo da sequência:** beco original → Largo do Mercado (primeira esquina) → portão de serviço (carroça) → escadaria/pátio superior (fuga e despedida). Mudança visual de arquitetura em cada marco, mas continuidade coerente entre tomadas no mesmo lugar. C01/P03/P05 devem manter Aldric sentado como a âncora C01-P04.
 
 ### C10 — Broche (108s–120s)
 

@@ -51,6 +51,9 @@ def checked_source(root, source):
 
 
 def build_plan(root=ROOT, revision='legacy'):
+    if revision == 'continuity-v3':
+        from .ep01_continuity_v3 import revised_camera_plan
+        return revised_camera_plan(build_plan(root, 'continuity-v2'), root, require_generated=True)
     if revision == 'continuity-v2':
         from .ep01_continuity_v2 import revised_camera_plan
         return revised_camera_plan(build_plan(root, 'legacy'), root, require_generated=True)
@@ -125,6 +128,9 @@ def build_plan(root=ROOT, revision='legacy'):
 def fingerprint(root, props):
     deps = ['videoforge/ep01_camera_batch.py', 'motion-remotion/src/ep01-camera-batch.tsx', 'motion-remotion/package-lock.json']
     deps += [(EP / name).as_posix() for name in ['APROVACOES-VISUAIS-C01-V3.json', 'POLITICA-SEM-MAOS-INDEPENDENTES-C01-P04.json', 'REVISAO-ERRO-PAINEIS-C01-P02.json']]
+    if props.get('revision') == 'continuity-v3':
+        deps += [(EP / 'CORRECAO-CENARIOS-TRONO-V3.json').as_posix(),
+                 'videoforge/ep01_continuity_v3.py']
     if props.get('revision') == 'continuity-v2':
         deps += [(EP / 'CONTINUIDADE-C07-C08-V2.json').as_posix(),
                  (EP / 'PROPOSTA-MOVIMENTO-C07-C08-V1.json').as_posix(),
@@ -136,7 +142,7 @@ def fingerprint(root, props):
 
 def prepare(root=ROOT, selected=None, revision='legacy'):
     plan = build_plan(root, revision)
-    write(root / OUT / ('execution-plan-42-continuity-v2.json' if revision == 'continuity-v2' else 'execution-plan-40.json'), plan)
+    write(root / OUT / ('execution-plan-42-continuity-v3.json' if revision == 'continuity-v3' else 'execution-plan-42-continuity-v2.json' if revision == 'continuity-v2' else 'execution-plan-40.json'), plan)
     selected = DEFAULT if selected is None else selected
     known = {s['id'] for s in plan['shots']}
     if not selected or len(set(selected)) != len(selected) or not set(selected) <= known:
@@ -247,6 +253,9 @@ def run(root=ROOT, selected=None, revision='legacy'):
     checkpoint['montage'] = render_one(root, montage_id, props)
     checkpoint['selected_shots'] = [s['id'] for s in props['shots']]
     checkpoint['human_review_priority'] = ['C01-P02 rejected contact', 'C01-P03 standing/seated king continuity', 'C01-P04 camera motion']
+    if revision == 'continuity-v3':
+        checkpoint['human_review_priority'] = ['C07 meeting must use different market background', 'C08 cart must block alone with no guards', 'C08 escape uses different stairs', 'C01-P03/C01-P05 king seated consistently with approved C01-P04', 'C09 upper courtyard matches escape']
+
     checkpoint['visual_shots_pending_individual_approval'] = sum(s['source'] is not None and s['approval_status'] != 'exact_sha_approval_record_exists' for s in build_plan(root, revision)['shots'])
     write(root / OUT / 'checkpoint.json', checkpoint)
     print(json.dumps({'validated': list(reports), 'montage': montage_id, 'next_task': checkpoint['next_task']}))
@@ -256,7 +265,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=['prepare', 'render'])
     parser.add_argument('--shots', default=','.join(DEFAULT), help='Comma-separated shot IDs or all')
-    parser.add_argument('--revision', choices=['legacy', 'continuity-v2'], default='legacy')
+    parser.add_argument('--revision', choices=['legacy', 'continuity-v2', 'continuity-v3'], default='legacy')
     args = parser.parse_args()
     selected = [s['id'] for s in build_plan(revision=args.revision)['shots']] if args.shots == 'all' else args.shots.split(',')
     if args.action == 'prepare':
