@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-art-request-biblia-largo-encontro-arken-v3",
+  "github_run_id": 44738527079,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "biblia-largo-encontro-arken-v3.png",
+      "width": 941,
+      "height": 1671,
+      "sha256": "2d2e10b7e1c67f9e3ae40bf4e221619f05e957eaedac5e049898e70fabba137a",
+      "bytes": 3341776,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}

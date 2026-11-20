@@ -1,0 +1,25 @@
+{
+  "schema": "videoforge/ep01-background-and-shot-v3/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "biblia-largo-encontro-arken-v3",
+  "visual_bible_reference_id": "biblia-largo-encontro-arken-v3",
+  "candidate_scene_shot_id": null,
+  "source_originals_sha_verified": [
+    {
+      "id": "biblia-beco-base-v1",
+      "sha256": "83c10082fb1a808a3f118625d9aca8bcf1e22707d9af0b91d92440af61436939"
+    }
+  ],
+  "sha256": "2d2e10b7e1c67f9e3ae40bf4e221619f05e957eaedac5e049898e70fabba137a",
+  "width": 941,
+  "height": 1671,
+  "kind": "environment_reference",
+  "generation_method": "proxy_generated_separate_versioned_image",
+  "source_revision": "v3",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_uploaded": false,
+  "official_mp4": false,
+  "provider_image_calls": 1
+}
