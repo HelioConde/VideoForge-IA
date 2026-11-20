@@ -11,6 +11,9 @@ on:
     paths:
       - 'videoforge/ep01_continuity_v3.py'
       - 'videoforge/ep01_camera_batch.py'
+      - 'tests/test_ep01_continuity_v3.py'
+      - 'scripts/ep01_continuity_v3_queue.py'
+      - '.github/workflows/ep01-continuity-v3.yml'
       - 'tests/test_ep01_continuity_v2.py'
       - 'canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CORRECAO-CENARIOS-TRONO-V3.json'
   workflow_dispatch:
@@ -36,6 +39,9 @@ jobs:
         run: python -m unittest tests.test_ep01_continuity_v3 tests.test_ep01_continuity_v2 tests.test_ep01_camera_batch -v
   queue:
     if: github.event_name == 'push'
+    concurrency:
+      group: ep01-v3-production-queue
+      cancel-in-progress: false
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
