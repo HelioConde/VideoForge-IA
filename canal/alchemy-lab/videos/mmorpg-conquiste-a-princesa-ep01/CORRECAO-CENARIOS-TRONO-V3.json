@@ -1,0 +1,276 @@
+{
+  "schema": "videoforge/ep01-shot-continuity-v3/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "status": "v3_rejected_v2_shots_revision_pending_assets",
+  "parent_revision": "continuity-v2",
+  "shots_total": 42,
+  "frames_total": 4890,
+  "fps": 30,
+  "seconds_total": 163,
+  "original_approved_visuals_preserved": [
+    "C01-P04"
+  ],
+  "originals_never_overwritten": true,
+  "forbidden_outputs": [
+    "youtube_upload",
+    "autonomous_human_visual_approval",
+    "automatic_rig_approval"
+  ],
+  "art_generation_policy": {
+    "calls_per_action_max": 1,
+    "do_not_retry_429": true,
+    "preserve_original_and_bad_candidates": true,
+    "sha_verified": true
+  },
+  "geography": {
+    "flee_alley": "C07-P01+C07-P02",
+    "market_meeting": "C07-P03+C07-P04",
+    "warehouse_cart": "C08-P01+C08-P02+C08-P03",
+    "stairs_exit": "C08-P04+C08-P05+C09-P01+C09-P02",
+    "spatial_order": [
+      "flee_alley",
+      "market_meeting",
+      "warehouse_cart",
+      "stairs_exit"
+    ],
+    "no_repeated_landmarks_between_different_locations": true
+  },
+  "throne": {
+    "king_posture": "Aldric seated throughout C01-P03/C01-P04/C01-P05/C02-P01/C02-P02",
+    "anchor": "C01-P04",
+    "anchor_human_approved": true,
+    "avoid_replacing_approved_anchor": true,
+    "guard_insert": "C01-P05 king still visible seated in center rear"
+  },
+  "backgrounds": [
+    {
+      "id": "biblia-largo-encontro-arken-v3",
+      "kind": "background_reference",
+      "name": "Largo do Mercado",
+      "reference_asset_ids": [
+        "biblia-beco-base-v1"
+      ],
+      "landmarks": [
+        "praca_larga_com_poco_de_pedra",
+        "tendas_verdes_e_azuis",
+        "arcada_de_saida_a_leste"
+      ],
+      "forbidden_landmarks": [
+        "mesmo_arco_suspenso_da_fuga",
+        "mesma_luminaria_pendurada",
+        "mesmo_estandarte_vermelho"
+      ],
+      "prompt": "Apenas o AMBIENTE, nenhuma pessoa, nenhuma carroça, nenhum texto. Largo do Mercado de Arken DEPOIS de virar a esquina do beco inicial: pequena praça mais larga, poço baixo circular de pedra no centro ao fundo, tendas de lona verdes e azuis e arcada de saída na parede leste. Outra geometria de rua e enquadramento, ruas de pedra molhada mas SEM a mesma ponte superior arqueada, SEM o mesmo lampião de parede, SEM o estandarte vermelho flor-de-lis do beco anterior. Consistência de cidade medieval e dourado/violeta, perspectiva vertical ampla 9:16; saída pela direita leva ao portão de serviço com uma rua estreita. Background mestre de localização B.",
+      "geographic_next": "biblia-gargalo-servico-arken-v3"
+    },
+    {
+      "id": "biblia-gargalo-servico-arken-v3",
+      "kind": "background_reference",
+      "name": "Portão de Serviço",
+      "reference_asset_ids": [
+        "biblia-beco-base-v1"
+      ],
+      "landmarks": [
+        "portao_ferragem_ferro_ao_fundo",
+        "paredes_de_armazem_em_pedra_ocre",
+        "trecho_estreito_perpendicular"
+      ],
+      "forbidden_landmarks": [
+        "mesmo_arco_suspenso_da_fuga",
+        "mesmo_poco_da_praca",
+        "mesma_luminaria_pendurada"
+      ],
+      "prompt": "Somente cenário vazio sem personagens, sem carrinho, sem soldados, sem texto. Um GARGALO de rua de SERVIÇO do mercado de Arken após a praça: duas fachadas de armazém com paredes de pedra ocre muito próximas formam trecho estreito, portão de ferragem escura ao fundo, calçamento de pedras grandes. Área útil à DIREITA para carrinho estacionado que será adicionado somente na cena-mãe. Permitir corredor lateral à direita para fuga pela escadaria do pátio superior. Não reutilizar arquitetura do primeiro beco: NÃO ponte elevada, NÃO luminária florido, NÃO bandeiras rubras e NÃO poço da praça. Vista frontal vertical 9:16, aparência de cidade coerente, mas local claramente DIFERENTE, geometria apropriada para carroça atravessada fisicamente bloquear a largura.",
+      "geographic_next": "biblia-escadaria-saida-arken-v3"
+    },
+    {
+      "id": "biblia-escadaria-saida-arken-v3",
+      "kind": "background_reference",
+      "name": "Escadaria de Saída",
+      "reference_asset_ids": [
+        "biblia-beco-base-v1"
+      ],
+      "landmarks": [
+        "escadaria_curva_de_pedra_clara",
+        "muralha_patio_superior",
+        "jardim_heras_azuis"
+      ],
+      "forbidden_landmarks": [
+        "mesmo_arco_suspenso_da_fuga",
+        "mesmo_poco_da_praca",
+        "mesmo_portao_de_armazem"
+      ],
+      "prompt": "Apenas arquitetura vazia, sem qualquer personagem ou carroça e sem texto. Ambiente C de fuga pós-barricada: escadaria CURVA de pedra clara e degraus largos, com muros altos de Arken levando ao PÁTIO SUPERIOR com heras azuis e pequeno jardim, luz de céu lilás e dourado; a rua do mercado fica abaixo e ATRÁS do observador, não reproduzir ponte, bandeiras vermelhas, lampiões e arcadas do beco antigo. Deve ser inequivocamente outra parte da cidade, com profundidade real de deslocamento, escadaria subindo para direita até um patamar em que Elara e Kael podem se encontrar para agradecer. 9:16 vertical, fundo sem pessoas, sem carrinho, estilo da Biblia Visual."
+    }
+  ],
+  "shots": [
+    {
+      "id": "C01-P03",
+      "location": "sala-do-trono",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-aldric-tribunal-v1",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "reference_scene_shot_id": "C01-P04",
+      "prompt": "PRÓLOGO no MESMO salão da C01-P04 aprovada: o rei ALDRIC permanece SENTADO no trono alto no fundo, coroa e manto bordô completos; Kael ajoelhado em primeiro plano com a cabeça baixa de frente para o trono. Dois guardas não aparecem no enquadramento estreito. NÃO levantar Aldric, NÃO colocá-lo no piso, NÃO trocar de trono, NÃO incluir Elara. Perspectiva do salão e posição do rei têm de coincidir com a C01-P04 aprovada. Corte suave para tomada geral C01-P04 sem saltos de postura.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C01-P05",
+      "location": "sala-do-trono",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-aldric-tribunal-v1",
+        "biblia-guarda-esquerdo-cerimonial-v1",
+        "biblia-guarda-direito-cerimonial-v1",
+        "biblia-lanca-guarda-completa-v2",
+        "biblia-sala-do-trono-vazio-v1"
+      ],
+      "reference_scene_shot_id": "C01-P04",
+      "prompt": "Plano detalhe de DOIS guardas reais de armadura segurando as DUAS lanças inteiras pela BASE do cabo, lanças cruzadas em X à frente da escadaria. NO CENTRO DO FUNDO, visível mas desfocado, o rei Aldric continua SENTADO no MESMO trono da C01-P04. O trono nunca fica vazio; Kael está fora de quadro por ser close nos guardas. Não trocar rei por estandarte, não retratar rei em pé, não inventar lanceiros extras nem mãos independentes. Esta tomada apenas muda o enquadramento da C01-P04 aprovada, não o estado físico.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C07-P03",
+      "location": "biblia-largo-encontro-arken-v3",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-kael-medieval-base-v1",
+        "biblia-largo-encontro-arken-v3"
+      ],
+      "prompt": "PRIMEIRO ENCONTRO: Elara acaba de virar a esquina do beco estreito para o LARGO DO MERCADO (poço de pedra, tendas verdes e azuis). Ela desacelera à ESQUERDA e surpreende Kael à DIREITA junto à saída leste. Exatamente duas figuras (Kael e Elara), ambos de pé, espaço de vários passos entre eles; perseguidores estão atrás no beco anterior, fora do quadro. NÃO colocar carroça ainda, NÃO colocar a mesma ponte elevada, lampião ou bandeira vermelha da fuga. Uma imagem de ação única que prepara a conversa, não fundir conversa e corrida.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C07-P04",
+      "location": "biblia-largo-encontro-arken-v3",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-kael-medieval-base-v1",
+        "biblia-largo-encontro-arken-v3"
+      ],
+      "prompt": "CONVERSA CURTA num OUTRO ENQUADRAMENTO do MESMO Largo do Mercado da C07-P03, com poço de pedra ao fundo, tendas verdes/azuis. Elara PARADA pede ajuda a Kael, Kael escuta e responde, mantendo vestimentas; sem corrida, sem carroça, sem soldados. A orientação dos dois deve ser a mesma de C07-P03. A saída leste do mercado aparece atrás de Kael para sinalizar onde fica o portão de serviço, cenário diferente do beco inicial.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C08-P01",
+      "location": "biblia-gargalo-servico-arken-v3",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-carrinho-base-v1",
+        "biblia-gargalo-servico-arken-v3"
+      ],
+      "prompt": "ESTABELECER OBJETO: Kael entrou pela saída leste do Largo do Mercado e agora DESCOBRE um carrinho de madeira com duas rodas, sozinho encostado na parede DIREITA do PORTÃO DE SERVIÇO (paredes ocre próximas e ferragem escura). Kael o observa a um passo de distância, sem empurrar ainda. Nenhuma Elara neste quadro; ela correu para a escadaria lateral; nenhum guarda, soldado ou mascarado. Carroça estacionada paralela à parede, com rodas apoiadas na pedra. Novo background, não copiar o beco de flores.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C08-P02",
+      "location": "biblia-gargalo-servico-arken-v3",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-carrinho-base-v1",
+        "biblia-gargalo-servico-arken-v3"
+      ],
+      "prompt": "AÇÃO DO CARRINHO: no MESMO portão de serviço ocre de C08-P01, Kael SOZINHO coloca o corpo e os dois braços integrados à estrutura do carrinho e EMPURRA o carrinho da parede direita para o MEIO do trecho estreito. A carroça gira para ficar atravessada em direção ao bloqueio. Nenhum guarda, nenhuma princesa, nenhum ajudante. Sem mãos soltas, sem rodas duplicadas, sem carroça flutuando. Imagem de momento intermediário, carrinho ainda não completamente transversal.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C08-P03",
+      "location": "biblia-gargalo-servico-arken-v3",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-carrinho-base-v1",
+        "biblia-gargalo-servico-arken-v3"
+      ],
+      "prompt": "PLANO DE CONFIRMAÇÃO DA BARRICADA, SOMENTE CARROÇA E CENÁRIO: uma única carroça de duas rodas da Bíblia Visual ATRAVESSADA PERPENDICULARMENTE ao gargalo de serviço, tangenciando fisicamente as paredes de pedra ocre nos dois lados, bloqueando toda a passagem. SEM Kael, SEM Elara, SEM guardas, SEM mascarados, SEM figuras humanas. Deixar inequívoco que ela está posicionada como obstáculo e não em movimento normal de viagem. Portão de ferragem escura ao fundo e luz dourada, sem ponte suspensa ou bandeiras antigas.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C08-P04",
+      "location": "biblia-escadaria-saida-arken-v3",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-elara-encapuzada-v1",
+        "biblia-escadaria-saida-arken-v3"
+      ],
+      "prompt": "Elara sozinha, mesma capa roxa com ouro, corre PARA A DIREITA e PARA CIMA pela ESCADARIA CLARA rumo ao pátio superior. A arquitetura é inteiramente diferente do beco original: degraus curvos de pedra, heras azuis, muro e céu ao fundo, sem lampião do beco, sem ponte e sem bandeira rubra. Ela já deixou o portão de serviço para trás, não mostrar a carroça ou soldados no quadro. Mostrar deslocamento real, mesma identidade de Elara.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C08-P05",
+      "location": "biblia-escadaria-saida-arken-v3",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-encapuzada-v1",
+        "biblia-escadaria-saida-arken-v3"
+      ],
+      "prompt": "No ALTO da escadaria clara depois da fuga, Kael alcança Elara no patamar do pátio superior, ambos retomando o fôlego. Heras azuis, muro claro e jardim ao fundo. Kael não segura seu braço nem a impede de correr; encontro tranquilo depois de vencer o portão de serviço. Nenhum guarda, nenhuma carroça, nenhuma bandeira rubra ou beco de flores. Estabelecer a nova geografia para C09-P01 com ambos no mesmo lado seguro.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C09-P01",
+      "location": "biblia-escadaria-saida-arken-v3",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-encapuzada-v1",
+        "biblia-escadaria-saida-arken-v3"
+      ],
+      "prompt": "Elara e Kael descansam no PATAMAR SUPERIOR da escadaria clara (mesmo cenário C08-P05): poço de luz lilás, heras azuis e muro branco; Elara agradece e faz um gesto delicado, Kael ouve, sem romance exagerado, sem toque forçado. Manter mesmo figurino e rostos. Não retornar ao beco de flores/ponte/estandarte. A conversa ocorre AQUI, após a fuga real, de forma contínua.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "C09-P02",
+      "location": "biblia-escadaria-saida-arken-v3",
+      "source_policy": "generate",
+      "ref": [
+        "biblia-kael-medieval-base-v1",
+        "biblia-elara-encapuzada-v1",
+        "biblia-escadaria-saida-arken-v3"
+      ],
+      "prompt": "Plano seguinte no PATAMAR SUPERIOR do mesmo cenário claro da escadaria. Elara se afasta pela saída superior à DIREITA para seguir rumo ao palácio, Kael permanece à esquerda sem persegui-la. Jardim/heras azuis ao fundo, trajes e rostos idênticos, não voltar à rua das flores. Uma ação única de despedida com progressão para o broche que cai no próximo beat.",
+      "legacy_source_locked": true,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false
+    }
+  ]
+}
