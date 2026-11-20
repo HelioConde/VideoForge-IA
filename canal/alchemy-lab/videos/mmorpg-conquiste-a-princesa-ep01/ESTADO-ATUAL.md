@@ -1,3 +1,7 @@
+## 20/11/2026 — 42/42 prévias de câmera; auditoria independente de camadas e rig
+
+[Action #44670895298](https://github.com/HelioConde/VideoForge-IA/actions/runs/44670895298) validou por SHA, canvas e RGBA as peças do EP01, com relatório em [QA-RIG-READINESS-EP01-2026-11-20.md](QA-RIG-READINESS-EP01-2026-11-20.md) e [artifact detalhado](https://github.com/HelioConde/VideoForge-IA/actions/runs/44670895298/artifacts/14599359892). No instante da auditoria: 146 solicitações, 106 peças ausentes, 10 candidatas rejeitadas preservadas, 21 peças com QA técnico pendente e 9 candidatas com verificações geométricas básicas; 0 rigs aprovados. O ledger da campanha registra 42/42 prévias de câmera completas, mas **não animação articulada**. Não regenerar rejeições automaticamente, não publicar. A campanha de 10 lotes é independente e continua conforme o estado das Actions.
+
 ## 19/11/2026 — EP01: V2 (42 tomadas) renderizada e verificada, pendente de revisão humana
 
 - **Sete imagens-mãe de continuidade C07/C08 já arquivadas por SHA**, tomadas `C07-P02`, `C07-P03`, `C08-P01`, `C08-P02`, `C08-P03`, `C08-P04`, `C08-P05`. Não regenerar automaticamente; C07-P01 e a C07-P03 antiga reaproveitada como C07-P04 continuam candidatas, sem aprovação visual individual nova.
