@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**199 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**200 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -203,6 +203,7 @@
 | [c06-p01-character-kael.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44671108330/c06-p01-character-kael.png) / C06-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`5e8b467d8c22…\` | [#44671108330](https://github.com/HelioConde/VideoForge-IA/actions/runs/44671108330) |
 | [c06-p02-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44671436119/c06-p02-background-clean.png) / C06-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`b6bd735823ed…\` | [#44671436119](https://github.com/HelioConde/VideoForge-IA/actions/runs/44671436119) |
 | [c06-p02-character-kael.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44671600052/c06-p02-character-kael.png) / C06-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`baf687a45158…\` | [#44671600052](https://github.com/HelioConde/VideoForge-IA/actions/runs/44671600052) |
+| [c09-p01-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44718958670/c09-p01-background-clean.png) / C09-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`7cfa5e7e700b…\` | [#44718958670](https://github.com/HelioConde/VideoForge-IA/actions/runs/44718958670) |
 
 ## Regras de consulta
 
