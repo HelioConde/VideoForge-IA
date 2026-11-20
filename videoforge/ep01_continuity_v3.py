@@ -262,6 +262,9 @@ def revised_camera_plan(v2_plan,root=ROOT,require_generated=True):
     for shot in v2_plan["shots"]:
         row=dict(shot)
         if row["id"] in candidates:
+            # Remove stale V2 blocking/motion labels tied to the rejected scene.
+            # V3 gets new source-specific QA before any rig can be enabled.
+            row.pop("continuity_gate",None)
             source=archived(row["id"],root)
             if source is None and require_generated:
                 raise ValueError("EP01_V3_MOTHER_PENDING "+row["id"])
