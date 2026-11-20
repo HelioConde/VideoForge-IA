@@ -1,3 +1,10 @@
+## 19/11/2026 — EP01: V2 (42 tomadas) renderizada e verificada, pendente de revisão humana
+
+- **Sete imagens-mãe de continuidade C07/C08 já arquivadas por SHA**, tomadas `C07-P02`, `C07-P03`, `C08-P01`, `C08-P02`, `C08-P03`, `C08-P04`, `C08-P05`. Não regenerar automaticamente; C07-P01 e a C07-P03 antiga reaproveitada como C07-P04 continuam candidatas, sem aprovação visual individual nova.
+- **MP4 único realmente produzido:** [Action #44266014731](https://github.com/HelioConde/VideoForge-IA/actions/runs/44266014731), [artifact #14411045741](https://github.com/HelioConde/VideoForge-IA/actions/runs/44266014731/artifacts/14411045741), `EP01-continuidade-V2-42-tomadas.mp4`, 42 tomadas/163 segundos, 4.890 frames a 30 FPS, H.264 540×960. SHA verificado `6ca502f74e024414dc452ce3d05c643d17ddb108995401853ecdc57ecf439048`.
+- O pacote contém `INDICE-TOMADAS.txt` e `QA-REVISAO.json`. **QA técnico aprovado ≠ continuidade visual aprovada**; câmera sobre imagens completas, sem narração nem rig articulado, não episódio oficial. Não publicar YouTube.
+- **Novo estado principal:** [RESULTADO-EP01-CONTINUIDADE-V2.json](RESULTADO-EP01-CONTINUIDADE-V2.json). A versão V1 de 40 tomadas é histórico, não versão corrigida. A próxima ação é colher os IDs das tomadas reprovadas pelo criador para correção pontual.
+
 ## 18/11/2026 — Correção narrativa C07/C08 V2 do criador
 
 Revisão originada no MP4 único de 40 tomadas: Elara muda de lado, conversa sem ponte, soldados aparentam ajudar Kael, carrinho troca de posição. [Plano aprovado para desenvolvimento V2](CONTINUIDADE-C07-C08-V2.json) e [guia](CONTINUIDADE-C07-C08-V2.md) corrigem o eixo com 9 tomadas C07/C08 dentro dos mesmos 29s. Adicionadas C07-P04 e C08-P05, total editorial revisado = 42 (antes 40); requer sete novas imagens-mãe versionadas e preserva duas fontes candidatas antigas. **Implementação de código/plano ≠ imagens geradas ou revisão visual aprovada.** Workflow de geração por SHA (uma chamada por Action) e opção de render V2 que bloqueia fontes faltantes. 39/39 mães do inventário histórico permanecem arquivadas; não declarar o EP01 corrigido ou publicar até QA real e MP4 novo.
