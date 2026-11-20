@@ -1,0 +1,72 @@
+{
+  "schema": "videoforge/ep01-continuity-v2-technical-review-result/v1",
+  "recorded_on": "2026-11-19",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "source_plan": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/CONTINUIDADE-C07-C08-V2.json",
+  "result": "full_technical_mp4_render_verified_human_visual_review_pending",
+  "original_mother_images_archived": 39,
+  "continuity_v2": {
+    "shot_count": 42,
+    "shots_added": [
+      "C07-P04",
+      "C08-P05"
+    ],
+    "versioned_new_candidates_archived": 7,
+    "archived_generation_runs": {
+      "C07-P02": 44264179761,
+      "C07-P03": 44264707976,
+      "C08-P01": 44264889930,
+      "C08-P02": 44265114014,
+      "C08-P03": 44265340634,
+      "C08-P04": 44265573380,
+      "C08-P05": 44265834974
+    },
+    "no_repeated_generation": true
+  },
+  "verified_video": {
+    "kind": "camera_only_technical_preview",
+    "workflow_run_id": 44266014731,
+    "run_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/44266014731",
+    "artifact_id": 14411045741,
+    "artifact_url": "https://github.com/HelioConde/VideoForge-IA/actions/runs/44266014731/artifacts/14411045741",
+    "artifact_name": "EP01-42-tomadas-MP4-continuidade-V2-44266014731",
+    "file_name": "EP01-continuidade-V2-42-tomadas.mp4",
+    "mp4_sha256": "6ca502f74e024414dc452ce3d05c643d17ddb108995401853ecdc57ecf439048",
+    "frames_verified": 4890,
+    "fps": 30,
+    "duration_seconds": 163,
+    "resolution": [
+      540,
+      960
+    ],
+    "codec": "H.264",
+    "checks": [
+      "python_unittest",
+      "typescript",
+      "remotion_render",
+      "decoded_all_frames",
+      "sha256_verified",
+      "artifact_uploaded",
+      "42_shots_in_order"
+    ],
+    "artifact_expires_at": "2026-12-18T08:26:24Z",
+    "included_index": "INDICE-TOMADAS.txt",
+    "included_qa": "QA-REVISAO.json",
+    "mp4_source_generation_calls": 0
+  },
+  "approvals": {
+    "visual_human": false,
+    "rig_animated": false,
+    "voice_audio": false,
+    "final_episode": false,
+    "youtube_published": false
+  },
+  "caveats": [
+    "A 42-shot camera-only cut is not an articulated animation.",
+    "All corrected sources still require human visual review for spatial continuity.",
+    "Keep original 40-shot candidate and 39 image mothers for traceability.",
+    "Do not generate corrected C07/C08 mothers again unless visual review rejects exact SHAs."
+  ],
+  "next_action": "Ask creator to watch full V2 MP4 and report shot IDs from INDICE-TOMADAS.txt; request only specific corrections."
+}
