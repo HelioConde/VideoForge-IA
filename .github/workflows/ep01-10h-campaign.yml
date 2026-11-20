@@ -1,0 +1,193 @@
+name: "EP01 - campanha de producao 10 horas"
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/ep01-10h-campaign.yml"
+      - ".github/workflows/ep01-10h-step.yml"
+      - "scripts/ep01_ten_hour_campaign.py"
+      - "tests/test_ep01_ten_hour_campaign.py"
+      - "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/FILA-PRODUCAO-10-HORAS.json"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ep01-10h-campaign.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+  issues: read
+
+concurrency:
+  group: ep01-campanha-10h-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar planejamento sem IA, media ou custos
+        run: |
+          python -m unittest tests.test_ep01_ten_hour_campaign -v
+          python -m scripts.ep01_ten_hour_campaign --mode validate
+
+  slot_01:
+    needs: validate
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 1
+    secrets: inherit
+
+  slot_02:
+    needs: slot_01
+    if: needs.slot_01.outputs.has_more == 'true'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 2
+    secrets: inherit
+
+  slot_03:
+    needs: slot_02
+    if: needs.slot_02.outputs.has_more == 'true'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 3
+    secrets: inherit
+
+  slot_04:
+    needs: slot_03
+    if: needs.slot_03.outputs.has_more == 'true'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 4
+    secrets: inherit
+
+  slot_05:
+    needs: slot_04
+    if: needs.slot_04.outputs.has_more == 'true'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 5
+    secrets: inherit
+
+  slot_06:
+    needs: slot_05
+    if: needs.slot_05.outputs.has_more == 'true'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 6
+    secrets: inherit
+
+  slot_07:
+    needs: slot_06
+    if: needs.slot_06.outputs.has_more == 'true'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 7
+    secrets: inherit
+
+  slot_08:
+    needs: slot_07
+    if: needs.slot_07.outputs.has_more == 'true'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 8
+    secrets: inherit
+
+  slot_09:
+    needs: slot_08
+    if: needs.slot_08.outputs.has_more == 'true'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 9
+    secrets: inherit
+
+  slot_10:
+    needs: slot_09
+    if: needs.slot_09.outputs.has_more == 'true'
+    uses: ./.github/workflows/ep01-10h-step.yml
+    with:
+      slot: 10
+    secrets: inherit
+
+  summarize:
+    if: always() && github.event_name != 'pull_request' && needs.validate.result == 'success'
+    needs: [validate, slot_01, slot_02, slot_03, slot_04, slot_05, slot_06, slot_07, slot_08, slot_09, slot_10]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Recolher recibos reais dos lotes (sem nova inferencia)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ep01-campanha-10h"
+          gh run download "$GITHUB_RUN_ID" --pattern 'ep01-10h-slot-*' -D "$RUNNER_TEMP/ep01-campanha-10h" || true
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          base=Path(os.environ["RUNNER_TEMP"])/"ep01-campanha-10h"
+          receipts=[]
+          for item in sorted(base.rglob("ep01-10h-slot-*.json")):
+              row=json.loads(item.read_text(encoding="utf-8"))
+              if row.get("schema")!="videoforge/ep01-ten-hour-production-receipt/v1":
+                  raise SystemExit("INVALID_CAMPAIGN_RECEIPT")
+              receipts.append(row)
+          ids=[x["slot"] for x in receipts]
+          if ids != sorted(set(ids)) or not all(1<=i<=10 for i in ids):
+              raise SystemExit("DUPLICATED_OR_INVALID_SLOT")
+          imgs=sum(x["verified_execution"]["images"] for x in receipts)
+          previews=sum(x["verified_execution"]["camera_previews"] for x in receipts)
+          if imgs>20 or previews>40:
+              raise SystemExit("CAMPAIGN_LIMIT_EXCEEDED")
+          state="completed_all_ten_slots" if ids==list(range(1,11)) else "partial_or_stopped_on_failure_or_no_safe_work"
+          report={
+              "schema":"videoforge/ep01-ten-hour-campaign-result/v1",
+              "planned_work_minutes":600,
+              "actual_elapsed_time_not_guaranteed":True,
+              "status":state,"completed_slots":ids,
+              "verified_paid_image_children":imgs,"verified_camera_preview_children":previews,
+              "controllers":[{"slot":x["slot"],"run_id":x["controller_run_id"],
+                              "artifact_id":x["controller_artifact_id"]} for x in receipts],
+              "art_approved":False,"rig_approved":False,"youtube_uploaded":False,
+              "review_needed":True
+          }
+          (base/"relatorio-final-ep01-10h.json").write_text(
+              json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          message="\n".join([
+              "# EP01 — resultado da fila de dez lotes", "",
+              f"- Lotes com recibos verificados: {len(receipts)}/10",
+              f"- Imagens geradas/arquivadas pela fila: {imgs}",
+              f"- Prévias de câmera verificadas: {previews}",
+              f"- Estado: {state}",
+              "- Sem aprovação automática de arte, rig ou publicação.",
+              "- Orçamento estimado de 10 blocos, não 10 horas garantidas de relógio.",
+              ""
+          ])
+          (base/"relatorio-final-ep01-10h.md").write_text(message,encoding="utf-8")
+          summary=os.getenv("GITHUB_STEP_SUMMARY")
+          if summary:
+              with open(summary,"a",encoding="utf-8") as f:f.write(message)
+          print("EP01_10H_SUMMARY",json.dumps(report,ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-campanha-10h-relatorio-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/ep01-campanha-10h/relatorio-final-ep01-10h.json
+            ${{ runner.temp }}/ep01-campanha-10h/relatorio-final-ep01-10h.md
+          retention-days: 30
+          if-no-files-found: warn
