@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**197 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**198 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -201,6 +201,7 @@
 | [c06-p01-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44670633337/c06-p01-background-clean.png) / C06-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`adf80b87db95…\` | [#44670633337](https://github.com/HelioConde/VideoForge-IA/actions/runs/44670633337) |
 | [c06-p01-character-figurantes.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44670960627/c06-p01-character-figurantes.png) / C06-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`21b3dc24a3b2…\` | [#44670960627](https://github.com/HelioConde/VideoForge-IA/actions/runs/44670960627) |
 | [c06-p01-character-kael.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44671108330/c06-p01-character-kael.png) / C06-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`5e8b467d8c22…\` | [#44671108330](https://github.com/HelioConde/VideoForge-IA/actions/runs/44671108330) |
+| [c06-p02-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44671436119/c06-p02-background-clean.png) / C06-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`b6bd735823ed…\` | [#44671436119](https://github.com/HelioConde/VideoForge-IA/actions/runs/44671436119) |
 
 ## Regras de consulta
 
