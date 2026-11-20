@@ -165,25 +165,17 @@ jobs:
               "review_needed":True
           }
           (base/"relatorio-final-ep01-10h.json").write_text(
-              json.dumps(report,ensure_ascii=False,indent=2)+"
-",encoding="utf-8")
-          message=(
-              "# EP01 — resultado da fila de dez lotes
-
-"
-              f"- Lotes com recibos verificados: {len(receipts)}/10
-"
-              f"- Imagens geradas/arquivadas pela fila: {imgs}
-"
-              f"- Prévias de câmera verificadas: {previews}
-"
-              f"- Estado: {state}
-"
-              "- Sem aprovação automática de arte, rig ou publicação.
-"
-              "- Este orçamento representa 10 blocos de trabalho planejado, não 10 horas de relógio.
-"
-          )
+              json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          message="\n".join([
+              "# EP01 — resultado da fila de dez lotes", "",
+              f"- Lotes com recibos verificados: {len(receipts)}/10",
+              f"- Imagens geradas/arquivadas pela fila: {imgs}",
+              f"- Prévias de câmera verificadas: {previews}",
+              f"- Estado: {state}",
+              "- Sem aprovação automática de arte, rig ou publicação.",
+              "- Orçamento estimado de 10 blocos, não 10 horas garantidas de relógio.",
+              ""
+          ])
           (base/"relatorio-final-ep01-10h.md").write_text(message,encoding="utf-8")
           summary=os.getenv("GITHUB_STEP_SUMMARY")
           if summary:
