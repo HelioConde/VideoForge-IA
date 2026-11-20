@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-art-request-biblia-escadaria-saida-arken-v3",
+  "github_run_id": 44738914799,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "biblia-escadaria-saida-arken-v3.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "08336ac183080e81d5c3d253e5fd6f7102809448d3ccf7ea1a6c70794e6c2166",
+      "bytes": 3189402,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
