@@ -15,6 +15,7 @@ from PIL import Image
 
 from videoforge import ep01_camera_batch as camera
 from videoforge import ep01_proxy_separate_parts as parts
+from videoforge.errors import VideoForgeError
 
 ROOT = Path(__file__).resolve().parents[1]
 EP = Path("canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01")
@@ -74,7 +75,7 @@ def inspect_part(root: Path, shot: dict, part_id: str) -> dict:
     }
     try:
         entry = parts.existing_part(sid, part_id, root)
-    except (OSError, ValueError, KeyError) as exc:
+    except (OSError, ValueError, KeyError, VideoForgeError) as exc:
         return dict(base, status="integrity_problem",
                     issues=["registry_or_archive_integrity_error"],
                     detail=type(exc).__name__)
