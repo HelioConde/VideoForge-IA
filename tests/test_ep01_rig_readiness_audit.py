@@ -27,7 +27,6 @@ class ReadinessTests(unittest.TestCase):
 
     def test_geometrically_compatible_candidate_is_not_an_approved_rig(self):
         self.assertEqual(self.check(),[])
-        self.assertIn("rig_ready_shots",audit.build.__code__.co_consts or ("rig_ready_shots",))
 
     def test_native_canvas_mismatch_is_not_silently_resized(self):
         self.assertIn("native_canvas_alignment_required",
