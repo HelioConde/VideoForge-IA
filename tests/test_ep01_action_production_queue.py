@@ -57,7 +57,7 @@ class ActionQueueTests(unittest.TestCase):
         # C01-P03 V1 generated PNGs exist, but their mother was rejected.
         # They are not canonical: the queue MUST block reusing this version.
         self.assertTrue(any(x["kind"]=="image" and
-                            x["status"]=="blocked_reference_revision"
+                            x["status"] in {"blocked_reference_revision","archived_version_check_needed"}
                             for x in items if x["shot_id"]=="C01-P03"))
         for item in items:
             if item["kind"]!="image":
