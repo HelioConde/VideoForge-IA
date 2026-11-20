@@ -1,0 +1,33 @@
+{
+  "schema": "videoforge/ep01-background-and-shot-v3/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c08-p02-continuity-v3-scene-mother",
+  "visual_bible_reference_id": null,
+  "candidate_scene_shot_id": "C08-P02",
+  "source_originals_sha_verified": [
+    {
+      "id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc"
+    },
+    {
+      "id": "biblia-carrinho-base-v1",
+      "sha256": "04f1eca70e79165dcffb03558639fbcf59ca616271c904c8ca9eb91f20c06d36"
+    },
+    {
+      "id": "biblia-gargalo-servico-arken-v3",
+      "sha256": "5b020209516dec76cc1714a2495c469b972c446daf553fb68491887c2d1c7da6"
+    }
+  ],
+  "sha256": "a531b7c04aace18cc1a14badeb3504a630ae29e450f7695144fc18a4b379a127",
+  "width": 941,
+  "height": 1671,
+  "kind": "scene_mother",
+  "generation_method": "proxy_generated_separate_versioned_image",
+  "source_revision": "v3",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_uploaded": false,
+  "official_mp4": false,
+  "provider_image_calls": 1
+}
