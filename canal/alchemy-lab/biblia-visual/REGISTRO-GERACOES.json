@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 213,
+  "total_arquivadas": 214,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -7834,6 +7834,44 @@
       "sha256": "a2c19bf1184b371f7490e26561a406a957ed754052cb5bd268faa332614f828f",
       "bytes": 3220127,
       "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "biblia-kael-medieval-base-v1",
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": null
+        },
+        {
+          "id": "biblia-elara-encapuzada-v1",
+          "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31",
+          "path": null
+        },
+        {
+          "id": "biblia-escadaria-saida-arken-v3",
+          "sha256": "08336ac183080e81d5c3d253e5fd6f7102809448d3ccf7ea1a6c70794e6c2166",
+          "path": null
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "não_informado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-continuity-v3-mother:44741059010:c09-p01-continuity-v3-scene-mother.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c09-p01-continuity-v3-scene-mother",
+      "shot": "C09-P01",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-continuity-v3-mother",
+      "github_run_id": 44741059010,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v3-mother/44741059010/c09-p01-continuity-v3-scene-mother.png",
+      "sha256": "c063977174f416fad4d83af05fdd7754f766889154ce1c566beb2ad7ed86e68a",
+      "bytes": 3104894,
+      "width": 940,
       "height": 1672,
       "referencias_usadas": [
         {

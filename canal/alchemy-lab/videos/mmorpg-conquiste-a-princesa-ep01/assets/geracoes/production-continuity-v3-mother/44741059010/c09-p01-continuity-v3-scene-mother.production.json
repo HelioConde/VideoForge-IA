@@ -1,0 +1,33 @@
+{
+  "schema": "videoforge/ep01-background-and-shot-v3/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c09-p01-continuity-v3-scene-mother",
+  "visual_bible_reference_id": null,
+  "candidate_scene_shot_id": "C09-P01",
+  "source_originals_sha_verified": [
+    {
+      "id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc"
+    },
+    {
+      "id": "biblia-elara-encapuzada-v1",
+      "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31"
+    },
+    {
+      "id": "biblia-escadaria-saida-arken-v3",
+      "sha256": "08336ac183080e81d5c3d253e5fd6f7102809448d3ccf7ea1a6c70794e6c2166"
+    }
+  ],
+  "sha256": "c063977174f416fad4d83af05fdd7754f766889154ce1c566beb2ad7ed86e68a",
+  "width": 940,
+  "height": 1672,
+  "kind": "scene_mother",
+  "generation_method": "proxy_generated_separate_versioned_image",
+  "source_revision": "v3",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_uploaded": false,
+  "official_mp4": false,
+  "provider_image_calls": 1
+}
