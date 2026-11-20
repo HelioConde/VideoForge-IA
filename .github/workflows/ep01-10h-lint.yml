@@ -1,0 +1,23 @@
+name: "EP01 - auditar YAML 10h"
+on:
+  push:
+    branches: [feat/ep01-campanha-10-horas-20261119]
+    paths:
+      - '.github/workflows/ep01-10h-campaign.yml'
+      - '.github/workflows/ep01-10h-step.yml'
+      - '.github/workflows/ep01-10h-lint.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/ep01-10h-campaign.yml'
+      - '.github/workflows/ep01-10h-step.yml'
+jobs:
+  actionlint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar YAML e expressoes do Actions
+        shell: bash
+        run: |
+          set -euo pipefail
+          go run github.com/rhysd/actionlint/cmd/actionlint@latest -color             .github/workflows/ep01-10h-campaign.yml             .github/workflows/ep01-10h-step.yml
