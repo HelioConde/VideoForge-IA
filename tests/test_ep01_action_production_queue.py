@@ -86,6 +86,25 @@ class ActionQueueTests(unittest.TestCase):
         self.assertEqual({t["paid_image_requests_per_child"] for t in cameras},{0})
         self.assertEqual({t["paid_image_requests_per_child"] for t in rigs},{0})
 
+    def test_v3_replacements_fence_old_paid_parts_and_old_camera_runs(self):
+        plan=self.plan
+        self.assertEqual(len(q.V3_REPLACED_SHOTS),11)
+        old_parts=[t for t in plan["tasks"] if t["kind"]=="image"
+                   and t["shot_id"] in q.V3_REPLACED_SHOTS]
+        self.assertTrue(old_parts)
+        self.assertTrue(all(t["status"]!="ready_for_preflight" for t in old_parts))
+        self.assertTrue(any("V3" in t["reason"] for t in old_parts))
+        candidate=next(t for t in plan["tasks"]
+            if t["kind"]=="camera_preview" and t["shot_id"]=="C08-P03")
+        env={"GH_TOKEN":"offline-test","GITHUB_TOKEN":"offline-test",
+             "GITHUB_REPOSITORY":"HelioConde/VideoForge-IA",
+             "GITHUB_REF":"refs/heads/main","GITHUB_RUN_ID":"999"}
+        with patch.dict("os.environ",env), patch.object(q,"QueueRemote",FakeRemote):
+            with patch.object(q,"dispatch_child",side_effect=AssertionError("old V2 preview must never run")):
+                result=q.run_remote({"tasks":[candidate]},0,1)
+        self.assertEqual(result["processed_camera_previews"],0)
+        self.assertEqual(result["external_workflow_dispatch_calls"],0)
+
     def test_branch_state_schema_does_not_accept_fake_completed_or_publishing(self):
         q.QueueRemote._validate_snapshot({
             "schema_version":1,"schema":q.STATE_SCHEMA,"attempts":{}})
