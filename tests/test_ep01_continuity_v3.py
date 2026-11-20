@@ -24,7 +24,7 @@ class EP01V3Tests(unittest.TestCase):
         shots={s["id"]:s for s in plan["shots"]}
         for sid in ["C07-P03","C07-P04"]:
             self.assertEqual(shots[sid]["location"],v3.EXPECTED_PLACES[0])
-            self.assertIn("sem carroça" if False else "carroça",shots[sid]["prompt"].lower())
+            self.assertTrue(any(term in shots[sid]["prompt"].lower() for term in ("sem carroça","não colocar carroça","sem corrida, sem carroça")), sid)
         self.assertEqual(shots["C08-P03"]["ref"],[
             "biblia-carrinho-base-v1",v3.EXPECTED_PLACES[1]])
         self.assertIn("SEM guardas",shots["C08-P03"]["prompt"])
@@ -34,7 +34,7 @@ class EP01V3Tests(unittest.TestCase):
             self.assertEqual(shots[sid]["location"],v3.EXPECTED_PLACES[2])
         for place in plan["backgrounds"]:
             self.assertEqual(len(place["forbidden_landmarks"]),3)
-            self.assertIn("nenhuma",place["prompt"].lower() if "nenhuma" in place["prompt"].lower() else "nenhuma")
+            self.assertTrue(any(term in place["prompt"].lower() for term in ("sem personagens","nenhuma pessoa","sem qualquer personagem")),place["id"])
 
     def test_king_never_gets_out_of_the_approved_seat(self):
         d={s["id"]:s for s in v3.load_plan()["shots"]}
