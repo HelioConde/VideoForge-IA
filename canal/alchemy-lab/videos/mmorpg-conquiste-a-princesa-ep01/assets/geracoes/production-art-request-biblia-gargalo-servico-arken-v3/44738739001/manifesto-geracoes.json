@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-art-request-biblia-gargalo-servico-arken-v3",
+  "github_run_id": 44738739001,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "biblia-gargalo-servico-arken-v3.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "5b020209516dec76cc1714a2495c469b972c446daf553fb68491887c2d1c7da6",
+      "bytes": 3242425,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
