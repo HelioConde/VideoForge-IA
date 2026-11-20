@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**179 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**180 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -183,6 +183,7 @@
 | [c03-p02-object-monitor.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44539532922/c03-p02-object-monitor.png) / C03-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`11070b713260…\` | [#44539532922](https://github.com/HelioConde/VideoForge-IA/actions/runs/44539532922) |
 | [c04-p01-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44628390592/c04-p01-background-clean.png) / C04-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`139a9e32cb1e…\` | [#44628390592](https://github.com/HelioConde/VideoForge-IA/actions/runs/44628390592) |
 | [c04-p01-character-kael.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44628606303/c04-p01-character-kael.png) / C04-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`4afd4371d6b1…\` | [#44628606303](https://github.com/HelioConde/VideoForge-IA/actions/runs/44628606303) |
+| [c04-p01-object-monitor.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44662112021/c04-p01-object-monitor.png) / C04-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`aa41c03b5f84…\` | [#44662112021](https://github.com/HelioConde/VideoForge-IA/actions/runs/44662112021) |
 
 ## Regras de consulta
 

@@ -1,0 +1,56 @@
+{
+  "schema": "videoforge/ep01-proxy-separate-part/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c04-p01-object-monitor",
+  "candidate_scene_shot_id": "C04-P01",
+  "component": "object-monitor",
+  "asset_role": "object",
+  "generation_method": "proxy_generated_separate_image",
+  "not_a_pixel_cutout": true,
+  "sha256": "aa41c03b5f847c40d4660190a84b731491c6814f97c49276e94397f3d32e05c0",
+  "source_image_sha256": "d4c51415314823c5e7092aa4e45bbc9f8fce9092352e4a18560e118f40488d1a",
+  "source_mother_sha256": "d4c51415314823c5e7092aa4e45bbc9f8fce9092352e4a18560e118f40488d1a",
+  "source_originals_sha_verified": [
+    {
+      "asset_id": "c04-p01-scene-mother",
+      "sha256": "d4c51415314823c5e7092aa4e45bbc9f8fce9092352e4a18560e118f40488d1a",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44085725018/c04-p01-scene-mother.png"
+    },
+    {
+      "asset_id": "biblia-quarto-kael-monitor-aceso-v1",
+      "sha256": "6eb1fb244a596b55b85fd3115511fe8f3a3f4e33bf7efe2cdfaec64b4789dfa7",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44008857880/biblia-quarto-kael-monitor-aceso-v1.png"
+    },
+    {
+      "asset_id": "biblia-kael-casual-antes-v2",
+      "sha256": "a9bfad6ba00f7ea1e3f9af33e3943d572e3e3918d41a29eceefd98df169a4dcd",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44011899028/biblia-kael-casual-antes-v2.png"
+    }
+  ],
+  "source_images_attached_to_request": 3,
+  "width": 1536,
+  "height": 1024,
+  "source_canvas": [
+    941,
+    1672
+  ],
+  "provider_canvas": [
+    1536,
+    1024
+  ],
+  "coordinate_alignment_required": true,
+  "source_visual_approval": false,
+  "transparent_alpha_required": true,
+  "technical_qa": "rejected_canvas_mismatch_no_pixel_resizing",
+  "qa_only_cart_zone_high_alpha_fraction": null,
+  "qa_only_cart_zone_maximum_for_character_v2": null,
+  "placement_verified": false,
+  "visual_recomposition_approved": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "model": "gpt-image-2",
+  "provider_image_calls": 1
+}
