@@ -1,0 +1,50 @@
+name: "EP01 - passo reutilizavel da fila de 10h"
+on:
+  workflow_call:
+    inputs:
+      slot:
+        description: "Numero do lote (1 a 10)"
+        type: number
+        required: true
+    outputs:
+      has_more:
+        description: "Proximo lote deve ser executado somente se houver progresso"
+        value: ${{ jobs.production.outputs.has_more }}
+permissions:
+  contents: read
+  actions: write
+  issues: read
+jobs:
+  production:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    outputs:
+      has_more: ${{ steps.execute.outputs.has_more }}
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Conferir limites, aprovacoes e horas de trabalho planejadas
+        run: python -m scripts.ep01_ten_hour_campaign --mode validate
+      - name: Executar somente a fila segura existente e observar o resultado
+        id: execute
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m scripts.ep01_ten_hour_campaign \
+            --mode run --slot "${{ inputs.slot }}" \
+            --output "$RUNNER_TEMP/ep01-10h-slot-${{ inputs.slot }}.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ep01-10h-slot-${{ inputs.slot }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/ep01-10h-slot-${{ inputs.slot }}.json
+          if-no-files-found: ignore
+          retention-days: 30
