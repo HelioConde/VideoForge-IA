@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**204 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**205 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -208,6 +208,7 @@
 | [biblia-largo-encontro-arken-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request-biblia-largo-encontro-arken-v3/44738527079/biblia-largo-encontro-arken-v3.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`2d2e10b7e1c6…\` | [#44738527079](https://github.com/HelioConde/VideoForge-IA/actions/runs/44738527079) |
 | [biblia-gargalo-servico-arken-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request-biblia-gargalo-servico-arken-v3/44738739001/biblia-gargalo-servico-arken-v3.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`5b020209516d…\` | [#44738739001](https://github.com/HelioConde/VideoForge-IA/actions/runs/44738739001) |
 | [biblia-escadaria-saida-arken-v3.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request-biblia-escadaria-saida-arken-v3/44738914799/biblia-escadaria-saida-arken-v3.png) / referência | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`08336ac18308…\` | [#44738914799](https://github.com/HelioConde/VideoForge-IA/actions/runs/44738914799) |
+| [c01-p03-continuity-v3-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v3-mother/44739095738/c01-p03-continuity-v3-scene-mother.png) / C01-P03 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`97a1eac01aa5…\` | [#44739095738](https://github.com/HelioConde/VideoForge-IA/actions/runs/44739095738) |
 
 ## Regras de consulta
 

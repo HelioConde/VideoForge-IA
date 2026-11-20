@@ -1,0 +1,37 @@
+{
+  "schema": "videoforge/ep01-background-and-shot-v3/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c01-p03-continuity-v3-scene-mother",
+  "visual_bible_reference_id": null,
+  "candidate_scene_shot_id": "C01-P03",
+  "source_originals_sha_verified": [
+    {
+      "id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc"
+    },
+    {
+      "id": "biblia-aldric-tribunal-v1",
+      "sha256": "37c48afcaa240f03406c280af1af4ca49304ead552f0dd89f0bbb25d0080e417"
+    },
+    {
+      "id": "biblia-sala-do-trono-vazio-v1",
+      "sha256": "1397aebed67213d0593ac32d1d7ba8d6a83511d39212368639833bec52cb43ee"
+    },
+    {
+      "id": "approved-scene-C01-P04",
+      "sha256": "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd"
+    }
+  ],
+  "sha256": "97a1eac01aa531b26ecb12326b9da045348a374626862da8a1aa3f0171bf1608",
+  "width": 941,
+  "height": 1672,
+  "kind": "scene_mother",
+  "generation_method": "proxy_generated_separate_versioned_image",
+  "source_revision": "v3",
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "youtube_uploaded": false,
+  "official_mp4": false,
+  "provider_image_calls": 1
+}
