@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 211,
+  "total_arquivadas": 212,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -7778,6 +7778,39 @@
         {
           "id": "biblia-gargalo-servico-arken-v3",
           "sha256": "5b020209516dec76cc1714a2495c469b972c446daf553fb68491887c2d1c7da6",
+          "path": null
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "não_informado",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-continuity-v3-mother:44740600378:c08-p04-continuity-v3-scene-mother.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c08-p04-continuity-v3-scene-mother",
+      "shot": "C08-P04",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-continuity-v3-mother",
+      "github_run_id": 44740600378,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v3-mother/44740600378/c08-p04-continuity-v3-scene-mother.png",
+      "sha256": "102ac14ded40431d179582e5b05d672fecaf7fa8f39e6f04969e07ac95879033",
+      "bytes": 3317977,
+      "width": 941,
+      "height": 1672,
+      "referencias_usadas": [
+        {
+          "id": "biblia-elara-encapuzada-v1",
+          "sha256": "7c610afc5e0bb39ada481a89287b6533cb9b3293f91963af5c01ca2872d71b31",
+          "path": null
+        },
+        {
+          "id": "biblia-escadaria-saida-arken-v3",
+          "sha256": "08336ac183080e81d5c3d253e5fd6f7102809448d3ccf7ea1a6c70794e6c2166",
           "path": null
         }
       ],
