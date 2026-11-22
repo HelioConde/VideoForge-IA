@@ -293,6 +293,73 @@ class ActionQueueTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             q.id_for("image","C08-P02","object bad","a"*64)
 
+    def test_child_dispatch_ignores_concurrent_unrelated_run(self):
+        task=next(t for t in self.plan["tasks"]
+                  if t["kind"]=="image" and t["status"]=="ready_for_preflight")
+        sent=[]
+        def fake_gh(*args,**kwargs):
+            self.assertEqual(args[:2],("workflow","run"))
+            sent.append(next(v.split("=",1)[1] for v in args
+                             if v.startswith("dispatch_token=")))
+            return ""
+        def runs(_workflow):
+            previous={"databaseId":100,"displayTitle":"earlier manual run"}
+            if not sent:
+                return [previous]
+            return [previous,
+                    {"databaseId":101,"displayTitle":"EP01 PNG separado C01-P01 / manual"},
+                    {"databaseId":102,"displayTitle":"EP01 PNG separado "+task["shot_id"]+" / "+sent[0]}]
+        with patch.dict("os.environ",{"GITHUB_RUN_ID":"999"},clear=False):
+            with patch.object(q,"gh",side_effect=fake_gh),patch.object(q,"child_runs",side_effect=runs):
+                result=q.dispatch_child(task)
+        self.assertEqual(result,102)
+        self.assertEqual(len(sent),1)
+        self.assertRegex(sent[0],r"^vfq-[0-9a-f]{20}$")
+
+    def test_child_dispatch_camera_uses_correlated_token(self):
+        task=next(t for t in self.plan["tasks"] if t["kind"]=="camera_preview")
+        sent=[]
+        def fake_gh(*args,**kwargs):
+            sent.append(next(v.split("=",1)[1] for v in args
+                             if v.startswith("dispatch_token=")))
+            self.assertIn("revision=continuity-v2",args)
+            return ""
+        def runs(_workflow):
+            if not sent:
+                return []
+            return [{"databaseId":201,"displayTitle":"EP01 camera preview C01-P01 / manual"},
+                    {"databaseId":202,"displayTitle":"EP01 camera preview "+task["shot_id"]+
+                     " / continuity-v2 / "+sent[0]}]
+        with patch.dict("os.environ",{"GITHUB_RUN_ID":"999"},clear=False):
+            with patch.object(q,"gh",side_effect=fake_gh),patch.object(q,"child_runs",side_effect=runs):
+                self.assertEqual(q.dispatch_child(task),202)
+
+    def test_ambiguous_correlated_child_runs_fail_closed(self):
+        task=next(t for t in self.plan["tasks"]
+                  if t["kind"]=="image" and t["status"]=="ready_for_preflight")
+        token=[]
+        def fake_gh(*args,**kwargs):
+            token.append(next(v.split("=",1)[1] for v in args
+                              if v.startswith("dispatch_token=")))
+            return ""
+        def runs(_workflow):
+            if not token:
+                return []
+            return [{"databaseId":301,"displayTitle":"A / "+token[0]},
+                    {"databaseId":302,"displayTitle":"B / "+token[0]}]
+        with patch.dict("os.environ",{"GITHUB_RUN_ID":"999"},clear=False):
+            with patch.object(q,"gh",side_effect=fake_gh),patch.object(q,"child_runs",side_effect=runs):
+                with self.assertRaisesRegex(RuntimeError,"Ambiguous correlated"):
+                    q.dispatch_child(task)
+
+    def test_child_run_listing_requires_display_title(self):
+        with patch.object(q,"gh",return_value=[{"databaseId":1}]):
+            with self.assertRaisesRegex(ValueError,"untraceable"):
+                q.child_runs(q.IMAGE_WORKFLOW)
+        with patch.object(q,"gh",return_value=[{"databaseId":1,"displayTitle":"run"}]) as api:
+            self.assertEqual(q.child_runs(q.IMAGE_WORKFLOW)[0]["databaseId"],1)
+            self.assertIn("databaseId,displayTitle,status,conclusion,createdAt",api.call_args.args)
+
 
 if __name__=="__main__":
     unittest.main()
