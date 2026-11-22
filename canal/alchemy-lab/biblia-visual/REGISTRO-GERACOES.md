@@ -1,6 +1,6 @@
 # Registro de gerações — alchemy-lab
 
-**218 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
+**219 PNGs reais arquivados e SHA-verificados.** Planejados não contam como gerados. Estado NÃO aprova arte automaticamente.
 
 | Imagem / tomada | Status | Canal / episódio | SHA-256 | GitHub Action |
 |---|---|---|---|---|
@@ -222,6 +222,7 @@
 | [c09-p02-continuity-v3-scene-mother.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-continuity-v3-mother/44741329621/c09-p02-continuity-v3-scene-mother.png) / C09-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`62598361322d…\` | [#44741329621](https://github.com/HelioConde/VideoForge-IA/actions/runs/44741329621) |
 | [c10-p01-character-elara.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/45016581440/c10-p01-character-elara.png) / C10-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`b5ace2fd861f…\` | [#45016581440](https://github.com/HelioConde/VideoForge-IA/actions/runs/45016581440) |
 | [c10-p01-object-broche-flor.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/45016696398/c10-p01-object-broche-flor.png) / C10-P01 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`8be92ed970a1…\` | [#45016696398](https://github.com/HelioConde/VideoForge-IA/actions/runs/45016696398) |
+| [c10-p02-background-clean.png](https://github.com/HelioConde/VideoForge-IA/blob/main/canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/45043065200/c10-p02-background-clean.png) / C10-P02 | gerado | alchemy-lab/mmorpg-conquiste-a-princesa-ep01 | \`f3bad426e437…\` | [#45043065200](https://github.com/HelioConde/VideoForge-IA/actions/runs/45043065200) |
 
 ## Regras de consulta
 
