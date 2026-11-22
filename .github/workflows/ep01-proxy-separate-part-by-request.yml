@@ -1,5 +1,5 @@
 name: "VideoForge - EP01 gerar parte independente pelo proxy"
-run-name: "EP01 PNG separado ${{ inputs.shot_id || 'pedido' }}"
+run-name: "EP01 PNG separado ${{ inputs.shot_id || 'pedido' }} / ${{ inputs.dispatch_token || 'manual' }}"
 on:
   workflow_dispatch:
     inputs:
@@ -13,6 +13,11 @@ on:
         type: string
         required: true
         default: "background-clean"
+      dispatch_token:
+        description: "Identificador de correlacao da fila (vazio para uso manual)"
+        type: string
+        required: false
+        default: ""
   push:
     branches: [main]
     paths:
