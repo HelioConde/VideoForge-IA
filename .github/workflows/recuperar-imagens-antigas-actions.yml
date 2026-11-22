@@ -10,6 +10,7 @@ on:
     branches: [main]
     paths:
       - 'docs/requests/recuperar-imagens-do-actions.json'
+      - '.github/workflows/recuperar-imagens-antigas-actions.yml'
   workflow_dispatch:
 
 permissions:
@@ -84,6 +85,17 @@ jobs:
           python -m videoforge.persist_generated_assets \
             --channel "$CH" --video-id "$VID" \
             --input "$INPUT" --run-id "$SOURCE_RUN" --producer "$ARCHIVE_PRODUCER"
+      - name: Sincronizar Bib Visual e inventario usando apenas PNG restaurado
+        shell: bash
+        env:
+          CH: ${{ steps.request.outputs.ch }}
+          VID: ${{ steps.request.outputs.vid }}
+        run: |
+          set -euo pipefail
+          python -m videoforge.visual_bible --channel "$CH"
+          if [[ "$CH" == 'alchemy-lab' && "$VID" == 'mmorpg-conquiste-a-princesa-ep01' ]]; then
+            python -m videoforge.ep01_image_inventory --write
+          fi
       - name: Enviar PNG original para historico permanente do canal
         shell: bash
         env:
@@ -97,6 +109,10 @@ jobs:
           git config user.name 'videoforge-assets[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -f -- "$FILE"
+          git add -A -- "canal/$CH/biblia-visual"
+          if [[ "$CH" == 'alchemy-lab' && "$VID" == 'mmorpg-conquiste-a-princesa-ep01' ]]; then
+            git add -f -- "canal/$CH/videos/$VID/CHECKPOINT-IMAGENS-EP01-AUTO.json"
+          fi
           if git diff --cached --quiet; then
             echo 'ALREADY_ARCHIVED_SHA_IDENTICAL'
             exit 0
