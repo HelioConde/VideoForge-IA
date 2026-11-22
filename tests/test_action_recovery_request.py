@@ -66,6 +66,16 @@ class ActionRecoveryRequestTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "NAME_OR_COUNT_MISMATCH"):
                 verify_download(folder, pinned)
 
+    def test_recovery_workflow_indexes_png_into_canonical_visual_bible(self):
+        workflow=(ROOT/".github/workflows/recuperar-imagens-antigas-actions.yml"
+                  ).read_text(encoding="utf-8")
+        self.assertIn("python -m videoforge.visual_bible --channel",workflow)
+        self.assertIn("python -m videoforge.ep01_image_inventory --write",workflow)
+        self.assertIn('git add -A -- "canal/$CH/biblia-visual"',workflow)
+        self.assertIn("CHECKPOINT-IMAGENS-EP01-AUTO.json",workflow)
+        self.assertIn("- '.github/workflows/recuperar-imagens-antigas-actions.yml'",workflow)
+        self.assertIn("if github.event_name != 'pull_request'",workflow)
+
     def test_legacy_request_is_still_compatible_but_never_publishes(self):
         legacy = dict(self.request,
                       archive_producer="legacy-action-import",
