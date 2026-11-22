@@ -1,5 +1,5 @@
 name: VideoForge - EP01 camera batch experimental
-run-name: "EP01 camera preview ${{ inputs.shots }} / ${{ inputs.revision || 'legacy' }}"
+run-name: "EP01 camera preview ${{ inputs.shots }} / ${{ inputs.revision || 'legacy' }} / ${{ inputs.dispatch_token || 'manual' }}"
 on:
   workflow_dispatch:
     inputs:
@@ -15,6 +15,11 @@ on:
           - continuity-v2
         default: legacy
         required: true
+      dispatch_token:
+        description: 'Identificador de correlacao da fila (vazio para uso manual)'
+        type: string
+        required: false
+        default: ''
 permissions:
   contents: read
   packages: read
