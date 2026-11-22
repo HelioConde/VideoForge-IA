@@ -13,6 +13,7 @@ on:
       - 'tests/test_agent_activity.py'
       - 'tests/test_durable_dispatch.py'
       - 'orchestrator/ep01_specialist_dispatch.py'
+      - 'orchestrator/runtime_store.py'
       - 'tests/test_ep01_specialist_dispatch.py'
       - 'videoforge/ep01_c08_proxy_composite.py'
       - 'videoforge/ep01_cart_kinematics.py'
@@ -152,6 +153,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_agent_activity.py' -v
           python -m unittest discover -s tests -p 'test_durable_dispatch.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_specialist_dispatch.py' -v
       - name: Execute or resume four allowed technical source audits in GitHub CAS
         run: |
           python -m orchestrator.durable_dispatch --github-state --initialize-store \

@@ -62,7 +62,7 @@ def pinned_file(root: Path, relative: str, expected: str | None = None) -> str:
     return digest
 
 
-def seed(store: Store, *, root=ROOT) -> list[str]:
+def seed(store: Store, *, root=ROOT, active_ids: dict[str, str] | None = None) -> list[str]:
     root = Path(root)
     created=[]
     for role in RUN_SEQUENCE:
@@ -88,6 +88,8 @@ def seed(store: Store, *, root=ROOT) -> list[str]:
             "source_scope":CONTRACT,
             "technical_executed_not_a_model_call":True,
         }
+        if active_ids is not None:
+            active_ids[role] = task["task_id"]
         if store.enqueue(task):
             created.append(task["task_id"])
     return created
@@ -304,8 +306,11 @@ def independent_qa(result: dict, output: Path, role: str, *, root=ROOT) -> bool:
     return True
 
 
-def worker_step(store: Store, output_dir: Path, *, root=ROOT):
-    task=store.claim(mode="deterministic")
+def worker_step(store: Store, output_dir: Path, *, root=ROOT,
+                active_ids: dict[str, str] | None = None):
+    # Historical versions remain in CAS but must never be executed again.
+    allowlist=set(active_ids.values()) if active_ids is not None else None
+    task=store.claim(mode="deterministic", allowed_task_ids=allowlist)
     if task is None:
         return None
     role=task["owner"]
@@ -319,11 +324,15 @@ def worker_step(store: Store, output_dir: Path, *, root=ROOT):
         if task["phase"]=="produce":
             needed=REQUIRES.get(role)
             if needed:
-                prerequisite=next(
-                    (x for x in store.export_snapshot()["tables"]["tasks"]
-                     if json.loads(x["payload"]).get("owner")==needed),None)
-                if (not prerequisite or
-                        json.loads(prerequisite["payload"])["status"]!="completed"):
+                # Check the matching CURRENT version, not an older completed role.
+                if active_ids is not None:
+                    prerequisite=store.get(active_ids[needed])
+                else:
+                    previous=next(
+                        (x for x in store.export_snapshot()["tables"]["tasks"]
+                         if json.loads(x["payload"]).get("owner")==needed),None)
+                    prerequisite=json.loads(previous["payload"]) if previous else None
+                if not prerequisite or prerequisite["status"]!="completed":
                     raise ValueError("Cannot start without preceding source specialist QA")
             evidence=produce(role,output,root=root)
             store.deliver(task["task_id"],task["attempt_id"],task["revision"],{
@@ -356,16 +365,28 @@ def worker_step(store: Store, output_dir: Path, *, root=ROOT):
 
 
 def run(store: Store, output_dir: Path, *, root=ROOT) -> dict:
-    created=seed(store,root=root)
+    active_ids: dict[str, str] = {}
+    created=seed(store,root=root,active_ids=active_ids)
     recovered=store.recover()
     steps=[]
     for _ in range(12):
-        row=worker_step(store,output_dir,root=root)
+        row=worker_step(store,output_dir,root=root,active_ids=active_ids)
         if row is None:
             break
         steps.append({"task_id":row["task_id"],"phase":row.get("phase"),
                       "status":row.get("status")})
     result=runtime_report(store,root=root)
+    # Report only the six task identities pinned to this source/code revision.
+    # Keep ALL older task/attempt/checkpoint bytes untouched in the CAS store.
+    current=set(active_ids.values())
+    if len(current)!=len(RUN_SEQUENCE):
+        raise ValueError("Cannot identify six unique current specialist tasks")
+    all_tasks=result["tasks"]
+    result["tasks"]=[t for t in all_tasks if t["task_id"] in current]
+    result["checkpoints"]=[c for c in result["checkpoints"] if c["task_id"] in current]
+    result["attempts"]=[a for a in result["attempts"] if a["task_id"] in current]
+    result["events"]=[e for e in result["events"] if e["task_id"] in current]
+    result["dead_letter_queue"]=[tid for tid in result["dead_letter_queue"] if tid in current]
     role_state={t["owner"]:t["status"] for t in result["tasks"]}
     original_run_ids={}
     for t in result["tasks"]:
@@ -374,6 +395,9 @@ def run(store: Store, output_dir: Path, *, root=ROOT) -> dict:
     result["specialist_dispatch"]={
         "contract":CONTRACT,"new_task_ids":created,"steps":steps,
         "source_execution_run_ids":original_run_ids,
+        "historical_task_versions":len(all_tasks)-len(result["tasks"]),
+        "historical_completed":sum(t["status"]=="completed" and t["task_id"] not in current
+                                    for t in all_tasks),
         "recovered":recovered,"safe_roles":list(RUN_SEQUENCE),
         "technical_completed":sum(t["status"]=="completed" for t in result["tasks"]),
         "completed_roles":sorted(r for r,s in role_state.items() if s=="completed"),
