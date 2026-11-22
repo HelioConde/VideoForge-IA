@@ -1,0 +1,56 @@
+{
+  "schema": "videoforge/ep01-proxy-separate-part/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "asset_id": "c10-p02-object-broche-flor",
+  "candidate_scene_shot_id": "C10-P02",
+  "component": "object-broche-flor",
+  "asset_role": "object",
+  "generation_method": "proxy_generated_separate_image",
+  "not_a_pixel_cutout": true,
+  "sha256": "00d310ea6ffffe96f60af9ab382c845703af7b94064b76d9308371ed63f64a19",
+  "source_image_sha256": "177866a92564456eac87330e2faba37f6366b2325744532c3301b01b4dce343c",
+  "source_mother_sha256": "177866a92564456eac87330e2faba37f6366b2325744532c3301b01b4dce343c",
+  "source_originals_sha_verified": [
+    {
+      "asset_id": "c10-p02-scene-mother",
+      "sha256": "177866a92564456eac87330e2faba37f6366b2325744532c3301b01b4dce343c",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44101844793/c10-p02-scene-mother.png"
+    },
+    {
+      "asset_id": "biblia-kael-medieval-base-v1",
+      "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+    },
+    {
+      "asset_id": "biblia-beco-base-v1",
+      "sha256": "83c10082fb1a808a3f118625d9aca8bcf1e22707d9af0b91d92440af61436939",
+      "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009676311/biblia-beco-base-v1.png"
+    }
+  ],
+  "source_images_attached_to_request": 3,
+  "width": 1672,
+  "height": 941,
+  "source_canvas": [
+    941,
+    1672
+  ],
+  "provider_canvas": [
+    1672,
+    941
+  ],
+  "coordinate_alignment_required": true,
+  "source_visual_approval": false,
+  "transparent_alpha_required": true,
+  "technical_qa": "rejected_canvas_mismatch_no_pixel_resizing",
+  "qa_only_cart_zone_high_alpha_fraction": null,
+  "qa_only_cart_zone_maximum_for_character_v2": null,
+  "placement_verified": false,
+  "visual_recomposition_approved": false,
+  "human_visual_approval": false,
+  "rig_ready": false,
+  "mp4_generated": false,
+  "youtube_uploaded": false,
+  "model": "gpt-image-2",
+  "provider_image_calls": 1
+}
