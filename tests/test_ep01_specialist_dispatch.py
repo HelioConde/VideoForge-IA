@@ -69,6 +69,61 @@ class SixSpecialistsTests(unittest.TestCase):
         self.assertFalse(qa["youtube_published"])
         self.assertGreater((root/"11-c08-p02-tech-preview-NOT-FINAL.mp4").stat().st_size,10000)
 
+    def test_historical_versions_do_not_inflate_current_six_or_get_claimed(self):
+        # Reproduce the live CAS ledger: older completed versions plus a stale
+        # ready one must never count as current work or be executed again.
+        from orchestrator.agent_bus import fingerprint
+        with tempfile.TemporaryDirectory(prefix="vf-historic-versions-") as tmp:
+            store=Store(Path(tmp)/"history.sqlite")
+            try:
+                store.import_snapshot(self.snapshot)
+                for role,status in (("08","completed"),("09","completed"),("11","ready")):
+                    task=next(t for t in self.first["tasks"] if t["owner"]==role)
+                    source=store.db.execute(
+                        "SELECT payload,revision FROM tasks WHERE task_id=?",
+                        (task["task_id"],)).fetchone()
+                    old=json.loads(source["payload"])
+                    old["task_id"]=f"EP01-REAL-TECH-AG{role}-historical"
+                    old["status"]=status
+                    old.pop("lease",None)
+                    old.pop("attempt_id",None)
+                    old.pop("phase",None)
+                    store.db.execute("INSERT INTO tasks(task_id,payload,revision) VALUES (?,?,?)",
+                                     (old["task_id"],json.dumps(old),source["revision"]))
+                    if status=="completed":
+                        cp_row=store.db.execute(
+                            "SELECT content FROM checkpoints WHERE task_id=?",
+                            (task["task_id"],)).fetchone()
+                        cp=json.loads(cp_row["content"])
+                        cp["task_id"]=old["task_id"]
+                        store.db.execute(
+                            "INSERT INTO checkpoints(task_id,content,sha256) VALUES (?,?,?)",
+                            (old["task_id"],json.dumps(cp),fingerprint(cp)))
+                outcome=d.run(store,Path(tmp)/"output")
+                summary=outcome["specialist_dispatch"]
+                self.assertEqual(summary["historical_task_versions"],3)
+                self.assertEqual(summary["historical_completed"],2)
+                self.assertEqual(summary["technical_completed"],6)
+                self.assertEqual(summary["new_task_ids"],[])
+                self.assertEqual(summary["steps"],[])
+                self.assertEqual(len(outcome["tasks"]),6)
+                self.assertEqual(len(outcome["checkpoints"]),6)
+                self.assertEqual(store.get("EP01-REAL-TECH-AG11-historical")["status"],"ready")
+                from orchestrator import agent_activity, durable_dispatch, runtime
+                with tempfile.TemporaryDirectory() as td:
+                    audit=Store(Path(td)/"audit.sqlite")
+                    try:
+                        base=durable_dispatch.run(audit,max_tasks=4)
+                    finally:
+                        audit.close()
+                queue=json.loads((runtime.ROOT/"orchestrator/tasks.json").read_text())
+                dashboard=agent_activity.make_status(
+                    base,queue,None,run_id=1234,now="2026-11-22T10:00:00+00:00",
+                    specialists=outcome)
+                self.assertEqual(dashboard["six_role_technical_execution"]["technical_completed"],6)
+            finally:
+                store.close()
+
     def test_reopen_is_idempotent_no_new_task_no_new_renders(self):
         again=d.run(self.store,self.outputs)
         self.assertEqual(again["specialist_dispatch"]["new_task_ids"],[])
