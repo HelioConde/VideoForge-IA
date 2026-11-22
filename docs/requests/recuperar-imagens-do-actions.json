@@ -1,14 +1,17 @@
 {
   "schema": "videoforge/restore-existing-action-artifact/v1",
-  "channel": "otaku-br",
-  "video_id": "spy-x-family-familia-de-mentira",
-  "source_run_id": 43560159589,
-  "artifact_name": "vf-cena-mae-spy-family-cena-01-43560159589",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "source_run_id": 44740269740,
+  "artifact_name": "vf-ep01-part-C10-P01-background-clean-44740269740",
   "source_folder": "imagens",
+  "archive_producer": "production-proxy-separate-part-v1",
+  "expected_png_name": "c10-p01-background-clean.png",
+  "expected_png_sha256": "ff290bddb995f049fb2a95def7fcb0babe3f8195781f1340284225f2ae00f460",
   "generate_new_image": false,
   "render_mp4": false,
   "youtube_upload": false,
-  "intent": "Arquivar imagens originais de camadas da cena 01 (sprites/background) a partir do Actions, sem IA nem edicao.",
-  "revision": 4,
-  "reason": "Retestar download com expressoes interpoladas corretamente e arquivar original sem geracao"
+  "intent": "Recuperar do artifact o PNG original da C10-P01 que foi gerado por 1 chamada de proxy e falhou no git push concorrente; não chamar proxy novamente.",
+  "revision": 5,
+  "reason": "Run 44740269740 passou geração, mas rebase conflitou em REGISTRO-GERACOES; SHA do PNG confirmado nos logs; salvar apenas bytes originais no caminho canônico do produtor."
 }
