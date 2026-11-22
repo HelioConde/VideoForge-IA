@@ -247,35 +247,49 @@ def gh(*args:str, json_out:bool=False):
 
 def child_runs(workflow:str):
     rows=gh("run","list","--workflow",workflow,"--event","workflow_dispatch",
-            "--limit","100","--json","databaseId,status,conclusion,createdAt",
+            "--limit","100","--json","databaseId,displayTitle,status,conclusion,createdAt",
             json_out=True)
-    if not isinstance(rows,list):
-        raise ValueError("GitHub workflow run listing invalid")
+    if (not isinstance(rows,list)
+            or any(not isinstance(row,dict)
+                   or type(row.get("databaseId")) is not int
+                   or not isinstance(row.get("displayTitle"),str)
+                   for row in rows)):
+        raise ValueError("GitHub workflow run listing invalid or untraceable")
     return rows
 
 
 def dispatch_child(task:dict)->int:
+    """Find ONLY our child by an exact run-name token, never by timing alone."""
     workflow=CHILD[task["kind"]]
-    before={int(row["databaseId"]) for row in child_runs(workflow)}
+    parent_run=os.environ.get("GITHUB_RUN_ID","")
+    if not re.fullmatch(r"[0-9]+",parent_run):
+        raise ValueError("Traceable parent GITHUB_RUN_ID required before child dispatch")
+    token="vfq-"+hashlib.sha256(
+        f"{parent_run}:{task['task_id']}".encode("utf-8")
+    ).hexdigest()[:20]
+    expected_suffix=" / "+token
+    before={row["databaseId"] for row in child_runs(workflow)}
     if task["kind"] in ("image","image_correction"):
         gh("workflow","run",workflow,"--ref","main",
            "-f","shot_id="+task["shot_id"],
-           "-f","part="+task["part"])
+           "-f","part="+task["part"],"-f","dispatch_token="+token)
     elif task["kind"]=="camera_preview":
         gh("workflow","run",workflow,"--ref","main",
-           "-f","shots="+task["shot_id"],"-f","revision=continuity-v2")
+           "-f","shots="+task["shot_id"],"-f","revision=continuity-v2",
+           "-f","dispatch_token="+token)
     else:
         raise ValueError("Workflow not supported")
     deadline=time.monotonic()+180
     while time.monotonic()<deadline:
         rows=[row for row in child_runs(workflow)
-              if int(row["databaseId"]) not in before]
+              if row["databaseId"] not in before
+              and row["displayTitle"].endswith(expected_suffix)]
         if len(rows)==1:
-            return int(rows[0]["databaseId"])
+            return rows[0]["databaseId"]
         if len(rows)>1:
-            raise RuntimeError("Ambiguous child Actions IDs; no retry")
+            raise RuntimeError("Ambiguous correlated child Actions IDs; no retry")
         time.sleep(7)
-    raise RuntimeError("New child Action not visible; no retry")
+    raise RuntimeError("Correlated child Action not visible; no retry")
 
 
 def reload_main():
