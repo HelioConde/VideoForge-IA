@@ -74,7 +74,7 @@ class ActionRecoveryRequestTests(unittest.TestCase):
         self.assertIn('git add -A -- "canal/$CH/biblia-visual"',workflow)
         self.assertIn("CHECKPOINT-IMAGENS-EP01-AUTO.json",workflow)
         self.assertIn("- '.github/workflows/recuperar-imagens-antigas-actions.yml'",workflow)
-        self.assertIn("if github.event_name != 'pull_request'",workflow)
+        self.assertIn("if: github.event_name != 'pull_request'",workflow)
 
     def test_legacy_request_is_still_compatible_but_never_publishes(self):
         legacy = dict(self.request,
