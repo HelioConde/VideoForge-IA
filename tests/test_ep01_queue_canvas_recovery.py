@@ -100,6 +100,71 @@ class TinyCanvasAndRecovery(unittest.TestCase):
         self.assertFalse(ledger["attempts"][task["task_id"]]["cannot_be_used_as_approved_rig"] is False)
         self.assertEqual(len(saved),1)
 
+    def test_failed_paid_child_with_restored_candidate_is_archived_no_replay(self):
+        # The real C10-P01 source completed one paid proxy call, but the archive
+        # push conflicted. Restore the original ZIP bytes first; only then may
+        # this deterministic ledger reconciliation mark the attempt terminal.
+        task={
+            "task_id":"image:C10-P01:background-clean:bf4bcf0210528b26bd8a",
+            "kind":"image","shot_id":"C10-P01","part":"background-clean",
+            "source_sha256":"bf4bcf0210528b26bd8a97b5ed9d953322e4b0edbe2ec5283c82470dd18a0c82",
+        }
+        prior={
+            "file":"canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/44740269740/c10-p01-background-clean.png",
+            "sha256":"ff290bddb995f049fb2a95def7fcb0babe3f8195781f1340284225f2ae00f460",
+        }
+        info={
+            "sha256":prior["sha256"],
+            "source_mother_sha256":task["source_sha256"],
+            "asset_id":"c10-p01-background-clean",
+            "technical_qa":"candidate_minor_edge_delta_requires_alignment_qa",
+            "human_visual_approval":False,"rig_ready":False,
+            "youtube_uploaded":False,
+        }
+        saved=[]
+        class Remote:
+            def save(self, data):
+                queue.QueueRemote._validate_snapshot(data)
+                saved.append(deepcopy(data))
+        for mutation in ("valid","wrong_file_sha","wrong_origin","not_final_child",
+                         "not_main_child","untrusted_quality","wrong_source_run"):
+            record={"status":"blocked_failed","workflow":queue.IMAGE_WORKFLOW,
+                    "source_sha256":task["source_sha256"],
+                    "child_run_id":44740269740}
+            ledger={"schema_version":1,"schema":queue.STATE_SCHEMA,
+                    "attempts":{task["task_id"]:record}}
+            source=dict(prior)
+            metadata=dict(info)
+            child={"conclusion":"failure","event":"workflow_dispatch","head_branch":"main"}
+            if mutation=="wrong_file_sha":
+                metadata["sha256"]="0"*64
+            elif mutation=="wrong_origin":
+                metadata["source_mother_sha256"]="1"*64
+            elif mutation=="not_final_child":
+                child["conclusion"]="success"
+            elif mutation=="not_main_child":
+                child["head_branch"]="feature"
+            elif mutation=="untrusted_quality":
+                metadata["technical_qa"]="approved_no_qa"
+            elif mutation=="wrong_source_run":
+                source["file"]=source["file"].replace("44740269740","999999999")
+            with self.subTest(mutation=mutation):
+                with patch.object(queue.parts,"existing_part",return_value=source):
+                    with patch.object(queue,"load_json",return_value=metadata):
+                        with patch.object(queue,"gh",return_value=child):
+                            fixed=queue.reconcile_rejected_archives({"tasks":[task]},Remote(),ledger)
+                if mutation=="valid":
+                    self.assertEqual(fixed,[task["task_id"]])
+                    self.assertEqual(record["status"],"archived")
+                    self.assertTrue(record["needs_human_visual_review"])
+                    self.assertFalse(record["youtube_publication"])
+                    self.assertEqual(record["sha256"],prior["sha256"])
+                    self.assertEqual(record["technical_qa"],info["technical_qa"])
+                else:
+                    self.assertEqual(fixed,[])
+                    self.assertEqual(record["status"],"blocked_failed")
+        self.assertEqual(len(saved),1)
+
     def test_unrelated_or_unverified_failure_remains_blocked_and_unresolved(self):
         task={"task_id":"image:C01-P05:character-guarda_direito:6a599ab681994790b3e9",
               "kind":"image","shot_id":"C01-P05","part":"character-guarda_direito",

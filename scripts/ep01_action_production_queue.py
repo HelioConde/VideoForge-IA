@@ -316,10 +316,11 @@ def verify_child(task:dict,run_id:int):
 def reconcile_rejected_archives(plan:dict,remote:QueueRemote,ledger:dict)->list[str]:
     """Repair only proven REJECTED archived results, without replaying a call.
 
-    Unlike a network-unknown reservation, a failed child with an archived PNG
-    and rejected technical QA is known to have billed/produced an image.
-    Mark it as terminal/rejected, not completed or retried. Refuse to
-    reconcile if the archival source SHA, run ID or actual child status differ.
+    Unlike a network-unknown reservation, a failed child with a SHA-pinned
+    archived PNG is a proven paid generation, even if Git push failed.
+    Preserve rejected art as rejected, and acceptable technical candidates as
+    archived but awaiting visual review. NEVER replay the billed child.
+    Refuse to reconcile if the source SHA, run ID, metadata or status differ.
     """
     changed=[]
     items={task["task_id"]:task for task in plan["tasks"]}
@@ -336,10 +337,12 @@ def reconcile_rejected_archives(plan:dict,remote:QueueRemote,ledger:dict)->list[
         if not archived:
             continue
         meta=load_json(ROOT/Path(archived["file"]).with_suffix(".production.json"))
+        quality=meta.get("technical_qa")
         if (meta.get("sha256")!=archived["sha256"]
                 or meta.get("source_mother_sha256")!=item["source_sha256"]
                 or meta.get("asset_id")!=item["shot_id"].lower()+"-"+item["part"]
-                or not str(meta.get("technical_qa","")).startswith("rejected_")
+                or not isinstance(quality,str)
+                or not quality.startswith(("rejected_","candidate_"))
                 or meta.get("human_visual_approval") is not False
                 or meta.get("rig_ready") is not False
                 or meta.get("youtube_uploaded") is not False
@@ -352,10 +355,10 @@ def reconcile_rejected_archives(plan:dict,remote:QueueRemote,ledger:dict)->list[
                 or child_report.get("head_branch")!="main"):
             continue
         entry.update({
-            "status":"rejected_archived",
+            "status":"rejected_archived" if quality.startswith("rejected_") else "archived",
             "sha256":archived["sha256"],
             "source_file":archived["file"],
-            "technical_qa":meta["technical_qa"],
+            "technical_qa":quality,
             "needs_human_visual_review":True,
             "cannot_be_used_as_approved_rig":True,
             "youtube_publication":False,
@@ -450,7 +453,7 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
     attempts=ledger["attempts"]
     reconciled=reconcile_rejected_archives(plan,remote,ledger)
     if reconciled:
-        print("EP01_REJECTED_SOURCE_ARCHIVED_NO_REBILL",
+        print("EP01_PAID_IMAGE_SOURCE_ARCHIVED_NO_REBILL",
               json.dumps(reconciled,ensure_ascii=False),flush=True)
     preflight_reconciled=reconcile_failed_preflight(plan,remote,ledger)
     if preflight_reconciled:
@@ -534,10 +537,10 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
                 rejected=reconcile_rejected_archives(plan,remote,ledger)
                 if key in rejected:
                     results.append({"task_id":key,"child_run_id":child_id,
-                                    "status":"rejected_archived",
+                                    "status":attempts[key]["status"],
                                     "technical_qa":attempts[key]["technical_qa"]})
                     counters[kind]+=1
-                    print("EP01_REJECTED_CHILD_RECONCILED_NO_REPLAY",
+                    print("EP01_VERIFIED_PAID_CHILD_ARCHIVED_NO_REPLAY",
                           key,child_id,flush=True)
                     continue
             raise RuntimeError("EP01_QUEUE_CHILD_FAILED_NO_RETRY "+
