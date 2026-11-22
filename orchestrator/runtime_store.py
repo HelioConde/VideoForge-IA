@@ -179,16 +179,20 @@ class Store:
             self._event(task, '01', task['owner'], 'task_assigned', {'operation': task['operation']}, task['task_id'], now, True)
         return True
 
-    def claim(self, now=None, ttl=900, max_concurrency=2, mode=None):
+    def claim(self, now=None, ttl=900, max_concurrency=2, mode=None, allowed_task_ids=None):
         now = int(time.time()) if now is None else now
         if not 1 <= max_concurrency <= 12 or not 60 <= ttl <= 3600:
             raise ValueError('Invalid lease/concurrency bound')
+        if allowed_task_ids is not None and not isinstance(allowed_task_ids, (set, frozenset)):
+            raise ValueError('Allowed task identities must be a set')
         with self.transaction():
             if self.db.execute("SELECT count(*) FROM attempts WHERE status='running' AND expires>?", (now,)).fetchone()[0] >= max_concurrency:
                 return None
             rows = [self.get(r[0]) for r in self.db.execute('SELECT task_id FROM tasks ORDER BY task_id')]
             rows.sort(key=lambda t: (t['status'] != 'needs_review', t.get('priority', 9), t['task_id']))
             for task in rows:
+                if allowed_task_ids is not None and task['task_id'] not in allowed_task_ids:
+                    continue
                 if mode is not None and task.get('mode') != mode:
                     continue
                 if task['status'] not in {'ready', 'needs_review'} or task['available_at'] > now:
