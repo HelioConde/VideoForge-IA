@@ -225,6 +225,7 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
             if role=="cart":
                 refs.append((root/item["file"]).read_bytes())
                 proofs.append({"asset_id":item["asset_id"],"sha256":item["sha256"],"path":item["file"]})
+    typ=request["role"]
     # Explicitly bind the native source orientation before spending an image call.
     # The provider size is only a model hint; its output can transpose the canvas.
     native_canvas = png_info(mother)
