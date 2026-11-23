@@ -695,3 +695,15 @@ Nova Action C01-P04 [44213509153](https://github.com/HelioConde/VideoForge-IA/ac
 [PR #68](https://github.com/HelioConde/VideoForge-IA/pull/68) integrado. [Action #44215462090](https://github.com/HelioConde/VideoForge-IA/actions/runs/44215462090) passou: quatro prévias (três visuais + preto) e montagem de 310 frames/10,33 s, 540×960, H.264, 30 FPS, sem áudio. [Baixar os cinco MP4s e QA](https://github.com/HelioConde/VideoForge-IA/actions/runs/44215462090/artifacts/14388741017). Decodificação de todos os quadros e SHA conferidos após download; cinco SKIP_VALIDATED na retomada. Evidência: [QA-CAMERA-BATCH-V1.json](QA-CAMERA-BATCH-V1.json); [prancha da abertura](QA-CAMERA-ABERTURA-V1.jpg). Testes: 36 Python, três Node e TypeScript passaram.
 
 Antes: somente P04 com MP4 de câmera e Action antiga vermelha. Agora: nova Action P04 verde (#44213509153), pipeline de 40 configurações e abertura experimental real. 38 tomadas visuais ainda sem aprovação individual. P02 permanece diagnóstico de contato rejeitado; P03 V3 aguarda revisão e apresenta rei em pé antes do rei sentado em P04. **Não é rig articulado nem episódio oficial.** Sem novas imagens, mãos independentes ou publicação. Próxima tomada técnica calculada: C01-P05; revisão humana prioritária: contato P02, continuidade P03/P04 e câmera P04.
+
+
+## 23/11/2026 — Bloqueio de canvas atualizado dentro do próprio lote
+
+Base inspecionada: `84f0288c28a34c01c4ca31faa5bc6200fad1de85`; PR #126 já integrada. A proteção por tomada era calculada somente em `build()`: duas rejeições arquivadas durante `run_remote()` não atualizavam a lista em memória, permitindo reservar uma terceira peça no mesmo lote.
+
+Correção: após reconciliação comprovada de PNGs, atualizar os mesmos objetos de tarefa, recomputar o bloqueio por mesma mãe/dimensões e as contagens antes de continuar. Também aplicar na recuperação de falhas de lotes anteriores. Arquivos rejeitados e ledger antirrepetição preservados; outras tomadas podem continuar. Push de código passa a executar somente plano, sem disparar filhos pagos; agendamento e despacho explícito mantêm seus limites.
+
+Validação em GitHub Actions: [PR #127](https://github.com/HelioConde/VideoForge-IA/pull/127), commit de código `81ca8eb73345b00d5f378d8d48062caab3510bd5`, [CI #45255208158](https://github.com/HelioConde/VideoForge-IA/actions/runs/45255208158) **success**. As cinco suítes Python da fila passaram, incluindo rejeição isolada, duas rejeições no mesmo lote (terceira peça não reservada), recuperação no início e retomada sem repetição; sintaxe JavaScript e geração do plano de 42 tomadas/276 tarefas também passaram. Nenhuma execução local foi alegada. Registro preparado para integração pela PR após validação; estado do merge deve ser conferido na própria PR.
+
+Nenhuma imagem, rig, áudio ou MP4 produzido nesta alteração; nenhuma aprovação visual nem publicação. Próximo passo: conferir a execução pós-merge em modo plano; revisar separadamente a incompatibilidade real de canvas do provedor, ainda não corrigida.
+

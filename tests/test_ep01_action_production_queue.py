@@ -1,5 +1,6 @@
 """Real 42-shot queue coverage, anti-duplicate and fail-closed paid dispatch."""
 from copy import deepcopy
+from contextlib import ExitStack
 import hashlib
 import json
 from pathlib import Path
@@ -246,49 +247,122 @@ class ActionQueueTests(unittest.TestCase):
                             q.run_remote(portion,1,0)
                         self.assertEqual(send.call_count,1)
 
-    def test_verified_rejected_child_is_not_retried_and_does_not_stop_next_task(self):
-        images=[t for t in self.plan["tasks"]
-                if t["kind"]=="image" and t["status"]=="ready_for_preflight"][:2]
-        self.assertEqual(len(images),2)
-        env={"GH_TOKEN":"offline-test","GITHUB_TOKEN":"offline-test",
-             "GITHUB_REPOSITORY":"HelioConde/VideoForge-IA",
-             "GITHUB_REF":"refs/heads/main","GITHUB_RUN_ID":"999"}
-        called=[]
-        def send(task):
-            called.append(task["task_id"])
-            return 2001 if len(called)==1 else 2002
-        def fake_reconcile(plan,remote,ledger):
-            task=images[0]["task_id"]
-            if ledger["attempts"].get(task,{}).get("status")=="blocked_failed":
-                ledger["attempts"][task].update(
-                    status="rejected_archived",
-                    technical_qa="rejected_canvas_mismatch_no_pixel_resizing")
-                remote.save(ledger)
-                return [task]
-            return []
-        def watcher(*args,**kwargs):
-            if args[:2]==("run","watch") and args[2]=="2001":
-                raise RuntimeError("verified rejected PNG child")
-            return ""
-        with patch.dict("os.environ",env),patch.object(q,"QueueRemote",FakeRemote):
-            with patch.object(q.parts,"existing_part",return_value=None):
-                with patch.object(q.parts,"prepare",side_effect=lambda shot,part:{
-                    "mother_proof":{"sha256":next(t["source_sha256"] for t in images
-                        if t["shot_id"]==shot and t["part"]==part)}}):
-                    with patch.object(q,"dispatch_child",side_effect=send):
-                        with patch.object(q,"reconcile_rejected_archives",side_effect=fake_reconcile):
-                            with patch.object(q,"reload_main"):
-                                with patch.object(q,"gh",side_effect=watcher):
-                                    with patch.object(q,"verify_child",return_value={
-                                        "status":"archived","sha256":"a"*64,
-                                        "source_file":"verified.png"}):
-                                        result=q.run_remote({"tasks":images},2,0)
-        self.assertEqual(len(called),2)
-        self.assertEqual(result["processed_images"],2)
-        self.assertEqual([x["status"] for x in result["executed"]],
-                         ["rejected_archived","archived"])
-        self.assertEqual(FakeRemote.shared["attempts"][images[0]["task_id"]]["status"],
-                         "rejected_archived")
+    def run_canvas_batch(self, rejected_count, pending_before_batch=False):
+        """Exercise real reconciliation/fencing with mocked external IO only."""
+        def task(shot, part):
+            sha = "a" * 64
+            return {"task_id": q.id_for("image", shot, part, sha),
+                    "kind": "image", "shot_id": shot, "part": part,
+                    "source_sha256": sha, "status": "ready_for_preflight",
+                    "reason": "", "priority": 10, "owner": "05"}
+        images = [
+            task("C11-P01", "character-kael"),
+            task("C11-P01", "object-broche-flor"),
+            task("C11-P01", "object-spear"),
+            task("C12-P01", "background-clean"),
+        ]
+        plan = {"tasks": images}
+        archives, metadata, called = {}, {}, []
+        def archive(row, run_id):
+            relative = f"archive/{run_id}/{row['shot_id'].lower()}-{row['part']}.png"
+            sha = str(run_id % 10) * 64
+            archives[(row["shot_id"], row["part"])] = {"file": relative, "sha256": sha}
+            metadata[str((q.ROOT / relative).with_suffix(".production.json"))] = {
+                "sha256": sha, "source_mother_sha256": row["source_sha256"],
+                "asset_id": row["shot_id"].lower() + "-" + row["part"],
+                "technical_qa": "rejected_canvas_mismatch_no_pixel_resizing",
+                "source_canvas": [941, 1672], "provider_canvas": [981, 1602],
+                "human_visual_approval": False, "rig_ready": False,
+                "youtube_uploaded": False,
+            }
+        if pending_before_batch:
+            attempts = {}
+            for index, row in enumerate(images[:rejected_count], 1):
+                run_id = 1000 + index
+                archive(row, run_id)
+                attempts[row["task_id"]] = {
+                    "status": "blocked_failed", "workflow": q.IMAGE_WORKFLOW,
+                    "source_sha256": row["source_sha256"], "child_run_id": run_id,
+                }
+            FakeRemote.shared = {"schema_version": 1, "schema": q.STATE_SCHEMA,
+                                 "attempts": attempts}
+        def send(row):
+            self.assertEqual(FakeRemote.writes[-1]["attempts"][row["task_id"]]["status"],
+                             "reserved")
+            called.append(row["task_id"])
+            return 2000 + len(called)
+        def external(*args, **kwargs):
+            if args[:2] == ("run", "watch"):
+                index = int(args[2]) - 2001
+                row = next(t for t in images if t["task_id"] == called[index])
+                if not pending_before_batch and index < rejected_count:
+                    archive(row, int(args[2]))
+                    raise RuntimeError("Paid PNG archived, but canvas QA failed")
+                return ""
+            if args[0] == "api":
+                return {"conclusion": "failure", "event": "workflow_dispatch",
+                        "head_branch": "main"}
+            raise AssertionError("Unexpected external call")
+        env = {"GH_TOKEN": "offline-test", "GITHUB_TOKEN": "offline-test",
+               "GITHUB_REPOSITORY": "HelioConde/VideoForge-IA",
+               "GITHUB_REF": "refs/heads/main", "GITHUB_RUN_ID": "999"}
+        with ExitStack() as stack:
+            stack.enter_context(patch.dict("os.environ", env))
+            stack.enter_context(patch.object(q, "QueueRemote", FakeRemote))
+            stack.enter_context(patch.object(q.parts, "existing_part",
+                side_effect=lambda shot, part, root=None: archives.get((shot, part))))
+            stack.enter_context(patch.object(q.parts, "prepare",
+                return_value={"mother_proof": {"sha256": "a" * 64}}))
+            stack.enter_context(patch.object(q, "load_json",
+                side_effect=lambda path: metadata[str(path)]))
+            stack.enter_context(patch.object(q, "dispatch_child", side_effect=send))
+            stack.enter_context(patch.object(q, "gh", side_effect=external))
+            stack.enter_context(patch.object(q, "reload_main"))
+            stack.enter_context(patch.object(q, "verify_child", return_value={
+                "status": "archived", "sha256": "f" * 64, "source_file": "verified.png"}))
+            result = q.run_remote(plan, 4, 0)
+            # A restart must neither rebill the rejected images nor reserve the
+            # blocked third component. Unrelated archived tasks stay terminal.
+            again = q.run_remote(plan, 4, 0)
+        self.assertEqual(again["executed"], [])
+        self.assertFalse(result["human_visual_approval"])
+        self.assertEqual(result["youtube_publications"], 0)
+        return images, plan, result, called
+
+    def test_one_rejected_child_allows_remaining_tasks_without_replay(self):
+        images, plan, result, called = self.run_canvas_batch(1)
+        self.assertEqual(called, [t["task_id"] for t in images])
+        self.assertEqual(result["processed_images"], 4)
+        self.assertEqual(result["executed"][0]["status"], "rejected_archived")
+        self.assertEqual(images[0]["status"], "archived_rejected_needs_review")
+
+    def test_two_matching_rejections_fence_third_component_within_same_batch(self):
+        images, plan, result, called = self.run_canvas_batch(2)
+        self.assertEqual(called, [images[i]["task_id"] for i in (0, 1, 3)])
+        self.assertEqual(result["processed_images"], 3)
+        self.assertEqual(images[2]["status"], "blocked_repeated_canvas_mismatch")
+        self.assertEqual(plan["status_counts"]["image:blocked_repeated_canvas_mismatch"], 1)
+        self.assertNotIn(images[2]["task_id"], FakeRemote.shared["attempts"])
+        for row in images[:2]:
+            self.assertEqual(FakeRemote.shared["attempts"][row["task_id"]]["status"],
+                             "rejected_archived")
+        self.assertEqual(FakeRemote.shared["attempts"][images[3]["task_id"]]["status"],
+                         "archived")
+
+    def test_recovered_rejections_refresh_stale_plan_before_first_dispatch(self):
+        images, plan, result, called = self.run_canvas_batch(2, pending_before_batch=True)
+        self.assertEqual(called, [images[3]["task_id"]])
+        self.assertEqual(result["processed_images"], 1)
+        self.assertEqual(images[2]["status"], "blocked_repeated_canvas_mismatch")
+        self.assertNotIn(images[2]["task_id"], FakeRemote.shared["attempts"])
+
+    def test_code_push_cannot_select_paid_queue_mode(self):
+        workflow = (q.ROOT / ".github/workflows/ep01-image-animation-action-queue.yml").read_text()
+        self.assertIn(
+            "QUEUE_MODE: ${{ inputs.mode || (github.event_name == 'schedule' && 'run' || 'plan') }}",
+            workflow,
+        )
+        self.assertIn("if: env.QUEUE_MODE == 'run'", workflow)
 
     def test_proven_preflight_failure_is_terminal_block_without_provider_replay(self):
         task=next(t for t in self.plan["tasks"]

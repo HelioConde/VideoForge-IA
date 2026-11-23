@@ -1,3 +1,13 @@
+## 23/11/2026 — Bloqueio de canvas atualizado dentro do próprio lote
+
+Base inspecionada: `84f0288c28a34c01c4ca31faa5bc6200fad1de85`; PR #126 já integrada. A proteção por tomada era calculada somente em `build()`: duas rejeições arquivadas durante `run_remote()` não atualizavam a lista em memória, permitindo reservar uma terceira peça no mesmo lote.
+
+Correção: após reconciliação comprovada de PNGs, atualizar os mesmos objetos de tarefa, recomputar o bloqueio por mesma mãe/dimensões e as contagens antes de continuar. Também aplicar na recuperação de falhas de lotes anteriores. Arquivos rejeitados e ledger antirrepetição preservados; outras tomadas podem continuar. Push de código passa a executar somente plano, sem disparar filhos pagos; agendamento e despacho explícito mantêm seus limites.
+
+Validação em GitHub Actions: [PR #127](https://github.com/HelioConde/VideoForge-IA/pull/127), commit de código `81ca8eb73345b00d5f378d8d48062caab3510bd5`, [CI #45255208158](https://github.com/HelioConde/VideoForge-IA/actions/runs/45255208158) **success**. As cinco suítes Python da fila passaram, incluindo rejeição isolada, duas rejeições no mesmo lote (terceira peça não reservada), recuperação no início e retomada sem repetição; sintaxe JavaScript e geração do plano de 42 tomadas/276 tarefas também passaram. Nenhuma execução local foi alegada. Registro preparado para integração pela PR após validação; estado do merge deve ser conferido na própria PR.
+
+Nenhuma imagem, rig, áudio ou MP4 produzido nesta alteração; nenhuma aprovação visual nem publicação. Próximo passo: conferir a execução pós-merge em modo plano; revisar separadamente a incompatibilidade real de canvas do provedor, ainda não corrigida.
+
 ## 20/11/2026 — Nova revisão V3 da perseguição e do trono (feedback visual do criador)
 
 O criador reprovou as imagens-mãe C07-P03/P04, C08-P01–P05, C09-P01/P02 pela repetição da arquitetura do beco. Também apontou rei ausente entre cortes e mudança repentina da postura em C01/C02. **V3 foi especificada para corrigir**, ainda sem arte ou MP4 V3 comprovados: [plano](CORRECAO-CENARIOS-TRONO-V3.json), [detalhes](CORRECAO-CENARIOS-TRONO-V3.md). Necessárias 3 novas imagens de cenário (mercado, serviço e escadaria) mais 11 tomadas substitutas, cada qual com SHA, arquivadas sem sobrescrever a V2. **C01-P04 permanece a imagem âncora aprovada e intocada**, rei sentado em todos os cortes. C08-P03 conterá apenas a carroça bloqueando o gargalo. C09 passa ao pátio alto de forma contínua. Manter 42 tomadas/163 s. Não autoaprovar, não liberar rigs/voz nem publicar no YouTube. MP4 V2 antigo segue disponível somente para comparação até V3 gerada/validada.

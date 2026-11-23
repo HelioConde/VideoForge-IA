@@ -477,6 +477,34 @@ def reconcile_failed_preflight(plan:dict,remote:QueueRemote,ledger:dict)->list[s
     return changed
 
 
+def refresh_reconciled_tasks(plan: dict, ledger: dict, reconciled: list[str]) -> None:
+    """Apply verified archive receipts and re-evaluate the fence in this batch.
+
+    Mutate the existing task objects: run_remote's sorted iteration still
+    references them. A newly blocked third component must never be reserved.
+    """
+    keys = set(reconciled)
+    for task in plan["tasks"]:
+        if task["task_id"] not in keys:
+            continue
+        entry = ledger["attempts"][task["task_id"]]
+        if task["status"] in {"ready_for_preflight", "archived",
+                              "archived_rejected_needs_review"}:
+            task["status"] = (
+                "archived_rejected_needs_review"
+                if entry["status"] == "rejected_archived" else "archived"
+            )
+        task["source_file"] = entry["source_file"]
+        task["file_sha256"] = entry["sha256"]
+        task["reason"] = "Verified child archive reconciled without replay; visual review pending"
+    fence_repeated_canvas_mismatch(plan["tasks"], ROOT)
+    counts = {}
+    for task in plan["tasks"]:
+        key = task["kind"] + ":" + task["status"]
+        counts[key] = counts.get(key, 0) + 1
+    plan["status_counts"] = counts
+
+
 def publish_active_child(task:dict, child_id:int) -> None:
     """Display the reserved child on the dashboard; status publishing cannot replay a child."""
     if os.environ.get("EP01_SHOW_ACTIVE_CHILD") != "true":
@@ -516,6 +544,7 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
     attempts=ledger["attempts"]
     reconciled=reconcile_rejected_archives(plan,remote,ledger)
     if reconciled:
+        refresh_reconciled_tasks(plan,ledger,reconciled)
         print("EP01_PAID_IMAGE_SOURCE_ARCHIVED_NO_REBILL",
               json.dumps(reconciled,ensure_ascii=False),flush=True)
     preflight_reconciled=reconcile_failed_preflight(plan,remote,ledger)
@@ -599,6 +628,7 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
                 reload_main()
                 rejected=reconcile_rejected_archives(plan,remote,ledger)
                 if key in rejected:
+                    refresh_reconciled_tasks(plan,ledger,rejected)
                     results.append({"task_id":key,"child_run_id":child_id,
                                     "status":attempts[key]["status"],
                                     "technical_qa":attempts[key]["technical_qa"]})
