@@ -1,7 +1,7 @@
 {
   "schema": "videoforge/visual-bible-generation-registry/v1",
   "channel": "alchemy-lab",
-  "total_arquivadas": 226,
+  "total_arquivadas": 227,
   "geracoes": [
     {
       "id": "mmorpg-conquiste-a-princesa-ep01:production-art-request:43784005362:character-bible.png",
@@ -8389,6 +8389,49 @@
           "id": null,
           "sha256": "3fcdaa067b55d3d75599dab6253ec4605f44453e7ecbc469581f67783bfbb5fb",
           "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005833952/biblia-guarda-direito-cerimonial-v1.png"
+        },
+        {
+          "id": null,
+          "sha256": "e68a242a4cce32b371ab0a97430389cc48619f8a80f38a44670bb944d5193a38",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44009839428/biblia-portao-real-base-v1.png"
+        }
+      ],
+      "status": "gerado",
+      "qa_tecnica": "rejected_canvas_mismatch_no_pixel_resizing",
+      "aprovacao_automatica": false,
+      "youtube_uploaded": false
+    },
+    {
+      "id": "mmorpg-conquiste-a-princesa-ep01:production-proxy-separate-part-v1:45198536342:c11-p02-background-clean.png",
+      "channel": "alchemy-lab",
+      "video_id": "mmorpg-conquiste-a-princesa-ep01",
+      "asset": "c11-p02-background-clean",
+      "shot": "C11-P02",
+      "tipo": "cena",
+      "biblia_item_id": null,
+      "biblia_categoria": null,
+      "producer": "production-proxy-separate-part-v1",
+      "github_run_id": 45198536342,
+      "arquivo": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/45198536342/c11-p02-background-clean.png",
+      "sha256": "aff82afb0d9a87c4920b2cdc6997ea642376461fa1441a29a00a031f12429417",
+      "bytes": 2841363,
+      "width": 981,
+      "height": 1602,
+      "referencias_usadas": [
+        {
+          "id": null,
+          "sha256": "849f5d344ce2db310f9243cc1f30040178f0caf7d437ddd42a26b557502e3181",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44102383757/c11-p02-scene-mother.png"
+        },
+        {
+          "id": null,
+          "sha256": "d30201d04c343777762f08f091b059f7736fb41af9976e801f34488ac1608bfc",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44003234837/biblia-kael-medieval-base-v1.png"
+        },
+        {
+          "id": null,
+          "sha256": "cfa01b0f4781a67ffda243a97c640909f30755f246bc82dde14b8274272d1679",
+          "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-art-request/44005682487/biblia-guarda-esquerdo-cerimonial-v1.png"
         },
         {
           "id": null,
