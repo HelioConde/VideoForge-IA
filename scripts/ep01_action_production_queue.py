@@ -64,6 +64,52 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+
+def fence_repeated_canvas_mismatch(tasks: list[dict], root: Path) -> set[str]:
+    """Stop more paid parts for one mother after two identical canvas failures.
+
+    Require distinct archived components, matching mother SHA, intact PNG
+    provenance and the same source/provider sizes. Never retry or change any
+    original image. A changed mother/version must be reviewed separately.
+    """
+    failures: dict[tuple, set[str]] = {}
+    for task in tasks:
+        if (task["kind"] != "image"
+                or task["status"] != "archived_rejected_needs_review"):
+            continue
+        archived = parts.existing_part(task["shot_id"], task["part"], root)
+        if archived is None:
+            raise ValueError("Rejected canvas source disappeared from archive")
+        meta = load_json(root / Path(archived["file"]).with_suffix(".production.json"))
+        source, provider = meta.get("source_canvas"), meta.get("provider_canvas")
+        if (meta.get("technical_qa") != "rejected_canvas_mismatch_no_pixel_resizing"
+                or meta.get("sha256") != archived["sha256"]
+                or meta.get("source_mother_sha256") != task["source_sha256"]
+                or meta.get("asset_id") != task["shot_id"].lower() + "-" + task["part"]
+                or not all(isinstance(size, list) and len(size) == 2
+                           and all(type(n) is int and 0 < n <= 16384 for n in size)
+                           for size in (source, provider))
+                or source == provider):
+            continue
+        key = (task["shot_id"], task["source_sha256"],
+               tuple(source), tuple(provider))
+        failures.setdefault(key, set()).add(task["part"])
+    paused = {(shot, mother_sha) for (shot, mother_sha, _, _), names
+              in failures.items() if len(names) >= 2}
+    for task in tasks:
+        if (task["kind"] == "image"
+                and task["status"] == "ready_for_preflight"
+                and (task["shot_id"], task["source_sha256"]) in paused):
+            task["status"] = "blocked_repeated_canvas_mismatch"
+            task["reason"] = (
+                "Two different SHA-verified components from this same mother "
+                "were rejected with the same provider canvas. Review the "
+                "versioned orientation/placement contract before any further "
+                "paid dispatch; never replay archived calls."
+            )
+    return {shot for shot, _ in paused}
+
+
 def policy_guard(root: Path) -> None:
     policy=load_json(root/POLICY)
     if (policy.get("scope")!="alchemy-lab/mmorpg-conquiste-a-princesa-ep01"
@@ -202,6 +248,9 @@ def build(root:Path=ROOT) -> dict:
             "technical 30fps camera-only preview; source image remains unapproved", "09",20+i)
         add("rig_animation",sid,None,src_sha,"blocked_waiting_for_verified_rgba_and_rig",
             "requires independent genuine RGBA pieces, motion QA, then human visual acceptance; not camera-only", "08",100+i)
+    # A repeated deterministic provider canvas error is a shot-specific cost
+    # circuit breaker, not a reason to purchase the next component blindly.
+    fence_repeated_canvas_mismatch(tasks, root)
     tallies={}
     for task in tasks:
         k=task["kind"]+":"+task["status"]

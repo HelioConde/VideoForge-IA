@@ -73,6 +73,71 @@ class ActionQueueTests(unittest.TestCase):
         kael=next(t for t in must if t["part"]=="character-kael-v3")
         self.assertIn(kael["status"], {"ready_for_preflight","archived","archived_rejected_needs_review"})
 
+    def test_c11_repeated_wrong_canvas_stops_unbilled_parts_only(self):
+        # Both stored provider attempts returned 981x1602 for a 941x1672
+        # mother, in different components. Keep both rejected PNGs untouched.
+        c11 = [t for t in self.plan["tasks"]
+               if t["kind"] == "image" and t["shot_id"] == "C11-P01"]
+        self.assertEqual(len(c11), 6)
+        for name in ("character-kael", "object-broche-flor"):
+            row = next(t for t in c11 if t["part"] == name)
+            self.assertEqual(row["status"], "archived_rejected_needs_review")
+        blocked = [t for t in c11 if t["status"] == "blocked_repeated_canvas_mismatch"]
+        self.assertTrue(blocked)
+        self.assertTrue(all("Two different SHA-verified components" in t["reason"]
+                            for t in blocked))
+        # The breaker must not stop unrelated shots or globally disable the queue.
+        self.assertTrue(any(t["status"] == "ready_for_preflight"
+                            for t in self.plan["tasks"]
+                            if t["kind"] == "image" and t["shot_id"] != "C11-P01"))
+
+    def test_canvas_breaker_requires_two_matching_archived_failures(self):
+        mother = "a" * 64
+        def make(part, status, shot="C11-P01", sha=mother):
+            return {"kind": "image", "shot_id": shot, "part": part,
+                    "source_sha256": sha, "status": status, "reason": ""}
+        failed = "archived_rejected_needs_review"
+        tasks = [make("character-kael", failed),
+                 make("object-broche-flor", failed),
+                 make("character-guarda_esquerdo", "ready_for_preflight"),
+                 make("background-clean", "ready_for_preflight", "C12-P01")]
+        archives = {
+            "character-kael": {"sha256": "1" * 64, "file": "archive/kael.png"},
+            "object-broche-flor": {"sha256": "2" * 64, "file": "archive/broche.png"},
+        }
+        details = {
+            "archive/kael.production.json": {
+                "technical_qa": "rejected_canvas_mismatch_no_pixel_resizing",
+                "sha256": "1" * 64, "source_mother_sha256": mother,
+                "asset_id": "c11-p01-character-kael", "source_canvas": [941, 1672],
+                "provider_canvas": [981, 1602]},
+            "archive/broche.production.json": {
+                "technical_qa": "rejected_canvas_mismatch_no_pixel_resizing",
+                "sha256": "2" * 64, "source_mother_sha256": mother,
+                "asset_id": "c11-p01-object-broche-flor", "source_canvas": [941, 1672],
+                "provider_canvas": [981, 1602]},
+        }
+        def lookup(shot, part, root):
+            return archives[part]
+        def metadata(path):
+            return details[str(path.relative_to(Path("/tmp/qa")))]
+        with patch.object(q.parts, "existing_part", side_effect=lookup), patch.object(
+                q, "load_json", side_effect=metadata):
+            paused = q.fence_repeated_canvas_mismatch(tasks, Path("/tmp/qa"))
+            self.assertEqual(paused, {"C11-P01"})
+            self.assertEqual(tasks[2]["status"], "blocked_repeated_canvas_mismatch")
+            self.assertEqual(tasks[3]["status"], "ready_for_preflight")
+            # Different provider dimensions mean no repeated failure signature.
+            details["archive/broche.production.json"]["provider_canvas"] = [1024, 1536]
+            tasks[2]["status"] = "ready_for_preflight"
+            self.assertEqual(q.fence_repeated_canvas_mismatch(tasks, Path("/tmp/qa")), set())
+            self.assertEqual(tasks[2]["status"], "ready_for_preflight")
+            # Even identical dimensions from a different mother must not mix.
+            details["archive/broche.production.json"]["provider_canvas"] = [981, 1602]
+            details["archive/broche.production.json"]["source_mother_sha256"] = "b" * 64
+            self.assertEqual(q.fence_repeated_canvas_mismatch(tasks, Path("/tmp/qa")), set())
+            self.assertEqual(tasks[2]["status"], "ready_for_preflight")
+
     def test_all_42_actual_rig_animations_blocked_and_camera_previews_separate(self):
         tasks=self.plan["tasks"]
         rigs=[x for x in tasks if x["kind"]=="rig_animation"]
