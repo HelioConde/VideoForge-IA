@@ -90,6 +90,22 @@ class SeparatePartsTests(unittest.TestCase):
                                     "EP01_ALIGN_ALREADY_ARCHIVED_NO_REPEAT"):
             align.prepare("C01-P05","character-guarda_direito")
 
+    def test_native_canvas_contract_prevents_silent_orientation_guess(self):
+        # Explicit native dimensions are part of the provider prompt; no paid calls.
+        with patch.object(p, "existing_part", return_value=None), patch.object(
+                p.proxy_images, "call_proxy") as charged:
+            for shot, part, expected in (
+                    ("C10-P02", "object-broche-flor", (941, 1672)),
+                    ("C08-P02", "object-carrinho", (1053, 1493))):
+                spec = p.prepare(shot, part)
+                w, h = spec["source_dimensions"]
+                self.assertEqual((w, h), expected)
+                self.assertIn(f"image one is {w}x{h} pixels", spec["prompt"])
+                self.assertIn(f"WIDTH={w}, HEIGHT={h}, VERTICAL portrait", spec["prompt"])
+                self.assertIn(f"NEVER transpose to {h}x{w}", spec["prompt"])
+                self.assertLessEqual(len(spec["prompt"]), 5000)
+            charged.assert_not_called()
+
     def test_new_shot_background_has_sha_verified_mother_and_reference(self):
         # The real background may already be archived by subsequent runs.
         # These prompt/provenance tests never bypass the production no-repeat gate.
