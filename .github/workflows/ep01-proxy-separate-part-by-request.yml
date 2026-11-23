@@ -179,6 +179,18 @@ jobs:
           bash scripts/arquivar-pngs-se-existirem.sh alchemy-lab mmorpg-conquiste-a-princesa-ep01 \
             output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
             "${{ github.run_id }}" production-proxy-separate-part-v1 "${{ job.status }}"
+      - name: Relatar QA da imagem e proximos passos no resumo da Action
+        if: always() && steps.request.outputs.execute == 'true'
+        shell: bash
+        env:
+          SHOT_ID: ${{ steps.request.outputs.shot_id }}
+          PART: ${{ steps.request.outputs.part }}
+        run: |
+          set -euo pipefail
+          python -m scripts.ep01_proxy_qa_feedback \
+            --images-dir output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens \
+            --shot-id "$SHOT_ID" --part "$PART" \
+            --summary "$GITHUB_STEP_SUMMARY"
       - name: Preservar parte gerada e proveniencia para revisão
         if: always() && steps.request.outputs.execute == 'true'
         uses: actions/upload-artifact@v4

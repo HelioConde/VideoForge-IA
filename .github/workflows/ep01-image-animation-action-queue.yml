@@ -15,6 +15,9 @@ on:
       - 'scripts/ep01_layer_gallery.py'
       - 'tests/test_ep01_layer_gallery.py'
       - 'videoforge/ep01_proxy_separate_parts.py'
+      - 'scripts/ep01_proxy_qa_feedback.py'
+      - 'tests/test_ep01_proxy_qa_feedback.py'
+      - '.github/workflows/ep01-proxy-separate-part-by-request.yml'
   push:
     branches: [main]
     paths:
@@ -77,6 +80,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_ep01_action_production_queue.py' -v
           python -m unittest discover -s tests -p 'test_ep01_queue_canvas_recovery.py' -v
           python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_proxy_qa_feedback.py' -v
       - name: Syntax-check GitHub issue updater JavaScript, not only Python
         shell: bash
         run: |
@@ -141,6 +145,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_ep01_action_production_queue.py' -v
           python -m unittest discover -s tests -p 'test_ep01_queue_canvas_recovery.py' -v
           python -m unittest discover -s tests -p 'test_ep01_proxy_separate_parts.py' -v
+          python -m unittest discover -s tests -p 'test_ep01_proxy_qa_feedback.py' -v
           gh auth status
       - name: Write a complete reusable queue plan FIRST (no provider calls)
         run: |
