@@ -1,0 +1,22 @@
+{
+  "schema": "videoforge/permanent-generated-image-archive/v1",
+  "channel": "alchemy-lab",
+  "video_id": "mmorpg-conquiste-a-princesa-ep01",
+  "producer": "production-proxy-separate-part-v1",
+  "github_run_id": 45198846161,
+  "source_output_dir": "output/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/imagens",
+  "images": [
+    {
+      "file": "c11-p02-character-guarda_esquerdo.png",
+      "width": 981,
+      "height": 1602,
+      "sha256": "d70dd7d1ac0dd0572eecd4f3576b7824d5af4ca5be460ea597cec178d031da92",
+      "bytes": 1933098,
+      "human_visual_approval": false
+    }
+  ],
+  "production_approved": false,
+  "youtube_uploaded": false,
+  "generated_in_this_archiver": false,
+  "archived_image_count": 1
+}
