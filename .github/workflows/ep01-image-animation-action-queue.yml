@@ -128,7 +128,8 @@ jobs:
       YOUTUBE_PUBLICATION_ENABLED: 'false'
       MAX_IMAGES: ${{ inputs.max_images }}
       MAX_PREVIEWS: ${{ inputs.max_previews }}
-      QUEUE_MODE: ${{ inputs.mode || 'run' }}
+      # Code pushes only validate/plan; paid batches need schedule or explicit run.
+      QUEUE_MODE: ${{ inputs.mode || (github.event_name == 'schedule' && 'run' || 'plan') }}
     steps:
       - uses: actions/checkout@v4
         with:
