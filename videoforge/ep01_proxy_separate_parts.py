@@ -225,8 +225,18 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
             if role=="cart":
                 refs.append((root/item["file"]).read_bytes())
                 proofs.append({"asset_id":item["asset_id"],"sha256":item["sha256"],"path":item["file"]})
-    typ=request["role"]
+    # Explicitly bind the native source orientation before spending an image call.
+    # The provider size is only a model hint; its output can transpose the canvas.
+    native_canvas = png_info(mother)
+    source_w, source_h = native_canvas["width"], native_canvas["height"]
+    orientation = "VERTICAL portrait" if source_h > source_w else (
+        "HORIZONTAL landscape" if source_w > source_h else "SQUARE")
     common=(
+        f"CANVAS CONTRACT: image one is {source_w}x{source_h} pixels "
+        f"(WIDTH={source_w}, HEIGHT={source_h}, {orientation}). "
+        f"Output must keep WIDTH={source_w} and HEIGHT={source_h} IN THAT ORDER; "
+        f"NEVER transpose to {source_h}x{source_w}, rotate the frame, or "
+        "reframe the subject. The transparent full-frame margins count. "
         "Use the ATTACHED first image as fixed visual reference of ONE cinematic "
         "semi-realistic fantasy anime 2D shot. Other attachments are SHA-verified "
         "Visual Bible identity/object references. Create a NEW INDEPENDENT image "
@@ -400,7 +410,7 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
             "mother":mother,"mother_proof":proof,
             "refs":refs,"ref_proofs":proofs,"prompt":prompt,
             "versioned_from_rejected_predecessor":versioned_predecessor,
-            "source_dimensions":(png_info(mother)["width"],png_info(mother)["height"]),
+            "source_dimensions":(source_w,source_h),
             "transparent":typ!="background"}
 
 
