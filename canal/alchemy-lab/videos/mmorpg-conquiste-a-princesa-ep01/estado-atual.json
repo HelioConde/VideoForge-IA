@@ -2642,18 +2642,29 @@
   "queue_canvas_batch_refresh_20261123": {
     "date": "2026-11-23",
     "base_main_sha": "84f0288c28a34c01c4ca31faa5bc6200fad1de85",
-    "status": "implemented_on_branch_ci_pending",
+    "status": "code_validated_in_PR_merge_requires_confirmed_green_checks",
     "module": "scripts/ep01_action_production_queue.py",
     "regression_suite": "tests/test_ep01_action_production_queue.py",
     "same_batch_canvas_fence": true,
     "reconcile_before_dispatch": true,
     "push_mode": "plan",
     "local_python_tests": "unavailable_no_attached_computer",
-    "ci": "pending_pr_validation",
+    "ci": {
+      "run_id": 45255208158,
+      "conclusion": "success",
+      "suites": 5,
+      "javascript_syntax": "passed",
+      "plan": {
+        "shots": 42,
+        "tasks": 276
+      }
+    },
     "provider_calls_by_this_change": 0,
     "human_visual_approval": false,
     "rig_ready": false,
     "youtube_uploaded": false,
-    "next_action": "validate_PR_CI_then_merge_and_verify_push_plan_only; provider_canvas_root_cause_remains_open"
+    "next_action": "verify_post_merge_push_plan_only; provider_canvas_root_cause_remains_open",
+    "pr": 127,
+    "code_commit": "81ca8eb73345b00d5f378d8d48062caab3510bd5"
   }
 }
