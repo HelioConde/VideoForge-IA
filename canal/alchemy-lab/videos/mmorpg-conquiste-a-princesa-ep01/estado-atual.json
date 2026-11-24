@@ -2815,7 +2815,7 @@
   "reference_candidate_qa_20261124": {
     "date": "2026-11-24",
     "base_main_sha": "dd2d23eca990ed3f706d57d85b823cc60d39327d",
-    "status": "implemented_pending_ci",
+    "status": "code_and_real_archive_validated_merge_requires_green_checks",
     "module": "videoforge/ep01_reference_placement.py",
     "tests_added": 9,
     "original_art_modified": false,
@@ -2830,6 +2830,66 @@
       "part": "character-guarda_direito",
       "artifact": "ep01-reference-candidate-qa-C11-P03.json"
     },
-    "next_action": "validate_PR_then_build_versioned_request_and_apply_candidate_QA_to_original_provider_response"
+    "next_action": "validate_PR_then_build_versioned_request_and_apply_candidate_QA_to_original_provider_response",
+    "pr": 131,
+    "code_commit": "f2f02d62769dc324cf4fc893d6bf8fc58f70ea7d",
+    "ci": {
+      "run_id": 45455916126,
+      "conclusion": "success",
+      "python_tests": 91,
+      "suites": 5,
+      "javascript_syntax": "passed",
+      "offline_plan": "passed",
+      "real_archive_inspection": "passed"
+    },
+    "archive_qa": {
+      "schema": "videoforge/ep01-reference-candidate-qa/v1",
+      "candidate_sha256": "d9f2475aaf0f962eb6a9c46053ffb771aebf12a384e93fa5c45edeb7fc2201b3",
+      "source_sha256": "9a03b7c13414707b34256c95cfc3d675f80588c9547d54c6374d7bcd26d73603",
+      "reference_sha256": "f44d508a12a7ab48f7f9ffbd2a68d1fba7f260676dfe0c30076a4a05aff1b78a",
+      "source_canvas": [
+        941,
+        1672
+      ],
+      "expected_canvas": [
+        944,
+        1680
+      ],
+      "candidate_canvas": [
+        981,
+        1602
+      ],
+      "source_rect_xyxy": [
+        1,
+        4,
+        942,
+        1676
+      ],
+      "reference_to_source_offset_xy": [
+        -1,
+        -4
+      ],
+      "scale_xy": [
+        1,
+        1
+      ],
+      "role": "character",
+      "alpha_bbox_source_xyxy": null,
+      "pixels_modified": false,
+      "provider_calls": 0,
+      "provider_provenance_verified": false,
+      "generation_authorized": false,
+      "placement_verified": false,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false,
+      "technical_qa": "rejected_reference_canvas_mismatch",
+      "canvas_alpha_candidate": false,
+      "archived_candidate_proof": {
+        "asset_id": "c11-p03-character-guarda_direito",
+        "sha256": "d9f2475aaf0f962eb6a9c46053ffb771aebf12a384e93fa5c45edeb7fc2201b3",
+        "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/45308344517/c11-p03-character-guarda_direito.png"
+      }
+    }
   }
 }
