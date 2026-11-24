@@ -4,7 +4,7 @@ Base inspecionada: `62b2e42f1b97e1766091bf3e6e62fa13b33dd733`; PR #128 já integ
 
 Corrigida a divergência entre prompt nativo e payload fixo 1024×1536. O gerador solicita o tamanho exato da fonte se compatível com o contrato documentado de gpt-image-2; fontes como 941×1672 e 1053×1493 são bloqueadas antes do despacho/provedor, sem arredondar, recortar ou modificar originais. Fila e workflow individual fazem preflight estrito; o ledger registra motivo e zero chamadas. O relatório separa tamanho solicitado e devolvido.
 
-Validação: oito regressões novas preparadas para tamanhos válidos/inválidos, inspeção histórica, bloqueio sem chamadas, payload com orientação/tamanho exatos, referências intactas e rejeição preservada sem retry. CI pendente nesta revisão inicial.
+Validação: sete regressões novas preparadas para tamanhos válidos/inválidos, inspeção histórica, bloqueio sem chamadas, payload com orientação/tamanho exatos, referências intactas e rejeição preservada sem retry. A primeira CI #45345470076 identificou duas fixtures antigas de canvas incompatível; elas foram atualizadas para entrada suportada, preservando os testes de desvio de um pixel e rejeição de saída. Nova CI pendente.
 
 Próximo passo: validar a PR e integração; depois preparar contrato versionado de canvas/placement verificável para as fontes incompatíveis, preservando a mãe aprovada. [Contrato e limites](../../../../docs/EP01-CANVAS-CONTRACT.md). Nenhuma geração paga, alteração de imagem, aprovação visual, rig ou publicação realizada. A saída real do proxy ainda não foi comprovada com o novo contrato.
 

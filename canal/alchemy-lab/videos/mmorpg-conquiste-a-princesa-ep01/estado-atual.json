@@ -2698,7 +2698,7 @@
     "strict_queue_and_child_preflight": true,
     "unsupported_canvas_auto_resize": false,
     "requested_size_recorded": true,
-    "regression_tests_added": 8,
+    "regression_tests_added": 7,
     "provider_calls_by_this_change": 0,
     "human_visual_approval": false,
     "rig_ready": false,
