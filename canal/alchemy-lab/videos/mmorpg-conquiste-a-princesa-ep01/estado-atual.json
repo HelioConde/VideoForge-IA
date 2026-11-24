@@ -2811,5 +2811,25 @@
       "offline_plan": "passed",
       "real_source_inspection": "passed"
     }
+  },
+  "reference_candidate_qa_20261124": {
+    "date": "2026-11-24",
+    "base_main_sha": "dd2d23eca990ed3f706d57d85b823cc60d39327d",
+    "status": "implemented_pending_ci",
+    "module": "videoforge/ep01_reference_placement.py",
+    "tests_added": 9,
+    "original_art_modified": false,
+    "provider_calls": 0,
+    "provider_provenance_verified": false,
+    "placement_verified": false,
+    "human_visual_approval": false,
+    "rig_ready": false,
+    "youtube_uploaded": false,
+    "archive_inspection": {
+      "shot": "C11-P03",
+      "part": "character-guarda_direito",
+      "artifact": "ep01-reference-candidate-qa-C11-P03.json"
+    },
+    "next_action": "validate_PR_then_build_versioned_request_and_apply_candidate_QA_to_original_provider_response"
   }
 }

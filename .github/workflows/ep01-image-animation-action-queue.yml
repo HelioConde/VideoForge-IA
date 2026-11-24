@@ -106,6 +106,10 @@ jobs:
           python -m videoforge.ep01_reference_placement --shot-id C11-P03 \
             > "$RUNNER_TEMP/ep01-reference-placement-C11-P03.json"
           cat "$RUNNER_TEMP/ep01-reference-placement-C11-P03.json"
+          python -m videoforge.ep01_reference_placement --shot-id C11-P03 \
+            --candidate-part character-guarda_direito \
+            > "$RUNNER_TEMP/ep01-reference-candidate-qa-C11-P03.json"
+          cat "$RUNNER_TEMP/ep01-reference-candidate-qa-C11-P03.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -113,6 +117,7 @@ jobs:
           path: |
             ${{ runner.temp }}/ep01-production-queue-plan.json
             ${{ runner.temp }}/ep01-reference-placement-C11-P03.json
+            ${{ runner.temp }}/ep01-reference-candidate-qa-C11-P03.json
           if-no-files-found: ignore
           retention-days: 14
 
@@ -166,6 +171,10 @@ jobs:
           python -m videoforge.ep01_reference_placement --shot-id C11-P03 \
             > "$RUNNER_TEMP/ep01-reference-placement-C11-P03.json"
           cat "$RUNNER_TEMP/ep01-reference-placement-C11-P03.json"
+          python -m videoforge.ep01_reference_placement --shot-id C11-P03 \
+            --candidate-part character-guarda_direito \
+            > "$RUNNER_TEMP/ep01-reference-candidate-qa-C11-P03.json"
+          cat "$RUNNER_TEMP/ep01-reference-candidate-qa-C11-P03.json"
       - name: Dispatch at most 2 image child Actions and 2 camera previews by default
         env:
           EP01_SHOW_ACTIVE_CHILD: "true"
@@ -385,5 +394,6 @@ jobs:
             ${{ runner.temp }}/ep01-feedback-plan.json
             ${{ runner.temp }}/ep01-feedback-state.json
             ${{ runner.temp }}/ep01-reference-placement-C11-P03.json
+            ${{ runner.temp }}/ep01-reference-candidate-qa-C11-P03.json
           retention-days: 30
           if-no-files-found: ignore

@@ -1,3 +1,13 @@
+## 24/11/2026 — QA de saída para o canvas de referência
+
+Base `dd2d23eca990ed3f706d57d85b823cc60d39327d`; PR #130 integrada e Actions pós-merge #45390475197 / #45390474930 concluídas com sucesso. A etapa seguinte implementa inspeção da candidata no canvas de referência antes de ligar esse contrato ao transporte pago.
+
+Novo QA em `videoforge.ep01_reference_placement`: reconstrói o contrato a partir do original e SHA independente; rejeita manifesto alterado, reutilização do próprio original/referência, tamanho errado, imagem animada, falta de RGBA, margens não transparentes e conteúdo vazio/opaco incompatível com o papel. Background deve ser opaco dentro da área original e transparente nas margens. A caixa de alfa é registrada nas coordenadas da fonte, sem alterar pixels nem inferir aprovação visual.
+
+CLI pode verificar peça arquivada da mesma mãe. A CI inspeciona o guarda direito C11-P03 histórico e publica o relatório; o arquivo de 981×1602 permanece rejeitado frente ao canvas proposto de 944×1680. Nove novas regressões preparadas, incluindo dados sintéticos, adulteração de contrato e arquivo real imutável. Validação atual pendente de CI.
+
+Próximo passo: depois dos checks verdes, integrar; preparar pedido versionado que use este contrato e aplique o QA à resposta original do provedor. Não reabrir tarefas antigas nem usar referência como sprite. Geração paga, aprovação visual, rig e publicação permanecem fora desta alteração.
+
 ## 24/11/2026 — Referência de canvas reversível, somente para inspeção
 
 PR #129 integrada em `61dfdfe8c64588630b9b391c40f124ee27360e95`; execução pós-merge #45346131450 confirmou plano sem despacho pago.

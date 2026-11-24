@@ -547,5 +547,157 @@ class ReferencePlacementTests(unittest.TestCase):
                     prepare_reference(raw,hashlib.sha256(raw).hexdigest())
 
 
+class ReferenceCandidateQATests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from videoforge import ep01_reference_placement as placement
+        from PIL import Image
+        cls.placement=placement
+        cls.source=cls.encode(Image.new("RGB",(941,1672),(12,34,56)))
+        cls.source_sha=hashlib.sha256(cls.source).hexdigest()
+        cls.reference,cls.manifest=placement.prepare_reference(cls.source,cls.source_sha)
+
+    @staticmethod
+    def encode(image,fmt="PNG",**options):
+        import io
+        stream=io.BytesIO()
+        image.save(stream,format=fmt,**options)
+        return stream.getvalue()
+
+    def candidate(self):
+        from PIL import Image, ImageDraw
+        image=Image.new("RGBA",(944,1680),(0,0,0,0))
+        ImageDraw.Draw(image).rectangle((11,24,40,63),fill=(90,80,70,255))
+        return image
+
+    def audit(self,image,role="character"):
+        return self.placement.inspect_candidate(self.encode(image),self.source,
+                    self.source_sha,self.manifest,role=role)
+
+    def test_valid_candidate_maps_alpha_bounds_without_approving_or_modifying(self):
+        from copy import deepcopy
+        before=deepcopy(self.manifest)
+        raw=self.encode(self.candidate())
+        with patch.object(p.proxy_images,"call_proxy") as charged:
+            qa=self.placement.inspect_candidate(raw,self.source,self.source_sha,
+                                                 self.manifest,role="character")
+            charged.assert_not_called()
+        self.assertTrue(qa["canvas_alpha_candidate"])
+        self.assertEqual(qa["alpha_bbox_source_xyxy"],[10,20,40,60])
+        self.assertEqual(qa["candidate_sha256"],hashlib.sha256(raw).hexdigest())
+        self.assertEqual(self.manifest,before)
+        for field in ("pixels_modified","placement_verified","human_visual_approval",
+                      "rig_ready","generation_authorized","provider_provenance_verified",
+                      "youtube_uploaded"):
+            self.assertIs(qa[field],False)
+        self.assertEqual(qa["provider_calls"],0)
+
+    def test_each_padding_edge_rejects_even_one_visible_alpha_pixel(self):
+        for point in ((0,20),(943,20),(20,0),(20,1679)):
+            with self.subTest(point=point):
+                image=self.candidate()
+                image.putpixel(point,(255,255,255,1))
+                self.assertEqual(self.audit(image)["technical_qa"],
+                                 "rejected_nontransparent_reference_padding")
+        image=self.candidate()
+        image.putpixel((0,20),(255,0,0,0))
+        self.assertTrue(self.audit(image)["canvas_alpha_candidate"])
+
+    def test_wrong_canvas_including_one_pixel_delta_never_auto_aligns(self):
+        from PIL import Image
+        for dims in ((944,1679),(1680,944),(941,1672)):
+            with self.subTest(dims=dims):
+                qa=self.audit(Image.new("RGBA",dims,(20,20,20,255)))
+                self.assertEqual(qa["technical_qa"],"rejected_reference_canvas_mismatch")
+                self.assertEqual(qa["candidate_canvas"],list(dims))
+                self.assertFalse(qa["pixels_modified"])
+
+    def test_missing_empty_and_fully_opaque_character_alpha_are_rejected(self):
+        from PIL import Image, ImageDraw
+        self.assertEqual(self.audit(self.candidate().convert("RGB"))["technical_qa"],
+                         "rejected_no_rgba_channel")
+        for opacity in (0,127):
+            image=Image.new("RGBA",(944,1680),(0,0,0,0))
+            image.putpixel((10,20),(70,80,90,opacity))
+            self.assertEqual(self.audit(image)["technical_qa"],
+                             "rejected_empty_or_insufficient_alpha")
+        image=self.candidate()
+        ImageDraw.Draw(image).rectangle((1,4,941,1675),fill=(90,80,70,255))
+        self.assertEqual(self.audit(image)["technical_qa"],
+                         "rejected_no_transparency_inside_source_rect")
+
+    def test_background_is_opaque_only_inside_original_rectangle(self):
+        from PIL import ImageDraw
+        image=self.candidate()
+        ImageDraw.Draw(image).rectangle((1,4,941,1675),fill=(90,80,70,255))
+        qa=self.audit(image,role="background")
+        self.assertTrue(qa["canvas_alpha_candidate"])
+        self.assertEqual(qa["alpha_bbox_source_xyxy"],[0,0,941,1672])
+        image.putpixel((20,30),(90,80,70,254))
+        self.assertEqual(self.audit(image,role="background")["technical_qa"],
+                         "rejected_background_has_transparent_holes")
+
+    def test_original_or_reference_bytes_cannot_be_claimed_as_new_candidate(self):
+        for raw in (self.source,self.reference):
+            with self.subTest(sha=hashlib.sha256(raw).hexdigest()):
+                qa=self.placement.inspect_candidate(raw,self.source,self.source_sha,
+                                                      self.manifest,role="background")
+                self.assertEqual(qa["technical_qa"],"rejected_source_or_reference_reused")
+
+    def test_manifest_and_source_tampering_fail_before_candidate_decode(self):
+        from copy import deepcopy
+        changes={"source_rect_xyxy":[0,0,941,1672],
+                 "reference_to_source_offset_xy":[0,0],
+                 "reference_canvas":[1024,1536],
+                 "scale_xy":[True,True],"source_sha256":"0"*64,
+                 "reference_sha256":"0"*64,"generation_authorized":True}
+        for field,value in changes.items():
+            manifest=deepcopy(self.manifest)
+            manifest[field]=value
+            with self.subTest(field=field), self.assertRaisesRegex(
+                    VideoForgeError,"MANIFEST_MISMATCH"):
+                self.placement.inspect_candidate(b"not decoded",self.source,
+                    self.source_sha,manifest,role="character")
+        with self.assertRaisesRegex(VideoForgeError,"SOURCE_SHA_MISMATCH"):
+            self.placement.inspect_candidate(b"",self.source,"0"*64,
+                                                self.manifest,role="character")
+        with self.assertRaisesRegex(VideoForgeError,"INVALID_ROLE"):
+            self.audit(self.candidate(),role="approved_rig")
+
+    def test_unreadable_non_png_and_animated_png_do_not_pass(self):
+        image=self.candidate()
+        second=image.copy()
+        second.putpixel((20,30),(255,0,0,255))
+        cases=[(b"not an image","rejected_unreadable_image"),
+               (self.encode(image.convert("RGB"),fmt="JPEG"),"rejected_expected_static_png"),
+               (self.encode(image,save_all=True,append_images=[second],duration=100),
+                "rejected_expected_static_png")]
+        for raw,expected in cases:
+            with self.subTest(expected=expected):
+                qa=self.placement.inspect_candidate(raw,self.source,self.source_sha,
+                                                     self.manifest,role="character")
+                self.assertEqual(qa["technical_qa"],expected)
+
+    def test_cli_rechecks_real_rejected_archive_without_rewriting_or_rebilling(self):
+        import io
+        import json
+        archived=p.existing_part("C11-P03","character-guarda_direito")
+        file=p.ROOT/archived["file"]
+        before=file.read_bytes()
+        output=io.StringIO()
+        with patch("sys.argv",["qa","--shot-id","C11-P03","--candidate-part",
+                              "character-guarda_direito"]),patch("sys.stdout",output):
+            with patch.object(p.proxy_images,"call_proxy") as charged:
+                self.placement.main()
+                charged.assert_not_called()
+        qa=json.loads(output.getvalue())["candidate_qa"]
+        self.assertEqual(qa["candidate_canvas"],[981,1602])
+        self.assertEqual(qa["expected_canvas"],[944,1680])
+        self.assertEqual(qa["technical_qa"],"rejected_reference_canvas_mismatch")
+        self.assertEqual(qa["candidate_sha256"],archived["sha256"])
+        self.assertEqual(file.read_bytes(),before)
+        self.assertFalse(qa["canvas_alpha_candidate"])
+
+
 if __name__=="__main__":
     unittest.main()

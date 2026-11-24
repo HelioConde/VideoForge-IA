@@ -45,3 +45,22 @@ python -m videoforge.ep01_reference_placement --shot-id C11-P03
 A CLI imprime o manifesto e descarta o derivado; a função `prepare_reference` disponibiliza os bytes em memória para QA e integração futura. A geração continua bloqueada pelo preflight estrito. Uma etapa posterior deverá vincular pedido versionado à mãe e ao derivado, conferir dimensões, padding, alpha e placement da saída real, e obter revisão visual antes de usar a transformação na composição. A compatibilidade teórica do tamanho não demonstra suporte efetivo do proxy. Nenhuma chamada paga, aprovação de arte, desbloqueio de rig ou publicação é autorizada por este módulo.
 
 A CI da fila também executa essa CLI sobre a mãe C11-P03 arquivada e publica `ep01-reference-placement-C11-P03.json` no artifact do plano. O manifesto identifica o arquivo original, asset e SHA em `source_proof`; o derivado permanece somente em memória. A prova técnica não autoriza enviar o derivado ao proxy ou usá-lo como peça final.
+
+## QA da candidata no canvas de referência
+
+`inspect_candidate` recompõe o contrato a partir dos bytes originais e de um SHA fornecido separadamente. Rejeita mudanças em dimensões, offsets, escala, SHA do derivado e flags do manifesto. O QA não aceita o próprio original ou o derivado de referência como nova peça.
+
+A candidata deve ser PNG estático RGBA no tamanho exato da referência, incluindo as margens. Não há tolerância automática de um pixel neste contrato novo. As quatro margens precisam ter alfa zero. Dentro do retângulo original, personagens/objetos precisam de transparência e pixels com alfa pelo menos 128; backgrounds precisam preencher esse retângulo com alfa 255. Esse contrato de background aplica-se à futura referência com margens, não altera o pedido opaco do gerador legado.
+
+A caixa de alfa é medida nas coordenadas da fonte. Essa medida não comprova identidade, anatomia, pose, contato, composição ou posição correta. O resultado permanece `placement_verified=false`, `provider_provenance_verified=false`, `human_visual_approval=false` e `rig_ready=false`, mesmo quando canvas e alfa passam. Não produz arquivo de imagem, não corta/redimensiona a candidata, não muda o ledger e não chama o provedor.
+
+Para inspecionar uma peça já arquivada e vinculada à mesma mãe por SHA:
+
+```sh
+python -m videoforge.ep01_reference_placement --shot-id C11-P03 \
+  --candidate-part character-guarda_direito
+```
+
+A CLI verifica o registro e a metadata da candidata. Rejeição técnica é um relatório de diagnóstico (exit 0), não aprovação; erro de proveniência interrompe a inspeção. A CI preserva `ep01-reference-candidate-qa-C11-P03.json` junto do manifesto de referência. A peça histórica 981×1602 continua rejeitada, sem nova cobrança ou modificação.
+
+Próximo passo: construir o pedido versionado com o mesmo contrato de canvas/alpha, fonte e derivado fixados por SHA, e aplicar este QA à resposta original. Nenhum caminho pago ou de animação é desbloqueado automaticamente.
