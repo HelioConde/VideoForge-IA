@@ -1,3 +1,13 @@
+## 24/11/2026 — Canvas validado antes do despacho pago
+
+Base inspecionada: `62b2e42f1b97e1766091bf3e6e62fa13b33dd733`; PR #128 já integrada. C11-P03 teve novos candidatos rejeitados nas Actions #45308177395 e #45308344517, preservados no arquivo.
+
+Corrigida a divergência entre prompt nativo e payload fixo 1024×1536. O gerador solicita o tamanho exato da fonte se compatível com o contrato documentado de gpt-image-2; fontes como 941×1672 e 1053×1493 são bloqueadas antes do despacho/provedor, sem arredondar, recortar ou modificar originais. Fila e workflow individual fazem preflight estrito; o ledger registra motivo e zero chamadas. O relatório separa tamanho solicitado e devolvido.
+
+Validação: sete regressões novas preparadas para tamanhos válidos/inválidos, inspeção histórica, bloqueio sem chamadas, payload com orientação/tamanho exatos, referências intactas e rejeição preservada sem retry. A primeira CI #45345470076 identificou duas fixtures antigas de canvas incompatível; elas foram atualizadas para entrada suportada, preservando os testes de desvio de um pixel e rejeição de saída. [PR #129](https://github.com/HelioConde/VideoForge-IA/pull/129), código `5be6edccd3cb791c239051a3e492b4872552287d`: [CI #45345749173](https://github.com/HelioConde/VideoForge-IA/actions/runs/45345749173) **success**, 75 testes nas cinco suítes, sintaxe JavaScript e plano completo aprovados. Checks de proveniência e arquivo de imagens também passaram. Integração condicionada aos checks verdes da revisão documental final; confirmar merge na PR.
+
+Próximo passo: validar a PR e integração; depois preparar contrato versionado de canvas/placement verificável para as fontes incompatíveis, preservando a mãe aprovada. [Contrato e limites](../../../../docs/EP01-CANVAS-CONTRACT.md). Nenhuma geração paga, alteração de imagem, aprovação visual, rig ou publicação realizada. A saída real do proxy ainda não foi comprovada com o novo contrato.
+
 ## 23/11/2026 — Feedback consistente da fila e preservação dos bloqueios atuais
 
 Base: `e58ca908b5eea19d8ae932d014f0b54ed4a0b008`, PR #127 integrada e push [#45255721049](https://github.com/HelioConde/VideoForge-IA/actions/runs/45255721049) concluído sem despacho pago. O painel #98 mostrava 41 prontas no cabeçalho e 40 no detalhe, pois usava plano bruto em um lugar e ledger no outro. Um recibo antigo `archived` também ocultava restrições atuais como `archived_version_check_needed`.

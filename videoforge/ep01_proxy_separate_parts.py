@@ -187,7 +187,27 @@ def enforce_source_qa(shot:dict)->None:
         raise VideoForgeError("EP01_PROXY_PARTS_MOTHER_REJECTED_NEW_VERSION_REQUIRED")
 
 
-def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
+def exact_canvas_size(dimensions) -> str:
+    """Validate the native gpt-image-2 request size without changing pixels.
+
+    Constraints: docs/EP01-CANVAS-CONTRACT.md. A valid request still needs
+    output canvas/alpha/placement QA; the proxy is not assumed to honor it.
+    """
+    if (not isinstance(dimensions, (tuple, list)) or len(dimensions) != 2
+            or any(type(edge) is not int or edge <= 0 for edge in dimensions)):
+        raise VideoForgeError("EP01_PROXY_PARTS_UNSUPPORTED_NATIVE_CANVAS")
+    width, height = dimensions
+    if (max(width, height) > 3840 or width % 16 or height % 16
+            or max(width, height) > 3 * min(width, height)
+            or not 655360 <= width * height <= 8294400):
+        raise VideoForgeError("EP01_PROXY_PARTS_UNSUPPORTED_NATIVE_CANVAS")
+    return f"{width}x{height}"
+
+
+def prepare(shot_id:str,part_id:str,root:Path=ROOT,*,
+            require_supported_canvas:bool=False)->dict:
+    """Inspect source provenance; production callers must validate its canvas."""
+
     root=Path(root)
     image_generation_policy.assert_image_generation_allowed(CHANNEL,VIDEO,root)
     shot,request=read_shot(shot_id,part_id,root)
@@ -227,9 +247,11 @@ def prepare(shot_id:str,part_id:str,root:Path=ROOT)->dict:
                 proofs.append({"asset_id":item["asset_id"],"sha256":item["sha256"],"path":item["file"]})
     typ=request["role"]
     # Explicitly bind the native source orientation before spending an image call.
-    # The provider size is only a model hint; its output can transpose the canvas.
+    # Valid request dimensions do not guarantee matching provider output.
     native_canvas = png_info(mother)
     source_w, source_h = native_canvas["width"], native_canvas["height"]
+    if require_supported_canvas:
+        exact_canvas_size((source_w, source_h))
     orientation = "VERTICAL portrait" if source_h > source_w else (
         "HORIZONTAL landscape" if source_w > source_h else "SQUARE")
     common=(
@@ -435,7 +457,8 @@ def right_side_prop_coverage(image) -> float:
 def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image-2")->dict:
     if model!="gpt-image-2":
         raise VideoForgeError("EP01_PROXY_PARTS_MODEL_NOT_ALLOWED")
-    spec=prepare(shot_id,part_id,root)
+    spec=prepare(shot_id,part_id,root,require_supported_canvas=True)
+    requested_size=exact_canvas_size(spec["source_dimensions"])
     base=Path(root)/"output"/CHANNEL/"videos"/VIDEO/"imagens"
     asset_id=shot_id.lower()+"-"+part_id
     image=base/(asset_id+".png")
@@ -449,7 +472,7 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
         raise VideoForgeError("EP01_PROXY_PARTS_PILLOW_NOT_AVAILABLE_BEFORE_PAID_CALL") from exc
     inputs=[spec["mother"]]+spec["refs"]
     payload={"model":model,"n":1,"prompt":spec["prompt"],
-             "size":"1024x1536",
+             "size":requested_size,
              "background":"transparent" if spec["transparent"] else "opaque",
              "output_format":"png","response_format":"b64_json","stream":False,
              "images":[{"image_url":"data:image/png;base64,"+
@@ -507,6 +530,7 @@ def generate(shot_id:str,part_id:str,url:str,root:Path=ROOT,model:str="gpt-image
         "source_images_attached_to_request":len(inputs),
         "width":dims[0],"height":dims[1],
         "source_canvas":list(spec["source_dimensions"]),
+        "requested_size":requested_size,
         "provider_canvas":list(dims),
         "coordinate_alignment_required": dims != spec["source_dimensions"],
         "source_visual_approval":False,

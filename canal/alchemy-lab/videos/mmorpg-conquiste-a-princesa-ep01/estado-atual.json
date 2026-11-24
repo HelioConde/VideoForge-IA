@@ -1,6 +1,6 @@
 {
   "schema": "videoforge/episode-checkpoint/v1",
-  "updated_local_date": "2026-11-23",
+  "updated_local_date": "2026-11-24",
   "wardrobe_roi_refinement_v2": {
     "schema": "videoforge/roi-color-filter-candidates-checkpoint/v1",
     "date": "2026-11-16",
@@ -2687,6 +2687,35 @@
       "python_tests": 68,
       "javascript_syntax": "passed",
       "offline_plan": "passed"
+    }
+  },
+  "native_canvas_contract_20261124": {
+    "date": "2026-11-24",
+    "base_main_sha": "62b2e42f1b97e1766091bf3e6e62fa13b33dd733",
+    "status": "code_validated_in_PR_merge_requires_confirmed_green_checks",
+    "module": "videoforge/ep01_proxy_separate_parts.py",
+    "documentation": "docs/EP01-CANVAS-CONTRACT.md",
+    "strict_queue_and_child_preflight": true,
+    "unsupported_canvas_auto_resize": false,
+    "requested_size_recorded": true,
+    "regression_tests_added": 7,
+    "provider_calls_by_this_change": 0,
+    "human_visual_approval": false,
+    "rig_ready": false,
+    "youtube_uploaded": false,
+    "next_action": "validate_PR_then_prepare_versioned_source_canvas_or_verified_placement_without_changing_approved_originals",
+    "live_proxy_canvas_verified": false,
+    "pr": 129,
+    "code_commit": "5be6edccd3cb791c239051a3e492b4872552287d",
+    "ci": {
+      "run_id": 45345749173,
+      "conclusion": "success",
+      "python_tests": 75,
+      "suites": 5,
+      "javascript_syntax": "passed",
+      "offline_plan": "passed",
+      "provenance_check": "passed",
+      "archive_check": "passed"
     }
   }
 }

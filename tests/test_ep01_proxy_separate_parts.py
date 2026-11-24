@@ -350,5 +350,103 @@ class SeparatePartsTests(unittest.TestCase):
             charged.assert_not_called()
 
 
+class NativeCanvasContractTests(unittest.TestCase):
+    def test_supported_sizes_keep_width_height_and_custom_dimensions(self):
+        for dims in ((1024,1536),(1536,1024),(1536,864),(1024,1024),
+                     (640,1024),(3840,2160),(2160,3840),(1536,512)):
+            with self.subTest(dims=dims):
+                self.assertEqual(p.exact_canvas_size(dims),f"{dims[0]}x{dims[1]}")
+
+    def test_unsupported_native_sizes_never_round_or_fall_back(self):
+        for dims in ((941,1672),(1053,1493),(0,1024),(-16,1024),
+                     (True,1024),(1024.0,1024),("1024",1024),
+                     (512,512),(4096,2048),(3840,3840),(2048,512),
+                     (1024,),None):
+            with self.subTest(dims=dims):
+                with self.assertRaisesRegex(VideoForgeError,"UNSUPPORTED_NATIVE_CANVAS"):
+                    p.exact_canvas_size(dims)
+
+    def test_inspection_remains_available_but_production_preflight_blocks(self):
+        with patch.object(p,"existing_part",return_value=None), patch.object(
+                p.proxy_images,"call_proxy") as charged:
+            spec=p.prepare("C11-P03","background-clean")
+            self.assertEqual(spec["source_dimensions"],(941,1672))
+            with self.assertRaisesRegex(VideoForgeError,"UNSUPPORTED_NATIVE_CANVAS"):
+                p.prepare("C11-P03","background-clean",require_supported_canvas=True)
+            charged.assert_not_called()
+
+    def test_generate_checks_canvas_before_provider_or_output(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp, patch.object(
+                p,"prepare",return_value={"source_dimensions":(941,1672)}) as prepare:
+            with patch.object(p.proxy_images,"call_proxy") as charged:
+                with self.assertRaisesRegex(VideoForgeError,"UNSUPPORTED_NATIVE_CANVAS"):
+                    p.generate("C11-P03","background-clean","http://unused",root=Path(tmp))
+                charged.assert_not_called()
+                prepare.assert_called_once_with("C11-P03","background-clean",Path(tmp),
+                                                require_supported_canvas=True)
+                self.assertEqual(list(Path(tmp).iterdir()),[])
+
+    @staticmethod
+    def png(size):
+        import io
+        from PIL import Image
+        stream=io.BytesIO()
+        # Synthetic QA fixture only; never stored as production art in Git.
+        Image.new("RGB",size,(12,34,56)).save(stream,format="PNG")
+        return stream.getvalue()
+
+    def run_generation(self,root,output_size):
+        import base64
+        source=self.png((1536,864))
+        reference=self.png((1024,1024))
+        output=self.png(output_size)
+        spec={"source_dimensions":(1536,864),"mother":source,"refs":[reference],
+              "mother_proof":{"sha256":hashlib.sha256(source).hexdigest()},
+              "ref_proofs":[{"sha256":hashlib.sha256(reference).hexdigest()}],
+              "role":"background","transparent":False,"prompt":"test"}
+        with patch.object(p,"prepare",return_value=spec), patch.object(
+                p.proxy_images,"call_proxy",
+                return_value={"data":[{"b64_json":base64.b64encode(output).decode()}]}) as charged:
+            if output_size==(1536,864):
+                report=p.generate("C11-P03","background-clean","http://unused",root=root)
+                self.assertEqual(report["requested_size"],"1536x864")
+                self.assertFalse(report["human_visual_approval"])
+                self.assertFalse(report["rig_ready"])
+            else:
+                with self.assertRaisesRegex(VideoForgeError,"GENERATED_REJECTED_BUT_ARCHIVED"):
+                    p.generate("C11-P03","background-clean","http://unused",root=root)
+            self.assertEqual(charged.call_count,1)
+            payload=charged.call_args.args[3]
+            self.assertEqual(payload["size"],"1536x864")
+            self.assertEqual(payload["n"],1)
+            self.assertEqual([base64.b64decode(x["image_url"].split(",",1)[1])
+                              for x in payload["images"]],[source,reference])
+        image=root/"output"/p.CHANNEL/"videos"/p.VIDEO/"imagens"/"c11-p03-background-clean.png"
+        self.assertEqual(image.read_bytes(),output)
+        return image
+
+    def test_request_uses_exact_landscape_size_and_original_reference_bytes(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            self.run_generation(Path(tmp),(1536,864))
+
+    def test_wrong_provider_canvas_is_archived_unmodified_without_retry(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            image=self.run_generation(Path(tmp),(981,1602))
+            report=json.loads(image.with_suffix(".production.json").read_text())
+            self.assertEqual(report["technical_qa"],"rejected_canvas_mismatch_no_pixel_resizing")
+            self.assertEqual(report["provider_canvas"],[981,1602])
+            self.assertEqual(report["requested_size"],"1536x864")
+            self.assertEqual(report["sha256"],hashlib.sha256(image.read_bytes()).hexdigest())
+            self.assertFalse(report["human_visual_approval"])
+            self.assertFalse(report["rig_ready"])
+
+
 if __name__=="__main__":
     unittest.main()

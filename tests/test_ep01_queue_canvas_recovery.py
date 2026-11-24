@@ -22,17 +22,18 @@ class TinyCanvasAndRecovery(unittest.TestCase):
         return b.getvalue()
 
     def fake_source(self):
+        # Valid request canvas; these tests exercise provider output QA.
         return {
             "mother":b"mother-reference","refs":[],
             "mother_proof":{"sha256":"a"*64},
-            "ref_proofs":[],"source_dimensions":[941,1672],
+            "ref_proofs":[],"source_dimensions":(1024,1536),
             "transparent":True,"role":"character",
             "prompt":"source-aligned full-canvas real RGBA character asset",
         }
 
     def test_one_pixel_height_delta_is_archived_as_unapproved_alignment_candidate(self):
         with tempfile.TemporaryDirectory() as folder:
-            raw=self.make_image((941,1671))
+            raw=self.make_image((1024,1535))
             with patch.object(producer,"prepare",return_value=self.fake_source()):
                 with patch.object(producer.proxy_images,"call_proxy",return_value={"fake":"response"}):
                     with patch.object(producer.proxy_images,"decode_image",return_value=(raw,".png")):
@@ -40,8 +41,8 @@ class TinyCanvasAndRecovery(unittest.TestCase):
                                                "http://not-used",root=Path(folder))
             self.assertEqual(info["technical_qa"],
                              "candidate_minor_edge_delta_requires_alignment_qa")
-            self.assertEqual([info["width"],info["height"]],[941,1671])
-            self.assertEqual(info["source_canvas"],[941,1672])
+            self.assertEqual([info["width"],info["height"]],[1024,1535])
+            self.assertEqual(info["source_canvas"],[1024,1536])
             self.assertTrue(info["coordinate_alignment_required"])
             self.assertFalse(info["placement_verified"])
             self.assertFalse(info["rig_ready"])

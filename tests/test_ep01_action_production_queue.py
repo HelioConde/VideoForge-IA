@@ -171,6 +171,31 @@ class ActionQueueTests(unittest.TestCase):
         self.assertEqual(result["processed_camera_previews"],0)
         self.assertEqual(result["external_workflow_dispatch_calls"],0)
 
+
+    def test_unsupported_source_canvas_blocks_before_dispatch_and_records_reason(self):
+        image=deepcopy(next(t for t in self.plan["tasks"]
+                   if t["kind"]=="image" and t["status"]=="ready_for_preflight"))
+        env={"GH_TOKEN":"offline-test","GITHUB_TOKEN":"offline-test",
+             "GITHUB_REPOSITORY":"HelioConde/VideoForge-IA",
+             "GITHUB_REF":"refs/heads/main","GITHUB_RUN_ID":"999"}
+        error=q.parts.VideoForgeError("EP01_PROXY_PARTS_UNSUPPORTED_NATIVE_CANVAS")
+        with patch.dict("os.environ",env), patch.object(q,"QueueRemote",FakeRemote):
+            with patch.object(q.parts,"existing_part",return_value=None), patch.object(
+                    q.parts,"prepare",side_effect=error) as preflight:
+                with patch.object(q,"dispatch_child") as dispatch:
+                    result=q.run_remote({"tasks":[image]},1,0)
+                    dispatch.assert_not_called()
+        preflight.assert_called_once_with(image["shot_id"],image["part"],
+                                          require_supported_canvas=True)
+        self.assertEqual(result["processed_images"],0)
+        self.assertEqual(result["external_workflow_dispatch_calls"],0)
+        record=FakeRemote.shared["attempts"][image["task_id"]]
+        self.assertEqual(record["status"],"blocked_preflight")
+        self.assertEqual(record["reason"],str(error))
+        self.assertEqual(record["source_sha256"],image["source_sha256"])
+        self.assertEqual(record["provider_calls_confirmed"],0)
+        self.assertFalse(record["retry_original_task"])
+
     def test_branch_state_schema_does_not_accept_fake_completed_or_publishing(self):
         q.QueueRemote._validate_snapshot({
             "schema_version":1,"schema":q.STATE_SCHEMA,"attempts":{}})

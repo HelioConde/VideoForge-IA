@@ -92,7 +92,7 @@ jobs:
               action='false'
               print('EP01_SEPARATE_SHA_ARCHIVED_NO_DUPLICATE',cached['sha256'])
           else:
-              spec=engine.prepare(shot_id,part)
+              spec=engine.prepare(shot_id,part,require_supported_canvas=True)
               if os.environ['GITHUB_EVENT_NAME'] != 'workflow_dispatch':
                   if (req.get('parent_mother_sha256') != spec['mother_proof']['sha256']
                       or req.get('parent_mother_asset') != spec['mother_proof']['asset_id']
