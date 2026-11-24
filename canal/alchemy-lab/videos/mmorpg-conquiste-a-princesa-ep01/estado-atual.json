@@ -2670,14 +2670,23 @@
   "queue_feedback_consistency_20261123": {
     "date": "2026-11-23",
     "base_main_sha": "e58ca908b5eea19d8ae932d014f0b54ed4a0b008",
-    "status": "implemented_branch_ci_pending",
+    "status": "code_validated_in_PR_merge_requires_green_checks",
     "shared_state_module": "scripts/ep01_layer_gallery.py",
-    "actual_workflow_js_tested_in_ci": false,
+    "actual_workflow_js_tested_in_ci": true,
     "provider_calls": 0,
     "ledger_modified": false,
     "human_visual_approval": false,
     "rig_ready": false,
     "youtube_uploaded": false,
-    "next_action": "validate_ci_then_merge_and_verify_matching_panel_counts_without_paid_dispatch"
+    "next_action": "verify_post_merge_feedback_panel_and_gallery; investigate_provider_size_contract_separately",
+    "pr": 128,
+    "code_commit": "777aa764de258292fbde7cae91a87a8205c9a9c4",
+    "validation": {
+      "run_id": 45302448347,
+      "conclusion": "success",
+      "python_tests": 68,
+      "javascript_syntax": "passed",
+      "offline_plan": "passed"
+    }
   }
 }
