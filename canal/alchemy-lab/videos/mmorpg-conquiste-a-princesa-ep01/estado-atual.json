@@ -2891,5 +2891,21 @@
         "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/45308344517/c11-p03-character-guarda_direito.png"
       }
     }
+  },
+  "reference_request_20261124": {
+    "date": "2026-11-24",
+    "base_main_sha": "70b5cfe160777d88a9ccc23e34de381f1a090692",
+    "status": "offline_request_and_response_binding_implemented_pending_ci",
+    "module": "videoforge/ep01_reference_request.py",
+    "tests_added": 8,
+    "provider_calls": 0,
+    "generation_authorized": false,
+    "ledger_modified": false,
+    "original_art_modified": false,
+    "human_visual_approval": false,
+    "rig_ready": false,
+    "youtube_uploaded": false,
+    "artifact_summary": "ep01-reference-request-C11-P03.json",
+    "next_action": "validate_PR_then_connect_durable_reservation_single_call_and_original_response_archive_without_replay"
   }
 }

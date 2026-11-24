@@ -64,3 +64,21 @@ python -m videoforge.ep01_reference_placement --shot-id C11-P03 \
 A CLI verifica o registro e a metadata da candidata. Rejeição técnica é um relatório de diagnóstico (exit 0), não aprovação; erro de proveniência interrompe a inspeção. A CI preserva `ep01-reference-candidate-qa-C11-P03.json` junto do manifesto de referência. A peça histórica 981×1602 continua rejeitada, sem nova cobrança ou modificação.
 
 Próximo passo: construir o pedido versionado com o mesmo contrato de canvas/alpha, fonte e derivado fixados por SHA, e aplicar este QA à resposta original. Nenhum caminho pago ou de animação é desbloqueado automaticamente.
+
+## Pedido versionado e resposta vinculada — modo offline
+
+`videoforge.ep01_reference_request.prepare_request` liga a tomada/componente genérico, SHA da mãe, referência com margens, referências da Bíblia e prompt ao payload de `/v1/images/edits`. Usa ID de componente `<componente>-reference-canvas-v1`, tamanho da referência e fundo transparente inclusive para backgrounds (opacos apenas dentro do retângulo original).
+
+O prompt genérico de canvas é substituído por coordenadas e margens explícitas. Templates inesperados falham. Tomadas bloqueadas por revisão V2/V3, C01-P04 aprovada, componentes já arquivados e revisões especiais com coordenadas próprias não são reabertos por este adaptador. Os bloqueios/recibos do ledger permanecem intactos.
+
+O fingerprint SHA-256 cobre o pedido inteiro, incluindo os bytes anexados, prompt, modelo, papel, fonte e geometria. `inspect_response` exige esse fingerprint fornecido separadamente, relê a mãe e aplica o QA da PR #131 aos bytes originais da resposta. Alterar um campo ou recalcular o hash sem alterar a referência externa não valida o pedido. Fingerprint comprova integridade, não autorização, autoria do provedor ou qualidade artística.
+
+```sh
+python -m videoforge.ep01_reference_request --shot-id C11-P03 \
+  --part character-kael \
+  --source-sha256 9a03b7c13414707b34256c95cfc3d675f80588c9547d54c6374d7bcd26d73603
+```
+
+A CLI imprime resumo revisável com prompt, SHA e quantidade de anexos; omite o base64 e marca `summary_only=true`. Esse resumo NÃO pode ser executado/validado como pedido completo. O artifact `ep01-reference-request-C11-P03.json` da CI contém somente esse resumo. O payload completo existe em memória para a futura integração.
+
+Nenhuma função envia HTTP, reserva tarefa, grava PNG ou modifica autorização. `generation_authorized=false`, `provider_calls=0` e os gates de rig/publicação permanecem falsos. Próxima etapa: transporte com reserva durável por ID/fingerprint antes de uma chamada, arquivamento da resposta original e reconciliação sem replay. O QA offline não comprova comportamento real do proxy.

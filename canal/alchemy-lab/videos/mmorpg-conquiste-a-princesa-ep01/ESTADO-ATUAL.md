@@ -1,3 +1,13 @@
+## 24/11/2026 — Pedido de referência versionado ligado ao QA de resposta
+
+Base `70b5cfe160777d88a9ccc23e34de381f1a090692`, PR #131 integrada com 91 testes e pós-merge #45456502372 confirmado sem despacho pago.
+
+Novo módulo `videoforge.ep01_reference_request`: prepara payload de edição com a referência verificada, Bíblia original, canvas/alpha coerentes e ID `reference-canvas-v1`. Fingerprint cobre prompt, modelo, fonte, geometria e anexos; inspeção da resposta exige hash externo, relê a mãe e aplica QA aos bytes sem alteração. Reusa bloqueios de revisão da fila e antirrepetição de componentes, recusa migrar prompts especiais automaticamente. Não executa HTTP nem altera o ledger.
+
+O resumo de C11-P03/Kael será publicado como `ep01-reference-request-C11-P03.json` no artifact da CI, sem base64 e sem autorização de execução. Oito regressões acrescentadas: pedido real determinístico, referências SHA, resposta vinculada, adulteração, mudança de fonte, arquivos já gerados, prompt de background e resumo não executável. Validação atual pendente de CI.
+
+Próximo passo: após CI e integração, conectar reserva durável por ID/fingerprint, chamada única e arquivamento/reconciliação da resposta. Nenhuma geração paga, fonte alterada, aprovação de arte, rig ou publicação nesta etapa. O funcionamento real do provedor continua sem comprovação para este novo contrato.
+
 ## 24/11/2026 — QA de saída para o canvas de referência
 
 Base `dd2d23eca990ed3f706d57d85b823cc60d39327d`; PR #130 integrada e Actions pós-merge #45390475197 / #45390474930 concluídas com sucesso. A etapa seguinte implementa inspeção da candidata no canvas de referência antes de ligar esse contrato ao transporte pago.
