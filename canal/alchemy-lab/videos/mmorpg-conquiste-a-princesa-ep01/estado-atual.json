@@ -2717,5 +2717,99 @@
       "provenance_check": "passed",
       "archive_check": "passed"
     }
+  },
+  "reference_canvas_placement_20261124": {
+    "date": "2026-11-24",
+    "pr": 130,
+    "status": "offline_reference_verified_merge_requires_green_final_checks",
+    "base_main_sha": "61dfdfe8c64588630b9b391c40f124ee27360e95",
+    "module": "videoforge/ep01_reference_placement.py",
+    "reference_only": true,
+    "scale_xy": [
+      1,
+      1
+    ],
+    "original_art_modified": false,
+    "generation_authorized": false,
+    "provider_calls": 0,
+    "human_visual_approval": false,
+    "placement_verified": false,
+    "rig_ready": false,
+    "youtube_uploaded": false,
+    "prior_ci": {
+      "run_id": 45359637258,
+      "conclusion": "success",
+      "python_tests": 81
+    },
+    "real_source_inspection": {
+      "schema": "videoforge/ep01-reference-placement/v1",
+      "source_canvas": [
+        941,
+        1672
+      ],
+      "reference_canvas": [
+        944,
+        1680
+      ],
+      "requested_size_candidate": "944x1680",
+      "source_rect_xyxy": [
+        1,
+        4,
+        942,
+        1676
+      ],
+      "padding_ltrb": [
+        1,
+        4,
+        2,
+        4
+      ],
+      "source_to_reference_offset_xy": [
+        1,
+        4
+      ],
+      "reference_to_source_offset_xy": [
+        -1,
+        -4
+      ],
+      "scale_xy": [
+        1,
+        1
+      ],
+      "reference_only": true,
+      "provider_calls": 0,
+      "generation_authorized": false,
+      "placement_verified": false,
+      "human_visual_approval": false,
+      "rig_ready": false,
+      "youtube_uploaded": false,
+      "source_sha256": "9a03b7c13414707b34256c95cfc3d675f80588c9547d54c6374d7bcd26d73603",
+      "reference_sha256": "f44d508a12a7ab48f7f9ffbd2a68d1fba7f260676dfe0c30076a4a05aff1b78a",
+      "source_rect_pixels_verified": true,
+      "padding_fill_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "shot_id": "C11-P03",
+      "source_proof": {
+        "asset_id": "c11-p03-scene-mother",
+        "sha256": "9a03b7c13414707b34256c95cfc3d675f80588c9547d54c6374d7bcd26d73603",
+        "path": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-v2/44102677921/c11-p03-scene-mother.png"
+      }
+    },
+    "artifact_manifest": "ep01-reference-placement-C11-P03.json",
+    "next_action": "validate_final_PR_then_bind_versioned_request_to_source_reference_hashes_and_placement_before_live_transport_test",
+    "code_commit": "20e3760298367469825f053960efdad7a3fa91c7",
+    "ci": {
+      "run_id": 45389950111,
+      "conclusion": "success",
+      "python_tests": 82,
+      "suites": 5,
+      "javascript_syntax": "passed",
+      "offline_plan": "passed",
+      "real_source_inspection": "passed"
+    }
   }
 }

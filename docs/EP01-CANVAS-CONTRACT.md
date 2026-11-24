@@ -23,3 +23,25 @@ O relatório passa a guardar `requested_size` junto a `source_canvas` e `provide
 Preparar um contrato versionado de fonte/canvas ou placement com coordenadas verificáveis antes de reabrir as tarefas incompatíveis. Não substituir a mãe aprovada, converter candidatos antigos em aprovados, limpar o ledger nem reexecutar tarefas rejeitadas para testar o transporte. Uma futura validação real do proxy precisa de pedido versionado e orçamento/autorização aplicável; o presente ajuste não comprova produção visual corrigida.
 
 Arte, alinhamento, recomposição, rig e publicação continuam sujeitos aos gates existentes.
+
+
+## Placement de referência V1 — preparação offline
+
+O módulo `videoforge.ep01_reference_placement` calcula o próximo múltiplo de 16 em cada eixo, preservando orientação, escala 1:1 e posição por translação inteira. Valida o canvas resultante com o mesmo contrato existente; não força elegibilidade de fontes inválidas. O PNG original permanece intocado. O derivado RGBA, com margens transparentes, serve exclusivamente como referência de inspeção.
+
+| Fonte | Canvas candidato | Deslocamento X,Y | Margens esquerda, topo, direita, base |
+|---|---|---|---|
+| 941×1672 | 944×1680 | 1,4 | 1,4,2,4 |
+| 1053×1493 | 1056×1504 | 1,5 | 1,5,2,6 |
+
+O manifesto V1 inclui SHA-256 da fonte e do derivado, retângulo de origem no canvas novo (limites superiores exclusivos), offsets direto/inverso, escala unitária e prova de igualdade dos pixels RGBA na região de origem. O crop do teste é exclusivamente QA. Não gera sprites por recorte, não redimensiona, não substitui a mãe e não modifica registro ou ledger.
+
+Inspecionar uma mãe existente, sem rede/proxy/escrita no repositório:
+
+```sh
+python -m videoforge.ep01_reference_placement --shot-id C11-P03
+```
+
+A CLI imprime o manifesto e descarta o derivado; a função `prepare_reference` disponibiliza os bytes em memória para QA e integração futura. A geração continua bloqueada pelo preflight estrito. Uma etapa posterior deverá vincular pedido versionado à mãe e ao derivado, conferir dimensões, padding, alpha e placement da saída real, e obter revisão visual antes de usar a transformação na composição. A compatibilidade teórica do tamanho não demonstra suporte efetivo do proxy. Nenhuma chamada paga, aprovação de arte, desbloqueio de rig ou publicação é autorizada por este módulo.
+
+A CI da fila também executa essa CLI sobre a mãe C11-P03 arquivada e publica `ep01-reference-placement-C11-P03.json` no artifact do plano. O manifesto identifica o arquivo original, asset e SHA em `source_proof`; o derivado permanece somente em memória. A prova técnica não autoriza enviar o derivado ao proxy ou usá-lo como peça final.

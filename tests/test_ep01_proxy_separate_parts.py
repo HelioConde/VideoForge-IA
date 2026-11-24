@@ -448,5 +448,104 @@ class NativeCanvasContractTests(unittest.TestCase):
             self.assertFalse(report["rig_ready"])
 
 
+class ReferencePlacementTests(unittest.TestCase):
+    def test_known_incompatible_mothers_have_reversible_integer_offsets(self):
+        from videoforge.ep01_reference_placement import plan_placement
+        for dims, canvas, rect in (
+                ((941,1672),[944,1680],[1,4,942,1676]),
+                ((1053,1493),[1056,1504],[1,5,1054,1498])):
+            with self.subTest(dims=dims):
+                plan=plan_placement(dims)
+                self.assertEqual(plan["reference_canvas"],canvas)
+                self.assertEqual(plan["source_rect_xyxy"],rect)
+                self.assertEqual(plan["scale_xy"],[1,1])
+                self.assertEqual(plan["reference_to_source_offset_xy"],
+                                 [-rect[0],-rect[1]])
+                self.assertFalse(plan["generation_authorized"])
+                self.assertFalse(plan["rig_ready"])
+                self.assertEqual(plan["provider_calls"],0)
+
+    def test_native_compatible_canvas_has_no_padding(self):
+        from videoforge.ep01_reference_placement import plan_placement
+        plan=plan_placement((1536,864))
+        self.assertEqual(plan["source_rect_xyxy"],[0,0,1536,864])
+        self.assertEqual(plan["padding_ltrb"],[0,0,0,0])
+        self.assertEqual(plan["requested_size_candidate"],"1536x864")
+
+    def test_invalid_or_orientation_changing_sources_fail_closed(self):
+        from videoforge.ep01_reference_placement import plan_placement
+        for dims in ((0,1024),(True,1024),(4096,2048),(100,100),
+                     (2048,512),(1000,1001),(3840,3840)):
+            with self.subTest(dims=dims), self.assertRaises(VideoForgeError):
+                plan_placement(dims)
+
+    def test_reference_pixels_and_transparent_margins_preserved(self):
+        import io
+        from PIL import Image
+        from videoforge.ep01_reference_placement import prepare_reference
+        for mode in ("RGB","RGBA"):
+            with self.subTest(mode=mode):
+                image=Image.new(mode,(941,1672),
+                                (12,34,56) if mode=="RGB" else (12,34,56,0))
+                image.putpixel((940,1671),(255,0,0) if mode=="RGB" else (255,0,0,192))
+                stream=io.BytesIO()
+                image.save(stream,format="PNG")
+                raw=stream.getvalue()
+                digest=hashlib.sha256(raw).hexdigest()
+                with patch.object(p.proxy_images,"call_proxy") as charged:
+                    reference, manifest=prepare_reference(raw,digest)
+                    charged.assert_not_called()
+                self.assertEqual(manifest["source_sha256"],digest)
+                self.assertEqual(manifest["reference_sha256"],hashlib.sha256(reference).hexdigest())
+                self.assertTrue(manifest["source_rect_pixels_verified"])
+                self.assertFalse(manifest["placement_verified"])
+                with Image.open(io.BytesIO(reference)) as padded:
+                    self.assertEqual(padded.size,(944,1680))
+                    self.assertEqual(padded.getpixel((0,0)),(0,0,0,0))
+                    self.assertEqual(padded.crop((1,4,942,1676)).tobytes(),
+                                     image.convert("RGBA").tobytes())
+
+
+    def test_cli_inspects_real_archived_mother_with_proof_without_mutation(self):
+        import io
+        import json
+        from videoforge import ep01_reference_placement as placement
+        raw, proof=p.mother_source("C11-P03")
+        output=io.StringIO()
+        with patch("sys.argv",["placement","--shot-id","C11-P03"]), patch(
+                "sys.stdout",output), patch.object(p.proxy_images,"call_proxy") as charged:
+            placement.main()
+            charged.assert_not_called()
+        manifest=json.loads(output.getvalue())
+        self.assertEqual(manifest["shot_id"],"C11-P03")
+        self.assertEqual(manifest["source_proof"],proof)
+        self.assertEqual(manifest["source_sha256"],hashlib.sha256(raw).hexdigest())
+        self.assertEqual(manifest["source_canvas"],[941,1672])
+        self.assertEqual(manifest["reference_canvas"],[944,1680])
+        self.assertTrue(manifest["source_rect_pixels_verified"])
+        self.assertTrue(manifest["reference_only"])
+        self.assertFalse(manifest["generation_authorized"])
+        self.assertFalse(manifest["placement_verified"])
+        self.assertEqual(p.mother_source("C11-P03"),(raw,proof))
+
+    def test_wrong_sha_rejected_before_reference_decode(self):
+        from videoforge.ep01_reference_placement import prepare_reference
+        with self.assertRaisesRegex(VideoForgeError,"SOURCE_SHA_MISMATCH"):
+            prepare_reference(b"not an image","0"*64)
+
+    def test_non_png_and_unsupported_mode_rejected(self):
+        import io
+        from PIL import Image
+        from videoforge.ep01_reference_placement import prepare_reference
+        for mode,fmt,error in (("RGB","JPEG","EXPECTED_STATIC_PNG"),
+                               ("L","PNG","UNSUPPORTED_PIXEL_MODE")):
+            with self.subTest(mode=mode,fmt=fmt):
+                stream=io.BytesIO()
+                Image.new(mode,(944,1680)).save(stream,format=fmt)
+                raw=stream.getvalue()
+                with self.assertRaisesRegex(VideoForgeError,error):
+                    prepare_reference(raw,hashlib.sha256(raw).hexdigest())
+
+
 if __name__=="__main__":
     unittest.main()

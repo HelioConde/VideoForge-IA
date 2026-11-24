@@ -1,3 +1,13 @@
+## 24/11/2026 — Referência de canvas reversível, somente para inspeção
+
+PR #129 integrada em `61dfdfe8c64588630b9b391c40f124ee27360e95`; execução pós-merge #45346131450 confirmou plano sem despacho pago.
+
+Continuação na [PR #130](https://github.com/HelioConde/VideoForge-IA/pull/130): módulo `videoforge.ep01_reference_placement` prepara referência RGBA em memória com margens transparentes, escala 1:1 e offsets inteiros reversíveis. Exemplos: 941×1672 → 944×1680, offset (1,4); 1053×1493 → 1056×1504, offset (1,5). Fonte SHA preservada; igualdade RGBA conferida dentro do retângulo original; orientação não pode mudar. Não produz sprite final nem desbloqueia o preflight.
+
+Revisão inclui CLI com proveniência do original e teste usando a mãe C11-P03 realmente arquivada. A CI executa a inspeção sem proxy e publica `ep01-reference-placement-C11-P03.json` no artifact. Seis testes anteriores da PR passaram na CI #45359637258 (81 testes totais); revisão atual acrescenta uma regressão de CLI/fonte real. [CI #45389950111](https://github.com/HelioConde/VideoForge-IA/actions/runs/45389950111) **success** no código `20e3760298367469825f053960efdad7a3fa91c7`: 82 testes, sintaxe JavaScript, plano completo e inspeção da fonte real passaram. SHA do derivado de referência `f44d508a12a7ab48f7f9ffbd2a68d1fba7f260676dfe0c30076a4a05aff1b78a`; igualdade de pixels confirmada. Merge condicionado aos checks verdes da revisão documental final; confirmar integração na PR.
+
+Próximo passo: conferir a revisão final e integrar somente após checks verdes. Depois, vincular um pedido versionado à mãe, ao derivado e ao placement; validar o transporte e QA de saída separadamente. Fontes, registros, ledger, aprovação visual, rig e publicação permanecem intactos. Nenhuma chamada paga nesta etapa.
+
 ## 24/11/2026 — Canvas validado antes do despacho pago
 
 Base inspecionada: `62b2e42f1b97e1766091bf3e6e62fa13b33dd733`; PR #128 já integrada. C11-P03 teve novos candidatos rejeitados nas Actions #45308177395 e #45308344517, preservados no arquivo.
