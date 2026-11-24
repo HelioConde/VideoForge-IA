@@ -43,3 +43,5 @@ python -m videoforge.ep01_reference_placement --shot-id C11-P03
 ```
 
 A CLI imprime o manifesto e descarta o derivado; a função `prepare_reference` disponibiliza os bytes em memória para QA e integração futura. A geração continua bloqueada pelo preflight estrito. Uma etapa posterior deverá vincular pedido versionado à mãe e ao derivado, conferir dimensões, padding, alpha e placement da saída real, e obter revisão visual antes de usar a transformação na composição. A compatibilidade teórica do tamanho não demonstra suporte efetivo do proxy. Nenhuma chamada paga, aprovação de arte, desbloqueio de rig ou publicação é autorizada por este módulo.
+
+A CI da fila também executa essa CLI sobre a mãe C11-P03 arquivada e publica `ep01-reference-placement-C11-P03.json` no artifact do plano. O manifesto identifica o arquivo original, asset e SHA em `source_proof`; o derivado permanece somente em memória. A prova técnica não autoriza enviar o derivado ao proxy ou usá-lo como peça final.

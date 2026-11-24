@@ -15,6 +15,7 @@ on:
       - 'scripts/ep01_layer_gallery.py'
       - 'tests/test_ep01_layer_gallery.py'
       - 'videoforge/ep01_proxy_separate_parts.py'
+      - 'videoforge/ep01_reference_placement.py'
       - 'scripts/ep01_proxy_qa_feedback.py'
       - 'tests/test_ep01_proxy_qa_feedback.py'
       - '.github/workflows/ep01-proxy-separate-part-by-request.yml'
@@ -100,11 +101,18 @@ jobs:
         run: |
           python -m scripts.ep01_action_production_queue --mode plan \
             --output "$RUNNER_TEMP/ep01-production-queue-plan.json"
+      - name: Inspect reversible reference canvas from archived mother (no provider)
+        run: |
+          python -m videoforge.ep01_reference_placement --shot-id C11-P03 \
+            > "$RUNNER_TEMP/ep01-reference-placement-C11-P03.json"
+          cat "$RUNNER_TEMP/ep01-reference-placement-C11-P03.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ep01-production-queue-plan-PR-${{ github.run_id }}
-          path: ${{ runner.temp }}/ep01-production-queue-plan.json
+          path: |
+            ${{ runner.temp }}/ep01-production-queue-plan.json
+            ${{ runner.temp }}/ep01-reference-placement-C11-P03.json
           if-no-files-found: ignore
           retention-days: 14
 
@@ -153,6 +161,11 @@ jobs:
           set -euo pipefail
           python -m scripts.ep01_action_production_queue --mode plan \
             --output "$RUNNER_TEMP/ep01-production-queue-plan.json"
+      - name: Inspect reversible reference canvas from archived mother (no provider)
+        run: |
+          python -m videoforge.ep01_reference_placement --shot-id C11-P03 \
+            > "$RUNNER_TEMP/ep01-reference-placement-C11-P03.json"
+          cat "$RUNNER_TEMP/ep01-reference-placement-C11-P03.json"
       - name: Dispatch at most 2 image child Actions and 2 camera previews by default
         env:
           EP01_SHOW_ACTIVE_CHILD: "true"
@@ -371,5 +384,6 @@ jobs:
             ${{ runner.temp }}/ep01-camadas.html
             ${{ runner.temp }}/ep01-feedback-plan.json
             ${{ runner.temp }}/ep01-feedback-state.json
+            ${{ runner.temp }}/ep01-reference-placement-C11-P03.json
           retention-days: 30
           if-no-files-found: ignore

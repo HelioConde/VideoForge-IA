@@ -2717,5 +2717,32 @@
       "provenance_check": "passed",
       "archive_check": "passed"
     }
+  },
+  "reference_canvas_placement_20261124": {
+    "date": "2026-11-24",
+    "pr": 130,
+    "status": "offline_reference_implemented_final_ci_pending",
+    "base_main_sha": "61dfdfe8c64588630b9b391c40f124ee27360e95",
+    "module": "videoforge/ep01_reference_placement.py",
+    "reference_only": true,
+    "scale_xy": [
+      1,
+      1
+    ],
+    "original_art_modified": false,
+    "generation_authorized": false,
+    "provider_calls": 0,
+    "human_visual_approval": false,
+    "placement_verified": false,
+    "rig_ready": false,
+    "youtube_uploaded": false,
+    "prior_ci": {
+      "run_id": 45359637258,
+      "conclusion": "success",
+      "python_tests": 81
+    },
+    "real_source_inspection": "C11-P03",
+    "artifact_manifest": "ep01-reference-placement-C11-P03.json",
+    "next_action": "validate_final_PR_then_bind_versioned_request_to_source_reference_hashes_and_placement_before_live_transport_test"
   }
 }

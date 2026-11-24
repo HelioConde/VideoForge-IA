@@ -89,6 +89,7 @@ def main():
     raw, proof = mother_source(args.shot_id)
     _, plan = prepare_reference(raw, proof["sha256"])
     plan["shot_id"] = args.shot_id
+    plan["source_proof"] = proof
     print(json.dumps(plan, indent=2))
 
 

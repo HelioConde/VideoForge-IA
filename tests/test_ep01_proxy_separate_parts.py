@@ -505,6 +505,29 @@ class ReferencePlacementTests(unittest.TestCase):
                     self.assertEqual(padded.crop((1,4,942,1676)).tobytes(),
                                      image.convert("RGBA").tobytes())
 
+
+    def test_cli_inspects_real_archived_mother_with_proof_without_mutation(self):
+        import io
+        import json
+        from videoforge import ep01_reference_placement as placement
+        raw, proof=p.mother_source("C11-P03")
+        output=io.StringIO()
+        with patch("sys.argv",["placement","--shot-id","C11-P03"]), patch(
+                "sys.stdout",output), patch.object(p.proxy_images,"call_proxy") as charged:
+            placement.main()
+            charged.assert_not_called()
+        manifest=json.loads(output.getvalue())
+        self.assertEqual(manifest["shot_id"],"C11-P03")
+        self.assertEqual(manifest["source_proof"],proof)
+        self.assertEqual(manifest["source_sha256"],hashlib.sha256(raw).hexdigest())
+        self.assertEqual(manifest["source_canvas"],[941,1672])
+        self.assertEqual(manifest["reference_canvas"],[944,1680])
+        self.assertTrue(manifest["source_rect_pixels_verified"])
+        self.assertTrue(manifest["reference_only"])
+        self.assertFalse(manifest["generation_authorized"])
+        self.assertFalse(manifest["placement_verified"])
+        self.assertEqual(p.mother_source("C11-P03"),(raw,proof))
+
     def test_wrong_sha_rejected_before_reference_decode(self):
         from videoforge.ep01_reference_placement import prepare_reference
         with self.assertRaisesRegex(VideoForgeError,"SOURCE_SHA_MISMATCH"):
