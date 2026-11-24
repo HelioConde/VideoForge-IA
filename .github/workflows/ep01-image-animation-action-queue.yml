@@ -178,19 +178,22 @@ jobs:
               core.warning('Queue planning itself failed. No progress may be claimed.');
               return;
             }
-            const input=JSON.parse(fs.readFileSync(process.env.PLAN_FILE,'utf8'));
+            const planned=JSON.parse(fs.readFileSync(process.env.PLAN_FILE,'utf8'));
+            const executed=fs.existsSync(process.env.RUN_FILE)
+              ? JSON.parse(fs.readFileSync(process.env.RUN_FILE,'utf8')) : null;
+            const result=executed?.execution || null;
+            if(executed && (result?.youtube_publications!==0 ||
+               result?.human_visual_approval!==false || result?.rig_ready!==false))
+              throw new Error('Unexpected approval or publishing in execution');
+            // A successful batch may have blocked more components in memory.
+            // Both the panel and gallery must consume that final snapshot.
+            const input=executed || planned;
             const data=input.queue;
             if(data.schema!=='videoforge/ep01-production-action-queue/v1' ||
                data.shots!==42 || data.original_image_requests!==146 ||
                data.total_tasks!==276 || data.per_child_paid_image_cap!==1 ||
                data.youtube_publication!==false || data.rig_approval_automatic!==false)
               throw new Error('Queue planner did not pass immutable EP01 source contract');
-            const count=(kind,status)=>data.tasks.filter(x=>x.kind===kind &&
-              (!status || x.status===status)).length;
-            const old=count('image');
-            const ready=count('image','ready_for_preflight');
-            const blocked=data.tasks.filter(x=>x.kind==='image' &&
-              x.status.startsWith('blocked')).length;
             let ledger={schema_version:1,schema:'videoforge/ep01-production-action-queue-state/v1',attempts:{}};
             try{
               const {data:state}=await github.rest.repos.getContent({
@@ -209,20 +212,19 @@ jobs:
             const path=require('path');
             const ledgerFile=path.join(process.env.RUNNER_TEMP,'ep01-gallery-ledger.json');
             fs.writeFileSync(ledgerFile,JSON.stringify(ledger));
+            const currentPlan=path.join(process.env.RUNNER_TEMP,'ep01-feedback-plan.json');
+            const feedbackFile=path.join(process.env.RUNNER_TEMP,'ep01-feedback-state.json');
+            fs.writeFileSync(currentPlan,JSON.stringify(input));
             require('child_process').execFileSync('python',['-m','scripts.ep01_layer_gallery',
-              process.env.PLAN_FILE,ledgerFile,path.join(process.env.RUNNER_TEMP,'ep01-camadas.html')]);
+              currentPlan,ledgerFile,path.join(process.env.RUNNER_TEMP,'ep01-camadas.html'),
+              '--feedback-json',feedbackFile]);
+            const feedback=JSON.parse(fs.readFileSync(feedbackFile,'utf8')).states;
             const attempts=Object.entries(ledger.attempts);
             const completed=attempts.filter(([,x])=>
               x.status==='archived'||x.status==='preview_complete');
             const rejected=attempts.filter(([,x])=>x.status==='rejected_archived');
             const pending=attempts.filter(([,x])=>
               !['archived','preview_complete','blocked_preflight','rejected_archived'].includes(x.status));
-            let result=null;
-            if(fs.existsSync(process.env.RUN_FILE)){
-              result=JSON.parse(fs.readFileSync(process.env.RUN_FILE,'utf8')).execution;
-              if(result?.youtube_publications!==0||result?.human_visual_approval!==false)
-                throw new Error('Unexpected approval or publishing in execution');
-            }
             const runUrl=`https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const rows=attempts.slice(-25).reverse().map(([id,item])=>{
               const child=item.child_run_id
@@ -234,8 +236,7 @@ jobs:
               return '| ' + id + ' | ' + item.status + ' | ' + child + ' | '+png+' | '+seconds+' |';
             });
             // Derive per-shot feedback from both the immutable plan and the durable CAS ledger.
-            const byId=new Map(data.tasks.map(t=>[t.task_id,t]));
-            const ledgerStatus=t=>ledger.attempts[t.task_id]?.status || t.status;
+            const ledgerStatus=t=>feedback[t.task_id].status;
             const items=kind=>data.tasks.filter(t=>t.kind===kind);
             const imageTasks=items('image');
             const isArchived=t=>['archived'].includes(ledgerStatus(t));
@@ -274,11 +275,11 @@ jobs:
             const problemRows=data.tasks.filter(t=>['image','image_correction'].includes(t.kind))
               .filter(t=>isRejected(t)||isBlocked(t)).slice(0,15).map(t=>{
                 const state=ledgerStatus(t);
-                const reason=ledger.attempts[t.task_id]?.technical_qa || ledger.attempts[t.task_id]?.reason || t.reason;
+                const reason=feedback[t.task_id].reason;
                 const brief=String(reason||'não informado').replace(/[\r\n|]/g,' ').slice(0,130);
                 return `| ${t.shot_id} / ${t.part||'-'} | ${state} | ${brief} | ${childLink(t)} |`;
               });
-            const active=data.tasks.filter(t=>['reserved','dispatched'].includes(ledgerStatus(t)));
+            const active=data.tasks.filter(t=>['reserved','dispatched'].includes(ledger.attempts[t.task_id]?.status));
             let cut=null;
             try {
               const {data:cuts}=await github.rest.actions.listWorkflowRuns({...context.repo,workflow_id:'ep01-review-cut.yml',
@@ -330,7 +331,7 @@ jobs:
               `**Ultima atualizacao:** [Action ${context.runId}](${runUrl}) — resultado: ${context.job || 'run'}.`,
               '',
               `- **Imagens-mae:** 42 slots, incluindo C01-P01 preto sem PNG; fontes reutilizadas por SHA.`,
-              `- **Pecas da fila original:** ${old} solicitacoes, ${ready} candidatas a preflight, ${blocked} com referencias bloqueadas.`,
+              `- **Pecas da fila original:** ${imageTasks.length} solicitacoes, ${imageReady} candidatas a preflight, ${imageBlocked} bloqueadas.`,
               `- **Correcoes C08 novas:** consultar o estado individual das quatro tarefas abaixo.`,
               '- **Previas de camera:** 42 tarefas tecnicas; NAO sao rigs ou animacoes de personagens.',
               '- **Animacoes articuladas:** 42 tarefas bloqueadas ate ter camadas RGBA autenticas e QA visual.',
@@ -368,5 +369,7 @@ jobs:
             ${{ runner.temp }}/ep01-production-queue-plan.json
             ${{ runner.temp }}/ep01-production-queue-execution.json
             ${{ runner.temp }}/ep01-camadas.html
+            ${{ runner.temp }}/ep01-feedback-plan.json
+            ${{ runner.temp }}/ep01-feedback-state.json
           retention-days: 30
           if-no-files-found: ignore

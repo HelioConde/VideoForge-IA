@@ -1,3 +1,13 @@
+## 23/11/2026 — Feedback consistente da fila e preservação dos bloqueios atuais
+
+Base: `e58ca908b5eea19d8ae932d014f0b54ed4a0b008`, PR #127 integrada e push [#45255721049](https://github.com/HelioConde/VideoForge-IA/actions/runs/45255721049) concluído sem despacho pago. O painel #98 mostrava 41 prontas no cabeçalho e 40 no detalhe, pois usava plano bruto em um lugar e ledger no outro. Um recibo antigo `archived` também ocultava restrições atuais como `archived_version_check_needed`.
+
+Correção de exibição: painel e galeria usam a mesma função de estado, preservam bloqueios/reprovações do plano atual e recusam atribuir conclusão a recibo de outra mãe (SHA). Links, PNGs e recibos históricos continuam disponíveis separadamente. Após um lote concluído, ambos consomem o plano final da execução, incluindo bloqueios criados dentro do lote. Cabeçalho e detalhamento usam as mesmas contagens; snapshots de feedback ficam no artifact.
+
+Testes acrescentados: precedência dos bloqueios, proveniência da mãe, operações pendentes, histórico preservado, imutabilidade/duplicidade e execução do JavaScript real do workflow com GitHub simulado para plano inicial, lote final e aprovação fabricada. [PR #128](https://github.com/HelioConde/VideoForge-IA/pull/128), commit `777aa764de258292fbde7cae91a87a8205c9a9c4`: [CI #45302448347](https://github.com/HelioConde/VideoForge-IA/actions/runs/45302448347) **success**, 68 testes Python, sintaxe JavaScript e plano completo passaram. Integração condicionada aos checks verdes da revisão final; confirmar merge na PR.
+
+Sem mudança no despacho, ledger de produção, custos, prompts ou imagens. A divergência de canvas do provedor permanece sem correção comprovada. Próximo passo: confirmar painel/galeria pós-merge com contagens iguais e geração pulada. Para a investigação de canvas, o payload atual pede `size=1024x1536` embora o prompt peça dimensões nativas (ex.: 941×1672); `internal/server/images.go` do proxy fixado em `02f8ce3581c15eb11b2d65daf93c3d4e3bd0e635` repassa `size` à ferramenta. Isso identifica contratos divergentes, mas NÃO comprova a causa da saída 981×1602 nem autoriza mudar tamanho, repetir chamadas ou aprovar arte. Investigar o contrato de tamanho suportado em uma versão separada antes de novo teste pago.
+
 ## 23/11/2026 — Bloqueio de canvas atualizado dentro do próprio lote
 
 Base inspecionada: `84f0288c28a34c01c4ca31faa5bc6200fad1de85`; PR #126 já integrada. A proteção por tomada era calculada somente em `build()`: duas rejeições arquivadas durante `run_remote()` não atualizavam a lista em memória, permitindo reservar uma terceira peça no mesmo lote.
