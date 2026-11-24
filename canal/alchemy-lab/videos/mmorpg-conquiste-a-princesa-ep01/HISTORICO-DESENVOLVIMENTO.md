@@ -718,3 +718,14 @@ Testes acrescentados: precedência dos bloqueios, proveniência da mãe, operaç
 
 Sem mudança no despacho, ledger de produção, custos, prompts ou imagens. A divergência de canvas do provedor permanece sem correção comprovada. Próximo passo: confirmar painel/galeria pós-merge com contagens iguais e geração pulada. Para a investigação de canvas, o payload atual pede `size=1024x1536` embora o prompt peça dimensões nativas (ex.: 941×1672); `internal/server/images.go` do proxy fixado em `02f8ce3581c15eb11b2d65daf93c3d4e3bd0e635` repassa `size` à ferramenta. Isso identifica contratos divergentes, mas NÃO comprova a causa da saída 981×1602 nem autoriza mudar tamanho, repetir chamadas ou aprovar arte. Investigar o contrato de tamanho suportado em uma versão separada antes de novo teste pago.
 
+
+## 24/11/2026 — Canvas validado antes do despacho pago
+
+Base inspecionada: `62b2e42f1b97e1766091bf3e6e62fa13b33dd733`; PR #128 já integrada. C11-P03 teve novos candidatos rejeitados nas Actions #45308177395 e #45308344517, preservados no arquivo.
+
+Corrigida a divergência entre prompt nativo e payload fixo 1024×1536. O gerador solicita o tamanho exato da fonte se compatível com o contrato documentado de gpt-image-2; fontes como 941×1672 e 1053×1493 são bloqueadas antes do despacho/provedor, sem arredondar, recortar ou modificar originais. Fila e workflow individual fazem preflight estrito; o ledger registra motivo e zero chamadas. O relatório separa tamanho solicitado e devolvido.
+
+Validação: oito regressões novas preparadas para tamanhos válidos/inválidos, inspeção histórica, bloqueio sem chamadas, payload com orientação/tamanho exatos, referências intactas e rejeição preservada sem retry. CI pendente nesta revisão inicial.
+
+Próximo passo: validar a PR e integração; depois preparar contrato versionado de canvas/placement verificável para as fontes incompatíveis, preservando a mãe aprovada. [Contrato e limites](../../../../docs/EP01-CANVAS-CONTRACT.md). Nenhuma geração paga, alteração de imagem, aprovação visual, rig ou publicação realizada. A saída real do proxy ainda não foi comprovada com o novo contrato.
+

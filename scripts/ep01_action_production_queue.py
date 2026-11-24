@@ -582,16 +582,21 @@ def run_remote(plan:dict,max_images:int,max_previews:int)->dict:
                     # Source archive changed since the initial planning run:
                     # omit from queue rather than overwrite/charge again.
                     continue
-                pre=parts.prepare(task["shot_id"],task["part"])
+                pre=parts.prepare(task["shot_id"],task["part"],require_supported_canvas=True)
                 if pre["mother_proof"]["sha256"]!=task["source_sha256"]:
                     raise ValueError("Scene mother changed after queue plan")
             except (ValueError,OSError,RuntimeError) as exc:
                 # Enqueue a source-specific BLOCK, never bill when preflight fails.
+                reason=(str(exc) if isinstance(exc,parts.VideoForgeError)
+                        and str(exc)=="EP01_PROXY_PARTS_UNSUPPORTED_NATIVE_CANVAS"
+                        else type(exc).__name__)
                 attempts[key]={"status":"blocked_preflight","workflow":IMAGE_WORKFLOW,
-                               "reason":type(exc).__name__,"source_sha256":task["source_sha256"]}
+                               "reason":reason,"source_sha256":task["source_sha256"],
+                               "provider_calls_confirmed":0,"review_required":True,
+                               "retry_original_task":False}
                 remote.save(ledger)
                 results.append({"task_id":key,"status":"blocked_preflight",
-                                "reason":type(exc).__name__})
+                                "reason":reason})
                 continue
         # Save the hard anti-duplicate reservation BEFORE invoking external
         # workflow_dispatch. If a host/network failure happens in between, the
