@@ -2666,5 +2666,18 @@
     "next_action": "verify_post_merge_push_plan_only; provider_canvas_root_cause_remains_open",
     "pr": 127,
     "code_commit": "81ca8eb73345b00d5f378d8d48062caab3510bd5"
+  },
+  "queue_feedback_consistency_20261123": {
+    "date": "2026-11-23",
+    "base_main_sha": "e58ca908b5eea19d8ae932d014f0b54ed4a0b008",
+    "status": "implemented_branch_ci_pending",
+    "shared_state_module": "scripts/ep01_layer_gallery.py",
+    "actual_workflow_js_tested_in_ci": false,
+    "provider_calls": 0,
+    "ledger_modified": false,
+    "human_visual_approval": false,
+    "rig_ready": false,
+    "youtube_uploaded": false,
+    "next_action": "validate_ci_then_merge_and_verify_matching_panel_counts_without_paid_dispatch"
   }
 }

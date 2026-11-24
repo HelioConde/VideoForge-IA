@@ -707,3 +707,14 @@ Validação em GitHub Actions: [PR #127](https://github.com/HelioConde/VideoForg
 
 Nenhuma imagem, rig, áudio ou MP4 produzido nesta alteração; nenhuma aprovação visual nem publicação. Próximo passo: conferir a execução pós-merge em modo plano; revisar separadamente a incompatibilidade real de canvas do provedor, ainda não corrigida.
 
+
+## 23/11/2026 — Feedback consistente da fila e preservação dos bloqueios atuais
+
+Base: `e58ca908b5eea19d8ae932d014f0b54ed4a0b008`, PR #127 integrada e push [#45255721049](https://github.com/HelioConde/VideoForge-IA/actions/runs/45255721049) concluído sem despacho pago. O painel #98 mostrava 41 prontas no cabeçalho e 40 no detalhe, pois usava plano bruto em um lugar e ledger no outro. Um recibo antigo `archived` também ocultava restrições atuais como `archived_version_check_needed`.
+
+Correção de exibição: painel e galeria usam a mesma função de estado, preservam bloqueios/reprovações do plano atual e recusam atribuir conclusão a recibo de outra mãe (SHA). Links, PNGs e recibos históricos continuam disponíveis separadamente. Após um lote concluído, ambos consomem o plano final da execução, incluindo bloqueios criados dentro do lote. Cabeçalho e detalhamento usam as mesmas contagens; snapshots de feedback ficam no artifact.
+
+Testes acrescentados: precedência dos bloqueios, proveniência da mãe, operações pendentes, histórico preservado, imutabilidade/duplicidade e execução do JavaScript real do workflow com GitHub simulado para plano inicial, lote final e aprovação fabricada. CI pendente nesta versão em branch; integrar somente após validação.
+
+Sem mudança no despacho, ledger de produção, custos, prompts ou imagens. A divergência de canvas do provedor permanece sem correção comprovada. Próximo passo: validar CI, integrar e confirmar painel/galeria pós-merge com contagens iguais e geração pulada.
+
