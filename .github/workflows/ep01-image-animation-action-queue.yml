@@ -16,6 +16,7 @@ on:
       - 'tests/test_ep01_layer_gallery.py'
       - 'videoforge/ep01_proxy_separate_parts.py'
       - 'videoforge/ep01_reference_placement.py'
+      - 'videoforge/ep01_reference_request.py'
       - 'scripts/ep01_proxy_qa_feedback.py'
       - 'tests/test_ep01_proxy_qa_feedback.py'
       - '.github/workflows/ep01-proxy-separate-part-by-request.yml'
@@ -110,6 +111,11 @@ jobs:
             --candidate-part character-guarda_direito \
             > "$RUNNER_TEMP/ep01-reference-candidate-qa-C11-P03.json"
           cat "$RUNNER_TEMP/ep01-reference-candidate-qa-C11-P03.json"
+          python -m videoforge.ep01_reference_request --shot-id C11-P03 \
+            --part character-kael \
+            --source-sha256 9a03b7c13414707b34256c95cfc3d675f80588c9547d54c6374d7bcd26d73603 \
+            > "$RUNNER_TEMP/ep01-reference-request-C11-P03.json"
+          cat "$RUNNER_TEMP/ep01-reference-request-C11-P03.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -118,6 +124,7 @@ jobs:
             ${{ runner.temp }}/ep01-production-queue-plan.json
             ${{ runner.temp }}/ep01-reference-placement-C11-P03.json
             ${{ runner.temp }}/ep01-reference-candidate-qa-C11-P03.json
+            ${{ runner.temp }}/ep01-reference-request-C11-P03.json
           if-no-files-found: ignore
           retention-days: 14
 
@@ -175,6 +182,11 @@ jobs:
             --candidate-part character-guarda_direito \
             > "$RUNNER_TEMP/ep01-reference-candidate-qa-C11-P03.json"
           cat "$RUNNER_TEMP/ep01-reference-candidate-qa-C11-P03.json"
+          python -m videoforge.ep01_reference_request --shot-id C11-P03 \
+            --part character-kael \
+            --source-sha256 9a03b7c13414707b34256c95cfc3d675f80588c9547d54c6374d7bcd26d73603 \
+            > "$RUNNER_TEMP/ep01-reference-request-C11-P03.json"
+          cat "$RUNNER_TEMP/ep01-reference-request-C11-P03.json"
       - name: Dispatch at most 2 image child Actions and 2 camera previews by default
         env:
           EP01_SHOW_ACTIVE_CHILD: "true"
@@ -395,5 +407,6 @@ jobs:
             ${{ runner.temp }}/ep01-feedback-state.json
             ${{ runner.temp }}/ep01-reference-placement-C11-P03.json
             ${{ runner.temp }}/ep01-reference-candidate-qa-C11-P03.json
+            ${{ runner.temp }}/ep01-reference-request-C11-P03.json
           retention-days: 30
           if-no-files-found: ignore

@@ -699,5 +699,149 @@ class ReferenceCandidateQATests(unittest.TestCase):
         self.assertFalse(qa["canvas_alpha_candidate"])
 
 
+class ReferenceRequestTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from videoforge import ep01_reference_request as request
+        cls.request=request
+        cls.source_sha="9a03b7c13414707b34256c95cfc3d675f80588c9547d54c6374d7bcd26d73603"
+        cls.bundle=request.prepare_request("C11-P03","character-kael",cls.source_sha)
+
+    def test_draft_binds_real_reference_and_identity_inputs_without_provider(self):
+        import base64
+        import io
+        from PIL import Image
+        bundle=self.bundle
+        payload=bundle["payload"]
+        self.assertEqual(bundle["request_id"],"c11-p03-character-kael-reference-canvas-v1")
+        self.assertEqual(payload["size"],"944x1680")
+        self.assertEqual(payload["background"],"transparent")
+        self.assertEqual(payload["n"],1)
+        self.assertIn("x=[1,942), y=[4,1676)",payload["prompt"])
+        self.assertNotIn("Output must keep WIDTH=941",payload["prompt"])
+        images=[base64.b64decode(row["image_url"].split(",",1)[1]) for row in payload["images"]]
+        self.assertEqual(hashlib.sha256(images[0]).hexdigest(),
+                         bundle["reference_manifest"]["reference_sha256"])
+        with Image.open(io.BytesIO(images[0])) as image:
+            self.assertEqual(image.size,(944,1680))
+        for raw,proof in zip(images[1:],bundle["identity_reference_proofs"]):
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),proof["sha256"])
+        with patch.object(p.proxy_images,"call_proxy") as charged:
+            again=self.request.prepare_request("C11-P03","character-kael",self.source_sha)
+            charged.assert_not_called()
+        self.assertEqual(again,bundle)
+        self.assertFalse(bundle["generation_authorized"])
+        self.assertEqual(bundle["provider_calls"],0)
+
+    def test_response_qa_is_bound_to_request_and_maps_source_coordinates(self):
+        import io
+        from PIL import Image,ImageDraw
+        image=Image.new("RGBA",(944,1680),(0,0,0,0))
+        ImageDraw.Draw(image).rectangle((11,24,40,63),fill=(80,70,60,255))
+        stream=io.BytesIO()
+        image.save(stream,format="PNG")
+        raw=stream.getvalue()
+        with patch.object(p.proxy_images,"call_proxy") as charged:
+            qa=self.request.inspect_response(self.bundle,raw,self.bundle["request_sha256"])
+            charged.assert_not_called()
+        self.assertTrue(qa["canvas_alpha_candidate"])
+        self.assertEqual(qa["alpha_bbox_source_xyxy"],[10,20,40,60])
+        self.assertEqual(qa["request_id"],self.bundle["request_id"])
+        self.assertEqual(qa["request_sha256"],self.bundle["request_sha256"])
+        self.assertFalse(qa["provider_provenance_verified"])
+        self.assertFalse(qa["placement_verified"])
+        self.assertFalse(qa["rig_ready"])
+
+    def test_modified_request_cannot_reuse_independently_pinned_fingerprint(self):
+        from copy import deepcopy
+        changes=[("prompt","changed"),("size","1024x1536"),("n",2),
+                 ("background","opaque"),("images",[])]
+        for field,value in changes:
+            bundle=deepcopy(self.bundle)
+            bundle["payload"][field]=value
+            with self.subTest(field=field),self.assertRaisesRegex(
+                    VideoForgeError,"FINGERPRINT_MISMATCH"):
+                self.request.inspect_response(bundle,b"not decoded",
+                                              self.bundle["request_sha256"])
+            unsigned=dict(bundle)
+            unsigned.pop("request_sha256")
+            bundle["request_sha256"]=self.request.fingerprint(unsigned)
+            with self.assertRaisesRegex(VideoForgeError,"FINGERPRINT_MISMATCH"):
+                self.request.inspect_response(bundle,b"",self.bundle["request_sha256"])
+        with self.assertRaisesRegex(VideoForgeError,"FINGERPRINT_MISMATCH"):
+            self.request.inspect_response(self.bundle,b"","0"*64)
+
+    def test_source_changes_and_incomplete_reference_proofs_block_draft(self):
+        from copy import deepcopy
+        with self.assertRaisesRegex(VideoForgeError,"SOURCE_CHANGED"):
+            self.request.prepare_request("C11-P03","character-kael","0"*64)
+        spec=p.prepare("C11-P03","character-kael")
+        spec=deepcopy(spec)
+        spec["ref_proofs"][0]["sha256"]="0"*64
+        with patch.object(p,"prepare",return_value=spec):
+            with self.assertRaisesRegex(VideoForgeError,"IDENTITY_REFERENCES_CHANGED"):
+                self.request.prepare_request("C11-P03","character-kael",self.source_sha)
+        with patch.object(p,"mother_source",return_value=(b"changed",{"sha256":"0"*64})):
+            with self.assertRaisesRegex(VideoForgeError,"SOURCE_CHANGED"):
+                self.request.inspect_response(self.bundle,b"",self.bundle["request_sha256"])
+
+    def test_source_revision_and_archived_base_or_version_are_not_reopened(self):
+        with self.assertRaisesRegex(VideoForgeError,"SOURCE_REVISION_BLOCKED"):
+            self.request.prepare_request("C08-P02","character-kael",self.source_sha)
+        with self.assertRaisesRegex(VideoForgeError,"SPECIAL_PROMPT_NOT_MIGRATED"):
+            self.request.prepare_request("C02-P01","object-coroa-aldric-v2",self.source_sha)
+        with self.assertRaisesRegex(VideoForgeError,"ALREADY_ARCHIVED_NO_REPEAT"):
+            self.request.prepare_request("C11-P03","character-guarda_direito",self.source_sha)
+        original=p.existing_part
+        def archived(shot,part,root):
+            if part.endswith("-reference-canvas-v1"):
+                return {"sha256":"a"*64}
+            return original(shot,part,root)
+        with patch.object(p,"existing_part",side_effect=archived):
+            with self.assertRaisesRegex(VideoForgeError,"ALREADY_ARCHIVED_NO_REPEAT"):
+                self.request.prepare_request("C11-P03","character-kael",self.source_sha)
+
+    def test_background_prompt_scopes_opaque_area_and_rejects_prompt_drift(self):
+        manifest=self.bundle["reference_manifest"]
+        spec={"role":"background","prompt":(
+            "CANVAS CONTRACT: old. Use the ATTACHED first image. "
+            "Generate ONLY the EMPTY CLEAN BACKGROUND of this same shot, OPAQUE "
+            "RGB/RGBA. No person/object silhouettes or transparent holes.")}
+        prompt=self.request.reference_prompt(spec,manifest)
+        self.assertIn("fully opaque ONLY inside the source rectangle",prompt)
+        self.assertIn("MUST have alpha=0, including background requests",prompt)
+        self.assertNotIn("OPAQUE RGB/RGBA",prompt)
+        for changed in ("Unrecognized template",spec["prompt"].replace("OPAQUE","opaque")):
+            with self.subTest(changed=changed),self.assertRaises(VideoForgeError):
+                self.request.reference_prompt(dict(spec,prompt=changed),manifest)
+
+    def test_printable_summary_is_not_an_executable_request_and_cli_does_not_bill(self):
+        import io
+        import json
+        output=io.StringIO()
+        with patch("sys.argv",["request","--shot-id","C11-P03","--part","character-kael",
+                              "--source-sha256",self.source_sha]),patch("sys.stdout",output):
+            with patch.object(p.proxy_images,"call_proxy") as charged:
+                self.request.main()
+                charged.assert_not_called()
+        result=json.loads(output.getvalue())
+        self.assertTrue(result["summary_only"])
+        self.assertNotIn("images",result["payload"])
+        self.assertEqual(result["attached_image_count"],len(self.bundle["payload"]["images"]))
+        self.assertEqual(result["request_sha256"],self.bundle["request_sha256"])
+        with self.assertRaisesRegex(VideoForgeError,"FINGERPRINT_MISMATCH"):
+            self.request.inspect_response(result,b"",self.bundle["request_sha256"])
+
+    def test_real_rejected_bytes_remain_rejected_under_bound_request(self):
+        archived=p.existing_part("C11-P03","character-guarda_direito")
+        path=p.ROOT/archived["file"]
+        raw=path.read_bytes()
+        qa=self.request.inspect_response(self.bundle,raw,self.bundle["request_sha256"])
+        self.assertEqual(qa["technical_qa"],"rejected_reference_canvas_mismatch")
+        self.assertFalse(qa["provider_provenance_verified"])
+        self.assertEqual(qa["candidate_sha256"],archived["sha256"])
+        self.assertEqual(path.read_bytes(),raw)
+
+
 if __name__=="__main__":
     unittest.main()

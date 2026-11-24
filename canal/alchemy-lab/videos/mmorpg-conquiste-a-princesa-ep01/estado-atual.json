@@ -2891,5 +2891,40 @@
         "file": "canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-proxy-separate-part-v1/45308344517/c11-p03-character-guarda_direito.png"
       }
     }
+  },
+  "reference_request_20261124": {
+    "date": "2026-11-24",
+    "base_main_sha": "70b5cfe160777d88a9ccc23e34de381f1a090692",
+    "status": "offline_request_response_verified_merge_requires_green_checks",
+    "module": "videoforge/ep01_reference_request.py",
+    "tests_added": 8,
+    "provider_calls": 0,
+    "generation_authorized": false,
+    "ledger_modified": false,
+    "original_art_modified": false,
+    "human_visual_approval": false,
+    "rig_ready": false,
+    "youtube_uploaded": false,
+    "artifact_summary": "ep01-reference-request-C11-P03.json",
+    "next_action": "validate_PR_then_connect_durable_reservation_single_call_and_original_response_archive_without_replay",
+    "pr": 132,
+    "code_commit": "5ba98db55534e5bc570630e1a5558e73d1b6eab1",
+    "ci": {
+      "run_id": 45507234483,
+      "conclusion": "success",
+      "python_tests": 99,
+      "suites": 5,
+      "offline_request_summary": "passed"
+    },
+    "verified_request": {
+      "request_id": "c11-p03-character-kael-reference-canvas-v1",
+      "request_sha256": "636c98614133621494bf5f5a06f96954bdf05cfd1f1912d366c907b8a3c95245",
+      "source_sha256": "9a03b7c13414707b34256c95cfc3d675f80588c9547d54c6374d7bcd26d73603",
+      "reference_sha256": "f44d508a12a7ab48f7f9ffbd2a68d1fba7f260676dfe0c30076a4a05aff1b78a",
+      "requested_size": "944x1680",
+      "attached_image_count": 5,
+      "summary_only": true
+    },
+    "transport_followup": "once_live_archiving_is_added_update_offline_fixture_and_review_command_to_inspect_saved_request_without_reopening_archived_versions"
   }
 }
