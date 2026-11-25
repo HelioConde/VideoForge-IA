@@ -760,3 +760,14 @@ Novo módulo `videoforge.ep01_reference_request`: prepara payload de edição co
 O resumo de C11-P03/Kael será publicado como `ep01-reference-request-C11-P03.json` no artifact da CI, sem base64 e sem autorização de execução. Oito regressões acrescentadas: pedido real determinístico, referências SHA, resposta vinculada, adulteração, mudança de fonte, arquivos já gerados, prompt de background e resumo não executável. [PR #132](https://github.com/HelioConde/VideoForge-IA/pull/132), código `5ba98db55534e5bc570630e1a5558e73d1b6eab1`: [CI #45507234483](https://github.com/HelioConde/VideoForge-IA/actions/runs/45507234483) **success**, 99 testes nas cinco suítes, JavaScript, plano e resumo do pedido real passaram. Pedido `c11-p03-character-kael-reference-canvas-v1`, canvas `944x1680`, 5 anexos; fingerprint `636c98614133621494bf5f5a06f96954bdf05cfd1f1912d366c907b8a3c95245`. Revisão documental final deve manter checks verdes antes da integração.
 
 Próximo passo: após CI e integração, conectar reserva durável por ID/fingerprint, chamada única e arquivamento/reconciliação da resposta. Nenhuma geração paga, fonte alterada, aprovação de arte, rig ou publicação nesta etapa. O funcionamento real do provedor continua sem comprovação para este novo contrato.
+
+## 24/11/2026 — Reserva por pedido no ledger compartilhado, sem transporte ativado
+
+Base `92f33b019b5f10bc86f1e05f30f239ede0b42a07`; PR #132 integrada com 99 testes e pós-merge #45507838966 aprovado, dispatch pago skipped.
+
+Novo módulo `videoforge.ep01_reference_reservation` reconstrói pedido/fontes/política antes de reservar por ID e fingerprint no ledger CAS já usado pela fila. Somente Actions/main com run/tentativa identificados. Retorna recibo apenas após gravação confirmada; colisões, timeout e confirmação perdida não autorizam retry. Reserva incerta antiga bloqueia a nova; a reserva nova também bloqueia a fila antiga. Schema estrito não aceita aprovação falsa, payload ou credenciais.
+
+Onze regressões offline usam o código real de persistência com HTTP simulado: disputa entre escritores, retomada/rerun, confirmação perdida, estado corrompido, pedido modificado, política/fonte alterada e convivência com recibos antigos. [PR #133](https://github.com/HelioConde/VideoForge-IA/pull/133), código `0a58939d497a8ccab083badd6e2583b138c9a9c2`: [CI #45515424288](https://github.com/HelioConde/VideoForge-IA/actions/runs/45515424288) **success**. 110 testes em seis suítes, JavaScript, plano completo e inspeções offline passaram. Integração depende dos checks verdes da revisão documental final; o estado de merge está na PR.
+
+Nenhuma reserva real ou chamada de imagem executada; nenhuma Action ativa o novo módulo. Próximo passo: transporte de chamada única com arquivamento original e reconciliação, no mesmo grupo de concorrência da fila. Atualizar fixture offline antes de arquivar a primeira versão. Arte, ledger remoto, rig e publicação permanecem intactos.
+

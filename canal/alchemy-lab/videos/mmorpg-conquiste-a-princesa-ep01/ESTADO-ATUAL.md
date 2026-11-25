@@ -1,3 +1,13 @@
+## 24/11/2026 — Reserva por pedido no ledger compartilhado, sem transporte ativado
+
+Base `92f33b019b5f10bc86f1e05f30f239ede0b42a07`; PR #132 integrada com 99 testes e pós-merge #45507838966 aprovado, dispatch pago skipped.
+
+Novo módulo `videoforge.ep01_reference_reservation` reconstrói pedido/fontes/política antes de reservar por ID e fingerprint no ledger CAS já usado pela fila. Somente Actions/main com run/tentativa identificados. Retorna recibo apenas após gravação confirmada; colisões, timeout e confirmação perdida não autorizam retry. Reserva incerta antiga bloqueia a nova; a reserva nova também bloqueia a fila antiga. Schema estrito não aceita aprovação falsa, payload ou credenciais.
+
+Onze regressões offline usam o código real de persistência com HTTP simulado: disputa entre escritores, retomada/rerun, confirmação perdida, estado corrompido, pedido modificado, política/fonte alterada e convivência com recibos antigos. [PR #133](https://github.com/HelioConde/VideoForge-IA/pull/133), código `0a58939d497a8ccab083badd6e2583b138c9a9c2`: [CI #45515424288](https://github.com/HelioConde/VideoForge-IA/actions/runs/45515424288) **success**. 110 testes em seis suítes, JavaScript, plano completo e inspeções offline passaram. Integração depende dos checks verdes da revisão documental final; o estado de merge está na PR.
+
+Nenhuma reserva real ou chamada de imagem executada; nenhuma Action ativa o novo módulo. Próximo passo: transporte de chamada única com arquivamento original e reconciliação, no mesmo grupo de concorrência da fila. Atualizar fixture offline antes de arquivar a primeira versão. Arte, ledger remoto, rig e publicação permanecem intactos.
+
 ## 24/11/2026 — Pedido de referência versionado ligado ao QA de resposta
 
 Base `70b5cfe160777d88a9ccc23e34de381f1a090692`, PR #131 integrada com 91 testes e pós-merge #45456502372 confirmado sem despacho pago.
