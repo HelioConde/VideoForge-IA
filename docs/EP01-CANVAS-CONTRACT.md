@@ -82,3 +82,35 @@ python -m videoforge.ep01_reference_request --shot-id C11-P03 \
 A CLI imprime resumo revisável com prompt, SHA e quantidade de anexos; omite o base64 e marca `summary_only=true`. Esse resumo NÃO pode ser executado/validado como pedido completo. O artifact `ep01-reference-request-C11-P03.json` da CI contém somente esse resumo. O payload completo existe em memória para a futura integração.
 
 Nenhuma função envia HTTP, reserva tarefa, grava PNG ou modifica autorização. `generation_authorized=false`, `provider_calls=0` e os gates de rig/publicação permanecem falsos. Próxima etapa: transporte com reserva durável por ID/fingerprint antes de uma chamada, arquivamento da resposta original e reconciliação sem replay. O QA offline não comprova comportamento real do proxy.
+
+
+## Reserva persistente antes do transporte
+
+`videoforge.ep01_reference_reservation.reserve_request` prepara a próxima etapa:
+reconstrói o pedido a partir das fontes e política atuais, compara o fingerprint
+externo e grava uma reserva no **mesmo ledger CAS da fila EP01**,
+`runtime/ep01-production-action-queue-v1.json`, na branch
+`state/multi-agent-runtime`. A chave `reference_image:<request_id>` independe
+do hash: mudar o prompt/hash não permite repetir a mesma versão.
+
+A função só aceita contexto Actions/main deste repositório, com run e tentativa
+identificados. O recibo só retorna depois da confirmação da gravação por SHA.
+Conflitos entre escritores, timeout e perda de confirmação interrompem a
+operação, sem retry. Uma retomada encontra a reserva e exige reconciliação.
+Reservas ou chamadas antigas com resultado incerto bloqueiam a nova reserva;
+registros antigos concluídos ou barrados no preflight são preservados.
+
+O registro contém somente IDs, hashes, run e flags falsas de aprovação, sem
+payload, imagem, prompt ou credenciais. Seu schema é validado também pela fila
+antiga. Enquanto houver a reserva, o bloqueio global de tentativas pendentes
+da fila impede novos despachos pagos. Não existe liberação automática nem estado
+de sucesso artificial. Reservar não afirma que o provedor foi chamado.
+
+**Ainda não ativado em produção:** nenhuma CLI/Action chama a nova função,
+nenhuma reserva real foi escrita nesta entrega e não há transporte de imagem.
+A CI simula somente a fronteira HTTP do GitHub e exercita o código real de
+load/save/CAS, inclusive uma corrida entre dois escritores e confirmação perdida.
+Antes de ativar: integrar chamada única, arquivamento dos bytes e reconciliação;
+usar o mesmo grupo de concorrência da fila existente e rever a fixture offline
+quando a versão for arquivada. O recibo não é autorização de geração e não
+pode, sozinho, permitir envio ao proxy.

@@ -286,6 +286,9 @@ class QueueRemote(GitHubState):
                         "blocked_uncertain","blocked_failed","blocked_preflight","rejected_archived"}
                     or not isinstance(value.get("workflow"),str)):
                 raise ValueError("Invalid queue attempt state")
+            if key.startswith("reference_image:"):
+                from videoforge.ep01_reference_reservation import validate_record
+                validate_record(key, value)
 
 
 def gh(*args:str, json_out:bool=False):
