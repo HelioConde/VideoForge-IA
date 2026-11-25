@@ -49,6 +49,9 @@ jobs:
           python -m pip install --no-cache-dir torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
           printf 'torch==2.6.0\ntorchvision==0.21.0\ntorchaudio==2.6.0\n' > "$RUNNER_TEMP/constraints.txt"
           python -m pip install --no-cache-dir -c "$RUNNER_TEMP/constraints.txt" -r "$RUNNER_TEMP/ComfyUI/requirements.txt"
+          python -m pip install --no-cache-dir requests==2.32.5
+          python -m pip check
+          python -c "import requests; print(requests.__version__)"
           python -m pip freeze > evidence/packages.txt
       - name: Download exactly two verified model files
         run: |
