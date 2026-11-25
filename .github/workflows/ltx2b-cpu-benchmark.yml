@@ -1,0 +1,196 @@
+name: LTX 2B CPU feasibility benchmark
+on:
+  pull_request:
+    branches: [main]
+    paths: ['.github/workflows/ltx2b-cpu-benchmark.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ltx2b-cpu-benchmark
+  cancel-in-progress: true
+jobs:
+  benchmark:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      OMP_NUM_THREADS: '4'
+      MKL_NUM_THREADS: '4'
+      HF_HUB_DISABLE_XET: '1'
+      PYTHONUNBUFFERED: '1'
+      SOURCE: canal/alchemy-lab/videos/mmorpg-conquiste-a-princesa-ep01/assets/geracoes/production-scene-mother-orientation-v3/44152300579/c01-p04-scene-mother-facing-throne-v3.png
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Inspect runner and immutable source
+        run: |
+          set -eux
+          mkdir -p evidence
+          lscpu > evidence/cpu.txt
+          free -m > evidence/memory.txt
+          df -h > evidence/disk-before.txt
+          if grep -aq '^version https://git-lfs.github.com/spec/v1' "$SOURCE"; then
+            git lfs pull --include="$SOURCE" --exclude=""
+          fi
+          echo "a55a2beb23b9015c729ad2099e906fa6062ac76e1ce310b1ab8f4390be2dd1dd  $SOURCE" | sha256sum -c -
+          # Remove unused preinstalled SDKs only on the disposable hosted runner.
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android
+          df -h > evidence/disk-after.txt
+      - name: Install isolated CPU inference environment
+        run: |
+          set -eux
+          git clone --depth 1 --branch v0.3.40 https://github.com/comfyanonymous/ComfyUI.git "$RUNNER_TEMP/ComfyUI"
+          git -C "$RUNNER_TEMP/ComfyUI" rev-parse HEAD > evidence/comfyui-commit.txt
+          python -m pip install --no-cache-dir torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          printf 'torch==2.6.0\ntorchvision==0.21.0\ntorchaudio==2.6.0\n' > "$RUNNER_TEMP/constraints.txt"
+          python -m pip install --no-cache-dir -c "$RUNNER_TEMP/constraints.txt" -r "$RUNNER_TEMP/ComfyUI/requirements.txt"
+          python -m pip freeze > evidence/packages.txt
+      - name: Download exactly two verified model files
+        run: |
+          set -eux
+          root="$RUNNER_TEMP/ComfyUI/models"
+          mkdir -p "$root/checkpoints" "$root/text_encoders"
+          start=$(date +%s)
+          curl --fail --location --retry 3 --max-time 600 -o "$root/checkpoints/ltxv-2b-0.9.6-distilled-04-25.safetensors" https://huggingface.co/Lightricks/LTX-Video/resolve/main/ltxv-2b-0.9.6-distilled-04-25.safetensors
+          curl --fail --location --retry 3 --max-time 600 -o "$root/text_encoders/t5xxl_fp8_e4m3fn.safetensors" https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors
+          echo "94891bd4bd08de30d484befbfc54fdcffe6d1596a131baad700b9baa5e1de86b  $root/checkpoints/ltxv-2b-0.9.6-distilled-04-25.safetensors" | sha256sum -c -
+          echo "7d330da4816157540d6bb7838bf63a0f02f573fc48ca4d8de34bb0cbfd514f09  $root/text_encoders/t5xxl_fp8_e4m3fn.safetensors" | sha256sum -c -
+          echo "$(( $(date +%s) - start ))" > evidence/download-seconds.txt
+      - name: Run actual image-to-video inference on CPU
+        run: |
+          python -u - <<'PY'
+          import os, pathlib, json, time, subprocess, urllib.request, shutil, traceback
+          from PIL import Image, ImageOps
+          root = pathlib.Path(os.environ['RUNNER_TEMP']) / 'ComfyUI'
+          out = pathlib.Path('evidence').resolve()
+          (root / 'input').mkdir(exist_ok=True)
+          ImageOps.fit(Image.open(os.environ['SOURCE']).convert('RGB'), (224,384), method=Image.Resampling.LANCZOS).save(root/'input'/'benchmark.png')
+          shutil.copy2(root/'input'/'benchmark.png', out/'input.png')
+          report = dict(model='ltxv-2b-0.9.6-distilled', device='cpu', width=224, height=384, frames_requested=9, fps=24, steps=8, seed=42, status='starting', peak_rss_kib=0, paid_api_calls=0, human_visual_approval=False)
+          def save():
+              (out/'benchmark.json').write_text(json.dumps(report, indent=2))
+          def api(path, body=None):
+              request=urllib.request.Request('http://127.0.0.1:8188'+path, data=None if body is None else json.dumps(body).encode(), headers={'Content-Type':'application/json'})
+              with urllib.request.urlopen(request, timeout=20) as response:
+                  return json.load(response)
+          def memory(proc):
+              try:
+                  for line in pathlib.Path('/proc',str(proc.pid),'status').read_text().splitlines():
+                      if line.startswith('VmHWM:'):
+                          report['peak_rss_kib']=max(report['peak_rss_kib'],int(line.split()[1]))
+              except FileNotFoundError:
+                  pass
+          save()
+          log=(out/'comfy.log').open('w')
+          proc=subprocess.Popen(['python','-u','main.py','--cpu','--bf16-unet','--listen','127.0.0.1','--port','8188'],cwd=root,stdout=log,stderr=subprocess.STDOUT)
+          try:
+              started=time.monotonic()
+              for _ in range(120):
+                  if proc.poll() is not None:
+                      raise RuntimeError('ComfyUI exited: '+str(proc.returncode))
+                  try:
+                      nodes=api('/object_info')
+                      break
+                  except Exception:
+                      time.sleep(1)
+              else:
+                  raise RuntimeError('ComfyUI startup timeout')
+              report['startup_seconds']=round(time.monotonic()-started,2)
+              def node(kind,**inputs):
+                  return {'class_type':kind,'inputs':inputs}
+              g={
+                '1':node('CheckpointLoaderSimple',ckpt_name='ltxv-2b-0.9.6-distilled-04-25.safetensors'),
+                '2':node('CLIPLoader',clip_name='t5xxl_fp8_e4m3fn.safetensors',type='ltxv'),
+                '3':node('LoadImage',image='benchmark.png'),
+                '4':node('CLIPTextEncode',clip=['2',0],text='A locked cinematic shot inside a medieval throne room. The king remains seated, subtle natural breathing and blinking, slight cloth movement. The guards remain standing and hold their spears steadily. Stable faces, costumes, lighting and framing.'),
+                '5':node('CLIPTextEncode',clip=['2',0],text='distorted faces, changed clothing, deformed hands, flicker, jump cuts, camera movement'),
+                '6':node('LTXVConditioning',positive=['4',0],negative=['5',0],frame_rate=24),
+                '7':node('LTXVImgToVideo',positive=['6',0],negative=['6',1],vae=['1',2],image=['3',0],width=224,height=384,length=9,batch_size=1,strength=1.0),
+                '8':node('LTXVScheduler',steps=8,max_shift=2.05,base_shift=0.95,stretch=True,terminal=0.1,latent=['7',2]),
+                '9':node('KSamplerSelect',sampler_name='euler'),
+                '10':node('SamplerCustom',model=['1',0],add_noise=True,noise_seed=42,cfg=1.0,positive=['7',0],negative=['7',1],sampler=['9',0],sigmas=['8',0],latent_image=['7',2]),
+                '11':node('VAEDecode',samples=['10',0],vae=['1',2]),
+                '12':node('SaveImage',images=['11',0],filename_prefix='benchmark/frame')
+              }
+              # Adapt only documented default inputs and check node signatures before submission.
+              for n in g.values():
+                  info=nodes[n['class_type']]['input']
+                  for k,spec in info.get('required',{}).items():
+                      if k not in n['inputs']:
+                          if len(spec)>1 and isinstance(spec[1],dict) and 'default' in spec[1]:
+                              n['inputs'][k]=spec[1]['default']
+                          else:
+                              raise RuntimeError('Missing required input '+n['class_type']+'.'+k)
+                  allowed=set(info.get('required',{}))|set(info.get('optional',{}))
+                  for k in list(n['inputs']):
+                      if k not in allowed:
+                          if (n['class_type'],k) in {('LTXVImgToVideo','strength'),('LTXVScheduler','latent')}:
+                              del n['inputs'][k]
+                          else:
+                              raise RuntimeError('Unexpected input '+n['class_type']+'.'+k)
+              (out/'workflow-api.json').write_text(json.dumps(g,indent=2))
+              report['status']='inference'
+              save()
+              t=time.monotonic()
+              prompt_id=api('/prompt',{'prompt':g})['prompt_id']
+              while time.monotonic()-t<1500:
+                  memory(proc)
+                  report['elapsed_seconds']=round(time.monotonic()-t,2)
+                  save()
+                  if proc.poll() is not None:
+                      raise RuntimeError('Inference process exited: '+str(proc.returncode))
+                  h=api('/history/'+prompt_id).get(prompt_id)
+                  if h:
+                      (out/'history.json').write_text(json.dumps(h,indent=2))
+                      if h.get('status',{}).get('status_str')!='success':
+                          raise RuntimeError('ComfyUI inference failed; see history.json')
+                      break
+                  time.sleep(5)
+              else:
+                  raise TimeoutError('Inference exceeded 25 minute budget')
+              report['inference_seconds']=round(time.monotonic()-t,2)
+              frames=sorted((root/'output'/'benchmark').glob('frame*.png'))
+              report['frames_actual']=len(frames)
+              if len(frames)!=9:
+                  raise RuntimeError('Expected 9 real frames')
+              from PIL import ImageChops, ImageStat
+              ims=[Image.open(p).convert('RGB') for p in frames]
+              report['mean_adjacent_pixel_delta']=[round(sum(ImageStat.Stat(ImageChops.difference(a,b)).mean)/3,4) for a,b in zip(ims,ims[1:])]
+              for i,p in enumerate(frames):
+                  shutil.copy2(p,out/('frame_%03d.png'%i))
+              subprocess.run(['ffmpeg','-v','error','-y','-framerate','24','-i',str(out/'frame_%03d.png'),'-c:v','libx264','-pix_fmt','yuv420p',str(out/'preview.mp4')],check=True)
+              report['status']='completed'
+          except BaseException as e:
+              report['status']='failed'
+              report['error']=repr(e)
+              traceback.print_exc()
+              raise
+          finally:
+              memory(proc)
+              save()
+              proc.terminate()
+              try: proc.wait(timeout=10)
+              except subprocess.TimeoutExpired: proc.kill()
+              log.close()
+          PY
+      - name: Publish benchmark evidence only
+        if: always()
+        run: |
+          if [ -f evidence/benchmark.json ]; then
+            cat evidence/benchmark.json
+            cat evidence/benchmark.json >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Inference not reached; inspect setup/download logs." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -f evidence/comfy.log ]; then tail -80 evidence/comfy.log; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ltx2b-cpu-benchmark
+          path: evidence/
+          retention-days: 3
